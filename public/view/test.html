@@ -1,0 +1,44 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<input id="trigger" type="button" value="ajax me!"/>
+
+<script>
+var $trigger = $('#trigger');
+
+$trigger.on('click', function() {
+	/*
+	$.get('/db/hquery', {
+		'monument1': JSON.stringify({
+			'x/long': 10,
+			'y/long': 11
+		}),
+		'monunent2': JSON.stringify({
+			'x/long': 20
+		}),
+		'research': JSON.stringify({
+			'id/long': 1
+		}),
+		'research->monument1': JSON.stringify({
+			'verb/$': 'describes',
+			'name/string': 'pojo'
+		}),
+		'research->monument2': JSON.stringify({
+			'verb/$': 'describes',
+			'name/string': 'pogo'
+		})
+	});
+	*/
+	
+	$.post('/db/hquery/upsert', {
+		'a:Monument': JSON.stringify({
+			'id': '143',
+			'x/num': '10.1',
+			'y/num': '11.1'
+		}),
+		'b:Monument': JSON.stringify({
+			'x/num': '20.1',
+			'y/num': '32.0'
+		})
+	});
+});
+</script>
