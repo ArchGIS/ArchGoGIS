@@ -3,7 +3,7 @@ package main
 import (
 	"cfg"
 	"service/hquery"
-	"service/sandbox"
+	"service/sbox"
 	"service/wc"
 	"web/server"
 )
@@ -12,7 +12,7 @@ func main() {
 	// Запуск веб-сервера (блокирующий вызов)
 	panic(server.Serve(
 		cfg.DefaultServer(),
-		sandbox.Config,
+		sbox.Config,
 		wc.Config,
 		hquery.Config,
 	))

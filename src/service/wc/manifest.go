@@ -7,5 +7,4 @@ import (
 var Config = service.Config{
 	StaticPath:  "web_client",
 	ServiceName: "wc",
-	Routes:      nil,
 }

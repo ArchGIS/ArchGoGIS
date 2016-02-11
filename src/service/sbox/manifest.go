@@ -1,4 +1,4 @@
-package sandbox
+package sbox
 
 import (
 	"fmt"
@@ -8,7 +8,8 @@ import (
 )
 
 var Config = service.Config{
-	ServiceName: "sandbox",
+	StaticPath:  "sandbox",
+	ServiceName: "sbox",
 	Routes: []web.Route{
 		{"/", Greetings},
 	},
