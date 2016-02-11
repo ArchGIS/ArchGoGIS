@@ -8,7 +8,6 @@ import (
 )
 
 var Config = service.Config{
-	StaticPath:  "",
 	ServiceName: "sandbox",
 	Routes: []web.Route{
 		{"/", Greetings},
