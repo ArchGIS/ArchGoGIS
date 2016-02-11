@@ -5,3 +5,4 @@
 | PureCSS       | Легковесный frontend framework        |
 | JQuery        | JavaScript библиотека                 |
 | underscore.js | JavaScript библиотека                 |
+| backbone.js   | JavaScript библиотека                 |

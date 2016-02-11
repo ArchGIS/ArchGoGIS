@@ -1,15 +1,15 @@
 package main
 
 import (
-	"handler"
-	"web"
+	"cfg"
+	"service/sandbox"
+	"web/server"
 )
 
 func main() {
-	web.Serve("8080", []web.Route{
-		{"/db/hquery/upsert", handler.HqueryUpsert},
-		{"/test/echo", handler.TestEcho},
-		{"/test/hquery", handler.TestHquery},
-		{"/", handler.Root},
-	})
+	// Запуск веб-сервера (блокирующий вызов)
+	panic(server.Serve(
+		cfg.DefaultServer(),
+		sandbox.Config,
+	))
 }
