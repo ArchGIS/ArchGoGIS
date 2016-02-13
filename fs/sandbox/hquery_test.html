@@ -29,16 +29,31 @@ $trigger.on('click', function() {
 	});
 	*/
 	
-	$.post('/hquery/upsert', {
-		'a:Monument': JSON.stringify({
+	var data = {
+		'a:Monument': {
 			'id': '143',
-			'x/num': '10.1',
-			'y/num': '11.1'
-		}),
-		'b:Monument': JSON.stringify({
-			'x/num': '20.1',
-			'y/num': '32.0'
-		})
+			'x/number': '10.1',
+			'y/number': '11.1'
+		},
+		'b:Monument': {
+			'x/number': '20.1',
+			'y/number': '32.0'
+		},
+		'a->b:SameAs': {
+			'since/number': '2016'
+		}
+	};
+	
+	console.log(JSON.stringify(data));
+	$.ajax({
+	  'dataType': 'json',
+	  'type': 'POST',
+	  'url': '/hquery/upsert',
+	  'data': JSON.stringify(data),
+	  'success': function(response) {
+		console.log(response);
+	  },
+	  'contentType': 'application/json'
 	});
 });
 </script>
