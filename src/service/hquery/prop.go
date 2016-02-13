@@ -20,6 +20,6 @@ func newProp(key, val string) (*prop, error) {
 	case "text":
 		return &prop{parts[0], `"` + val + `"`}, nil
 	default:
-		return nil, badTypeHintErr()
+		return nil, badTypeHintErr(parts[1])
 	}
 }

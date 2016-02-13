@@ -29,5 +29,5 @@ func badPropNameErr() error {
 }
 
 func badTypeHintErr(badType string) error {
-	errors.New("type `" + badType + "` is not supported")
+	return errors.New("type `" + badType + "` is not supported")
 }

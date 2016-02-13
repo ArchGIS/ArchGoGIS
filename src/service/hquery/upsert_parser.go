@@ -85,12 +85,13 @@ func (my *UpsertParser) parseRelation(connectedNames, label string, entry Upsert
 		return badPropNameErr()
 	}
 
-	if props, err := concatProps(entry, propPairs); err == nil {
-		my.pushRelation(stmt.NewRelation(names, label, props))
-		return nil
-	} else {
+	props, err := concatProps(entry, propPairs)
+	if err != nil {
 		return err
 	}
+
+	my.pushRelation(stmt.NewRelation(names, label, props))
+	return nil
 }
 
 func (my *UpsertParser) pushRelation(relation *stmt.Relation) {
@@ -101,21 +102,23 @@ func (my *UpsertParser) parseUpdate(name, descriptor string, entry UpsertEntry) 
 	id := entry["id"]
 	delete(entry, "id")
 
-	if props, err := concatProps(entry, func(prop *prop) string {
+	props, err := concatProps(entry, func(prop *prop) string {
 		return name + "." + prop.key + "=" + prop.val
-	}); err == nil {
-		my.updates[name] = stmt.NewUpdate(descriptor, id, props)
-		return nil
-	} else {
+	})
+	if err != nil {
 		return err
 	}
+
+	my.updates[name] = stmt.NewUpdate(descriptor, id, props)
+	return nil
 }
 
 func (my *UpsertParser) parseInsert(name, descriptor string, entry UpsertEntry) error {
-	if props, err := concatProps(entry, propPairs); err == nil {
-		my.inserts[name] = stmt.NewInsert(descriptor, props)
-		return nil
-	} else {
+	props, err := concatProps(entry, propPairs)
+	if err != nil {
 		return err
 	}
+
+	my.inserts[name] = stmt.NewInsert(descriptor, props)
+	return nil
 }
