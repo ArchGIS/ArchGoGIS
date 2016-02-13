@@ -1,15 +1,15 @@
 package stmt
 
 type Relation struct {
-	lhs   string
-	rhs   string
+	Lhs   string
+	Rhs   string
 	query string
 }
 
 func NewRelation(names []string, label string, props string) *Relation {
 	relation := &Relation{
-		lhs: names[0],
-		rhs: names[1],
+		Lhs: names[0],
+		Rhs: names[1],
 	}
 
 	if props == "" {

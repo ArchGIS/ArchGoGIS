@@ -5,11 +5,11 @@ import (
 )
 
 func descriptorLengthErr() error {
-	return errors.New("descriptor max length is 32")
+	return errors.New("entry descriptor is too long")
 }
 
 func descriptorPatternErr(badDescriptor string) error {
-	return errors.New(badDescriptor + " is not a valid descriptor")
+	return errors.New(badDescriptor + " is not a valid entry descriptor")
 }
 
 func multipleArrowsErr() error {
@@ -30,4 +30,8 @@ func badPropNameErr() error {
 
 func badTypeHintErr(badType string) error {
 	return errors.New("type `" + badType + "` is not supported")
+}
+
+func missingRefErr(ref string) error {
+	return errors.New("missing entry for `" + ref + "` relation")
 }

@@ -45,13 +45,24 @@ func newUpsertParser(input io.ReadCloser) (*UpsertParser, error) {
 }
 
 func (my *UpsertParser) parse() error {
+	// Обработать каждый entry
 	for descriptor, entry := range my.batch {
-		if len(descriptor) > 32 {
+		if !validDescriptorLen(descriptor) {
 			return descriptorLengthErr()
 		}
 
 		if err := my.parseEntry(descriptor, entry); err != nil {
 			return err
+		}
+	}
+
+	// Проверить lhs & rhs для связей
+	for _, relation := range my.relations {
+		if !my.hasRef(relation.Lhs) {
+			return missingRefErr(relation.Lhs)
+		}
+		if !my.hasRef(relation.Rhs) {
+			return missingRefErr(relation.Rhs)
 		}
 	}
 
@@ -121,4 +132,16 @@ func (my *UpsertParser) parseInsert(name, descriptor string, entry UpsertEntry) 
 
 	my.inserts[name] = stmt.NewInsert(descriptor, props)
 	return nil
+}
+
+func (my *UpsertParser) hasRef(name string) bool {
+	if _, ok := my.inserts[name]; ok {
+		return true
+	}
+
+	if _, ok := my.updates[name]; ok {
+		return true
+	}
+
+	return false
 }

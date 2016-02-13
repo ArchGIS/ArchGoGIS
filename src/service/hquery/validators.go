@@ -1,8 +1,15 @@
 package hquery
 
-// validPropName проверяет, соответствует ли аргумент правилам API
+const (
+	maxDescriptorLen = 32
+)
+
+func validDescriptorLen(descriptor string) bool {
+	return len(descriptor) <= maxDescriptorLen
+}
+
 func validPropName(name string) bool {
-	// Идентификатор должен состоять только из Latin1 ASCII.
+	// Идентификатор должен состоять только из Latin1 ASCII символов.
 	// #FIXME: реализовать
 	return true
 }

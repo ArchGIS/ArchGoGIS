@@ -23,7 +23,6 @@ func processRequest(input io.ReadCloser) string {
 	if err != nil {
 		return api.Error(err)
 	}
-	fmt.Printf("%+v\n", parser)
 
 	return api.NoError
 }
