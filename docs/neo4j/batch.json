@@ -1,0 +1,7 @@
+{
+    "statements": [{
+	"statement": "MATCH (a:Foo {id: 3}) SET a.id = 5 RETURN a.id"
+    }, {
+	"statement": "MATCH (b:Foo {id: 4}) SET b.id = 6 RETURN b.id"
+    }]
+}
