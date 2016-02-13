@@ -1,0 +1,5 @@
+#!/bin/bash
+go build ./src/main/main.go
+if [[ $? == "0" ]]; then
+  rm main
+fi
