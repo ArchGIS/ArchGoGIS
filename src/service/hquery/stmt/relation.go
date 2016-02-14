@@ -1,11 +1,5 @@
 package stmt
 
-type Relation struct {
-	Lhs   string
-	Rhs   string
-	query string
-}
-
 func NewRelation(names []string, label string, props string) *Relation {
 	relation := &Relation{
 		Lhs: names[0],

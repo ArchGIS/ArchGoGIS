@@ -1,7 +1,5 @@
 package stmt
 
-type Insert string
-
 func NewInsert(descriptor, props string) Insert {
 	return Insert("CREATE (" + descriptor + " {" + props + "})")
 }

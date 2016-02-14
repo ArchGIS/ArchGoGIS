@@ -5,19 +5,15 @@ import (
 	"net/http"
 )
 
-type ResponseWriter struct {
-	http.ResponseWriter
-}
-
-func (rw *ResponseWriter) RenderError(code int) {
+func (my *ResponseWriter) RenderError(code int) {
 	message := http.StatusText(code)
 
 	if message == "" {
 		echo.ServerError.Printf("%d is not a valid http status code", code)
 
 		// Выдадим 500-ую, если нам больше "нечего сказать"
-		rw.RenderError(500)
+		my.RenderError(500)
 	} else {
-		http.Error(rw, message, code)
+		http.Error(my, message, code)
 	}
 }

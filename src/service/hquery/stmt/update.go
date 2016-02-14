@@ -1,7 +1,5 @@
 package stmt
 
-type Update string
-
 func NewUpdate(descriptor, id, props string) Update {
 	return Update("MATCH (" + descriptor + " {id: " + id + "}) SET " + props)
 }

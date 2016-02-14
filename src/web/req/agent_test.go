@@ -14,6 +14,8 @@ const (
 )
 
 func init() {
+	// С помощью стандартной библиотеки достанем данные
+	// для проверки результатов.
 	response, err := http.Get(testUrl)
 	assert.Nil(err).NotNil(response)
 	defer response.Body.Close()
