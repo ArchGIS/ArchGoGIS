@@ -1,8 +1,6 @@
 package hquery
 
 import (
-	"encoding/json"
-	"io"
 	"service/hquery/stmt"
 	"strings"
 )
@@ -26,22 +24,6 @@ func concatProps(entry UpsertEntry, fn func(*prop) string) (string, error) {
 	}
 
 	return strings.Join(parts, ","), nil
-}
-
-func newUpsertParser(input io.ReadCloser) (*UpsertParser, error) {
-	parser := &UpsertParser{} // Откладываем инициализацию map'ов
-	err := json.NewDecoder(input).Decode(&parser.batch)
-
-	if err == nil {
-		// Производим аллокации только если успешно выполнился decode.
-		// Выделяем [возможно] больше памяти, чем нужно, зато гарантированно
-		// задаём максимально возможный capacity
-		parser.updates = make(UpdateMap, len(parser.batch))
-		parser.inserts = make(InsertMap, len(parser.batch))
-		return parser, nil
-	} else {
-		return nil, err
-	}
 }
 
 func (my *UpsertParser) parse() error {
