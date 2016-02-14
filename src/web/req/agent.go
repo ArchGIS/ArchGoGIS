@@ -34,6 +34,10 @@ func (my *Agent) Post(url string, data []byte) ([]byte, error) {
 	return my.Send("POST", url, data)
 }
 
+func (my *Agent) Delete(url string, data []byte) ([]byte, error) {
+	return my.Send("DELETE", url, data)
+}
+
 func (my *Agent) Send(method, url string, data []byte) ([]byte, error) {
 	request, err := my.NewRequest(method, url, data)
 	if err != nil {
