@@ -2,6 +2,7 @@ package hquery
 
 const (
 	maxDescriptorLen = 32
+	maxEntries       = 12
 )
 
 func validDescriptorLen(descriptor string) bool {

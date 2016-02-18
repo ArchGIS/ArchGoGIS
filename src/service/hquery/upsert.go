@@ -1,6 +1,7 @@
 package hquery
 
 import (
+	"dbg"
 	"fmt"
 	"io"
 	"net/http"
@@ -22,6 +23,10 @@ func processRequest(input io.ReadCloser) string {
 	err = parser.parse()
 	if err != nil {
 		return api.Error(err)
+	}
+
+	for _, query := range parser.updates {
+		dbg.Dump(query)
 	}
 
 	return api.NoError
