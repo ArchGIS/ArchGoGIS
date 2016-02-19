@@ -9,5 +9,5 @@ func (my Update) yieldProp(prop *ast.Prop) string {
 }
 
 func (my Update) yieldResult(body string) string {
-	return "MATCH (" + my.descriptor.Full + " {id:" + my.id + "}) SET " + body + " RETURN 1"
+	return "MATCH (" + my.descriptor.Full + " {id:" + my.id + "})\nSET " + body + " RETURN 1"
 }
