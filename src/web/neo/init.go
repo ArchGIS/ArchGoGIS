@@ -8,20 +8,19 @@ import (
 
 var agent *req.Agent
 
-const endpoint = cfg.NeoHost + "db/data/transaction/commit/"
+const (
+	txEndpoint = cfg.NeoHost + "db/data/transaction/"
+	endpoint   = txEndpoint + "commit/"
+)
 
-func generateAuthString() string {
+func init() {
 	authString := base64.StdEncoding.EncodeToString(
 		[]byte(cfg.NeoUserName + ":" + cfg.NeoPassword),
 	)
 
-	return authString
-}
-
-func init() {
 	agent = req.NewAgent(map[string][]string{
 		"Accept":        {"application/json; charset=UTF-8"},
-		"Authorization": {"Basic " + generateAuthString()},
+		"Authorization": {"Basic " + authString},
 		"Content-type":  {"application/json"},
 	})
 }

@@ -1,14 +1,9 @@
 package neo
 
 import (
-	"bytes"
 	"encoding/json"
+	"web/neo/builder"
 )
-
-// Builder - одноразовый(!) генератор запросов.
-type Builder struct {
-	query bytes.Buffer
-}
 
 type Result struct {
 	Columns []string
@@ -22,23 +17,40 @@ type Error struct {
 	Message string
 }
 
-// SimpleResponse - ответ без статистики и состояния коммита.
-// Такой ответ приходит в случае использования анонимной транзакции.
-type SimpleResponse struct {
+type Response struct {
+	Commit  string
 	Results []Result
 	Errors  []Error
 }
 
-func NewSimpleResponse(input []byte) (*SimpleResponse, error) {
-	result := &SimpleResponse{}
+type Query struct {
+	builder *builder.Builder
+}
+
+type TxQuery struct {
+	Query
+	commitUrl string
+}
+
+func NewQuery() Query {
+	return Query{builder.New()}
+}
+
+func NewTxQuery() TxQuery {
+	return TxQuery{NewQuery(), ""}
+}
+
+func newResponse(input []byte) (*Response, error) {
+	result := &Response{}
 	err := json.Unmarshal(input, result)
 
 	return result, err
 }
 
-func NewBuilder() *Builder {
-	query := bytes.Buffer{}
-	query.WriteString(`{"statements":[`)
-
-	return &Builder{query}
+func tryNewResponse(responseText []byte, err error) (*Response, error) {
+	if err == nil {
+		return newResponse(responseText)
+	} else {
+		return nil, err
+	}
 }

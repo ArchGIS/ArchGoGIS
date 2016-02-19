@@ -1,4 +1,4 @@
-package neo
+package builder
 
 func (my *Builder) AddStatement(statement string) {
 	my.query.WriteString(`{"statement":"`)

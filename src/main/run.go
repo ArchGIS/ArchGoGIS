@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	obj, err := neo.SimpleQuery(
+	obj, err := neo.NewQuery(
 		"match (x:Foo) return x",
 		/*
 			"create (x:Foo id:99, name: 'labo'})",
