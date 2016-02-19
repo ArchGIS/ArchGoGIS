@@ -1,7 +1,14 @@
 package neo
 
+import (
+	"echo"
+)
+
 func (my *TxQuery) Run() (*Response, error) {
-	response, err := tryNewResponse(agent.Post(txEndpoint, my.builder.Bytes()))
+	statements := my.builder.Bytes()
+	echo.Info.Printf("%+v", string(statements))
+
+	response, err := tryNewResponse(agent.Post(txEndpoint, statements))
 	if err != nil {
 		return nil, err
 	}
@@ -16,9 +23,13 @@ func (my *TxQuery) Rollback() (*Response, error) {
 }
 
 func (my *TxQuery) Commit() (*Response, error) {
-	return tryNewResponse(agent.Post(my.baseUrl(), nil))
+	return tryNewResponse(agent.Post(my.commitUrl, nil))
 }
 
 func (my *TxQuery) baseUrl() string {
 	return my.commitUrl[:len(my.commitUrl)-len("/commit")]
+}
+
+func (my *TxQuery) Debug() string {
+	return string(my.builder.Bytes())
 }

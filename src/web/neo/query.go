@@ -5,7 +5,7 @@ import (
 )
 
 func (my *Query) ResetStatements() {
-	my.builder = builder.New()
+	my.builder = builder.NewQueryBuilder()
 }
 
 func (my *Query) AddStatement(statement string) {
@@ -14,4 +14,8 @@ func (my *Query) AddStatement(statement string) {
 
 func (my *Query) Run() (*Response, error) {
 	return tryNewResponse(agent.Post(endpoint, my.builder.Bytes()))
+}
+
+func (my *Query) StatementBuilder() *builder.StatementBuilder {
+	return &builder.StatementBuilder{}
 }

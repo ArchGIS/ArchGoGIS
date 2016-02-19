@@ -4,14 +4,15 @@ import (
 	"bytes"
 )
 
-// Builder - одноразовый(!) генератор запросов.
-type Builder struct {
-	query bytes.Buffer
+type QueryBuilder struct {
+	statements []string
 }
 
-func New() *Builder {
-	query := bytes.Buffer{}
-	query.WriteString(`{"statements":[`)
+// Пока не используется (возможно скоро будет удалён)
+type StatementBuilder struct {
+	statement *bytes.Buffer
+}
 
-	return &Builder{query}
+func NewQueryBuilder() *QueryBuilder {
+	return &QueryBuilder{}
 }

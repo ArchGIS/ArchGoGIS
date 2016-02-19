@@ -15,4 +15,5 @@ var (
 	MissingRefs          = errors.New("3000")
 	BatchUpdateFailed    = errors.New("4000")
 	NotAllRecordsUpdates = errors.New("4001")
+	BatchInsertFailed    = errors.New("4002")
 )

@@ -12,7 +12,7 @@ type entries map[string]entry
 
 type relation struct {
 	*ast.BinOp
-	query string
+	statement string
 }
 
 type UpsertParser struct {

@@ -24,7 +24,7 @@ type Response struct {
 }
 
 type Query struct {
-	builder *builder.Builder
+	builder *builder.QueryBuilder
 }
 
 // Транзакции нужно закрывать всегда (Commit или Rollback)
@@ -34,7 +34,7 @@ type TxQuery struct {
 }
 
 func NewQuery() Query {
-	return Query{builder.New()}
+	return Query{builder.NewQueryBuilder()}
 }
 
 func NewTxQuery() TxQuery {
