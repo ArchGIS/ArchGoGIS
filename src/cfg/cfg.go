@@ -5,3 +5,9 @@ const (
 	NeoPassword = "qwerty"
 	NeoHost     = "http://localhost:7474/"
 )
+
+const (
+	PgUserName = "postgres"
+	PgPassword = "postgres"
+	PgDatabase = "postgres"
+)
