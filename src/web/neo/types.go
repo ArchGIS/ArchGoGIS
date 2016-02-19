@@ -27,6 +27,7 @@ type Query struct {
 	builder *builder.Builder
 }
 
+// Транзакции нужно закрывать всегда (Commit или Rollback)
 type TxQuery struct {
 	Query
 	commitUrl string

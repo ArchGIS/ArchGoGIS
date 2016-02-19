@@ -13,4 +13,6 @@ var (
 	BadPropTypeHint      = errors.New("2001")
 	InvalidPropKey       = errors.New("2002")
 	MissingRefs          = errors.New("3000")
+	BatchUpdateFailed    = errors.New("4000")
+	NotAllRecordsUpdates = errors.New("4001")
 )
