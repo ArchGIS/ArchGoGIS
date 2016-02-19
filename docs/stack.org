@@ -1,8 +1,10 @@
-| Технология    | Роль                                  |
-|---------------+---------------------------------------|
-| Go            | Язык программирования серверной части |
-| Neo4j         | NoSQL graph СУБД                      |
-| PureCSS       | Легковесный frontend framework        |
-| JQuery        | JavaScript библиотека                 |
-| underscore.js | JavaScript библиотека                 |
-| backbone.js   | JavaScript библиотека                 |
+| Технология    | Роль                                    |
+|---------------+-----------------------------------------|
+| Go            | Язык программирования серверной части   |
+| Neo4j         | NoSQL graph СУБД                        |
+| PostgreSQL    | Реляционная СУБД (lib/pq)               |
+| PureCSS       | Легковесный frontend framework          |
+| JQuery        | JavaScript библиотека                   |
+| underscore.js | JavaScript библиотека                   |
+| backbone.js   | JavaScript библиотека (почти фреймворк) |
+|               |                                         |
