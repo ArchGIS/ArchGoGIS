@@ -1,7 +1,7 @@
 package neo
 
 import (
-	"web/neo/builder"
+	"db/neo/builder"
 )
 
 func (my *Query) ResetStatements() {

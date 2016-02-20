@@ -1,6 +1,7 @@
 package hquery
 
 import (
+	"db/neo"
 	"fmt"
 	"io"
 	"net/http"
@@ -8,7 +9,6 @@ import (
 	"strings"
 	"web"
 	"web/api"
-	"web/neo"
 )
 
 func Upsert(w web.ResponseWriter, r *http.Request) {
