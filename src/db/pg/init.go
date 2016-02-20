@@ -1,6 +1,7 @@
 package pg
 
 import (
+	"assert"
 	"cfg"
 	"database/sql"
 	"fmt"
@@ -9,8 +10,6 @@ import (
 )
 
 func init() {
-	var err error
-
 	dns := fmt.Sprintf(
 		"user=%s password=%s dbname=%s sslmode=disable",
 		cfg.PgUserName,
@@ -18,8 +17,5 @@ func init() {
 		cfg.PgDatabase,
 	)
 
-	agent, err = sql.Open("postgres", dns)
-	if err != nil {
-		panic(err)
-	}
+	Agent = assert.Must(sql.Open("postgres", dns)).(*sql.DB)
 }

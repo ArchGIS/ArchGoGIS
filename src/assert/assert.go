@@ -7,7 +7,7 @@ var chainer = chain{}
 func Nil(maybeNils ...interface{}) chain {
 	for i := range maybeNils {
 		if maybeNils[i] != nil {
-			println("assert.Nil failed!")
+			println("{{ assert.Nil failed! }}")
 			panic(maybeNils[i])
 		}
 	}
@@ -18,10 +18,16 @@ func Nil(maybeNils ...interface{}) chain {
 func NotNil(maybeNils ...interface{}) chain {
 	for i := range maybeNils {
 		if maybeNils[i] == nil {
-			println("assert.NotNil failed!")
+			println("{{ assert.NotNil failed! }}")
 			panic(maybeNils[i])
 		}
 	}
 
 	return chainer
+}
+
+func Must(object interface{}, err error) interface{} {
+	Nil(err)
+
+	return object
 }

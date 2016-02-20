@@ -2,12 +2,12 @@ package main
 
 import (
 	"assert"
-	"web/pg"
+	"db/pg/seq"
 )
 
 func main() {
-	defer pg.CloseConnection()
-	id, err := pg.SeqNextVal("Monument")
+	// id, err := pg.SeqNextVal("Monument")
+	id, err := seq.NextId("Monument")
 	assert.Nil(err)
 	println(id)
 
