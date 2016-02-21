@@ -4,6 +4,7 @@
     }, {
 	"statement": "CREATE (a:Y {id:1})"
     }, {
-	"statement": "MATCH (a:X {id:1}), (b:Y {id:1}) CREATE (a)-[:YE]->(b)"
+	"statement": "MATCH (a:X {id:{id}}), (b:Y {id:1}) CREATE (a)-[:YE]->(b)",
+	"params": {"id": 1}
     }]
 }
