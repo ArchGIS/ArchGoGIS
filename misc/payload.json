@@ -1,0 +1,9 @@
+{
+    "statements": [{
+	"statement": "CREATE (a:X {id:1})"
+    }, {
+	"statement": "CREATE (a:Y {id:1})"
+    }, {
+	"statement": "MATCH (a:X {id:1}), (b:Y {id:1}) CREATE (a)-[:YE]->(b)"
+    }]
+}
