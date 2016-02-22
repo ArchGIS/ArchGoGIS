@@ -1,2 +1,3 @@
-CREATE SEQUENCE monument_id_seq START 1;
-CREATE SEQUENCE research_id_seq START 1;
+CREATE SEQUENCE n_monument_id_seq;
+CREATE SEQUENCE n_research_id_seq;
+CREATE SEQUENCE e_describes_id_seq;
