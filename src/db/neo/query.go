@@ -10,8 +10,8 @@ func NewQuery(stmt ...Statement) Query {
 	return this
 }
 
-func (my *Query) Reset() {
-	my.batch = Batch{}
+func (my *Query) SetBatch(batch Batch) {
+	my.batch = batch
 }
 
 func (my *Query) AddStatement(stmt Statement) {

@@ -1,24 +1,54 @@
 package neo
 
-func (my *TxQuery) Run() (*Response, error) {
-	response, err := tryNewResponse(agent.Post(txEndpoint, my.batch.Bytes()))
+import (
+	"echo"
+	"errors"
+)
+
+func (my *TxQuery) firstRun() (*Response, error) {
+	resp, err := tryNewResponse(agent.Post(txEndpoint, my.batch.Bytes()))
 	if err != nil {
 		return nil, err
 	}
 
-	my.commitUrl = response.Commit
+	my.commitUrl = resp.Commit
+	my.baseUrl = my.commitUrl[:len(my.commitUrl)-len("/commit")]
 
-	return response, nil
+	return resp, nil
+}
+
+func (my *TxQuery) run() (*Response, error) {
+	resp, err := tryNewResponse(agent.Post(my.baseUrl, my.batch.Bytes()))
+	if err != nil {
+		my.Rollback()
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func (my *TxQuery) Run() (*Response, error) {
+	if my.commitUrl == "" {
+		return my.firstRun()
+	} else {
+		return my.run()
+	}
 }
 
 func (my *TxQuery) Rollback() (*Response, error) {
-	return tryNewResponse(agent.Delete(my.baseUrl(), nil))
+	if my.commitUrl == "" {
+		return nil, errors.New("can not rollback prior any executions")
+	}
+
+	echo.Info.Print("rollback " + my.commitUrl)
+	return tryNewResponse(agent.Delete(my.baseUrl, nil))
 }
 
 func (my *TxQuery) Commit() (*Response, error) {
-	return tryNewResponse(agent.Post(my.commitUrl, nil))
-}
+	if my.commitUrl == "" {
+		return nil, errors.New("can not commit prior any executions")
+	}
 
-func (my *TxQuery) baseUrl() string {
-	return my.commitUrl[:len(my.commitUrl)-len("/commit")]
+	echo.Info.Print("commit " + my.commitUrl)
+	return tryNewResponse(agent.Post(my.commitUrl, nil))
 }

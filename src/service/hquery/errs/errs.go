@@ -8,6 +8,7 @@ import (
 var (
 	BadJsonGiven   = errors.New("1000")
 	TooManyEntries = errors.New("1001")
+	EmptyInput     = errors.New("1002")
 
 	EntryTooManyProps = errors.New("1100")
 	EntryNoProps      = errors.New("1101")
@@ -32,4 +33,10 @@ var (
 
 	EdgeTooManyLabels = errors.New("2400")
 	EdgeMissingRef    = errors.New("2401")
+)
+
+// Ошибки во время выполнения запроса
+var (
+	BatchUpdateFailed = errors.New("3000")
+	BatchInsertFailed = errors.New("3001")
 )

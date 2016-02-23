@@ -47,10 +47,20 @@ $trigger.on('click', function() {
 	*/
 	
 	var data = {
-		'b:Foo': {
-			'a/number': '5',
-			'b/text': 'hello'
+		'a:Node1': {
+			'id': '1',
+			'x/number': '1999'
 		},
+		'b:Node2': {
+			'id': '2',
+			'x/number': '2999'
+		},
+		'c:Node3': {
+			'foo/text': 'bar!'
+		},
+		'c->a:SomeRelation': {
+			'prop/text': 'val'
+		}
 	};
 	
 	console.log(JSON.stringify(data));

@@ -14,11 +14,14 @@ func NewParser(input io.ReadCloser) (*Parser, error) {
 	this := &Parser{}
 	err := json.NewDecoder(input).Decode(&this.input)
 
-	if len(this.input) > cfg.HqueryMaxEntries {
-		return nil, errs.TooManyEntries
-	}
-
 	if err == nil {
+		switch {
+		case len(this.input) > cfg.HqueryMaxEntries:
+			return nil, errs.TooManyEntries
+		case len(this.input) == 0:
+			return nil, errs.EmptyInput
+		}
+
 		totalProps := 0
 		for tag, rawProps := range this.input {
 			totalProps += len(rawProps)

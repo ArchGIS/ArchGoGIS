@@ -1,6 +1,8 @@
 package neo
 
 import (
+	"db/neo/errs"
+	"echo"
 	"encoding/json"
 )
 
@@ -13,7 +15,21 @@ func newResponse(input []byte) (*Response, error) {
 
 func tryNewResponse(responseText []byte, err error) (*Response, error) {
 	if err == nil {
-		return newResponse(responseText)
+		resp, err := newResponse(responseText)
+		if err != nil {
+			echo.ServerError.Print(err)
+			return nil, errs.InvalidResponse
+		}
+
+		if len(resp.Errors) > 0 {
+			for _, err := range resp.Errors {
+				echo.ServerError.Print(err)
+			}
+
+			return nil, errs.InvalidResponse
+		}
+
+		return resp, nil
 	} else {
 		return nil, err
 	}

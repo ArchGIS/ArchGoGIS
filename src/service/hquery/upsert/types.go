@@ -4,10 +4,18 @@ import (
 	"service/hquery/upsert/ast"
 )
 
-type Parser struct {
+type Data struct {
 	nodeInserts map[string]*ast.Node
 	nodeUpdates map[string]*ast.Node
 	edgeInserts []*ast.Edge
 	edgeUpdates []*ast.Edge
-	input       map[string]map[string]string
+}
+
+type Parser struct {
+	input map[string]map[string]string
+	Data
+}
+
+type errorProxy struct {
+	err error
 }

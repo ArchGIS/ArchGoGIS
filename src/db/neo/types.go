@@ -32,6 +32,7 @@ type Query struct {
 type TxQuery struct {
 	Query
 	commitUrl string
+	baseUrl   string
 }
 
 type Statement struct {
