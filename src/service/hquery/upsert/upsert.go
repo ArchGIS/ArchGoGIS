@@ -32,6 +32,7 @@ func processRequest(input io.ReadCloser) string {
 
 		resp, err := tx.Run()
 		if err != nil {
+			tx.Rollback()
 			return api.Error(errs.BatchUpdateFailed)
 		}
 

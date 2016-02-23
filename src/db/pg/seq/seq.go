@@ -7,13 +7,6 @@ import (
 	"fmt"
 )
 
-// Префикс n_ для нодов, e_ - для рёбер
-var idSequences = map[string]string{
-	"Monument":  "n_monument_id_seq",
-	"Research":  "n_research_id_seq",
-	"Describes": "e_describes_id_seq",
-}
-
 // Можно было бы организовать statementPool, подготавливать запросы
 // единожды и далее брать их по ключу, но такой подход несёт несколько
 // усложнений. Например, если будут network проблемы, то сессия
