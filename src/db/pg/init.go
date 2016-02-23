@@ -9,6 +9,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
+var Agent *sql.DB
+
 func init() {
 	dns := fmt.Sprintf(
 		"user=%s password=%s dbname=%s sslmode=disable",
