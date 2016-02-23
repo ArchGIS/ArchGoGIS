@@ -1,9 +1,10 @@
 package neo
 
 import (
-	"db/neo/builder"
 	"encoding/json"
 )
+
+type Params map[string]string
 
 type Result struct {
 	Columns []string
@@ -24,7 +25,7 @@ type Response struct {
 }
 
 type Query struct {
-	builder *builder.QueryBuilder
+	batch Batch
 }
 
 // Транзакции нужно закрывать всегда (Commit или Rollback)
@@ -33,25 +34,11 @@ type TxQuery struct {
 	commitUrl string
 }
 
-func NewQuery() Query {
-	return Query{builder.NewQueryBuilder()}
+type Statement struct {
+	Body   string
+	Params Params
 }
 
-func NewTxQuery() TxQuery {
-	return TxQuery{NewQuery(), ""}
-}
-
-func newResponse(input []byte) (*Response, error) {
-	result := &Response{}
-	err := json.Unmarshal(input, result)
-
-	return result, err
-}
-
-func tryNewResponse(responseText []byte, err error) (*Response, error) {
-	if err == nil {
-		return newResponse(responseText)
-	} else {
-		return nil, err
-	}
+type Batch struct {
+	Statements []Statement
 }

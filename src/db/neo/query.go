@@ -1,21 +1,27 @@
 package neo
 
-import (
-	"db/neo/builder"
-)
+func NewQuery(stmt ...Statement) Query {
+	this := Query{}
 
-func (my *Query) ResetStatements() {
-	my.builder = builder.NewQueryBuilder()
+	for i := range stmt {
+		this.AddStatement(stmt[i])
+	}
+
+	return this
 }
 
-func (my *Query) AddStatement(statement string) {
-	my.builder.AddStatement(statement)
+func (my *Query) Reset() {
+	my.batch = Batch{}
+}
+
+func (my *Query) AddStatement(stmt Statement) {
+	my.batch.AddStatement(stmt)
+}
+
+func (my *Query) AddString(body string) {
+	my.batch.AddStatement(Statement{body, nil})
 }
 
 func (my *Query) Run() (*Response, error) {
-	return tryNewResponse(agent.Post(endpoint, my.builder.Bytes()))
-}
-
-func (my *Query) StatementBuilder() *builder.StatementBuilder {
-	return &builder.StatementBuilder{}
+	return tryNewResponse(agent.Post(endpoint, my.batch.Bytes()))
 }

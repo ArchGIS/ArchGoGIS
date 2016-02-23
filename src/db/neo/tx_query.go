@@ -1,14 +1,7 @@
 package neo
 
-import (
-	"echo"
-)
-
 func (my *TxQuery) Run() (*Response, error) {
-	statements := my.builder.Bytes()
-	echo.Info.Printf("%+v", string(statements))
-
-	response, err := tryNewResponse(agent.Post(txEndpoint, statements))
+	response, err := tryNewResponse(agent.Post(txEndpoint, my.batch.Bytes()))
 	if err != nil {
 		return nil, err
 	}
@@ -28,8 +21,4 @@ func (my *TxQuery) Commit() (*Response, error) {
 
 func (my *TxQuery) baseUrl() string {
 	return my.commitUrl[:len(my.commitUrl)-len("/commit")]
-}
-
-func (my *TxQuery) Debug() string {
-	return string(my.builder.Bytes())
 }
