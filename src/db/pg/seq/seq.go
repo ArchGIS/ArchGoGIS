@@ -2,6 +2,7 @@ package seq
 
 import (
 	"db/pg"
+	"db/pg/errs"
 	"errors"
 	"fmt"
 )
@@ -18,6 +19,14 @@ var idSequences = map[string]string{
 // усложнений. Например, если будут network проблемы, то сессия
 // с бд будет утрачена и все подготовленные запросы перестанут быть
 // валидными. Поэтому как минимум пока - keep it simple.
+
+func NextId(tableName string) (string, error) {
+	if seqName, ok := idSequences[tableName]; ok {
+		return NextString(seqName)
+	} else {
+		return "", errs.IdSeqNotFound(tableName)
+	}
+}
 
 func NextIds(tableName string, n int) ([]string, error) {
 	if n == 0 {
@@ -46,8 +55,15 @@ func NextIds(tableName string, n int) ([]string, error) {
 
 		return ids, nil
 	} else {
-		return nil, errors.New("id sequence for " + tableName + " not found")
+		return nil, errs.IdSeqNotFound(tableName)
 	}
+}
+
+func NextString(seqName string) (string, error) {
+	var val string
+	err := pg.Agent.QueryRow("SELECT NEXTVAL('" + seqName + "')").Scan(&val)
+
+	return val, err
 }
 
 func NextInt(seqName string) (int, error) {

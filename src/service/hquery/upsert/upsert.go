@@ -2,27 +2,17 @@ package upsert
 
 import (
 	"db/neo"
+	"db/pg/seq"
+	"echo"
 	"fmt"
 	"io"
 	"net/http"
 	"service/hquery/errs"
-	// "strings"
-	// "dbg"
 	"service/hquery/upsert/ast"
 	"service/hquery/upsert/builder"
 	"web"
 	"web/api"
 )
-
-var idSequences = map[string]string{
-	"Monument":     "n_monument_id_seq",
-	"Research":     "n_research_id_seq",
-	"Describes":    "e_describes_id_seq",
-	"Node1":        "1",
-	"Node2":        "2",
-	"Node3":        "3",
-	"SomeRelation": "8",
-}
 
 func Handler(w web.ResponseWriter, r *http.Request) {
 	response := processRequest(r.Body)
@@ -54,7 +44,13 @@ func processRequest(input io.ReadCloser) string {
 	}
 
 	if data.insertSize() > 0 {
-		tx.SetBatch(makeInsertBatch(data))
+		batch, err := makeInsertBatch(data)
+		if err != nil {
+			echo.ServerError.Print(err)
+			return errs.BatchInsertFailed
+		}
+
+		tx.SetBatch(batch)
 
 		_, err := tx.Run()
 		if err != nil {
@@ -110,7 +106,7 @@ func makeUpdateBatch(data *Data) neo.Batch {
 	return batch
 }
 
-func makeInsertBatch(data *Data) neo.Batch {
+func makeInsertBatch(data *Data) (neo.Batch, error) {
 	sb := builder.NewStatementBuilder(data.insertSize())
 
 	for _, edge := range data.edgeInserts {
