@@ -47,12 +47,12 @@ func processRequest(input io.ReadCloser) string {
 		batch, err := makeInsertBatch(data)
 		if err != nil {
 			echo.ServerError.Print(err)
-			return errs.BatchInsertFailed
+			return api.Error(errs.BatchInsertFailed)
 		}
 
-		tx.SetBatch(batch)
+		tx.SetBatch(*batch)
 
-		_, err := tx.Run()
+		_, err = tx.Run()
 		if err != nil {
 			return api.Error(errs.BatchInsertFailed)
 		}
@@ -106,7 +106,7 @@ func makeUpdateBatch(data *Data) neo.Batch {
 	return batch
 }
 
-func makeInsertBatch(data *Data) (neo.Batch, error) {
+func makeInsertBatch(data *Data) (*neo.Batch, error) {
 	sb := builder.NewStatementBuilder(data.insertSize())
 
 	for _, edge := range data.edgeInserts {
@@ -120,14 +120,22 @@ func makeInsertBatch(data *Data) (neo.Batch, error) {
 	}
 
 	for _, node := range data.nodeInserts {
-		sb.AddNode(idSequences[node.Labels], node)
+		id, err := seq.NextId(node.Labels)
+		if err != nil {
+			return nil, err
+		}
+		sb.AddNode(id, node)
 	}
 
 	for _, edge := range data.edgeInserts {
-		sb.AddEdge(idSequences[edge.Label], edge)
+		id, err := seq.NextId(edge.Label)
+		if err != nil {
+			return nil, err
+		}
+		sb.AddEdge(id, edge)
 	}
 
-	return neo.Batch{[]neo.Statement{sb.Build()}}
+	return &neo.Batch{[]neo.Statement{sb.Build()}}, nil
 }
 
 // #FIXME: функция перестанет быть нужной как только []*Prop будет

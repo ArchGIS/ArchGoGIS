@@ -47,19 +47,26 @@ $trigger.on('click', function() {
 	*/
 	
 	var data = {
-		'a:Node1': {
-			'id': '1',
+		'a:Monument': {
+			'id': '21',
 			'x/number': '1999'
 		},
-		'b:Node2': {
-			'id': '2',
-			'x/number': '2999'
+		'b:Monument': {
+			'id': '22',
+			'x/number': '2999',
+			'y/number': '4',
+			'description/text': 'this is second monument'
 		},
-		'c:Node3': {
-			'foo/text': 'bar!'
+		'a->b:Describes': {
+			'by/text': 'by me'
 		},
-		'c->a:SomeRelation': {
-			'prop/text': 'val'
+		'c:Research': {
+			'type/text': 'field research'
+		},
+		'c->a:Describes': {
+			'name/text': 'big thing',
+			'smell/text': 'smells good',
+			'height/number': '55'
 		}
 	};
 	

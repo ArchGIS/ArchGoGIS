@@ -42,8 +42,8 @@ func matchNodeById(node *ast.Node) string {
 func writeUpdateProps(buf *bytes.Buffer, name string, props []*ast.Prop) {
 	for _, prop := range props {
 		if prop.Key != "id" { // Id мы уже использовали вручную.
-			buf.WriteString(name + "." + prop.Key + "={" + prop.Key + "}")
-			buf.WriteByte(' ')
+			buf.WriteString(name + "." + prop.Key + "={" + prop.Key + "},")
 		}
 	}
+	buf.Truncate(buf.Len() - 1) // Отбрасываем лишнюю запятую
 }

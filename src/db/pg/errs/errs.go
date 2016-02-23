@@ -5,5 +5,5 @@ import (
 )
 
 func IdSeqNotFound(tableName string) error {
-	return "id sequence for " + tableName + " not found"
+	return errors.New("id sequence for " + tableName + " not found")
 }

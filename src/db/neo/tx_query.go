@@ -40,7 +40,6 @@ func (my *TxQuery) Rollback() (*Response, error) {
 		return nil, errors.New("can not rollback prior any executions")
 	}
 
-	echo.Info.Print("rollback " + my.commitUrl)
 	return tryNewResponse(agent.Delete(my.baseUrl, nil))
 }
 
@@ -49,6 +48,5 @@ func (my *TxQuery) Commit() (*Response, error) {
 		return nil, errors.New("can not commit prior any executions")
 	}
 
-	echo.Info.Print("commit " + my.commitUrl)
 	return tryNewResponse(agent.Post(my.commitUrl, nil))
 }
