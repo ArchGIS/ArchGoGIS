@@ -18,16 +18,23 @@ var idSequences = map[string]string{
 // с бд будет утрачена и все подготовленные запросы перестанут быть
 // валидными. Поэтому как минимум пока - keep it simple.
 
-func NextId(tableName string) (int, error) {
+func NextId(tableName string) (string, error) {
 	if seqName, ok := idSequences[tableName]; ok {
-		return NextVal(seqName)
+		return NextString(seqName)
 	} else {
 		return 0, errors.New("id sequence for " + tableName + " not found")
 	}
 }
 
-func NextVal(seqName string) (int, error) {
+func NextInt(seqName string) (int, error) {
 	var val int
+	err := pg.Agent.QueryRow("SELECT NEXTVAL('" + seqName + "')").Scan(&val)
+
+	return val, err
+}
+
+func NextString(seqName string) (string, error) {
+	var val string
 	err := pg.Agent.QueryRow("SELECT NEXTVAL('" + seqName + "')").Scan(&val)
 
 	return val, err
