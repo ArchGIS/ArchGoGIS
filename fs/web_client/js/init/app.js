@@ -45,20 +45,13 @@
     };
     
     this.translate = function(keys) {
-      var translation = dict[keys[0]];
-      if (!translation) {
+      if (!dict[keys[0]]) {
 	return undefined;
       }
-
-      for (var i = 1, len = keys.length; i < len; ++i) {
-	if (translation[keys[i]]) {
-	  translation = translation[keys[i]];
-	} else {
-	  return undefined;
-	}
-      }
       
-      return translation;
+      return _.reduce(keys, function(translation, key) {
+        return translation[key] ? translation[key] : undefined
+      }, dict);
     };
   }();
 
