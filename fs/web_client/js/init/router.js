@@ -1,17 +1,16 @@
-(function() {
+'use strict';
 
-window.App = {
-  Router: {}
-};
-
-App.Router = Backbone.Router.extend({
+App.router = new (Backbone.Router.extend({
   routes: {
     '': 'index',
     'monuments': 'allMonuments',
     'researches': 'allResearches',
     'user/profile': 'userProfile',
     'monument/:id': 'showMon',
-    'researche/:id': 'showRes'
+    'researche/:id': 'showRes',
+	'*actions': function() {
+		alert(123);
+	}
   },
 
   index: function() {
@@ -29,9 +28,8 @@ App.Router = Backbone.Router.extend({
   userProfile: function() {
     $('#todoapp').html('profile');
   }
+}));
+
+Backbone.history.start({
+  'pushstate': true
 });
-
-var router = new App.Router();
-Backbone.history.start({pushstate: true});
-
-})();
