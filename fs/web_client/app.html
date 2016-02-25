@@ -16,12 +16,6 @@
 	<script src="/web_client/vendor/js/jquery.min.js"></script>
 	<script src="/web_client/vendor/js/underscore.min.js"></script>
 	<script src="/web_client/vendor/js/backbone.min.js"></script>
-	
-	<!-- app src -->
-	<script src="/web_client/js/init/app.js"></script>
-	<script src="/web_client/js/init/router.js"></script>
-	<script src="/web_client/js/init/template.js"></script>
-	
   </head>
 
   <body>
@@ -38,6 +32,12 @@
 	      <li class="pure-menu-item">
 	        <a href="#" class="pure-menu-link">Error</a>
 	      </li>
+          <li class="pure-menu-item">
+            <a href="#monument/new" class="pure-menu-link">Памятник</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="#research/new" class="pure-menu-link">Исследование</a>
+          </li>
 	      <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
 	        <a href="#" class="pure-menu-link">User</a>
 	        <ul class="pure-menu-children">
@@ -66,5 +66,14 @@
     <footer>
   	  <p>&copy; GisApp 2016</p>
 	</footer>
+	
+	<!-- app src -->
+    <script src="/web_client/js/init/app.js"></script>
+    <script src="/web_client/js/init/template.js"></script>
+    <script src="/web_client/js/controllers/monument.js"></script>
+    <script src="/web_client/js/controllers/research.js"></script>
+    <script src="/web_client/js/models/monument.js"></script>
+    <script src="/web_client/js/init/router.js"></script>
+	
   </body>
 </html>

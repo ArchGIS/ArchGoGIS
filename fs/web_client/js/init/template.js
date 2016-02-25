@@ -1,18 +1,18 @@
 'use strict';
 
 App.template = new function() {
-  var cache = {};
+  var memo = {};
 
   this.get = function(templateName, onLoad) {
-    if (!_.has(cache, templateName)) { // Не загружено и не в очереди?
-      cache[templateName] = 'loading'; // Помечаем как загружаемую.
+    if (!_.has(memo, templateName)) { // Не загружено и не в очереди?
+      memo[templateName] = 'loading'; // Помечаем как загружаемую.
 
-      $.get('/web_client/templates/' + templateName, function(tmplText) {
-        cache[templateName] = tmplText;
-        onLoad(tmplText)
+      $.get('/web_client/templates/' + templateName + '.html', function(tmplText) {
+        memo[templateName] = _.template(tmplText); // Компилируем и сохраняем.
+        onLoad(memo[templateName]);
       });
-    } else if (cache[templateName] != 'loading') { // Уже загружено?
-      onLoad(cache[templateName]);
+    } else if (memo[templateName] != 'loading') { // Уже загружено?
+      onLoad(memo[templateName]);
     }
   }
 };
