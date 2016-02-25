@@ -11,8 +11,8 @@
 	}
 	
 	// Предварительная очистка.
-	if (currentController.destruct) {
-          currentController.destruct();
+	if (currentController.finish) {
+          currentController.finish();
 	}
 	App.page.clear();
 	
@@ -38,7 +38,10 @@
 	}
 	
 	currentController = App.controllers[controllerName];
-	App.controllers[controllerName][controllerAction]();
+	if (currentController.start) {
+	  currentController.start();
+	}
+	currentController[controllerAction]();
       }
     }
   }));

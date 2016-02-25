@@ -5,7 +5,7 @@ App.controllers.research = new (App.View.extend({
     App.page.render('research');
   },
 
-  'destruct': function() {
+  'finish': function() {
     console.log('research controller is done');
   }
 }));

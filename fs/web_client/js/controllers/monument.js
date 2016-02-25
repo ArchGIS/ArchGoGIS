@@ -5,7 +5,11 @@ App.controllers.monument = new (App.View.extend({
     App.page.render('monument', {'param': 'test data'});
   },
 
-  'destruct': function() {
+  'start': function() {
+    console.log('monument controller is launched');
+  },
+
+  'finish': function() {
     console.log('monument controller is done');
   }
 }));
