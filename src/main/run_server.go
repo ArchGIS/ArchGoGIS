@@ -3,6 +3,7 @@ package main
 import (
 	"cfg"
 	"service/hquery"
+	"service/i18n"
 	"service/sbox"
 	"service/wc"
 	"web/server"
@@ -17,5 +18,6 @@ func main() {
 		sbox.Config,
 		wc.Config,
 		hquery.Config,
+		i18n.Config,
 	))
 }

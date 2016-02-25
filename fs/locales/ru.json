@@ -1,0 +1,14 @@
+{
+ "research": {
+  "singular": "Исследование",
+  "plural": "Исследования"
+ },
+ "monument": {
+  "singular": "Памятник",
+  "plural": "Памятники"
+ },
+ "nav": {
+  "signout": "Выйти",
+  "profile": "Личный кабинет"
+ }
+}

@@ -23,15 +23,6 @@
       <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
 	<a href="#" class="pure-menu-heading">Gis App</a>
 	<ul class="pure-menu-list">
-	  <li class="pure-menu-item">
-	    <a href="#" class="pure-menu-link">Hello</a>
-	  </li>
-	  <li class="pure-menu-item">
-	    <a href="#" class="pure-menu-link">Its me</a>
-	  </li>
-	  <li class="pure-menu-item">
-	    <a href="#" class="pure-menu-link">Error</a>
-	  </li>
           <li class="pure-menu-item">
             <a href="#monument/new" class="pure-menu-link">Памятник</a>
           </li>
@@ -39,11 +30,14 @@
             <a href="#research/new" class="pure-menu-link">Исследование</a>
           </li>
 	  <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-	    <a href="#" class="pure-menu-link">User</a>
+	    <a href="#" class="pure-menu-link">Пользователь</a>
 	    <ul class="pure-menu-children">
-	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">Profile</a></li>
-	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">Help</a></li>
-	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">Sign out</a></li>
+	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">
+		  <%= t('user.profile') %>
+              </a></li>
+	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">
+		  <%= t('user.signout') %>
+              </a></li>
 	    </ul>
 	  </li>
 	</ul>
