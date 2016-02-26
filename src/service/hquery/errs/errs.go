@@ -11,7 +11,6 @@ var (
 	EmptyInput     = errors.New("1002")
 
 	EntryTooManyProps = errors.New("1100")
-	EntryNoProps      = errors.New("1101")
 
 	TagTooLong = errors.New("1200")
 
@@ -31,8 +30,10 @@ var (
 	PropInvalidNumber   = errors.New("2303")
 	PropTextTooLong     = errors.New("2304")
 
-	EdgeTooManyLabels = errors.New("2400")
-	EdgeMissingRef    = errors.New("2401")
+	NodeNoProps = errors.New("2400")
+
+	EdgeTooManyLabels = errors.New("2500")
+	EdgeMissingRef    = errors.New("2501")
 )
 
 // Ошибки во время выполнения запроса

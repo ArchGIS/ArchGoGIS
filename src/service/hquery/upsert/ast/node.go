@@ -6,6 +6,10 @@ import (
 )
 
 func NewNode(tag string, rawProps map[string]string) (*Node, error) {
+	if len(rawProps) == 0 {
+		return nil, errs.NodeNoProps
+	}
+
 	labelSepPos := strings.IndexByte(tag, ':')
 	if labelSepPos == -1 {
 		return nil, errs.TagLabelMissing

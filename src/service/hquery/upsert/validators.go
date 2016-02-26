@@ -10,10 +10,6 @@ func inputError(tag string, rawProps map[string]string) error {
 		return errs.EntryTooManyProps
 	}
 
-	if len(rawProps) == 0 {
-		return errs.EntryNoProps
-	}
-
 	if len(tag) > cfg.HqueryMaxTagLen {
 		return errs.TagTooLong
 	}
