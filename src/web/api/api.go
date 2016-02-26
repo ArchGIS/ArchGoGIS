@@ -7,5 +7,5 @@ func InternalServerError() string {
 }
 
 func Error(err error) string {
-	return `{"error":"` + err.Error() + `"}`
+	return `{"error":` + err.Error() + `}`
 }
