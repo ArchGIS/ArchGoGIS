@@ -11,7 +11,7 @@ var identifierMatcher *regexp.Regexp
 
 func isNumber(maybeNumber string) bool {
 	// Возможно не самый лучший в разных смыслах способ, зато one-liner
-	_, err := strconv.Atoi(maybeNumber)
+	_, err := strconv.ParseFloat(maybeNumber, 64)
 
 	return err == nil
 }
