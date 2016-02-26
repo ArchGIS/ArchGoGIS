@@ -1,0 +1,39 @@
+{
+  "author:Author": {
+    "name/text": "Иван Авторович",
+    "birth_date/text": "02.04.1969"
+  },
+  "coauthor:Author": {
+    "name/text": "Иван Соавторович",
+    "birth_date/text": "03.10.1968"
+  },
+  "art:Artifact": {
+    "name/text": "Палка2000",
+    "weight/number": "2.4"
+  },
+  "o:Object": {
+    "type/text": "Могила"
+  },
+  "m:Monument": {
+    "x/number": "10.6",
+    "y/number": "13.5",
+    "epoch/text": "Средние века"
+  },
+  "g:Geometry": {
+    "shape_file_url/text": "http://.../расположение shape файла"
+  },
+  "k:Knowledge": {
+    "name/text": "Памятник с могилой",
+    "culture/text": "Именьковская культура"
+  },
+  "r:Research": {
+    "year/number": "2015"
+  },
+  "o->art:Contains": {},
+  "m->o:Contains": {},
+  "author->r:Created": {},
+  "coauthor->r:HelpedToCreate": {},
+  "r->k:Contains": {},
+  "k->m:Describes": {},
+  "k->g:Has": {}
+}
