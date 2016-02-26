@@ -1,10 +1,11 @@
 #!/bin/bash
 
+endpoint='http://localhost:7474/db/data/transaction'
 time \
-curl -XPOST 'http://localhost:7474/db/data/transaction/commit/' \
-     -d "$1" \
-     -H Accept:application/json \
-     -H Content-Type:application/json \
-     -H 'Authorization: Basic bmVvNGo6cXdlcnR56' \
-     
-     
+    curl -XPOST "$endpoint/commit/" \
+    -d "$1" \
+    -H Accept:application/json \
+    -H Content-Type:application/json \
+    -H 'Authorization: Basic bmVvNGo6cXdlcnR56' \
+    
+    
