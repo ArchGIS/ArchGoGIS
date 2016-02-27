@@ -2,8 +2,14 @@
 
 (function() {
   var currentController = {};
+  var controllerName = '';
+  var controllerAction = '';
   
   window.App.router = new (Backbone.Router.extend({
+    'current': {
+      'controller': function() { return controllerName; },
+      'action': function() { return controllerAction; }
+    },
     'routes': {
       '*actions': function(dispathInfo) {
 	try {
@@ -24,8 +30,8 @@
 	    throw 'invalid controller/action: ' + controllerNameAndAction;
 	  } 
 	  
-	  var controllerName = controllerNameAndAction[0];
-	  var controllerAction = controllerNameAndAction[1];
+	  controllerName = controllerNameAndAction[0];
+	  controllerAction = controllerNameAndAction[1];
 	  if (!_.has(App.controllers, controllerName)) {
             throw 'controller ' + controllerName + ' is undefined';
 	  }

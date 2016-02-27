@@ -1,7 +1,7 @@
 'use strict';
 
 App.controllers.wizard = new (App.View.extend({
-  'create': function() {
-    App.page.render('create_data');
+  'create_data': function() {
+    App.page.render('wizard/create_data');
   }
 }));

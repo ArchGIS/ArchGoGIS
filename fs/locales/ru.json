@@ -11,5 +11,10 @@
  "nav": {
   "signout": "Выйти",
   "profile": "Личный кабинет"
+ },
+ "titles": {
+  "wizard": {
+   "create_data": "Создание данных"
+  }
  }
 }

@@ -19,8 +19,10 @@
       App.template.get(templateName, function(tmpl) {
 	$body.html(tmpl(templateParams));
       });
-
-      $title.text(templateName);
+      
+      $title.text(App.locale.translate([
+	'titles', App.router.current.controller(), App.router.current.action()
+      ]));
     };
 
     this.clear = function() {
@@ -50,7 +52,7 @@
       }
       
       return _.reduce(keys, function(translation, key) {
-        return translation[key] ? translation[key] : undefined
+        return translation && translation[key] ? translation[key] : undefined
       }, dict);
     };
   }();
@@ -64,7 +66,7 @@
     'views': {},
     'models': {},
     'Model': {},
-    'View': {},
+    'View': {}
   };
 }());
 
