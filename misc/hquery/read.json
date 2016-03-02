@@ -1,0 +1,36 @@
+/*
+MATCH (m:Monument {id: 23})
+MATCH (author:Author)
+MATCH (coauthor:Author)
+MATCH (art:Artifact)
+MATCH (o:Object)
+MATCH (g:Geometry)
+MATCH (k:Knowledge)
+MATCH (r:Research)
+MATCH (o)-[:Contains]->(a)
+MATCH (m)-[:Contains]->(o)
+MATCH (author)-[:Created]->(r)
+MATCH (coauthor)-[:HelpedToCreate]->(r)
+MATCH (r)-[:Contains]->(k)
+MATCH (k)-[:Describes]->(m)
+MATCH (k)-[:Has]->(g)
+RETURN *
+*/
+
+{
+  "m:Monument": ["23", "id", "x", "y", "epoch"],
+  "author:Author": ["*", "id", "name", "birth_date"],
+  "coauthor:Author": ["*", "id", "name", "birth_date"],
+  "art:Artifact": ["*", "id", "name", "weight"],
+  "o:Object": ["*", "id", "type"],
+  "g:Geometry": ["*", "shape_file_url"],
+  "k:Knowledge": ["*", "id", "name", "culture"],
+  "r:Research": ["*", "id", "year"],
+  "o->art:Contains": [],
+  "m->o:Contains": [],
+  "author->r:Created": [],
+  "coauthor->r:HelpedToCreate": [],
+  "r->k:Contains": [],
+  "k->m:Describes": [],
+  "k->g:Has": []
+}
