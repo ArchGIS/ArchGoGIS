@@ -3,6 +3,7 @@ package builder
 import (
 	"db/neo"
 	"service/hquery/upsert/ast"
+	"strings"
 )
 
 func NewStatementBuilder(paramCount int) *StatementBuilder {
@@ -24,12 +25,27 @@ func (my *StatementBuilder) AddNode(id string, node *ast.Node) {
 	my.buf.WriteString("})")
 }
 
-func (my *StatementBuilder) AddEdge(id string, edge *ast.Edge) {
-	edge.Props = append(edge.Props, &ast.Prop{"id", id})
+func (my *StatementBuilder) AddEdge(edge *ast.Edge) {
+	name := edge.Lhs + "_" + edge.Label + "_" + edge.Rhs // Возможно стоит вынести в newEdge()
 
-	my.buf.WriteString("CREATE (" + edge.Lhs + ")-[:" + edge.Label + " {")
-	my.writeProps(edge.Props)
-	my.buf.WriteString("}]->(" + edge.Rhs + ")")
+	if 0 == len(edge.Props) {
+		my.buf.WriteString("CREATE UNIQUE (" + edge.Lhs + ")-[")
+		my.buf.WriteString(name + ":" + edge.Label + "]->(" + edge.Rhs + ")")
+	} else {
+		my.buf.WriteString("CREATE UNIQUE (" + edge.Lhs + ")-[" + name + ":" + edge.Label + " {")
+
+		insertProps := make([]string, len(edge.Props))
+		updateProps := make([]string, len(edge.Props))
+		for i, prop := range edge.Props {
+			placeholder := my.nextPlaceholder()
+			insertProps[i] = prop.Key + ":{" + placeholder + "}"
+			updateProps[i] = name + "." + prop.Key + "={" + placeholder + "}"
+			my.params[placeholder] = prop.Val
+		}
+		my.buf.WriteString(strings.Join(insertProps, ","))
+		my.buf.WriteString("}]->(" + edge.Rhs + ") SET ")
+		my.buf.WriteString(strings.Join(updateProps, ","))
+	}
 }
 
 func (my *StatementBuilder) AddRef(id string, node *ast.Node) {

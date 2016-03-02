@@ -40,8 +40,7 @@ func NewParser(input io.ReadCloser) (*Parser, error) {
 		// задаём максимально возможный capacity
 		this.nodeInserts = make(map[string]*ast.Node, len(this.input))
 		this.nodeUpdates = make(map[string]*ast.Node, len(this.input))
-		this.edgeInserts = make([]*ast.Edge, 0, len(this.input))
-		this.edgeUpdates = make([]*ast.Edge, 0, len(this.input))
+		this.edges = make([]*ast.Edge, 0, len(this.input))
 
 		return this, nil
 	} else {
@@ -57,7 +56,7 @@ func (my *Parser) parse() error {
 		}
 	}
 
-	for _, edge := range my.edgeInserts {
+	for _, edge := range my.edges {
 		if !(my.hasRef(edge.Lhs) && my.hasRef(edge.Rhs)) {
 			return errs.EdgeMissingRef
 		}
@@ -100,11 +99,7 @@ func (my *Parser) parseEdge(tag string, rawProps map[string]string) error {
 		return err
 	}
 
-	if _, hasId := rawProps["id"]; hasId {
-		my.edgeUpdates = append(my.edgeUpdates, edge)
-	} else {
-		my.edgeInserts = append(my.edgeInserts, edge)
-	}
+	my.edges = append(my.edges, edge)
 
 	return nil
 }

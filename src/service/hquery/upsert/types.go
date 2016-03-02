@@ -7,8 +7,7 @@ import (
 type Data struct {
 	nodeInserts map[string]*ast.Node
 	nodeUpdates map[string]*ast.Node
-	edgeInserts []*ast.Edge
-	edgeUpdates []*ast.Edge
+	edges       []*ast.Edge
 }
 
 type Parser struct {

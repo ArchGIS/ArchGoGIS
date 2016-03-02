@@ -100,17 +100,14 @@ func makeUpdateBatch(data *Data) neo.Batch {
 		batch.Add(builder.UpdateNode(node), propsToParams(node.Props))
 	}
 
-	for _, edge := range data.edgeUpdates {
-		batch.Add(builder.UpdateEdge(edge), propsToParams(edge.Props))
-	}
-
 	return batch
 }
 
 func makeInsertBatch(data *Data) (*neo.Batch, error) {
 	sb := builder.NewStatementBuilder(data.insertSize())
 
-	for _, edge := range data.edgeInserts {
+	// Собрать MATCH для отсутствующих в insert связей.
+	for _, edge := range data.edges {
 		if _, ok := data.nodeInserts[edge.Lhs]; !ok {
 			node := data.nodeUpdates[edge.Lhs]
 			sb.AddRef(getId(node.Props), node)
@@ -128,12 +125,8 @@ func makeInsertBatch(data *Data) (*neo.Batch, error) {
 		sb.AddNode(id, node)
 	}
 
-	for _, edge := range data.edgeInserts {
-		id, err := seq.NextId(edge.Label)
-		if err != nil {
-			return nil, err
-		}
-		sb.AddEdge(id, edge)
+	for _, edge := range data.edges {
+		sb.AddEdge(edge)
 	}
 
 	return &neo.Batch{[]neo.Statement{sb.Build()}}, nil

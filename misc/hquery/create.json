@@ -32,7 +32,10 @@
   "o->art:Contains": {},
   "m->o:Contains": {},
   "author->r:Created": {},
-  "coauthor->r:HelpedToCreate": {},
+  "coauthor->r:HelpedToCreate": {
+    "year/number": "2015",
+    "contribution/text": "high"
+  },
   "r->k:Contains": {},
   "k->m:Describes": {},
   "k->g:Has": {}
