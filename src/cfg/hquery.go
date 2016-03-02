@@ -20,10 +20,10 @@ var (
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{
-		{"Describes", "e_describes_id_seq"},
-		{"Has", "e_has_id_seq"},
-		{"Contains", "e_contains_id_seq"},
-		{"Created", "e_created_id_seq"},
-		{"HelpedToCreate", "e_helped_to_create_id_seq"},
+		{"Describes"},
+		{"Has"},
+		{"Contains"},
+		{"Created"},
+		{"HelpedToCreate"},
 	}
 )

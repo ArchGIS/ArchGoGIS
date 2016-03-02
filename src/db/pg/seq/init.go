@@ -7,14 +7,9 @@ import (
 var idSequences map[string]string
 
 func init() {
-	totalLabels := len(cfg.HqueryPermittedNodeLabels) + len(cfg.HqueryPermittedEdgeLabels)
-	idSequences = make(map[string]string, totalLabels)
+	idSequences = make(map[string]string, len(cfg.HqueryPermittedNodeLabels))
 
 	for _, nodeLabel := range cfg.HqueryPermittedNodeLabels {
 		idSequences[nodeLabel.Key] = nodeLabel.Seq
-	}
-
-	for _, edgeLabel := range cfg.HqueryPermittedEdgeLabels {
-		idSequences[edgeLabel.Key] = edgeLabel.Seq
 	}
 }

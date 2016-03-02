@@ -8,5 +8,4 @@ type HqueryNodeLabel struct {
 // #FIXME: нужно ещё учитывать LHS и RHS
 type HqueryEdgeLabel struct {
 	Key string
-	Seq string
 }
