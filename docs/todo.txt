@@ -1,0 +1,5 @@
+## JS client:
+
+## Server:
+- Сделать замеры []string + strings.Join vs bytes.Buffer
+- Вынести абстракцию цикла + buf.truncate(buf.Len() - 1) в функцию или метод
