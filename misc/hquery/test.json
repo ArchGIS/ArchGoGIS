@@ -1,5 +1,5 @@
 {
-  "m:Monument": ["34", "+"],
+  "m:Monument": ["40", "+"],
   "r:Research": ["*", "+"],
   "k:Knowledge": ["*", "+"],
   "k_Describes_m": ["-"],

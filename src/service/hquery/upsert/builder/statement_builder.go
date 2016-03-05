@@ -18,7 +18,7 @@ func (my *StatementBuilder) Build() neo.Statement {
 }
 
 func (my *StatementBuilder) AddNode(id string, node *ast.Node) {
-	node.Props = append(node.Props, &ast.Prop{"id", id})
+	node.Props["id"] = id
 
 	my.buf.WriteString("CREATE (" + node.Tag + " {")
 	my.writeProps(node.Props)
@@ -34,13 +34,15 @@ func (my *StatementBuilder) AddEdge(edge *ast.Edge) {
 	} else {
 		my.buf.WriteString("CREATE UNIQUE (" + edge.Lhs + ")-[" + name + ":" + edge.Type + " {")
 
+		n := 0
 		insertProps := make([]string, len(edge.Props))
 		updateProps := make([]string, len(edge.Props))
-		for i, prop := range edge.Props {
+		for key, val := range edge.Props {
 			placeholder := my.nextPlaceholder()
-			insertProps[i] = prop.Key + ":{" + placeholder + "}"
-			updateProps[i] = name + "." + prop.Key + "={" + placeholder + "}"
-			my.params[placeholder] = prop.Val
+			insertProps[n] = key + ":{" + placeholder + "}"
+			updateProps[n] = name + "." + key + "={" + placeholder + "}"
+			my.params[placeholder] = val
+			n += 1
 		}
 		my.buf.WriteString(strings.Join(insertProps, ","))
 		my.buf.WriteString("}]->(" + edge.Rhs + ") SET ")
@@ -54,11 +56,11 @@ func (my *StatementBuilder) AddRef(id string, node *ast.Node) {
 	my.params[placeholder] = id
 }
 
-func (my *StatementBuilder) writeProps(props []*ast.Prop) {
-	for _, prop := range props {
+func (my *StatementBuilder) writeProps(props map[string]string) {
+	for key, val := range props {
 		placeholder := my.nextPlaceholder()
-		my.buf.WriteString(prop.Key + ":{" + placeholder + "},")
-		my.params[placeholder] = prop.Val
+		my.buf.WriteString(key + ":{" + placeholder + "},")
+		my.params[placeholder] = val
 	}
 	my.buf.Truncate(my.buf.Len() - 1) // Отбрасываем лишнюю запятую
 }

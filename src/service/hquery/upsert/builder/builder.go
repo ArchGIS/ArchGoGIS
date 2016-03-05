@@ -39,10 +39,10 @@ func matchNodeById(node *ast.Node) string {
 	return "MATCH (" + node.Tag + " {id:{id}})"
 }
 
-func writeUpdateProps(buf *bytes.Buffer, name string, props []*ast.Prop) {
-	for _, prop := range props {
-		if prop.Key != "id" { // Id мы уже использовали вручную.
-			buf.WriteString(name + "." + prop.Key + "={" + prop.Key + "},")
+func writeUpdateProps(buf *bytes.Buffer, name string, props map[string]string) {
+	for key, _ := range props {
+		if key != "id" { // Id мы уже использовали вручную.
+			buf.WriteString(name + "." + key + "={" + key + "},")
 		}
 	}
 	buf.Truncate(buf.Len() - 1) // Отбрасываем лишнюю запятую

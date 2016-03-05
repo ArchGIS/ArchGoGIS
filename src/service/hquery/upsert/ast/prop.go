@@ -6,63 +6,62 @@ import (
 	"strings"
 )
 
-func newProps(rawProps map[string]string) ([]*Prop, error) {
-	// Всегда резервируем памяти под 1 дополнительный параметр (id)
-	props := make([]*Prop, 0, len(rawProps)+1)
+func newProps(rawProps map[string]string) (map[string]string, error) {
+	props := make(map[string]string, len(rawProps)+1)
 
-	for key, val := range rawProps {
-		prop, err := newProp(key, val)
+	for rawKey, rawVal := range rawProps {
+		key, val, err := fetchKeyVal(rawKey, rawVal)
 		if err != nil {
 			return nil, err
 		}
 
-		props = append(props, prop)
+		props[key] = val
 	}
 
 	return props, nil
 }
 
-func newProp(key, val string) (*Prop, error) {
-	if key == "id" { // Особый случай. У id нет typeHint, поэтому key == name
-		return newNumberProp("id", val)
+func fetchKeyVal(rawKey, rawVal string) (string, string, error) {
+	if rawKey == "id" { // Особый случай. У id нет typeHint, поэтому key == name
+		return fetchNumber("id", rawVal)
 	}
 
-	nameAndTypeHint := strings.Split(key, "/")
+	nameAndTypeHint := strings.Split(rawKey, "/")
 
 	// len(parts) должно быть равно 2
 	if len(nameAndTypeHint) < 2 {
-		return nil, errs.PropNoTypeHint
+		return "", "", errs.PropNoTypeHint
 	} else if len(nameAndTypeHint) > 2 {
-		return nil, errs.PropInvalidKey
+		return "", "", errs.PropInvalidKey
 	}
 
 	name, typeHint := nameAndTypeHint[0], nameAndTypeHint[1]
 	if !valid.Identifier(name) {
-		return nil, errs.InvalidIdentifier
+		return "", "", errs.InvalidIdentifier
 	}
 
 	switch typeHint {
 	case "number":
-		return newNumberProp(name, val)
+		return fetchNumber(name, rawVal)
 	case "text":
-		return newTextProp(name, val)
+		return fetchText(name, rawVal)
 	default:
-		return nil, errs.PropUnknownTypeHint
+		return "", "", errs.PropUnknownTypeHint
 	}
 }
 
-func newNumberProp(key, val string) (*Prop, error) {
+func fetchNumber(key, val string) (string, string, error) {
 	if valid.Number(val) {
-		return &Prop{key, val}, nil
+		return key, val, nil
 	} else {
-		return nil, errs.PropInvalidNumber
+		return "", "", errs.PropInvalidNumber
 	}
 }
 
-func newTextProp(key, val string) (*Prop, error) {
+func fetchText(key, val string) (string, string, error) {
 	if len(val) > valid.TextLen {
-		return nil, errs.PropTextTooLong
+		return "", "", errs.PropTextTooLong
 	}
 
-	return &Prop{key, `"` + val + `"`}, nil
+	return key, `"` + val + `"`, nil
 }

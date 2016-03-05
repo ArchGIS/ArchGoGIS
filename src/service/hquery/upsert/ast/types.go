@@ -4,17 +4,12 @@ type Node struct {
 	Tag    string
 	Name   string
 	Labels string
-	Props  []*Prop
+	Props  map[string]string
 }
 
 type Edge struct {
 	Lhs   string
 	Rhs   string
 	Type  string
-	Props []*Prop // Возможно стоит перейти на map[string]string
-}
-
-type Prop struct {
-	Key string
-	Val string
+	Props map[string]string
 }

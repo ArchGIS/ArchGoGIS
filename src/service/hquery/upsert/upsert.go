@@ -10,7 +10,6 @@ import (
 	"io"
 	"net/http"
 	"service/hquery/errs"
-	"service/hquery/upsert/ast"
 	"service/hquery/upsert/builder"
 	"web"
 	"web/api"
@@ -96,26 +95,13 @@ func parse(input io.ReadCloser) (*Data, error) {
 	return &parser.Data, nil
 }
 
-// #FIXME: этой функции может и не быть, если props будут хранится в виде
-// map[string]string. Когда-то здесь был unsafe трюк (cast), но он работал до
-// переписывания params на map[string]string.
-func propsToParams(props []*ast.Prop) map[string]string {
-	params := make(map[string]string, len(props))
-
-	for _, prop := range props {
-		params[prop.Key] = prop.Val
-	}
-
-	return params
-}
-
 func makeUpdateBatch(data *Data) neo.Batch {
 	batch := neo.Batch{
 		make([]neo.Statement, 0, data.updateSize()),
 	}
 
 	for _, node := range data.nodeUpdates {
-		batch.Add(builder.UpdateNode(node), propsToParams(node.Props))
+		batch.Add(builder.UpdateNode(node), node.Props)
 	}
 
 	return batch
@@ -128,10 +114,10 @@ func makeInsertBatch(ids map[string]string, data *Data) (*neo.Batch, error) {
 	for _, edge := range data.edges {
 		if _, ok := data.nodeInserts[edge.Lhs]; !ok {
 			node := data.nodeUpdates[edge.Lhs]
-			sb.AddRef(getId(node.Props), node)
+			sb.AddRef(node.Props["id"], node)
 		} else if _, ok := data.nodeInserts[edge.Rhs]; !ok {
 			node := data.nodeUpdates[edge.Rhs]
-			sb.AddRef(getId(node.Props), node)
+			sb.AddRef(node.Props["id"], node)
 		}
 	}
 
@@ -144,16 +130,4 @@ func makeInsertBatch(ids map[string]string, data *Data) (*neo.Batch, error) {
 	}
 
 	return &neo.Batch{[]neo.Statement{sb.Build()}}, nil
-}
-
-// #FIXME: функция перестанет быть нужной как только []*Prop будет
-// переписан на map[string]string.
-func getId(props []*ast.Prop) string {
-	for _, prop := range props {
-		if prop.Key == "id" {
-			return prop.Val
-		}
-	}
-
-	panic("refactor []*ast.Prop to map[string]string!")
 }

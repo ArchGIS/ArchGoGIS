@@ -28,8 +28,6 @@ func processRequest(input io.ReadCloser) string {
 		return api.Error(err)
 	}
 
-	fmt.Printf("%+v\n", data)
-
 	sb := builder.NewStatementBuilder(len(data.nodes))
 	for _, node := range data.nodes {
 		if node.Matcher.Exact() {
@@ -46,40 +44,11 @@ func processRequest(input io.ReadCloser) string {
 	sb.AddNodesReturn(data.nodes)
 	sb.AddEdgesReturn(data.edges)
 
-	// fmt.Printf("%+v\n", sb.Build())
-
 	query := neo.NewQuery(sb.Build())
 	resp, err := query.Run()
 	if err != nil {
 		return api.Error(errs.BatchReadFailed)
 	}
-
-	/*
-		batch := neo.Batch{
-			make([]neo.Statement, 0, len(data.edges)+len(data.nodes)),
-		}
-	*/
-
-	/*
-			MATCH (m:Monument {id: 30})
-			MATCH (author:Author)
-			MATCH (coauthor:Author)
-			MATCH (art:Artifact)
-
-			"r:Research": ["10", "id", "year"],
-		  	"author:Author": ["?", "id", "name", "birth_date"],
-		  	"m:Monument": ["*", "id", "x", "y", "epoch"],
-		  	"coauthor:Author": ["*", "id", "name", "birth_date"],
-	*/
-
-	/*
-		for _, node := range data.nodes {
-			batch.Add(
-				"MATCH (" + node.Name + ""
-			)
-			batch.Add(builder.UpdateNode(node), propsToParams(node.Props))
-		}
-	*/
 
 	return string(format.NewJsonFormatter(resp).Bytes())
 }
