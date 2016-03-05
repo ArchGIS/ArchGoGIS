@@ -1,7 +1,6 @@
 package ext
 
 import (
-	"bytes"
 	"fmt"
 )
 
