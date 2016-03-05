@@ -2,23 +2,20 @@ package ast
 
 import (
 	"service/hquery/errs"
+	"service/hquery/valid"
 	"strings"
 )
 
+// x_Type_y
 func NewEdge(tag string, rawProps map[string]string) (*Edge, error) {
-	firstColonPos := strings.IndexByte(tag, ':')
-	if firstColonPos == -1 {
-		return nil, errs.TagLabelMissing
-	}
-	lastColonPos := strings.LastIndexByte(tag, ':')
-	if firstColonPos != lastColonPos {
-		return nil, errs.EdgeTooManyLabels
+	parts := strings.Split(tag, "_")
+	if len(parts) != 3 {
+		return nil, errs.TagBadFormat
 	}
 
-	name, label := tag[:firstColonPos], tag[firstColonPos+1:]
+	lhs, ty, rhs := parts[0], parts[1], parts[2]
 
-	lhs, rhs := fetchLhsAndRhs(name)
-	if !isIdentifier(lhs) || !isIdentifier(rhs) {
+	if !valid.Identifier(lhs) || !valid.Identifier(rhs) || !valid.Identifier(ty) {
 		return nil, errs.InvalidIdentifier
 	}
 
@@ -27,11 +24,5 @@ func NewEdge(tag string, rawProps map[string]string) (*Edge, error) {
 		return nil, err
 	}
 
-	return &Edge{lhs, rhs, label, props}, nil
-}
-
-func fetchLhsAndRhs(name string) (string, string) {
-	lhsAndRhs := strings.Split(name, "->")
-
-	return lhsAndRhs[0], lhsAndRhs[1]
+	return &Edge{lhs, rhs, ty, props}, nil
 }

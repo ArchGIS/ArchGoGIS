@@ -2,6 +2,7 @@ package ast
 
 import (
 	"service/hquery/errs"
+	"service/hquery/valid"
 	"strings"
 )
 
@@ -17,7 +18,7 @@ func NewNode(tag string, rawProps map[string]string) (*Node, error) {
 
 	name, labels := tag[:labelSepPos], tag[labelSepPos+1:]
 
-	if !isIdentifier(name) {
+	if !valid.Identifier(name) {
 		return nil, errs.InvalidIdentifier
 	}
 

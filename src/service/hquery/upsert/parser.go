@@ -25,7 +25,7 @@ func NewParser(input io.ReadCloser) (*Parser, error) {
 		totalProps := 0
 		for tag, rawProps := range this.input {
 			totalProps += len(rawProps)
-			if totalProps > totalProps {
+			if totalProps > cfg.HqueryMaxPropsTotal {
 				return nil, errs.BatchTooManyProps
 			}
 
@@ -66,12 +66,7 @@ func (my *Parser) parse() error {
 }
 
 func (my *Parser) parseOne(tag string, rawProps map[string]string) error {
-	arrows := strings.Count(tag, "->")
-	if arrows > 1 {
-		return errs.TagMultipleArrows
-	}
-
-	if arrows == 1 {
+	if strings.Contains(tag, "_") {
 		return my.parseEdge(tag, rawProps)
 	} else {
 		return my.parseNode(tag, rawProps)

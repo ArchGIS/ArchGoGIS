@@ -3,7 +3,7 @@ package api
 const NoError = `{"error":false}`
 
 func InternalServerError() string {
-	return `{"error":"internal server error"}`
+	return `{"error":1}`
 }
 
 func Error(err error) string {

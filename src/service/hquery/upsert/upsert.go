@@ -1,9 +1,11 @@
 package upsert
 
 import (
+	"cfg"
 	"db/neo"
 	"db/pg/seq"
 	"echo"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -15,8 +17,12 @@ import (
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
+	if r.ContentLength > cfg.HqueryUpsertMaxInputLen {
+		fmt.Fprint(w, api.Error(errs.InputIsTooBig))
+	}
+
 	response := processRequest(r.Body)
-	fmt.Fprintf(w, "%s", response)
+	fmt.Fprint(w, response)
 }
 
 func processRequest(input io.ReadCloser) string {
@@ -44,8 +50,19 @@ func processRequest(input io.ReadCloser) string {
 		}
 	}
 
+	var ids map[string]string
+
 	if data.insertSize() > 0 {
-		batch, err := makeInsertBatch(data)
+		ids = make(map[string]string, len(data.nodeInserts))
+		for _, node := range data.nodeInserts {
+			id, err := seq.NextId(node.Labels)
+			if err != nil {
+				return api.Error(errs.BatchInsertFailed)
+			}
+			ids[node.Name] = id
+		}
+
+		batch, err := makeInsertBatch(ids, data)
 		if err != nil {
 			echo.ServerError.Print(err)
 			return api.Error(errs.BatchInsertFailed)
@@ -60,8 +77,9 @@ func processRequest(input io.ReadCloser) string {
 	}
 
 	tx.Commit()
+	jsonString, err := json.Marshal(ids)
 
-	return api.NoError
+	return string(jsonString)
 }
 
 func parse(input io.ReadCloser) (*Data, error) {
@@ -103,7 +121,7 @@ func makeUpdateBatch(data *Data) neo.Batch {
 	return batch
 }
 
-func makeInsertBatch(data *Data) (*neo.Batch, error) {
+func makeInsertBatch(ids map[string]string, data *Data) (*neo.Batch, error) {
 	sb := builder.NewStatementBuilder(data.insertSize())
 
 	// Собрать MATCH для отсутствующих в insert связей.
@@ -118,11 +136,7 @@ func makeInsertBatch(data *Data) (*neo.Batch, error) {
 	}
 
 	for _, node := range data.nodeInserts {
-		id, err := seq.NextId(node.Labels)
-		if err != nil {
-			return nil, err
-		}
-		sb.AddNode(id, node)
+		sb.AddNode(ids[node.Name], node)
 	}
 
 	for _, edge := range data.edges {

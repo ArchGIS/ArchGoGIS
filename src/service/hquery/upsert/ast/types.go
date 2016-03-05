@@ -10,7 +10,7 @@ type Node struct {
 type Edge struct {
 	Lhs   string
 	Rhs   string
-	Label string
+	Type  string
 	Props []*Prop // Возможно стоит перейти на map[string]string
 }
 

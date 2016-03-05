@@ -26,13 +26,13 @@ func (my *StatementBuilder) AddNode(id string, node *ast.Node) {
 }
 
 func (my *StatementBuilder) AddEdge(edge *ast.Edge) {
-	name := edge.Lhs + "_" + edge.Label + "_" + edge.Rhs // Возможно стоит вынести в newEdge()
+	name := edge.Lhs + "_" + edge.Type + "_" + edge.Rhs // Возможно стоит вынести в newEdge()
 
 	if 0 == len(edge.Props) {
 		my.buf.WriteString("CREATE UNIQUE (" + edge.Lhs + ")-[")
-		my.buf.WriteString(name + ":" + edge.Label + "]->(" + edge.Rhs + ")")
+		my.buf.WriteString(name + ":" + edge.Type + "]->(" + edge.Rhs + ")")
 	} else {
-		my.buf.WriteString("CREATE UNIQUE (" + edge.Lhs + ")-[" + name + ":" + edge.Label + " {")
+		my.buf.WriteString("CREATE UNIQUE (" + edge.Lhs + ")-[" + name + ":" + edge.Type + " {")
 
 		insertProps := make([]string, len(edge.Props))
 		updateProps := make([]string, len(edge.Props))

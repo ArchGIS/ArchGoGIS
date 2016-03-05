@@ -3,3 +3,4 @@
 ## Server:
 - Сделать замеры []string + strings.Join vs bytes.Buffer
 - Вынести абстракцию цикла + buf.truncate(buf.Len() - 1) в функцию или метод
+- Вычислять read запросы, которые провоцируют natural join и не задают вменяемого limit

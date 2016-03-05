@@ -32,7 +32,7 @@ func UpdateNode(node *ast.Node) string {
 }
 
 func matchEdgeById(edge *ast.Edge) string {
-	return "MATCH (" + edge.Lhs + ")-[r:" + edge.Label + " {id:{id}}]-(" + edge.Rhs + ")"
+	return "MATCH (" + edge.Lhs + ")-[r:" + edge.Type + " {id:{id}}]-(" + edge.Rhs + ")"
 }
 
 func matchNodeById(node *ast.Node) string {

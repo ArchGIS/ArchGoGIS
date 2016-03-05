@@ -1,11 +1,13 @@
 package cfg
 
 const (
-	HqueryMaxEntries       = 32
-	HqueryMaxPropsPerEntry = 24
-	HqueryMaxPropsTotal    = 120
-	HqueryMaxTagLen        = 48
-	HqueryMaxTextLen       = 256
+	HqueryUpsertMaxInputLen = 4096
+	HqueryReadMaxInputLen   = 1024
+	HqueryMaxEntries        = 32
+	HqueryMaxPropsPerEntry  = 24
+	HqueryMaxPropsTotal     = 120
+	HqueryMaxTagLen         = 48
+	HqueryMaxTextLen        = 256
 )
 
 var (

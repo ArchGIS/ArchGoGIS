@@ -2,6 +2,7 @@ package ast
 
 import (
 	"service/hquery/errs"
+	"service/hquery/valid"
 	"strings"
 )
 
@@ -36,7 +37,7 @@ func newProp(key, val string) (*Prop, error) {
 	}
 
 	name, typeHint := nameAndTypeHint[0], nameAndTypeHint[1]
-	if !isIdentifier(name) {
+	if !valid.Identifier(name) {
 		return nil, errs.InvalidIdentifier
 	}
 
@@ -51,7 +52,7 @@ func newProp(key, val string) (*Prop, error) {
 }
 
 func newNumberProp(key, val string) (*Prop, error) {
-	if isNumber(val) {
+	if valid.Number(val) {
 		return &Prop{key, val}, nil
 	} else {
 		return nil, errs.PropInvalidNumber
@@ -59,7 +60,7 @@ func newNumberProp(key, val string) (*Prop, error) {
 }
 
 func newTextProp(key, val string) (*Prop, error) {
-	if len(val) > maxTextLen {
+	if len(val) > valid.TextLen {
 		return nil, errs.PropTextTooLong
 	}
 

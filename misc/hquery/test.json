@@ -1,0 +1,10 @@
+{
+  "m:Monument": ["34", "+"],
+  "r:Research": ["*", "+"],
+  "k:Knowledge": ["*", "+"],
+  "k_Describes_m": ["-"],
+  "a:Author": ["?", "+"],
+  "c:Author": ["*", "+"],
+  "a_Created_r": ["-"],
+  "c_HelpedToCreate_r": ["+"]
+}

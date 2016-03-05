@@ -29,14 +29,14 @@
   "r:Research": {
     "year/number": "2015"
   },
-  "o->art:Contains": {},
-  "m->o:Contains": {},
-  "author->r:Created": {},
-  "coauthor->r:HelpedToCreate": {
+  "o_Contains_art": {},
+  "m_Contains_o": {},
+  "author_Created_r": {},
+  "coauthor_HelpedToCreate_r": {
     "year/number": "2015",
     "contribution/text": "high"
   },
-  "r->k:Contains": {},
-  "k->m:Describes": {},
-  "k->g:Has": {}
+  "r_Contains_k": {},
+  "k_Describes_m": {},
+  "k_Has_g": {}
 }

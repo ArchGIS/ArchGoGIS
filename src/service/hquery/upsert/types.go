@@ -14,7 +14,3 @@ type Parser struct {
 	input map[string]map[string]string
 	Data
 }
-
-type errorProxy struct {
-	err error
-}
