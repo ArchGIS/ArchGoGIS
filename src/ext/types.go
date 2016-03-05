@@ -7,3 +7,7 @@ type StringWriter interface {
 type Byter interface {
 	Bytes() []byte
 }
+
+type Xbuf struct {
+	bytes.Buffer
+}
