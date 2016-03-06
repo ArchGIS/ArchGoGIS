@@ -11,7 +11,7 @@ import (
 )
 
 func Handle(w web.ResponseWriter, r *http.Request, responder func(io.ReadCloser) []byte) {
-	defer throw.Guard(func(err error) {
+	defer throw.Catch(func(err error) {
 		w.Write([]byte(err.Error()))
 	})
 

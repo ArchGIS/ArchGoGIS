@@ -16,16 +16,16 @@ func Error(err error) {
 	panic(err)
 }
 
-func Catch(err error, catcher func(error)) {
+func Guard(err error, guardian func(error)) {
 	if err != nil {
-		catcher(err)
+		guardian(err)
 	}
 }
 
-// Guard ловит брошенные внутри тела функции ошибки (panic(err)).
+// Catch ловит брошенные внутри тела функции ошибки (panic(err)).
 // Должен вызываться через defer.
-func Guard(handler func(error)) {
+func Catch(catcher func(error)) {
 	if err := recover(); err != nil {
-		handler(err.(error))
+		catcher(err.(error))
 	}
 }

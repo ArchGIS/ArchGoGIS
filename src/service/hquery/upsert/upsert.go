@@ -47,7 +47,7 @@ func processRequest(input io.ReadCloser) []byte {
 		ids = make(map[string]string, len(data.nodeInserts))
 		for _, node := range data.nodeInserts {
 			id, err := seq.NextId(node.Labels)
-			throw.Catch(err, func(err error) {
+			throw.Guard(err, func(err error) {
 				echo.ServerError.Print(err)
 				throw.Error(errs.BatchInsertFailed)
 			})

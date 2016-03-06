@@ -37,7 +37,7 @@ func MustDestructureEdgeTag(tag string) (string, string, string) {
 
 func MustFetchJson(reader io.ReadCloser) map[string]map[string]string {
 	var input map[string]map[string]string
-	throw.Catch(json.NewDecoder(reader).Decode(&input), func(err error) {
+	throw.Guard(json.NewDecoder(reader).Decode(&input), func(err error) {
 		echo.ClientError.Print(err)
 		throw.Error(errs.BadJsonGiven)
 	})
