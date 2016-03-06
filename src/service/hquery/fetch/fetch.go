@@ -20,3 +20,18 @@ func NameAndLabels(tag string) (string, string, error) {
 
 	return name, labels, nil
 }
+
+func DestructureEdgeTag(tag string) (string, string, string, error) {
+	parts := strings.Split(tag, "_")
+	if len(parts) != 3 {
+		return "", "", "", errs.TagBadFormat
+	}
+
+	lhs, ty, rhs := parts[0], parts[1], parts[2]
+
+	if !valid.Identifier(lhs) || !valid.Identifier(rhs) || !valid.Identifier(ty) {
+		return "", "", "", errs.InvalidIdentifier
+	}
+
+	return lhs, ty, rhs, nil
+}

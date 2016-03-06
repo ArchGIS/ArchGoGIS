@@ -1,10 +1,10 @@
 {
-  "m:Monument": ["40", "+"],
-  "r:Research": ["*", "+"],
-  "k:Knowledge": ["*", "+"],
-  "k_Describes_m": ["-"],
-  "a:Author": ["?", "+"],
-  "c:Author": ["*", "+"],
-  "a_Created_r": ["-"],
-  "c_HelpedToCreate_r": ["+"]
+  "m:Monument": {"id": "43", "select": "*"},
+  "r:Research": {"id": "*", "select": "*"},
+  "k:Knowledge": {"id": "*", "select": "*"},
+  "k_Describes_m": {},
+  "a:Author": {"id": "?", "select": "*"},
+  "c:Author": {"id": "*", "select": "*"},
+  "a_Created_r": {},
+  "c_HelpedToCreate_r": {"select": "*"}
 }

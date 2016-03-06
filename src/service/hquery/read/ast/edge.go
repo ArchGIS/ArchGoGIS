@@ -1,39 +1,18 @@
 package ast
 
 import (
-	"service/hquery/errs"
-	"service/hquery/valid"
-	"strings"
+	"service/hquery/fetch"
 )
 
-func NewEdge(tag string, slots []string) (*Edge, error) {
-	parts := strings.Split(tag, "_")
-	if len(parts) != 3 {
-		return nil, errs.TagBadFormat
+func NewEdge(tag string, query map[string]string) (*Edge, error) {
+	if err := edgeQueryError(query); err != nil {
+		return nil, err
 	}
 
-	lhs, ty, rhs := parts[0], parts[1], parts[2]
-
-	if !valid.Identifier(lhs) || !valid.Identifier(rhs) || !valid.Identifier(ty) {
-		return nil, errs.InvalidIdentifier
+	lhs, ty, rhs, err := fetch.DestructureEdgeTag(tag)
+	if err != nil {
+		return nil, err
 	}
 
-	if len(slots) != 1 {
-		return nil, errs.EdgeSlotsBadFormat
-	}
-
-	switch slots[0] {
-	case "+":
-		return &Edge{tag, lhs, rhs, ty, true}, nil
-	case "-":
-		return &Edge{tag, lhs, rhs, ty, false}, nil
-	default:
-		return nil, errs.SlotsBadSelector
-	}
-}
-
-func fetchLhsAndRhs(name string) (string, string) {
-	lhsAndRhs := strings.Split(name, "->")
-
-	return lhsAndRhs[0], lhsAndRhs[1]
+	return &Edge{tag, lhs, rhs, ty, query}, nil
 }

@@ -30,10 +30,11 @@ func processRequest(input io.ReadCloser) string {
 
 	sb := builder.NewStatementBuilder(len(data.nodes))
 	for _, node := range data.nodes {
-		if node.Matcher.Exact() {
-			sb.AddRef(string(node.Matcher), node.Tag)
-		} else {
+		switch matcher := node.Props["id"]; matcher {
+		case "*", "?":
 			sb.AddNodeMatch(node.Tag)
+		default:
+			sb.AddRef(matcher, node.Tag)
 		}
 	}
 

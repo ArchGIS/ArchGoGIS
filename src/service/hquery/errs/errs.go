@@ -31,15 +31,16 @@ var (
 	PropInvalidNumber   = errors.New("2303")
 	PropTextTooLong     = errors.New("2304")
 
-	NodeNoProps        = errors.New("2400")
-	NodeSlotsBadFormat = errors.New("2401")
+	NodeNoProps = errors.New("2400")
 
 	EdgeTooManyLabels  = errors.New("2500")
 	EdgeMissingRef     = errors.New("2501")
 	EdgeSlotsBadFormat = errors.New("2502")
 
-	SlotsBadMatcher  = errors.New("2601")
-	SlotsBadSelector = errors.New("2602")
+	QueryBadFormat   = errors.New("2600")
+	QueryNoMatcher   = errors.New("2601")
+	QueryBadMatcher  = errors.New("2602")
+	QueryBadSelector = errors.New("2603")
 )
 
 // Ошибки во время выполнения запроса

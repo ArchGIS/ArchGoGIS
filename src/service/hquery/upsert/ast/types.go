@@ -8,6 +8,7 @@ type Node struct {
 }
 
 type Edge struct {
+	Tag   string
 	Lhs   string
 	Rhs   string
 	Type  string

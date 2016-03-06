@@ -1,11 +1,12 @@
 package builder
 
 import (
-	"bytes"
+	"ext"
+	"service/hquery/placeholder"
 )
 
 type StatementBuilder struct {
-	paramIndex int
-	buf        bytes.Buffer
-	params     map[string]string
+	placeholder placeholder.Seq
+	buf         ext.Xbuf
+	params      map[string]string
 }

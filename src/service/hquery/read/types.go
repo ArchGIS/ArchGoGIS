@@ -10,6 +10,6 @@ type Data struct {
 }
 
 type Parser struct {
-	input map[string][]string
+	input map[string]map[string]string
 	Data
 }

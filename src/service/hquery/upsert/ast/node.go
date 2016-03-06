@@ -2,8 +2,7 @@ package ast
 
 import (
 	"service/hquery/errs"
-	"service/hquery/valid"
-	"strings"
+	"service/hquery/fetch"
 )
 
 func NewNode(tag string, rawProps map[string]string) (*Node, error) {
@@ -11,15 +10,9 @@ func NewNode(tag string, rawProps map[string]string) (*Node, error) {
 		return nil, errs.NodeNoProps
 	}
 
-	labelSepPos := strings.IndexByte(tag, ':')
-	if labelSepPos == -1 {
-		return nil, errs.TagLabelMissing
-	}
-
-	name, labels := tag[:labelSepPos], tag[labelSepPos+1:]
-
-	if !valid.Identifier(name) {
-		return nil, errs.InvalidIdentifier
+	name, labels, err := fetch.NameAndLabels(tag)
+	if err != nil {
+		return nil, err
 	}
 
 	props, err := newProps(rawProps)

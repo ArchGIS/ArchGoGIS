@@ -23,13 +23,13 @@ func NewParser(input io.ReadCloser) (*Parser, error) {
 		}
 
 		totalSlots := 0
-		for tag, slots := range this.input {
-			totalSlots += len(slots)
+		for tag, query := range this.input {
+			totalSlots += len(query)
 			if totalSlots > cfg.HqueryMaxPropsTotal {
 				return nil, errs.BatchTooManyProps
 			}
 
-			if err := inputError(tag, slots); err != nil {
+			if err := inputError(tag, query); err != nil {
 				return nil, err
 			}
 		}
@@ -45,8 +45,8 @@ func NewParser(input io.ReadCloser) (*Parser, error) {
 }
 
 func (my *Parser) parse() error {
-	for tag, slots := range my.input {
-		if err := my.parseOne(tag, slots); err != nil {
+	for tag, query := range my.input {
+		if err := my.parseOne(tag, query); err != nil {
 			return err
 		}
 	}
@@ -60,16 +60,16 @@ func (my *Parser) parse() error {
 	return nil
 }
 
-func (my *Parser) parseOne(tag string, slots []string) error {
+func (my *Parser) parseOne(tag string, query map[string]string) error {
 	if strings.Contains(tag, "_") {
-		return my.parseEdge(tag, slots)
+		return my.parseEdge(tag, query)
 	} else {
-		return my.parseNode(tag, slots)
+		return my.parseNode(tag, query)
 	}
 }
 
-func (my *Parser) parseNode(tag string, slots []string) error {
-	node, err := ast.NewNode(tag, slots)
+func (my *Parser) parseNode(tag string, query map[string]string) error {
+	node, err := ast.NewNode(tag, query)
 	if err != nil {
 		return err
 	}
@@ -79,8 +79,8 @@ func (my *Parser) parseNode(tag string, slots []string) error {
 	return nil
 }
 
-func (my *Parser) parseEdge(tag string, slots []string) error {
-	edge, err := ast.NewEdge(tag, slots)
+func (my *Parser) parseEdge(tag string, query map[string]string) error {
+	edge, err := ast.NewEdge(tag, query)
 	if err != nil {
 		return err
 	}
