@@ -24,7 +24,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, response)
 }
 
-func processRequest(input io.ReadCloser) string {
+func processRequest(input io.ReadCloser) []byte {
 	data, err := parse(input)
 	if err != nil {
 		return api.Error(err)
@@ -77,8 +77,11 @@ func processRequest(input io.ReadCloser) string {
 
 	tx.Commit()
 	jsonString, err := json.Marshal(ids)
+	if err != nil {
+		panic(err)
+	}
 
-	return string(jsonString)
+	return jsonString
 }
 
 func parse(input io.ReadCloser) (*Data, error) {

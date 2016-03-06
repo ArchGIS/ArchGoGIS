@@ -3,30 +3,32 @@ package read
 import (
 	"cfg"
 	"db/neo"
-	"fmt"
 	"io"
 	"net/http"
 	"service/hquery/errs"
 	"service/hquery/format"
 	"service/hquery/read/builder"
+	"throw"
 	"web"
 	"web/api"
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
+	defer func() {
+		if errorCode := recover(); errorCode != nil {
+			w.Write([]byte(errorCode.(error).Error()))
+		}
+	}()
+
 	if r.ContentLength > cfg.HqueryReadMaxInputLen {
-		fmt.Fprint(w, api.Error(errs.InputIsTooBig))
+		w.Write(api.Error(errs.InputIsTooBig))
 	}
 
-	response := processRequest(r.Body)
-	fmt.Fprint(w, response)
+	w.Write(mustProcessRequest(r.Body))
 }
 
-func processRequest(input io.ReadCloser) string {
-	data, err := parse(input)
-	if err != nil {
-		return api.Error(err)
-	}
+func mustProcessRequest(input io.ReadCloser) []byte {
+	data := mustParse(input)
 
 	sb := builder.NewStatementBuilder(len(data.nodes))
 	for _, node := range data.nodes {
@@ -47,23 +49,15 @@ func processRequest(input io.ReadCloser) string {
 
 	query := neo.NewQuery(sb.Build())
 	resp, err := query.Run()
-	if err != nil {
-		return api.Error(errs.BatchReadFailed)
-	}
+	throw.If(err != nil, errs.BatchReadFailed)
 
-	return string(format.NewJsonFormatter(resp).Bytes())
+	return format.NewJsonFormatter(resp).Bytes()
 }
 
-func parse(input io.ReadCloser) (*Data, error) {
-	parser, err := NewParser(input)
-	if err != nil {
-		return nil, err
-	}
+func mustParse(input io.ReadCloser) *Data {
+	parser := MustNewParser(input)
 
-	err = parser.parse()
-	if err != nil {
-		return nil, err
-	}
+	parser.mustParse()
 
-	return &parser.Data, nil
+	return &parser.Data
 }

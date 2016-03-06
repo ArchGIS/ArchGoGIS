@@ -8,86 +8,66 @@ import (
 	"service/hquery/errs"
 	"service/hquery/read/ast"
 	"strings"
+	"throw"
 )
 
-func NewParser(input io.ReadCloser) (*Parser, error) {
+func MustNewParser(input io.ReadCloser) *Parser {
 	this := &Parser{}
-	err := json.NewDecoder(input).Decode(&this.input)
-
-	if err == nil {
-		switch {
-		case len(this.input) > cfg.HqueryMaxEntries:
-			return nil, errs.TooManyEntries
-		case len(this.input) == 0:
-			return nil, errs.EmptyInput
-		}
-
-		totalSlots := 0
-		for tag, query := range this.input {
-			totalSlots += len(query)
-			if totalSlots > cfg.HqueryMaxPropsTotal {
-				return nil, errs.BatchTooManyProps
-			}
-
-			if err := inputError(tag, query); err != nil {
-				return nil, err
-			}
-		}
-
-		this.nodes = make(map[string]*ast.Node, len(this.input))
-		this.edges = make([]*ast.Edge, 0, len(this.input))
-
-		return this, nil
-	} else {
+	throw.Catch(json.NewDecoder(input).Decode(&this.input), func(err error) {
 		echo.ClientError.Print(err)
-		return nil, errs.BadJsonGiven
+		throw.Error(errs.BadJsonGiven)
+	})
+
+	throw.If(len(this.input) > cfg.HqueryMaxEntries, errs.TooManyEntries)
+	throw.If(len(this.input) == 0, errs.EmptyInput)
+
+	totalSlots := 0
+	for tag, query := range this.input {
+		totalSlots += len(query)
+
+		throw.If(totalSlots > cfg.HqueryMaxPropsTotal, errs.BatchTooManyProps)
+		throw.If(len(query) > cfg.HqueryMaxPropsPerEntry, errs.TagTooLong)
+		throw.If(len(tag) > cfg.HqueryMaxTagLen, errs.TagTooLong)
 	}
+
+	this.nodes = make(map[string]*ast.Node, len(this.input))
+	this.edges = make([]*ast.Edge, 0, len(this.input))
+
+	return this
 }
 
-func (my *Parser) parse() error {
+func (my *Parser) mustParse() {
 	for tag, query := range my.input {
-		if err := my.parseOne(tag, query); err != nil {
-			return err
-		}
+		my.mustParseOne(tag, query)
 	}
 
 	for _, edge := range my.edges {
 		if !(my.hasRef(edge.Lhs) && my.hasRef(edge.Rhs)) {
-			return errs.EdgeMissingRef
+			throw.Error(errs.EdgeMissingRef)
 		}
 	}
-
-	return nil
 }
 
-func (my *Parser) parseOne(tag string, query map[string]string) error {
+func (my *Parser) mustParseOne(tag string, query map[string]string) {
 	if strings.Contains(tag, "_") {
-		return my.parseEdge(tag, query)
+		my.mustParseEdge(tag, query)
 	} else {
-		return my.parseNode(tag, query)
+		my.mustParseNode(tag, query)
 	}
 }
 
-func (my *Parser) parseNode(tag string, query map[string]string) error {
+func (my *Parser) mustParseNode(tag string, query map[string]string) {
 	node, err := ast.NewNode(tag, query)
-	if err != nil {
-		return err
-	}
+	throw.OnError(err)
 
 	my.nodes[node.Name] = node
-
-	return nil
 }
 
-func (my *Parser) parseEdge(tag string, query map[string]string) error {
+func (my *Parser) mustParseEdge(tag string, query map[string]string) {
 	edge, err := ast.NewEdge(tag, query)
-	if err != nil {
-		return err
-	}
+	throw.OnError(err)
 
 	my.edges = append(my.edges, edge)
-
-	return nil
 }
 
 func (my *Parser) hasRef(key string) bool {
