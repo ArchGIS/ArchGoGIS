@@ -1,18 +1,21 @@
 package ast
 
 import (
-	"service/hquery/fetch"
+	"service/hquery/errs"
+	"service/hquery/parsing"
+	"throw"
 )
 
-func NewEdge(tag string, query map[string]string) (*Edge, error) {
-	if err := edgeQueryError(query); err != nil {
-		return nil, err
+func MustNewEdge(tag string, query map[string]string) *Edge {
+	if len(query) != 0 {
+		if len(query) == 1 {
+			mustValidateSelector(query["select"])
+		} else {
+			throw.Error(errs.QueryBadFormat)
+		}
 	}
 
-	lhs, ty, rhs, err := fetch.DestructureEdgeTag(tag)
-	if err != nil {
-		return nil, err
-	}
+	lhs, ty, rhs := parsing.MustDestructureEdgeTag(tag)
 
-	return &Edge{tag, lhs, rhs, ty, query}, nil
+	return &Edge{tag, lhs, rhs, ty, query}
 }

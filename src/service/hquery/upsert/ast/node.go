@@ -2,23 +2,14 @@ package ast
 
 import (
 	"service/hquery/errs"
-	"service/hquery/fetch"
+	"service/hquery/parsing"
+	"throw"
 )
 
-func NewNode(tag string, rawProps map[string]string) (*Node, error) {
-	if len(rawProps) == 0 {
-		return nil, errs.NodeNoProps
-	}
+func MustNewNode(tag string, rawProps map[string]string) *Node {
+	throw.If(len(rawProps) == 0, errs.NodeNoProps)
 
-	name, labels, err := fetch.NameAndLabels(tag)
-	if err != nil {
-		return nil, err
-	}
+	name, labels := parsing.MustDestructureNodeTag(tag)
 
-	props, err := newProps(rawProps)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Node{tag, name, labels, props}, nil
+	return &Node{tag, name, labels, mustNewProps(rawProps)}
 }

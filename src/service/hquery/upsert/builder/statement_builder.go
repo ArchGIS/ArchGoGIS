@@ -17,10 +17,11 @@ func (my *StatementBuilder) Build() neo.Statement {
 func (my *StatementBuilder) AddNode(id string, node *ast.Node) {
 	node.Props["id"] = id
 
-	props := make([]string, len(node.Props))
+	props := make([]string, 0, len(node.Props))
 	for key, val := range node.Props {
-		my.params[my.placeholder.Next()] = val
-		props = append(props, key+":{"+my.placeholder.Current()+"}")
+		placeholder := my.placeholder.Next()
+		my.params[placeholder] = val
+		props = append(props, key+":{"+placeholder+"}")
 	}
 
 	my.buf.WriteStringf("CREATE (%s {%s})", node.Tag, strings.Join(props, ","))
@@ -33,8 +34,8 @@ func (my *StatementBuilder) AddEdge(edge *ast.Edge) {
 			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
 		)
 	} else {
-		insertProps := make([]string, len(edge.Props))
-		updateProps := make([]string, len(edge.Props))
+		insertProps := make([]string, 0, len(edge.Props))
+		updateProps := make([]string, 0, len(edge.Props))
 		for key, val := range edge.Props {
 			ph := my.placeholder.Next()
 			insertProps = append(insertProps, key+":{"+ph+"}")
@@ -53,6 +54,7 @@ func (my *StatementBuilder) AddEdge(edge *ast.Edge) {
 }
 
 func (my *StatementBuilder) AddRef(id string, node *ast.Node) {
-	my.buf.WriteStringf("MATCH (%s {id:{%s}})", node.Tag, my.placeholder.Next())
-	my.params[my.placeholder.Current()] = id
+	placeholder := my.placeholder.Next()
+	my.buf.WriteStringf("MATCH (%s {id:{%s}})", node.Tag, placeholder)
+	my.params[placeholder] = id
 }

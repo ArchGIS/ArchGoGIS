@@ -1,34 +1,26 @@
 package upsert
 
 import (
-	"cfg"
 	"db/neo"
 	"db/pg/seq"
 	"echo"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"service/hquery/errs"
+	"service/hquery/shared"
 	"service/hquery/upsert/builder"
+	"throw"
 	"web"
 	"web/api"
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
-	if r.ContentLength > cfg.HqueryUpsertMaxInputLen {
-		fmt.Fprint(w, api.Error(errs.InputIsTooBig))
-	}
-
-	response := processRequest(r.Body)
-	fmt.Fprint(w, response)
+	shared.Handle(w, r, processRequest)
 }
 
 func processRequest(input io.ReadCloser) []byte {
-	data, err := parse(input)
-	if err != nil {
-		return api.Error(err)
-	}
+	data := mustParse(input)
 
 	var tx neo.TxQuery
 
@@ -55,21 +47,16 @@ func processRequest(input io.ReadCloser) []byte {
 		ids = make(map[string]string, len(data.nodeInserts))
 		for _, node := range data.nodeInserts {
 			id, err := seq.NextId(node.Labels)
-			if err != nil {
-				return api.Error(errs.BatchInsertFailed)
-			}
+			throw.Catch(err, func(err error) {
+				echo.ServerError.Print(err)
+				throw.Error(errs.BatchInsertFailed)
+			})
 			ids[node.Name] = id
 		}
 
-		batch, err := makeInsertBatch(ids, data)
-		if err != nil {
-			echo.ServerError.Print(err)
-			return api.Error(errs.BatchInsertFailed)
-		}
+		tx.SetBatch(makeInsertBatch(ids, data))
 
-		tx.SetBatch(*batch)
-
-		_, err = tx.Run()
+		_, err := tx.Run()
 		if err != nil {
 			return api.Error(errs.BatchInsertFailed)
 		}
@@ -84,18 +71,12 @@ func processRequest(input io.ReadCloser) []byte {
 	return jsonString
 }
 
-func parse(input io.ReadCloser) (*Data, error) {
-	parser, err := NewParser(input)
-	if err != nil {
-		return nil, err
-	}
+func mustParse(input io.ReadCloser) *Data {
+	parser := MustNewParser(input)
 
-	err = parser.parse()
-	if err != nil {
-		return nil, err
-	}
+	parser.mustParse()
 
-	return &parser.Data, nil
+	return &parser.Data
 }
 
 func makeUpdateBatch(data *Data) neo.Batch {
@@ -110,7 +91,7 @@ func makeUpdateBatch(data *Data) neo.Batch {
 	return batch
 }
 
-func makeInsertBatch(ids map[string]string, data *Data) (*neo.Batch, error) {
+func makeInsertBatch(ids map[string]string, data *Data) neo.Batch {
 	sb := builder.NewStatementBuilder(data.insertSize())
 
 	// Собрать MATCH для отсутствующих в insert связей.
@@ -132,5 +113,5 @@ func makeInsertBatch(ids map[string]string, data *Data) (*neo.Batch, error) {
 		sb.AddEdge(edge)
 	}
 
-	return &neo.Batch{[]neo.Statement{sb.Build()}}, nil
+	return neo.Batch{[]neo.Statement{sb.Build()}}
 }

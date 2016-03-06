@@ -4,64 +4,50 @@ import (
 	"service/hquery/errs"
 	"service/hquery/valid"
 	"strings"
+	"throw"
 )
 
-func newProps(rawProps map[string]string) (map[string]string, error) {
+func mustNewProps(rawProps map[string]string) map[string]string {
 	props := make(map[string]string, len(rawProps)+1)
 
 	for rawKey, rawVal := range rawProps {
-		key, val, err := fetchKeyVal(rawKey, rawVal)
-		if err != nil {
-			return nil, err
-		}
-
+		key, val := mustFetchKeyVal(rawKey, rawVal)
 		props[key] = val
 	}
 
-	return props, nil
+	return props
 }
 
-func fetchKeyVal(rawKey, rawVal string) (string, string, error) {
+func mustFetchKeyVal(rawKey, rawVal string) (string, string) {
 	if rawKey == "id" { // Особый случай. У id нет typeHint, поэтому key == name
-		return fetchNumber("id", rawVal)
+		return mustFetchNumber("id", rawVal)
 	}
 
 	nameAndTypeHint := strings.Split(rawKey, "/")
 
-	// len(parts) должно быть равно 2
-	if len(nameAndTypeHint) < 2 {
-		return "", "", errs.PropNoTypeHint
-	} else if len(nameAndTypeHint) > 2 {
-		return "", "", errs.PropInvalidKey
-	}
+	throw.If(len(nameAndTypeHint) < 2, errs.PropNoTypeHint)
+	throw.If(len(nameAndTypeHint) > 2, errs.PropInvalidKey)
 
 	name, typeHint := nameAndTypeHint[0], nameAndTypeHint[1]
-	if !valid.Identifier(name) {
-		return "", "", errs.InvalidIdentifier
-	}
+	throw.If(!valid.Identifier(name), errs.InvalidIdentifier)
 
 	switch typeHint {
 	case "number":
-		return fetchNumber(name, rawVal)
+		return mustFetchNumber(name, rawVal)
 	case "text":
-		return fetchText(name, rawVal)
+		return mustFetchText(name, rawVal)
 	default:
-		return "", "", errs.PropUnknownTypeHint
+		throw.Error(errs.PropUnknownTypeHint)
+		panic("unreachable")
 	}
 }
 
-func fetchNumber(key, val string) (string, string, error) {
-	if valid.Number(val) {
-		return key, val, nil
-	} else {
-		return "", "", errs.PropInvalidNumber
-	}
+func mustFetchNumber(key, val string) (string, string) {
+	throw.If(!valid.Number(val), errs.PropInvalidNumber)
+	return key, val
 }
 
-func fetchText(key, val string) (string, string, error) {
-	if len(val) > valid.TextLen {
-		return "", "", errs.PropTextTooLong
-	}
-
-	return key, `"` + val + `"`, nil
+func mustFetchText(key, val string) (string, string) {
+	throw.If(len(val) > valid.TextLen, errs.PropTextTooLong)
+	return key, `"` + val + `"`
 }

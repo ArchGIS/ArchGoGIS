@@ -1,18 +1,25 @@
 package ast
 
 import (
-	"service/hquery/fetch"
+	"service/hquery/errs"
+	"service/hquery/parsing"
+	"throw"
 )
 
-func NewNode(tag string, query map[string]string) (*Node, error) {
-	if err := nodeQueryError(query); err != nil {
-		return nil, err
+func MustNewNode(tag string, query map[string]string) *Node {
+	switch len(query) {
+	case 1:
+		mustValidateMatcher(query["id"])
+
+	case 2:
+		mustValidateMatcher(query["id"])
+		mustValidateSelector(query["select"])
+
+	default:
+		throw.Error(errs.QueryBadFormat)
 	}
 
-	name, labels, err := fetch.NameAndLabels(tag)
-	if err != nil {
-		return nil, err
-	}
+	name, labels := parsing.MustDestructureNodeTag(tag)
 
-	return &Node{tag, name, labels, query}, nil
+	return &Node{tag, name, labels, query}
 }

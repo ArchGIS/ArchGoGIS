@@ -1,20 +1,11 @@
 package ast
 
 import (
-	"service/hquery/fetch"
+	"service/hquery/parsing"
 )
 
-// x_Type_y
-func NewEdge(tag string, rawProps map[string]string) (*Edge, error) {
-	lhs, ty, rhs, err := fetch.DestructureEdgeTag(tag)
-	if err != nil {
-		return nil, err
-	}
+func MustNewEdge(tag string, rawProps map[string]string) *Edge {
+	lhs, ty, rhs := parsing.MustDestructureEdgeTag(tag)
 
-	props, err := newProps(rawProps)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Edge{tag, lhs, rhs, ty, props}, nil
+	return &Edge{tag, lhs, rhs, ty, mustNewProps(rawProps)}
 }

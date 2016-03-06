@@ -2,101 +2,66 @@ package upsert
 
 import (
 	"cfg"
-	"echo"
-	"encoding/json"
 	"io"
 	"service/hquery/errs"
+	"service/hquery/parsing"
 	"service/hquery/upsert/ast"
 	"strings"
+	"throw"
 )
 
-func NewParser(input io.ReadCloser) (*Parser, error) {
-	this := &Parser{}
-	err := json.NewDecoder(input).Decode(&this.input)
+func MustNewParser(input io.ReadCloser) *Parser {
+	this := &Parser{input: parsing.MustFetchJson(input)}
 
-	if err == nil {
-		switch {
-		case len(this.input) > cfg.HqueryMaxEntries:
-			return nil, errs.TooManyEntries
-		case len(this.input) == 0:
-			return nil, errs.EmptyInput
-		}
+	totalProps := 0
+	for tag, rawProps := range this.input {
+		totalProps += len(rawProps)
 
-		totalProps := 0
-		for tag, rawProps := range this.input {
-			totalProps += len(rawProps)
-			if totalProps > cfg.HqueryMaxPropsTotal {
-				return nil, errs.BatchTooManyProps
-			}
-
-			if err := inputError(tag, rawProps); err != nil {
-				return nil, err
-			}
-		}
-
-		// Производим аллокации только если успешно выполнился decode
-		// и предварительные проверки.
-		// Выделяем [возможно] больше памяти, чем нужно, зато гарантированно
-		// задаём максимально возможный capacity
-		this.nodeInserts = make(map[string]*ast.Node, len(this.input))
-		this.nodeUpdates = make(map[string]*ast.Node, len(this.input))
-		this.edges = make([]*ast.Edge, 0, len(this.input))
-
-		return this, nil
-	} else {
-		echo.ClientError.Print(err)
-		return nil, errs.BadJsonGiven
+		throw.If(totalProps > cfg.HqueryMaxPropsTotal, errs.BatchTooManyProps)
+		throw.If(len(rawProps) > cfg.HqueryMaxPropsPerEntry, errs.EntryTooManyProps)
+		throw.If(len(tag) > cfg.HqueryMaxTagLen, errs.TagTooLong)
 	}
+
+	this.nodeInserts = make(map[string]*ast.Node, len(this.input))
+	this.nodeUpdates = make(map[string]*ast.Node, len(this.input))
+	this.edges = make([]*ast.Edge, 0, len(this.input))
+
+	return this
 }
 
-func (my *Parser) parse() error {
+func (my *Parser) mustParse() {
 	for tag, rawProps := range my.input {
-		if err := my.parseOne(tag, rawProps); err != nil {
-			return err
-		}
+		my.mustParseOne(tag, rawProps)
 	}
 
 	for _, edge := range my.edges {
 		if !(my.hasRef(edge.Lhs) && my.hasRef(edge.Rhs)) {
-			return errs.EdgeMissingRef
+			throw.Error(errs.EdgeMissingRef)
 		}
 	}
-
-	return nil
 }
 
-func (my *Parser) parseOne(tag string, rawProps map[string]string) error {
+func (my *Parser) mustParseOne(tag string, rawProps map[string]string) {
 	if strings.Contains(tag, "_") {
-		return my.parseEdge(tag, rawProps)
+		my.mustParseEdge(tag, rawProps)
 	} else {
-		return my.parseNode(tag, rawProps)
+		my.mustParseNode(tag, rawProps)
 	}
 }
 
-func (my *Parser) parseNode(tag string, rawProps map[string]string) error {
-	node, err := ast.NewNode(tag, rawProps)
-	if err != nil {
-		return err
-	}
+func (my *Parser) mustParseNode(tag string, rawProps map[string]string) {
+	node := ast.MustNewNode(tag, rawProps)
 
 	if _, hasId := rawProps["id"]; hasId {
 		my.nodeUpdates[node.Name] = node
 	} else {
 		my.nodeInserts[node.Name] = node
 	}
-
-	return nil
 }
 
-func (my *Parser) parseEdge(tag string, rawProps map[string]string) error {
-	edge, err := ast.NewEdge(tag, rawProps)
-	if err != nil {
-		return err
-	}
-
+func (my *Parser) mustParseEdge(tag string, rawProps map[string]string) {
+	edge := ast.MustNewEdge(tag, rawProps)
 	my.edges = append(my.edges, edge)
-
-	return nil
 }
 
 func (my *Parser) hasRef(key string) bool {

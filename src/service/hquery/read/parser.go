@@ -2,31 +2,19 @@ package read
 
 import (
 	"cfg"
-	"echo"
-	"encoding/json"
 	"io"
 	"service/hquery/errs"
+	"service/hquery/parsing"
 	"service/hquery/read/ast"
 	"strings"
 	"throw"
 )
 
 func MustNewParser(input io.ReadCloser) *Parser {
-	this := &Parser{}
-	throw.Catch(json.NewDecoder(input).Decode(&this.input), func(err error) {
-		echo.ClientError.Print(err)
-		throw.Error(errs.BadJsonGiven)
-	})
+	this := &Parser{input: parsing.MustFetchJson(input)}
 
-	throw.If(len(this.input) > cfg.HqueryMaxEntries, errs.TooManyEntries)
-	throw.If(len(this.input) == 0, errs.EmptyInput)
-
-	totalSlots := 0
 	for tag, query := range this.input {
-		totalSlots += len(query)
-
-		throw.If(totalSlots > cfg.HqueryMaxPropsTotal, errs.BatchTooManyProps)
-		throw.If(len(query) > cfg.HqueryMaxPropsPerEntry, errs.TagTooLong)
+		throw.If(len(query) > 2, errs.QueryBadFormat)
 		throw.If(len(tag) > cfg.HqueryMaxTagLen, errs.TagTooLong)
 	}
 
@@ -57,16 +45,12 @@ func (my *Parser) mustParseOne(tag string, query map[string]string) {
 }
 
 func (my *Parser) mustParseNode(tag string, query map[string]string) {
-	node, err := ast.NewNode(tag, query)
-	throw.OnError(err)
-
+	node := ast.MustNewNode(tag, query)
 	my.nodes[node.Name] = node
 }
 
 func (my *Parser) mustParseEdge(tag string, query map[string]string) {
-	edge, err := ast.NewEdge(tag, query)
-	throw.OnError(err)
-
+	edge := ast.MustNewEdge(tag, query)
 	my.edges = append(my.edges, edge)
 }
 

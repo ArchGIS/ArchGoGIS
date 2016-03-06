@@ -21,3 +21,11 @@ func Catch(err error, catcher func(error)) {
 		catcher(err)
 	}
 }
+
+// Guard ловит брошенные внутри тела функции ошибки (panic(err)).
+// Должен вызываться через defer.
+func Guard(handler func(error)) {
+	if err := recover(); err != nil {
+		handler(err.(error))
+	}
+}

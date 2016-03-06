@@ -1,30 +1,19 @@
 package read
 
 import (
-	"cfg"
 	"db/neo"
 	"io"
 	"net/http"
 	"service/hquery/errs"
 	"service/hquery/format"
 	"service/hquery/read/builder"
+	"service/hquery/shared"
 	"throw"
 	"web"
-	"web/api"
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
-	defer func() {
-		if errorCode := recover(); errorCode != nil {
-			w.Write([]byte(errorCode.(error).Error()))
-		}
-	}()
-
-	if r.ContentLength > cfg.HqueryReadMaxInputLen {
-		w.Write(api.Error(errs.InputIsTooBig))
-	}
-
-	w.Write(mustProcessRequest(r.Body))
+	shared.Handle(w, r, mustProcessRequest)
 }
 
 func mustProcessRequest(input io.ReadCloser) []byte {
