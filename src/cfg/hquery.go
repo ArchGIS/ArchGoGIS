@@ -3,6 +3,8 @@ package cfg
 const (
 	HqueryUpsertMaxInputLen = 4096
 	HqueryReadMaxInputLen   = 1024
+	HqueryReadDefaultLimit  = "10"
+	HqueryReadMaxLimit      = "100"
 	HqueryMaxEntries        = 32
 	HqueryMaxPropsPerEntry  = 24
 	HqueryMaxPropsTotal     = 120

@@ -1,7 +1,9 @@
 package read
 
 import (
+	"cfg"
 	"db/neo"
+	"ext/xstr"
 	"io"
 	"net/http"
 	"service/hquery/errs"
@@ -10,33 +12,30 @@ import (
 	"service/hquery/shared"
 	"throw"
 	"web"
+	"web/api"
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
-	shared.Handle(w, r, mustProcessRequest)
+	limit := r.URL.Query().Get("limit")
+	if xstr.NumericalGt(limit, cfg.HqueryReadMaxLimit) {
+		w.Write(api.Error(errs.LimitParamOverflow))
+	} else {
+		if limit == "" {
+			limit = cfg.HqueryReadDefaultLimit
+		}
+
+		shared.Handle(w, r, func(input io.ReadCloser) []byte {
+			return mustProcessRequest(input, limit)
+		})
+	}
 }
 
-func mustProcessRequest(input io.ReadCloser) []byte {
+func mustProcessRequest(input io.ReadCloser, limit string) []byte {
 	data := mustParse(input)
 
-	sb := builder.NewStatementBuilder(len(data.nodes))
-	for _, node := range data.nodes {
-		switch matcher := node.Props["id"]; matcher {
-		case "*", "?":
-			sb.AddNodeMatch(node.Tag)
-		default:
-			sb.AddRef(matcher, node.Tag)
-		}
-	}
+	sb := builder.NewStatementBuilder(data.nodes, data.edges)
 
-	for _, edge := range data.edges {
-		sb.AddEdgeMatch(edge)
-	}
-
-	sb.AddNodesReturn(data.nodes)
-	sb.AddEdgesReturn(data.edges)
-
-	query := neo.NewQuery(sb.Build())
+	query := neo.NewQuery(sb.Build(limit))
 	resp, err := query.Run()
 	throw.If(err != nil, errs.BatchReadFailed)
 

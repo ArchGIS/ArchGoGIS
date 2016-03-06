@@ -11,5 +11,6 @@ type Data struct {
 
 type Parser struct {
 	input map[string]map[string]string
+	limit string
 	Data
 }

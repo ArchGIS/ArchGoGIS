@@ -1,7 +1,5 @@
 {
-  "monument:Monument": {"id": "49", "select": "*"},
-  "researches:Research": {"id": "*", "select": "*"},
-  "knowledge:Knowledge": {"id": "*"},
-  "researches_Contains_knowledge": {},
-  "knowledge_Describes_monument": {}
+  "r:Record": {"id": "*", "select": "*"},
+  "x:Xcord": {"id": "1", "select": "*"},
+  "r_Edge_x": {}
 }

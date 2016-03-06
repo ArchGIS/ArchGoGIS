@@ -38,3 +38,14 @@ func Write(w ext.StringWriter, parts []string) {
 		w.WriteString(part)
 	}
 }
+
+func NumericalGt(a, b string) bool {
+	switch {
+	case len(a) > len(b):
+		return true
+	case len(b) > len(a):
+		return false
+	default:
+		return a > b
+	}
+}

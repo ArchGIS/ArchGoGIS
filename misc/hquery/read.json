@@ -1,67 +1,7 @@
-/*
-MATCH (m:Monument {id: 30})
-MATCH (author:Author)
-MATCH (coauthor:Author)
-MATCH (art:Artifact)
-MATCH (o:Object)
-MATCH (g:Geometry)
-MATCH (k:Knowledge)
-MATCH (r:Research)
-MATCH (o)-[:Contains]->(a)
-MATCH (m)-[:Contains]->(o)
-MATCH (author)-[:Created]->(r)
-MATCH (coauthor)-[:HelpedToCreate]->(r)
-MATCH (r)-[:Contains]->(k)
-MATCH (k)-[:Describes]->(m)
-MATCH (k)-[:Has]->(g)
-RETURN 
-r.id, r.year,
-author.id, author.name, author.birth_date,
-
-*/
-
 {
-  "r:Research": {"id": 10, "year/number": 1999},
-  
-  "author": {"id": 9, "name": "Ivan", "birth_date": "02.03.1989"},
-  "m": [
-    {},
-    {},
-  ]
-}
-
-{ 
-  "r:Research": {"id": "*", ""},
-  "author:Author": {"id": "?", "return": "+"},
-  "m:Monument": {"id": "*", "return": "+"},
-  "coauthor:Author": {"id": "*", "return": "+"},
-  "art:Artifact": {"id": "*", "return": "+"},
-  "o:Object": {"id": "*", "return": "+"},
-  "g:Geometry": {"id": "*", "return": "+"},
-  "k:Knowledge": {"id": "*", "return": "+"},
-  "o->art:Contains": {"return": "-"},
-  "m->o:Contains": {"return": "-"},
-  "author->r:Created": {"return": "-"}, 
-  "coauthor->r:HelpedToCreate": {"return": "+"},
-  "r->k:Contains": {"return": "-"},
-  "k->m:Describes": {"return": "-"},
-  "k->g:Has": {"return": "-"}
-}
-
-{
-  "r:Research": ["10", "id", "year"],
-  "author:Author": ["?", ".."],
-  "m:Monument": ["*", "id", "x", "y", "epoch"],
-  "coauthor:Author": ["*", "id", "name", "birth_date"],
-  "art:Artifact": ["*", "id", "name", "weight"],
-  "o:Object": ["*", "id", "type"],
-  "g:Geometry": ["*", "shape_file_url"],
-  "k:Knowledge": ["*", "id", "name", "culture"],
-  "o->art:Contains": [],
-  "m->o:Contains": [],
-  "author->r:Created": [], 
-  "coauthor->r:HelpedToCreate": ["year", "contribution"],
-  "r->k:Contains": [],
-  "k->m:Describes": [],
-  "k->g:Has": []
+  "monument:Monument": {"id": "47", "select": "*"},
+  "researches:Research": {"id": "*", "select": "*"},
+  "knowledge:Knowledge": {"id": "*"},
+  "researches_Contains_knowledge": {},
+  "knowledge_Describes_monument": {}
 }

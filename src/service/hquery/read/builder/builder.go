@@ -1,48 +1,61 @@
 package builder
 
 import (
-	"bytes"
-	"cfg"
 	"db/neo"
-	"fmt"
+	"ext"
+	"service/hquery/placeholder"
 	"service/hquery/read/ast"
+	"strings"
 )
 
-var placeholders []string
-
-func init() {
-	// Нам не понадобится больше имён для placeholder'ов, чем у нас
-	// вообще можно быть параметров в запросе.
-	// #FIXME: хотя здесь важен лимит именно на количество свойств в insert
-	// запросах. Мы можем использовать меньше памяти.
-	placeholders = make([]string, cfg.HqueryMaxPropsTotal)
-
-	for i := 0; i < cfg.HqueryMaxPropsTotal; i++ {
-		placeholders[i] = fmt.Sprintf("p%d", i) // p0, p1, ..., p(n-1)
-	}
-}
-
 type StatementBuilder struct {
-	paramIndex int
-	buf        bytes.Buffer
-	params     map[string]string
+	placeholder placeholder.Seq
+	buf         ext.Xbuf
+	nodes       map[string]*ast.Node
+	edges       []*ast.Edge
+	params      map[string]string
 }
 
-func NewStatementBuilder(paramCount int) *StatementBuilder {
-	return &StatementBuilder{params: make(map[string]string, paramCount)}
-}
-
-func (my *StatementBuilder) Build() neo.Statement {
-	return neo.Statement{
-		my.buf.String(),
-		my.params,
+func NewStatementBuilder(nodes map[string]*ast.Node, edges []*ast.Edge) *StatementBuilder {
+	return &StatementBuilder{
+		params: make(map[string]string),
+		nodes:  nodes,
+		edges:  edges,
 	}
 }
 
-func (my *StatementBuilder) AddNodesReturn(nodes map[string]*ast.Node) {
-	my.buf.WriteString("RETURN ")
+func (my *StatementBuilder) Build(limit string) neo.Statement {
+	selection := make([]string, 0, len(my.nodes))
 
-	for _, node := range nodes {
+	for _, node := range my.nodes {
+		switch matcher := node.Props["id"]; matcher {
+		case "*", "?":
+			my.buf.WriteString("MATCH (" + node.Tag + ")")
+		default:
+			ph := my.placeholder.Next()
+			my.buf.WriteStringf("MATCH (%s {id:{%s}})", node.Tag, ph)
+			my.params[ph] = matcher
+		}
+
+		if _, selected := node.Props["select"]; selected {
+			selection = append(selection, node.Name)
+		}
+	}
+
+	for _, edge := range my.edges {
+		my.buf.WriteStringf(
+			"MATCH(%s)-[%s:%s]->(%s)",
+			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
+		)
+	}
+
+	my.buf.WriteStringf(
+		"WITH %s LIMIT %s RETURN ",
+		strings.Join(selection, ","),
+		limit,
+	)
+
+	for _, node := range my.nodes {
 		if _, selected := node.Props["select"]; selected {
 			switch node.Props["id"] {
 			case "?":
@@ -56,36 +69,15 @@ func (my *StatementBuilder) AddNodesReturn(nodes map[string]*ast.Node) {
 			}
 		}
 	}
-}
-
-func (my *StatementBuilder) AddEdgesReturn(edges []*ast.Edge) {
-	for _, edge := range edges {
+	for _, edge := range my.edges {
 		if _, selected := edge.Props["select"]; selected {
 			my.buf.WriteString(edge.Tag + ",")
 		}
 	}
 	my.buf.Truncate(my.buf.Len() - 1)
-}
 
-func (my *StatementBuilder) AddNodeMatch(tag string) {
-	my.buf.WriteString("MATCH (" + tag + ")")
-}
-
-func (my *StatementBuilder) AddEdgeMatch(edge *ast.Edge) {
-	my.buf.WriteString("MATCH (" + edge.Lhs + ")-[" + edge.Tag + ":" + edge.Type + "]->(" + edge.Rhs + ")")
-}
-
-func (my *StatementBuilder) AddAny(name string) {
-	my.buf.WriteString("COLLECT")
-}
-
-func (my *StatementBuilder) AddRef(id string, tag string) {
-	placeholder := my.nextPlaceholder()
-	my.buf.WriteString("MATCH (" + tag + " {id:{" + placeholder + "}})")
-	my.params[placeholder] = id
-}
-
-func (my *StatementBuilder) nextPlaceholder() string {
-	my.paramIndex++
-	return placeholders[my.paramIndex-1]
+	return neo.Statement{
+		my.buf.String(),
+		my.params,
+	}
 }

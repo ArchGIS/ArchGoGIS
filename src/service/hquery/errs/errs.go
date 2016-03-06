@@ -6,10 +6,11 @@ import (
 
 // Ошибки предварительной обработки
 var (
-	BadJsonGiven   = errors.New("1000")
-	TooManyEntries = errors.New("1001")
-	EmptyInput     = errors.New("1002")
-	InputIsTooBig  = errors.New("1003")
+	BadJsonGiven       = errors.New("1000")
+	TooManyEntries     = errors.New("1001")
+	EmptyInput         = errors.New("1002")
+	InputIsTooBig      = errors.New("1003")
+	LimitParamOverflow = errors.New("1004")
 
 	EntryTooManyProps = errors.New("1100")
 
