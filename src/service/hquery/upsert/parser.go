@@ -60,8 +60,7 @@ func (my *Parser) mustParseNode(tag string, rawProps map[string]string) {
 }
 
 func (my *Parser) mustParseEdge(tag string, rawProps map[string]string) {
-	edge := ast.MustNewEdge(tag, rawProps)
-	my.edges = append(my.edges, edge)
+	my.edges = append(my.edges, ast.MustNewEdge(tag, rawProps))
 }
 
 func (my *Parser) hasRef(key string) bool {

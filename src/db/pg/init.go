@@ -19,7 +19,8 @@ func init() {
 		cfg.PgDatabase,
 	)
 
-	Agent = assert.Must(sql.Open("postgres", dns)).(*sql.DB)
+	Agent, err := sql.Open("postgres", dns)
+	assert.Nil(err)
 
 	// Нам всё ещё нужно проверить, что мы подключились.
 	// postgres драйвер неохотно ведает о неправильном логине/пароле,

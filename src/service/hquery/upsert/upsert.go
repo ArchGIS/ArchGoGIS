@@ -1,12 +1,12 @@
 package upsert
 
 import (
+	"assert"
 	"cfg"
 	"db/neo"
 	"db/pg/seq"
 	"echo"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"service/hquery/errs"
@@ -78,9 +78,7 @@ func processRequest(input io.ReadCloser) []byte {
 
 	tx.Commit()
 	jsonString, err := json.Marshal(ids)
-	if err != nil {
-		panic(err)
-	}
+	assert.Nil(err) // Если encode map[string]string провалился, то совсем беда
 
 	return jsonString
 }
