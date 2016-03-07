@@ -1,3 +1,4 @@
+// Hyper Query
 package hquery
 
 import (
