@@ -15,7 +15,7 @@ func InternalServerError() []byte {
 }
 
 func Error(err error) []byte {
-	errBytes := make([]byte, len(`{"error":`)+len(err.Error())+1)
+	errBytes := make([]byte, 0, len(`{"error":`)+len(err.Error())+1)
 
 	errBytes = append(errBytes, `{"error":`...)
 	errBytes = append(errBytes, err.Error()...)

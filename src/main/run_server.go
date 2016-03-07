@@ -5,6 +5,7 @@ import (
 	"service/hquery"
 	"service/i18n"
 	"service/sbox"
+	"service/search"
 	"service/wc"
 	"web/server"
 )
@@ -19,5 +20,6 @@ func main() {
 		wc.Config,
 		hquery.Config,
 		i18n.Config,
+		search.Config,
 	))
 }

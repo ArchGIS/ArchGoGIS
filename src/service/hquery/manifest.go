@@ -13,6 +13,6 @@ var Config = service.Config{
 	Routes: []web.Route{
 		{"/upsert", upsert.Handler},
 		{"/read", read.Handler},
-		{"/delete", Delete},
+		{"/delete", deleteHandler},
 	},
 }
