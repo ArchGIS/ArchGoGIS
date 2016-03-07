@@ -12,7 +12,12 @@ import (
 
 func Handle(w web.ResponseWriter, r *http.Request, responder func(io.ReadCloser) []byte) {
 	defer throw.Catch(func(err error) {
-		w.Write([]byte(err.Error()))
+		if _, ok := err.(errs.HqueryError); ok {
+			w.Write([]byte(err.Error()))
+		} else {
+			// Runtime ошибка?
+			panic(err)
+		}
 	})
 
 	if r.ContentLength > cfg.HqueryUpsertMaxInputLen {

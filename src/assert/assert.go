@@ -22,3 +22,9 @@ func NotNil(maybeNils ...interface{}) {
 		}
 	}
 }
+
+func Must(object interface{}, err error) interface{} {
+	Nil(err)
+
+	return object
+}
