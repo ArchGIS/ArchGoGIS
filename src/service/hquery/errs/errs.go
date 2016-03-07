@@ -42,6 +42,9 @@ var (
 	QueryNoMatcher   = errors.New("2601")
 	QueryBadMatcher  = errors.New("2602")
 	QueryBadSelector = errors.New("2603")
+
+	ValidationNoValue = errors.New("2700")
+	ValidationFailed  = errors.New("2701")
 )
 
 // Ошибки во время выполнения запроса

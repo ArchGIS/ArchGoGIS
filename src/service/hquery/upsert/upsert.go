@@ -1,10 +1,12 @@
 package upsert
 
 import (
+	"cfg"
 	"db/neo"
 	"db/pg/seq"
 	"echo"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"service/hquery/errs"
@@ -19,8 +21,20 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 	shared.Handle(w, r, processRequest)
 }
 
+func mustPassValidation(data *Data) {
+	for _, node := range data.nodeInserts {
+		if validators, ok := cfg.HqueryValidators[node.Labels]; ok {
+			for propName, validator := range validators {
+				throw.If(node.Props[propName] == "", errs.ValidationNoValue)
+				throw.If(!validator(node.Props[propName]), errs.ValidationFailed)
+			}
+		}
+	}
+}
+
 func processRequest(input io.ReadCloser) []byte {
 	data := mustParse(input)
+	mustPassValidation(data)
 
 	var tx neo.TxQuery
 

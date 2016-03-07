@@ -1,5 +1,9 @@
 package cfg
 
+import (
+	"unicode/utf8"
+)
+
 const (
 	HqueryUpsertMaxInputLen = 4096
 	HqueryReadMaxInputLen   = 1024
@@ -10,6 +14,17 @@ const (
 	HqueryMaxPropsTotal     = 120
 	HqueryMaxTagLen         = 48
 	HqueryMaxTextLen        = 256
+)
+
+var (
+	HqueryValidators = map[string]map[string]func(string) bool{
+		"Author": {
+			"name": func(name string) bool {
+				// У нас строка будет содержать ещё и кавычки, поэтому -2
+				return (utf8.RuneCountInString(name) - 2) > 3
+			},
+		},
+	}
 )
 
 var (
