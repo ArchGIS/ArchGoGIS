@@ -1,0 +1,11 @@
+{
+  "monument:Monument": {
+    "id": "63",
+    "x/number": "20.4"
+  },
+  "knowledge:Knowledge": {
+    "id": "36",
+    "name/text": "Переименованный памятник"
+  },
+  "knowledge_Describes_monument": {}
+}
