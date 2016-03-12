@@ -13,7 +13,7 @@ func (my *Xbuf) WriteCsvStrings(parts []string, yielder func(string) string) {
 		my.WriteString(yielder(part))
 		my.WriteByte(',')
 	}
-	my.dropLastByte()
+	my.DropLastByte()
 }
 
 func (my *Xbuf) WriteCsvMap(parts map[string]string, yielder func(string, string) string) {
@@ -21,9 +21,9 @@ func (my *Xbuf) WriteCsvMap(parts map[string]string, yielder func(string, string
 		my.WriteString(yielder(partKey, partVal))
 		my.WriteByte(',')
 	}
-	my.dropLastByte()
+	my.DropLastByte()
 }
 
-func (my *Xbuf) dropLastByte() {
+func (my *Xbuf) DropLastByte() {
 	my.Truncate(my.Len() - 1)
 }

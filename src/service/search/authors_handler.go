@@ -1,9 +1,9 @@
 package search
 
 import (
-	"bytes"
 	"cfg"
 	"db/neo"
+	"ext"
 	"net/http"
 	"norm"
 	"service/search/errs"
@@ -47,13 +47,14 @@ func searchForAuthors(needle string) ([]byte, error) {
 	}
 
 	// Подготавливаем ответ.
-	// #FIXME: этот код форматирования нужно унести в другое место.
-	var buf bytes.Buffer
+	var buf ext.Xbuf
 
 	buf.WriteByte('[')
 	for _, row := range resp.Results[0].Data {
 		buf.Write(row.Row[0])
+		buf.WriteByte(',')
 	}
+	buf.DropLastByte()
 	buf.WriteByte(']')
 
 	return buf.Bytes(), nil
