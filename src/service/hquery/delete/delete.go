@@ -30,7 +30,7 @@ x.id IN [id...] лучше, чем x.id = 1 or x.id = 2 ...
 */
 
 type Parser struct {
-	input map[string]map[string]string
+	input parsing.Source
 }
 
 func mustNewParser(input io.ReadCloser) *Parser {
@@ -55,7 +55,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 	// mustValidate(data)
 }
 
-func mustValidate(data map[string]map[string]string) {
+func mustValidate(data parsing.Source) {
 	for labels, pairs := range data {
 		throw.If(!valid.Identifier(labels), errs.InvalidIdentifier)
 		for id, selector := range pairs {

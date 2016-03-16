@@ -1,6 +1,7 @@
 package upsert
 
 import (
+	"service/hquery/parsing"
 	"service/hquery/upsert/ast"
 )
 
@@ -11,6 +12,6 @@ type Data struct {
 }
 
 type Parser struct {
-	input map[string]map[string]string
+	input parsing.Source
 	Data
 }
