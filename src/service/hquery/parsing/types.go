@@ -1,3 +1,4 @@
 package parsing
 
-type Source map[string]map[string]string
+type Tree map[string]map[string]string
+type Node map[string]string

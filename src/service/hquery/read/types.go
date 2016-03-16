@@ -11,7 +11,7 @@ type Data struct {
 }
 
 type Parser struct {
-	input parsing.Source
+	input parsing.Tree
 	limit string
 	Data
 }

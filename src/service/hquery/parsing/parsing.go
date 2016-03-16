@@ -35,8 +35,8 @@ func MustDestructureEdgeTag(tag string) (string, string, string) {
 	return parts[0], parts[1], parts[2]
 }
 
-func MustFetchJson(reader io.ReadCloser) Source {
-	var input Source
+func MustFetchJson(reader io.ReadCloser) Tree {
+	var input Tree
 	throw.Guard(json.NewDecoder(reader).Decode(&input), func(err error) {
 		echo.ClientError.Print(err)
 		throw.Error(errs.BadJsonGiven)
