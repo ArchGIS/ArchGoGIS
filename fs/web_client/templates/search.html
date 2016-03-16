@@ -1,0 +1,40 @@
+<label>
+  <%= t('search.subject') %>
+  <select>
+    <option><%= t('monument.singular') %></option>
+    <option></option>
+  </select>
+
+  <div id="monument-params">
+    <label>
+      <%= t('knowledge.prop.name') %>
+      <button><%= t('search.submit') %></button>
+    </label>
+  </div>
+
+  <div id="research-params">
+    
+  </div>
+</label>
+
+<!--
+create (m1:Monument {id:1})
+create (m2:Monument {id:2})
+create (r1:Research {id:1})
+create (r2:Research {id:2})
+create (r3:Research {id:3})
+create (k1:Knowledge {id:1, name: "Первый"})
+create (k2:Knowledge {id:2, name: "Второй"})
+create (k3:Knowledge {id:3, name: "Вторуй"})
+create (r1)-[:Has]->(k1)
+create (r2)-[:Has]->(k2)
+create (r3)-[:Has]->(k3)
+create (k1)-[:Describes]->(m1)
+create (k2)-[:Describes]->(m2)
+create (k3)-[:Describes]->(m2)
+
+match (m:Monument)
+match (k:Knowledge)-[:Describes]->(m)
+where k.name starts with 'Пе'
+return m
+-->
