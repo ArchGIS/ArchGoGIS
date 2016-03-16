@@ -16,6 +16,9 @@
 	  if (!dispathInfo) {
 	    return; // Скорее всего, это root action, но мы его пока не обрабатываем.
 	  }
+
+	  // Парсим GET-параметры.
+	  App.Url.parse(window.location.search);
 	  
 	  // Предварительная очистка.
 	  if (currentController.finish) {
