@@ -46,34 +46,20 @@ func searchForAuthors(needle string) ([]byte, error) {
 		return nil, errs.RetrieveError
 	}
 
-	// Подготавливаем ответ.
-	var buf ext.Xbuf
+	if len(resp.Results[0].Data) == 0 {
+		return []byte("[]"), nil
+	} else {
+		// Подготавливаем ответ.
+		var buf ext.Xbuf
 
-	buf.WriteByte('[')
-	for _, row := range resp.Results[0].Data {
-		buf.Write(row.Row[0])
-		buf.WriteByte(',')
+		buf.WriteByte('[')
+		for _, row := range resp.Results[0].Data {
+			buf.Write(row.Row[0])
+			buf.WriteByte(',')
+		}
+		buf.DropLastByte()
+		buf.WriteByte(']')
+
+		return buf.Bytes(), nil
 	}
-	buf.DropLastByte()
-	buf.WriteByte(']')
-
-	return buf.Bytes(), nil
-
-	/*
-		if len(resp.Results[0].Data) == 0 {
-			return []byte("[]"), nil
-		} else {
-			// Подготавливаем ответ.
-			var buf ext.Xbuf
-
-			buf.WriteByte('[')
-			for _, row := range resp.Results[0].Data {
-				buf.Write(row.Row[0])
-				buf.WriteByte(',')
-			}
-			buf.DropLastByte()
-			buf.WriteByte(']')
-
-			return buf.Bytes(), nil
-		}*/
 }
