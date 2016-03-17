@@ -3,6 +3,8 @@
 App.template = new function() {
   var memo = {};
 
+  
+
   this.get = function(templateName, onLoad) {
     if (!_.has(memo, templateName)) { // Не загружено и не в очереди?
       memo[templateName] = 'loading'; // Помечаем как загружаемую.

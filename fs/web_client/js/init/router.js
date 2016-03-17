@@ -18,7 +18,7 @@
 	  }
 
 	  // Парсим GET-параметры.
-	  App.Url.parse(window.location.search);
+	  App.url.parse(window.location.search);
 	  
 	  // Предварительная очистка.
 	  if (currentController.finish) {
@@ -53,13 +53,14 @@
 	  }
 	  currentController[controllerAction]();
 	} catch (e) {
+	  console.error(e);
 	  App.page.render('e404');
 	}
       }
     }
   }));
 }());
-  
+
 Backbone.history.start({
   'pushstate': true
 });
