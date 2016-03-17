@@ -1,11 +1,15 @@
 <label>
   <%= t('search.subject') %>
 
-  <%= widget('toggler', [
-    [t('monument.singular'), '#monument-params'],
-    [t('research.singular'), '#research-params']
-  ]) %>
+  <%= widget('toggler', {"select": [
+    [t("monument.singular"), "#monument-params"],
+    [t("research.singular"), "#research-params"]
+  ]}) %>
+
+  <%= widget('toggler', {"checkbox": "#toggle-me"}) %>
 </label>
+
+<div id="toggle-me" style="display: none">Ты меня раскрыл!</div>
 
 <div id="monument-params" style="display: none">
   <label>
