@@ -22,6 +22,7 @@ App.page = new function() {
     }
     
     App.template.get(templateName, function(tmpl) {
+      App.locale.set(App.url.get('lang'));
       $body.html(tmpl(templateParams));
       App.widgetMaker.runDefers();
       
