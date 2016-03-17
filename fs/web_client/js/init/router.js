@@ -52,6 +52,7 @@
           }
           currentController[controllerAction]();
         } catch (e) {
+          console.error(e);
           App.page.render('e404');
         }
       }

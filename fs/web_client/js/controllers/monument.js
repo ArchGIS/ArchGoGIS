@@ -18,7 +18,20 @@ App.monuments = {
 };
 
 App.controllers.monument = new (App.View.extend({
-  'index': function() {
+  'show': function() {
+    var query = {
+      "m:Monument": {"id": "1", "select": "*"},
+      "k:Knowledge": {"id": "*", "select": "*"},
+      "r:Research": {"id": "*", "select": "*"},
+      // "k_Describes_m": {},
+      // "r_Contains_k": {}
+    };
+    $.post('/hquery/read', JSON.stringify(query))
+    .success(function(response) {
+      console.log(response);
+    });
+
+    var id = App.Url.get("id");
     App.page.render('monument', App.monuments[id]);
   },
 
