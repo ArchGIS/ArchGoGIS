@@ -2,7 +2,7 @@ package cfg
 
 const (
 	NeoUserName = "neo4j"
-	NeoPassword = "qwerty"
+	NeoPassword = "qwe"
 	NeoHost     = "http://localhost:7474/"
 )
 
