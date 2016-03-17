@@ -4,3 +4,4 @@
   http://localhost:8080/search/authors?needle=злю&limit=10
 Ответ:
   [{"name":"Злюмов Ч.В.","id":120},{"name":"Злючий К.У.","id":117}]
+

@@ -1,0 +1,33 @@
+<label>
+  <%= t('search.subject') %>
+
+  <%= widget('toggler', {"select": [
+    [t("monument.singular"), "#monument-params"],
+    [t("research.singular"), "#research-params"]
+  ]}) %>
+
+  <%= widget('toggler', {"checkbox": "#toggle-me"}) %>
+</label>
+
+<div id="toggle-me" style="display: none">Ты меня раскрыл!</div>
+
+<div id="monument-params" style="display: none">
+  <label>
+    <%= t('knowledge.prop.name') %>
+    <input type="text"/>
+  </label>
+</div>
+
+<div id="research-params" style="display: none">
+  <label>
+    <%= t('author.prop.name') %>
+    <input type="text"/>
+  </label>
+  
+  <label>
+    <%= t('research.prop.year') %>
+    <input type="text"/>
+  </label>
+</div>
+
+<button><%= t('search.submit') %></button>

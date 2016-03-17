@@ -1,20 +1,32 @@
 {
- "e404": "Запрашиваемая страница не найдена",
- "research": {
-  "singular": "Исследование",
-  "plural": "Исследования"
- },
- "monument": {
-  "singular": "Памятник",
-  "plural": "Памятники"
- },
- "nav": {
-  "signout": "Выйти",
-  "profile": "Личный кабинет"
- },
- "titles": {
-  "wizard": {
-   "create_data": "Создание данных"
+  "e404": "Запрашиваемая страница не найдена",
+  "research": {
+    "singular": "Исследование",
+    "plural": "Исследования"
+  },
+  "monument": {
+    "singular": "Памятник",
+    "plural": "Памятники"
+  },
+  "knowledge": {
+    "prop": {
+      "name": "Название памятника"
+    }
+  },
+  "search": {
+    "subject": "Что ищем?",
+    "submit": "Найти"
+  },
+  "nav": {
+    "signout": "Выйти",
+    "profile": "Личный кабинет"
+  },
+  "titles": {
+    "wizard": {
+      "create_data": "Создание данных"
+    },
+    "search": {
+      "index": "Поиск"
+    }
   }
- }
 }

@@ -3,6 +3,7 @@ package hquery
 
 import (
 	"service"
+	// "service/hquery/delete"
 	"service/hquery/read"
 	"service/hquery/upsert"
 	"web"
@@ -13,6 +14,6 @@ var Config = service.Config{
 	Routes: []web.Route{
 		{"/upsert", upsert.Handler},
 		{"/read", read.Handler},
-		{"/delete", deleteHandler},
+		// {"/delete", delete.Handler},
 	},
 }

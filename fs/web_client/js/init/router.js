@@ -16,6 +16,9 @@
 	  if (!dispathInfo) {
 	    return; // Скорее всего, это root action, но мы его пока не обрабатываем.
 	  }
+
+	  // Парсим GET-параметры.
+	  App.url.parse(window.location.search);
 	  
 	  // Предварительная очистка.
 	  if (currentController.finish) {
@@ -50,13 +53,14 @@
 	  }
 	  currentController[controllerAction]();
 	} catch (e) {
+	  console.error(e);
 	  App.page.render('e404');
 	}
       }
     }
   }));
 }());
-  
+
 Backbone.history.start({
   'pushstate': true
 });
