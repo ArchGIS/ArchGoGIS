@@ -1,0 +1,8 @@
+#!/bin/bash
+
+endpoint='http://localhost:8080/hquery'
+time \
+    curl -XPOST "$endpoint/$1" \
+    -d "$2" \
+    -H Accept:application/json \
+    -H Content-Type:application/json 

@@ -16,15 +16,17 @@
           if (!dispathInfo) {
             return; // Скорее всего, это root action, но мы его пока не обрабатываем.
           }
-          
+
+          // Парсим GET-параметры.
+          App.Url.parse(window.location.search);
+      
           // Предварительная очистка.
           if (currentController.finish) {
             currentController.finish();
           }
           App.page.clear();
           
-          // Далее пытаемся запустить action контроллера:
-          
+          // Далее пытаемся запустить action контроллера:  
           var controllerNameAndAction = dispathInfo.split('/');
           if (controllerNameAndAction.length != 2) {
             throw 'invalid controller/action: ' + controllerNameAndAction;

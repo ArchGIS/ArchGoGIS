@@ -1,6 +1,7 @@
 package read
 
 import (
+	"service/hquery/parsing"
 	"service/hquery/read/ast"
 )
 
@@ -10,7 +11,7 @@ type Data struct {
 }
 
 type Parser struct {
-	input map[string]map[string]string
+	input parsing.Tree
 	limit string
 	Data
 }

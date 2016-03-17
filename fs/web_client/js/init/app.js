@@ -6,8 +6,8 @@
     var $title = $('#title');
     
     this.render = function(templateName, templateParams) {
-      // Здесь должен быть запуск view, скорее всего...
-      // Сама view уже должна знать свой title.
+      var action = App.router.current.action();
+      var controller = App.router.current.controller();
       
       templateParams = templateParams || {};
       
@@ -18,10 +18,18 @@
       
       App.template.get(templateName, function(tmpl) {
         $body.html(tmpl(templateParams));
+	
+        // Если есть view. 
+      	if (App.views[controller]) {
+      	  var view = App.views[controller][action];
+      	  if (view) {
+      	    view();
+      	  }
+      	}
       });
-      
+
       $title.text(App.locale.translate([
-        'titles', App.router.current.controller(), App.router.current.action()
+        'titles', controllers, action
       ]));
     };
 
@@ -75,3 +83,6 @@ App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
 App.locale.set('ru'); // Язык стоит брать из куков.
+
+App.Widgets = {};
+App.Url = {};
