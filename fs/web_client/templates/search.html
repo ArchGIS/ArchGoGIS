@@ -10,10 +10,20 @@
 <div id="monument-params" style="display: none">
   <label>
     <%= t('knowledge.prop.name') %>
-    <button><%= t('search.submit') %></button>
+    <input type="text"/>
   </label>
 </div>
 
 <div id="research-params" style="display: none">
-  #TODO
+  <label>
+    <%= t('author.prop.name') %>
+    <input type="text"/>
+  </label>
+  
+  <label>
+    <%= t('research.prop.year') %>
+    <input type="text"/>
+  </label>
 </div>
+
+<button><%= t('search.submit') %></button>

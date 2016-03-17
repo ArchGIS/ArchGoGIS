@@ -20,7 +20,7 @@ App.widgets.toggler = function(params, id) {
     var $el = $('#' + id);
     var $items = _.object(
       _.pluck(params, 0),
-      _.map(params, function(param) { return $(param[1]); })
+      _.map(params, param => $(param[1]))
     );
     var $lastSelected = $items[params[0][0]];
 
