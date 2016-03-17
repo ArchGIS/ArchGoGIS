@@ -1,13 +1,26 @@
 package cfg
 
-const (
-	NeoUserName = "neo4j"
-	NeoPassword = "qwerty"
-	NeoHost     = "http://localhost:7474/"
+import (
+	"assert"
+	"encoding/json"
+	"io/ioutil"
 )
+
+var Neo struct {
+	UserName string
+	Password string
+	Host     string
+}
 
 const (
 	PgUserName = "postgres"
 	PgPassword = "postgres"
 	PgDatabase = "postgres"
 )
+
+func init() {
+	data, err := ioutil.ReadFile(".cfg/db/neo.json")
+	assert.Nil(err)
+	err = json.Unmarshal(data, &Neo)
+	assert.Nil(err)
+}

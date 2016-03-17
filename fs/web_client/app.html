@@ -16,6 +16,10 @@
     <script src="/web_client/vendor/js/jquery.min.js"></script>
     <script src="/web_client/vendor/js/underscore.min.js"></script>
     <script src="/web_client/vendor/js/backbone.min.js"></script>
+
+  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="/web_client/vendor/js/backbone.validation.min.js"></script>
   </head>
 
   <body>
@@ -24,7 +28,7 @@
       	<a href="#" class="pure-menu-heading">Gis App</a>
       	<ul class="pure-menu-list">
           <li class="pure-menu-item">
-            <a href="#wizard/create_data" class="pure-menu-link">Создать</a>
+            <a href="#monument/new" class="pure-menu-link">Создать</a>
           </li>
           <li class="pure-menu-item">
             <a href="#search/index" class="pure-menu-link">Найти</a>
@@ -62,14 +66,26 @@
     </footer>
     
     <!-- app src -->
+    <!-- init -->
     <script src="/web_client/js/init/app.js"></script>
+    <script src="/web_client/js/data.js"></script>
+    <script src="/web_client/js/init/locale.js"></script>
+    <script src="/web_client/js/init/widgetMaker.js"></script>
+    <script src="/web_client/js/init/page.js"></script>
     <script src="/web_client/js/init/url.js"></script>
     <script src="/web_client/js/init/template.js"></script>
+    <!-- widgets -->
+    <script src="/web_client/js/widgets/toggler.js"></script>
+    <!-- controllers -->
     <script src="/web_client/js/controllers/wizard.js"></script>
     <script src="/web_client/js/controllers/monument.js"></script>
     <script src="/web_client/js/controllers/research.js"></script>
-    <script src="/web_client/js/models/monument.js"></script>
+    <script src="/web_client/js/controllers/search.js"></script>
+    <!-- router -->
     <script src="/web_client/js/init/router.js"></script>
-    
+    <!-- models -->
+    <script src="/web_client/js/models/monument.js"></script>
+    <!-- views -->
+    <script src="/web_client/js/views/search.js"></script>
   </body>
 </html>

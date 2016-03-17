@@ -1,6 +1,6 @@
 'use strict';
 
-App.Url = new function() {
+App.url = new function() {
   var params = {};
   
   this.parse = function(query) {

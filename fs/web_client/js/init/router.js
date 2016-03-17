@@ -59,7 +59,7 @@
     }
   }));
 }());
-  
+
 Backbone.history.start({
   'pushstate': true
 });
