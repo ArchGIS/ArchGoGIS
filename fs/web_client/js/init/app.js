@@ -13,8 +13,6 @@ App.Controller = Backbone.View.extend({});
 App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
-App.locale.set('ru'); // Язык стоит брать из куков.
-
 var dburl = "http://localhost:8080/";
 
 function activateMonNew(){
