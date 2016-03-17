@@ -1,5 +1,5 @@
 {
-  "monument:Monument": {"id": "63", "select": "*"},
+  "monument:Monument": {"id": "2", "select": "*"},
   "researches:Research": {"id": "*", "select": "*"},
   "knowledge:Knowledge": {"id": "*", "select": "*"},
   "researches_Contains_knowledge": {},

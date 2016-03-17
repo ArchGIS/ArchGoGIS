@@ -1,2 +1,64 @@
 <h2><%= t('monument.singular') %></h2>
-<%= param %>
+
+<div id="container">
+  <ul>
+    <li><a href="#home">Исследование</a></li>
+    <li><a href="#menu1">Памятник</a></li>
+    <li><a href="#menu2">Объект</a></li>
+    <li><a href="#menu3">Артефакт</a></li>
+  </ul>
+
+  <div id="home">
+    <h3>Исследование</h3>
+    <div>
+      <label for="author-input">Автор исследования</label>
+      <input id="author-input" class="autoinput"></input>
+      <input id="author-input-id" hidden></input>
+    </div>
+
+    <div>
+      <label for="research-input">Исследование</label>
+      <input id="research-input" class="autoinput"></input>
+      <input id="research-input-id" hidden></input>
+    </div>
+  </div>
+  <div id="menu1">
+    <h3>Памятник</h3>
+    <div>
+      <label for="monument-input">Название памятника</label>
+      <input id="monument-input" class="autoinput"></input>
+      <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
+    </div>
+  </div>
+  <div id="menu2">
+    <h3>Объект</h3>
+    Необязательная страница.
+  </div>
+  <div id="menu3">
+    <h3>Артефакт</h3>
+    <div>
+      <label for="artifact-name-input">Название</label>
+      <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name"></input>
+    </div>
+    <div>
+      <label for="artifact-weight-input">Вес</label>
+      <input id="artifact-weight-input" data-for="a:Artifact" type="number" name="weight"></input>
+    </div>
+    <div>
+      <label for="artifact-size-input">Габариты</label>
+      <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
+    </div>
+    <!-- <div>
+      <label for="artifact-foto-input">Фото</label>
+      <input id="artifact-foto-input" type="file"></input>
+    </div> -->
+  </div>
+
+  <input hidden data-name="m:Monument">
+  <input hidden data-name="a:Artifact">
+  <input hidden data-name="m_Contains_a">
+
+</div>
+<button onclick="postQuery()">Сгенерить</button>
+
+<script type="text/javascript">$(document).ready(function(){activateMonNew()})</script>

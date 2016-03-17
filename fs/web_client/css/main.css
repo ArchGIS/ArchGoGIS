@@ -14,3 +14,7 @@ footer {
 .header {
 	padding-bottom: 1em;
 }
+
+.switch {
+	cursor: pointer;
+}
