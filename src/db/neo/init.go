@@ -8,14 +8,17 @@ import (
 
 var agent *req.Agent
 
-const (
-	txEndpoint = cfg.NeoHost + "db/data/transaction/"
-	endpoint   = txEndpoint + "commit/"
+var (
+	txEndpoint string
+	endpoint   string
 )
 
 func init() {
+	txEndpoint = cfg.Neo.Host + "db/data/transaction/"
+	endpoint = txEndpoint + "commit/"
+
 	authString := base64.StdEncoding.EncodeToString(
-		[]byte(cfg.NeoUserName + ":" + cfg.NeoPassword),
+		[]byte(cfg.Neo.UserName + ":" + cfg.Neo.Password),
 	)
 
 	agent = req.NewAgent(map[string][]string{
