@@ -12,7 +12,12 @@
     <h3>Исследование</h3>
     <div>
       <label for="author-input">Автор исследования</label>
-      <input id="author-input" class="autoinput"></input>
+      
+      <%= widget('SearchLine', {
+	"source": App.models.Author.findByNamePrefix,
+	"etl": authors => _.map(authors, author => ({"id": author.id, "label": author.name}))
+      }, "authorInput") %>
+          
       <input id="author-input-id" hidden></input>
     </div>
 
@@ -60,5 +65,3 @@
 
 </div>
 <button onclick="postQuery()">Сгенерить</button>
-
-<script type="text/javascript">$(document).ready(function(){activateMonNew()})</script>
