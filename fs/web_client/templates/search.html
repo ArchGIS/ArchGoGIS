@@ -21,9 +21,9 @@
     <label>
       <%= t('author.name') %>
       
-      <%= widget('SearchLine', {
-	  "source": App.models.Author.findByNamePrefix,
-	  "etl": authors => _.map(authors, author => ({"id": author.id, "label": author.name}))
+      <%= widget("SearchLine", {
+	"source": App.models.Author.findByNamePrefix,
+	"etl": authors => _.map(authors, author => ({"id": author.id, "label": author.name}))
       }, "authorByName") %>
     </label>
     <br/>
