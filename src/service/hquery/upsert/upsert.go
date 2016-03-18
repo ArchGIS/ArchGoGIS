@@ -72,6 +72,7 @@ func processRequest(input io.ReadCloser) []byte {
 
 		_, err := tx.Run()
 		if err != nil {
+			echo.ServerError.Print(err)
 			return api.Error(errs.BatchInsertFailed)
 		}
 	}
