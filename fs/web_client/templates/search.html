@@ -1,33 +1,44 @@
 <label>
   <%= t('search.subject') %>
 
-  <%= widget('toggler', {"select": [
+  <%= widget('Toggler', {"select": [
     [t("monument.singular"), "#monument-params"],
-    [t("research.singular"), "#research-params"]
-  ]}) %>
-
-  <%= widget('toggler', {"checkbox": "#toggle-me"}) %>
+    [t("research.singular"), "#research-params"],
+    [t("author.singular"), "#author-params"]  
+  ]}, "params-toggler") %>
 </label>
 
-<div id="toggle-me" style="display: none">Ты меня раскрыл!</div>
-
-<div id="monument-params" style="display: none">
-  <label>
-    <%= t('knowledge.prop.name') %>
-    <input type="text"/>
-  </label>
-</div>
-
-<div id="research-params" style="display: none">
-  <label>
-    <%= t('author.prop.name') %>
-    <input type="text"/>
-  </label>
+<fieldset id="search-criteria">
+  <legend><%= t("search.criteria") %></legend>
   
-  <label>
-    <%= t('research.prop.year') %>
-    <input type="text"/>
-  </label>
-</div>
+  <div id="monument-params" style="display: none">
+    <label>
+      <%= t('knowledge.prop.name') %>
+      <input type="text"/>
+    </label>
+  </div>
+  <div id="research-params" style="display: none" data-url="research">
+    <label>
+      <%= t('author.name') %>
+      
+      <%= widget('SearchLine', {
+	  "source": App.models.Author.findByNamePrefix,
+	  "etl": authors => _.map(authors, author => ({"id": author.id, "label": author.name}))
+      }, "authorByName") %>
+    </label>
+    <br/>
+    <label>
+      <%= t('research.year') %>
+      <input type="text"/>
+    </label>
+  </div>
 
-<button><%= t('search.submit') %></button>
+  <div id="author-params" style="display: none">
+    <label>
+      <%= t('author.prop.name') %>
+      <input type="text"/>
+    </label>
+  </div>
+</fieldset>
+
+<button id="search-submit"><%= t('search.submit') %></button>

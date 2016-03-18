@@ -47,7 +47,7 @@ function activateMonNew(){
         })
       })
     },
-  }).focus(function(){            
+  }).focus(function(){
     $(this).autocomplete("search");
   });
 
