@@ -16,4 +16,8 @@ App.url = new function() {
   this.get = function(key) {
     return params[key];
   };
+
+  this.make = function(location, params) {
+    return location + '?' + _.map(params, (val, key) => key + '=' + val).join('&');
+  }
 };
