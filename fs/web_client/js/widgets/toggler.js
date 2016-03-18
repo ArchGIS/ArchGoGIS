@@ -1,6 +1,6 @@
 'use strict';
 
-App.widgets.toggler = function(params, id) {
+App.widgets.Toggler = function(params, id) {
   var type = _.keys(params)[0];
   var params = params[type];
   
