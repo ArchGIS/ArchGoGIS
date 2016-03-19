@@ -5,7 +5,8 @@ var App = {
   'widgets': {},
   'controllers': {},
   'models': {},
-  'views': {}
+  'views': {},
+  'fn': {}
 };
 
 // Зачатки переопределённых базовых классов Backbone?
