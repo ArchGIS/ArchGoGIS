@@ -2,8 +2,9 @@
 
 App.views.search = new (App.View.extend({
   'index': function() {
-    App.page.get('authorByName').on('autocompleteselect', function(event, ui) {
+    App.page.get('researchAuthorInput').on('autocompleteselect', function(event, ui) {
       $('#research-author-id').val(ui.item.id);
+
       
     });
     

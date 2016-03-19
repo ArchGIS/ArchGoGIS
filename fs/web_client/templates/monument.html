@@ -12,12 +12,7 @@
     <h3>Исследование</h3>
     <div>
       <label for="author-input">Автор исследования</label>
-      
-      <%= widget('SearchLine', {
-	"source": App.models.Author.findByNamePrefix,
-	"etl": authors => _.map(authors, author => ({"id": author.id, "label": author.name}))
-      }, "authorInput") %>
-          
+      <%= widget("SearchLine", authorsInputOptions, "authorInput") %>
       <input id="author-input-id" hidden></input>
     </div>
 

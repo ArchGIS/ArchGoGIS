@@ -20,11 +20,7 @@
   <div id="research-params" style="display: none" data-url="research">
     <label>
       <%= t('author.name') %>
-      
-      <%= widget("SearchLine", {
-	"source": App.models.Author.findByNamePrefix,
-	"etl": authors => _.map(authors, author => ({"id": author.id, "label": author.name}))
-      }, "authorByName") %>
+      <%= widget("SearchLine", researchAuthorSearchOptions, "researchAuthorInput") %>
       <input id="research-author-id" hidden name="id"/>
     </label>
     <br/>
