@@ -1,0 +1,37 @@
+<h2><%= t('monument.singular') %></h2>
+
+<p>Название: 
+<% for (var i=0; i<k.length; ++i) { %>
+  <%= k[i].name %>
+  <% if (i != k.length-1) { %>,<% } %>
+<% } %>
+</p>
+
+<p>Тип: 
+<% for (var i=0; i<o.length; ++i) { %>
+  <%= o[i].type %>
+  <% if (i != k.length-1) { %>,<% } %>
+<% } %>
+</p>
+
+<p>Эпоха: <%= m.epoch %></p>
+
+<p>Культурная принадлежность: 
+<% for (var i=0; i<k.length; ++i) { %>
+  <%= k[i].culture %>
+  <% if (i != k.length-1) { %>,<% } %>
+<% } %>
+</p>
+
+<p>Координаты: <%= m.x %>, <%= m.y %></p>
+
+<h3>Исследования:</h3>
+<% for (var i=0; i<r.length; ++i) { %>
+  <p>
+    <%= a[i].name %> 
+    &ndash; 
+    <a href="?id=<%= r[i].id %>#research/show">
+      <%= r[i].description %> (<%= r[i].year %>)
+    </a>
+  </p>
+<% } %>

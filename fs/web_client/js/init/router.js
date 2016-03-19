@@ -18,7 +18,7 @@
           }
 
           // Парсим GET-параметры.
-          App.Url.parse(window.location.search);
+          App.url.parse(window.location.search);
       
           // Предварительная очистка.
           if (currentController.finish) {

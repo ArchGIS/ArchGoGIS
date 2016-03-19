@@ -1,20 +1,67 @@
 .content {
-	width: 70%;
-	margin: auto;
-	margin-top: 1em;
-	padding: 10px;
+  width: 70%;
+  margin: auto;
+  margin-top: 1em;
+  padding: 10px;
 }
 
 footer {
-	width: 50%;
-	margin: auto;
-	margin-left: 15%;
+  width: 50%;
+  margin: auto;
+  margin-left: 15%;
 }
 
 .header {
-	padding-bottom: 1em;
+  padding-bottom: 1em;
 }
 
 .switch {
-	cursor: pointer;
+  cursor: pointer;
+}
+
+.pure-menu, .pure-menu-list {
+  background: rgb(58, 58, 58);
+}
+
+.pure-menu-heading {
+  color: #ccc;
+  float: left;
+}
+
+.pure-menu-list {
+  float: right;
+}
+
+.pure-menu-link:hover {
+  background: #222;
+}
+
+.pure-menu-link:focus {
+  background: rgb(58, 58, 58);
+}
+
+.pure-menu-list li a {
+  color: #ddd;
+}
+
+.pure-menu-list li:hover > a {
+  background: #222;
+}
+
+/*.pure-menu-list:last-child {
+  .pure-menu-children {
+    right: 0;
+  }
+}*/
+
+.pure-menu-children {
+  position: absolute;
+}
+
+.pure-menu-children li {
+  /*float: none;*/
+}
+
+.pure-menu-list li:hover > ul {
+  background: rgb(58, 58, 58);
 }

@@ -1,42 +1,31 @@
 'use strict';
 
-App.monuments = {
-  '1': {
-    'monumentName': 'Болгар',
-    'monumentX': '12.3232',
-    'monumentY': '53.5353',
-    'monumentType': 'Городище',
-    'monumentEpoch': 'Кайнозой'
-  },
-  '2': {
-    'monumentName': 'Кармыш',
-    'monumentX': '7.3232',
-    'monumentY': '29.5353',
-    'monumentType': 'Холм',
-    'monumentEpoch': 'Мезозой'
-  }
-};
-
 App.controllers.monument = new (App.View.extend({
   'show': function() {
+    var id = App.url.get("id");
+
     var query = {
-      "m:Monument": {"id": "1", "select": "*"},
+      "m:Monument": {"id": id, "select": "*"},
       "k:Knowledge": {"id": "*", "select": "*"},
       "r:Research": {"id": "*", "select": "*"},
-      // "k_Describes_m": {},
-      // "r_Contains_k": {}
+      "a:Author": {"id": "*", "select": "*"},
+      "o:Object": {"id": "*", "select": "*"},
+      "k_Describes_m": {},
+      "r_Contains_k": {},
+      "a_Created_r": {},
+      "m_Contains_o": {}
     };
     $.post('/hquery/read', JSON.stringify(query))
     .success(function(response) {
       console.log(response);
+      var respObject = JSON.parse(response);
+      // console.log(respObject);
+      App.page.render('monument_view', respObject);
     });
-
-    var id = App.Url.get("id");
-    App.page.render('monument', App.monuments[id]);
   },
 
   'new': function() {
-    console.log('new monument creating');
+    App.page.render('monument', {});
   },
 
   'start': function() {

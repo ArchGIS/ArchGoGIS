@@ -27,10 +27,10 @@ App.page = new function() {
       
       // Если есть view, то запускаем и его
       if (App.views[controller]) {
-	var view = App.views[controller][action];
-	if (view) {
-	  view();
-	}
+      	var view = App.views[controller][action];
+      	if (view) {
+      	  view();
+      	}
       }
     });
 

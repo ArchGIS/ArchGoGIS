@@ -17,14 +17,14 @@
     <script src="/web_client/vendor/js/underscore.min.js"></script>
     <script src="/web_client/vendor/js/backbone.min.js"></script>
 
-  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  	<!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
     <script src="/web_client/vendor/js/backbone.validation.min.js"></script>
   </head>
 
   <body>
     <nav class="header">
-      <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <div class="pure-menu pure-menu-horizontal pure-menu-fixed">
       	<a href="#" class="pure-menu-heading">Gis App</a>
       	<ul class="pure-menu-list">
           <li class="pure-menu-item">
@@ -36,17 +36,23 @@
       	  <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
       	    <a href="#" class="pure-menu-link">Пользователь</a>
       	    <ul class="pure-menu-children">
-      	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">
-      		  <%= t('user.profile') %>
-                    </a></li>
-      	      <li class="pure-menu-item"><a href="#" class="pure-menu-link">
-      		  <%= t('user.signout') %>
-                    </a></li>
+      	      <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">
+      		        <%= t('user.profile') %>
+                </a>
+              </li>
+      	      <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">
+      		        <%= t('user.signout') %>
+                </a>
+              </li>
       	    </ul>
       	  </li>
       	</ul>
       </div>
     </nav>
+
+    <!-- <div style="clear: both;"></div> -->
 
     <div class="content">
       <div class="pure-g">
