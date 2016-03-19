@@ -8,14 +8,11 @@ App.views.monument = new (App.View.extend({
       console.log(ui.item.id);
       $('#author-input-id').val(ui.item.id);
 
-      var researches = [];
-
-      App.models.Research.findByAuthorId(ui.item.id).then(function(data) {
-        _.each(data, function(res) {
-          researches.push({label: fmt("$description ($year)", res), id: res.id})
-        });
+      App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
         $('#research-input').autocomplete({
-          source: researches
+          source: _.map(researches, function(research) {
+            return {'label': fmt('$description ($year)', research), 'id': research.id}
+          })
         });
       });
       
