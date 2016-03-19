@@ -11,7 +11,7 @@ App.views.monument = new (App.View.extend({
       var researches = [];
 
       App.models.Research.findByAuthorId(ui.item.id).then(function(data) {
-        $.each(data, function(key, res) {
+        _.each(data, function(res) {
           researches.push({label: fmt("$description ($year)", res), id: res.id})
         });
         $('#research-input').autocomplete({
@@ -36,7 +36,7 @@ App.views.monument = new (App.View.extend({
 
           $.post(dburl+"hquery/read", JSON.stringify(args), function(data) {
             var data = $.parseJSON(data).knowledge;
-            $.each(data, function(key, res) {
+            _.each(data, function(res) {
               monuments.push({label: fmt("$name ($culture)", res), id: res.id})
             });
             $("#monument-input").autocomplete({
