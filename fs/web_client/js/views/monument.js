@@ -5,16 +5,10 @@ App.views.monument = new (App.View.extend({
     var authorSelectHandler = function(event, ui) {
       console.log(ui.item.id);
       $('#author-input-id').val(ui.item.id);
-      
-      var args = {
-        'r:Research': {'id': '*', 'select': '*'},
-        'a:Author': {'id': $('#author-input-id').val()},
-        'a_Created_r': {}
-      };
+
       var researches = [];
 
-      $.post('/hquery/read', JSON.stringify(args), function(data) {
-        var data = $.parseJSON(data).r;
+      App.models.Research.findByAuthorId(ui.item.id).then(function(data) {
         var title;
         $.each(data, function(key, res) {
           title = res.description+' ('+res.year+')';
@@ -22,7 +16,7 @@ App.views.monument = new (App.View.extend({
         });
         $('#research-input').autocomplete({
           source: researches
-        })
+        });
       });
       
       $("#research-input").autocomplete({
