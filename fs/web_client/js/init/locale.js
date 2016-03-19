@@ -3,9 +3,18 @@
 App.locale = new function() {
   var dict = {};
   var currentName = '';
-
+  var supportedLangs = {
+    'en': true,
+    'ru': true
+  };
+  var fallbackLang = 'ru'; // Должно браться из куков.
+  
   this.set = function(name) {
     if (currentName != name) {
+      if (!supportedLangs[name]) {
+	name = fallbackLang
+      }
+      
       $.ajax({
 	'url': '/locales/' + name + '.json',
 	'async': false // Возможно стоит сделать асинхронным
@@ -26,5 +35,3 @@ App.locale = new function() {
     }, dict);
   };
 };
-
-App.locale.set('ru'); // Язык стоит брать из куков.

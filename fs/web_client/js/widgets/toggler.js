@@ -1,18 +1,18 @@
 'use strict';
 
-App.widgets.toggler = function(params, id) {
+App.widgets.Toggler = function(params, id) {
   var type = _.keys(params)[0];
   var params = params[type];
   
   var selectTmpl = _.template(`
-    <select id=<%= id %>>
+    <select id="<%= id %>">
       <% _.each(options, function(option) { %>
         <option><%= option %></option>
       <% }); %>
     </select>
   `);
 
-  var checkboxTmpl = _.template(`<input id=<%= id %> type="checkbox"/>`);
+  var checkboxTmpl = _.template(`<input id="<%= id %>" type="checkbox"/>`);
   
   this.early = function() {
     switch (type) {

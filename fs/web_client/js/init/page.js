@@ -3,6 +3,7 @@
 App.page = new function() {
   var $body = $('#body');
   var $title = $('#title');
+  var objects = {};
 
   var defaultContext = {
     't': function(key) {
@@ -22,6 +23,7 @@ App.page = new function() {
     }
     
     App.template.get(templateName, function(tmpl) {
+      App.locale.set(App.url.get('lang'));
       $body.html(tmpl(templateParams));
       App.widgetMaker.runDefers();
       
@@ -41,5 +43,14 @@ App.page = new function() {
 
   this.clear = function() {
     $body.empty();
+    objects = {};
   };
+
+  this.get = function(name) {
+    return objects[name];
+  };
+
+  this.set = function(name, object) {
+    objects[name] = object;
+  }
 };
