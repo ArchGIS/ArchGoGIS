@@ -19,7 +19,7 @@ const (
 )
 
 func init() {
-	data, err := ioutil.ReadFile(".cfg/db/neo.json")
+	data, err := ioutil.ReadFile("cfg/db/neo.json")
 	assert.Nil(err)
 	err = json.Unmarshal(data, &Neo)
 	assert.Nil(err)
