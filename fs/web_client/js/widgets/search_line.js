@@ -1,9 +1,16 @@
 'use strict';
 
 App.widgets.SearchLine = function(params, id) {
+  var grepObject = App.fn.grepObject;
+  console.log(params);
+  
   var $input = null;
+  var records = {};
   var tmpl = _.template(`<input id="<%= id %>" class="autoinput"></input>`);
-  params = _.extend(App.widgets.SearchLine.defaultOptions, params);
+  
+  params = $.extend({
+    'searchOnFocus': true
+  }, params);
   
   this.early = function() {
     return tmpl({'id': id});
@@ -11,33 +18,31 @@ App.widgets.SearchLine = function(params, id) {
 
   this.later = function() {
     $input = $('#' + id);
-    var records = {};
 
     var minLength = params.minLength || 3;
     var lastTerm = '';
+    var items = [];
  
     $input.autocomplete({
       'minLength': params.minLength || 3,
       'source': function(request, response) {
 	var term = request.term.toLowerCase();
 
-	if (term.length <= minLength && term != lastTerm) {
+	if (term != lastTerm) {
 	  lastTerm = term;
 	  // Нужно забирать данные заново.
 	  params.source(term).then(
             function(result) {
+              records = result;
 	      if (typeof params.etl == 'function') {
 		result = params.etl(result);
 	      }
-	      records = result;
-	      response(records);
+	      items = result;
+	      response(items);
 	    }
 	  );
 	} else {
-          // Через regexp для N записей эффективнее,
-          // чем через прогон каждого record.label.toLowerCase + startsWith
-	  var matcher = new RegExp('^' + term, 'i');
-          response(_.filter(records, record => matcher.test(record.label)));
+          response(grepObject('^' + term, items, 'label'));
 	}
       }
     });
@@ -47,11 +52,7 @@ App.widgets.SearchLine = function(params, id) {
     }
   };
 
-  this.on = function(autocompleteEvent, callback) {
-    $input.on(autocompleteEvent, callback);
-  };
-};
-
-App.widgets.SearchLine.defaultOptions = {
-  'searchOnFocus': true
+  this.on = (event, callback) => $input.on(event, callback);
+  
+  this.getRecords = () => records;
 };

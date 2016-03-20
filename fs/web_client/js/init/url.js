@@ -1,23 +1,23 @@
 'use strict';
 
 App.url = new function() {
-  var params = {};
-  
-  this.parse = function(query) {
-    query = query.substring(1);
+  var params = [];
+  var mapping = {};
 
-    params = {};
-    _.each(query.split("&"), function(keyValString) {
-      var keyVal = keyValString.split("=");
-      params[keyVal[0]] = keyVal[1];
-    });
+  this.bindParams = function(paramsToBind) {
+    params = paramsToBind;
+    mapping = {};
+  };
+
+  this.setMapping = function(mappingToSet) {
+    mapping = _.invert(mappingToSet);
   };
   
   this.get = function(key) {
-    return params[key];
+    return params[mapping[key]];
   };
 
   this.make = function(location, params) {
     return location + '?' + _.map(params, (val, key) => key + '=' + val).join('&');
-  }
+  };
 };

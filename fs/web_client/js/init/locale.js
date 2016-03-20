@@ -10,11 +10,11 @@ App.locale = new function() {
   var fallbackLang = 'ru'; // Должно браться из куков.
   
   this.set = function(name) {
+    if (!supportedLangs[name]) {
+      name = fallbackLang
+    }
+    
     if (currentName != name) {
-      if (!supportedLangs[name]) {
-        name = fallbackLang;
-      }
-      
       $.ajax({
         'url': '/locales/' + name + '.json',
         'async': false // Возможно стоит сделать асинхронным

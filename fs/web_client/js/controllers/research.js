@@ -6,6 +6,8 @@ App.controllers.research = new (App.View.extend({
   },
 
   'show': function() {
+    App.url.setMapping(['id']);
+    
     var id = App.url.get("id");
 
     App.page.render('research_view', {"id": id});
