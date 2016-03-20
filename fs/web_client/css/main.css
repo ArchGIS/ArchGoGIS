@@ -21,8 +21,8 @@ a:hover {
 
 .content {
   width: 70%;
-  min-width: 800px;
-  margin: auto;
+  min-width: 640px;
+  width: 640px;
   /*margin-top: 3em;*/
   /*border: 1px solid black;*/
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
