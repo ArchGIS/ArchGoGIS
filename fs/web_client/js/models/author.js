@@ -13,3 +13,11 @@ App.models.Author.findByNamePrefix = function(name) {
       .error(reject);
   });
 };
+
+App.models.Author.url = function(id) {
+  return id ? '#author/show/' + id : '#author/show';
+};
+
+App.models.Author.href = function(id, text) {
+  return '<a href="' + App.models.Author.url(id) + '">' + text + '</a>';
+};

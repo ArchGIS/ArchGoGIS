@@ -15,3 +15,11 @@ App.models.Research.findByAuthorId = function(authorId) {
       .error(reject);
   });
 };
+
+App.models.Research.url = function(id) {
+  return id ? '#research/show/' + id : '#research/show';
+};
+
+App.models.Research.href = function(id, text) {
+  return '<a href="' + App.models.Research.url(id) + '">' + text + '</a>';
+};

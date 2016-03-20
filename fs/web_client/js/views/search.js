@@ -2,54 +2,128 @@
 
 App.views.search = new (App.View.extend({
   'index': function() {
-    App.page.get('researchAuthorInput').on('autocompleteselect', function(event, ui) {
-      $('#research-author-id').val(ui.item.id);
-
-      
-    });
+    var t = App.locale.translate;
+    var grepObject = App.fn.grepObject;
     
-    function makeRequest($dataDiv) {
-      _.each($dataDiv.find('input'), function(input) {
-	
+    var $results = $('#results');
+    var $resultsCount = $('#results-count');
+
+    var resultProvider = null;
+    var $objectToggler = App.page.get('objectToggler');
+    var object = null;
+    var objects = {
+      'monument-params': {
+        'handler': searchMonument,
+        'heading': ['#', t(['monument', 'prop', 'type']), t(['monument', 'prop', 'epoch'])],
+        'columnsMaker': function(monuments) {
+          return _.map(monuments, function(mk, n) {
+            return [App.models.Monument.href(mk[0].id, n+1), mk[0].type, mk[0].epoch];
+          });
+        },
+        'inputs': {'monument': App.page.get('monument-input')}
+      },
+      'research-params': {
+        'handler': searchResearch,
+        'heading': ['#', t(['research', 'prop', 'description']), t(['research', 'prop', 'type'])],
+        'columnsMaker': function(researches) {
+          return _.map(researches, function(r, n) {
+            return [App.models.Research.href(r.id, n+1), r.description, r.type];
+          });
+        },
+        'inputs': {
+          'author': App.page.get('research-author-input'),
+          '$year': $('#research-year-input') 
+        }
+      },
+      'author-params': {
+        'handler': searchAuthor,
+        'heading': ['#', t(['author', 'prop', 'name']), t(['author', 'prop', 'year'])],
+        'columnsMaker': function(authors) {
+          return _.map(authors, function(a, n) {
+            return [App.models.Author.href(a.id, n+1), a.name, a.year];
+          });
+        },
+        'inputs': {'author': App.page.get('author-input')}
+      }
+    };
+
+    $('#show-results-button').on('click', showResults);
+    
+    // Заполнение и отрисовка таблицы результатов.
+    function showResults() {
+      $('#body :input').prop('disabled', true);
+      
+      App.page.get('resultsTable')
+        .setHead(object.heading)
+        .setBody(object.columnsMaker(resultProvider()));
+                 
+      $('#results-table-box').show();
+    }
+
+    // Смена искомого объекта.
+    $objectToggler.setCallback(function($object) {
+      object = objects[$object.prop('id')];
+      object.handler(object);
+    });
+    object = objects['monument-params'];
+    object.handler(object);
+
+    // Поиск памятника
+    function searchMonument(my) {
+      var monuments = [];
+      resultProvider = () => monuments;
+
+      my.inputs.monument.on('autocompleteselect', function(event, ui) {
+        $results.show();
+       
+        // #FIXME: это очень плохое преобразование данных.
+        var records = my.inputs.monument.getRecords();
+        var matcher = new RegExp('^' + ui.item.label);
+        monuments = _.filter(records, function(record) {
+          return matcher.test(record[1].name);
+        });
+
+        $resultsCount.html(monuments.length);
       });
     }
-    
-    var $submit = $('#search-submit');
-    $submit.on('click', function() {
-      $submit.prop('disabled', true);
 
+    // Поиск автора
+    function searchAuthor(my) {
+      var authors = [];
+      resultProvider = () => authors;
+
+      my.inputs.author.on('autocompleteselect', function(event, ui) {
+        $results.show();
+        authors = grepObject('^' + ui.item.label, my.inputs.author.getRecords(), 'name');
+        $resultsCount.html(authors.length);     
+      });
+    }
+
+    // Поиск исследования
+    function searchResearch(my) {
+      var researches = [];
+      var filteredResearches = [];
+      resultProvider = () => filteredResearches;
+     
+      function handleAuthorSelect(event, ui) {
+        App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
+          
+          my.inputs.$year.autocomplete({
+            'minLength': 0,
+            'source': _.map(_.uniq(researches, 'year'), function(research) {
+              return {'label': research.year, 'id': research.id}
+            })
+          })
+          .on('focus', () => my.inputs.$year.autocomplete('search'))
+          .on('autocompleteselect', function(event, ui) {
+            $results.show();
+            filteredResearches = _.filter(researches, r => r.year == ui.item.label);
+            $resultsCount.html(filteredResearches.length);
+          });
+        });
+      }
       
-    });
+      my.inputs.author.on('autocompleteselect', handleAuthorSelect);
+    }
   }
 }));
-
-/*
-create (a1:Author {id:1, name:'Первый'})
-create (a2:Author {id:2, name:'Второй'})
-create (a3:Author {id:3, name:'Третий'})
-create (r1:Research {id:1, year: 1999, description: 'r1'})
-create (r2:Research {id:2, year: 1999, description: 'r2'})
-create (r3:Research {id:3, year: 2000, description: 'r2'})
-create (r4:Research {id:4, year: 2000, description: 'r2'})
-create (r5:Research {id:4, year: 2001, description: 'r3'})
-create (a1)-[:Created]->(r1)
-create (a1)-[:Created]->(r2)
-create (a1)-[:Created]->(r3)
-create (a2)-[:Created]->(r4)
-create (a3)-[:Created]->(r5)
-        
-profile 
-match (a:Author {id:1})
-match (r:Research)
-match (a)-[:Created]->(r)
-where r.year = 1999
-return r
-
-profile 
-match (a:Author)
-match (r:Research)
-match (a)-[:Created]->(r)
-where a.name starts with 'Пер'
-  and r.year = 1999
-return r
-*/

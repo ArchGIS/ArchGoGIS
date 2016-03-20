@@ -5,7 +5,7 @@
     [t("monument.singular"), "#monument-params"],
     [t("research.singular"), "#research-params"],
     [t("author.singular"), "#author-params"]  
-  ]}, "params-toggler") %>
+  ]}, "objectToggler") %>
 </label>
 
 <fieldset id="search-criteria">
@@ -13,29 +13,38 @@
   
   <div id="monument-params" style="display: none">
     <label>
-      <%= t('knowledge.prop.name') %>
-      <input type="text"/>
+      <%= t("knowledge.prop.name") %>
+      <%= widget("SearchLine", monumentSearchOptions, "monument-input") %>
     </label>
   </div>
   <div id="research-params" style="display: none" data-url="research">
     <label>
-      <%= t('author.name') %>
-      <%= widget("SearchLine", researchAuthorSearchOptions, "researchAuthorInput") %>
-      <input id="research-author-id" hidden name="id"/>
+      <%= t("author.name") %>
+      <%= widget("SearchLine", monumentSearchOptions, "research-author-input") %>
     </label>
     <br/>
     <label>
-      <%= t('research.year') %>
-      <input type="text"/>
+      <%= t("research.year") %>
+      <input id="research-year-input" class="autoinput">
     </label>
   </div>
 
   <div id="author-params" style="display: none">
     <label>
-      <%= t('author.prop.name') %>
-      <input type="text"/>
+      <%= t("author.prop.name") %>
+      <%= widget("SearchLine", researchAuthorSearchOptions, "author-input") %>
     </label>
   </div>
 </fieldset>
 
-<button id="search-submit"><%= t('search.submit') %></button>
+<div id="results" style="display: none">
+  <%= t("search.results-count") %>: <span id="results-count"></span>
+  
+  <button id="show-results-button">
+    <%= t("search.show-results") %>
+  </button>
+</div>
+
+<div id="results-table-box" style="display: none">
+  <%= widget("Table", {}, "resultsTable") %>
+</div>

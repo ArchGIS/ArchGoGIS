@@ -4,6 +4,47 @@
   var currentController = {};
   var controllerName = '';
   var controllerAction = '';
+
+  function cleanup() {
+    if (currentController.finish) {
+      currentController.finish();
+    }
+    
+    App.page.clear();
+  }
+
+  function parseUrl(dispatchInfo) {
+    var parts = dispatchInfo.split('/');
+    if (parts.length < 2) { // Неправильный формат url
+      throw 'invalid controller/action: ' + parts.join('/');
+    }
+    
+    controllerName = parts[0]
+    controllerAction = parts[1].length > 0 ? parts[1] : 'index';
+    
+    // Всё после controller/action - параметры
+    App.url.bindParams(parts.slice(2)); 
+  }
+
+  function validateControllerInfo() {
+    if (!_.has(App.controllers, controllerName)) {
+      throw 'controller ' + controllerName + ' is undefined';
+    }
+
+    if (!App.controllers[controllerName][controllerAction]) {
+      throw 'controller ' + controllerName + ' has no action ' + controllerAction;
+    }
+  }
+
+  function dispatch() {
+    currentController = App.controllers[controllerName];
+
+    if (currentController.start) {
+      currentController.start();
+    }
+    
+    currentController[controllerAction]();
+  }
   
   window.App.router = new (Backbone.Router.extend({
     'current': {
@@ -12,50 +53,19 @@
     },
     'routes': {
       '*actions': function(dispathInfo) {
-	try {
-	  if (!dispathInfo) {
-	    return; // Скорее всего, это root action, но мы его пока не обрабатываем.
-	  }
-
-	  // Парсим GET-параметры.
-	  App.url.parse(window.location.search);
-	  
-	  // Предварительная очистка.
-	  if (currentController.finish) {
-            currentController.finish();
-	  }
-	  App.page.clear();
-	  
-	  // Далее пытаемся запустить action контроллера:
-	  
-	  var controllerNameAndAction = dispathInfo.split('/');
-	  if (controllerNameAndAction.length != 2) {
-	    throw 'invalid controller/action: ' + controllerNameAndAction;
-	  } 
-	  
-	  controllerName = controllerNameAndAction[0];
-	  controllerAction = controllerNameAndAction[1];
-	  if (!_.has(App.controllers, controllerName)) {
-            throw 'controller ' + controllerName + ' is undefined';
-	  }
-	  
-	  if (controllerAction.length == 0) {
-            controllerAction = 'index';
-	  }
-
-	  if (!App.controllers[controllerName][controllerAction]) {
-            throw 'controller ' + controllerName + ' has no action ' + controllerAction;
-	  }
-	  
-	  currentController = App.controllers[controllerName];
-	  if (currentController.start) {
-	    currentController.start();
-	  }
-	  currentController[controllerAction]();
-	} catch (e) {
-	  console.error(e);
-	  App.page.render('e404');
-	}
+        try {
+          if (!dispathInfo) {
+            return; // Скорее всего, это root action, но мы его пока не обрабатываем.
+          }
+          
+          parseUrl(dispathInfo);
+          cleanup();
+          validateControllerInfo();
+          dispatch();
+        } catch (e) {
+          console.error(e);
+          App.page.render('e404');
+        }
       }
     }
   }));

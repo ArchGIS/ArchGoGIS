@@ -3,6 +3,8 @@
 App.widgets.Toggler = function(params, id) {
   var type = _.keys(params)[0];
   var params = params[type];
+  var $el = null;
+  var callback = null;
   
   var selectTmpl = _.template(`
     <select id="<%= id %>">
@@ -31,7 +33,7 @@ App.widgets.Toggler = function(params, id) {
   };
 
   this.later = function() {
-    var $el = $('#' + id);
+    $el = $('#' + id);
 
     switch (type) {
     case 'select':
@@ -49,6 +51,10 @@ App.widgets.Toggler = function(params, id) {
 	if ($selected) {
 	  $lastSelected.hide();
 	  $lastSelected = $selected.show();
+
+          if (callback) {
+            callback($selected);
+          }
 	}
       });
       break;
@@ -60,5 +66,9 @@ App.widgets.Toggler = function(params, id) {
 	$item.toggle();
       });
     }
+  };
+
+  this.setCallback = function(callbackToSet) {
+    callback = callbackToSet;
   };
 };
