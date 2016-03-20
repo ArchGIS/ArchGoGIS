@@ -1,0 +1,41 @@
+{
+  "e404": "Requested page not found",
+  "research": {
+    "singular": "Research",
+    "plural": "Researches",
+    "prop": {
+      "year": "Year"
+    }
+  },
+  "author": {
+    "prop": {
+      "name": "Name"
+    }
+  },
+  "monument": {
+    "singular": "Monument",
+    "plural": "Monuments"
+  },
+  "knowledge": {
+    "prop": {
+      "name": "Monument name"
+    }
+  },
+  "search": {
+    "subject": "Seeking for what?",
+    "submit": "Find",
+    "criteria": "Search criteria"
+  },
+  "nav": {
+    "signout": "Logout",
+    "profile": "Manage account"
+  },
+  "titles": {
+    "wizard": {
+      "create_data": "Create data"
+    },
+    "search": {
+      "index": "Search"
+    }
+  }
+}

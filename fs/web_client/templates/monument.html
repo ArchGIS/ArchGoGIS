@@ -17,8 +17,8 @@
 
     <div toggle-by="new-author-checkbox" need-option="false">
       <label for="author-input">Автор исследования</label>
-      <input id="author-input"></input>
-      <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
+      <%= widget("SearchLine", authorsInputOptions, "authorInput") %>
+      <input id="author-input-id" hidden></input>
     </div>
 
     <div toggle-by="new-author-checkbox" need-option="true">
@@ -118,5 +118,3 @@
 
 </div>
 <button onclick="postQuery()">Сгенерить</button>
-
-<script type="text/javascript">$(document).ready(function(){activateMonNew()})</script>

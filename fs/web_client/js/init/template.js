@@ -1,9 +1,7 @@
 'use strict';
 
 App.template = new function() {
-  var memo = {};
-
-  
+  var memo = {};  
 
   this.get = function(templateName, onLoad) {
     if (!_.has(memo, templateName)) { // Не загружено и не в очереди?
