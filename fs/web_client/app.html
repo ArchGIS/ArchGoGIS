@@ -9,8 +9,10 @@
     <title>ArchGIS</title>
     
     <!-- styles -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="/web_client/vendor/css/pure-min.css">
-    <link rel="stylesheet" href="/web_client/css/main.css"> 
+    <link rel="stylesheet" href="/web_client/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/web_client/css/main.css">
 
     <!-- icon -->
     <link rel="shortcut icon" href="/web_client/img/favicon.ico" type="image/x-icon">
@@ -20,38 +22,42 @@
     <script src="/web_client/vendor/js/underscore.min.js"></script>
     <script src="/web_client/vendor/js/backbone.min.js"></script>
 
-  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="/web_client/vendor/js/backbone.validation.min.js"></script>
   </head>
 
   <body>
     <nav class="header">
       <div class="pure-menu pure-menu-horizontal pure-menu-fixed">
-      	<a href="#" class="pure-menu-heading">Gis App</a>
-      	<ul class="pure-menu-list">
+        <a href="#" class="pure-menu-heading">
+          <i class="fa fa-globe fa-lg"></i>
+          Arch Gis
+        </a>
+        <ul class="pure-menu-list">
           <li class="pure-menu-item">
             <a href="#monument/new" class="pure-menu-link">Создать</a>
           </li>
           <li class="pure-menu-item">
             <a href="#search/index" class="pure-menu-link">Найти</a>
           </li>
-      	  <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-      	    <a href="#" class="pure-menu-link">Пользователь</a>
-      	    <ul class="pure-menu-children">
-      	      <li class="pure-menu-item">
+          <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">Пользователь</a>
+            <ul class="pure-menu-children">
+              <li class="pure-menu-item">
                 <a href="#" class="pure-menu-link">
-      		        Профиль<!-- <%= t('nav.profile') %> -->
+                  <i class="fa fa-user"></i>
+                  Профиль<!-- <%= t('nav.profile') %> -->
                 </a>
               </li>
-      	      <li class="pure-menu-item">
+              <li class="pure-menu-item">
                 <a href="#" class="pure-menu-link">
-      		        Выйти<!-- <%= t('nav.signout') %> -->
+                  <i class="fa fa-sign-out"></i>
+                  Выйти<!-- <%= t('nav.signout') %> -->
                 </a>
               </li>
-      	    </ul>
-      	  </li>
-      	</ul>
+            </ul>
+          </li>
+        </ul>
       </div>
     </nav>
 
@@ -60,18 +66,19 @@
     <div class="content">
       <div class="pure-g">
         <div class="pure-u-1">
-      	  <fieldset>
-      	    <legend id="title">Главная</legend>
-      	    
-      	    <div id="body">
-      	    </div>
-      	  </fieldset>
+          <fieldset>
+            <legend id="title">Главная</legend>
+            
+            <div id="body">
+            </div>
+          </fieldset>
         </div>
       </div>
     </div>
 
     <footer>
-      <p>&copy; GisApp 2016</p>
+      <i class="fa fa-copyright"></i>
+      Arch Gis 2016
     </footer>
     
     <!-- app src -->

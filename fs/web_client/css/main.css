@@ -1,20 +1,39 @@
-/*body {
-  font: 12pt/10pt Helvetica, sans-serif;
-  font-family: Helvetica, sans-serif;
-  font-size: 12pt/10pt;
-}*/
+body {
+  font: 12pt/10pt Helvetica sans-serif;
+}
+
+*:focus {
+  outline: none;
+}
+
+nav {
+  margin-bottom: 2em;
+}
+
+a, a:visited {
+  color: #33d;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 
 .content {
   width: 70%;
   min-width: 800px;
   margin: auto;
-  margin-top: 3em;
+  /*margin-top: 3em;*/
+  /*border: 1px solid black;*/
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border-radius: 0 0 10px 10px;
 }
 
 footer {
   width: 50%;
   margin: auto;
   margin-left: 15%;
+  margin-top: 1.5em;
 }
 
 .switch {
@@ -25,23 +44,34 @@ footer {
   /*padding-top: 0.2em;
   padding-bottom: 0.2em;*/
   min-width: 800px;
+  padding: 0;
+  margin: 0;
 }
 
 .pure-menu, .pure-menu-list {
   background: rgb(58, 58, 58);
 }
 
-.pure-menu-heading {
+a.pure-menu-heading {
   color: #ccc;
+  text-decoration: none;
   float: left;
+}
+
+a.pure-menu-heading:hover {
+  color: #fff;
 }
 
 .pure-menu-list {
   float: right;
+  padding: 0;
+  margin: 0;
 }
 
 .pure-menu-link:hover {
   background: #222;
+  color: #fff;
+  text-decoration: none;
 }
 
 .pure-menu-link:focus {
@@ -50,6 +80,11 @@ footer {
 
 .pure-menu-list li a {
   color: #ddd;
+  /*border-right: 3px solid #555;*/
+}
+
+.pure-menu-list li {
+  /*position: relative;*/
 }
 
 .pure-menu-list li:hover > a {
@@ -58,18 +93,38 @@ footer {
 
 .pure-menu-list > li {
   position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .pure-menu-children {
   /*position: absolute;
   float: right;*/
-  overflow: auto;
+  min-width: 100%;
 }
 
 .pure-menu-children li {
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 }
 
 .pure-menu-list li:hover > ul {
   background: rgb(58, 58, 58);
+}
+
+.pure-button {
+  margin-top: 0.7em;
+}
+
+input {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+fieldset {
+  /*padding: 1em;*/
+  margin: 1em;
+}
+
+#search-criteria {
+  margin-top: 1em;
 }

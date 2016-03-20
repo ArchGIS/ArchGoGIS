@@ -1,3 +1,5 @@
+<h2><%= t('search.head') %></h2>
+
 <label>
   <%= t('search.subject') %>
 
@@ -8,13 +10,14 @@
   ]}, "params-toggler") %>
 </label>
 
+<form class="pure-form">
 <fieldset id="search-criteria">
   <legend><%= t("search.criteria") %></legend>
   
   <div id="monument-params" style="display: none">
     <label>
       <%= t('knowledge.prop.name') %>
-      <input type="text"/>
+      <input class="pure-input-1-2" type="text"/>
     </label>
   </div>
   <div id="research-params" style="display: none" data-url="research">
@@ -33,9 +36,13 @@
   <div id="author-params" style="display: none">
     <label>
       <%= t('author.prop.name') %>
-      <input type="text"/>
+      <input class="pure-input-1-2" type="text"/>
     </label>
   </div>
 </fieldset>
 
-<button id="search-submit"><%= t('search.submit') %></button>
+<button type="submit" id="search-submit" class="pure-button pure-button-primary">
+  <i class="fa fa-search"></i>
+  <%= t('search.submit') %>
+</button>
+</form>

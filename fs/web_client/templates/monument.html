@@ -18,7 +18,7 @@
 
     <div>
       <label for="research-input">Исследование</label>
-      <input id="research-input" class="autoinput"></input>
+      <input id="research-input" class="autoinput pure-input-1-2"></input>
       <input id="research-input-id" hidden></input>
     </div>
   </div>
@@ -26,7 +26,7 @@
     <h3>Памятник</h3>
     <div>
       <label for="monument-input">Название памятника</label>
-      <input id="monument-input" class="autoinput"></input>
+      <input id="monument-input" class="pure-input-1-2 autoinput"></input>
       <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
     </div>
   </div>
@@ -59,4 +59,7 @@
   <input hidden data-name="m_Contains_a">
 
 </div>
-<button onclick="postQuery()">Сгенерить</button>
+<button class="pure-button pure-button-primary" onclick="postQuery()">
+  <i class="fa fa-cogs"></i>
+  Сгенерить
+</button>
