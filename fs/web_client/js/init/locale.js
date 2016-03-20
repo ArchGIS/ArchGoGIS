@@ -12,15 +12,15 @@ App.locale = new function() {
   this.set = function(name) {
     if (currentName != name) {
       if (!supportedLangs[name]) {
-	name = fallbackLang
+        name = fallbackLang;
       }
       
       $.ajax({
-	'url': '/locales/' + name + '.json',
-	'async': false // Возможно стоит сделать асинхронным
+        'url': '/locales/' + name + '.json',
+        'async': false // Возможно стоит сделать асинхронным
       }).success(function(newDict) {
-	dict = newDict;
-	currentName = name;
+        dict = newDict;
+        currentName = name;
       });
     }
   };

@@ -11,14 +11,17 @@
     <!-- styles -->
     <link rel="stylesheet" href="/web_client/vendor/css/pure-min.css">
     <link rel="stylesheet" href="/web_client/css/main.css"> 
+
+    <!-- icon -->
+    <link rel="shortcut icon" href="/web_client/img/favicon.ico" type="image/x-icon">
     
     <!-- vendor js -->
     <script src="/web_client/vendor/js/jquery.min.js"></script>
     <script src="/web_client/vendor/js/underscore.min.js"></script>
     <script src="/web_client/vendor/js/backbone.min.js"></script>
 
-  	<!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
-    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+  	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="/web_client/vendor/js/backbone.validation.min.js"></script>
   </head>
 
@@ -38,12 +41,12 @@
       	    <ul class="pure-menu-children">
       	      <li class="pure-menu-item">
                 <a href="#" class="pure-menu-link">
-      		        <%= t('user.profile') %>
+      		        Профиль<!-- <%= t('nav.profile') %> -->
                 </a>
               </li>
       	      <li class="pure-menu-item">
                 <a href="#" class="pure-menu-link">
-      		        <%= t('user.signout') %>
+      		        Выйти<!-- <%= t('nav.signout') %> -->
                 </a>
               </li>
       	    </ul>

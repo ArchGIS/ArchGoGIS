@@ -1,8 +1,14 @@
+/*body {
+  font: 12pt/10pt Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
+  font-size: 12pt/10pt;
+}*/
+
 .content {
   width: 70%;
+  min-width: 800px;
   margin: auto;
-  margin-top: 1em;
-  padding: 10px;
+  margin-top: 3em;
 }
 
 footer {
@@ -11,12 +17,14 @@ footer {
   margin-left: 15%;
 }
 
-.header {
-  padding-bottom: 1em;
-}
-
 .switch {
   cursor: pointer;
+}
+
+.pure-menu {
+  /*padding-top: 0.2em;
+  padding-bottom: 0.2em;*/
+  min-width: 800px;
 }
 
 .pure-menu, .pure-menu-list {
@@ -48,18 +56,18 @@ footer {
   background: #222;
 }
 
-/*.pure-menu-list:last-child {
-  .pure-menu-children {
-    right: 0;
-  }
-}*/
+.pure-menu-list > li {
+  position: relative;
+}
 
 .pure-menu-children {
-  position: absolute;
+  /*position: absolute;
+  float: right;*/
+  overflow: auto;
 }
 
 .pure-menu-children li {
-  /*float: none;*/
+  white-space: nowrap;
 }
 
 .pure-menu-list li:hover > ul {
