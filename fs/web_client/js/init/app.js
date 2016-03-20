@@ -101,7 +101,7 @@ function activateMonNew(){
 }
 
 function setSelectsEvents() {
-  var selects = $("select[dynamic=true]");
+  var selects = $("[dynamic=true]");
 
   $.each(selects, function(key, select) {
     var obj = $(select);
@@ -113,7 +113,11 @@ function setSelectsEvents() {
 function showField(select) {
   var selectName = select.attr("id");
   var dynamicFields = $("[toggle-by="+selectName+"]");
-  var selectedValue = select.find("option:selected").val();
+  if (select.attr("type") == "checkbox") {
+    var selectedValue = (select.is(":checked")) ? "true" : "false";
+  } else {
+    var selectedValue = select.find("option:selected").val();
+  }
   var requiredOptions, obj;
 
   $.each(dynamicFields, function(key, field) {

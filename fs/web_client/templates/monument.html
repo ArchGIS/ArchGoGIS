@@ -7,27 +7,79 @@
     <li><a href="#menu2">Объект</a></li>
     <li><a href="#menu3">Артефакт</a></li>
   </ul>
-
+  
   <div id="home">
     <h3>Исследование</h3>
     <div>
-      <label for="author-input">Автор исследования</label>
-      <input id="author-input" class="autoinput"></input>
-      <input id="author-input-id" hidden></input>
+      <label for="new-author-checkbox">Добавить нового автора</label>
+      <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
     </div>
 
-    <div>
+    <div toggle-by="new-author-checkbox" need-option="false">
+      <label for="author-input">Автор исследования</label>
+      <input id="author-input"></input>
+      <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
+    </div>
+
+    <div toggle-by="new-author-checkbox" need-option="true">
+      <label for="author-name-input">Имя</label>
+      <input id="author-name-input" data-for="author:Author" type="text" name="name"></input>
+    </div>
+    <div toggle-by="new-author-checkbox" need-option="true">
+      <label for="author-birth-date-input">Дата рождения</label>
+      <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
+    </div>
+
+    <div id="research-choose">
+      <label for="new-research-checkbox">Добавить новое исследование</label>
+      <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
+    </div>
+    <div toggle-by="new-research-checkbox" need-option="false">
       <label for="research-input">Исследование</label>
-      <input id="research-input" class="autoinput"></input>
-      <input id="research-input-id" hidden></input>
+      <input id="research-input"></input>
+      <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
+    </div>
+
+    <div toggle-by="new-research-checkbox" need-option="true">
+      <label for="research-title-input">Описание</label>
+      <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
+    </div>
+    <div toggle-by="new-research-checkbox" need-option="true">
+      <label for="research-year-input">Год</label>
+      <input id="research-year-input" data-for="r:Research" type="number" name="year"></input>
     </div>
   </div>
   <div id="menu1">
     <h3>Памятник</h3>
     <div>
-      <label for="monument-input">Название памятника</label>
-      <input id="monument-input" class="autoinput"></input>
+      <label for="new-monument-checkbox">Добавить новый памятник</label>
+      <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
+    </div>
+    <div toggle-by="new-monument-checkbox" need-option="false">
+      <label>Памятник</label>
+      <input id="monument-input"></input>
       <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
+    </div>
+
+    <div toggle-by="new-monument-checkbox" need-option="true">
+      <label>Название памятника</label>
+      <input id="monument-name-input" data-for="k:Knowledge" type="text" name="name"></input>
+    </div>
+    <div toggle-by="new-monument-checkbox" need-option="true">
+      <label>Эпоха</label>
+      <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
+    </div>
+    <div toggle-by="new-monument-checkbox" need-option="true">
+      <label>Культура</label>
+      <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
+    </div>
+    <div toggle-by="new-monument-checkbox" need-option="true">
+      <label>Координата X</label>
+      <input id="monument-input" data-for="m:Monument" type="number" name="x"></input>
+    </div>
+    <div toggle-by="new-monument-checkbox" need-option="true">
+      <label>Координата Y</label>
+      <input id="monument-input" data-for="m:Monument" type="number" name="y"></input>
     </div>
   </div>
   <div id="menu2">
@@ -54,8 +106,14 @@
     </div> -->
   </div>
 
+  <input hidden data-name="author:Author">
+  <input hidden data-name="r:Research">
+  <input hidden data-name="k:Knowledge">
   <input hidden data-name="m:Monument">
   <input hidden data-name="a:Artifact">
+  <input hidden data-name="author_Created_r">
+  <input hidden data-name="r_Contains_k">
+  <input hidden data-name="k_Describes_m">
   <input hidden data-name="m_Contains_a">
 
 </div>
