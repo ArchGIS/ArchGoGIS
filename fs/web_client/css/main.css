@@ -80,7 +80,6 @@ a.pure-menu-heading:hover {
 
 .pure-menu-list li a {
   color: #ddd;
-  /*border-right: 3px solid #555;*/
 }
 
 .pure-menu-list li {
@@ -93,9 +92,11 @@ a.pure-menu-heading:hover {
 
 .pure-menu-list > li {
   position: relative;
-  margin: 0;
-  padding: 0;
+  margin-right: -5px;
+  border-right: 1px solid;
 }
+
+.pure-menu-list > li: {}
 
 .pure-menu-children {
   /*position: absolute;
@@ -113,6 +114,7 @@ a.pure-menu-heading:hover {
 
 .pure-button {
   margin-top: 0.7em;
+  margin-left: 1em;
 }
 
 input {
@@ -128,3 +130,33 @@ fieldset {
 #search-criteria {
   margin-top: 1em;
 }
+
+/*
+  monument.html
+*/
+
+.ui-widget-content {
+  border: none;
+}
+
+.ui-widget-header {
+  border: none;
+  border-bottom: 1px solid #aaa;
+  background: none;
+}
+
+.flexible {
+  display: flex;
+  justify-content: end;
+  width: 45%;
+  align-items: center;
+}
+
+.flexible label {
+  margin-right: 1em;
+  line-height: normal;
+}
+
+/*input[type="text"], input[type="number"] {
+  width: 100%;
+}*/

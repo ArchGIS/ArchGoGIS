@@ -2,7 +2,7 @@
 
 App.widgets.SearchLine = function(params, id) {
   var $input = null;
-  var tmpl = _.template(`<input id="<%= id %>" class="autoinput pure-input-1-2"></input>`);
+  var tmpl = _.template(`<input id="<%= id %>" class="autoinput"></input>`);
   params = _.extend(App.widgets.SearchLine.defaultOptions, params);
   
   this.early = function() {

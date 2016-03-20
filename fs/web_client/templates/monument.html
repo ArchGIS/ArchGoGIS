@@ -10,23 +10,23 @@
 
   <div id="home">
     <h3>Исследование</h3>
-    <div>
+    <div class="flexible">
       <label for="author-input">Автор исследования</label>
       <%= widget("SearchLine", authorsInputOptions, "authorInput") %>
       <input id="author-input-id" hidden></input>
     </div>
 
-    <div>
+    <div class="flexible">
       <label for="research-input">Исследование</label>
-      <input id="research-input" class="autoinput pure-input-1-2"></input>
+      <input id="research-input" class="autoinput"></input>
       <input id="research-input-id" hidden></input>
     </div>
   </div>
   <div id="menu1">
     <h3>Памятник</h3>
-    <div>
+    <div class="flexible">
       <label for="monument-input">Название памятника</label>
-      <input id="monument-input" class="pure-input-1-2 autoinput"></input>
+      <input id="monument-input" class="autoinput"></input>
       <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
     </div>
   </div>
@@ -36,15 +36,15 @@
   </div>
   <div id="menu3">
     <h3>Артефакт</h3>
-    <div>
+    <div class="flexible">
       <label for="artifact-name-input">Название</label>
       <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name"></input>
     </div>
-    <div>
+    <div class="flexible">
       <label for="artifact-weight-input">Вес</label>
-      <input id="artifact-weight-input" data-for="a:Artifact" type="number" name="weight"></input>
+      <input id="artifact-weight-input" data-for="a:Artifact" type="text" name="weight"></input>
     </div>
-    <div>
+    <div class="flexible">
       <label for="artifact-size-input">Габариты</label>
       <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
     </div>
