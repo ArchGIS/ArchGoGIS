@@ -1,3 +1,5 @@
+<h2><%= t('search.head') %></h2>
+
 <label>
   <%= t('search.subject') %>
 
@@ -8,6 +10,7 @@
   ]}, "objectToggler") %>
 </label>
 
+<form class="pure-form">
 <fieldset id="search-criteria">
   <legend><%= t("search.criteria") %></legend>
   
@@ -20,7 +23,7 @@
   <div id="research-params" style="display: none" data-url="research">
     <label>
       <%= t("author.name") %>
-      <%= widget("SearchLine", monumentSearchOptions, "research-author-input") %>
+      <%= widget("SearchLine", authorSearchOptions, "research-author-input") %>
     </label>
     <br/>
     <label>
@@ -32,7 +35,7 @@
   <div id="author-params" style="display: none">
     <label>
       <%= t("author.prop.name") %>
-      <%= widget("SearchLine", researchAuthorSearchOptions, "author-input") %>
+      <%= widget("SearchLine", authorSearchOptions, "author-input") %>
     </label>
   </div>
 </fieldset>

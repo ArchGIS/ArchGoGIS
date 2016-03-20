@@ -1,6 +1,6 @@
 {
 	
-	"NeoUserName": "neo4j",
-	"NeoPassword": "qwe",
-	"NeoHost": "http://localhost:7474/"
+	"UserName": "neo4j",
+	"Password": "qwerty",
+	"Host": "http://localhost:7474/"
 }

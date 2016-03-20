@@ -3,6 +3,7 @@ package search
 import (
 	"cfg"
 	"db/neo"
+	"echo"
 	"ext"
 	"net/http"
 	"norm"
@@ -43,6 +44,7 @@ func searchForMonuments(needle string) ([]byte, error) {
 	needle = norm.Name(needle)
 	resp, err := neo.Run(monumnetsCypher, neo.Params{"needle": `"` + needle + `"`})
 	if err != nil {
+		echo.ServerError.Print(err)
 		return nil, errs.RetrieveError
 	}
 

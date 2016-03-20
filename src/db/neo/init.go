@@ -14,6 +14,7 @@ var (
 )
 
 func init() {
+	println("neo init")
 	txEndpoint = cfg.Neo.Host + "db/data/transaction/"
 	endpoint = txEndpoint + "commit/"
 

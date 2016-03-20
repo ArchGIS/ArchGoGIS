@@ -39,6 +39,7 @@ func (my *Agent) Delete(url string, data []byte) ([]byte, error) {
 }
 
 func (my *Agent) Send(method, url string, data []byte) ([]byte, error) {
+	echo.Info.Print(url)
 	request, err := my.NewRequest(method, url, data)
 	if err != nil {
 		return nil, err
