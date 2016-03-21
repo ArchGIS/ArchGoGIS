@@ -10,7 +10,7 @@
   
   <div id="home">
     <h3>Исследование</h3>
-    <div>
+    <div class="flexible">
       <label for="new-author-checkbox">Добавить нового автора</label>
       <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
     </div>
@@ -25,26 +25,26 @@
       <label for="author-name-input">Имя</label>
       <input id="author-name-input" data-for="author:Author" type="text" name="name"></input>
     </div>
-    <div toggle-by="new-author-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-author-checkbox" need-option="true">
       <label for="author-birth-date-input">Дата рождения</label>
       <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
     </div>
 
-    <div id="research-choose">
+    <div class="flexible" id="research-choose">
       <label for="new-research-checkbox">Добавить новое исследование</label>
       <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
     </div>
-    <div toggle-by="new-research-checkbox" need-option="false">
+    <div class="flexible" toggle-by="new-research-checkbox" need-option="false">
       <label for="research-input">Исследование</label>
       <input id="research-input"></input>
       <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
     </div>
 
-    <div toggle-by="new-research-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-research-checkbox" need-option="true">
       <label for="research-title-input">Описание</label>
       <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
     </div>
-    <div toggle-by="new-research-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-research-checkbox" need-option="true">
       <label for="research-year-input">Год</label>
       <input id="research-year-input" data-for="r:Research" type="number" name="year"></input>
     </div>
@@ -55,29 +55,29 @@
       <label for="new-monument-checkbox">Добавить новый памятник</label>
       <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
     </div>
-    <div toggle-by="new-monument-checkbox" need-option="false">
+    <div class="flexible" toggle-by="new-monument-checkbox" need-option="false">
       <label>Памятник</label>
       <input id="monument-input"></input>
       <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
     </div>
 
-    <div toggle-by="new-monument-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
       <label>Название памятника</label>
       <input id="monument-name-input" data-for="k:Knowledge" type="text" name="name"></input>
     </div>
-    <div toggle-by="new-monument-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
       <label>Эпоха</label>
       <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
     </div>
-    <div toggle-by="new-monument-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
       <label>Культура</label>
       <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
     </div>
-    <div toggle-by="new-monument-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
       <label>Координата X</label>
       <input id="monument-input" data-for="m:Monument" type="number" name="x"></input>
     </div>
-    <div toggle-by="new-monument-checkbox" need-option="true">
+    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
       <label>Координата Y</label>
       <input id="monument-input" data-for="m:Monument" type="number" name="y"></input>
     </div>
@@ -122,3 +122,6 @@
   Сгенерить
 </button>
 
+<!-- <div class="maps">
+  <%= widget("Map", {}, "map") %>
+</div> -->

@@ -10,17 +10,16 @@
   ]}, "objectToggler") %>
 </label>
 
-<form class="pure-form">
 <fieldset id="search-criteria">
   <legend><%= t("search.criteria") %></legend>
   
-  <div id="monument-params" style="display: none">
+  <div class="flexible" id="monument-params" style="display: none">
     <label>
       <%= t("knowledge.prop.name") %>
       <%= widget("SearchLine", monumentSearchOptions, "monument-input") %>
     </label>
   </div>
-  <div id="research-params" style="display: none" data-url="research">
+  <div class="flexible" id="research-params" style="display: none" data-url="research">
     <label>
       <%= t("author.name") %>
       <%= widget("SearchLine", authorSearchOptions, "research-author-input") %>
@@ -40,12 +39,13 @@
   </div>
 </fieldset>
 
-<div id="results" style="display: none">
-  <%= t("search.results-count") %>: <span id="results-count"></span>
-  
-  <button id="show-results-button">
+<button class="pure-button pure-button-primary" id="show-results-button">
+    <i class="fa fa-search"></i>
     <%= t("search.show-results") %>
-  </button>
+</button>
+
+<div class="count-search" id="results" style="display: none">
+  <%= t("search.results-count") %>: <span id="results-count"></span>
 </div>
 
 <div id="results-table-box" style="display: none">

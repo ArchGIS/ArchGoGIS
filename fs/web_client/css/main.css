@@ -1,5 +1,6 @@
 body {
   font: 12pt/10pt Helvetica sans-serif;
+  min-width: 875px;
 }
 
 *:focus {
@@ -20,13 +21,11 @@ a:hover {
 }
 
 .content {
-  width: 70%;
-  min-width: 640px;
-  width: 640px;
-  /*margin-top: 3em;*/
-  /*border: 1px solid black;*/
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-radius: 0 0 10px 10px;
+  /*width: 50%;*/
+  /*margin: auto;*/
+  /*min-width: 574px;*/
+  /*box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
+  /*border-radius: 0 0 10px 10px;*/
 }
 
 footer {
@@ -40,18 +39,12 @@ footer {
   cursor: pointer;
 }
 
-.switch {
-  cursor: pointer;
-}
-
 #research-choose {
   margin-top: 30px;
 }
 
 .pure-menu {
-  /*padding-top: 0.2em;
-  padding-bottom: 0.2em;*/
-  min-width: 800px;
+  /*min-width: 800px;*/
   padding: 0;
   margin: 0;
 }
@@ -99,7 +92,7 @@ a.pure-menu-heading:hover {
 }
 
 .pure-menu-list > li {
-  position: relative;
+  /*position: relative;*/
   margin-right: -5px;
   border-right: 1px solid;
 }
@@ -121,8 +114,17 @@ a.pure-menu-heading:hover {
 }
 
 .pure-button {
-  margin-top: 0.7em;
-  margin-left: 1em;
+  /*margin-top: 1em;*/
+  /*margin-left: 1em;*/
+  /*align;*/
+}
+
+.pure-table {
+  margin-top: 1em;
+}
+
+.count-search {
+  margin-top: 1em;
 }
 
 input {
@@ -133,6 +135,7 @@ input {
 fieldset {
   /*padding: 1em;*/
   margin: 1em;
+  border-radius: 10px;
 }
 
 #search-criteria {
@@ -156,7 +159,7 @@ fieldset {
 .flexible {
   display: flex;
   justify-content: end;
-  width: 45%;
+  width: 86%;
   align-items: center;
 }
 
@@ -168,3 +171,43 @@ fieldset {
 /*input[type="text"], input[type="number"] {
   width: 100%;
 }*/
+
+/*
+  Map settings
+*/
+
+.maps {
+  position: fixed;
+  top: 3em;
+  left: 574px;
+  right: 1%;
+  width: auto;
+  min-width: 300px;
+  height: 85%;
+  min-height: 300px;
+  /*padding-right: -1px; */
+  border: 1px solid;
+  /*border-right: 2px solid;*/
+}
+
+
+
+
+.main-block {
+  position: relative;
+  width: 50%;
+  margin: auto;
+  /*float: left;*/
+}
+
+
+
+.test {
+  width: 40%;
+  height: 200px;
+  position: relative;
+  top: 1em;
+  
+  /*float: right;*/
+  border: 1px solid;
+}
