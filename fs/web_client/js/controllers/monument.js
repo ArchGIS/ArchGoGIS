@@ -25,6 +25,10 @@ App.controllers.monument = new (App.View.extend({
   },
 
   'new': function() {
+    App.page.pushDestructor(function() {
+      console.log('monument controller is done (destructor)');
+    });
+    
     App.page.render('monument', {
       'param': 'test data',
       'authorsInputOptions': {
@@ -38,9 +42,5 @@ App.controllers.monument = new (App.View.extend({
 
   'start': function() {
     console.log('monument controller is launched');
-  },
-
-  'finish': function() {
-    console.log('monument controller is done');
   }
 }));

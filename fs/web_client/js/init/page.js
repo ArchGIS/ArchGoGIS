@@ -7,6 +7,8 @@ App.page = new function() {
   // Объекты, локальные для страницы (controller.action);
   // Это хранилище очищается перед отрисовкой (render) следующей страницы.
   var objects = {};
+  // Массив функций, которые нужно выполнить перед запуском следующей страницы.
+  var destructors = [];
   
   this.render = function(templateName, templateParams) {
     var action = App.router.current.action();
@@ -32,15 +34,24 @@ App.page = new function() {
   };
 
   this.clear = function() {
-    $body.empty();
+    _.invoke(destructors, 'call');
     objects = {};
+    $body.empty();
   };
 
   this.get = function(name) {
     return objects[name];
   };
 
-  this.set = function(name, object) {
+  this.registerObject = function(name, object) {
+    if (name in objects) {
+      throw name + ' already defined';
+    }
+    
     objects[name] = object;
-  }
+  };
+
+  this.pushDestructor = function(destructor) {
+    destructors.push(destructor);
+  };
 };
