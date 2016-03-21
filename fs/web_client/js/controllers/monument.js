@@ -18,9 +18,8 @@ App.controllers.monument = new (App.View.extend({
     };
     $.post('/hquery/read', JSON.stringify(query))
     .success(function(response) {
-      // console.log(response);
+      // #FIXME: унести запрос и JSON.parse в модель    
       var respObject = JSON.parse(response);
-      // console.log(respObject);
       App.page.render('monument_view', respObject);
     });
   },
