@@ -55,15 +55,6 @@ function showField(select) {
   })
 }
 
-function fillSelect(selectId, obj) {
-  $.each(obj, function(key, value) {   
-    $('#'+selectId)
-      .append($("<option></option>")
-      .attr("value", key)
-      .text(value)); 
-  });
-}
-
 function postQuery() {
   var query = generateQuery([
     "Author_Research_Created",
