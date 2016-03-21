@@ -36,6 +36,7 @@ var (
 		{"Geometry", "n_geometry_id_seq"},
 		{"Object", "n_object_id_seq"},
 		{"Artifact", "n_artifact_id_seq"},
+		{"Organization", "n_organization_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{
@@ -44,5 +45,6 @@ var (
 		{"Contains"},
 		{"Created"},
 		{"HelpedToCreate"},
+		{"WorkedIn"},
 	}
 )
