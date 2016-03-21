@@ -3,24 +3,14 @@
 App.page = new function() {
   var $body = $('#body');
   var $title = $('#title');
-  var objects = {};
 
-  var defaultContext = {
-    't': function(key) {
-      return App.locale.translate(key.split('.'));
-    },
-    'widget': App.widgetMaker.createWidget
-  };
+  // Объекты, локальные для страницы (controller.action);
+  // Это хранилище очищается перед отрисовкой (render) следующей страницы.
+  var objects = {};
   
   this.render = function(templateName, templateParams) {
     var action = App.router.current.action();
     var controller = App.router.current.controller();
-    
-    if (templateParams) {
-      templateParams = _.extend(defaultContext, templateParams);
-    } else {
-      templateParams = defaultContext;
-    }
     
     App.template.get(templateName, function(tmpl) {
       App.locale.set(App.url.get('lang'));
