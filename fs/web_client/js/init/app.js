@@ -3,6 +3,7 @@
 // Контейнеры
 var App = {
   'widgets': {},
+  'blocks': {},
   'controllers': {},
   'models': {},
   'views': {},

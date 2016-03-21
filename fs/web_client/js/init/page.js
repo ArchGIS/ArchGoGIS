@@ -18,6 +18,7 @@ App.page = new function() {
       App.locale.set(App.url.get('lang'));
       $body.html(tmpl(templateParams));
       App.widgetMaker.runDefers();
+      App.blockMaker.runInitializers();
       
       // Если есть view, то запускаем и его
       if (App.views[controller]) {

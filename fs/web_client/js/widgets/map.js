@@ -54,11 +54,16 @@ App.widgets.Map = function(params, id) {
     }
   };
 
-  this.addPlacemark = function(coord, id) {
+  this.onPlacemark = function(id, event, callback) {
+    placemarks[id].events.add(event, callback);
+  };
+
+  this.addPlacemark = function(coord, id, opts) {
+    // https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/
     var placemark = new ymaps.Placemark(
-      coord, 
-      {}, // Данные внутри отметки
-      {'preset': 'islands#darkGreenCircleDotIcon'} // Стилизация отметки
+      coord,
+      {}, // Свойства отметки 
+      opts
     );
 
     if (id) {
@@ -68,11 +73,11 @@ App.widgets.Map = function(params, id) {
     map.geoObjects.add(placemark);
   };
 
-  this.updatePlacemark = function(id, coord) {
+  this.updatePlacemark = function(id, coord, opts) {
     if (placemarks[id]) {
       placemarks[id].geometry.setCoordinates(coord);
     } else {
-      this.addPlacemark(coord, id);
+      this.addPlacemark(coord, id, opts);
     }
   };
 
@@ -85,4 +90,6 @@ App.widgets.Map = function(params, id) {
       eventsPool[event] = callback;
     }
   };
+
+  this.getCenter = () => map.getCenter();
 };

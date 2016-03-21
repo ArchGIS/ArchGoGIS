@@ -8,7 +8,9 @@ App.template = new function() {
     't': function(key) {
       return App.locale.translate(key.split('.'));
     },
-    'widget': App.widgetMaker.createWidget
+    'widget': App.widgetMaker.createWidget,
+    'block': App.blockMaker.createBlock,
+    'endblock': '</div>'
   };
 
   // Добавить в контекст шаблона параметры по умолчанию.

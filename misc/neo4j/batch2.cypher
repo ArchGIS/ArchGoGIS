@@ -6,7 +6,7 @@ create (r1:Research {id:1, year: 1999, description: 'r1', type: 'Неразру�
 create (r2:Research {id:2, year: 1999, description: 'r2', type: 'Аналитическое'})
 create (r3:Research {id:3, year: 2000, description: 'r3', type: 'Аналитическое'})
 create (r4:Research {id:4, year: 2000, description: 'r4', type: 'Неразрушающее'})
-create (r5:Research {id:4, year: 2001, description: 'r5', type: 'Вскрытие культурного слоя'})
+create (r5:Research {id:5, year: 2001, description: 'r5', type: 'Вскрытие культурного слоя'})
 create (k1:Knowledge {id:1, name:'Памятник one', culture: 'Пеленгская'})
 create (k2:Knowledge {id:2, name:'Городище777', culture: 'Малокская'})
 create (k3:Knowledge {id:3, name:'Памятное место', culture: 'Фэянская'})
