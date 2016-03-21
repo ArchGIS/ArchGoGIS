@@ -67,6 +67,10 @@ func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node, edges []*ast.
 func (my *StatementBuilder) Build(limit string) neo.Statement {
 	selection := my.scanNodes(false, my.nodes)
 	for _, edge := range my.edges {
+		if edge.Props["select"] != "" {
+			selection = append(selection, edge.Tag)
+		}
+
 		my.buf.WriteStringf(
 			"MATCH(%s)-[%s:%s]->(%s)",
 			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
@@ -75,6 +79,10 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 
 	optionalSelection := my.scanNodes(true, my.optionalNodes)
 	for _, edge := range my.optionalEdges {
+		if edge.Props["select"] != "" {
+			optionalSelection = append(optionalSelection, edge.Tag)
+		}
+
 		my.buf.WriteStringf(
 			"OPTIONAL MATCH(%s)-[%s:%s]->(%s)",
 			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
