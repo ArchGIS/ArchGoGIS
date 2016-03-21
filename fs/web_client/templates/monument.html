@@ -15,34 +15,34 @@
         <label for="new-author-checkbox">Добавить нового автора</label>
         <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
       </div>
-    <div class="flexible" toggle-by="new-author-checkbox" need-option="false">
-      <label for="author-input">Автор исследования</label>
-      <%= widget("SearchLine", authorsInputOptions, "author-input") %>
-      <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
-    </div>
+      <div class="flexible" toggle-by="new-author-checkbox" need-option="false">
+        <label for="author-input">Автор исследования</label>
+        <%= widget("SearchLine", authorsInputOptions, "author-input") %>
+        <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
+      </div>
 
-    <div class="flexible" toggle-by="new-author-checkbox" need-option="true">
-      <label for="author-name-input">Имя</label>
-      <input id="author-name-input" data-for="author:Author" type="text" name="name"></input>
-    </div>
-    <div class="flexible" toggle-by="new-author-checkbox" need-option="true">
-      <label for="author-birth-date-input">Дата рождения</label>
-      <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
-    </div>
-    <div>
-      <label for="coauthor-input">Соавторы</label>
-      <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
-      <input id="coauthor-input-id" data-few="true" data-for="co:Coauthor" type="hidden" name="id"></input>
-    </div>
-    <div class="flexible" id="research-choose">
-      <label for="new-research-checkbox">Добавить новое исследование</label>
-      <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
-    </div>
-    <div class="flexible" toggle-by="new-research-checkbox" need-option="false">
-      <label for="research-input">Исследование</label>
-      <input id="research-input"></input>
-      <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
-    </div>
+      <div class="flexible" toggle-by="new-author-checkbox" need-option="true">
+        <label for="author-name-input">Имя</label>
+        <input id="author-name-input" data-for="author:Author" type="text" name="name"></input>
+      </div>
+      <div class="flexible" toggle-by="new-author-checkbox" need-option="true">
+        <label for="author-birth-date-input">Дата рождения</label>
+        <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
+      </div>
+      <div>
+        <label for="coauthor-input">Соавторы</label>
+        <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
+        <input id="coauthor-input-id" data-few="true" data-for="co:Coauthor" type="hidden" name="id"></input>
+      </div>
+      <div class="flexible" id="research-choose">
+        <label for="new-research-checkbox">Добавить новое исследование</label>
+        <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
+      </div>
+      <div class="flexible" toggle-by="new-research-checkbox" need-option="false">
+        <label for="research-input">Исследование</label>
+        <input id="research-input"></input>
+        <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
+      </div>
 
       <div class="flexible" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-title-input">Описание</label>
@@ -108,41 +108,23 @@
         <label for="artifact-foto-input">Фото</label>
         <input id="artifact-foto-input" type="file"></input>
       </div> -->
-    </div>
-    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
-      <label>Эпоха</label>
-      <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
-    </div>
-    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
-      <label>Культура</label>
-      <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
-    </div>
-    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
-      <label>Координата X</label>
-      <input id="monument-input" data-for="m:Monument" type="number" name="x"></input>
-    </div>
-    <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
-      <label>Координата Y</label>
-      <input id="monument-input" data-for="m:Monument" type="number" name="y"></input>
-    </div>
-  </div>
-  <div id="menu2">
-    <h3>Объект</h3>
-    Необязательная страница.
-  </div>
-  <div id="menu3">
-    <h3>Артефакт</h3>
-    <div class="flexible">
-      <label for="artifact-name-input">Название</label>
-      <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name"></input>
-    </div>
-    <div class="flexible">
-      <label for="artifact-weight-input">Вес</label>
-      <input id="artifact-weight-input" data-for="a:Artifact" type="text" name="weight"></input>
-    </div>
-    <div class="flexible">
-      <label for="artifact-size-input">Габариты</label>
-      <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
+      </div>
+      <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Эпоха</label>
+        <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
+      </div>
+      <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Культура</label>
+        <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
+      </div>
+      <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Координата X</label>
+        <input id="monument-input" data-for="m:Monument" type="number" name="x"></input>
+      </div>
+      <div class="flexible" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Координата Y</label>
+        <input id="monument-input" data-for="m:Monument" type="number" name="y"></input>
+      </div>
     </div>
   </div>
 </div>
