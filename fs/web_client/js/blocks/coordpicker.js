@@ -22,7 +22,7 @@ App.blocks.coordpicker = function($el, params) {
   function createPlacemark() {
     updatePlacemark();
     
-    map.onPlacemark($el.prop('id'), 'drag', function(event) {
+    map.onPlacemark($el.prop('id'), 'dragend', function(event) {
       updateInputValues(event.get('target').geometry.getCoordinates());
     });
 
