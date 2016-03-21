@@ -18,7 +18,7 @@ App.widgetMaker = new function() {
 	App.page.registerObject(id, widget);
       } else {
 	// Генерируем id сами, не добавляем Widget в пул объектов страницы.
-	widget = new App.widgets[widgetName](params, 'widget-' + lastId++);
+	widget = new App.widgets[widgetName](params, 'widget--' + lastId++);
       }
       
       deferred.push(widget);

@@ -4,12 +4,12 @@ App.blockMaker = new function() {
   // Блоки для инициализации.
   var initializers = [];
 
-  this.createBlock = function(blockName, id, params) {
-    if (!id) {
-      throw 'no id for ' + blockName + ' block given';
-    }
-    
+  var lastId = 0;
+
+  this.createBlock = function(blockName, params, id) {
     if (App.blocks[blockName]) {
+      var id = id || 'block--' + lastId++;
+      
       initializers.push(function() {
         var $block = $('#' + id);
         App.blocks[blockName]($block, params)
