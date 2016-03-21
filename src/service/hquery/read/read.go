@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"service/hquery/errs"
 	"service/hquery/format"
-	"service/hquery/read/builder"
 	"service/hquery/shared"
 	"throw"
 	"web"
@@ -33,7 +32,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 func mustProcessRequest(input io.ReadCloser, limit string) []byte {
 	data := mustParse(input)
 
-	sb := builder.NewStatementBuilder(data.nodes, data.edges)
+	sb := NewStatementBuilder(data)
 
 	query := neo.NewQuery(sb.Build(limit))
 	resp, err := query.Run()

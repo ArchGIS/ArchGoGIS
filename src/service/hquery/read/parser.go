@@ -19,7 +19,9 @@ func MustNewParser(input io.ReadCloser) *Parser {
 	}
 
 	this.nodes = make(map[string]*ast.Node, len(this.input))
+	this.optionalNodes = make(map[string]*ast.Node, len(this.input))
 	this.edges = make([]*ast.Edge, 0, len(this.input))
+	this.optionalEdges = make([]*ast.Edge, 0, len(this.input))
 
 	return this
 }
@@ -38,9 +40,17 @@ func (my *Parser) mustParse() {
 
 func (my *Parser) mustParseOne(tag string, query map[string]string) {
 	if strings.Contains(tag, "_") {
-		my.mustParseEdge(tag, query)
+		if tag[0] == '?' {
+			my.mustParseOptionalEdge(tag[1:], query)
+		} else {
+			my.mustParseEdge(tag, query)
+		}
 	} else {
-		my.mustParseNode(tag, query)
+		if tag[0] == '?' {
+			my.mustParseOptionalNode(tag[1:], query)
+		} else {
+			my.mustParseNode(tag, query)
+		}
 	}
 }
 
@@ -49,11 +59,26 @@ func (my *Parser) mustParseNode(tag string, query map[string]string) {
 	my.nodes[node.Name] = node
 }
 
+func (my *Parser) mustParseOptionalNode(tag string, query map[string]string) {
+	node := ast.MustNewNode(tag, query)
+	my.optionalNodes[node.Name] = node
+}
+
 func (my *Parser) mustParseEdge(tag string, query map[string]string) {
 	my.edges = append(my.edges, ast.MustNewEdge(tag, query))
 }
 
+func (my *Parser) mustParseOptionalEdge(tag string, query map[string]string) {
+	my.optionalEdges = append(my.optionalEdges, ast.MustNewEdge(tag, query))
+}
+
 func (my *Parser) hasRef(key string) bool {
-	_, has := my.nodes[key]
-	return has
+	if _, ok := my.nodes[key]; ok {
+		return true
+	}
+	if _, ok := my.optionalNodes[key]; ok {
+		return true
+	}
+
+	return false
 }

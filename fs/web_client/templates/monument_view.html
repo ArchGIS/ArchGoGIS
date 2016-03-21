@@ -1,36 +1,25 @@
 <h2><%= t('monument.singular') %></h2>
 
-<p>Название: 
-<% for (var i=0; i<k.length; ++i) { %>
-  <%= k[i].name %>
-  <% if (i != k.length-1) { %>,<% } %>
-<% } %>
+<p><%= t('knowledge.prop.name') %>:
+  <%= _.pluck(k, 'name').join(', ') %>
 </p>
 
-<p>Тип: 
-<% for (var i=0; i<o.length; ++i) { %>
-  <%= o[i].type %>
-  <% if (i != k.length-1) { %>,<% } %>
-<% } %>
+<p><%= t('monument.prop.type') %>: <%= m.type %></p>
+
+<p><%= t('monument.prop.epoch') %>: <%= m.epoch %></p>
+
+<p><%= t('knowledge.prop.culture') %>:
+  <%= _.pluck(k, 'culture').join(', ') %>
 </p>
 
-<p>Эпоха: <%= m.epoch %></p>
+<p><%= t('coord.plural') %>: <%= m.x %>, <%= m.y %></p>
 
-<p>Культурная принадлежность: 
-<% for (var i=0; i<k.length; ++i) { %>
-  <%= k[i].culture %>
-  <% if (i != k.length-1) { %>,<% } %>
-<% } %>
-</p>
-
-<p>Координаты: <%= m.x %>, <%= m.y %></p>
-
-<h3>Исследования:</h3>
+<h3><%= t('research.plural') %>:</h3> 
 <% for (var i=0; i<r.length; ++i) { %>
   <p>
     <%= a[i].name %> 
     &ndash; 
-    <a href="?id=<%= r[i].id %>#research/show">
+    <a href="#research/show/<%= r[i].id %>">
       <%= r[i].description %> (<%= r[i].year %>)
     </a>
   </p>

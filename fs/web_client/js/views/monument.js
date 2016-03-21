@@ -15,7 +15,7 @@ App.views.monument = new (App.View.extend({
           })
         });
       });
-      
+
       $("#research-input").autocomplete({
         source: [],
         minLength: 0,
@@ -59,12 +59,40 @@ App.views.monument = new (App.View.extend({
     };
   
     var lastSelectedAuthorId = 0;
-    App.page.get('authorInput').on('autocompleteselect', function(event, ui) {
+    App.page.get('author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         authorSelectHandler(event, ui);
       } 
     });
+
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    App.page.get('coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    App.page.get('coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
 
     setSelectsEvents();
     setSwitches();

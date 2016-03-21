@@ -5,5 +5,5 @@ CREATE SEQUENCE n_research_id_seq;
 CREATE SEQUENCE n_geometry_id_seq;
 CREATE SEQUENCE n_object_id_seq;
 CREATE SEQUENCE n_artifact_id_seq;
-
+CREATE SEQUENCE n_organization_seq;
 

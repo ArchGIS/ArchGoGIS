@@ -17,8 +17,8 @@
 
     <div class="flexible" toggle-by="new-author-checkbox" need-option="false">
       <label for="author-input">Автор исследования</label>
-      <%= widget("SearchLine", authorsInputOptions, "authorInput") %>
-      <input id="author-input-id" hidden></input>
+      <%= widget("SearchLine", authorsInputOptions, "author-input") %>
+      <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
     </div>
 
     <div class="flexible" toggle-by="new-author-checkbox" need-option="true">
@@ -29,7 +29,11 @@
       <label for="author-birth-date-input">Дата рождения</label>
       <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
     </div>
-
+    <div>
+      <label for="coauthor-input">Соавторы</label>
+      <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
+      <input id="coauthor-input-id" data-few="true" data-for="co:Coauthor" type="hidden" name="id"></input>
+    </div>
     <div class="flexible" id="research-choose">
       <label for="new-research-checkbox">Добавить новое исследование</label>
       <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
@@ -100,26 +104,11 @@
       <label for="artifact-size-input">Габариты</label>
       <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
     </div>
-    <!-- <div>
-      <label for="artifact-foto-input">Фото</label>
-      <input id="artifact-foto-input" type="file"></input>
-    </div> -->
   </div>
-
-  <input hidden data-name="author:Author">
-  <input hidden data-name="r:Research">
-  <input hidden data-name="k:Knowledge">
-  <input hidden data-name="m:Monument">
-  <input hidden data-name="a:Artifact">
-  <input hidden data-name="author_Created_r">
-  <input hidden data-name="r_Contains_k">
-  <input hidden data-name="k_Describes_m">
-  <input hidden data-name="m_Contains_a">
-
 </div>
 <button class="pure-button pure-button-primary" onclick="postQuery()">
   <i class="fa fa-cogs"></i>
-  Сгенерить
+  Создать
 </button>
 
 <!-- <div class="maps">

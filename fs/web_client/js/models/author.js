@@ -21,3 +21,7 @@ App.models.Author.url = function(id) {
 App.models.Author.href = function(id, text) {
   return '<a href="' + App.models.Author.url(id) + '">' + text + '</a>';
 };
+App.models.Author.findByLastNamePrefix = function(name) {
+	var lastName = name.split(/,\s*/).pop();
+	return App.models.Author.findByNamePrefix(lastName);
+};

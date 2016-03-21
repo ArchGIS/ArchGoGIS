@@ -2,31 +2,43 @@
 
 App.controllers.monument = new (App.View.extend({
   'show': function() {
-    var id = App.url.get("id");
-
+    App.url.setMapping(['id']);
+    var id = App.url.get('id');
+    
     var query = {
       "m:Monument": {"id": id, "select": "*"},
       "k:Knowledge": {"id": "*", "select": "*"},
       "r:Research": {"id": "*", "select": "*"},
       "a:Author": {"id": "*", "select": "*"},
-      "o:Object": {"id": "*", "select": "*"},
+      "?o:Object": {"id": "*", "select": "*"},
       "k_Describes_m": {},
       "r_Contains_k": {},
       "a_Created_r": {},
-      "m_Contains_o": {}
+      "?m_Contains_o": {}
     };
     $.post('/hquery/read', JSON.stringify(query))
     .success(function(response) {
+      // #FIXME: унести запрос и JSON.parse в модель    
       var respObject = JSON.parse(response);
       App.page.render('monument_view', respObject);
     });
   },
 
   'new': function() {
+    App.page.pushDestructor(function() {
+      console.log('monument controller is done (destructor)');
+    });
+    
     App.page.render('monument', {
       'param': 'test data',
       'authorsInputOptions': {
         'source': App.models.Author.findByNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        }
+      },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
@@ -36,9 +48,5 @@ App.controllers.monument = new (App.View.extend({
 
   'start': function() {
     console.log('monument controller is launched');
-  },
-
-  'finish': function() {
-    console.log('monument controller is done');
   }
 }));

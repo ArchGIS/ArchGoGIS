@@ -6,10 +6,6 @@
   var controllerAction = '';
 
   function cleanup() {
-    if (currentController.finish) {
-      currentController.finish();
-    }
-    
     App.page.clear();
   }
 
