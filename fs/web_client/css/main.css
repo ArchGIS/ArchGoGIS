@@ -1,4 +1,9 @@
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
   font: 12pt/10pt Helvetica sans-serif;
   min-width: 875px;
 }
@@ -20,12 +25,32 @@ a:hover {
   text-decoration: underline;
 }
 
+#body {
+  /*display: flex;
+  flex-direction: row;
+  justify-content: center;*/
+  margin-top: 3em;
+  height: calc(100% - 2em);
+  /*align-items: flex-start;*/
+}
+
 .content {
-  /*width: 50%;*/
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: start;*/
+  /*margin-right: 1em;*/
+  /*position: relative;*/
+  width: 50%;
+  /*min-width: 520px;*/
+  border: 1px solid;
+}
+
+#container {
   /*margin: auto;*/
-  /*min-width: 574px;*/
-  /*box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
-  /*border-radius: 0 0 10px 10px;*/
+  /*justify-content: flex-start;*/
+  /*min-width: 515px;*/
+  width: 100%;
+  border: 1px solid blue;
 }
 
 footer {
@@ -114,7 +139,7 @@ a.pure-menu-heading:hover {
 }
 
 .pure-button {
-  /*margin-top: 1em;*/
+  margin-top: 1em;
   /*margin-left: 1em;*/
   /*align;*/
 }
@@ -156,14 +181,20 @@ fieldset {
   background: none;
 }
 
-.flexible {
+.flex-column {
   display: flex;
-  justify-content: end;
-  width: 86%;
-  align-items: center;
+  flex-direction: column;
 }
 
-.flexible label {
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  /*justify-content: end;*/
+  /*width: 86%;*/
+  /*align-items: center;*/
+}
+
+.flex-row label {
   margin-right: 1em;
   line-height: normal;
 }
@@ -177,37 +208,23 @@ fieldset {
 */
 
 .maps {
+  /*margin: auto;*/
   position: fixed;
+  left: calc(50% + 1em);
   top: 3em;
-  left: 574px;
-  right: 1%;
+  /*min-width: 300px;*/
+  /*min-height: 250px;*/
+  width: 45%;
+  height: 90%;
+  /*position: fixed;*/
+  /*top: 5em;*/
+  /*left: 574px;*/
+  /*right: 1%;
   width: auto;
   min-width: 300px;
   height: 85%;
-  min-height: 300px;
+  min-height: 300px;*/
   /*padding-right: -1px; */
   border: 1px solid;
   /*border-right: 2px solid;*/
-}
-
-
-
-
-.main-block {
-  position: relative;
-  width: 50%;
-  margin: auto;
-  /*float: left;*/
-}
-
-
-
-.test {
-  width: 40%;
-  height: 200px;
-  position: relative;
-  top: 1em;
-  
-  /*float: right;*/
-  border: 1px solid;
 }

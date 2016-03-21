@@ -21,6 +21,12 @@
       "name": "Monument name"
     }
   },
+  "object": {
+    "singular": "Object"
+  },
+  "artifact": {
+    "singular": "Artifact"
+  },
   "search": {
     "head": "Fast search",
     "subject": "Seeking for what?",
