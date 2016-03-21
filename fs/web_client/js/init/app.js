@@ -64,7 +64,13 @@ function fillSelect(selectId, obj) {
 }
 
 function postQuery() {
-  var query = generateQuery();
+  var query = generateQuery([
+    "Author_Research_Created",
+    "Research_Knowledge_Contains",
+    "Knowledge_Monument_Describes",
+    "Monument_Artifact_Contains",
+    "Coauthor_Research_Helpedtocreate"
+  ]);
 
   $.post("/hquery/upsert", JSON.stringify(query))
   .success(function(response) {
@@ -72,25 +78,47 @@ function postQuery() {
   })
 }
 
-function generateQuery() {
+function generateQuery(relations) {
   var type, json = {};
-  var objs = $("input[data-name]");
-  var dataName, name, value;
+  var inputs = $("[data-for][used!=false]");
+  var dataName, name, value, objs = {};
 
-  $.each(objs, function(key, obj) {
-    json[$(obj).attr("data-name")] = {};
+  $.each(inputs, function(key, input) {
+    dataName = $(input).attr("data-for");
+    type = ($(input).attr("type") != "hidden") ? ("/" + $(input).attr("type")) : "";
+    name = $(input).attr("name") + type;
+    value = $(input).val();
+
+    if ($(input).attr("data-few")) {
+      value = value.split(",")
+      var i=0;
+      var inputName = dataName.split(":")[0];
+      var inputClass = dataName.split(":")[1];
+      _.each(value, function(val) {
+        objs[inputClass] = objs[inputClass] || [];
+        objs[inputClass].push(inputName+i);
+
+        json[inputName+i+":"+inputClass] = {};
+        json[inputName+i+":"+inputClass]["id"] = val;
+        i++;
+      })
+    } else {
+      objs[dataName.split(":")[1]] = objs[dataName.split(":")[1]] || [];
+      objs[dataName.split(":")[1]].push(dataName.split(":")[0]);
+
+      json[dataName] = json[dataName] || {};
+      json[dataName][name] = value;
+    }
   })
 
-  objs = $("[data-for][used!=false]");
-  $.each(objs, function(key, obj) {
-    dataName = $(obj).attr("data-for");
-    type = ($(obj).attr("type") != "hidden") ? ("/" + $(obj).attr("type")) : "";
-    name = $(obj).attr("name") + type;
-    value = $(obj).val();
-
-    json[dataName][name] = value;
+  _.each(relations, function(val) {
+    var relation = val.split("_");
+    _.each(objs[relation[0]], function(val) {
+      if (objs[relation[1]]) {
+        json[val+"_"+relation[2]+"_"+objs[relation[1]][0]] = {};
+      }
+    })
   })
-
 
   console.log(json)
   return json;

@@ -14,6 +14,9 @@ App.controllers.search = new (App.View.extend({
       'authorSearchOptions': {
 	'source': App.models.Author.findByNamePrefix,
 	'etl': function(authors) {
+      'researchAuthorSearchOptions': {
+        'source': App.models.Author.findByNamePrefix,
+        'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
       }

@@ -36,6 +36,12 @@ App.controllers.monument = new (App.View.extend({
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
+      },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        }
       }
     });
   },
