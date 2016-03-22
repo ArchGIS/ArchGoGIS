@@ -14,7 +14,7 @@ App.views.search = new (App.View.extend({
     var objects = {
       'monument-params': {
         'handler': searchMonument,
-        'heading': ['#', t(['monument', 'prop', 'type']), t(['monument', 'prop', 'epoch'])],
+        'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
           return _.map(monuments, function(mk, n) {
             return [App.models.Monument.href(mk[0].id, n+1), mk[0].type, mk[0].epoch];
@@ -24,7 +24,7 @@ App.views.search = new (App.View.extend({
       },
       'research-params': {
         'handler': searchResearch,
-        'heading': ['#', t(['research', 'prop', 'description']), t(['research', 'prop', 'type'])],
+        'heading': ['#', t('research.prop.description'), t('research.prop.type')],
         'columnsMaker': function(researches) {
           return _.map(researches, function(r, n) {
             return [App.models.Research.href(r.id, n+1), r.description, r.type];
@@ -37,7 +37,7 @@ App.views.search = new (App.View.extend({
       },
       'author-params': {
         'handler': searchAuthor,
-        'heading': ['#', t(['author', 'prop', 'name']), t(['author', 'prop', 'year'])],
+        'heading': ['#', t('author.prop.name'), t('author.prop.year')],
         'columnsMaker': function(authors) {
           return _.map(authors, function(a, n) {
             return [App.models.Author.href(a.id, n+1), a.name, a.year];
