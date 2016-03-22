@@ -76,15 +76,22 @@
         <label>Культура</label>
         <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
-        <label>Координата X</label>
-        <input id="monument-input" data-for="m:Monument" type="number" name="x"></input>
-      </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
-        <label>Координата Y</label>
-        <input id="monument-input" data-for="m:Monument" type="number" name="y"></input>
+
+      <div class="coords" toggle-by="new-monument-checkbox" need-option="true">
+        <div class="coord">
+          <label>Координата X
+            <input id="monument-x" data-for="m:Monument" type="text" name="x"></input>
+          </label>
+        </div>
+        <div class="coord">
+          <label>Координата Y
+            <input id="monument-y" data-for="m:Monument" type="text" name="y"></input>
+          </label>
+        </div>
+        <i id="pick-coord" class="fa fa-map-marker"></i>
       </div>
     </div>
+    
     <div id="menu2">
       <h3>Объект</h3>
       Необязательная страница.

@@ -171,6 +171,21 @@ input {
   border-radius: 0;
 }
 
+.coord {
+    width: 210px;
+}
+
+input[type=text] {
+    width: 200px;
+}
+
+.coords {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
