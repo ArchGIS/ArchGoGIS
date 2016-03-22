@@ -13,4 +13,15 @@
 </div>
 
 <h3><%= t('organization.plural') %>:</h3>
-# TODO
+
+<% _.each(orgs, function(org, i) { %>
+  <a href="#organization/show/<%= org.id %>"><%= org.name %></a>
+  <br>
+  <p>
+    <%= t('work-post') %>:
+    <%= a_WorkedIn_orgs[i].position %>
+    <%= t('since') %>
+    <%= a_WorkedIn_orgs[i].since %>
+  </p>
+  <br>
+<% }); %>
