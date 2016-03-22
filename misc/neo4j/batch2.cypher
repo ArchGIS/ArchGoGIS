@@ -30,11 +30,21 @@ create (obj1:Object {id:1, type:'Могила'})
 create (obj2:Object {id:2, type:'Могила'})
 create (obj3:Object {id:3, type:'Крыша от мавзолея'})
 
-create (art1:Artifact {id:1, weight:1.4, type:'Кости'})
-create (art2:Artifact {id:2, weight:1.5, type:'Корона'})
-create (art3:Artifact {id:3, weight:20.4, type:'Скелет'})
-create (art4:Artifact {id:4, weight:3.0, type:'Мох'})
-create (art5:Artifact {id:5, weight:19.3, type:'Камни'})
+create (art1:Artifact {
+  id:1, weight:1.4, names:['Кости', 'Груда костей']
+})
+create (art2:Artifact {
+  id:2, weight:1.5, names:['Корона']
+})
+create (art3:Artifact {
+  id:3, weight:20.4, names:['Останки', 'Скелет']
+})
+create (art4:Artifact {
+  id:4, weight:3.0, names:['Гниль', 'Мох']
+})
+create (art5:Artifact {
+  id:5, weight:19.3, names:['Камни']
+})
 
 create (m1)-[:Contains]->(obj1)
 create (m1)-[:Contains]->(obj2)
