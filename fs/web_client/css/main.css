@@ -35,7 +35,7 @@ a:hover {
 }
 
 .content {
-  width: 50%;
+  width: 49%;
   margin-top: 3em;
   padding-left: 1em;
 }
@@ -180,10 +180,22 @@ input[type=text] {
 }
 
 .coords {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.ui-autocomplete {
+  border: 1px solid #ccc;
+}
+
+.ui-autocomplete .ui-menu-item {
+  border-bottom: 1px solid #aaa;
+}
+
+.ui-autocomlete:last-child {
+  border-bottom: none;
 }
 
 .flex-column {
