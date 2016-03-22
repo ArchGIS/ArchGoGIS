@@ -15,15 +15,19 @@
 
   <h3><%= t('organization.plural') %>:</h3>
 
-  <% _.each(orgs, function(org, i) { %>
-    <a href="#organization/show/<%= org.id %>"><%= org.name %></a>
-    <br>
-    <p>
-      <%= t('work-post') %>:
-      <%= a_WorkedIn_orgs[i].position %>
-      <%= t('since') %>
-      <%= a_WorkedIn_orgs[i].since %>
-    </p>
+  <% if (a_WorkedIn_orgs.length) { %>
+    <% _.each(a_WorkedIn_orgs, function(job, i) { %>
+      <a href="#organization/show/<%= orgs[i].id %>"><%= orgs[i].name %></a>
+      <br>
+      <p>
+        <%= t('work-post') %>:
+        <%= job.position %>
+        <%= t('since') %>
+        <%= job.since %>
+      </p>
     <br>
   <% }); %>
+  <% } else { %>
+    <p>Нет организаций</p>
+  <% } %>
 </div>
