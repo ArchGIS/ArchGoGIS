@@ -25,32 +25,38 @@ a:hover {
   text-decoration: underline;
 }
 
+/*
+  Основные блоки
+*/
+
 #body {
-  /*display: flex;
-  flex-direction: row;
-  justify-content: center;*/
   margin-top: 3em;
   height: calc(100% - 2em);
-  /*align-items: flex-start;*/
 }
 
 .content {
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: start;*/
-  /*margin-right: 1em;*/
-  /*position: relative;*/
   width: 50%;
-  /*min-width: 520px;*/
-  border: 1px solid;
 }
 
 #container {
-  /*margin: auto;*/
-  /*justify-content: flex-start;*/
-  /*min-width: 515px;*/
   width: 100%;
-  border: 1px solid blue;
+}
+
+.maps {
+  position: fixed;
+  left: calc(50% + 1em);
+  top: 3em;
+  width: calc(100% - 50% - 1.5em);
+  height: 90%;
+  border: 1px solid;
+}
+
+.block {
+  width: 50%;
+  margin: auto;
+  padding: 1em;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border-radius: 5px;
 }
 
 footer {
@@ -59,6 +65,9 @@ footer {
   margin-left: 15%;
   margin-top: 1.5em;
 }
+
+/* ######################## */
+
 
 .switch {
   cursor: pointer;
@@ -69,7 +78,6 @@ footer {
 }
 
 .pure-menu {
-  /*min-width: 800px;*/
   padding: 0;
   margin: 0;
 }
@@ -108,30 +116,17 @@ a.pure-menu-heading:hover {
   color: #ddd;
 }
 
-.pure-menu-list li {
-  /*position: relative;*/
-}
-
 .pure-menu-list li:hover > a {
   background: #222;
 }
 
 .pure-menu-list > li {
-  /*position: relative;*/
   margin-right: -5px;
   border-right: 1px solid;
 }
 
-.pure-menu-list > li: {}
-
 .pure-menu-children {
-  /*position: absolute;
-  float: right;*/
   min-width: 100%;
-}
-
-.pure-menu-children li {
-  /*white-space: nowrap;*/
 }
 
 .pure-menu-list li:hover > ul {
@@ -140,8 +135,7 @@ a.pure-menu-heading:hover {
 
 .pure-button {
   margin-top: 1em;
-  /*margin-left: 1em;*/
-  /*align;*/
+  margin-left: 2em;
 }
 
 .pure-table {
@@ -155,12 +149,6 @@ a.pure-menu-heading:hover {
 input {
   margin-top: 0.3em;
   margin-bottom: 0.3em;
-}
-
-fieldset {
-  /*padding: 1em;*/
-  margin: 1em;
-  border-radius: 10px;
 }
 
 #search-criteria {
@@ -179,6 +167,7 @@ fieldset {
   border: none;
   border-bottom: 1px solid #aaa;
   background: none;
+  border-radius: 0;
 }
 
 .flex-column {
@@ -189,42 +178,5 @@ fieldset {
 .flex-row {
   display: flex;
   flex-direction: row;
-  /*justify-content: end;*/
-  /*width: 86%;*/
-  /*align-items: center;*/
-}
-
-.flex-row label {
-  margin-right: 1em;
-  line-height: normal;
-}
-
-/*input[type="text"], input[type="number"] {
-  width: 100%;
-}*/
-
-/*
-  Map settings
-*/
-
-.maps {
-  /*margin: auto;*/
-  position: fixed;
-  left: calc(50% + 1em);
-  top: 3em;
-  /*min-width: 300px;*/
-  /*min-height: 250px;*/
-  width: 45%;
-  height: 90%;
-  /*position: fixed;*/
-  /*top: 5em;*/
-  /*left: 574px;*/
-  /*right: 1%;
-  width: auto;
-  min-width: 300px;
-  height: 85%;
-  min-height: 300px;*/
-  /*padding-right: -1px; */
-  border: 1px solid;
-  /*border-right: 2px solid;*/
+  justify-content: center;
 }

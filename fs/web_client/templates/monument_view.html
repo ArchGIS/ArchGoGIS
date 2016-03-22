@@ -1,26 +1,28 @@
-<h2><%= t('monument.singular') %></h2>
+<div class="block">  
+  <h2><%= t('monument.singular') %></h2>
 
-<p><%= t('knowledge.prop.name') %>:
-  <%= _.pluck(k, 'name').join(', ') %>
-</p>
-
-<p><%= t('monument.prop.type') %>: <%= m.type %></p>
-
-<p><%= t('monument.prop.epoch') %>: <%= m.epoch %></p>
-
-<p><%= t('knowledge.prop.culture') %>:
-  <%= _.pluck(k, 'culture').join(', ') %>
-</p>
-
-<p><%= t('coord.plural') %>: <%= m.x %>, <%= m.y %></p>
-
-<h3><%= t('research.plural') %>:</h3> 
-<% for (var i=0; i<r.length; ++i) { %>
-  <p>
-    <%= a[i].name %> 
-    &ndash; 
-    <a href="#research/show/<%= r[i].id %>">
-      <%= r[i].description %> (<%= r[i].year %>)
-    </a>
+  <p><%= t('knowledge.prop.name') %>:
+    <%= _.pluck(k, 'name').join(', ') %>
   </p>
-<% } %>
+
+  <p><%= t('monument.prop.type') %>: <%= m.type %></p>
+
+  <p><%= t('monument.prop.epoch') %>: <%= m.epoch %></p>
+
+  <p><%= t('knowledge.prop.culture') %>:
+    <%= _.pluck(k, 'culture').join(', ') %>
+  </p>
+
+  <p><%= t('coord.plural') %>: <%= m.x %>, <%= m.y %></p>
+
+  <h3><%= t('research.plural') %>:</h3> 
+  <% for (var i=0; i<r.length; ++i) { %>
+    <p>
+      <%= a[i].name %> 
+      &ndash; 
+      <a href="#research/show/<%= r[i].id %>">
+        <%= r[i].description %> (<%= r[i].year %>)
+      </a>
+    </p>
+  <% } %>
+</div>

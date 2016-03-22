@@ -7,8 +7,8 @@ App.controllers.author = new (App.View.extend({
 
     var query = JSON.stringify({
       'a:Author': {'id': id, 'select': '*'},
-      'orgs:Organization': {'id': '*', 'select': '*'},
-      'a_WorkedIn_orgs': {'select': '*', 'collect': '+'}
+      '?orgs:Organization': {'id': '*', 'select': '*'},
+      '?a_WorkedIn_orgs': {'select': '*', 'collect': '+'}
     });
 
     $.post('/hquery/read', query)

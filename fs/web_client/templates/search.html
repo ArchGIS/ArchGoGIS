@@ -1,4 +1,4 @@
-<div class="content">
+<div class="block">
   <h2><%= t('search.head') %></h2>
 
   <label>
@@ -11,34 +11,31 @@
     ]}, "objectToggler") %>
   </label>
 
-  <!-- <fieldset id="search-criteria"> -->
-    <!-- <legend><%= t("search.criteria") %></legend> -->
-    <h4>Критерии поиска:</h4>
-    <div class="flex-row" id="monument-params" style="display: none">
-      <label>
-        <%= t("knowledge.prop.name") %>
-        <%= widget("SearchLine", monumentSearchOptions, "monument-input") %>
-      </label>
-    </div>
-    <div class="flex-column" id="research-params" style="display: none" data-url="research">
-      <label class="flex-row">
-        <%= t("author.name") %>
-        <%= widget("SearchLine", authorSearchOptions, "research-author-input") %>
-      </label>
-      <br/>
-      <label class="flex-row">
-        <%= t("research.year") %>
-        <input id="research-year-input" class="autoinput">
-      </label>
-    </div>
+  <h4>Критерии поиска:</h4>
+  <div class="flex-row" id="monument-params" style="display: none">
+    <label>
+      <%= t("knowledge.prop.name") %>
+      <%= widget("SearchLine", monumentSearchOptions, "monument-input") %>
+    </label>
+  </div>
+  <div class="flex-column" id="research-params" style="display: none" data-url="research">
+    <label class="flex-row">
+      <%= t("author.name") %>
+      <%= widget("SearchLine", authorSearchOptions, "research-author-input") %>
+    </label>
+    <br/>
+    <label class="flex-row">
+      <%= t("research.year") %>
+      <input id="research-year-input" class="autoinput">
+    </label>
+  </div>
 
-    <div id="author-params" style="display: none">
-      <label>
-        <%= t("author.prop.name") %>
-        <%= widget("SearchLine", authorSearchOptions, "author-input") %>
-      </label>
-    </div>
-  <!-- </fieldset> -->
+  <div id="author-params" style="display: none">
+    <label class="flex-row">
+      <%= t("author.prop.name") %>
+      <%= widget("SearchLine", authorSearchOptions, "author-input") %>
+    </label>
+  </div>
 
   <button class="pure-button pure-button-primary" id="show-results-button">
       <i class="fa fa-search"></i>

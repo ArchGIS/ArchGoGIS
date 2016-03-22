@@ -1,7 +1,6 @@
 <div class="content">
-
+  <h2><%= t('monument.singular') %></h2>
   <div id="container">
-    <h2><%= t('monument.singular') %></h2>
     <ul>
       <li><a href="#home"><%= t('research.singular') %></a></li>
       <li><a href="#menu1"><%= t('monument.singular') %></a></li>
@@ -111,11 +110,12 @@
       </div>
     </div>
   </div>
+
+  <button class="pure-button pure-button-primary" onclick="postQuery()">
+    <i class="fa fa-cogs"></i>
+    Создать
+  </button>
 </div>
-<button class="pure-button pure-button-primary" onclick="postQuery()">
-  <i class="fa fa-cogs"></i>
-  Создать
-</button>
 
 <div class="maps">
   <%= widget("Map", {}, "map") %>
