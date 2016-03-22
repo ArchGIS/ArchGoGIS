@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  height: 100%;
+  height: calc(100% - 2em);
   font: 12pt/10pt Helvetica sans-serif;
   min-width: 875px;
 }
@@ -30,12 +30,14 @@ a:hover {
 */
 
 #body {
-  margin-top: 3em;
-  height: calc(100% - 2em);
+  margin-top: 2em;
+  min-height: calc(100vh - 5em);
 }
 
 .content {
   width: 50%;
+  margin-top: 3em;
+  padding-left: 1em;
 }
 
 #container {
@@ -56,14 +58,13 @@ a:hover {
   margin: auto;
   padding: 1em;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
 }
 
 footer {
-  width: 50%;
-  margin: auto;
-  margin-left: 15%;
-  margin-top: 1.5em;
+  width: 200px;
+  height: 1em;
+  margin-left: 1em;
 }
 
 /* ######################## */
