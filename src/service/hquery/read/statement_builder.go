@@ -59,7 +59,11 @@ func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node, edges []*ast.
 	}
 	for _, edge := range edges {
 		if _, selected := edge.Props["select"]; selected {
-			my.buf.WriteString(edge.Tag + ",")
+			if edge.Props["collect"] != "" { // Временный хак
+				my.buf.WriteStringf("COLLECT(%s) AS %s,", edge.Tag, edge.Tag)
+			} else {
+				my.buf.WriteString(edge.Tag + ",")
+			}
 		}
 	}
 }
