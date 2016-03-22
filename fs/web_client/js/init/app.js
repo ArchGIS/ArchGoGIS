@@ -56,55 +56,64 @@ function showField(select) {
 }
 
 function postQuery() {
-  var query = generateQuery([
-    "Author_Research_Created",
-    "Research_Knowledge_Contains",
-    "Knowledge_Monument_Describes",
-    "Monument_Artifact_Contains",
-    "Coauthor_Research_Helpedtocreate"
+  var json = generateJson([
+    ["Author", "Research", "Created"],
+    ["Research", "Knowledge", "Contains"],
+    ["Knowledge", "Monument", "Describes"],
+    ["Monument", "Artifact", "Contains"],
+    ["Coauthor", "Research", "HelpedToCreate"]
   ]);
 
-  $.post("/hquery/upsert", JSON.stringify(query))
+  $.post("/hquery/upsert", JSON.stringify(json))
   .success(function(response) {
     console.log(response);
   })
 }
 
-function generateQuery(relations) {
+function generateJson(relations) {
   var type, json = {};
   var inputs = $("[data-for][used!=false]");
-  var dataName, name, value, objs = {};
+  var dataFor, name, value, inputName, counter, inputClass, inputSubclass, inputObjName, objs = {};
 
   $.each(inputs, function(key, input) {
-    dataName = $(input).attr("data-for");
+    dataFor = $(input).attr("data-for");
     type = ($(input).attr("type") != "hidden") ? ("/" + $(input).attr("type")) : "";
     name = $(input).attr("name") + type;
     value = $(input).val();
+    inputClass = dataFor.split(":")[1];
+    inputSubclass = $(input).attr("data-subclass") || inputClass;
+
+    if (!value) {
+      return true;
+    }
+
+    objs[inputSubclass] = objs[inputSubclass] || [];
 
     if ($(input).attr("data-few")) {
       value = value.split(",")
-      var i=0;
-      var inputName = dataName.split(":")[0];
-      var inputClass = dataName.split(":")[1];
+      counter = 0;
+      
       _.each(value, function(val) {
-        objs[inputClass] = objs[inputClass] || [];
-        objs[inputClass].push(inputName+i);
-
-        json[inputName+i+":"+inputClass] = {};
-        json[inputName+i+":"+inputClass]["id"] = val;
-        i++;
+        inputObjName = dataFor.split(":")[0]+counter;
+        objs[inputSubclass].push(inputObjName);
+        json[inputObjName+":"+inputClass] = {};
+        json[inputObjName+":"+inputClass]["id"] = val;
+        counter++;
       })
     } else {
-      objs[dataName.split(":")[1]] = objs[dataName.split(":")[1]] || [];
-      objs[dataName.split(":")[1]].push(dataName.split(":")[0]);
-
-      json[dataName] = json[dataName] || {};
-      json[dataName][name] = value;
+      inputObjName = dataFor.split(":")[0];
+      objs[inputSubclass].push(inputObjName);
+      json[dataFor] = json[dataFor] || {};
+      json[dataFor][name] = value;
     }
   })
 
-  _.each(relations, function(val) {
-    var relation = val.split("_");
+  _.each(relations, function(relation) {
+    console.log(objs[relation[0]])
+    if (objs[relation[0]]) {
+      objs[relation[0]] = $.unique(objs[relation[0]]);
+    }
+    
     _.each(objs[relation[0]], function(val) {
       if (objs[relation[1]]) {
         json[val+"_"+relation[2]+"_"+objs[relation[1]][0]] = {};
@@ -113,16 +122,6 @@ function generateQuery(relations) {
   })
 
   console.log(json)
+  console.log(objs)
   return json;
-}
-
-function setSwitches() {
-  var switches = $(".switch");
-
-  $.each(switches, function(ket, obj) {
-    $(obj).click(function() {
-      $(obj).next().slideToggle(500);
-    })
-    $(obj).next().hide();
-  })
-}
+} 

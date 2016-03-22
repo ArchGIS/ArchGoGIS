@@ -44,12 +44,14 @@ func processRequest(input io.ReadCloser) []byte {
 		resp, err := tx.Run()
 		if err != nil {
 			tx.Rollback()
+			echo.ServerError.Print(err)
 			return api.Error(errs.BatchUpdateFailed)
 		}
 
 		// Все ли записи были обновлены?
 		for _, result := range resp.Results {
 			if len(result.Data) == 0 {
+				echo.ServerError.Print("partial update")
 				return api.Error(errs.BatchUpdateFailed)
 			}
 		}

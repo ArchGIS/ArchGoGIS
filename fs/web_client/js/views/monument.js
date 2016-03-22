@@ -95,7 +95,6 @@ App.views.monument = new (App.View.extend({
     })
 
     setSelectsEvents();
-    setSwitches();
     $("#container").tabs();
   }
 }));
