@@ -17,7 +17,11 @@ App.views.search = new (App.View.extend({
         'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
           return _.map(monuments, function(mk, n) {
-            return [App.models.Monument.href(mk[0].id, n+1), mk[0].type, mk[0].epoch];
+            return [
+              App.models.Monument.href(mk[0].id, n+1),
+              t('monument.types')[+mk[2]],
+              t('epoch')[mk[3] - 1]
+            ];
           });
         },
         'inputs': {'monument': App.page.get('monument-input')}
@@ -75,7 +79,7 @@ App.views.search = new (App.View.extend({
 
       my.inputs.monument.on('autocompleteselect', function(event, ui) {
         $results.show();
-       
+        
         // #FIXME: это очень плохое преобразование данных.
         var records = my.inputs.monument.getRecords();
         var matcher = new RegExp('^' + ui.item.label);

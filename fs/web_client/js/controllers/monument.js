@@ -11,16 +11,30 @@ App.controllers.monument = new (App.View.extend({
       "r:Research": {"id": "*", "select": "*"},
       "a:Author": {"id": "*", "select": "*"},
       "?o:Object": {"id": "*", "select": "*"},
+      "c:Culture": {"id": "*", "select": "*"},
       "k_Describes_m": {},
       "r_Contains_k": {},
+      "k_CultureOf_c": {},
       "a_Created_r": {},
       "?m_Contains_o": {}
     };
     $.post('/hquery/read', JSON.stringify(query))
-    .success(function(response) {
-      // #FIXME: унести запрос и JSON.parse в модель    
-      var respObject = JSON.parse(response);
-      App.page.render('monument_view', respObject);
+    .success(function(monumentData) {
+      var query = {
+        "m:Monument": {"id": id},
+        "ty:MonumentType": {"id": "?", "select": "*"},
+        "e:Epoch": {"id": "?", "select": "*"},
+        "m_TypeOf_ty": {},
+        "m_EpochOf_e": {},
+      };
+      $.post('/hquery/read', JSON.stringify(query))
+      .success(function(ty) {
+        // #FIXME: унести запрос и JSON.parse в модель    
+        var respObject = JSON.parse(monumentData);
+        var type = JSON.parse(ty);
+        console.log($.extend(respObject, type));
+        App.page.render('monument_view', $.extend(respObject, type));
+      });
     });
   },
 

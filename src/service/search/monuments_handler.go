@@ -1,6 +1,7 @@
 package search
 
 import (
+	"bytes"
 	"cfg"
 	"db/neo"
 	"echo"
@@ -9,6 +10,7 @@ import (
 	"norm"
 	"service/search/errs"
 	"unicode/utf8"
+	"unsafe"
 	"web"
 	"web/api"
 )
@@ -16,8 +18,10 @@ import (
 const (
 	monumnetsCypher = "MATCH (m:Monument)" +
 		"MATCH (k:Knowledge)-[:Describes]->(m)" +
+		"MATCH (m)-[:EpochOf]->(e:Epoch)" +
+		"MATCH (m)-[:TypeOf]->(ty:MonumentType)" +
 		"WHERE k.name STARTS WITH {needle}" +
-		"RETURN m, k"
+		"RETURN m, k, ty.id, e.id"
 )
 
 func monumentsHandler(w web.ResponseWriter, r *http.Request) {
@@ -56,10 +60,11 @@ func searchForMonuments(needle string) ([]byte, error) {
 
 		buf.WriteByte('[')
 		for _, row := range resp.Results[0].Data {
+			// #FIXME: перепиши меня, когда будет время!
 			buf.WriteByte('[')
-			buf.Write(row.Row[0])
-			buf.WriteByte(',')
-			buf.Write(row.Row[1])
+			buf.Write(
+				bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
+			)
 			buf.WriteByte(']')
 			buf.WriteByte(',')
 		}
