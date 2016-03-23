@@ -11,8 +11,7 @@
     <div id="home">
       <h3>Исследование</h3>
       <div>
-        <label for="new-author-checkbox">Добавить нового автора</label>
-        <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+        <%= input({id: "new-author-checkbox", label: "Добавить нового автора"}) %>
       </div>
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="false">
         <label for="author-input">Автор исследования</label>

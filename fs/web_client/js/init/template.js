@@ -3,14 +3,26 @@
 App.template = new function() {
   var memo = {};  
 
+  function input(opts) {
+    return opts.id ? input.templates["withId"](opts) : input.templates["noId"](opts);
+  }
+  input.templates = {
+    "noId": _.template(`<label><%= label %><input/></label>`),
+    "withId": _.template(`<label><%= label %><input id="<%= id %>"/></label>`)
+  };
+
+  function maybe(object) {
+    return object ? object : '?';
+  }
+  
   // То, что передаётся в каждый шаблон в любом случае.
   var defaultContext = {
-    't': function(key) {
-      return App.locale.translate(key.split('.'));
-    },
+    't': App.locale.translate,
     'widget': App.widgetMaker.createWidget,
     'block': App.blockMaker.createBlock,
-    'endblock': '</div>'
+    'endblock': '</div>',
+    'input': input,
+    'maybe': maybe
   };
 
   // Добавить в контекст шаблона параметры по умолчанию.

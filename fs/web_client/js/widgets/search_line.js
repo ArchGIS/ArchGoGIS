@@ -36,7 +36,7 @@ App.widgets.SearchLine = function(params, id) {
 	      if (typeof params.etl == 'function') {
 		result = params.etl(result);
 	      }
-	      items = result;
+	      items = _.uniq(result, 'label');
 	      response(items);
 	    }
 	  );

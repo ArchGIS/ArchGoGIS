@@ -5,12 +5,12 @@
     <%= _.pluck(k, 'name').join(', ') %>
   </p>
 
-  <p><%= t('monument.prop.type') %>: <%= m.type %></p>
+  <p><%= t('monument.prop.type') %>: <%= t('monument.types')[ty.id] %></p>
 
-  <p><%= t('monument.prop.epoch') %>: <%= m.epoch %></p>
+  <p><%= t('monument.prop.epoch') %>: <%= t('epoch')[e.id - 1] %></p>
 
   <p><%= t('knowledge.prop.culture') %>:
-    <%= _.pluck(k, 'culture').join(', ') %>
+    <%= _.pluck(c, "name").join(", ") %>
   </p>
 
   <p><%= t('coord.plural') %>: <%= m.x %>, <%= m.y %></p>
