@@ -3,3 +3,4 @@ pkg
 tmp
 cfg
 src/github.com
+fs/local_storage/*
