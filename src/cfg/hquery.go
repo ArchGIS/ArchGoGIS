@@ -8,7 +8,7 @@ const (
 	HqueryUpsertMaxInputLen = 4096
 	HqueryReadMaxInputLen   = 1024
 	HqueryReadDefaultLimit  = "10"
-	HqueryReadMaxLimit      = "100"
+	HqueryReadMaxLimit      = "500"
 	HqueryMaxEntries        = 32
 	HqueryMaxPropsPerEntry  = 24
 	HqueryMaxPropsTotal     = 120
