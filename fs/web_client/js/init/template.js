@@ -10,6 +10,10 @@ App.template = new function() {
     "noId": _.template(`<label><%= label %><input/></label>`),
     "withId": _.template(`<label><%= label %><input id="<%= id %>"/></label>`)
   };
+
+  function maybe(object) {
+    return object ? object : '?';
+  }
   
   // То, что передаётся в каждый шаблон в любом случае.
   var defaultContext = {
@@ -17,7 +21,8 @@ App.template = new function() {
     'widget': App.widgetMaker.createWidget,
     'block': App.blockMaker.createBlock,
     'endblock': '</div>',
-    'input': input
+    'input': input,
+    'maybe': maybe
   };
 
   // Добавить в контекст шаблона параметры по умолчанию.
