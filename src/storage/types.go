@@ -1,10 +1,12 @@
 package storage
 
 type FileStorage interface {
-	save(key string, data []byte) error
-	load(key string) ([]byte, error)
-	url(key string) (string, error)
+	Save(key string, data []byte) error
+	Load(key string) ([]byte, error)
+	Url(key string) (string, error)
 }
+
+type LocalStorage struct{}
 
 /*
 1) реализовать LocalFileStorage
