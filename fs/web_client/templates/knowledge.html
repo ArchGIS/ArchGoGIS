@@ -1,0 +1,41 @@
+<div class="content">  
+  <h2><%= t("knowledge.singular") %></h2>
+
+  <p><%= t("knowledge.prop.name") %>: <%= k.name %></p>
+  <p><%= t("monument.prop.type") %>: <%= t("monument.types")[ty[0].id] %></p>
+  <p><%= t("monument.prop.epoch") %>: <%= t("epoch")[e[0].id - 1] %></p>
+  <p><%= t("knowledge.prop.culture") %>: <%= c[0].name %></p>
+  <p><%= t("coord.plural") %>: <%= m[0].x %>, <%= m[0].y %></p>
+
+  <a href="#research/show/<%= r[0].id %>"><%= t("goto.research") %></a>
+  <br>
+  <br>
+  <a href="#monument/show/<%= m[0].id %>"><%= t("goto.monument") %></a>
+  <br>
+  <br>
+
+  <% if (tp) { %>
+    <h4>Топоплан</h4>
+    <img src="<%= tp[0].url %>">
+  <% } else { %>
+    <span style="color: gray">Нет топоплана.</span>
+    <br>
+    <br>
+  <% } %>
+
+  <% if (photos.length) { %>
+    <h4>Фотографии</h4>
+    <% _.each(photos, function(photo) { %>
+      <p><%= photo.name %></p>
+      <img src="<%= photo.url %>">
+    <% }); %>
+  <% } else { %>
+    <span style="color: gray">Нет фотографий.</span>
+  <% } %>  
+  
+</div>
+
+<div class="maps">
+  <%= widget("Map", {"center": [m[0].x, m[0].y], "withPlacemark": true}, "map") %>
+</div>
+
