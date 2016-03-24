@@ -2,16 +2,14 @@ package upsert
 
 import (
 	"cfg"
-	"io"
 	"service/hquery/errs"
-	"service/hquery/parsing"
 	"service/hquery/upsert/ast"
 	"strings"
 	"throw"
 )
 
-func MustNewParser(input io.ReadCloser) *Parser {
-	this := &Parser{input: parsing.MustFetchJson(input)}
+func MustNewParser(input map[string]map[string]string) *Parser {
+	this := &Parser{input: input}
 
 	totalProps := 0
 	for tag, rawProps := range this.input {

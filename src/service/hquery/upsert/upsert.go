@@ -7,10 +7,14 @@ import (
 	"db/pg/seq"
 	"echo"
 	"encoding/json"
-	"io"
+	"fmt"
+	// "io"
+	"mime"
 	"net/http"
 	"service/hquery/errs"
-	"service/hquery/shared"
+	"service/hquery/parsing"
+	// "service/hquery/shared"
+	"io/ioutil"
 	"service/hquery/upsert/builder"
 	"throw"
 	"web"
@@ -18,7 +22,67 @@ import (
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
-	shared.Handle(w, r, processRequest)
+	defer throw.Catch(func(err error) {
+		if _, ok := err.(*errs.HqueryError); ok {
+			w.Write([]byte(err.Error()))
+		} else {
+			// Runtime ошибка?
+			// panic(err)
+			fmt.Print(err)
+		}
+	})
+
+	mimeType, _, _ := mime.ParseMediaType(r.Header.Get("Content-Type"))
+	input := make(map[string]map[string]string)
+	// files := make(map[string]string) // [tag] => [url]
+
+	if "multipart/form-data" == mimeType {
+		// Нужно распаковать formData.
+		r.ParseMultipartForm(999999)
+
+		for tag, headers := range r.MultipartForm.File {
+			file, err := headers[0].Open()
+			if err != nil {
+				echo.ServerError.Print(err)
+				return
+			}
+
+			data, err := ioutil.ReadAll(file)
+			if err != nil {
+				echo.ServerError.Print(err)
+				return
+			}
+
+			key, err := agent.Save(data)
+			if err != nil {
+				echo.ServerError.Print(err)
+				return
+			}
+
+			url, _ := agent.Url(key)
+
+			input[tag] = map[string]string{
+				"name/text": headers[0].Filename,
+				"url/text":  url,
+			}
+		}
+
+		for tag, rawBody := range r.Form {
+			parsedBody := make(map[string]string)
+			err := json.Unmarshal([]byte(rawBody[0]), &parsedBody)
+			if err != nil {
+				w.Write(api.Error(errs.BadJsonGiven))
+				return
+			}
+
+			input[tag] = parsedBody
+		}
+	} else {
+		input = parsing.MustFetchJson(r.Body)
+	}
+
+	fmt.Printf("%+v\n", input)
+	w.Write(processRequest(input))
 }
 
 func mustPassValidation(data *Data) {
@@ -32,7 +96,7 @@ func mustPassValidation(data *Data) {
 	}
 }
 
-func processRequest(input io.ReadCloser) []byte {
+func processRequest(input map[string]map[string]string) []byte {
 	data := mustParse(input)
 	mustPassValidation(data)
 
@@ -86,7 +150,7 @@ func processRequest(input io.ReadCloser) []byte {
 	return jsonString
 }
 
-func mustParse(input io.ReadCloser) *Data {
+func mustParse(input map[string]map[string]string) *Data {
 	parser := MustNewParser(input)
 
 	parser.mustParse()

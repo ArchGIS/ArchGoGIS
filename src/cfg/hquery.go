@@ -39,6 +39,7 @@ var (
 		{"Organization", "n_organization_seq"},
 		{"Report", "n_report_id_seq"},
 		{"Heritage_Object", "n_heritage_object_id_seq"},
+		{"File", "n_file_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

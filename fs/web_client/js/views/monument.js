@@ -2,8 +2,7 @@
 
 App.views.monument = new (App.View.extend({
   'new': function() {    
-    var fmt = App.fn.fmt;
-  
+    var fmt = App.fn.fmt;  
     
     var authorSelectHandler = function(event, ui) {
       console.log(ui.item.id);
