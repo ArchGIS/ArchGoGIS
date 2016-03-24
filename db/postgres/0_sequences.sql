@@ -7,3 +7,4 @@ CREATE SEQUENCE n_object_id_seq;
 CREATE SEQUENCE n_artifact_id_seq;
 CREATE SEQUENCE n_organization_seq;
 
+CREATE SEQUENCE local_storage_file_id_seq;

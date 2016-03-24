@@ -7,7 +7,11 @@ import (
 	"web"
 )
 
+var config *Config
+
 func Serve(serverConfig Config, serviceConfigs ...service.Config) error {
+	config = &serverConfig
+
 	for _, serviceConfig := range serviceConfigs {
 		registerService(serviceConfig)
 	}
@@ -15,6 +19,10 @@ func Serve(serverConfig Config, serviceConfigs ...service.Config) error {
 	echo.Info.Printf("starting server at :%s port", serverConfig.Port)
 
 	return http.ListenAndServe(":"+serverConfig.Port, nil)
+}
+
+func GetHost() string {
+	return config.Host
 }
 
 func registerService(config service.Config) {

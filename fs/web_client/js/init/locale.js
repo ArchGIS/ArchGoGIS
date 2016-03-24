@@ -36,6 +36,7 @@ App.locale = new function() {
     if (currentName != name) {
       $.ajax({
         'url': '/locales/' + name + '.json',
+        'dataType': 'json',
         'async': false // Возможно стоит сделать асинхронным
       }).success(function(newDict) {
         setDict(newDict);

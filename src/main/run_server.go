@@ -15,7 +15,7 @@ func main() {
 	// Запуск веб-сервера (блокирующий вызов)
 	panic(server.Serve(
 		// Конфиг сервера:
-		cfg.DefaultServer(),
+		cfg.DevServer(),
 		// Подключаемые сервисы:
 		sbox.Config,
 		wc.Config,
