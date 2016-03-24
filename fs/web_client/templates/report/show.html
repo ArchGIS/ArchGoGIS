@@ -1,0 +1,25 @@
+<div class="block">
+  <h2>Отчёт #<%= r.id %></h2>
+
+  <p>
+    Описание: <%= r.description %>
+  </p>
+  <p>
+    Год: <%= r.year %>
+  </p>
+  <p>
+    <strong>Автор:</strong>
+    <a href="<%= App.models.Author.url(a[0].id) %>"><%= a[0].name %></a>
+  </p>
+  <p>
+    <strong>Памятники:</strong>
+    <!-- <%= _.pluck(k, 'name').join(', ') %> -->
+    <% for (var i=0; i<k.length; i++) { %>
+    <p>
+      <a href="#monument/show/<%= m[i].id %>">
+        <%= k[i].name %>
+      </a>
+    </p>
+    <% } %>
+  </p>
+</div>
