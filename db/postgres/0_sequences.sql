@@ -6,5 +6,7 @@ CREATE SEQUENCE n_geometry_id_seq;
 CREATE SEQUENCE n_object_id_seq;
 CREATE SEQUENCE n_artifact_id_seq;
 CREATE SEQUENCE n_organization_seq;
+CREATE SEQUENCE n_report_id_seq;
+CREATE SEQUENCE n_heritage_object_id_seq;
 
 CREATE SEQUENCE local_storage_file_id_seq;

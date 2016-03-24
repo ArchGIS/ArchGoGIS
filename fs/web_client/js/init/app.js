@@ -58,9 +58,12 @@ function showField(select) {
 function postQuery() {
   var json = generateJson([
     ["Author", "Research", "Created"],
+    ["Author", "Report", "Created"],
     ["Research", "Knowledge", "Contains"],
     ["Knowledge", "Monument", "Describes"],
     ["Monument", "Artifact", "Contains"],
+    ["Report", "Monument", "Contains"],
+    ["Heritage_Object", "Monument", "Contains"],
     ["Coauthor", "Research", "HelpedToCreate"]
   ]);
 
@@ -109,7 +112,6 @@ function generateJson(relations) {
   })
 
   _.each(relations, function(relation) {
-    console.log(objs[relation[0]])
     if (objs[relation[0]]) {
       objs[relation[0]] = $.unique(objs[relation[0]]);
     }

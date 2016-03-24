@@ -37,6 +37,8 @@ var (
 		{"Object", "n_object_id_seq"},
 		{"Artifact", "n_artifact_id_seq"},
 		{"Organization", "n_organization_seq"},
+		{"Report", "n_report_id_seq"},
+		{"Heritage_Object", "n_heritage_object_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

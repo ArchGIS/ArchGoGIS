@@ -1,91 +1,25 @@
 'use strict';
 
 App.views.monument = new (App.View.extend({
-  'new': function() {
-    // #FIXME: copy/paste из block/coordpicker
-    function bindCoords() {
-      var $x = $('#monument-x');
-      var $y = $('#monument-y');
-      var map = App.page.get('map');
-      var $button = $('#pick-coord');
-      
-      function updateInputValues(coords) {
-        $x.val(coords[0]);
-        $y.val(coords[1]);
-      }
-
-      function updatePlacemark() {
-        updateInputValues(map.getCenter());
-        map.updatePlacemark('coord-pick', map.getCenter(), {'draggable': true});
-      }
-      
-      function createPlacemark() {
-        updatePlacemark();
-        
-        map.onPlacemark('coord-pick', 'dragend', function(event) {
-          updateInputValues(event.get('target').geometry.getCoordinates());
-        });
-
-        // Следующие клики ставят отметку в отображаемый центр карты.
-        $button.on('click', updatePlacemark);
-      }
-      
-      $button.one('click', createPlacemark);
-    }
-    
+  'new': function() {    
     var fmt = App.fn.fmt;
-
-    
+  
     
     var authorSelectHandler = function(event, ui) {
       console.log(ui.item.id);
       $('#author-input-id').val(ui.item.id);
 
-      App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
-        $('#research-input').autocomplete({
-          source: _.map(researches, function(research) {
-            return {'label': fmt('$description ($year)', research), 'id': research.id}
+      App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
+        $('#report-input').autocomplete({
+          source: _.map(reports, function(report) {
+            return {'label': fmt('$description ($year)', report), 'id': report.id}
           })
         });
       });
 
-      $("#research-input").autocomplete({
+      $("#report-input").autocomplete({
         source: [],
-        minLength: 0,
-        select: function(event, ui) { 
-          $("#research-input-id").val(ui.item.id);
-          
-          var args = {
-            "monument:Monument": {"id": "*", "select": "*"},
-            "researches:Research": {"id": $("#research-input-id").val()},
-            "knowledge:Knowledge": {"id": "*", "select": "*"},
-            "researches_Contains_knowledge": {},
-            "knowledge_Describes_monument": {}
-          }
-          var monuments = [];
-
-          $.post(dburl+"hquery/read", JSON.stringify(args), function(data) {
-            var data = $.parseJSON(data).knowledge;
-            _.each(data, function(res) {
-              monuments.push({label: fmt("$name ($culture)", res), id: res.id})
-            });
-            $("#monument-input").autocomplete({
-              source: monuments
-            })
-          })
-        }
-      }).focus(function(){            
-        $(this).autocomplete("search");
-      });
-
-      $("#monument-input").autocomplete({
-        source: function(request, response) {
-          response(window[""+$("#research-input-id").val()]);
-        },
-        minLength: 0,
-        select: function(event, ui) { 
-          $("#monument-input-id").val(ui.item.id);
-        }
+        minLength: 0
       }).focus(function(){            
         $(this).autocomplete("search");
       });
@@ -99,36 +33,11 @@ App.views.monument = new (App.View.extend({
       } 
     });
 
-    $("#coauthor-input").bind("keyup", function(event) {
-      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
-        var coauthors = _.values(App.store.coauthors);
-        var input = this.value.split(', ');
-
-        if (coauthors.length == input.length) {
-          this.value = coauthors.join(", ") + ", ";
-        } else {
-          var inter = _.intersection(coauthors, input);
-          this.value = (inter.length) ? inter.join(", ") + ", " : "";
-
-          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
-        }
-        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
-      }
-    });
-
-    App.page.get('coauthor-input').on('autocompleteselect', function(event, ui) {
-      App.store.coauthors[ui.item.id] = ui.item.value;
-      this.value = _.values(App.store.coauthors).join(", ")+", ";
-      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
-      return false;
-    });
-
-    App.page.get('coauthor-input').on('autocompletefocus', function(event, ui) {
-      return false;
-    })
-
     setSelectsEvents();
-    bindCoords();
     $("#container").tabs();
+  },
+
+  'create': function() {
+    alert(22)
   }
 }));

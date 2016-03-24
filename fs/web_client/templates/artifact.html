@@ -1,0 +1,124 @@
+<div class="content">
+  <h2><%= t('monument.singular') %></h2>
+  <div id="container">
+    <ul>
+      <li><a href="#home"><%= t('research.singular') %></a></li>
+      <li><a href="#menu1"><%= t('monument.singular') %></a></li>
+      <li><a href="#menu2"><%= t('object.singular') %></a></li>
+      <li><a href="#menu3"><%= t('artifact.singular') %></a></li>
+    </ul>
+    
+    <div id="home">
+      <h3>Исследование</h3>
+      <div>
+        <label for="new-author-checkbox">Добавить нового автора</label>
+        <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-author-checkbox" need-option="false">
+        <label for="author-input">Автор исследования</label>
+        <%= widget("SearchLine", authorsInputOptions, "author-input") %>
+        <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
+      </div>
+
+      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+        <label for="author-name-input">Имя</label>
+        <input id="author-name-input" data-for="author:Author" type="text" name="name"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+        <label for="author-birth-date-input">Дата рождения</label>
+        <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
+      </div>
+      <div class="flex-row">
+        <label for="coauthor-input">Соавторы</label>
+        <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
+        <input id="coauthor-input-id" data-few="true" data-for="co:Author" data-subclass="Coauthor" type="hidden" name="id"></input>
+      </div>
+      <div class="top-indent">
+        <label for="new-research-checkbox">Добавить новое исследование</label>
+        <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-research-checkbox" need-option="false">
+        <label for="research-input">Исследование</label>
+        <input id="research-input"></input>
+        <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
+      </div>
+      
+      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+        <label for="research-title-input">Описание</label>
+        <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+        <label for="research-year-input">Год</label>
+        <input id="research-year-input" data-for="r:Research" type="number" name="year"></input>
+      </div>
+    </div>
+    <div id="menu1">
+      <h3>Памятник</h3>
+      <div>
+        <label for="new-monument-checkbox">Добавить новый памятник</label>
+        <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="false">
+        <label>Памятник</label>
+        <input id="monument-input"></input>
+        <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
+      </div>
+
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Название памятника</label>
+        <input id="monument-name-input" data-for="k:Knowledge" type="text" name="name"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Эпоха</label>
+        <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Культура</label>
+        <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
+      </div>
+
+      <div class="coords" toggle-by="new-monument-checkbox" need-option="true">
+        <div class="coord">
+          <label>Координата X
+            <input id="monument-x" data-for="m:Monument" type="text" name="x"></input>
+          </label>
+        </div>
+        <div class="coord">
+          <label>Координата Y
+            <input id="monument-y" data-for="m:Monument" type="text" name="y"></input>
+          </label>
+        </div>
+        <i id="pick-coord" class="fa fa-map-marker"></i>
+      </div>
+    </div>
+    
+    <div id="menu2">
+      <h3>Объект</h3>
+      Необязательная страница.
+    </div>
+    <div id="menu3">
+      <h3>Артефакт</h3>
+      <div class="flex-row">
+        <label for="artifact-name-input">Название</label>
+        <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name"></input>
+      </div>
+      <div class="flex-row">
+        <label for="artifact-weight-input">Вес</label>
+        <input id="artifact-weight-input" data-for="a:Artifact" type="text" name="weight"></input>
+      </div>
+      <div class="flex-row">
+        <label for="artifact-size-input">Габариты</label>
+        <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
+      </div>
+    </div>
+  </div>
+
+  <button class="pure-button pure-button-primary" onclick="postQuery()">
+    <i class="fa fa-cogs"></i>
+    Создать
+  </button>
+</div>
+
+<div class="maps">
+  <%= widget("Map", {}, "map") %>
+</div>

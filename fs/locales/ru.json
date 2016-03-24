@@ -69,6 +69,10 @@
       "Стоянка"
     ]
   },
+
+  "okn": {
+    "singular": "ОКН"
+  },
   
   "knowledge": {
     "prop": {
