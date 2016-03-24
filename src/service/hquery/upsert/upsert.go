@@ -34,7 +34,6 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 
 	mimeType, _, _ := mime.ParseMediaType(r.Header.Get("Content-Type"))
 	input := make(map[string]map[string]string)
-	// files := make(map[string]string) // [tag] => [url]
 
 	if "multipart/form-data" == mimeType {
 		// Нужно распаковать formData.
