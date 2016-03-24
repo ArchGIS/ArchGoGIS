@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.monument = new (App.View.extend({
+App.views.monument = new (App.View.extend({  
   'new': function() {    
     var fmt = App.fn.fmt;  
     

@@ -1,4 +1,4 @@
-<div class="block">  
+<div class="content">  
   <h2><%= t('monument.singular') %></h2>
 
   <p><%= t('knowledge.prop.name') %>:
@@ -26,3 +26,8 @@
     </p>
   <% } %>
 </div>
+
+<div class="maps">
+  <%= widget("Map", {"center": [m.x, m.y], "withPlacemark": true}, "map") %>
+</div>
+

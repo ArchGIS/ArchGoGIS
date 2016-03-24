@@ -13,7 +13,7 @@ App.widgets.Map = function(params, id) {
   var map = null;
   var eventsPool = {};
 
-  params = _.extend({
+  params = $.extend({
     'center': geo.kazan,
     'zoom': 7,
     'controls': [
@@ -23,11 +23,9 @@ App.widgets.Map = function(params, id) {
       'rulerControl'
     ]
   }, params);
-  
+ 
   this.early = () => tmpl({'id': id});
-  this.later = () => ymaps.ready(delayedLater);
-
-  function delayedLater() {
+  this.later = () => ymaps.ready(() => {
     map = new ymaps.Map(id, {
       'center': params.center,
       'zoom': params.zoom,
@@ -41,7 +39,11 @@ App.widgets.Map = function(params, id) {
       map.events.add(event, callback);
     });
     eventsPool = null; // Больше нам не нужно их держать.
-  }
+
+    if (params.withPlacemark) {
+      this.addPlacemark(params.center);
+    }
+  });
 
   this.center = function(coord, opts) {
     map.setCenter(coord, map.getZoom(), opts);
