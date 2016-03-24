@@ -19,7 +19,10 @@ App.views.monument = new (App.View.extend({
 
       $("#report-input").autocomplete({
         source: [],
-        minLength: 0
+        minLength: 0,
+        select: function(event, ui) { 
+          $("#report-input-id").val(ui.item.id);
+        }
       }).focus(function(){            
         $(this).autocomplete("search");
       });

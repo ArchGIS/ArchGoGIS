@@ -17,7 +17,7 @@ App.models.Report.findByAuthorId = function(authorId) {
 };
 
 App.models.Report.url = function(id) {
-  return id ? '#Report/show/' + id : '#Report/show';
+  return id ? '#report/show/' + id : '#report/show';
 };
 
 App.models.Report.href = function(id, text) {
