@@ -17,16 +17,19 @@
   <p><%= maybe(r.description) %></p>
   
   <h3><%= t('monument.plural') %>:</h3>
+  <div class="flow-block">
   <% if (m.length) { %>
-    <% _.each(m, function(monument, i) { %>
+    <% var mSort = _.sortBy(k, s => s.name); %>
+    <% _.each(mSort, function(monument) { %>
       <p>
         <a href="#monument/show/<%= monument.id %>">
-          <%= k[i].name %>
+          <%= monument.name %>
         </a>
       </p>
     <% }); %>
   <% } else { %>
   <% } %>
+  </div>
 
   <% if (files.length) { %>
     <h4>Файлы:</h4>
