@@ -5,6 +5,7 @@ App.controllers.author = new (App.View.extend({
     App.url.setMapping(['id']);
     var id = App.url.get('id');
 
+    // #FIXME: запрос сломанный!
     var query = JSON.stringify({
       'a:Author': {'id': id, 'select': '*'},
       '?orgs:Organization': {'id': '*', 'select': '*'},

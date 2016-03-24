@@ -27,4 +27,14 @@
     <% }); %>
   <% } else { %>
   <% } %>
+
+  <% if (files.length) { %>
+    <h4>Файлы:</h4>
+  <% } %>
+  <% _.each(files, function(file) { %>
+    <p><%= file.name %></p>
+    <img src="<%= file.url %>">
+  <% }); %>
 </div>
+
+

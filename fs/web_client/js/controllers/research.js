@@ -30,7 +30,21 @@ App.controllers.research = new (App.View.extend({
       $.post('/hquery/read', query)
       .success(function(authorData) {
         authorData = JSON.parse(authorData);
-        App.page.render('research_view', $.extend(researchData, authorData));
+
+        var query = JSON.stringify({
+          "r:Research": {"id": id},
+          "files:File": {"id": "*", "select": "*"},
+          "r_Has_files": {}
+        });
+
+        $.post('/hquery/read', query)
+        .success(function(filesData) {
+          App.page.render('research_view', $.extend(
+            researchData,
+            authorData,
+            JSON.parse(filesData)
+          ));
+        });
       });
     });
   }

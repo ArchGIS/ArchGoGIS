@@ -8,10 +8,21 @@ App.views.files = new (App.View.extend({
 
     var query = {
       'r:Research': {
-        'description/text': 'testing file api',
+        'description/text': 'Проверка загрузки файлов',
         'year/number': '2017',
         'test/number': '1'
-      }
+      },
+      'm:Monument': {
+        'x/number': '1',
+        'y/number': '2'
+      },
+      'k:Knowledge': {
+        'name/text': 'Памятник %3ruf'
+      },
+      'a:Author': {'id': '50'},
+      'a_Created_r': {},
+      'r_Contains_k': {},
+      'k_Describes_m': {}
     };
 
     /*
