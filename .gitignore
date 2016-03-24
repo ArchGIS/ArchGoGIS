@@ -1,6 +1,7 @@
 bin
 pkg
 tmp
-cfg
+cfg/
+!src/cfg/
 src/github.com
 fs/local_storage/*

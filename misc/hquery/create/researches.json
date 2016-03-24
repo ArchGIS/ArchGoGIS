@@ -1,7 +1,7 @@
 {
   "author:Author": {
     "name/text": "Иван Авторович",
-    "birth_date/text": "02.04.1969"
+    "birth_date/text": "02.04.1969",
   },
   "coauthor:Author": {
     "name/text": "Иван Соавторович",

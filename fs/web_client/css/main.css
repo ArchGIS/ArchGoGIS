@@ -97,6 +97,14 @@ a.pure-menu-heading:hover {
   color: #fff;
 }
 
+a.pure-button {
+  color: #fff;
+}
+
+a.pure-button:hover {
+  text-decoration: none;
+}
+
 .pure-menu-list {
   float: right;
   padding: 0;
