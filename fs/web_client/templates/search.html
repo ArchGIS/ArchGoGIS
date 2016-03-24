@@ -7,7 +7,8 @@
     <%= widget('Toggler', {"select": [
       [t("monument.singular"), "#monument-params"],
       [t("research.singular"), "#research-params"],
-      [t("author.singular"), "#author-params"]  
+      [t("author.singular"), "#author-params"],
+      [t("report.singular"), "#report-params"],
     ]}, "objectToggler") %>
   </label>
 
@@ -34,6 +35,18 @@
     <label class="flex-row">
       <%= t("author.prop.name") %>
       <%= widget("SearchLine", authorSearchOptions, "author-input") %>
+    </label>
+  </div>
+
+  <div class="flex-column" id="report-params" style="display: none" data-url="research">
+    <label class="flex-row">
+      <%= t("author.name") %>
+      <%= widget("SearchLine", authorSearchOptions, "report-author-input") %>
+    </label>
+    <br/>
+    <label class="flex-row">
+      <%= t("report.year") %>
+      <input id="report-year-input" class="autoinput">
     </label>
   </div>
 

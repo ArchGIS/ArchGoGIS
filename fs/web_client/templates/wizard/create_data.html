@@ -5,9 +5,9 @@
     <label>
       <div class="pure-u-1-4">Что создаётся?</div>
       <div class="pure-u-1-4">
-        <select class="pure-u-1-1">
-          <option>Исследование</option>
-          <option>Памятник</option>
+        <select class="pure-u-1-1" id="what-create">
+          <option value="artifact">Артефакт</option>
+          <option value="monument">Памятник</option>
         </select>
       </div>
     </label>
@@ -19,9 +19,8 @@
     <label>
       <div class="pure-u-1-4">На основе чего?</div>
       <div class="pure-u-1-4">
-        <select class="pure-u-1-1">
-          <option>Артефакт</option>
-          <option>Отчет</option>
+        <select class="pure-u-1-1" id="from-what-create">
+          <option value="research">Исследование</option>
         </select>
       </div>
     </label>
@@ -29,7 +28,7 @@
 
   <br/>
 
-  <a class="pure-button pure-button-primary" href="#monument/new">
+  <a class="pure-button pure-button-primary" id="goto-create" href="#artifact/new">
     <i class="fa fa-pencil-square-o fa-lg"></i>
     Приступить к заполнению
   </a>

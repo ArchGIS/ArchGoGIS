@@ -73,6 +73,16 @@
   "okn": {
     "singular": "ОКН"
   },
+
+  "report": {
+    "singular": "Отчет",
+    "year": "Год создания отчета",
+    "prop": {
+      "description": "Описание",
+      "year": "Год создания",
+      "type": "Тип"
+    }
+  },
   
   "knowledge": {
     "prop": {

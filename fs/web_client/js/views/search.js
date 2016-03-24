@@ -48,6 +48,19 @@ App.views.search = new (App.View.extend({
           });
         },
         'inputs': {'author': App.page.get('author-input')}
+      },
+      'report-params': {
+        'handler': searchReport,
+        'heading': ['#', t('report.prop.description'), t('report.prop.type')],
+        'columnsMaker': function(reports) {
+          return _.map(reports, function(r, n) {
+            return [App.models.Report.href(r.id, n+1), r.description, r.type];
+          });
+        },
+        'inputs': {
+          'author': App.page.get('report-author-input'),
+          '$year': $('#report-year-input') 
+        }
       }
     };
 
@@ -123,6 +136,32 @@ App.views.search = new (App.View.extend({
             $results.show();
             filteredResearches = _.filter(researches, r => r.year == ui.item.label);
             $resultsCount.html(filteredResearches.length);
+          });
+        });
+      }
+      
+      my.inputs.author.on('autocompleteselect', handleAuthorSelect);
+    }
+
+    function searchReport(my) {
+      var reports = [];
+      var filteredReport = [];
+      resultProvider = () => filteredReport;
+     
+      function handleAuthorSelect(event, ui) {
+        App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
+          
+          my.inputs.$year.autocomplete({
+            'minLength': 0,
+            'source': _.map(_.uniq(reports, 'year'), function(report) {
+              return {'label': report.year, 'id': report.id}
+            })
+          })
+          .on('focus', () => my.inputs.$year.autocomplete('search'))
+          .on('autocompleteselect', function(event, ui) {
+            $results.show();
+            filteredReport = _.filter(reports, r => r.year == ui.item.label);
+            $resultsCount.html(filteredReport.length);
           });
         });
       }

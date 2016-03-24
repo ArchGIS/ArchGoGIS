@@ -67,10 +67,20 @@ function postQuery() {
     ["Coauthor", "Research", "HelpedToCreate"]
   ]);
 
-  $.post("/hquery/upsert", JSON.stringify(json))
-  .success(function(response) {
-    console.log(response);
+  var formdata = new FormData();
+
+  _.each(json, function(val, key) {
+    formdata.append(key, JSON.stringify(key));
   })
+
+  $.ajax({
+    url: "/hquery/upsert",
+    data: formdata,
+    type: "POST",
+    success: function(response) {
+      console.log(response);
+    }
+  });
 }
 
 function generateJson(relations) {
