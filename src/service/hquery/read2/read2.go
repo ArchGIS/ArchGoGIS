@@ -1,7 +1,7 @@
 package read2
 
 import (
-	"db/neo"
+	// "db/neo"
 	"encoding/json"
 	"fmt"
 	"net/http"

@@ -1,4 +1,4 @@
-package read2
+package parser
 
 /*
 func mustNewSegment(a, b *Statement) *segment {

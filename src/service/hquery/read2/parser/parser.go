@@ -1,4 +1,4 @@
-package read2
+package parser
 
 import (
 	"bytes"
@@ -53,9 +53,9 @@ func (my *Parser) matchByLeftMerge(lhs, rhs *Statement, rel Relation) {
 
 	my.mergeData.add(merge, rhs.id)
 
-	//my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
-	//my.projection.add(rhs)
-	my.projection.addMerge(rhs, lhs, &rel)
+	my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
+	my.projection.add(rhs)
+	// my.projection.addMerge(rhs, lhs, &rel)
 
 	my.matches.addLeft(lhs, rhs, &rel)
 }
@@ -65,9 +65,9 @@ func (my *Parser) matchByRightMerge(lhs, rhs *Statement, rel Relation) {
 
 	my.mergeData.add(merge, lhs.id)
 
-	my.projection.addMerge(lhs, rhs, &rel)
-	//my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
-	//my.projection.add(lhs)
+	// my.projection.addMerge(lhs, rhs, &rel)
+	my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
+	my.projection.add(lhs)
 
 	my.matches.addRight(lhs, rhs, &rel)
 }

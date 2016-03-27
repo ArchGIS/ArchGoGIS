@@ -1,4 +1,4 @@
-package read2
+package parser
 
 type Relation struct {
 	name     string
