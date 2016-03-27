@@ -28,3 +28,9 @@ func Must(object interface{}, err error) interface{} {
 
 	return object
 }
+
+func True(maybeTrue bool) {
+	if !maybeTrue {
+		println("{{ assert.True failed! }}")
+	}
+}
