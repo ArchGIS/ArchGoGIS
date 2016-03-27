@@ -52,6 +52,25 @@ func TestGetById2(t *testing.T) {
 	}
 }
 
+func TestGetById3(t *testing.T) {
+	query := makeQuery(`{
+		"a1:Author.getBy": 1,
+		"a2:Author.getBy": 2
+	}`)
+
+	got := string(newParser(query).generateCypher())
+	expected := []string{
+		`MATCH (a1:Author {id:1})MATCH (a2:Author {id:2})RETURN a1,a2`,
+		`MATCH (a1:Author {id:1})MATCH (a2:Author {id:2})RETURN a2,a1`,
+		`MATCH (a2:Author {id:2})MATCH (a1:Author {id:1})RETURN a1,a2`,
+		`MATCH (a2:Author {id:2})MATCH (a1:Author {id:1})RETURN a2,a1`,
+	}
+
+	if !anyMatch(expected, got) {
+		blameArr(expected, got, t)
+	}
+}
+
 func TestGetByRel1(t *testing.T) {
 	query := makeQuery(`{
 		"a:Author.getBy": 1,
@@ -60,13 +79,13 @@ func TestGetByRel1(t *testing.T) {
 	parser := newParser(query)
 
 	got := string(parser.generateCypher())
-	expected1 :=
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN a,COLLECT(o) AS o`
-	expected2 :=
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN COLLECT(o) AS o,a`
+	expected := []string{
+		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN a,COLLECT(o) AS o`,
+		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN COLLECT(o) AS o,a`,
+	}
 
-	if got != expected1 && got != expected2 {
-		blame(expected1+"`\nOR\n`"+expected2, got, t)
+	if !anyMatch(expected, got) {
+		blameArr(expected, got, t)
 	}
 }
 
@@ -78,13 +97,13 @@ func TestGetByRel2(t *testing.T) {
 	parser := newParser(query)
 
 	got := string(parser.generateCypher())
-	expected1 :=
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN o,COLLECT(a) AS a`
-	expected2 :=
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN COLLECT(a) AS a,o`
+	expected := []string{
+		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN o,COLLECT(a) AS a`,
+		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN COLLECT(a) AS a,o`,
+	}
 
-	if got != expected1 && got != expected2 {
-		blame(expected1+"`\nOR\n`"+expected2, got, t)
+	if !anyMatch(expected, got) {
+		blameArr(expected, got, t)
 	}
 }
 
@@ -96,13 +115,14 @@ func TestGetByMerge1(t *testing.T) {
 	parser := newParser(query)
 
 	got := string(parser.generateCypher())
+	prefix := `MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN `
 	expected := []string{
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN COLLECT(a) AS a,COLLECT(a_o) AS a_o,o`,
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN COLLECT(a_o) AS a_o,COLLECT(a) AS a,o`,
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN COLLECT(a_o) AS a_o,o,COLLECT(a) AS a`,
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN COLLECT(a) AS a,o,COLLECT(a_o) AS a_o`,
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN o,COLLECT(a) AS a,COLLECT(a_o) AS a_o`,
-		`MATCH (o:Organization {id:1})OPTIONAL MATCH (a:Author)-[a_o:WorkedIn]->(o)RETURN o,COLLECT(a_o) AS a_o,COLLECT(a) AS a`,
+		prefix + `COLLECT(a) AS a,COLLECT(a_o) AS a_o,o`,
+		prefix + `COLLECT(a_o) AS a_o,COLLECT(a) AS a,o`,
+		prefix + `COLLECT(a_o) AS a_o,o,COLLECT(a) AS a`,
+		prefix + `COLLECT(a) AS a,o,COLLECT(a_o) AS a_o`,
+		prefix + `o,COLLECT(a) AS a,COLLECT(a_o) AS a_o`,
+		prefix + `o,COLLECT(a_o) AS a_o,COLLECT(a) AS a`,
 	}
 
 	if !anyMatch(expected, got) {
@@ -118,13 +138,14 @@ func TestGetByMerge2(t *testing.T) {
 	parser := newParser(query)
 
 	got := string(parser.generateCypher())
+	prefix := `MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN `
 	expected := []string{
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN COLLECT(o) AS o,COLLECT(a_o) AS a_o,a`,
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN COLLECT(a_o) AS a_o,COLLECT(o) AS o,a`,
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN COLLECT(a_o) AS a_o,a,COLLECT(o) AS o`,
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN COLLECT(o) AS o,a,COLLECT(a_o) AS a_o`,
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN a,COLLECT(o) AS o,COLLECT(a_o) AS a_o`,
-		`MATCH (a:Author {id:1})OPTIONAL MATCH (a)-[a_o:WorkedIn]->(o:Organization)RETURN a,COLLECT(a_o) AS a_o,COLLECT(o) AS o`,
+		prefix + `COLLECT(o) AS o,COLLECT(a_o) AS a_o,a`,
+		prefix + `COLLECT(a_o) AS a_o,COLLECT(o) AS o,a`,
+		prefix + `COLLECT(a_o) AS a_o,a,COLLECT(o) AS o`,
+		prefix + `COLLECT(o) AS o,a,COLLECT(a_o) AS a_o`,
+		prefix + `a,COLLECT(o) AS o,COLLECT(a_o) AS a_o`,
+		prefix + `a,COLLECT(a_o) AS a_o,COLLECT(o) AS o`,
 	}
 
 	if !anyMatch(expected, got) {
