@@ -13,13 +13,13 @@ const (
 	mandatory = false
 )
 
-var mergeRelations = map[string]map[string]Relation{
+var mergeRelations = relationScheme{
 	"Author": {
 		"Organization": {"WorkedIn", multi, optional},
 	},
 }
 
-var getRelations = map[string]map[string]Relation{
+var getRelations = relationScheme{
 	"Coauthor": {
 		"Research": {"HelpedToCreate", multi, optional},
 	},

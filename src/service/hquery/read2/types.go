@@ -25,6 +25,7 @@ type matches struct {
 
 type projection []string
 type matchFunc func(*Statement, *Statement, Relation)
+type relationScheme map[string]map[string]Relation
 
 type segment struct {
 	id  string
