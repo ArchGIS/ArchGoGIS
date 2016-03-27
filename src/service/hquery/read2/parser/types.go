@@ -13,8 +13,8 @@ type Statement struct {
 	params interface{}
 }
 
-type mergeData struct {
-	mapping map[string]string
+type MergeData struct {
+	Mapping map[string]string
 	index   map[string]struct{}
 }
 
@@ -38,5 +38,5 @@ type Parser struct {
 	statements map[string]*Statement
 	matches    matches
 	projection projection
-	mergeData  mergeData
+	MergeData  MergeData
 }

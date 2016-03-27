@@ -8,6 +8,7 @@ import (
 	"ext/xjson"
 	"ext/xslice"
 	"fmt"
+	"service/hquery/read2/parser"
 )
 
 func mustDestructureResp(resp *neo.Response) ([]string, []json.RawMessage) {
@@ -23,7 +24,7 @@ func mustDestructureResp(resp *neo.Response) ([]string, []json.RawMessage) {
 	return cols, row
 }
 
-func mustFmtJson(resp *neo.Response, merges *mergeData) []byte {
+func mustFmtJson(resp *neo.Response, merges *parser.MergeData) []byte {
 	var result ext.Xbuf
 	cols, row := mustDestructureResp(resp)
 
@@ -35,7 +36,7 @@ func mustFmtJson(resp *neo.Response, merges *mergeData) []byte {
 	for colIndex, rowData := range row {
 		colName := cols[colIndex]
 
-		if to := merges.mapping[colName]; to != "" {
+		if to := merges.Mapping[colName]; to != "" {
 			fmt.Printf("%+v\n", string(row[xslice.IndexString(cols, colName)]))
 
 			mergeFrom := xjson.MustDecode(row[xslice.IndexString(cols, colName)])
@@ -43,7 +44,7 @@ func mustFmtJson(resp *neo.Response, merges *mergeData) []byte {
 			merged := xjson.MustEncode(xjson.Merge(mergeFrom, mergeInto))
 
 			result.WriteStringf(`"%s":%s,`, to, string(merged))
-		} else if !merges.isMerging(colName) {
+		} else if !merges.IsMerging(colName) {
 			result.WriteStringf(`"%s":%s,`, colName, string(rowData))
 		}
 	}

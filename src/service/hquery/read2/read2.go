@@ -1,11 +1,11 @@
 package read2
 
 import (
-	// "db/neo"
+	"db/neo"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	// "throw"
+	"service/hquery/read2/parser"
 	"web"
 )
 
@@ -13,8 +13,8 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 	var query map[string]interface{}
 	err := json.NewDecoder(r.Body).Decode(&query)
 
-	parser := newParser(query)
-	cypher := parser.generateCypher()
+	parser := parser.New(query)
+	cypher := parser.GenerateCypher()
 
 	neoQuery := neo.NewQuery(neo.Statement{string(cypher), nil})
 	response, err := neoQuery.Run()
@@ -23,7 +23,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("%+v\n", response)
-	w.Write(mustFmtJson(response, &parser.mergeData))
+	w.Write(mustFmtJson(response, &parser.MergeData))
 
 	/*
 		limit := r.URL.Query().Get("limit")

@@ -1,18 +1,18 @@
 package parser
 
-func newMergeData() mergeData {
-	return mergeData{
+func newMergeData() MergeData {
+	return MergeData{
 		make(map[string]string),
 		make(map[string]struct{}),
 	}
 }
 
-func (my *mergeData) add(from, to string) {
-	my.mapping[from] = to
+func (my *MergeData) add(from, to string) {
+	my.Mapping[from] = to
 	my.index[to] = struct{}{}
 }
 
-func (my *mergeData) isMerging(key string) bool {
+func (my *MergeData) IsMerging(key string) bool {
 	_, merging := my.index[key]
 	return merging
 }

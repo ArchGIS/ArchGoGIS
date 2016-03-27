@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func newParser(query map[string]interface{}) *Parser {
+func New(query map[string]interface{}) *Parser {
 	statements := make(map[string]*Statement, len(query))
 	for tag, params := range query {
 		statement := NewStatement(tag, params)
@@ -18,6 +18,21 @@ func newParser(query map[string]interface{}) *Parser {
 		make([]string, 0, len(query)),
 		newMergeData(),
 	}
+}
+
+func (my *Parser) GenerateCypher() []byte {
+	my.mustParseAll()
+
+	var cypher bytes.Buffer
+
+	// Порядок имеет значение. Сначала matches, затем уже optional matches.
+	cypher.WriteString(strings.Join(my.matches.Exact, ""))
+	for _, optionalMatch := range my.matches.Optional {
+		cypher.WriteString("OPTIONAL " + optionalMatch)
+	}
+	cypher.WriteString("RETURN " + strings.Join(my.projection, ","))
+
+	return cypher.Bytes()
 }
 
 func (my *Parser) mustParseAll() {
@@ -33,25 +48,10 @@ func (my *Parser) mustParseAll() {
 	}
 }
 
-func (my *Parser) generateCypher() []byte {
-	my.mustParseAll()
-
-	var cypher bytes.Buffer
-
-	// Порядок имеет значение. Сначала matches, затем уже optional matches.
-	cypher.WriteString(strings.Join(my.matches.Exact, ""))
-	for _, optionalMatch := range my.matches.Optional {
-		cypher.WriteString("OPTIONAL " + optionalMatch)
-	}
-	cypher.WriteString("RETURN " + strings.Join(my.projection, ","))
-
-	return cypher.Bytes()
-}
-
 func (my *Parser) matchByLeftMerge(lhs, rhs *Statement, rel Relation) {
 	merge := lhs.id + "_" + rhs.id
 
-	my.mergeData.add(merge, rhs.id)
+	my.MergeData.add(merge, rhs.id)
 
 	my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
 	my.projection.add(rhs)
@@ -63,7 +63,7 @@ func (my *Parser) matchByLeftMerge(lhs, rhs *Statement, rel Relation) {
 func (my *Parser) matchByRightMerge(lhs, rhs *Statement, rel Relation) {
 	merge := lhs.id + "_" + rhs.id
 
-	my.mergeData.add(merge, lhs.id)
+	my.MergeData.add(merge, lhs.id)
 
 	// my.projection.addMerge(lhs, rhs, &rel)
 	my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
