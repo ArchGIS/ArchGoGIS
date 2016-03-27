@@ -7,8 +7,8 @@ import (
 	"ext"
 	"ext/xjson"
 	"ext/xslice"
-	"fmt"
 	"service/hquery/read2/parser"
+	"throw"
 )
 
 func mustDestructureResp(resp *neo.Response) ([]string, []json.RawMessage) {
@@ -25,25 +25,40 @@ func mustDestructureResp(resp *neo.Response) ([]string, []json.RawMessage) {
 }
 
 func mustFmtJson(resp *neo.Response, merges *parser.MergeData) []byte {
-	var result ext.Xbuf
-	cols, row := mustDestructureResp(resp)
-
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("{}")
 	}
+
+	var result ext.Xbuf
+	cols, row := mustDestructureResp(resp)
 
 	result.WriteByte('{')
 	for colIndex, rowData := range row {
 		colName := cols[colIndex]
 
 		if to := merges.Mapping[colName]; to != "" {
-			fmt.Printf("%+v\n", string(row[xslice.IndexString(cols, colName)]))
+			from := row[xslice.IndexString(cols, colName)]
+			into := row[xslice.IndexString(cols, to)]
 
-			mergeFrom := xjson.MustDecode(row[xslice.IndexString(cols, colName)])
-			mergeInto := xjson.MustDecode(row[xslice.IndexString(cols, to)])
-			merged := xjson.MustEncode(xjson.Merge(mergeFrom, mergeInto))
+			if rowData[0] == '{' { // Одиночный объект
+				mergeFrom := xjson.MustDecode(from)
+				mergeInto := xjson.MustDecode(into)
+				merged := xjson.MustEncode(xjson.Merge(mergeFrom, mergeInto))
 
-			result.WriteStringf(`"%s":%s,`, to, string(merged))
+				result.WriteStringf(`"%s":%s,`, to, string(merged))
+			} else { // Массив объектов
+				var mergesFrom []xjson.Object
+				var mergesInto []xjson.Object
+				throw.Error(json.Unmarshal(from, &mergesFrom))
+				throw.Error(json.Unmarshal(into, &mergesInto))
+				for i := range mergesFrom {
+					mergesInto[i] = xjson.Merge(mergesFrom[i], mergesInto[i])
+				}
+				merged, err := json.Marshal(mergesInto)
+				throw.Error(err)
+
+				result.WriteStringf(`"%s":%s,`, to, string(merged))
+			}
 		} else if !merges.IsMerging(colName) {
 			result.WriteStringf(`"%s":%s,`, colName, string(rowData))
 		}

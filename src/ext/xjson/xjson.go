@@ -5,13 +5,13 @@ import (
 	"throw"
 )
 
-type Object map[string][]interface{}
+type Object map[string]interface{}
 
 func Merge(from, to Object) Object {
-	for key, props := range from {
-		for propKey, propVal := range props {
-			to[key][propKey] = propVal
-		}
+	for key, val := range from {
+		// for propKey, propVal := range props {
+		to[key] = val
+		// }
 	}
 
 	return to

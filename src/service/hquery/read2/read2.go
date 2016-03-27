@@ -23,7 +23,11 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("%+v\n", response)
-	w.Write(mustFmtJson(response, &parser.MergeData))
+	println(">>>>>>>>>>")
+	result := mustFmtJson(response, &parser.MergeData)
+	println(">>>>>>>>>>")
+	fmt.Printf("result: %s\n", string(result))
+	// w.Write(mustFmtJson(response, &parser.MergeData))
 
 	/*
 		limit := r.URL.Query().Get("limit")
