@@ -7,9 +7,7 @@ import (
 )
 
 func newResponse(input []byte) (*Response, error) {
-	echo.Info.Print(string(input))
 	result := &Response{}
-	echo.Info.Print(string(input))
 	err := json.Unmarshal(input, result)
 
 	return result, err
