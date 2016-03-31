@@ -24,6 +24,7 @@ func mustDestructureResp(resp *neo.Response) ([]string, []json.RawMessage) {
 	return cols, row
 }
 
+// #FIXME
 func mustFmtJson(resp *neo.Response, merges *parser.MergeData) []byte {
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("{}")
@@ -49,15 +50,17 @@ func mustFmtJson(resp *neo.Response, merges *parser.MergeData) []byte {
 			} else { // Массив объектов
 				var mergesFrom []xjson.Object
 				var mergesInto []xjson.Object
-				throw.Error(json.Unmarshal(from, &mergesFrom))
-				throw.Error(json.Unmarshal(into, &mergesInto))
+
+				throw.OnError(json.Unmarshal(from, &mergesFrom))
+				throw.OnError(json.Unmarshal(into, &mergesInto))
 				for i := range mergesFrom {
 					mergesInto[i] = xjson.Merge(mergesFrom[i], mergesInto[i])
 				}
 				merged, err := json.Marshal(mergesInto)
-				throw.Error(err)
+				throw.OnError(err)
 
 				result.WriteStringf(`"%s":%s,`, to, string(merged))
+
 			}
 		} else if !merges.IsMerging(colName) {
 			result.WriteStringf(`"%s":%s,`, colName, string(rowData))

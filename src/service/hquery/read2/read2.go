@@ -6,10 +6,16 @@ import (
 	"fmt"
 	"net/http"
 	"service/hquery/read2/parser"
+	"throw"
 	"web"
 )
 
+// #FIXME
 func Handler(w web.ResponseWriter, r *http.Request) {
+	defer throw.Catch(func(err error) {
+		fmt.Printf("%+v\n", err)
+	})
+
 	var query map[string]interface{}
 	err := json.NewDecoder(r.Body).Decode(&query)
 
@@ -22,25 +28,5 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	fmt.Printf("%+v\n", response)
-	println(">>>>>>>>>>")
-	result := mustFmtJson(response, &parser.MergeData)
-	println(">>>>>>>>>>")
-	fmt.Printf("result: %s\n", string(result))
-	// w.Write(mustFmtJson(response, &parser.MergeData))
-
-	/*
-		limit := r.URL.Query().Get("limit")
-		if xstr.NumericalGt(limit, cfg.HqueryReadMaxLimit) {
-			w.Write(api.Error(errs.LimitParamOverflow))
-		} else {
-			if limit == "" {
-				limit = cfg.HqueryReadDefaultLimit
-			}
-
-			shared.Handle(w, r, func(input io.ReadCloser) []byte {
-				return mustProcessRequest(input, limit)
-			})
-		}
-	*/
+	w.Write(mustFmtJson(response, &parser.MergeData))
 }
