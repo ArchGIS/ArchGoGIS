@@ -28,5 +28,6 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(mustFmtJson(response, &parser.MergeData))
 }
