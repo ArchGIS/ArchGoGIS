@@ -5,19 +5,14 @@ App.controllers.author = new (App.View.extend({
     App.url.setMapping(['id']);
     var id = App.url.get('id');
 
-    // #FIXME: запрос сломанный!
-    var query = JSON.stringify({
-      'a:Author': {'id': id, 'select': '*'},
-      '?orgs:Organization': {'id': '*', 'select': '*'},
-      '?rs:Research': {'id': '*', 'select': '*'},
-      '?a_WorkedIn_orgs': {'select': '*', 'collect': '+'},
-      '?a_Created_rs': {}
+    var query = JSON.stringify({      
+      "author:Author.getBy": +id,
+      "orgs:Organization.mergeBy": "author",
+      "researches:Research.getBy": "author"
     });
 
-    $.post('/hquery/read', query)
-      .success(function(response) {
-        console.log(response);
-      App.page.render('author/show', JSON.parse(response));
+    $.post('/hquery/read2', query).success(function(response) {
+      App.page.render('author/show', response);
     });
   }
 }));

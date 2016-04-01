@@ -3,19 +3,19 @@
 
   <div class="pure-g">
     <div class="pure-u-1-4"><%= t('author.prop.name') %></div>
-    <div class="pure-u-1-3"><%= a.name %></div>
+    <div class="pure-u-1-3"><%= author.name %></div>
   </div>
 
   <br/>
 
   <div class="pure-g">
     <div class="pure-u-1-4"><%= t('author.prop.year') %></div>
-    <div class="pure-u-1-3"><%= maybe(a.year) %></div>
+    <div class="pure-u-1-3"><%= maybe(author.year) %></div>
   </div>
 
   <h3><%= t("research.plural") %>:</h3>
-  <% if (rs.length) { %>
-    <% _.each(rs, function(r, i) { %>
+  <% if (researches.length) { %>
+    <% _.each(researches, function(r, i) { %>
       <%= i + 1 %>)
       <a href="#research/show/<%= r.id %>"><%= r.description %></a>
       <br><br>
@@ -25,15 +25,15 @@
   <% } %>     
 
   <h3><%= t('organization.plural') %>:</h3>
-  <% if (a_WorkedIn_orgs.length) { %>
-    <% _.each(a_WorkedIn_orgs, function(job, i) { %>
-      <a href="#organization/show/<%= orgs[i].id %>"><%= orgs[i].name %></a>
+  <% if (orgs.length) { %>
+    <% _.each(orgs, function(org, i) { %>
+      <a href="#organization/show/<%= orgs[i].id %>"><%= org.name %></a>
       <br>
       <p>
         <%= t('work-post') %>:
-        <%= job.position %>
+        <%= org.position %>
         <%= t('since') %>
-        <%= job.since %>
+        <%= org.since %>
       </p>
       <br>
     <% }); %>
