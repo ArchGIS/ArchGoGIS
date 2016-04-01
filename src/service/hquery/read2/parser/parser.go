@@ -1,10 +1,5 @@
 package parser
 
-import (
-	"bytes"
-	"strings"
-)
-
 func New(query map[string]interface{}) *Parser {
 	statements := make(map[string]*Statement, len(query))
 	for tag, params := range query {
@@ -14,25 +9,14 @@ func New(query map[string]interface{}) *Parser {
 
 	return &Parser{
 		statements,
-		newMatches(len(query)),
-		make([]string, 0, len(query)),
+		cypherQuery{},
 		newMergeData(),
 	}
 }
 
 func (my *Parser) GenerateCypher() []byte {
 	my.mustParseAll()
-
-	var cypher bytes.Buffer
-
-	// Порядок имеет значение. Сначала matches, затем уже optional matches.
-	cypher.WriteString(strings.Join(my.matches.Exact, ""))
-	for _, optionalMatch := range my.matches.Optional {
-		cypher.WriteString("OPTIONAL " + optionalMatch)
-	}
-	cypher.WriteString("RETURN " + strings.Join(my.projection, ","))
-
-	return cypher.Bytes()
+	return my.query.build()
 }
 
 func (my *Parser) mustParseAll() {
@@ -45,56 +29,6 @@ func (my *Parser) mustParseAll() {
 		default:
 			panic("unknown method")
 		}
-	}
-}
-
-func (my *Parser) matchByLeftMerge(lhs, rhs *Statement, rel Relation) {
-	merge := lhs.id + "_" + rhs.id
-
-	my.MergeData.add(merge, rhs.id)
-
-	my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
-	my.projection.add(rhs)
-	// my.projection.addMerge(rhs, lhs, &rel)
-
-	my.matches.addLeft(lhs, rhs, &rel)
-}
-
-func (my *Parser) matchByRightMerge(lhs, rhs *Statement, rel Relation) {
-	merge := lhs.id + "_" + rhs.id
-
-	my.MergeData.add(merge, lhs.id)
-
-	// my.projection.addMerge(lhs, rhs, &rel)
-	my.projection = append(my.projection, "COLLECT("+merge+") AS "+merge)
-	my.projection.add(lhs)
-
-	my.matches.addRight(lhs, rhs, &rel)
-}
-
-func (my *Parser) matchGetBy(this *Statement) {
-	that := my.statements[this.params.(string)]
-
-	if _, isRight := getRelations[this.class][that.class]; isRight {
-		// mustNewSegment(this, that, getRelations[this.class][that.class])
-		my.matchByRightStatement(this, that, getRelations[this.class][that.class])
-	} else if _, isLeft := getRelations[that.class][this.class]; isLeft {
-		my.matchByLeftStatement(that, this, getRelations[that.class][this.class])
-	} else {
-		panic("invalid relation")
-	}
-}
-
-func (my *Parser) matchMergeBy(this *Statement) {
-	that := my.statements[this.params.(string)]
-
-	if _, isRight := mergeRelations[this.class][that.class]; isRight {
-		// mustNewSegment(this, that, getRelations[this.class][that.class])
-		my.matchByRightMerge(this, that, mergeRelations[this.class][that.class])
-	} else if _, isLeft := mergeRelations[that.class][this.class]; isLeft {
-		my.matchByLeftMerge(that, this, mergeRelations[that.class][this.class])
-	} else {
-		panic("invalid relation")
 	}
 }
 
@@ -118,45 +52,23 @@ func (my *Parser) parseGetBy(statement *Statement) {
 	}
 }
 
-func (my *Parser) allParentRelationsAreUnique(statement *Statement) bool {
-	parent := my.statements[statement.params.(string)]
+func (my *Parser) matchMergeBy(this *Statement) {
+	that := my.statements[this.params.(string)]
+	rel := getTree[that.class][this.class]
 
-	parentRelation := getRelations[parent.class][statement.class]
-
-	if parentRelation.unique {
-		return my.allParentRelationsAreUnique(parent)
-	} else {
-		return false
-	}
+	my.query.addMerge(that, this, &rel)
+	my.MergeData.add(that, this)
 }
 
-func (my *Parser) parseRelationProjection(lhs, rhs *Statement, rel *Relation) {
-	if rel.unique {
-		if _, hasParent := lhs.params.(string); hasParent {
-			if my.allParentRelationsAreUnique(lhs) {
-				my.projection.addUnique(rhs)
-			} else {
-				my.projection.add(rhs)
-			}
-		} else {
-			my.projection.addUnique(rhs)
-		}
-	} else {
-		my.projection.add(rhs)
-	}
+func (my *Parser) matchGetBy(this *Statement) {
+	that := my.statements[this.params.(string)]
+	rel := getTree[that.class][this.class]
+	println(this.class, that.class)
+
+	my.query.addMatch(that, this, &rel)
+	my.query.addProjection(this, that, &rel)
 }
 
-func (my *Parser) matchByLeftStatement(lhs, rhs *Statement, rel Relation) {
-	my.parseRelationProjection(lhs, rhs, &rel)
-	my.matches.addLeft(lhs, rhs, &rel)
-}
-
-func (my *Parser) matchByRightStatement(lhs, rhs *Statement, rel Relation) {
-	my.parseRelationProjection(rhs, lhs, &rel)
-	my.matches.addRight(lhs, rhs, &rel)
-}
-
-func (my *Parser) matchGetById(statement *Statement) {
-	my.projection.addUnique(statement)
-	my.matches.add(statement)
+func (my *Parser) matchGetById(stmt *Statement) {
+	my.query.addStatement(stmt)
 }

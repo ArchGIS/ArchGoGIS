@@ -1,9 +1,17 @@
 package parser
 
+type cypherQuery struct {
+	projection      []string
+	exactMatches    []string
+	optionalMatches []string
+}
+
 type Relation struct {
+	pat      string
 	name     string
 	unique   bool
 	optional bool
+	renaming string
 }
 
 type Statement struct {
@@ -13,30 +21,19 @@ type Statement struct {
 	params interface{}
 }
 
+type rule struct {
+	name   string
+	count  string
+	target string
+}
+
 type MergeData struct {
 	Mapping map[string]string
 	index   map[string]struct{}
 }
 
-type matches struct {
-	Exact    []string
-	Optional []string
-}
-
-type projection []string
-type matchFunc func(*Statement, *Statement, Relation)
-type relationScheme map[string]map[string]Relation
-
-type segment struct {
-	id  string
-	rel *Relation
-	lhs *Statement
-	rhs *Statement
-}
-
 type Parser struct {
 	statements map[string]*Statement
-	matches    matches
-	projection projection
-	MergeData  MergeData
+	query      cypherQuery
+	MergeData
 }

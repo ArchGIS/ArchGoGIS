@@ -1,0 +1,5 @@
+{
+  "author:Author.getBy": 697622,
+  "orgs:Organization.mergeBy": "author",
+  "researches:Research.getBy": "author"
+}

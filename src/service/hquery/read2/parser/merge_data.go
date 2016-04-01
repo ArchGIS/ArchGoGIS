@@ -7,9 +7,9 @@ func newMergeData() MergeData {
 	}
 }
 
-func (my *MergeData) add(from, to string) {
-	my.Mapping[from] = to
-	my.index[to] = struct{}{}
+func (my *MergeData) add(from, to *Statement) {
+	my.Mapping[from.id+"_"+to.id] = to.id
+	my.index[to.id] = struct{}{}
 }
 
 func (my *MergeData) IsMerging(key string) bool {

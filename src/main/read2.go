@@ -2,7 +2,10 @@ package main
 
 import (
 	"db/neo"
+	"encoding/json"
+	"fmt"
 	"service/hquery/read2"
+	"service/hquery/read2/parser"
 )
 
 func main() {
@@ -33,18 +36,18 @@ func main() {
 	var query map[string]interface{}
 	json.Unmarshal(rawQuery, &query)
 
-	parser := read2.NewParser(query)
+	parser := parser.New(query)
 
-	cypher := parser.generateCypher()
-	fmt.Printf("%+v\n", string(cypher))
+	cypher := parser.GenerateCypher()
+	fmt.Printf("`%s`\n", string(cypher))
 
-	neoQuery := neo.NewQuery(neo.Statement{string(cypher), nil})
-	response, err := neoQuery.Run()
+	fmt.Printf("%+v\n", parser.MergeData)
+
+	resp, err := neo.Run(string(cypher), nil)
 	if err != nil {
 		panic(err)
 	}
 
-	result := read2.MustJsonFmt(resp)
-
-	fmt.Printf("`%s`\n", string(formatResponse(response, &parser.mergeData)))
+	result := read2.MustFmtJson(resp, &parser.MergeData)
+	fmt.Printf("`%s`\n", string(result))
 }
