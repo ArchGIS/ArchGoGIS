@@ -1,9 +1,9 @@
 'use strict';
 
 App.controllers.author = new (App.View.extend({
-  'show': function() {
-    App.url.setMapping(['id']);
-    var id = App.url.get('id');
+  "show": function() {
+    App.url.setMapping(["id"]);
+    var id = App.url.get("id");
 
     var query = JSON.stringify({      
       "author:Author.getBy": +id,
@@ -11,8 +11,8 @@ App.controllers.author = new (App.View.extend({
       "researches:Research.getBy": "author"
     });
 
-    $.post('/hquery/read2', query).success(function(response) {
-      App.page.render('author/show', response);
+    $.post("/hquery/read2", query).success(function(response) {
+      App.page.render("author/show", response);
     });
   }
 }));
