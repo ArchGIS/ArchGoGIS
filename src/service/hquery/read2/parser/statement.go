@@ -9,3 +9,8 @@ func NewStatement(tag string, params interface{}) *Statement {
 func (my *Statement) idParam() int {
 	return int(my.params.(float64))
 }
+
+func (my *Statement) hasParent() bool {
+	_, ok := my.params.(string)
+	return ok
+}

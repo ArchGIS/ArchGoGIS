@@ -10,42 +10,17 @@ App.controllers.research = new (App.View.extend({
     var id = App.url.get("id");
 
     var query = JSON.stringify({
-      "r:Research": {"id": id, "select": "*"},
-      "k:Knowledge": {"id": "*", "select": "*"},
-      "m:Monument": {"id": "*", "select": "*"},
-      "r_Contains_k": {},
-      "k_Describes_m": {}
+      "research:Research.getBy": 74,
+      "author:Author.getBy": "research",
+      "knowledge:Knowledge.getBy": "research",
+      "monuments:Monument.getBy": "knowledge",
+      "photos:Photo.getBy": "knowledge",
+      "documents:Document.getBy": "knowledge"
     });
 
-    $.post('/hquery/read?limit=400', query)
-    .success(function(researchData) {
-      researchData = JSON.parse(researchData);
-
-      var query = JSON.stringify({
-        "r:Research": {"id": id},
-        "a:Author": {"id": "?", "select": "*"},
-        "a_Created_r": {}
-      });
-
-      $.post('/hquery/read', query)
-      .success(function(authorData) {
-        authorData = JSON.parse(authorData);
-
-        var query = JSON.stringify({
-          "r:Research": {"id": id},
-          "files:File": {"id": "*", "select": "*"},
-          "r_Has_files": {}
-        });
-
-        $.post('/hquery/read', query)
-        .success(function(filesData) {
-          App.page.render('research_view', $.extend(
-            researchData,
-            authorData,
-            JSON.parse(filesData)
-          ));
-        });
-      });
+    $.post('/hquery/read2', query).success(function(researchData) {
+      console.log(researchData);
+      App.page.render('research_view', researchData);
     });
   }
 }));

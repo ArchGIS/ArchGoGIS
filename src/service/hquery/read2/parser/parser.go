@@ -63,10 +63,35 @@ func (my *Parser) matchMergeBy(this *Statement) {
 func (my *Parser) matchGetBy(this *Statement) {
 	that := my.statements[this.params.(string)]
 	rel := getTree[that.class][this.class]
-	println(this.class, that.class)
+
+	if rel.unique {
+		if that.hasParent() {
+			thatParent := my.seekTopParent(that)
+			if thatParent != that {
+				thatParentRel := getTree[thatParent.class][that.class]
+				if thatParentRel.unique {
+					my.query.addProjection(this.id)
+				} else {
+					my.query.addMultiProjection(this)
+				}
+			}
+		} else {
+			my.query.addProjection(this.id)
+		}
+	} else {
+		my.query.addMultiProjection(this)
+	}
 
 	my.query.addMatch(that, this, &rel)
-	my.query.addProjection(this, that, &rel)
+}
+
+func (my *Parser) seekTopParent(stmt *Statement) *Statement {
+	if stmt.hasParent() {
+		parent := my.statements[stmt.params.(string)]
+		return my.seekTopParent(parent)
+	} else {
+		return stmt
+	}
 }
 
 func (my *Parser) matchGetById(stmt *Statement) {

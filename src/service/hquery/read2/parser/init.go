@@ -23,9 +23,18 @@ var getScheme = map[string][]string{
 	"Research": {
 		"{1} Author",
 		"{0,} Coauthor",
+		"Contains {1,} Knowledge",
 	},
 	"Organization": {
 		"{0,} Author",
+	},
+	"Knowledge": {
+		"HasPhoto {0,} Photo",
+		"HasDocument {0,} Document",
+		"Describes {1} Monument",
+	},
+	"Monument": {
+		"Contains {0,} Object",
 	},
 }
 
