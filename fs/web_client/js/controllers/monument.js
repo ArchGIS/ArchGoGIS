@@ -4,37 +4,20 @@ App.controllers.monument = new (App.View.extend({
   'show': function() {
     App.url.setMapping(['id']);
     var id = App.url.get('id');
-    
-    var query = {
-      "m:Monument": {"id": id, "select": "*"},
-      "k:Knowledge": {"id": "*", "select": "*"},
-      "r:Research": {"id": "*", "select": "*"},
-      "a:Author": {"id": "*", "select": "*"},
-      "?o:Object": {"id": "*", "select": "*"},
-      "c:Culture": {"id": "*", "select": "*"},
-      "k_Describes_m": {},
-      "r_Contains_k": {},
-      "k_CultureOf_c": {},
-      "a_Created_r": {},
-      "?m_Contains_o": {}
-    };
-    $.post('/hquery/read', JSON.stringify(query))
-    .success(function(monumentData) {
-      var query = {
-        "m:Monument": {"id": id},
-        "ty:MonumentType": {"id": "?", "select": "*"},
-        "e:Epoch": {"id": "?", "select": "*"},
-        "m_TypeOf_ty": {},
-        "m_EpochOf_e": {},
-      };
-      $.post('/hquery/read', JSON.stringify(query))
-      .success(function(ty) {
-        // #FIXME: унести запрос и JSON.parse в модель    
-        var respObject = JSON.parse(monumentData);
-        var type = JSON.parse(ty);
-        console.log($.extend(respObject, type));
-        App.page.render('monument_view', $.extend(respObject, type));
-      });
+
+    var query = JSON.stringify({
+      "monument:Monument.getBy": +id,
+      "epoch:Epoch.getBy": "monument",
+      "type:MonumentType.getBy": "monument",
+      "objects:Object.getBy": "monument",
+      "knowledges:Knowledge.getBy": "monument",
+      "researches:Research.getBy": "knowledges",
+      "cultures:Culture.getBy": "knowledges",
+      "authors:Author.getBy": "researches"
+    });
+
+    $.post("/hquery/read2", query).success(function(response) {
+      App.page.render("monument_view", response);
     });
   },
 
@@ -44,7 +27,6 @@ App.controllers.monument = new (App.View.extend({
     });
     
     App.page.render('monument', {
-      'param': 'test data',
       'authorsInputOptions': {
         'source': App.models.Author.findByNamePrefix,
         'etl': function(authors) {
