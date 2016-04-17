@@ -3,14 +3,14 @@
 App.page = new function() {
   var $body = $('#body');
   var $title = $('#title');
-
+  
   // Объекты, локальные для страницы (controller.action);
   // Это хранилище очищается перед отрисовкой (render) следующей страницы.
   var objects = {};
   // Массив функций, которые нужно выполнить перед запуском следующей страницы.
   var destructors = [];
   
-  this.render = function(templateName, templateParams) {
+  this.render = function(templateName, templateParams, viewContext) {
     var action = App.router.current.action();
     var controller = App.router.current.controller();
     
@@ -24,7 +24,7 @@ App.page = new function() {
       if (App.views[controller]) {
       	var view = App.views[controller][action];
       	if (view) {
-      	  view();
+      	  view(viewContext);
       	}
       }
     });
@@ -36,6 +36,7 @@ App.page = new function() {
 
   this.clear = function() {
     _.invoke(destructors, 'call');
+    destructors = [];
     objects = {};
     $body.empty();
   };
