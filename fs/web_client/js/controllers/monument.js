@@ -36,6 +36,15 @@ App.controllers.monument = new (App.View.extend({
     });
   },
 
+  "new_by_arch_map": function() {
+    App.form.bind({
+      "monument": new App.models.Monument(),
+      "knowledge": new App.models.Knowledge()
+    });
+    
+    App.page.render("monument/by_arch_map");
+  },
+
   'start': function() {
     console.log('monument controller is launched');
   }
