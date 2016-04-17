@@ -32,10 +32,19 @@ var getScheme = map[string][]string{
 		"HasPhoto {0,} Photo",
 		"HasDocument {0,} Document",
 		"Describes {1} Monument",
+		"CultureOf {1} Culture",
+		"{1} Research",
 	},
 	"Monument": {
 		"Contains {0,} Object",
+		"TypeOf {1} MonumentType",
+		"EpochOf {1} Epoch",
+		"{1,} Knowledge",
 	},
+	"Epoch":        {},
+	"Object":       {},
+	"Culture":      {},
+	"MonumentType": {},
 }
 
 // Храним в том числе и неизменяемые названия для лучшего быстродействия.
@@ -47,6 +56,9 @@ var labelRenamings = map[string]string{
 	"Object":       "Object",
 	"Monument":     "Monument",
 	"Organization": "Organization",
+	"Culture":      "Culture",
+	"MonumentType": "MonumentType",
+	"Epoch":        "Epoch",
 	// Меняющие название:
 	"Photo":    "File",
 	"Document": "File",
@@ -54,7 +66,7 @@ var labelRenamings = map[string]string{
 }
 
 var statementMatcher = regexp.MustCompile(
-	`([a-z][a-z0-9]*):([A-Z][a-z]*)\.([a-z]\w*)`,
+	`([a-z][a-z0-9]*):([A-Z][A-Za-z]*)\.([a-z]\w*)`,
 )
 
 func init() {
