@@ -47,10 +47,15 @@ func (my *cypherQuery) addMultiProjection(stmt *Statement) {
 }
 
 func (my *cypherQuery) addStatement(stmt *Statement) {
-	match := fmt.Sprintf("MATCH (%s:%s {id:%d})", stmt.id, stmt.class, stmt.idParam())
-	my.exactMatches = append(my.exactMatches, match)
-
-	my.projection = append(my.projection, stmt.id)
+	if stmt.hasIdParam() {
+		match := fmt.Sprintf("MATCH (%s:%s {id:%d})", stmt.id, stmt.class, stmt.idParam())
+		my.exactMatches = append(my.exactMatches, match)
+		my.projection = append(my.projection, stmt.id)
+	} else {
+		match := fmt.Sprintf("MATCH (%s:%s)", stmt.id, stmt.class)
+		my.exactMatches = append(my.exactMatches, match)
+		my.addMultiProjection(stmt)
+	}
 }
 
 func (my *cypherQuery) addMerge(lhs, rhs *Statement, rel *Relation) {

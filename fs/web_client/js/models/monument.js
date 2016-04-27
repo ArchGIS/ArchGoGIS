@@ -1,8 +1,18 @@
-'use strict';
+"use strict";
 
-// #TODO
-App.models.Monument = App.Model.extend({
-});
+(function() {
+  function Monument(key) {
+    App.models.base.call(this, key, Monument.scheme);
+  }
+
+  Monument.scheme = {
+    "epoch": {"type": "enum"},
+    "x": {"type": "number"},
+    "y": {"type": "number"}
+  };
+
+  App.models.Monument = Monument;
+}());
 
 App.models.Monument.findByNamePrefix = function(name) {
   return new Promise(function(resolve, reject) {
