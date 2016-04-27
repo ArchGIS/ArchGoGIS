@@ -22,7 +22,7 @@ App.controllers.monument = new (App.View.extend({
   },
 
   'new': function() {
-    App.page.pushDestructor(function() {
+    App.page.on("atClear", function() {
       console.log('monument controller is done (destructor)');
     });
     

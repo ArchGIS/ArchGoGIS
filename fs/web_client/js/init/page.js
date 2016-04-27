@@ -7,8 +7,15 @@ App.page = new function() {
   // Объекты, локальные для страницы (controller.action);
   // Это хранилище очищается перед отрисовкой (render) следующей страницы.
   var objects = {};
-  // Массив функций, которые нужно выполнить перед запуском следующей страницы.
-  var destructors = [];
+  
+  var hooks = {
+    "afterRender": [],
+    "atClear": []
+  };
+
+  this.on = function(hookName, callback) {
+    hooks[hookName].push(callback);
+  };
   
   this.render = function(templateName, templateParams) {
     var action = App.router.current.action();
@@ -17,7 +24,8 @@ App.page = new function() {
     App.template.get(templateName, function(tmpl) {
       App.locale.set(App.url.get('lang'));
       $body.html(tmpl(templateParams));
-      App.widgetMaker.runDefers();
+      _.invoke(hooks.afterRender, 'call');
+      App.widgetMaker.runDefers(); 
       App.blockMaker.runInitializers();
       
       // Если есть view, то запускаем и его
@@ -35,7 +43,7 @@ App.page = new function() {
   };
 
   this.clear = function() {
-    _.invoke(destructors, 'call');
+    _.invoke(hooks.atClear, 'call');
     objects = {};
     $body.empty();
   };
@@ -50,9 +58,5 @@ App.page = new function() {
     }
     
     objects[name] = object;
-  };
-
-  this.pushDestructor = function(destructor) {
-    destructors.push(destructor);
   };
 };

@@ -2,10 +2,6 @@
 
 App.controllers.artifact = new (App.View.extend({
   'new': function() {
-    App.page.pushDestructor(function() {
-      console.log('artifact controller is done (destructor)');
-    });
-    
     App.page.render('artifact', {
       'param': 'test data',
       'authorsInputOptions': {
