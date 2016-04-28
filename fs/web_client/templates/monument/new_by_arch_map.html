@@ -2,27 +2,24 @@
   <div id="container" class="ui-widget ui-widget-content">
     <fieldset>
       <legend><%= t("knowledge.singular") %></legend>
-      <%= knowledge.input("name") %>
+      <%= form.input("knowledge", "name") %>
       <br>
-      <%= knowledge.input("ArchMap.n") %>
+      <%= form.input("knowledge", "ArchMap.n") %>
       <br>
-      <%= knowledge.input("ArchMap.page") %>
+      <%= form.input("knowledge", "ArchMap.page") %>
     </fieldset>
-    
+
+    <%= form.list("monument") %>
     <fieldset>
       <legend><%= t("monument.singular") %></legend>
-      <%= monument.input("epoch") %>
+      <%= form.input("monument", "epoch") %>
       
       <div class="coords">
-        <div class="coord"><%= monument.input("x") %></div>
-        <div class="coord"><%= monument.input("y") %></div>
+        <div class="coord"><%= form.input("monument", "x") %></div>
+        <div class="coord"><%= form.input("monument", "y") %></div>
         <i id="pick-coord" class="fa fa-map-marker"></i>
       </div>
     </fieldset>
-    
   </div>
 </div>
 
-<div class="maps">
-  <%= widget("Map", {}, "map") %>
-</div>

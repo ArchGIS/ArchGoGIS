@@ -1,8 +1,8 @@
 "use strict";
 
 (function() {
-  function Monument(key) {
-    App.models.base.call(this, key, Monument.scheme);
+  function Monument() {
+    App.models.base.call(this, Monument.scheme);
   }
 
   Monument.scheme = {
