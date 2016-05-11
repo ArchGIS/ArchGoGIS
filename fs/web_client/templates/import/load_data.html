@@ -1,0 +1,14 @@
+<div class="block">
+  <h3>Загрузка данных</h3>
+  
+  <div>Археологическая карта</div>
+  
+  <label>
+    Название:
+    <%= widget("SearchLine", archmapSearchOptions, "archmap-input") %>
+  </label>
+
+  <input id="excel_file" type="file">Выбрать excel файл (*.xlsx)</input>
+
+  <button id="goto-load">Загрузить</button>
+</div>
