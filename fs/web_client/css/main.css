@@ -2,10 +2,31 @@ html {
   height: 100%;
 }
 
+.field-input {
+    background-color: #F6F8FA;
+    border: 1px solid #E0E0E8;
+    display: inline-block;
+    margin: 2px;
+    max-width: 100%;
+}
+
+.field-input input {
+    max-width: calc(100% - 6px);
+}
+
+.field-input select {
+    width: 100%;
+}
+
 body {
   height: calc(100% - 2em);
-  font: 12pt/10pt Helvetica sans-serif;
   min-width: 875px;
+}
+
+body, button, input, select, textarea,
+.pure-g [class *= "pure-u"],
+.ui-widget {
+    font: 12pt/10pt Helvetica sans-serif !important;
 }
 
 *:focus {
@@ -76,7 +97,6 @@ footer {
 }
 
 /* ######################## */
-
 
 .switch {
   cursor: pointer;
@@ -185,10 +205,6 @@ input {
   border-bottom: 1px solid #aaa;
   background: none;
   border-radius: 0;
-}
-
-.coord {
-    width: 210px;
 }
 
 input[type=text] {

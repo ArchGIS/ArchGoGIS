@@ -37,9 +37,14 @@ App.controllers.monument = new (App.View.extend({
   },
 
   "new_by_arch_map": function() {
+    var m = App.models;
     var models = {
-      "knowledge": new App.models.Knowledge(),
-      "monument": new App.models.Monument(),
+      "archMap": new m.ArchMap(),
+      "knowledge": new m.Knowledge(),
+      "monument": new m.Monument(),
+      "researchRef": new m.ResearchRef(),
+      "archMapRecord": new m.ArchMapRecord(),
+      "literatureRef": new m.LiteratureRef()
       // "research": new App.models.Research(),
       // "collection": new App.models.Collection(),
       // "archMap": new App.models.ArchMap()

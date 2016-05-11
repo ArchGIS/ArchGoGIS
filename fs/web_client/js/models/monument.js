@@ -1,6 +1,6 @@
 "use strict";
 
-(function() {
+(function() {  
   function Monument() {
     App.models.base.call(this, Monument.scheme);
   }
@@ -9,6 +9,12 @@
     "epoch": {"type": "enum"},
     "x": {"type": "number"},
     "y": {"type": "number"}
+  };
+
+  Monument.presentation = {
+    "epoch": {"t": "Monument.prop.epoch"},
+    "x": {"t": "Monument.prop.x"},
+    "y": {"t": "Monument.prop.y"}
   };
 
   App.models.Monument = Monument;

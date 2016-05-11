@@ -36,6 +36,7 @@ function ModelGroup(model, key) {
   var items = [{"model": model, "$ref": null}];
   var inputs = {};
   var scheme = App.models[model.constructor.name].scheme;
+  var presentation = App.models[model.constructor.name].presentation;
 
   var listRef = (modelKey, isActive) => {
     return $("<span/>", {
@@ -111,31 +112,80 @@ function ModelGroup(model, key) {
     var text = t(`${model.constructor.name}.plural`);
     return `${text}: <span id="${id}"></span>`;
   };
+
+  this.finder = () => {
+    var id = `${key}-${model.constructor.name}-finder`;
+    var text = t(`${model.constructor.name}.singular`);
+    App.page.on("afterRender", () => {
+      var $finder = $("#" + id);
+      var lastTerm = "";
+      var items = [];
+      
+      $finder.autocomplete({
+        "minLength": 4,
+        "source": (request, response) => {
+          var term = request.term;
+          if (term != lastTerm) {
+            model.finder(term).then(
+              result => {
+                items = result;
+                response(items);
+              }
+            );
+          } else {
+            response(grepObject("^" + term, items, "label"));
+          }
+        }
+      });
+      $finder.on("focus", () => { $finder.autocomplete("search"); });
+    });
+    return `<div class="field-input"><label><input id="${id}">${text}</label></div>`;
+  };
   
   this.input = (propName) => {
     var id = `${key}-${model.constructor.name}-${propName}`;
-    var text = t(`${model.constructor.name}.prop.${propName}`);
+    var text = t(presentation[propName].t);
 
+    var propInfo = scheme[propName];
+    if (!propInfo) {
+      throw `prop ${propName} not found in ${model.constructor.name} scheme`;
+    }
+    
     if ("enum" == scheme[propName].type) {
       inputs[propName] = new Select(id);
       App.page.on("afterRender", function() {
         inputs[propName].fill(t(`enums.${propName}`));
       });
-      return `<label>${text}<select id="${id}"></select></label>`;
+      return `<div class="field-input"><label><select id="${id}"></select>${text}</label></div>`;
     } else {
       inputs[propName] = new Input(id);
-      return `<label>${text}<input id="${id}"></label>`;
+      if ("textarea" == presentation[propName].input) {
+        return `<div class="field-input"><label><textarea id="${id}"></textarea>${text}</label></div>`;
+      } else {
+        return `<div class="field-input"><label><input id="${id}">${text}</label></div>`;
+      }
     }
   };
 }
 
 App.Form = function Form(models) {
   var t = App.locale.translate;
-
+  
   var groups = _.mapObject(models, function(model, groupKey) {
     return new ModelGroup(model, groupKey);
   });
+  
+  var findGroup = (groupKey) => {
+    var group = groups[groupKey];
+    if (!group) {
+      throw `group ${groupKey} not found`;
+    }
+    return group;
+  };
 
-  this.list = (groupKey) => groups[groupKey].list();  
-  this.input = (groupKey, propName) => groups[groupKey].input(propName);
+  this.list = (groupKey) => findGroup(groupKey).list();
+  
+  this.finder = (groupKey) => findGroup(groupKey).finder();
+  
+  this.input = (groupKey, propName) => findGroup(groupKey).input(propName);
 };
