@@ -1,5 +1,12 @@
 package xl
 
+import (
+	"encoding/json"
+	"errors"
+
+	"github.com/tealeg/xlsx"
+)
+
 func toString(cell *xlsx.Cell) string {
 	stringValue, err := cell.String()
 	if err != nil {
@@ -39,7 +46,7 @@ func ToJson(xlsxFilePath string, rawScheme []byte) ([]byte, error) {
 	rows := sheet.Rows[1:]  // Остальные - данные
 
 	// Сбор индексов. Разрешены столбцы в любом порядке.
-	result := NewResult(len(scheme), len(rows))
+	result := newResult(len(scheme), len(rows))
 	for _, headerCell := range header.Cells {
 		headerCellName := toString(headerCell)
 		for _, schemeCellName := range scheme {
