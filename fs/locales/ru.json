@@ -14,7 +14,7 @@
   "work-post": "Должность",
   "since": "с",
 
-  "ArchMap": {
+  "arch-map": {
     "singular": "Археологическая карта"
   },
   
@@ -55,7 +55,7 @@
     }
   },
   
-  "Monument": {
+  "monument": {
     "singular": "Памятник",
     "plural": "Памятники",
     "prop": {
@@ -101,7 +101,7 @@
     }
   },
   
-  "Knowledge": {
+  "knowledge": {
     "singular": "Данные памятника в рамках исследования",
     "prop": {
       "name": "Название",

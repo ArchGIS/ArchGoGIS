@@ -70,13 +70,15 @@ function postQuery() {
   var formdata = new FormData();
 
   _.each(json, function(val, key) {
-    formdata.append(key, JSON.stringify(key));
+    formdata.append(key, JSON.stringify(val));
   })
 
   $.ajax({
     url: "/hquery/upsert",
     data: formdata,
     type: "POST",
+    processData: false,
+    contentType: false,
     success: function(response) {
       console.log(response);
     }
