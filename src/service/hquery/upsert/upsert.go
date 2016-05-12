@@ -177,7 +177,8 @@ func makeInsertBatch(ids map[string]string, data *Data) neo.Batch {
 		if _, ok := data.nodeInserts[edge.Lhs]; !ok {
 			node := data.nodeUpdates[edge.Lhs]
 			sb.AddRef(node.Props["id"], node)
-		} else if _, ok := data.nodeInserts[edge.Rhs]; !ok {
+		}
+		if _, ok := data.nodeInserts[edge.Rhs]; !ok {
 			node := data.nodeUpdates[edge.Rhs]
 			sb.AddRef(node.Props["id"], node)
 		}
