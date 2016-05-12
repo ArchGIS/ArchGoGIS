@@ -63,7 +63,7 @@ function postQuery() {
     ["Knowledge", "Monument", "Describes"],
     ["Monument", "Artifact", "Contains"],
     ["Report", "Knowledge", "Contains"],
-    ["Heritage_Object", "Monument", "Contains"],
+    ["HeritageObject", "Monument", "Contains"],
     ["Coauthor", "Research", "HelpedToCreate"]
   ]);
 
