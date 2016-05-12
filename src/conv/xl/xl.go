@@ -59,12 +59,17 @@ func ToJson(xlsxFilePath string, rawScheme []byte) ([]byte, error) {
 		return nil, errors.New("given xlsx file not matches scheme")
 	}
 
+	realSize := 0 // Количество непустых строк данных
 	for rowIndex, row := range rows {
-		for _, cell := range row.Cells {
-			result.Rows[rowIndex] =
-				append(result.Rows[rowIndex], toString(cell))
+		if len(row.Cells) == len(scheme) {
+			for _, cell := range row.Cells {
+				result.Rows[realSize] =
+					append(result.Rows[rowIndex], toString(cell))
+			}
+			realSize += 1
 		}
 	}
+	result.Rows = result.Rows[:realSize] // Обрезаем пустые строки
 
 	return json.Marshal(result)
 }
