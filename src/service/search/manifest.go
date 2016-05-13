@@ -10,5 +10,6 @@ var Config = service.Config{
 	Routes: []web.Route{
 		{"/authors", authorsHandler},
 		{"/monuments", monumentsHandler},
+		{"/archMaps", archMapsHandler},
 	},
 }
