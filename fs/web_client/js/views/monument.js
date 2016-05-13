@@ -43,6 +43,10 @@ App.views.monument = new (App.View.extend({
     $("#container").tabs();
   },
 
+  "new_by_xlsx": function() {
+
+  },
+
   'create': function() {
     alert(22)
   }

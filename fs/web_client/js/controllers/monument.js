@@ -36,6 +36,10 @@ App.controllers.monument = new (App.View.extend({
     });
   },
 
+  "new_by_xlsx": function() {
+    App.page.render("monument_from_xlsx");
+  },
+
   "new_by_arch_map": function() {
     var models = {
       "knowledge": new App.models.Knowledge("k"),

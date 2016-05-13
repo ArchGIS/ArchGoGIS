@@ -6,8 +6,9 @@ import (
 )
 
 func main() {
-	format := []byte(`["Столбец1","Столбец2","Столбец3"]`)
-	result, err := xl.ToJson("/home/quasilyte/DML/import_xslx/input/simple.xlsx", format)
+	format := []byte(`["Номер","Название памятника","X","Y","Тип памятника","Культура","Эпоха","Описание","Библиографическая ссылка","Страница"]`)
+
+	result, err := xl.ToJson("D:/Educations/test.xlsx", format)
 	if err != nil {
 		panic(err)
 	}
