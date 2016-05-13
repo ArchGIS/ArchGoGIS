@@ -15,8 +15,8 @@
       var url = App.url.make("/search/archMaps", {"needle": name, "limit": 10});
 
       $.get(url)
-	.success(response => resolve($.parseJSON(response)))
-	.error(reject);
+      .success(response => resolve($.parseJSON(response)))
+      .error(reject);
     });
   };
 
