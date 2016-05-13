@@ -27,7 +27,6 @@ App.widgets.SearchLine = function(params, id) {
       'source': function(request, response) {
 	var term = request.term.toLowerCase();
 
-        console.log([term, lastTerm]);
 	if (term != lastTerm) {
 	  lastTerm = term;
 	  // Нужно забирать данные заново.
