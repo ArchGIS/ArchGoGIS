@@ -10,13 +10,13 @@ App.views.import = new (App.View.extend({
 				"notices": [
 					{
 						"line": 10,
-						"text": "Whatever",
-						"cells": ["Some error", "Another error", "And another"]
+						"text": ["err1", "err2"],
+						"cells": ["v1", "v2", "v3"]
 					},
 					{
-						"line": 13,
-						"text": "Whatever",
-						"cells": ["Some error", "Another error", "Dude what?"]
+						"line": 11,
+						"text": ["err1", "err2"],
+						"cells": ["v11", "v2", "v3"]
 					}
 				],
 				"header": [
@@ -34,13 +34,14 @@ App.views.import = new (App.View.extend({
 			} else if (resp.notices) {
 				var table = new App.widgets.Table(null, "notice");
 				var tmpl = table.early();
-				table.later();
 				
 				$('.error-message').html(tmpl);
+				table.later();
+				
 				table.setHead(resp.header);
 				_.each(resp.notices, function(el) {
-					table.setBody(el.cells);
-					table.appendRow(el.text);
+					table.setBody(el.cells, 1);
+					_.each(el.text, e => table.appendRow(e, resp.header.length));
 				});
 			} else {
 				// Обработка правильных данных
