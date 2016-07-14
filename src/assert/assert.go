@@ -31,6 +31,6 @@ func Must(object interface{}, err error) interface{} {
 
 func True(maybeTrue bool) {
 	if !maybeTrue {
-		println("{{ assert.True failed! }}")
+		panic("{{ assert.True failed! }}")
 	}
 }
