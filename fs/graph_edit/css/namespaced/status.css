@@ -1,0 +1,13 @@
+/* 
+    status-* 
+*/
+
+.status-ok {
+  display: inline-block;
+  background-color: rgb(28, 184, 65);
+}
+
+.status-error {
+  display: inline-block;
+  background-color: rgb(202, 60, 60);
+}

@@ -1,0 +1,13 @@
+#top-panel {
+    float: left;
+    padding: 4px;
+    width: 400px;
+    height: 660px;
+    border: 1px solid gray;
+    font-size: 12pt;
+}
+
+.control-group {
+    margin: 8px;
+    background-color: #F4F4FA;
+}
