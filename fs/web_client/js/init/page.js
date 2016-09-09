@@ -38,7 +38,7 @@ App.page = new function() {
     });
 
     $title.text(App.locale.translate([
-      'titles', controllers, action
+      'titles', controller, action
     ]));
   };
 
