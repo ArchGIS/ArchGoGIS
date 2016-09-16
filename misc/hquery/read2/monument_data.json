@@ -1,0 +1,10 @@
+{
+  "monument:Monument.getBy": 181,
+  "epoch:Epoch.getBy": "monument",
+  "type:MonumentType.getBy": "monument",
+  "objects:Object.getBy": "monument",
+  "knowledges:Knowledge.getBy": "monument",
+  "researches:Research.getBy": "knowledges",
+  "cultures:Culture.getBy": "knowledges",
+  "authors:Author.getBy": "researches"
+}
