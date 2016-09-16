@@ -35,8 +35,6 @@ App.views.artifact = new (App.View.extend({
     
     var fmt = App.fn.fmt;
 
-    
-    
     var authorSelectHandler = function(event, ui) {
       console.log(ui.item.id);
       $('#author-input-id').val(ui.item.id);

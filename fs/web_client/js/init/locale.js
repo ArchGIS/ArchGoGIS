@@ -45,5 +45,12 @@ App.locale = new function() {
     }
   };
   
-  this.translate = (key) => dictIndex[key];
+  this.translate = (key) => {
+    var translation = dictIndex[key];
+    if (translation) {
+      return translation;
+    } else {
+      return `<< ${key} >>`;
+    }
+  }
 };

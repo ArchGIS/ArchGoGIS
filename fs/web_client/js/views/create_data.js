@@ -18,7 +18,7 @@ App.views.wizard = new (App.View.extend({
         "#monument/new": t("report.singular")
       },
       "monuments": {
-        "#monument/new_by_arch_map": t("arch-map.singular")
+        "#monument/new_by_arch_map": t("ArchMap.singular")
       },
       "artifact": {
         "#artifact/new": t("research.singular")

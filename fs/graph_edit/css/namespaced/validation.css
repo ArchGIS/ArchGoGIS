@@ -1,0 +1,15 @@
+/* 
+    validation-* 
+*/
+
+.validation-ok {
+  border: 2px solid rgb(28, 184, 65);
+}
+
+.validation-error {
+  border: 2px solid rgb(202, 60, 60);
+}
+
+.validation-empty {
+  border: 2px solid rgb(223, 117, 20);
+}

@@ -41,15 +41,22 @@ App.controllers.monument = new (App.View.extend({
   },
 
   "new_by_arch_map": function() {
+    var m = App.models;
     var models = {
-      "knowledge": new App.models.Knowledge("k"),
-      "monument": new App.models.Monument("m"),
-      "research": new App.models.Research("r"),
-      "collection": new App.models.Collection("coll"),
-      "archMap": new App.models.ArchMap("am")
+      "archMap": new m.ArchMap(),
+      "knowledge": new m.Knowledge(),
+      "monument": new m.Monument(),
+      "researchRef": new m.ResearchRef(),
+      "archMapRecord": new m.ArchMapRecord(),
+      "literatureRef": new m.LiteratureRef()
+      // "research": new App.models.Research(),
+      // "collection": new App.models.Collection(),
+      // "archMap": new App.models.ArchMap()
     };
+    var form = new App.Form(models);
+    window.form = form;
        
-    App.page.render("monument/new_by_arch_map", models, models);
+    App.page.render("monument/new_by_arch_map", {"form": form}, models);
   },
 
   'start': function() {
