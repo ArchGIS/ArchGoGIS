@@ -1,24 +1,9 @@
 "use strict";
 
-(function() {  
-  function Monument() {
-    App.models.base.call(this, Monument.scheme);
-  }
-
-  Monument.scheme = {
-    "epoch": {"type": "enum"},
-    "x": {"type": "number"},
-    "y": {"type": "number"}
-  };
-
-  Monument.presentation = {
-    "epoch": {"t": "Monument.prop.epoch"},
-    "x": {"t": "Monument.prop.x"},
-    "y": {"t": "Monument.prop.y"}
-  };
-
-  App.models.Monument = Monument;
-}());
+App.models.Monument = function Monument() {
+  var props = {};
+  App.models.proto.call(this, App.models.Monument.scheme, props);
+};
 
 App.models.Monument.findByNamePrefix = function(name) {
   return new Promise(function(resolve, reject) {
@@ -37,3 +22,18 @@ App.models.Monument.url = function(id) {
 App.models.Monument.href = function(id, text) {
   return '<a href="' + App.models.Monument.url(id) + '">' + text + '</a>';
 };
+
+App.models.Monument.scheme = App.models.proto.parseScheme("monument", {
+  "x": {
+    "type": "number",
+    "validations": []
+  },
+  "y": {
+    "type": "number",
+    "validations": []
+  },
+  "epoch": {
+    "type": "text",
+    "validations": []
+  }
+});

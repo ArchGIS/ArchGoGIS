@@ -1,7 +1,9 @@
 package server
 
 import (
+	"assert"
 	"echo"
+	"ext/xfile"
 	"net/http"
 	"service"
 	"web"
@@ -38,6 +40,9 @@ func registerService(config service.Config) {
 	if config.StaticPath != "" { // Обслуживаем статические файлы.
 		staticUrl := "/" + config.StaticPath + "/"
 		path := "fs/" + config.StaticPath
+
+		assert.True(xfile.Exists(path))
+
 		fs := http.FileServer(http.Dir(path))
 
 		echo.Info.Printf("serve static content in " + path)

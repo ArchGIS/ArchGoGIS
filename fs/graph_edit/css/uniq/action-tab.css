@@ -1,0 +1,7 @@
+#action-tab :nth-child(n) {
+  margin-right: 8px;
+}
+
+#action-tab :last-child {
+  margin-right: 0;
+}

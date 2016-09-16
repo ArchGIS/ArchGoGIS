@@ -19,3 +19,8 @@ App.fn.grepObject = function(pattern, items, key) {
   var matcher = new RegExp(pattern, 'i');
   return _.filter(items, item => matcher.test(item[key]));
 };
+
+App.fn.sequence = function(initial) {
+  initial = initial || 0;
+  return () => initial++;
+};

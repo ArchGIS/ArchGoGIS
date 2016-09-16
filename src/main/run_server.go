@@ -2,11 +2,13 @@ package main
 
 import (
 	"cfg"
+	"service/graphed"
 	"service/hquery"
 	"service/i18n"
 	"service/pfs"
 	"service/sbox"
 	"service/search"
+	"service/vending"
 	"service/wc"
 	"web/server"
 )
@@ -23,5 +25,7 @@ func main() {
 		i18n.Config,
 		search.Config,
 		pfs.Config,
+		vending.Config,
+		graphed.Config,
 	))
 }

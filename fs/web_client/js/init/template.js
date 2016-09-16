@@ -1,8 +1,10 @@
 'use strict';
 
 App.template = new function() {
+  var t = App.locale.translate;
   var memo = {};  
 
+  /*
   function input(opts) {
     return opts.id ? input.templates["withId"](opts) : input.templates["noId"](opts);
   }
@@ -10,6 +12,15 @@ App.template = new function() {
     "noId": _.template(`<label><%= label %><input/></label>`),
     "withId": _.template(`<label><%= label %><input id="<%= id %>"/></label>`)
   };
+  */
+  function input(opts, name) {
+    console.log(opts);
+    if (opts.name) {
+      // Создание input'а на основе модели
+      var labelText = t(opts.name + ".prop." + name);
+      
+    }
+  }
 
   function maybe(object) {
     return object ? object : '?';
@@ -18,6 +29,7 @@ App.template = new function() {
   // То, что передаётся в каждый шаблон в любом случае.
   var defaultContext = {
     't': App.locale.translate,
+    'form': App.form,
     'widget': App.widgetMaker.createWidget,
     'block': App.blockMaker.createBlock,
     'endblock': '</div>',

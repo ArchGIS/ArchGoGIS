@@ -7,7 +7,7 @@ MATCH (mt6:MonumentType {id:6})
 
 // Старостин:
 MATCH (a:Author {id: 7}) 
-MATCH (c1:Culture {id: 1})
+MATCH (c1:Culture {id: 3})
 MATCH (e:Epoch {id: 7})
 
 CREATE (r:Research {id:1, description:"Памятники Именьковской культуры", year:1967})

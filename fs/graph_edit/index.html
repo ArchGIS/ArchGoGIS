@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <title>ArchGraph Editor</title>
+
+    <!-- styles -->
+
+    <link rel="stylesheet" href="/vendor/pure-min.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+
+    <link href="/graph_edit/css/base.css" rel="stylesheet">
+    <link href="/graph_edit/css/uniq/tab-selector.css" rel="stylesheet">
+    <link href="/graph_edit/css/uniq/action-tab.css" rel="stylesheet">
+    <link href="/graph_edit/css/uniq/cytoscape.css" rel="stylesheet">
+    <link href="/graph_edit/css/uniq/map.css" rel="stylesheet">
+    <link href="/graph_edit/css/uniq/top-panel.css" rel="stylesheet">
+    <link href="/graph_edit/css/namespaced/button.css" rel="stylesheet">
+    <link href="/graph_edit/css/namespaced/node-input.css" rel="stylesheet">
+    <link href="/graph_edit/css/namespaced/status.css" rel="stylesheet">
+
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <div id="app-container">
+
+      <div id="top-panel">
+        <select id="tab-selector">  
+        </select>
+
+        <div id="graphControl" style="display: none">
+          <div class="control-group">
+            Масштаб:
+            <button id="zoom-in" class="pure-button button-small">+</button>
+            <button id="zoom-out" class="pure-button button-small">-</button>
+          </div>
+
+          <div class="control-group">
+            Выравнивание элементов:
+            <select id="graph-layout-selector"></select>
+
+            <button id="apply-graph-layout" class="pure-button">Применить</button> 
+          </div>
+
+        </div>
+
+        <div id="mapControl" style="display: none">
+        </div>
+
+        <div id="nodeControl" style="display: none">
+          <div id="selected-node-menu" style="display: none">
+            <div id="add-node" class="control-group">
+              Присоединить элемент:
+              <div id="available-nodes" class="pure-g"></div>
+            </div>
+
+            <div class="control-group">
+              <select id="node-type-select" style="width: 100%">
+                <option value="new">Свойства для создания записи</option>              
+                <option value="existing">Свойства для поиска существующей записи</option>
+              </select> 
+
+              <div id="node-props"></div>
+            </div>
+
+            <button id="remove-node" class="pure-button button-error">Удалить элемент</button>          
+          </div>
+
+          <p id="empty-node-menu">
+            Нет выделенного элемента.
+          </p>
+
+        </div>
+      </div>
+
+      <div id="cytoscape"></div>
+
+      <div id="map-box">
+        <div id="map">[[ карта ]]</div>
+      </div>
+      
+    </div>
+
+    <!-- scripts -->
+
+    <script src="/vendor/js/cytoscape.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/jquery/jquery.ui.min.js"></script>
+    <script src="/vendor/js/underscore.min.js"></script>
+
+    <script src="/graph_edit/js/core/init.js"></script>
+    <script src="/graph_edit/js/core/hotkey.js"></script>
+    <script src="/graph_edit/js/core/locale.js"></script>
+    <script src="/graph_edit/js/alert.js"></script>
+    <script src="/graph_edit/js/make.js"></script>
+    <script src="/graph_edit/js/inputs.js"></script>
+    <script src="/graph_edit/js/node/base.js"></script>
+    <script src="/graph_edit/js/node/author.js"></script>
+    <script src="/graph_edit/js/node/coauthor.js"></script>
+    <script src="/graph_edit/js/node/monument.js"></script>
+    <script src="/graph_edit/js/node/research.js"></script>
+    <script src="/graph_edit/js/node/excavations.js"></script>
+    <script src="/graph_edit/js/graph.js"></script>
+    <script src="/graph_edit/js/ui/toolbox.js"></script>
+    <script src="/graph_edit/js/ui/graph_control.js"></script>
+    <script src="/graph_edit/js/ui/node_control.js"></script>
+
+    <script src="/graph_edit/js/core/app.js"></script>
+  </body>
+</html>

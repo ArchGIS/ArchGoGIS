@@ -43,6 +43,10 @@ App.views.monument = new (App.View.extend({
     $("#container").tabs();
   },
 
+  "new_by_arch_map": function(context) {
+    console.log(context);
+  },
+
   'create': function() {
     alert(22)
   }

@@ -1,24 +1,31 @@
 "use strict";
 
-(function() {  
-  function Knowledge(key) {
-    App.models.base.call(this, key, Knowledge.scheme);
-  }
-  
-  Knowledge.scheme = {
-    "name": {"type": "text"},
-    "description": {"type": "text"}
-  };
+App.models.Knowledge = function Knowledge() {
+  var props = {};
+  App.models.proto.call(this, App.models.Knowledge.scheme, props);
 
-  Knowledge.presentation = {
+  this.describes = function() {
+    // return new App.models.Knowledge.Describes(
+  };
+};
+
+App.models.Knowledge.scheme =
+  App.models.proto.parseScheme("knowledge", {
     "name": {
-      "t": "Knowledge.prop.name"
-    },
-    "description": {
-      "t": "Knowledge.prop.description",
-      "input": "textarea"
+      "type": "text",
+      "validations": []
     }
-  };
+  });
 
-  App.models.Knowledge = Knowledge;
-}());
+App.models.Knowledge.Describes = function Describes() {
+  var props = {};
+  App.models.proto.call(this, App.models.Knowledge.Describes.scheme, props);
+};
+
+App.models.Knowledge.Describes.scheme =
+  App.models.proto.parseScheme("knowledge.describes", {
+    "test": {
+      "type": "text",
+      "validations": []
+    }
+  });

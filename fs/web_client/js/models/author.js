@@ -1,6 +1,21 @@
 'use strict';
 
-App.models.Author = function() {};
+App.models.Author = function Author(key) {
+  var props = {};
+  App.models.proto.call(this, key, App.models.Author.scheme, props);
+}
+
+App.models.Author.scheme =
+  App.models.proto.parseScheme("author", {
+    "name": {
+      "type": "text",
+      "validations": []
+    },
+    "year": {
+      "type": "number",
+      "validations": []
+    }
+  });
 
 App.models.Author.findByNamePrefix = function(name) {
   return new Promise(function(resolve, reject) {

@@ -1,0 +1,30 @@
+<div class="block">
+  <h2><%= t("titles.import.xlsx") %></h2>
+
+  <label>
+    <%= t("import.subject") %>
+
+    <%= widget("Toggler", {"select": [
+      [t("case.monumentsByArchMap"), "#archMap-params"],
+    ]}, "importToggler") %>
+  </label>
+
+  <h4><%= t("import.data") %></h4>
+
+  <div id="monument-params">
+    <label>
+      <%= t("ArchMap.singular") %>
+      <%= widget("SearchLine", archmapSearchOptions, "archmap-input") %>
+    </label>
+  </div>
+
+  <label>
+    Файл (*.xlsx)<input id="xlsx-file" type="file">
+  </label>
+
+  <br>
+  <br>
+  <button id="goto-load">Загрузить</button>
+  <br>
+  <div class="error-message"></div>
+</div>
