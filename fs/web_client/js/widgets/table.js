@@ -16,17 +16,15 @@ App.widgets.Table = function(params, id) {
   var thTmpl = _.template(`
     <tr>
       <% _.each(columns, function(column) { %>
-        <th><%= column %></hd>
+        <th><%= column %></th>
       <% }); %>  
     </tr>
   `);
     
   var tdTmpl = _.template(`
-    <tr>
-      <% _.each(columns, function(column) { %>
-        <td><%= column %></td>
-      <% }); %>  
-    </tr>
+    <td colspan="<%= colspan %>">
+      <%= columns %>
+    </td>
   `);
   
   this.early = function() {
@@ -43,12 +41,12 @@ App.widgets.Table = function(params, id) {
     return this;
   };
 
-  this.setBody = function(rows) {
-    body.$el.html(_.map(rows, row => tdTmpl({'columns': row})).join(''));
+  this.setBody = function(rows, colspan) {
+    body.$el.append("<tr>" + _.map(rows, row => tdTmpl({'columns': row, 'colspan': colspan})) + "</tr>");
     return this;
   };
 
-  this.appendRow = function(rowData) {
-    body.$el.append(rowTmpl({'columns': rowData}));
+  this.appendRow = function(rowData, numColumns) {
+    body.$el.append("<tr>" + tdTmpl({'columns': rowData, 'colspan': numColumns}) + "</tr>");
   };
 };
