@@ -1,6 +1,6 @@
 'use strict';
 
-App.models.Research = function() {};
+App.models.Research = function Research() {};
 
 App.models.Research.findByAuthorId = function(authorId) {
   return new Promise(function(resolve, reject) {
