@@ -20,7 +20,7 @@ App.widgets.Table = function(params, id) {
       <% }); %>  
     </tr>
   `);
-    
+
   var tdTmpl = _.template(`
     <td colspan="<%= colspan %>">
       <%= columns %>
