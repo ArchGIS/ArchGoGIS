@@ -1,5 +1,15 @@
 package parser
 
+import (
+	"service/hquery/errs"
+	"throw"
+)
+
+func isString(maybeString interface{}) bool {
+	_, ok := maybeString.(string)
+	return ok
+}
+
 func New(query map[string]interface{}) *Parser {
 	statements := make(map[string]*Statement, len(query))
 	for tag, params := range query {
@@ -22,22 +32,21 @@ func (my *Parser) GenerateCypher() []byte {
 func (my *Parser) mustParseAll() {
 	for _, statement := range my.statements {
 		switch statement.method {
+		case "getAll":
+			my.parseGetAll(statement)
 		case "getBy":
 			my.parseGetBy(statement)
 		case "mergeBy":
 			my.parseMergeBy(statement)
 		default:
-			panic("unknown method")
+			panic(errs.UnknownMethod)
 		}
 	}
 }
 
-func (my *Parser) parseMergeBy(statement *Statement) {
-	if _, isString := statement.params.(string); isString {
-		my.matchMergeBy(statement)
-	} else {
-		panic("not a valid merge by param")
-	}
+func (my *Parser) parseGetAll(statement *Statement) {
+	throw.If(!isString(statement.params), errs.InvalidGetAllParam)
+	my.matchGetById(statement)
 }
 
 func (my *Parser) parseGetBy(statement *Statement) {
@@ -52,12 +61,18 @@ func (my *Parser) parseGetBy(statement *Statement) {
 	}
 }
 
-func (my *Parser) matchMergeBy(this *Statement) {
-	that := my.statements[this.params.(string)]
-	rel := getTree[that.class][this.class]
+func (my *Parser) parseMergeBy(statement *Statement) {
+	throw.If(!isString(statement.params), errs.InvalidMergeByParam)
+	my.matchGetAll(statement)
+}
 
-	my.query.addMerge(that, this, &rel)
-	my.MergeData.add(that, this)
+func (my *Parser) matchGetAll(statement *Statement) {
+	selector := statement.params.(string)
+	if "*" == selector {
+		my.matchGetById(statement)
+	} else {
+		throw.Error(errs.InvalidGetAllParam)
+	}
 }
 
 func (my *Parser) matchGetBy(this *Statement) {
@@ -83,6 +98,14 @@ func (my *Parser) matchGetBy(this *Statement) {
 	}
 
 	my.query.addMatch(that, this, &rel)
+}
+
+func (my *Parser) matchMergeBy(this *Statement) {
+	that := my.statements[this.params.(string)]
+	rel := getTree[that.class][this.class]
+
+	my.query.addMerge(that, this, &rel)
+	my.MergeData.add(that, this)
 }
 
 func (my *Parser) seekTopParent(stmt *Statement) *Statement {

@@ -1,0 +1,9 @@
+/* 
+    node-input-* 
+*/
+
+.node-input {
+    width: 190px;
+    max-width: 190px;
+    min-width: 190px;
+}

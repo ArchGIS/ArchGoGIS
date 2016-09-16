@@ -38,7 +38,7 @@ var (
 		{"Artifact", "n_artifact_id_seq"},
 		{"Organization", "n_organization_seq"},
 		{"Report", "n_report_id_seq"},
-		{"Heritage_Object", "n_heritage_object_id_seq"},
+		{"HeritageObject", "n_heritage_object_id_seq"},
 		{"File", "n_file_id_seq"},
 	}
 

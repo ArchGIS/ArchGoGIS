@@ -1,6 +1,10 @@
 'use strict';
 
-App.views.monument = new (App.View.extend({  
+App.views.monument = new (App.View.extend({
+  "new_by_arch_map": function(models) {
+    
+  },
+  
   'new': function() {    
     var fmt = App.fn.fmt;  
     

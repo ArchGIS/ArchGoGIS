@@ -10,7 +10,7 @@ MATCH (a:Author {id: 7})
 // Его исследование:
 MATCH (r:Research {id: 1})
 // Именьковская культура:
-MATCH (c1:Culture {id: 1})
+MATCH (c1:Culture {id: 3})
 MATCH (e:Epoch {id: 7})
 
 CREATE (Monument1008:Monument { id:164,originId:1008,code:259,x:50.011086111,y:54.449436111 })

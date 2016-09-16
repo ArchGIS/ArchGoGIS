@@ -1,5 +1,11 @@
 package errs
 
+var (
+	UnknownMethod       = &HqueryError{"1"}
+	InvalidMergeByParam = &HqueryError{"2"}
+	InvalidGetAllParam  = &HqueryError{"3"}
+)
+
 // Ошибки предварительной обработки
 var (
 	BadJsonGiven       = &HqueryError{"1000"}

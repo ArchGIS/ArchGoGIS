@@ -33,5 +33,7 @@ App.views.wizard = new (App.View.extend({
         $sources.append($("<option/>").attr("value", href).text(text));
       });
     })
+
+    $("#what-create").trigger("change");
   }
 }));

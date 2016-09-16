@@ -22,7 +22,7 @@ App.controllers.monument = new (App.View.extend({
   },
 
   'new': function() {
-    App.page.pushDestructor(function() {
+    App.page.on("atClear", function() {
       console.log('monument controller is done (destructor)');
     });
     
@@ -37,12 +37,15 @@ App.controllers.monument = new (App.View.extend({
   },
 
   "new_by_arch_map": function() {
-    App.form.bind({
-      "monument": new App.models.Monument(),
-      "knowledge": new App.models.Knowledge()
-    });
-    
-    App.page.render("monument/by_arch_map");
+    var models = {
+      "knowledge": new App.models.Knowledge("k"),
+      "monument": new App.models.Monument("m"),
+      "research": new App.models.Research("r"),
+      "collection": new App.models.Collection("coll"),
+      "archMap": new App.models.ArchMap("am")
+    };
+       
+    App.page.render("monument/new_by_arch_map", models, models);
   },
 
   'start': function() {
