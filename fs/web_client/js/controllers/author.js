@@ -5,7 +5,7 @@ App.controllers.author = new (App.View.extend({
     App.url.setMapping(["id"]);
     var id = App.url.get("id");
 
-    var query = JSON.stringify({      
+    var query = JSON.stringify({
       "author:Author.getBy": +id,
       "orgs:Organization.mergeBy": "author",
       "researches:Research.getBy": "author"
