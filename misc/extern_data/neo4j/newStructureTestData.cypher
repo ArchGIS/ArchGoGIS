@@ -1,367 +1,367 @@
 // Заполнить БД
 create (middle_age:Epoch {
-  `name`: 'Средневековье'
+  name: 'Средневековье'
 })
 create (iron_age:Epoch {
-  `name`: 'Железный век'
+  name: 'Железный век'
 })
 create (mesolit:Epoch {
-  `name`: 'Мезолит'
+  name: 'Мезолит'
 })
 
 create (yellow:Tag {
-  `name`: 'Желтый'
+  name: 'Желтый'
 })
 create (big:Tag {
-  `name`: 'Большой'
+  name: 'Большой'
 })
 create (funny:Tag {
-  `name`: 'Забавный'
+  name: 'Забавный'
 })
 
 create (kazan:City {
-  `name`: 'Казань'
+  name: 'Казань'
 })
 create (piter:City {
-  `name`: 'Санкт-Петербург'
+  name: 'Санкт-Петербург'
 })
 create (bolgar:City {
-  `name`: 'Болгар'
+  name: 'Болгар'
 })
 
 create (tatar:Culture {
-  `name`: 'Татарская'
+  name: 'Татарская'
 })
 create (fin:Culture {
-  `name`: 'Финно-угорская'
+  name: 'Финно-угорская'
 })
 create (mongol:Culture {
-  `name`: 'Монгольская'
+  name: 'Монгольская'
 })
 
 create (mound:MonumentType {
-  `name `: 'Курган'
+  name: 'Курган'
 })
 create (tomb:MonumentType {
-  `name `: 'Гробница'
+  name: 'Гробница'
 })
 
 create (tri:Area {
-  `coordinates `: '[[100, 100],[100, 50],[50, 75]]'
+  coordinates: '[[100, 100],[100, 50],[50, 75]]'
 })
 create (square:Area {
-  `coordinates `: '[[10, 10],[20, 10],[20, 20],[10,20]]'
+  coordinates: '[[10, 10],[20, 10],[20, 20],[10,20]]'
 })
 
 create (cir1:CircleArea {
-  `x `: 75,
-  `y `: 75,
-  `radius `: 10
+  x: 75,
+  y: 75,
+  radius: 10
 })
 create (cir2:CircleArea {
-  `x `: 15,
-  `y `: 15,
-  `radius `: 1
+  x: 15,
+  y: 15,
+  radius: 1
 })
 
 create (weapon:ArtifactCategory {
-  `name `: 'Оружие'
+  name: 'Оружие'
 })
 create (armor:ArtifactCategory {
-  `name `: 'Доспехи'
+  name: 'Доспехи'
 })
 create (jewelry:ArtifactCategory {
-  `name `: 'Украшения'
+  name: 'Украшения'
 })
 
 create (metal:ArtifactMaterial {
-  `name `: 'Металл'
+  name: 'Металл'
 })
 create (wood:ArtifactMaterial {
-  `name `: 'Дерево'
+  name: 'Дерево'
 })
 create (fabric:ArtifactMaterial {
-  `name `: 'Ткань'
+  name: 'Ткань'
 })
 create (gems:ArtifactMaterial {
-  `name `: 'Драгоценные камни'
+  name: 'Драгоценные камни'
 })
 
 create (au1:Author {
-  `id `: 1,
-  `name `: 'Николай',
-  `birthdate `: 1965
+  id: 1,
+  name: 'Николай',
+  birthdate: 1965
 })
 create (au2:Author {
-  `id `: 2,
-  `name `: 'Булат',
-  `birthdate `: 1980
+  id: 2,
+  name: 'Булат',
+  birthdate: 1980
 })
 create (au3:Author {
-  `id `: 3,
-  `name `: 'Джек',
-  `birthdate `: 1985
+  id: 3,
+  name: 'Джек',
+  birthdate: 1985
 })
 
 create (job1:AuthorJob {
-  `post_name `: 'Главный археолог',
-  `period `: [2000]
+  post_name: 'Главный археолог',
+  period: [2000]
 })
 create (job2:AuthorJob {
-  `post_name `: 'Помощник археолога',
-  `period `: [2010]
+  post_name: 'Помощник археолога',
+  period: [2010]
 })
 create (job3:AuthorJob {
-  `post_name `: 'Помощник археолога',
-  `period `: [2010]
+  post_name: 'Помощник археолога',
+  period: [2010]
 })
 create (job4:AuthorJob {
-  `post_name `: 'Копатель',
-  `period `: [2005, 2010]
+  post_name: 'Копатель',
+  period: [2005, 2010]
 })
 
 create (r1:Research {
-  `id `: 1,
-  `code `: '1232-526',
-  `year `: 2011,
-  `name `: 'Болгар-2011',
-  `description `: 'Анализируем Болгар'
+  id: 1,
+  code: '1232-526',
+  year: 2011,
+  name: 'Болгар-2011',
+  description: 'Анализируем Болгар'
 })
 create (r2:Research {
-  `id `: 2,
-  `code `: '1232-777',
-  `year `: 2010,
-  `name `: 'Болгар-2010',
-  `description `: 'Поиск оружия'
+  id: 2,
+  code: '1232-777',
+  year: 2010,
+  name: 'Болгар-2010',
+  description: 'Поиск оружия'
 })
 create (r3:Research {
-  `id `: 3,
-  `code `: '1232-666',
-  `year `: 2005,
-  `name `: 'Болгар-2005',
-  `description `: 'Разведка'
+  id: 3,
+  code: '1232-666',
+  year: 2005,
+  name: 'Болгар-2005',
+  description: 'Разведка'
 })
 
 create (exc:MonumentExcavation {
-  `id `: 1,
-  `monument_name`: 'Курган в Болгаре',
-  `description `: 'Копаем оружие в Болгаре'
+  id: 1,
+  monument_name: 'Курган в Болгаре',
+  description: 'Копаем оружие в Болгаре'
 })
 create (surv:MonumentSurvey {
-  `id `: 2,
-  `monument_name`: 'Гробница в Болгаре',
-  `description `: 'Расхищаем гробницу'
+  id: 2,
+  monument_name: 'Гробница в Болгаре',
+  description: 'Расхищаем гробницу'
 })
 create (an:MonumentAnalysis {
-  `id `: 3,
-  `monument_name`: 'Курган в Болгаре',
-  `description `: 'Изучаем курган'
+  id: 3,
+  monument_name: 'Курган в Болгаре',
+  description: 'Изучаем курган'
 })
 
 create (map:ArchMap {
-  `name `: 'Карта кургана',
-  `published_at `: 2007,
-  `volume `: '1',
-  `isbn `: '1241523-9837'
+  name: 'Карта кургана',
+  published_at: 2007,
+  volume: '1',
+  isbn: '1241523-9837'
 })
 create (mono1:Monograph {
-  `name `: 'Как я копал Курган',
-  `published_at `: 2010,
-  `isbn `: '1241523-9137'
+  name: 'Как я копал Курган',
+  published_at: 2010,
+  isbn: '1241523-9137'
 })
 create (mono2:Monograph {
-  `name `: 'Анализ раскопок кургана',
-  `published_at `: 2012,
-  `isbn `: '1241523-9137'
+  name: 'Анализ раскопок кургана',
+  published_at: 2012,
+  isbn: '1241523-9137'
 })
 create (dig:Digest {
-  `name `: 'Сборник легенд о гробнице царя',
-  `published_at `: 2000,
-  `isbn `: '1241523-4137'
+  name: 'Сборник легенд о гробнице царя',
+  published_at: 2000,
+  isbn: '1241523-4137'
 })
 create (jour:Journal {
-  `name `: 'Вестник Болгара',
-  `published_at `: 2011,
-  `volume `: 1,
-  `number `: '37',
-  `isbn `: '1241523-4737'
+  name: 'Вестник Болгара',
+  published_at: 2011,
+  volume: 1,
+  number: '37',
+  isbn: '1241523-4737'
 })	
 
 create (art1:Article {
-  `name `: 'Описание найденого в кургане оружия',
-  `pages `: [33, 77]
+  name: 'Описание найденого в кургане оружия',
+  pages: [33, 77]
 })	
 create (art2:Article {
-  `name `: 'Расхищение гробницы. Что надо об этом знать?',
-  `pages `: [60, 80]
+  name: 'Расхищение гробницы. Что надо об этом знать?',
+  pages: [60, 80]
 })	
 
 create (col1:Collection {
-  `name `: 'Вещи царя',
-  `Description `: 'Древние украшения, найденные в гробнице'
+  name: 'Вещи царя',
+  Description: 'Древние украшения, найденные в гробнице'
 })
 create (col2:Collection {
-  `name `: 'Питерская коллекция',
-  `Description `: 'Коллекция древностей в Питере'
+  name: 'Питерская коллекция',
+  Description: 'Коллекция древностей в Питере'
 })
 
 create (mon1:Monument {
-  `id `: 1
+  id: 1
 })
 create (mon2:Monument {
-  `id `: 2
+  id: 2
 })
 
 create (status:HeritageStatus {
-  `code `: '555-3307'
+  code: '555-3307'
 })
 
 create (im1:Image {
-  `id `: 1,
-  `resource_id `: 'url',
-  `description `: 'Оружие из кургана',
-  `date `: '14.07.2010',
-  `x `: 10,
-  `y `: 10
+  id: 1,
+  resource_id: 'url',
+  description: 'Оружие из кургана',
+  date: '14.07.2010',
+  x: 10,
+  y: 10
 })
 create (im2:Image {
-  `id `: 2,
-  `resource_id `: 'url',
-  `description `: 'Украшения царя',
-  `date `: '14.07.2005',
-  `x `: 10,
-  `y `: 10
+  id: 2,
+  resource_id: 'url',
+  description: 'Украшения царя',
+  date: '14.07.2005',
+  x: 10,
+  y: 10
 })	
 create (im3:Image {
-  `id `: 3,
-  `resource_id `: 'url',
-  `description `: 'Внутри гробницы',
-  `date `: '14.07.2005',
-  `x `: 10,
-  `y `: 10
+  id: 3,
+  resource_id: 'url',
+  description: 'Внутри гробницы',
+  date: '14.07.2005',
+  x: 10,
+  y: 10
 })	
 create (im4:Image {
-  `id `: 4,
-  `resource_id `: 'url',
-  `description `: 'Вход в курган',
-  `date `: '14.07.2010',
-  `x `: 10,
-  `y `: 10
+  id: 4,
+  resource_id: 'url',
+  description: 'Вход в курган',
+  date: '14.07.2010',
+  x: 10,
+  y: 10
 })	
 create (im5:Image {
-  `id `: 5,
-  `resource_id `: 'url',
-  `description `: 'Раскопки гробницы',
-  `date `: '14.07.2005',
-  `x `: 10,
-  `y `: 10
+  id: 5,
+  resource_id: 'url',
+  description: 'Раскопки гробницы',
+  date: '14.07.2005',
+  x: 10,
+  y: 10
 })	
 create (im6:Image {
-  `id `: 6,
-  `resource_id `: 'url',
-  `description `: 'Раскопки кургана',
-  `date `: '14.07.2010',
-  `x `: 10,
-  `y `: 10
+  id: 6,
+  resource_id: 'url',
+  description: 'Раскопки кургана',
+  date: '14.07.2010',
+  x: 10,
+  y: 10
 })	
 
 create (pub1:Publisher {
-  `name `: 'Болгар-арт'
+  name: 'Болгар-арт'
 })
 create (pub2:Publisher {
-  `name `: 'Рускарт'
+  name: 'Рускарт'
 })
 
 create (org1:Organization {
-  `name `: 'Сообщество копателей'
+  name: 'Сообщество копателей'
 })
 create (org2:Organization {
-  `name `: 'Ассоциация археологов Татарстана'
+  name: 'Ассоциация археологов Татарстана'
 })
 create (org3:Organization {
-  `name `: 'Питерский музей'
+  name: 'Питерский музей'
 })
 
 create (stor1:StorageInterval {
-  `period `: [2005, 2012]
+  period: [2005, 2012]
 })
 create (stor2:StorageInterval {
-  `period `: [2005]
+  period: [2005]
 })
 create (stor3:StorageInterval {
-  `period `: [2005]
+  period: [2005]
 })
 create (stor4:StorageInterval {
-  `period `: [2010, 2012]
+  period: [2010, 2012]
 })
 create (stor5:StorageInterval {
-  `period `: [2010]
+  period: [2010]
 })
 create (stor6:StorageInterval {
-  `period `: [2010]
+  period: [2010]
 })
 create (stor7:StorageInterval {
-  `period `: [2012]
+  period: [2012]
 })
 create (stor8:StorageInterval {
-  `period `: [2012]
+  period: [2012]
 })
 
 create (store1:Storage {
-  `address `: 'Где-то в Питере'
+  address: 'Где-то в Питере'
 })
 create (store2:Storage {
-  `address `: 'Музей Казани'
+  address: 'Музей Казани'
 })
 create (store3:Storage {
-  `address `: 'Казанское хранилище'
+  address: 'Казанское хранилище'
 })
 
 create (ref1:ShortBibliographicRef {
-  `pages `: [14, 15],
-  `number `: 'Карта №3',
-  `comment `: 'Карта местности кургана'
+  pages: [14, 15],
+  number: 'Карта №3',
+  comment: 'Карта местности кургана'
 })
 create (ref2:ShortBibliographicRef {
-  `pages `: [33, 35],
-  `number `: 'Опись',
-  `comment `: 'Все найденные артефакты'
+  pages: [33, 35],
+  number: 'Опись',
+  comment: 'Все найденные артефакты'
 })
 create (ref3:ShortBibliographicRef {
-  `pages `: [8, 9],
-  `number `: '3',
-  `comment `: 'Поиск кургана'
+  pages: [8, 9],
+  number: '3',
+  comment: 'Поиск кургана'
 })
 
 create (arti1:Artifact {
-  `id `: 1,
-  `code `: '534-1',
-  `description `: 'Железный меч'
+  id: 1,
+  code: '534-1',
+  description: 'Железный меч'
 })
 create (arti2:Artifact {
-  `id `: 2,
-  `code `: '534-2',
-  `description `: 'Часть деревянного щита'
+  id: 2,
+  code: '534-2',
+  description: 'Часть деревянного щита'
 })
 create (arti3:Artifact {
-  `id `: 3,
-  `code `: '534-3',
-  `description `: 'Плащ'
+  id: 3,
+  code: '534-3',
+  description: 'Плащ'
 })
 create (arti4:Artifact {
-  `id `: 4,
-  `code `: '743-1',
-  `description `: 'Золотое кольцо'
+  id: 4,
+  code: '743-1',
+  description: 'Золотое кольцо'
 })
 create (arti5:Artifact {
-  `id `: 5,
-  `code `: '743-2',
-  `description `: 'Картина с котятами'
+  id: 5,
+  code: '743-2',
+  description: 'Картина с котятами'
 })
 create (arti6:Artifact {
-  `id `: 6,
-  `code `: '743-3',
-  `description `: 'Сапфировое ожерелье'
+  id: 6,
+  code: '743-3',
+  description: 'Сапфировое ожерелье'
 })
 
 create (au1)-[:has]->(job1)
