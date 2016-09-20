@@ -40,7 +40,7 @@ func searchForAuthors(needle string) ([]byte, error) {
 		return nil, errs.PrefixIsTooLong
 	}
 
-	needle = norm.Name(needle)
+	needle = norm.NormalPerson(needle)
 	resp, err := neo.Run(authorsCypher, neo.Params{"needle": `"` + needle + `"`})
 	if err != nil {
 		return nil, errs.RetrieveError

@@ -45,7 +45,7 @@ func searchForMonuments(needle string) ([]byte, error) {
 		return nil, errs.PrefixIsTooLong
 	}
 
-	needle = norm.Name(needle)
+	needle = norm.NormalMonument(needle)
 	resp, err := neo.Run(monumnetsCypher, neo.Params{"needle": `"` + needle + `"`})
 	if err != nil {
 		echo.ServerError.Print(err)

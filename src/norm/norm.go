@@ -1,25 +1,126 @@
 package norm
 
 import (
+	"regexp"
 	"strings"
-	"unicode"
 	"unicode/utf8"
 )
 
-func Capitalize(subject string) string {
-	ch, width := utf8.DecodeRuneInString(subject)
-	return string(unicode.ToUpper(ch)) + strings.ToLower(subject[width:])
+const (
+	MAX_LENGTH = 60
+)
+
+// Нормализация имён памятников
+func NormalMonument(input string) string {
+	slice := strings.Fields(input)
+
+	// Приведение обычных слов к нормальному виду, в римских цифрах меняется только 'l'=>'I'
+	for i, v := range slice {
+		if !IsRomeNumber(v) {
+			slice[i] = standartNormal(v)
+		} else if strings.ContainsRune(v, 'l') {
+			num := v
+			num = strings.Replace(num, "l", "I", -1)
+			slice[i] = num
+		}
+	}
+
+	result := strings.Join(slice, " ")
+
+	return result
 }
 
-func Name(name string) string {
-	spaceless := strings.TrimSpace(name)
-	spacePos := strings.IndexByte(spaceless, ' ')
+// Проверка слова на римское число
+func IsRomeNumber(input string) bool {
+	const alphabet = "lIVXLCDM"
+	isRN := true
 
-	if spacePos == -1 {
-		return Capitalize(spaceless)
-	} else {
-		firstName := Capitalize(spaceless[:spacePos])
-		initials := strings.Replace(strings.ToUpper(spaceless[spacePos:]), " ", "", -1)
-		return firstName + " " + initials
+	for _, ch := range input {
+		if !strings.ContainsRune(alphabet, ch) {
+			isRN = false
+			break
+		}
 	}
+
+	return isRN
+}
+
+// Стандартная нормализация: hELlo => Hello
+func standartNormal(val string) string {
+	word := strings.ToLower(val)
+	word = strings.Title(word)
+	return word
+}
+
+// Нормализация имён людей
+func NormalPerson(input string) string {
+	words := strings.Fields(input)
+	slice := make([]string, 0)
+	short := ""
+	countOfShorts := 0
+
+	for _, v := range words {
+		if utf8.RuneCountInString(v) == 1 {
+			short += v
+			countOfShorts += 1
+			continue
+		}
+
+		if strings.ContainsRune(v, '.') {
+			short += v
+			countOfShorts += 1
+		} else {
+			slice = append(slice, standartNormal(v))
+		}
+	}
+
+	result := strings.Join(slice, " ")
+
+	if countOfShorts > 0 {
+		result += " " + strings.ToUpper(short)
+	}
+
+	return result
+}
+
+// Валидация имён людей
+func ValidatePersonName(name string) string {
+	const N = 4
+	re := regexp.MustCompile("^[^\\sa-zA-Zа-яА-Я-]+$")
+
+	if utf8.RuneCountInString(name) > MAX_LENGTH {
+		return ("too long string")
+	}
+
+	words := strings.Fields(name)
+
+	if len(words) > N {
+		return ("count of name parts too much")
+	}
+
+	for _, v := range words {
+		if re.MatchString(v) {
+			return ("not valid character")
+		}
+	}
+
+	return ""
+}
+
+// Валидация имён памятников
+func ValidateMonumentName(name string) string {
+	if utf8.RuneCountInString(name) > MAX_LENGTH {
+		return ("too long string")
+	}
+
+	re := regexp.MustCompile("[^\\sa-zA-Zа-яА-Я0-9-]+$")
+	words := strings.Fields(name)
+
+	for _, v := range words {
+		if re.MatchString(v) {
+			return ("not valid character")
+		}
+	}
+
+	return ""
 }
