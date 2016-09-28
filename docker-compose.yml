@@ -1,0 +1,13 @@
+version "2"
+services:
+  neo:
+		image: neo4j
+	postgres:
+		image: postgres
+	app:
+		image: bontequero/archgis
+		command: ArchGoGIS
+		ports:
+			- "8080:8080"
+		volumes:
+			- .:/go/src/github.com/ArchGIS/ArchGoGIS
