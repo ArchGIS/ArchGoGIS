@@ -1,2 +1,2 @@
 #!/bin/bash
-go run ./src/main/run_server.go
+go run ./main/run_server.go
