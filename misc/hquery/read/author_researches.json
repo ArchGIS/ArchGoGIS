@@ -1,0 +1,5 @@
+{
+  "r:Research": {"id": "*", "select": "*"},
+  "a:Author": {"id": "122"},
+  "a_Created_r": {}
+}
