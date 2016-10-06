@@ -3,6 +3,7 @@ package parser
 import (
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/throw"
+	"fmt"
 )
 
 func isString(maybeString interface{}) bool {
@@ -31,6 +32,8 @@ func (my *Parser) GenerateCypher() []byte {
 
 func (my *Parser) mustParseAll() {
 	for _, statement := range my.statements {
+		fmt.Printf("%#v\n", *statement)
+
 		switch statement.method {
 		case "getAll":
 			my.parseGetAll(statement)
@@ -63,7 +66,7 @@ func (my *Parser) parseGetBy(statement *Statement) {
 
 func (my *Parser) parseMergeBy(statement *Statement) {
 	throw.If(!isString(statement.params), errs.InvalidMergeByParam)
-	my.matchGetAll(statement)
+	my.matchMergeBy(statement)
 }
 
 func (my *Parser) matchGetAll(statement *Statement) {

@@ -12,6 +12,7 @@ App.controllers.author = new (App.View.extend({
     });
 
     $.post("/hquery/read2", query).success(function(response) {
+      // console.log(response);
       App.page.render("author/show", response);
     });
   }

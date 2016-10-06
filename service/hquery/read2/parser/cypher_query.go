@@ -14,6 +14,7 @@ func (my *cypherQuery) build() []byte {
 	query.WriteString(strings.Join(my.optionalMatches, ""))
 	query.WriteString("RETURN " + strings.Join(my.projection, ","))
 
+
 	return query.Bytes()
 }
 

@@ -1,8 +1,0 @@
-{
-  "research:Research.getBy": 74,
-  "author:Author.getBy": "research",
-  "knowledge:Knowledge.getBy": "research",
-  "monument:Monument.getBy": "knowledge",
-  "photos:Photo.getBy": "knowledge",
-  "documents:Document.getBy": "knowledge"
-}

@@ -5,7 +5,7 @@ import (
 )
 
 func Dump(any interface{}) {
-	fmt.Printf("<<< DEBUG >>>\n%+v\n>>>       <<<\n", any)
+	fmt.Printf("<<< DEBUG >>>\n%#v\n>>>       <<<\n", any)
 }
 
 func DumpSome(some ...interface{}) {
