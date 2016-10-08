@@ -9,9 +9,7 @@
       var maybeMatch = term.match(/\(?(\d+)\)?/);
       if (maybeMatch) {
         year = maybeMatch[1];
-      }
-
-      
+      }      
     };
 
     var resolveByIsbn = (term, resolve) => resolve({});
@@ -54,8 +52,8 @@
       var url = App.url.make("/search/archMaps", {"needle": name, "limit": 10});
 
       $.get(url)
-      .success(response => resolve($.parseJSON(response)))
-      .error(reject);
+        .success(response => resolve($.parseJSON(response)))
+        .error(reject);
     });
   };
 

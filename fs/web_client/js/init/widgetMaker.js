@@ -12,13 +12,13 @@ App.widgetMaker = new function() {
       var widget = null;
       
       if (id) {
-	// Явно переданный id. Widget сохраняем в объектах страницы.
-	// Далее его можно получить через App.page.get(id).
-	widget = new App.widgets[widgetName](params, id);
-	App.page.registerObject(id, widget);
+      	// Явно переданный id. Widget сохраняем в объектах страницы.
+      	// Далее его можно получить через App.page.get(id).
+      	widget = new App.widgets[widgetName](params, id);
+      	App.page.registerObject(id, widget);
       } else {
-	// Генерируем id сами, не добавляем Widget в пул объектов страницы.
-	widget = new App.widgets[widgetName](params, 'widget--' + lastId++);
+      	// Генерируем id сами, не добавляем Widget в пул объектов страницы.
+      	widget = new App.widgets[widgetName](params, 'widget--' + lastId++);
       }
       
       deferred.push(widget);
