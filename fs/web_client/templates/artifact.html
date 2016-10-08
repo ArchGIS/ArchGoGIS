@@ -26,7 +26,7 @@
       </div>
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-birth-date-input">Дата рождения</label>
-        <input id="author-birth-date-input" data-for="author:Author" type="text" name="birth_date"></input>
+        <input id="author-birth-date-input" data-for="author:Author" type="text" name="birthdate"></input>
       </div>
       <div class="flex-row">
         <label for="coauthor-input">Соавторы</label>
@@ -43,6 +43,10 @@
         <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
       </div>
       
+      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+        <label for="research-title-input">Название</label>
+        <input id="research-title-input" data-for="r:Research" type="text" name="name"></input>
+      </div>
       <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-title-input">Описание</label>
         <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
@@ -66,26 +70,34 @@
 
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Название памятника</label>
-        <input id="monument-name-input" data-for="k:Knowledge" type="text" name="name"></input>
+        <input id="monument-name-input" data-for="m:Monument" type="text" name="monument_name"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Описание памятника</label>
+        <input id="monument-desc-input" data-for="ma:MonumentAnalysis" type="text" name="description"></input>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Эпоха</label>
-        <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
+        <input id="monument-input"></input>
+        <!-- <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input> -->
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Культура</label>
-        <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input>
+        <input id="monument-input"></input>
+        <!-- <input id="monument-input" data-for="ma:MonumentAnalysis" type="text" name="culture"></input> -->
       </div>
 
       <div class="coords" toggle-by="new-monument-checkbox" need-option="true">
         <div class="coord">
           <label>Координата X
-            <input id="monument-x" data-for="m:Monument" type="text" name="x"></input>
+            <input id="monument-x"></input>
+            <!-- <input id="monument-x" data-for="m:Monument" type="text" name="x"></input> -->
           </label>
         </div>
         <div class="coord">
           <label>Координата Y
-            <input id="monument-y" data-for="m:Monument" type="text" name="y"></input>
+            <input id="monument-y"></input>
+            <!-- <input id="monument-y" data-for="m:Monument" type="text" name="y"></input> -->
           </label>
         </div>
         <i id="pick-coord" class="fa fa-map-marker"></i>
@@ -101,6 +113,10 @@
       <div class="flex-row">
         <label for="artifact-name-input">Название</label>
         <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name"></input>
+      </div>
+      <div class="flex-row">
+        <label for="artifact-name-input">Описание</label>
+        <input id="artifact-name-input" data-for="a:Artifact" type="text" name="description"></input>
       </div>
       <div class="flex-row">
         <label for="artifact-weight-input">Вес</label>
