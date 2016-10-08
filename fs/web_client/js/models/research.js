@@ -1,6 +1,20 @@
 'use strict';
 
-App.models.Research = function Research() {};
+
+(function() {
+  function Research(key) {
+    App.models.base.call(this, key, Research.scheme);
+  }
+
+  Research.scheme = {
+    "year": {"type": "number"},
+    "code": {"type": "string"},
+    "description": {"type": "text"},
+    "name": {"type": "string"}
+  };
+}());
+
+App.models.Research = function() {};
 
 App.models.Research.findByAuthorId = function(authorId) {
   return new Promise(function(resolve, reject) {
