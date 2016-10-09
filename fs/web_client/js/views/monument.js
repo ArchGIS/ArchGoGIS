@@ -1,8 +1,38 @@
 'use strict';
 
 App.views.monument = new (App.View.extend({
-  'new': function() {    
-    var fmt = App.fn.fmt;  
+  'new': function() {
+    function bindCoords() {
+      var $x = $('#monument-x');
+      var $y = $('#monument-y');
+      var map = App.page.get('map');
+      var $button = $('#pick-coord');
+      
+      function updateInputValues(coords) {
+        $x.val(coords[0]);
+        $y.val(coords[1]);
+      }
+
+      function updatePlacemark() {
+        updateInputValues(map.getCenter());
+        map.updatePlacemark('coord-pick', map.getCenter(), {'draggable': true});
+      }
+      
+      function createPlacemark() {
+        updatePlacemark();
+        
+        map.onPlacemark('coord-pick', 'dragend', function(event) {
+          updateInputValues(event.get('target').geometry.getCoordinates());
+        });
+
+        // Следующие клики ставят отметку в отображаемый центр карты.
+        $button.on('click', updatePlacemark);
+      }
+      
+      $button.one('click', createPlacemark);
+    }
+
+    var fmt = App.fn.fmt;
     
     var authorSelectHandler = function(event, ui) {
       console.log(ui.item.id);
@@ -36,6 +66,7 @@ App.views.monument = new (App.View.extend({
     });
 
     setSelectsEvents();
+    bindCoords();
     $("#container").tabs();
   },
 
