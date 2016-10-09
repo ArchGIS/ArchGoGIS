@@ -57,14 +57,12 @@ function showField(select) {
 
 function postQuery() {
   var json = generateJson([
-    ["Author", "Research", "Created"],
-    ["Author", "Report", "Created"],
-    ["Research", "Knowledge", "Contains"],
-    ["Knowledge", "Monument", "Describes"],
-    ["Monument", "Artifact", "Contains"],
-    ["Report", "Knowledge", "Contains"],
-    ["HeritageObject", "Monument", "Contains"],
-    ["Coauthor", "Research", "HelpedToCreate"]
+    ["Research", "Author", "hasauthor"],
+    ["Research", "Coauthor", "hascoauthor"],
+    ["Research", "MonumentAnalysis", "has"],
+    ["MonumentAnalysis", "Monument", "belongsto"],
+    ["MonumentAnalysis", "Artifact", "founded"],
+    ["HeritageObject", "Monument", "contains"]
   ]);
 
   var formdata = new FormData();

@@ -40,6 +40,7 @@ App.views.artifact = new (App.View.extend({
       $('#author-input-id').val(ui.item.id);
 
       App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
+        console.log(researches)
         $('#research-input').autocomplete({
           source: _.map(researches, function(research) {
             return {'label': fmt('$description ($year)', research), 'id': research.id}
@@ -56,16 +57,17 @@ App.views.artifact = new (App.View.extend({
           var args = {
             "monument:Monument": {"id": "*", "select": "*"},
             "researches:Research": {"id": $("#research-input-id").val()},
-            "knowledge:Knowledge": {"id": "*", "select": "*"},
-            "researches_Contains_knowledge": {},
-            "knowledge_Describes_monument": {}
+            "knowledge:MonumentAnalysis": {"id": "*", "select": "*"},
+            "researches_has_knowledge": {},
+            "knowledge_belongsto_monument": {}
           }
           var monuments = [];
 
           $.post(dburl+"hquery/read", JSON.stringify(args), function(data) {
             var data = $.parseJSON(data).knowledge;
+            console.log(data)
             _.each(data, function(res) {
-              monuments.push({label: fmt("$name ($culture)", res), id: res.id})
+              monuments.push({label: fmt("$description", res), id: res.id})
             });
             $("#monument-input").autocomplete({
               source: monuments
