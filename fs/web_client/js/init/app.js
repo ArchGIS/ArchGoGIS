@@ -78,7 +78,7 @@ function postQuery() {
     processData: false,
     contentType: false,
     success: function(response) {
-      console.log(response);
+      alert('Успешно!');
     }
   });
 }
