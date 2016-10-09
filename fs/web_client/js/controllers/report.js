@@ -16,23 +16,8 @@ App.controllers.report = new (App.View.extend({
     };
 
     $.post('/hquery/read', JSON.stringify(query))
-    .success(function(reportData) {
-      // var query = {
-      //   "m:Monument": {"id": id},
-      //   "ty:MonumentType": {"id": "?", "select": "*"},
-      //   "e:Epoch": {"id": "?", "select": "*"},
-      //   "m_TypeOf_ty": {},
-      //   "m_EpochOf_e": {},
-      // };
-      // $.post('/hquery/read', JSON.stringify(query))
-      // .success(function(ty) {
-      //   // #FIXME: унести запрос и JSON.parse в модель    
-        var respObject = JSON.parse(reportData);
-      //   var type = JSON.parse(ty);
-        // console.log($.extend(respObject, type));
-        console.log(respObject);
-        App.page.render('report/show', respObject);//$.extend(respObject, type));
+      .success(function(reportData) {
+        App.page.render('report/show', JSON.parse(reportData));
       });
-    // });
   }
 }));

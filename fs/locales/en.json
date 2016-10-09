@@ -44,5 +44,13 @@
     "search": {
       "index": "Search"
     }
-  }
+  },
+
+  "organization": {
+    "singular": "Organization",
+    "plural": "Organizations",
+    "prop": {
+      "name": "Name"
+    }
+  },
 }
