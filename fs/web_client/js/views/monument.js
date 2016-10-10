@@ -31,11 +31,9 @@ App.views.monument = new (App.View.extend({
     
     var fillResearchInputs = function(){
       var year = $("#report-year-input").val();
-      var title = $("#report-title-input").val() + " - " + year;
-      $("#research-name-input").val(title);
+      var name = $("#report-name-input").val() + " - " + year;
+      $("#research-name-input").val(name);
       $("#research-year-input").val(year);
-      console.log(year)
-      console.log(title)
     };
 
     var lastSelectedAuthorId = 0;

@@ -4,18 +4,18 @@ App.models.Report = function() {};
 
 App.models.Report.findByAuthorId = function(authorId) {
   return new Promise(function(resolve, reject) {
-    // var query = JSON.stringify({
-    //   'a:Author': {'id': authorId.toString()},
-    //   'r:Report': {'id': '*', 'select': '*'},
-    //   'r_hasaut_a': {}
-    // });
-
     var query = JSON.stringify({
-      "author:Author.getBy": +id,
-      "r:Report.mergeBy": "author",
+      'a:Author': {'id': authorId.toString()},
+      'r:Report': {'id': '*', 'select': '*'},
+      'r_hasauthor_a': {}
     });
+
+    // var query = JSON.stringify({
+    //   "author:Author.getBy": +id,
+    //   "r:Report.getBy": "author",
+    // });
     
-    $.post('/hquery/read2', query)
+    $.post('/hquery/read', query)
       .success(response => resolve($.parseJSON(response).r))
       .error(reject);
   });

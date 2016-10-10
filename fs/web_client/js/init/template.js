@@ -23,7 +23,7 @@ App.template = new function() {
   }
 
   function maybe(object) {
-    return object ? object : '?';
+    return object ? object : 'Нет данных';
   }
   
   // То, что передаётся в каждый шаблон в любом случае.
