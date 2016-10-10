@@ -22,7 +22,7 @@ App.controllers.research = new (App.View.extend({
     var query = JSON.stringify({
       "research:Research": {"id": id, "select": "*"},
       "author:Author": {"id": "*", "select": "*"},
-      "knowledge:MonumentAnalysis": {"id": "*", "select": "*"},
+      "knowledge:Knowledge": {"id": "*", "select": "*"},
       "monuments:Monument": {"id": "*", "select": "*"},
       "research_hasauthor_author": {},
       "research_has_knowledge": {},

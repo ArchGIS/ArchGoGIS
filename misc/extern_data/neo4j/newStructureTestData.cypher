@@ -125,40 +125,40 @@ create (r1:Research {
   code: '1232-526',
   year: 2011,
   name: 'Болгар-2011',
-  description: 'Анализируем Болгар'
+  description: 'Анализируем Болгар',
+  type: 'Аналитическое'
 })
 create (r2:Research {
   id: 2,
   code: '1232-777',
   year: 2010,
   name: 'Болгар-2010',
-  description: 'Поиск оружия'
+  description: 'Поиск оружия',
+  type: 'Раскопки'
 })
 create (r3:Research {
   id: 3,
   code: '1232-666',
   year: 2005,
   name: 'Болгар-2005',
-  description: 'Разведка'
+  description: 'Разведка',
+  type: 'Разведка'
 })
 
 create (exc:Knowledge {
   id: 1,
   monument_name: 'Курган в Болгаре',
   description: 'Копаем оружие в Болгаре',
-  type: 'Раскопки'
 })
 create (surv:Knowledge {
   id: 2,
   monument_name: 'Гробница в Болгаре',
   description: 'Расхищаем гробницу',
-  type: 'Разведка'
 })
 create (an:Knowledge {
   id: 3,
   monument_name: 'Курган в Болгаре',
   description: 'Изучаем курган',
-  type: 'Аналитическое'
 })
 
 create (map:ArchMap {

@@ -59,9 +59,9 @@ function postQuery() {
   var json = generateJson([
     ["Research", "Author", "hasauthor"],
     ["Research", "Coauthor", "hascoauthor"],
-    ["Research", "MonumentAnalysis", "has"],
-    ["MonumentAnalysis", "Monument", "belongsto"],
-    ["MonumentAnalysis", "Artifact", "founded"],
+    ["Research", "Knowledge", "has"],
+    ["Knowledge", "Monument", "belongsto"],
+    ["Knowledge", "Artifact", "founded"],
     ["HeritageStatus", "Monument", "contains"],
     ["Research", "Report", "hasreport"],
     ["Report", "Author", "hasauthor"]
