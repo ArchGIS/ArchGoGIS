@@ -2,12 +2,11 @@
   <h2><%= t("monument.singular") %></h2>
 
   <p><%= t("knowledge.prop.name") %>:
-    <%= _.pluck(knowledges, "name").join(", ") %>
+    <%= _.pluck(knowledges, "monument_name").join(", ") %>
   </p>
 
-  <p><%= t("monument.prop.type") %>: <%= t("monument.types")[type.id] %></p>
 
-  <p><%= t("monument.prop.epoch") %>: <%= t("epoch")[epoch.id - 1] %></p>
+
 
   <p><%= t("knowledge.prop.culture") %>:
     <%= _.pluck(cultures, "name").join(", ") %>
@@ -15,12 +14,12 @@
 
   <p><%= t("coord.plural") %>: <%= monument.x %>, <%= monument.y %></p>
 
-  <h3><%= t("research.plural") %>:</h3> 
+  <h3><%= t("research.plural") %>:</h3>
   <% _.each(researches, function(research, i) { %>
     <p>
       <%= authors[i].name %> 
       &ndash; 
-      <a href="#knowledge/show/<%= knowledges[i].id %>">
+      <a href="#research/show/<%= researches[i].id %>">
         <%= research.description %> (<%= research.year %>)
       </a>
     </p>

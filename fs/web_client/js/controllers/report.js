@@ -6,13 +6,16 @@ App.controllers.report = new (App.View.extend({
     var id = App.url.get("id");
 
     var query = {
-      "r:Report": {"id": id, "select": "*"},
+      "rep:Report": {"id": id, "select": "*"},
       "a:Author": {"id": "*", "select": "*"},
+      "res:Research": {"id": "*", "select": "*"},
       "k:Knowledge": {"id": "*", "select": "*"},
       "m:Monument": {"id": "*", "select": "*"},
-      "a_Created_r": {},
-      "r_Contains_k": {},
-      "k_Describes_m": {}
+      "res_hasauthor_a": {},
+      "res_has_k": {},
+      "rep_hasauthor_a": {},
+      "res_hasreport_rep": {},
+      "k_belongsto_m": {}
     };
 
     $.post('/hquery/read', JSON.stringify(query))

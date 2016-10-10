@@ -1,11 +1,11 @@
 <div class="block">
-  <h2>Отчёт #<%= r.id %></h2>
+  <h2>Отчёт #<%= rep.id %></h2>
 
   <p>
-    Описание: <%= r.description %>
+    Описание: <%= rep.description %>
   </p>
   <p>
-    Год: <%= r.year %>
+    Год: <%= rep.year %>
   </p>
   <p>
     <strong>Автор:</strong>
@@ -17,7 +17,7 @@
     <% for (var i=0; i<k.length; i++) { %>
     <p>
       <a href="#monument/show/<%= m[i].id %>">
-        <%= k[i].name %>
+        <%= k[i].monument_name %>
       </a>
     </p>
     <% } %>

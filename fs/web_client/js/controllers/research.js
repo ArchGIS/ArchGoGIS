@@ -29,8 +29,27 @@ App.controllers.research = new (App.View.extend({
       "knowledge_belongsto_monuments": {}
     });
 
+    var query_for_reports = JSON.stringify({
+      "research:Research": {"id": id, "select": "*"},
+      "author:Author": {"id": "*", "select": "*"},
+      "reports:Report": {"id": "*", "select": "*"},
+      "reports_hasauthor_author": {},
+      "research_hasreport_reports": {}
+    });
+
+    var result = {};
     $.post('/hquery/read', query).success(function(researchData) {
-      App.page.render('research_view', JSON.parse(researchData));
+      result = JSON.parse(researchData);
+      result['reports'] = {};
+
+      $.post('/hquery/read', query_for_reports).success(function(researchD) {
+        // var response = JSON.parse(researchD);
+        // if (response.)
+        // response['orgs'] = {};
+
+        _.extend(result, JSON.parse(researchD));
+        App.page.render('research_view', result);
+      });
     });
   }
 }));

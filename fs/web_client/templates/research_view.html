@@ -33,6 +33,23 @@
       Нет памятников
     </p>
   <% } %>
+
+  <h3><%= t('report.plural') %>:</h3>
+  <% if (reports.length) { %>
+    <div>
+    <% _.each(reports, function(report) { %>
+      <p>
+        <a href="#report/show/<%= report.id %>">
+          <%= report.name %>
+        </a>
+      </p>
+    <% }); %>
+    </div>
+  <% } else { %>
+    <p>
+      Нет очётов
+    </p>
+  <% } %>
 </div>
 
 
