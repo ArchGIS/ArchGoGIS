@@ -28,7 +28,7 @@ App.views.artifact = new (App.View.extend({
           var args = {
             "monument:Monument": {"id": "*", "select": "*"},
             "researches:Research": {"id": $("#research-input-id").val()},
-            "knowledge:MonumentAnalysis": {"id": "*", "select": "*"},
+            "knowledge:Knowledge": {"id": "*", "select": "*"},
             "researches_has_knowledge": {},
             "knowledge_belongsto_monument": {}
           }

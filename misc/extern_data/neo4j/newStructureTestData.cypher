@@ -125,37 +125,40 @@ create (r1:Research {
   code: '1232-526',
   year: 2011,
   name: 'Болгар-2011',
-  description: 'Анализируем Болгар'
+  description: 'Анализируем Болгар',
+  type: 'Аналитическое'
 })
 create (r2:Research {
   id: 2,
   code: '1232-777',
   year: 2010,
   name: 'Болгар-2010',
-  description: 'Поиск оружия'
+  description: 'Поиск оружия',
+  type: 'Раскопки'
 })
 create (r3:Research {
   id: 3,
   code: '1232-666',
   year: 2005,
   name: 'Болгар-2005',
-  description: 'Разведка'
+  description: 'Разведка',
+  type: 'Разведка'
 })
 
-create (exc:MonumentExcavation {
+create (exc:Knowledge {
   id: 1,
   monument_name: 'Курган в Болгаре',
-  description: 'Копаем оружие в Болгаре'
+  description: 'Копаем оружие в Болгаре',
 })
-create (surv:MonumentSurvey {
+create (surv:Knowledge {
   id: 2,
   monument_name: 'Гробница в Болгаре',
-  description: 'Расхищаем гробницу'
+  description: 'Расхищаем гробницу',
 })
-create (an:MonumentAnalysis {
+create (an:Knowledge {
   id: 3,
   monument_name: 'Курган в Болгаре',
-  description: 'Изучаем курган'
+  description: 'Изучаем курган',
 })
 
 create (map:ArchMap {
@@ -369,23 +372,23 @@ create (au2)-[:has]->(job2)
 create (au3)-[:has]->(job3)
 create (au3)-[:has]->(job4)
 
-create (job1)-[:belongs_to]->(org2)
-create (job2)-[:belongs_to]->(org2)
-create (job3)-[:belongs_to]->(org2)
-create (job4)-[:belongs_to]->(org1)
+create (job1)-[:belongsto]->(org2)
+create (job2)-[:belongsto]->(org2)
+create (job3)-[:belongsto]->(org2)
+create (job4)-[:belongsto]->(org1)
 
-create (r2)-[:author]->(au1)
-create (r3)-[:author]->(au1)
-create (r1)-[:author]->(au2)
-create (r1)-[:coauthor]->(au1)
+create (r2)-[:hasauthor]->(au1)
+create (r3)-[:hasauthor]->(au1)
+create (r1)-[:hasauthor]->(au2)
+create (r1)-[:hascoauthor]->(au1)
 
 create (r1)-[:has]->(exc)
 create (r2)-[:has]->(surv)
 create (r3)-[:has]->(an)
 
-create (exc)-[:belongs_to]->(mon1)
-create (surv)-[:belongs_to]->(mon2)
-create (an)-[:belongs_to]->(mon1)
+create (exc)-[:belongsto]->(mon1)
+create (surv)-[:belongsto]->(mon2)
+create (an)-[:belongsto]->(mon1)
 
 create (exc)-[:founded]->(arti1)
 create (exc)-[:founded]->(arti2)
@@ -479,9 +482,9 @@ create (mono1)-[:from]->(ref1)-[:to]->(map)
 create (jour)-[:from]->(ref2)-[:to]->(mono1)
 create (mono2)-[:from]->(ref3)-[:to]->(mono1)
 
-create (au1)-[:author]->(mono1)
-create (au2)-[:author]->(mono2)
-create (au1)-[:coauthor]->(mono2)
+create (au1)-[:hasauthor]->(mono1)
+create (au2)-[:hasauthor]->(mono2)
+create (au1)-[:hascoauthor]->(mono2)
 
 create (mon1)-[:has]->(status)
 

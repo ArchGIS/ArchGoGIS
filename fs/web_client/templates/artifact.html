@@ -52,6 +52,14 @@
         <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
       </div>
       <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+        <label for="research-type-input">Тип</label>
+        <select data-for="r:Research" type="text" name="type">
+          <option id="#monument-type-excavation"><%= t("research.types.excavation") %></option>
+          <option id="#monument-type-survey"><%= t("research.types.survey") %></option>
+          <option id="#monument-type-analysis"><%= t("research.types.analysis") %></option>
+        </select>
+      </div>
+      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-year-input">Год</label>
         <input id="research-year-input" data-for="r:Research" type="number" name="year"></input>
       </div>
@@ -74,11 +82,11 @@
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Название памятника</label>
-        <input id="monument-name-input" data-for="ma:MonumentAnalysis" type="text" name="monument_name"></input>
+        <input id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name"></input>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Описание памятника</label>
-        <input id="monument-desc-input" data-for="ma:MonumentAnalysis" type="text" name="description"></input>
+        <input id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Эпоха</label>
@@ -88,7 +96,7 @@
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Культура</label>
         <input id="monument-input"></input>
-        <!-- <input id="monument-input" data-for="ma:MonumentAnalysis" type="text" name="culture"></input> -->
+        <!-- <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input> -->
       </div>
 
       <div id="coord-picker" class="coords" toggle-by="new-monument-checkbox" need-option="true">
