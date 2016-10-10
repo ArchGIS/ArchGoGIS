@@ -114,6 +114,7 @@
 
   "report": {
     "singular": "Отчет",
+    "plural": "Отчёты",
     "year": "Год создания отчета",
     "prop": {
       "description": "Описание",
