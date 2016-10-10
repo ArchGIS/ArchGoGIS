@@ -97,7 +97,7 @@ App.views.search = new (App.View.extend({
         var records = my.inputs.monument.getRecords();
         var matcher = new RegExp('^' + ui.item.label);
         monuments = _.filter(records, function(record) {
-          return matcher.test(record[1].name);
+          return matcher.test(record[1].monument_name);
         });
 
         $resultsCount.html(monuments.length);

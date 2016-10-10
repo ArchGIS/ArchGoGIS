@@ -17,7 +17,7 @@ import (
 
 const (
 	monumnetsCypher = "MATCH (m:Monument)" +
-		"MATCH (k:MonumentAnalysis)-[:belongsto]->(m)" +
+		"MATCH (k:Knowledge)-[:belongsto]->(m)" +
 		// "MATCH (m)-[:EpochOf]->(e:Epoch)" +
 		// "MATCH (m)-[:TypeOf]->(ty:MonumentType)" +
 		"WHERE k.monument_name STARTS WITH {needle}" +
