@@ -8,7 +8,7 @@ App.controllers.search = new (App.View.extend({
       'monumentSearchOptions': {
         'source': App.models.Monument.findByNamePrefix,
         'etl': function(monuments) {
-          return _.map(monuments, mk => ({'id': mk[0].id, 'label': mk[1].name}));
+          return _.map(monuments, mk => ({'id': mk[0].id, 'label': mk[1].monument_name}));
         }
       },
       'authorSearchOptions': {

@@ -17,11 +17,11 @@ import (
 
 const (
 	monumnetsCypher = "MATCH (m:Monument)" +
-		"MATCH (k:Knowledge)-[:Describes]->(m)" +
-		"MATCH (m)-[:EpochOf]->(e:Epoch)" +
-		"MATCH (m)-[:TypeOf]->(ty:MonumentType)" +
-		"WHERE k.name STARTS WITH {needle}" +
-		"RETURN m, k, ty.id, e.id"
+		"MATCH (k:MonumentAnalysis)-[:belongsto]->(m)" +
+		// "MATCH (m)-[:EpochOf]->(e:Epoch)" +
+		// "MATCH (m)-[:TypeOf]->(ty:MonumentType)" +
+		"WHERE k.monument_name STARTS WITH {needle}" +
+		"RETURN m, k"//, ty.id, e.id"
 )
 
 func monumentsHandler(w web.ResponseWriter, r *http.Request) {
