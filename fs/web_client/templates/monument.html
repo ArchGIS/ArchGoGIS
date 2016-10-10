@@ -39,8 +39,8 @@
       </div>
       
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
-        <label for="report-title-input">Описание</label>
-        <input id="report-title-input" data-for="r:Report" type="text" name="description"></input>
+        <label for="report-name-input">Название</label>
+        <input id="report-name-input" data-for="r:Report" type="text" name="name"></input>
       </div>
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-year-input">Год</label>
@@ -49,6 +49,15 @@
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
         <input id="report-file-input" type="file" name="file"></input>
+      </div>
+
+      <div hidden="true">
+        <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
+          <input id="research-name-input" data-for="rs:Research" type="text" name="name"></input>
+        </div>
+        <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
+          <input id="research-year-input" data-for="rs:Research" type="number" name="year"></input>
+        </div>
       </div>
     </div>
 
@@ -61,55 +70,71 @@
       </div>
       <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="false">
         <label>Код</label>
-        <input id="heritage-object-code-input" data-for="o:HeritageObject" type="text" name="code"></input>
+        <input id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
       </div>
 
       <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label>Описание ОКН</label>
-        <input id="heritage-object-description-input" data-for="o:HeritageObject" type="text" name="description"></input>
+        <label>Код ОКН</label>
+        <input id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
+      </div>
+      <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
+        <label>Описание</label>
+        <input id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></input>
       </div>
       <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label>Описание границ</label>
-        <input id="heritage-object-border-input" data-for="o:HeritageObject" type="text" name="border"></input>
+        <input id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></input>
       </div>
       <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label>Предмет охраны</label>
-        <input id="heritage-object-security-input" data-for="o:HeritageObject" type="text" name="security"></input>
+        <input id="heritage-object-security-input" data-for="hs:HeritageStatus" type="text" name="security"></input>
       </div>
     </div>
 
     <div id="menu2">
       <h3>Памятник</h3>
 
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Код памятника</label>
+        <input id="monument-name-input" data-for="m:Monument"  type="text" name="Code"></input>
+      </div>
       <div class="flex-row">
         <label>Название памятника</label>
         <input id="monument-name-input" data-for="ma:MonumentAnalysis" type="text" name="name"></input>
       </div>
+      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+        <label>Описание памятника</label>
+        <input id="monument-desc-input" data-for="ma:MonumentAnalysis" type="text" name="description"></input>
+      </div>
       <div class="flex-row">
         <label>Эпоха</label>
-        <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input>
+        <input id="monument-input"></input>
+        <!-- <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input> -->
       </div>
       <div class="flex-row">
         <label>Культура</label>
-        <input id="monument-input" data-for="ma:MonumentAnalysis" type="text" name="culture"></input>
+        <input id="monument-input"></input>
+        <!-- <input id="monument-input" data-for="ma:MonumentAnalysis" type="text" name="culture"></input> -->
       </div>
 
       <div id="coord-picker" class="coords">
         <div class="coord">
           <label>Координата X
-            <input id="monument-x" data-for="m:Monument" type="text" name="x"></input>
+            <input id="monument-x"></input>
+            <!-- <input id="monument-x" data-for="m:Monument" type="text" name="x"></input> -->
           </label>
         </div>
         <div class="coord">
           <label>Координата Y
-            <input id="monument-y" data-for="m:Monument" type="text" name="y"></input>
+            <input id="monument-y"></input>
+            <!-- <input id="monument-y" data-for="m:Monument" type="text" name="y"></input> -->
           </label>
         </div>
         <!-- <i id="pick-coord" class="fa fa-map-marker"></i> -->
       </div>
     </div>
 
-  <button class="pure-button pure-button-primary" onclick="postQuery()">
+  <button id="send-button" class="pure-button pure-button-primary">
     <i class="fa fa-cogs"></i>
     Создать
   </button>

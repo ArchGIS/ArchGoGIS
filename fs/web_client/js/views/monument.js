@@ -28,7 +28,16 @@ App.views.monument = new (App.View.extend({
         $(this).autocomplete("search");
       });
     };
-  
+    
+    var fillResearchInputs = function(){
+      var year = $("#report-year-input").val();
+      var title = $("#report-title-input").val() + " - " + year;
+      $("#research-name-input").val(title);
+      $("#research-year-input").val(year);
+      console.log(year)
+      console.log(title)
+    };
+
     var lastSelectedAuthorId = 0;
     App.page.get('author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
@@ -37,6 +46,10 @@ App.views.monument = new (App.View.extend({
       } 
     });
 
+    $('#send-button').on('click', function() {
+      fillResearchInputs();
+      postQuery();
+    });
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {
