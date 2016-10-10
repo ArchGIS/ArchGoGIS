@@ -62,7 +62,9 @@ function postQuery() {
     ["Research", "MonumentAnalysis", "has"],
     ["MonumentAnalysis", "Monument", "belongsto"],
     ["MonumentAnalysis", "Artifact", "founded"],
-    ["HeritageObject", "Monument", "contains"]
+    ["HeritageStatus", "Monument", "contains"],
+    ["Research", "Report", "hasreport"],
+    ["Report", "Author", "hasauthor"]
   ]);
 
   var formdata = new FormData();
@@ -71,16 +73,16 @@ function postQuery() {
     formdata.append(key, JSON.stringify(val));
   })
 
-  $.ajax({
-    url: "/hquery/upsert",
-    data: formdata,
-    type: "POST",
-    processData: false,
-    contentType: false,
-    success: function(response) {
-      console.log(response);
-    }
-  });
+    $.ajax({
+      url: "/hquery/upsert",
+      data: formdata,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        console.log(response);
+      }
+    });
 }
 
 function generateJson(relations) {
@@ -132,6 +134,16 @@ function generateJson(relations) {
       }
     })
   })
+
+  // Может быть в следующий раз
+  // var required = $("[required][used!=false]");
+  // $.each(required, function(key, input) {
+  //   dataFor = $(input).attr("data-for");
+  //   if (!json[dataFor]) {
+  //     json[dataFor] = {};
+  //   }
+  //   console.log(dataFor);
+  // });
 
   console.log(json)
   console.log(objs)
