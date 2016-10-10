@@ -148,17 +148,17 @@ create (r3:Research {
 create (exc:Knowledge {
   id: 1,
   monument_name: 'Курган в Болгаре',
-  description: 'Копаем оружие в Болгаре',
+  description: 'Копаем оружие в Болгаре'
 })
 create (surv:Knowledge {
   id: 2,
   monument_name: 'Гробница в Болгаре',
-  description: 'Расхищаем гробницу',
+  description: 'Расхищаем гробницу'
 })
 create (an:Knowledge {
   id: 3,
   monument_name: 'Курган в Болгаре',
-  description: 'Изучаем курган',
+  description: 'Изучаем курган'
 })
 
 create (map:ArchMap {
