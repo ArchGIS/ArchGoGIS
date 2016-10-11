@@ -60,8 +60,11 @@ function postQuery() {
     ["Research", "Author", "hasauthor"],
     ["Research", "Coauthor", "hascoauthor"],
     ["Research", "Knowledge", "has"],
+    ["Research", "ResearchType", "has"],
     ["Knowledge", "Monument", "belongsto"],
     ["Knowledge", "Artifact", "founded"],
+    ["Knowledge", "Epoch", "has"],
+    ["Knowledge", "Culture", "has"],
     ["HeritageStatus", "Monument", "contains"],
     ["Research", "Report", "hasreport"],
     ["Report", "Author", "hasauthor"]
@@ -92,7 +95,7 @@ function generateJson(relations) {
 
   $.each(inputs, function(key, input) {
     dataFor = $(input).attr("data-for");
-    type = ($(input).attr("type") != "hidden") ? ("/" + $(input).attr("type")) : "";
+    type = ($(input).attr("type") != "id") ? ("/" + $(input).attr("type")) : "";
     name = $(input).attr("name") + type;
     value = $(input).val();
     inputClass = dataFor.split(":")[1];
@@ -217,4 +220,16 @@ function createMonumentsFromXlsx() {
   })
 
   console.log(query);
+}
+
+function fillSelector(query, selector) {
+  $.post("/hquery/read", query).success(function(response) {
+    var data = JSON.parse(response);
+    $.each(data.rows, function(id, row) {
+      $("<option></option>")
+        .text(row.name)
+        .val(row.id)
+        .appendTo(selector);
+    })
+  });
 }

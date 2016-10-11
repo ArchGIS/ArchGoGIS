@@ -61,7 +61,31 @@ App.views.artifact = new (App.View.extend({
         $(this).autocomplete("search");
       });
     };
-  
+    
+    var fillEpochSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:Epoch": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
+    var fillCultureSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:Culture": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
+    var fillResearchTypeSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:ResearchType": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
     var lastSelectedAuthorId = 0;
     App.page.get('author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
@@ -98,6 +122,13 @@ App.views.artifact = new (App.View.extend({
       return false;
     })
 
+    $('#send-button').on('click', function() {
+      postQuery();
+    });
+
+    fillEpochSelector($("#epoch-selector"));
+    fillCultureSelector($("#culture-selector"));
+    fillResearchTypeSelector($("#research-type-selector"));
     setSelectsEvents();
 
     coordpicker($('#coord-picker'), {

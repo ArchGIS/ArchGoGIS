@@ -41,6 +41,9 @@ var (
 		{"HeritageStatus", "n_heritage_status_id_seq"},
 		{"File", "n_file_id_seq"},
 		{"MonumentAnalysis", "n_monument_analysis_id_seq"},
+		{"Epoch", "n_epoch_id_seq"},
+		{"Culture", "n_culture_id_seq"},
+		{"ResearchType", "n_research_type_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{
