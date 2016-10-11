@@ -5,8 +5,8 @@ App.views.search = new (App.View.extend({
     var t = App.locale.translate;
     var grepObject = App.fn.grepObject;
     
-    var $results = $('#results');
-    var $resultsCount = $('#results-count');
+    var $results = $('#search-results');
+    // var $resultsCount = $('#results-count');
 
     var resultProvider = null;
     var $objectToggler = App.page.get('objectToggler');
@@ -16,15 +16,13 @@ App.views.search = new (App.View.extend({
         'handler': searchMonument,
         'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
-          return _.map(monuments, function(mk, n) {
-            return [
-              App.models.Monument.href(mk[0].id, n+1),
-              t('monument.types')[+mk[2]],
-              t('epoch')[mk[3] - 1]
-            ];
+          return _.map(monuments, function(mk) {
+            return [App.models.Monument.href(mk[0], `${mk[1]} (${mk[3]} - ${mk[2]})`)];
+              // t('monument.types')[+mk[2]],
+              // t('epoch')[mk[3] - 1]
           });
         },
-        'inputs': {'monument': App.page.get('monument-input')}
+        'inputs': {'monument': $('#monument-input')}
       },
       'research-params': {
         'handler': searchResearch,
@@ -68,13 +66,16 @@ App.views.search = new (App.View.extend({
     
     // Заполнение и отрисовка таблицы результатов.
     function showResults() {
-      $('#body :input').prop('disabled', true);
+      $results.empty();
+      object.handler(object);
       
-      App.page.get('resultsTable')
-        .setHead(object.heading)
-        .setBody(object.columnsMaker(resultProvider()));
+      // $('#body :input').prop('disabled', true);
+      
+      // App.page.get('resultsTable')
+      //   .setHead(object.heading)
+      //   .setBody(object.columnsMaker(resultProvider()));
                  
-      $('#results-table-box').show();
+      // $('#results-table-box').show();
     }
 
     // Смена искомого объекта.
@@ -83,25 +84,40 @@ App.views.search = new (App.View.extend({
       object.handler(object);
     });
     object = objects['monument-params'];
-    object.handler(object);
+    // object.handler(object);
 
     // Поиск памятника
     function searchMonument(my) {
       var monuments = [];
       resultProvider = () => monuments;
 
-      my.inputs.monument.on('autocompleteselect', function(event, ui) {
-        $results.show();
-        
-        // #FIXME: это очень плохое преобразование данных.
-        var records = my.inputs.monument.getRecords();
-        var matcher = new RegExp('^' + ui.item.label);
-        monuments = _.filter(records, function(record) {
-          return matcher.test(record[1].monument_name);
+      var tmp = my.inputs.monument.val();
+      var find = App.models.Monument.findByNamePrefix(tmp);
+
+      find
+        .then(function(response) {
+          var list = my.columnsMaker(response);
+
+          _.each(list, function(item) {
+            $results.append(item + '<br />');
+          });
+        }, function(error) {
+          console.log(error);
         });
 
-        $resultsCount.html(monuments.length);
-      });
+
+      // my.inputs.monument.on('autocompleteselect', function(event, ui) {
+      //   $results.show();
+        
+      //   // #FIXME: это очень плохое преобразование данных.
+      //   var records = my.inputs.monument.getRecords();
+      //   var matcher = new RegExp('^' + ui.item.label);
+      //   monuments = _.filter(records, function(record) {
+      //     return matcher.test(record[1].monument_name);
+      //   });
+
+      //   $resultsCount.html(monuments.length);
+      // });
     }
 
     // Поиск автора
