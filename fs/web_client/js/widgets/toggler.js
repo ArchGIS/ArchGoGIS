@@ -20,8 +20,8 @@ App.widgets.Toggler = function(params, id) {
     switch (type) {
     case 'select':
       return selectTmpl({
-	'options': _.pluck(params, 0),
-	'id': id
+        'options': _.pluck(params, 0),
+        'id': id
       });
       
     case 'checkbox':
@@ -36,35 +36,35 @@ App.widgets.Toggler = function(params, id) {
     $el = $('#' + id);
 
     switch (type) {
-    case 'select':
-      var $items = _.object(
-	_.pluck(params, 0),
-	_.map(params, param => $(param[1]))
-      );
-      var $lastSelected = $items[params[0][0]];
+      case 'select':
+        var $items = _.object(
+          _.pluck(params, 0),
+          _.map(params, param => $(param[1]))
+        );
+        var $lastSelected = $items[params[0][0]];
 
-      $lastSelected.show();
-      
-      $el.on('change', function() {
-	var $selected = $items[$el.find(":selected").text()];
+        $lastSelected.show();
+        
+        $el.on('change', function() {
+          var $selected = $items[$el.find(":selected").text()];
 
-	if ($selected) {
-	  $lastSelected.hide();
-	  $lastSelected = $selected.show();
+          if ($selected) {
+            $lastSelected.hide();
+            $lastSelected = $selected.show();
 
-          if (callback) {
-            callback($selected);
+            if (callback) {
+              callback($selected);
+            }
           }
-	}
-      });
-      break;
+        });
+        break;
 
-    case 'checkbox':
-      var $item = $(params);
-      
-      $el.on('click', function() {
-	$item.toggle();
-      });
+      case 'checkbox':
+        var $item = $(params);
+        
+        $el.on('click', function() {
+          $item.toggle();
+        });
     }
   };
 

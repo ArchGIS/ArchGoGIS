@@ -25,24 +25,24 @@ App.widgets.SearchLine = function(params, id) {
     $input.autocomplete({
       'minLength': params.minLength || 3,
       'source': function(request, response) {
-	var term = request.term.toLowerCase();
+        var term = request.term.toLowerCase();
 
-	if (term != lastTerm) {
-	  lastTerm = term;
-	  // Нужно забирать данные заново.
-	  params.source(term).then(
+      	if (term != lastTerm) {
+      	  lastTerm = term;
+      	  // Нужно забирать данные заново.
+      	  params.source(term).then(
             function(result) {
               records = result;
-	      if (typeof params.etl == 'function') {
-		result = params.etl(result);
-	      }
-	      items = _.uniq(result, 'label');
-	      response(items);
-	    }
-	  );
-	} else {
+              if (typeof params.etl == 'function') {
+		            result = params.etl(result);
+              }
+              items = _.uniq(result, 'label');
+              response(items);
+            }
+          );
+        } else {
           response(grepObject('^' + term, items, 'label'));
-	}
+        }
       }
     });
 
