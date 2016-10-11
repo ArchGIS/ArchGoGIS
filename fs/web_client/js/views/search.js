@@ -73,20 +73,23 @@ App.views.search = new (App.View.extend({
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       object = objects[$object.prop('id')];
-      object.handler(object);
+      // object.handler(object);
     });
     object = objects['monument-params'];
     // object.handler(object);
 
     // Поиск памятника
     function searchMonument(my) {
-      var tmp = my.inputs.monument.val();
+      var input = my.inputs.monument;
+      var tmp = input.val();
+      input.val('');
 
       if (tmp) {
         var find = App.models.Monument.findByNamePrefix(tmp);
 
         find
           .then(function(response) {
+            input.css('border', '');
             if (response.length) {
               var list = my.columnsMaker(response);
 
@@ -100,7 +103,7 @@ App.views.search = new (App.View.extend({
             console.log(error);
           });
       } else {
-        my.inputs.monument.css('border', 'solid 1px #f33');
+        input.css('border', 'solid 1px #f33');
         $results.append('<p class="danger">Заполните поля, выделенные красным</p>')
       }
 
