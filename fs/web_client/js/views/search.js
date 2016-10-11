@@ -68,14 +68,6 @@ App.views.search = new (App.View.extend({
     function showResults() {
       $results.empty();
       object.handler(object);
-      
-      // $('#body :input').prop('disabled', true);
-      
-      // App.page.get('resultsTable')
-      //   .setHead(object.heading)
-      //   .setBody(object.columnsMaker(resultProvider()));
-                 
-      // $('#results-table-box').show();
     }
 
     // Смена искомого объекта.
@@ -88,22 +80,29 @@ App.views.search = new (App.View.extend({
 
     // Поиск памятника
     function searchMonument(my) {
-      var monuments = [];
-      resultProvider = () => monuments;
-
       var tmp = my.inputs.monument.val();
-      var find = App.models.Monument.findByNamePrefix(tmp);
 
-      find
-        .then(function(response) {
-          var list = my.columnsMaker(response);
+      if (tmp) {
+        var find = App.models.Monument.findByNamePrefix(tmp);
 
-          _.each(list, function(item) {
-            $results.append(item + '<br />');
+        find
+          .then(function(response) {
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(item + '<br />');
+              });
+            } else {
+              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+            }
+          }, function(error) {
+            console.log(error);
           });
-        }, function(error) {
-          console.log(error);
-        });
+      } else {
+        my.inputs.monument.css('border', 'solid 1px #f33');
+        $results.append('<p class="danger">Заполните поля, выделенные красным</p>')
+      }
 
 
       // my.inputs.monument.on('autocompleteselect', function(event, ui) {
