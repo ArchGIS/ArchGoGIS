@@ -17,7 +17,7 @@
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="false">
         <label for="author-input">Автор исследования</label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
-        <input id="author-input-id" data-for="author:Author" type="hidden" name="id"></input>
+        <input id="author-input-id" data-for="author:Author" hidden type="id" name="id"></input>
       </div>
 
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
@@ -31,7 +31,7 @@
       <div class="flex-row">
         <label for="coauthor-input">Соавторы</label>
         <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
-        <input id="coauthor-input-id" data-few="true" data-for="co:Author" data-subclass="Coauthor" type="hidden" name="id"></input>
+        <input id="coauthor-input-id" data-few="true" data-for="co:Author" data-subclass="Coauthor" hidden type="id" name="id"></input>
       </div>
       <div class="top-indent">
         <label for="new-research-checkbox">Добавить новое исследование</label>
@@ -40,7 +40,7 @@
       <div class="flex-row" toggle-by="new-research-checkbox" need-option="false">
         <label for="research-input">Исследование</label>
         <input id="research-input"></input>
-        <input id="research-input-id" data-for="r:Research" type="hidden" name="id"></input>
+        <input id="research-input-id" data-for="r:Research" hidden type="id" name="id"></input>
       </div>
       
       <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
@@ -52,12 +52,8 @@
         <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
       </div>
       <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
-        <label for="research-type-input">Тип</label>
-        <select data-for="r:Research" type="text" name="type">
-          <option id="#monument-type-excavation"><%= t("research.types.excavation") %></option>
-          <option id="#monument-type-survey"><%= t("research.types.survey") %></option>
-          <option id="#monument-type-analysis"><%= t("research.types.analysis") %></option>
-        </select>
+        <label for="research-type-selector">Тип</label>
+        <select id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
       </div>
       <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-year-input">Год</label>
@@ -73,13 +69,9 @@
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="false">
         <label>Памятник</label>
         <input id="monument-input"></input>
-        <input id="monument-input-id" data-for="m:Monument" type="hidden" name="id"></input>
+        <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id"></input>
       </div>
 
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
-        <label>Код памятника</label>
-        <input id="monument-name-input" data-for="m:Monument"  type="text" name="Code"></input>
-      </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <label>Название памятника</label>
         <input id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name"></input>
@@ -89,27 +81,23 @@
         <input id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
-        <label>Эпоха</label>
-        <input id="monument-input"></input>
-        <!-- <input id="monument-input" data-for="m:Monument" type="text" name="epoch"></input> -->
+        <label for="epoch-selector">Эпоха</label>
+        <select id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
-        <label>Культура</label>
-        <input id="monument-input"></input>
-        <!-- <input id="monument-input" data-for="k:Knowledge" type="text" name="culture"></input> -->
+        <label for="culture-selector">Культура</label>
+        <select id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
       </div>
 
       <div id="coord-picker" class="coords" toggle-by="new-monument-checkbox" need-option="true">
         <div class="coord">
           <label>Координата X
-            <input id="monument-x"></input>
-            <!-- <input id="monument-x" data-for="m:Monument" type="text" name="x"></input> -->
+            <input id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
           </label>
         </div>
         <div class="coord">
           <label>Координата Y
-            <input id="monument-y"></input>
-            <!-- <input id="monument-y" data-for="m:Monument" type="text" name="y"></input> -->
+            <input id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
           </label>
         </div>
         <!-- <i id="pick-coord" class="fa fa-map-marker"></i> -->

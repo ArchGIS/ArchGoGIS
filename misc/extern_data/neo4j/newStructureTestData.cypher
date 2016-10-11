@@ -1,11 +1,14 @@
 // Заполнить БД
 create (middle_age:Epoch {
+  id: 1,
   name: 'Средневековье'
 })
 create (iron_age:Epoch {
+  id: 2,
   name: 'Железный век'
 })
 create (mesolit:Epoch {
+  id: 3,
   name: 'Мезолит'
 })
 
@@ -30,12 +33,15 @@ create (bolgar:City {
 })
 
 create (tatar:Culture {
+  id: 1,
   name: 'Татарская'
 })
 create (fin:Culture {
+  id: 2,
   name: 'Финно-угорская'
 })
 create (mongol:Culture {
+  id: 3,
   name: 'Монгольская'
 })
 
@@ -122,7 +128,6 @@ create (job4:AuthorJob {
 
 create (r1:Research {
   id: 1,
-  code: '1232-526',
   year: 2011,
   name: 'Болгар-2011',
   description: 'Анализируем Болгар',
@@ -130,7 +135,6 @@ create (r1:Research {
 })
 create (r2:Research {
   id: 2,
-  code: '1232-777',
   year: 2010,
   name: 'Болгар-2010',
   description: 'Поиск оружия',
@@ -138,11 +142,25 @@ create (r2:Research {
 })
 create (r3:Research {
   id: 3,
-  code: '1232-666',
   year: 2005,
   name: 'Болгар-2005',
   description: 'Разведка',
   type: 'Разведка'
+})
+
+create (rt1:ResearchType {
+  id: 1,
+  name: 'Аналитическое'
+})
+
+create (rt2:ResearchType {
+  id: 2,
+  name: 'Раскопки'
+})
+
+create (rt3:ResearchType {
+  id: 3,
+  name: 'Разведка'
 })
 
 create (exc:Knowledge {
@@ -366,6 +384,10 @@ create (arti6:Artifact {
   code: '743-3',
   description: 'Сапфировое ожерелье'
 })
+
+create (r1)-[:has]->(rt1)
+create (r2)-[:has]->(rt2)
+create (r3)-[:has]->(rt3)
 
 create (au1)-[:has]->(job1)
 create (au2)-[:has]->(job2)
