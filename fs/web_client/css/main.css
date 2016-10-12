@@ -235,19 +235,19 @@ input[type=text] {
   flex-direction: column;
 }
 
-.flex-row {
+/*.flex-row {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   width: 60%;
   align-items: center;
-}
-
+}*/
+/*
 .flex-row label {
   margin-right: 1em;
-  /*padding-top: 1em;*/
+  /*padding-top: 1em;
   line-height: 1;
-}
+}*/
 
 /*
    Сообщения
