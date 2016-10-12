@@ -14,12 +14,13 @@ App.controllers.report = new (App.View.extend({
       "res_hasauthor_a": {},
       "res_has_k": {},
       "rep_hasauthor_a": {},
-      "res_hasreport_rep": {},
+      "k_has_rep": {},
       "k_belongsto_m": {}
     };
 
     $.post('/hquery/read', JSON.stringify(query))
       .success(function(reportData) {
+        console.log(JSON.parse(reportData));
         App.page.render('report/show', JSON.parse(reportData));
       });
   }

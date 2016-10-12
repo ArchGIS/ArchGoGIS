@@ -48,6 +48,9 @@ App.views.monument = new (App.View.extend({
       fillResearchInputs();
       postQuery();
     });
+
+    fillSelector($("#epoch-selector"), "Epoch");
+    fillSelector($("#culture-selector"), "Culture");
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {
@@ -56,6 +59,13 @@ App.views.monument = new (App.View.extend({
     });
 
     $("#container").tabs();
+  },
+
+  "show": function(argument) {
+    var map = App.page.get("map");
+    map.on("click", function(e) {
+      map.addPlacemark(e.get("coords"), {hintContent: "Да есть жеж!"});
+    })
   },
 
   "new_by_xlsx": function() {

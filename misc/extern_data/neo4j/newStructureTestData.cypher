@@ -148,16 +148,30 @@ create (r3:Research {
   type: 'Разведка'
 })
 
+create (rep1:Report {
+  id: 1,
+  year: 2012,
+  name: "Отчет об анализе"
+})
+create (rep2:Report {
+  id: 2,
+  year: 2011,
+  name: "Отчет о раскопках"
+})
+create (rep3:Report {
+  id: 3,
+  year: 2006,
+  name: "Отчет о разведке"
+})
+
 create (rt1:ResearchType {
   id: 1,
   name: 'Аналитическое'
 })
-
 create (rt2:ResearchType {
   id: 2,
   name: 'Раскопки'
 })
-
 create (rt3:ResearchType {
   id: 3,
   name: 'Разведка'
@@ -165,16 +179,22 @@ create (rt3:ResearchType {
 
 create (exc:Knowledge {
   id: 1,
-  monument_name: 'Курган в Болгаре',
+  monument_name: 'Болгарский курган',
+  x: 49,
+  y: 55,
   description: 'Копаем оружие в Болгаре'
 })
 create (surv:Knowledge {
   id: 2,
   monument_name: 'Гробница в Болгаре',
+  x: 48.8,
+  y: 54.8,
   description: 'Расхищаем гробницу'
 })
 create (an:Knowledge {
   id: 3,
+  x: 48.6,
+  y: 54.6,
   monument_name: 'Курган в Болгаре',
   description: 'Изучаем курган'
 })
@@ -356,32 +376,26 @@ create (ref3:ShortBibliographicRef {
 
 create (arti1:Artifact {
   id: 1,
-  code: '534-1',
   description: 'Железный меч'
 })
 create (arti2:Artifact {
   id: 2,
-  code: '534-2',
   description: 'Часть деревянного щита'
 })
 create (arti3:Artifact {
   id: 3,
-  code: '534-3',
   description: 'Плащ'
 })
 create (arti4:Artifact {
   id: 4,
-  code: '743-1',
   description: 'Золотое кольцо'
 })
 create (arti5:Artifact {
   id: 5,
-  code: '743-2',
   description: 'Картина с котятами'
 })
 create (arti6:Artifact {
   id: 6,
-  code: '743-3',
   description: 'Сапфировое ожерелье'
 })
 
@@ -404,9 +418,17 @@ create (r3)-[:hasauthor]->(au1)
 create (r1)-[:hasauthor]->(au2)
 create (r1)-[:hascoauthor]->(au1)
 
+create (rep2)-[:hasauthor]->(au1)
+create (rep3)-[:hasauthor]->(au1)
+create (rep1)-[:hasauthor]->(au2)
+
 create (r1)-[:has]->(exc)
 create (r2)-[:has]->(surv)
 create (r3)-[:has]->(an)
+
+create (exc)-[:has]->(rep1)
+create (surv)-[:has]->(rep2)
+create (an)-[:has]->(rep3)
 
 create (exc)-[:belongsto]->(mon1)
 create (surv)-[:belongsto]->(mon2)
