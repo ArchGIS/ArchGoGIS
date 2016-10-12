@@ -148,6 +148,22 @@ create (r3:Research {
   type: 'Разведка'
 })
 
+create (rep1:Report {
+  id: 1,
+  year: 2012,
+  name: "Отчет об анализе"
+})
+create (rep2:Report {
+  id: 2,
+  year: 2011,
+  name: "Отчет о раскопках"
+})
+create (rep3:Report {
+  id: 3,
+  year: 2006,
+  name: "Отчет о разведке"
+})
+
 create (rt1:ResearchType {
   id: 1,
   name: 'Аналитическое'
@@ -163,7 +179,7 @@ create (rt3:ResearchType {
 
 create (exc:Knowledge {
   id: 1,
-  monument_name: 'Курган в Болгаре',
+  monument_name: 'Болгарский курган',
   x: 49,
   y: 55,
   description: 'Копаем оружие в Болгаре'
@@ -402,9 +418,17 @@ create (r3)-[:hasauthor]->(au1)
 create (r1)-[:hasauthor]->(au2)
 create (r1)-[:hascoauthor]->(au1)
 
+create (rep2)-[:hasauthor]->(au1)
+create (rep3)-[:hasauthor]->(au1)
+create (rep1)-[:hasauthor]->(au2)
+
 create (r1)-[:has]->(exc)
 create (r2)-[:has]->(surv)
 create (r3)-[:has]->(an)
+
+create (exc)-[:has]->(rep1)
+create (surv)-[:has]->(rep2)
+create (an)-[:has]->(rep3)
 
 create (exc)-[:belongsto]->(mon1)
 create (surv)-[:belongsto]->(mon2)

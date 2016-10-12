@@ -10,24 +10,53 @@ App.controllers.monument = new (App.View.extend({
       "researches:Research": {"id": "*", "select": "*"},
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
-      "culture:Culture": {"id": "*", "select": "*"},
+      "cultures:Culture": {"id": "*", "select": "*"},
+      "epochs:Epoch": {"id": "*", "select": "*"},
       "researches_hasauthor_authors": {},
       "researches_has_knowledges": {},
       "knowledges_belongsto_monument": {},
-      "knowledges_has_culture": {}
+      "knowledges_has_cultures": {},
+      "knowledges_has_epochs": {},
     });
 
     $.post("/hquery/read", query).success(function(data) {
       data = JSON.parse(data);
       data.placemarks = [];
-      console.log(data);
+      data.artifacts = [];
+      data.reports = [];
+
       $.each(data.knowledges, function(id, knowledge) {
+        query = JSON.stringify({
+          "knowledge:Knowledge": {"id": knowledge.id+""},
+          "artifacts:Artifact": {"id": "*", "select": "*"},
+          "knowledge_founded_artifacts": {}
+        });
+
+        $.post("/hquery/read", query).success(function(artifacts) {
+          artifacts = JSON.parse(artifacts);
+          data.artifacts.push(artifacts.artifacts);
+        })
+
+        query = JSON.stringify({
+          "knowledge:Knowledge": {"id": knowledge.id+""},
+          "report:Report": {"id": "*", "select": "*"},
+          "author:Author": {"id": "*", "select": "*"},
+          "knowledge_has_report": {},
+          "report_hasauthor_author": {}
+        });
+
+        $.post("/hquery/read", query).success(function(report) {
+          report = JSON.parse(report);
+          data.reports.push(report);
+        })
+
         data.placemarks.push({
           "coords": [knowledge.y, knowledge.x],
           "pref": {"hintContent": knowledge.monument_name}
         })
       });
 
+      console.log(data);
       App.page.render("monument_view", data);
     });
   },

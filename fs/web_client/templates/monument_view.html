@@ -1,5 +1,64 @@
 <div class="content">  
   <h2><%= t("monument.singular") %></h2>
+  <br>
+  <% var counter=1 %>
+  <% _.each(researches, function(research, i) { %>
+    <p>
+      <h3><%= t("research.singular") %> №<%= counter++%>:
+      <a href="#research/show/<%= researches[i].id %>">
+        <%= research.description %>
+      </a></h3>
+    </p>
+
+    <p>Год :
+      <%= researches[i].year %>
+    </p>
+    <p>Присвоенное памятнику название:
+      <%= knowledges[i].monument_name %>
+    </p>
+    <p>Эпоха:
+      <%= epochs[i].name %>
+    </p>
+    <p>Культура:
+      <%= cultures[i].name %>
+    </p>
+    <p>Тип исследования:
+      <%= researches[i].type %>
+    </p>
+    <p>Найденные артефакты:
+      <% if (artifacts[i] && artifacts[i].length > 0) { %>
+        <% var length = artifacts[i].length %>
+        <% _.each(artifacts[i], function(artifact, i) { %>
+          <a href="#artifact/show/<%= artifact.id %>">
+            <%= artifact.description%>
+          </a>
+          <% if (i < length-1) { %>
+            ,
+          <% } %>
+        <% }); %>
+      <% } else { %>
+        нет
+      <% } %>
+    </p>
+    <% if (reports[i] && reports[i].report.length > 0) { %>
+      <p>Отчет:
+        <a href="#report/show/<%= reports[i].report[0].id %>">
+          <%= reports[i].report[0].name %> (<%= reports[i].author[0].name%>, <%= reports[i].report[0].year%>)
+        </a>
+      </p>
+    <% } %>
+    <hr>
+  <% }); %>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
   <p><%= t("knowledge.prop.name") %>:
     <%= _.pluck(knowledges, "monument_name").join(", ") %>
@@ -7,6 +66,10 @@
 
   <p><%= t("knowledge.prop.culture") %>:
     <%= _.pluck(cultures, "name").join(", ") %>
+  </p>
+
+  <p><%= t("knowledge.prop.epoch") %>:
+    <%= _.uniq(_.pluck(epochs, "name")).join(", ") %>
   </p>
 
   <h3><%= t("research.plural") %>:</h3>
@@ -18,8 +81,23 @@
     </p>
   <% }); %>
   <h3><%= t("report.plural") %>:</h3>
+  <% _.each(reports, function(report, i) { %>
+    <p>
+      <a href="#report/show/<%= report.report[0].id %>">
+        <%= report.report[0].name %> (<%= report.author[0].name%>, <%= report.report[0].year%>)
+      </a>
+    </p>
+  <% }); %>
 </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>
 </div>
