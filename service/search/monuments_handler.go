@@ -7,7 +7,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"net/http"
-	"github.com/ArchGIS/ArchGoGIS/norm"
+	// "github.com/ArchGIS/ArchGoGIS/norm"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
 	"unicode/utf8"
 	"unsafe"
@@ -16,12 +16,12 @@ import (
 )
 
 const (
-	monumnetsCypher = "MATCH (m:Monument)" +
+	monumentsCypher = "MATCH (m:Monument)" +
 		"MATCH (k:Knowledge)-[:belongsto]->(m)" +
-		// "MATCH (m)-[:EpochOf]->(e:Epoch)" +
-		// "MATCH (m)-[:TypeOf]->(ty:MonumentType)" +
-		"WHERE k.monument_name STARTS WITH {needle}" +
-		"RETURN m, k"//, ty.id, e.id"
+		"MATCH (r:Research)-[:has]->(k)" +
+		"MATCH (a:Author)<-[:hasauthor]-(r)" +
+		"WHERE k.monument_name =~ {needle}" +
+		"RETURN m.id, k.monument_name, r.year, a.name"
 )
 
 func monumentsHandler(w web.ResponseWriter, r *http.Request) {
@@ -45,8 +45,8 @@ func searchForMonuments(needle string) ([]byte, error) {
 		return nil, errs.PrefixIsTooLong
 	}
 
-	needle = norm.NormalMonument(needle)
-	resp, err := neo.Run(monumnetsCypher, neo.Params{"needle": `"` + needle + `"`})
+	// needle = norm.NormalMonument(needle)
+	resp, err := neo.Run(monumentsCypher, neo.Params{"needle": `"(?ui)^.*` + needle + `.*$"`})
 	if err != nil {
 		echo.ServerError.Print(err)
 		return nil, errs.RetrieveError

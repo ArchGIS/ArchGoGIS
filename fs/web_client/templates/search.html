@@ -14,32 +14,32 @@
   <div class="flex-row" id="monument-params" style="display: none">
     <label>
       <%= t("knowledge.prop.name") %>
-      <%= widget("SearchLine", monumentSearchOptions, "monument-input") %>
+      <input type="text" id="monument-input" class="autoinput"/>
     </label>
   </div>
   <div class="flex-column" id="research-params" style="display: none" data-url="research">
     <label class="flex-row">
       <%= t("author.name") %>
-      <%= widget("SearchLine", authorSearchOptions, "research-author-input") %>
+      <input type="text" id="research-author-input" class="autoinput"/>
     </label>
     <br/>
     <label class="flex-row">
       <%= t("research.year") %>
-      <input id="research-year-input" class="autoinput">
+      <input type="number" id="research-year-input" class="autoinput"/>
     </label>
   </div>
 
   <div id="author-params" style="display: none">
     <label class="flex-row">
       <%= t("author.prop.name") %>
-      <%= widget("SearchLine", authorSearchOptions, "author-input") %>
+      <input type="text" id="author-input" class="autoinput"/>
     </label>
   </div>
 
   <div class="flex-column" id="report-params" style="display: none" data-url="research">
     <label class="flex-row">
       <%= t("author.name") %>
-      <%= widget("SearchLine", authorSearchOptions, "report-author-input") %>
+      <input type="text" id="report-author-input" class="autoinput"/>
     </label>
     <br/>
     <label class="flex-row">
@@ -53,11 +53,5 @@
       <%= t("search.show-results") %>
   </button>
 
-  <div class="count-search" id="results" style="display: none">
-    <%= t("search.results-count") %>: <span id="results-count"></span>
-  </div>
-
-  <div id="results-table-box" style="display: none">
-    <%= widget("Table", {}, "resultsTable") %>
-  </div>
+  <div class="search-results" id="search-results"></div>
 </div>
