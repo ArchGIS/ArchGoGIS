@@ -25,6 +25,7 @@ App.views.search = new (App.View.extend({
         'inputs': {
           'monument': $('#monument-input'),
           'year': $('#monument-year'),
+          'author': $('#monument-author'),
           'epoch': $('#monument-epoch'),
           'culture': $('#monument-culture')
         }
@@ -97,9 +98,9 @@ App.views.search = new (App.View.extend({
     var $epoch = $('#monument-epoch');
     var $culture = $('#monument-culture');
     fillEpochSelector($epoch);
-    $epoch.prepend('<option value="0" disabled selected>Ничего не выбрано</option>');
+    $epoch.prepend('<option value="0" selected>Ничего не выбрано</option>');
     fillCultureSelector($culture);
-    $culture.prepend('<option value="0" disabled selected>Ничего не выбрано</option>');
+    $culture.prepend('<option value="0" selected>Ничего не выбрано</option>');
 
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
@@ -112,16 +113,43 @@ App.views.search = new (App.View.extend({
 
     // Поиск памятника
     function searchMonument(my) {
-      var input = my.inputs.monument;
-      var tmp = input.val();
-      input.val('');
+      var input = my.inputs;
 
-      if (tmp) {
-        var find = App.models.Monument.findByNamePrefix(tmp);
+      var mnt     = input.monument.val(),
+          year    = input.year.val(),
+          author  = input.author.val(),
+          epoch   = input.epoch,
+          culture = input.culture;
 
-        find
+      // input.monument.val('');
+      // input.year.val('');
+      // input.epoch.val('0');
+      // input.culture.val('0');
+
+      if (mnt || year || author || epoch.val() != 0 || culture.val() != 0) {
+        // var find = App.models.Monument.findByNamePrefix(mnt);
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_monuments', {
+              'name': mnt,
+              'year': year,
+              'author': author,
+              'epoch': epoch.val() != 0 ? epoch.val() : '',
+              'culture': culture.val() != 0 ? culture.val() : ''
+              // 'limit': 10
+            });
+
+            $.get(url)
+              .success((response) => {
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
+          });
+        }
+
+        find()
           .then(function(response) {
-            input.css('border', '');
+            // input.css('border', '');
             if (response.length) {
               var list = my.columnsMaker(response);
 
@@ -135,8 +163,8 @@ App.views.search = new (App.View.extend({
             console.log(error);
           });
       } else {
-        input.css('border', 'solid 1px #f33');
-        $results.append('<p class="danger">Заполните поля, выделенные красным</p>')
+        // input.monument.css('border', 'solid 1px #f33');
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
     }
 
