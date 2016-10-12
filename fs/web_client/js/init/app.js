@@ -222,7 +222,11 @@ function createMonumentsFromXlsx() {
   console.log(query);
 }
 
-function fillSelector(query, selector) {
+function fillSelector(selector, dataType) {
+  var query = {};
+  query["rows:"+dataType] = {"id": "*", "select": "*"};
+  query = JSON.stringify(query);
+
   $.post("/hquery/read", query).success(function(response) {
     var data = JSON.parse(response);
     $.each(data.rows, function(id, row) {

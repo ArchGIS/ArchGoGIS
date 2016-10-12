@@ -48,6 +48,9 @@ App.views.monument = new (App.View.extend({
       fillResearchInputs();
       postQuery();
     });
+
+    fillSelector($("#epoch-selector"), "Epoch");
+    fillSelector($("#culture-selector"), "Culture");
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {
