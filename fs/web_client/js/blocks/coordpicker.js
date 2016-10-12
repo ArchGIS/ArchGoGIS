@@ -16,7 +16,7 @@ App.blocks.coordpicker = function($el, params) {
 
   function updatePlacemark() {
     updateInputValues(map.getCenter());
-    map.updatePlacemark($el.prop('id'), map.getCenter(), {'draggable': true});
+    map.updatePlacemark($el.prop('id'), map.getCenter(), {}, {'draggable': true});
   }
   
   function createPlacemark() {

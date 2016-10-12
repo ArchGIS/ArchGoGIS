@@ -5,28 +5,22 @@
     <%= _.pluck(knowledges, "monument_name").join(", ") %>
   </p>
 
-
-
-
   <p><%= t("knowledge.prop.culture") %>:
     <%= _.pluck(cultures, "name").join(", ") %>
   </p>
 
-  <p><%= t("coord.plural") %>: <%= monument.x %>, <%= monument.y %></p>
-
   <h3><%= t("research.plural") %>:</h3>
   <% _.each(researches, function(research, i) { %>
     <p>
-      <%= authors[i].name %> 
-      &ndash; 
       <a href="#research/show/<%= researches[i].id %>">
-        <%= research.description %> (<%= research.year %>)
+        <%= research.description %> (<%= authors[i].name %>, <%= research.year %>)
       </a>
     </p>
   <% }); %>
+  <h3><%= t("report.plural") %>:</h3>
 </div>
 
 <div class="maps">
-  <%= widget("Map", {}, "map") %>
+  <%= widget("Map", {"placemarks": placemarks}, "map") %>
 </div>
 

@@ -152,12 +152,10 @@ create (rt1:ResearchType {
   id: 1,
   name: 'Аналитическое'
 })
-
 create (rt2:ResearchType {
   id: 2,
   name: 'Раскопки'
 })
-
 create (rt3:ResearchType {
   id: 3,
   name: 'Разведка'
@@ -166,15 +164,21 @@ create (rt3:ResearchType {
 create (exc:Knowledge {
   id: 1,
   monument_name: 'Курган в Болгаре',
+  x: 49,
+  y: 55,
   description: 'Копаем оружие в Болгаре'
 })
 create (surv:Knowledge {
   id: 2,
   monument_name: 'Гробница в Болгаре',
+  x: 48.8,
+  y: 54.8,
   description: 'Расхищаем гробницу'
 })
 create (an:Knowledge {
   id: 3,
+  x: 48.6,
+  y: 54.6,
   monument_name: 'Курган в Болгаре',
   description: 'Изучаем курган'
 })
@@ -356,32 +360,26 @@ create (ref3:ShortBibliographicRef {
 
 create (arti1:Artifact {
   id: 1,
-  code: '534-1',
   description: 'Железный меч'
 })
 create (arti2:Artifact {
   id: 2,
-  code: '534-2',
   description: 'Часть деревянного щита'
 })
 create (arti3:Artifact {
   id: 3,
-  code: '534-3',
   description: 'Плащ'
 })
 create (arti4:Artifact {
   id: 4,
-  code: '743-1',
   description: 'Золотое кольцо'
 })
 create (arti5:Artifact {
   id: 5,
-  code: '743-2',
   description: 'Картина с котятами'
 })
 create (arti6:Artifact {
   id: 6,
-  code: '743-3',
   description: 'Сапфировое ожерелье'
 })
 

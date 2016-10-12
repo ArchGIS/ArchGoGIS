@@ -5,29 +5,30 @@ App.controllers.monument = new (App.View.extend({
     App.url.setMapping(['id']);
     var id = App.url.get('id');
 
-    // var query = JSON.stringify({
-    //   "monument:Monument.getBy": +id,
-    //   "epoch:Epoch.getBy": "monument",
-    //   "type:MonumentType.getBy": "monument",
-    //   "objects:Object.getBy": "monument",
-    //   "knowledges:Knowledge.getBy": "monument",
-    //   "researches:Research.getBy": "knowledges",
-    //   "cultures:Culture.getBy": "knowledges",
-    //   "authors:Author.getBy": "researches"
-    // });
-
     var query = JSON.stringify({
       "monument:Monument": {"id": id, "select": "*"},
       "researches:Research": {"id": "*", "select": "*"},
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
+      "culture:Culture": {"id": "*", "select": "*"},
       "researches_hasauthor_authors": {},
       "researches_has_knowledges": {},
-      "knowledges_belongsto_monument": {}
+      "knowledges_belongsto_monument": {},
+      "knowledges_has_culture": {}
     });
 
-    $.post("/hquery/read", query).success(function(response) {
-      App.page.render("monument_view", JSON.parse(response));
+    $.post("/hquery/read", query).success(function(data) {
+      data = JSON.parse(data);
+      data.placemarks = [];
+      console.log(data);
+      $.each(data.knowledges, function(id, knowledge) {
+        data.placemarks.push({
+          "coords": [knowledge.y, knowledge.x],
+          "pref": {"hintContent": knowledge.monument_name}
+        })
+      });
+
+      App.page.render("monument_view", data);
     });
   },
 

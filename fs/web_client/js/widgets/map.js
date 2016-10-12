@@ -12,6 +12,7 @@ App.widgets.Map = function(params, id) {
   var placemarks = {};
   var map = null;
   var eventsPool = {};
+  var thisRef = this;
 
   params = $.extend({
     'center': geo.kazan,
@@ -40,8 +41,10 @@ App.widgets.Map = function(params, id) {
     });
     eventsPool = null; // Больше нам не нужно их держать.
 
-    if (params.withPlacemark) {
-      this.addPlacemark(params.center);
+    if (params.placemarks) {
+      $.each(params.placemarks, function(id, placemark) {
+        thisRef.addPlacemark(placemark.coords, placemark.pref, placemark.opts);
+      })
     }
   });
 
@@ -60,26 +63,26 @@ App.widgets.Map = function(params, id) {
     placemarks[id].events.add(event, callback);
   };
 
-  this.addPlacemark = function(coord, id, opts) {
+  this.addPlacemark = function(coord, prop, opts, id) {
     // https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage-docpage/
     var placemark = new ymaps.Placemark(
       coord,
-      {}, // Свойства отметки 
+      prop, // Свойства отметки 
       opts
     );
 
     if (id) {
       placemarks[id] = placemark;
     }
-
+    
     map.geoObjects.add(placemark);
   };
 
-  this.updatePlacemark = function(id, coord, opts) {
+  this.updatePlacemark = function(id, coord, prop, opts) {
     if (placemarks[id]) {
       placemarks[id].geometry.setCoordinates(coord);
     } else {
-      this.addPlacemark(coord, id, opts);
+      this.addPlacemark(coord, prop, opts, id);
     }
   };
 
