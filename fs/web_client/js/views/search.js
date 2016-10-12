@@ -22,7 +22,12 @@ App.views.search = new (App.View.extend({
               // t('epoch')[mk[3] - 1]
           });
         },
-        'inputs': {'monument': $('#monument-input')}
+        'inputs': {
+          'monument': $('#monument-input'),
+          'year': $('#monument-year'),
+          'epoch': $('#monument-epoch'),
+          'culture': $('#monument-culture')
+        }
       },
       'research-params': {
         'handler': searchResearch,
@@ -70,6 +75,32 @@ App.views.search = new (App.View.extend({
       object.handler(object);
     }
 
+    // Заполнение селекта эпох
+    var fillEpochSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:Epoch": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
+    // Заполнение селекта культурной принадлежности
+    var fillCultureSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:Culture": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
+    // Выключение выбора эпохи и культуры по умолчанию
+    var $epoch = $('#monument-epoch');
+    var $culture = $('#monument-culture');
+    fillEpochSelector($epoch);
+    $epoch.prepend('<option value="0" disabled selected>Ничего не выбрано</option>');
+    fillCultureSelector($culture);
+    $culture.prepend('<option value="0" disabled selected>Ничего не выбрано</option>');
+
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       $results.empty();
@@ -95,7 +126,7 @@ App.views.search = new (App.View.extend({
               var list = my.columnsMaker(response);
 
               _.each(list, function(item) {
-                $results.append(item + '<br />');
+                $results.append(`<p>${item}</p>`);
               });
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
@@ -107,20 +138,6 @@ App.views.search = new (App.View.extend({
         input.css('border', 'solid 1px #f33');
         $results.append('<p class="danger">Заполните поля, выделенные красным</p>')
       }
-
-
-      // my.inputs.monument.on('autocompleteselect', function(event, ui) {
-      //   $results.show();
-        
-      //   // #FIXME: это очень плохое преобразование данных.
-      //   var records = my.inputs.monument.getRecords();
-      //   var matcher = new RegExp('^' + ui.item.label);
-      //   monuments = _.filter(records, function(record) {
-      //     return matcher.test(record[1].monument_name);
-      //   });
-
-      //   $resultsCount.html(monuments.length);
-      // });
     }
 
     // Поиск автора
