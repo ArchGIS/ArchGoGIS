@@ -72,6 +72,7 @@ App.views.search = new (App.View.extend({
 
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
+      $results.empty();
       object = objects[$object.prop('id')];
       // object.handler(object);
     });
