@@ -237,3 +237,27 @@ function fillSelector(selector, dataType) {
     })
   });
 }
+
+
+function uploadFile (selector) {
+  var file = $(selector)[0].files[0];
+  console.log(file)
+
+  if (file) {
+    var data = new FormData();
+    data.append('reportKey', file);
+    console.log(data);
+
+    $.ajax({
+      url: "/pfs/save",
+      data: data,
+      type: "POST",
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        console.log('Файл загружен');
+      }
+    });
+  }
+}
