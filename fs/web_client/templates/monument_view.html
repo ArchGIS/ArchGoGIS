@@ -5,8 +5,8 @@
   <% _.each(researches, function(research, i) { %>
     <p>
       <h3><%= t("research.singular") %> №<%= counter++%>:
-      <a href="#research/show/<%= researches[i].id %>">
-        <%= authors[i].name %>, <%= research.year %>, <%= researches[i].type %>
+      <a href="#research/show/<%= research.id %>">
+        <%= authors[i].name %>, <%= research.year %>, <%= research.type %>
       </a></h3>
     </p>
 

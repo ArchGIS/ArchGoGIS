@@ -68,7 +68,7 @@ App.controllers.research = new (App.View.extend({
 
         _.extend(data, JSON.parse(researchD));
         console.log(data);
-        $.when(d).done(App.page.render('research_view', data));
+        $.when(d).done(function() {App.page.render('research_view', data)});
       });
     });
   }

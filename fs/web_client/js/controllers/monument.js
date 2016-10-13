@@ -72,7 +72,7 @@ App.controllers.monument = new (App.View.extend({
       });
 
       console.log(data);
-      $.when(d1, d2).done(App.page.render("monument_view", data));
+      $.when(d1, d2).done(function() {App.page.render("monument_view", data)});
     });
   },
 
