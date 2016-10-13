@@ -64,9 +64,23 @@
         нет
       <% } %>
     </p>
-    
+
     <hr>
   <% }) %>
+
+  <% if (usedArtifacts.length > 0) { %>
+    <p>Упоминаемые артефакты:
+        <% var length = usedArtifacts.length %>
+        <% _.each(usedArtifacts, function(artifact, i) { %>
+          <a href="#artifact/show/<%= artifact.id %>">
+            <%= artifact.description%>
+          </a>
+          <% if (i < length-1) { %>
+            ,
+          <% } %>
+        <% }); %>
+    </p>
+  <% } %>
 
 <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>

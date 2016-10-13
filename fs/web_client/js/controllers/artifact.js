@@ -33,8 +33,9 @@ App.controllers.artifact = new (App.View.extend({
     data.materials = {};
     data.researches = {};
     data.intervals = {};
+    data.placemarks = [];
 
-    var queryFound = JSON.stringify({
+    var queryResearches = JSON.stringify({
       "artifact:Artifact": {"id": id, "select": "*"},
       "researches:Research": {"id": "*", "select": "*"},
       "knowledges:Knowledge":  {"id": "*", "select": "*"},
@@ -44,7 +45,7 @@ App.controllers.artifact = new (App.View.extend({
       "researches_hasauthor_authors": {},
     });
 
-    var queryResearches = JSON.stringify({
+    var queryFound = JSON.stringify({
       "artifact:Artifact": {"id": id, "select": "*"},
       "knowFound:Knowledge": {"id": "*", "select": "*"},
       "monFound:Monument": {"id": "*", "select": "*"},
@@ -81,6 +82,14 @@ App.controllers.artifact = new (App.View.extend({
     $.post('/hquery/read', queryFound).success(function(response) {
       response = JSON.parse(response);
       data = $.extend(data, response);
+      
+      data.placemarks.push({
+        "coords": [data.knowFound[0].x, data.knowFound[0].y],
+        "pref": {
+          "hintContent": data.knowFound[0].monument_name
+        }
+      })
+
       d1.resolve();
     })
 
@@ -109,7 +118,7 @@ App.controllers.artifact = new (App.View.extend({
     })
 
     console.log(data);
-    $.when(d1, d2, d3, d4).done(function() {App.page.render("artifact/show", data)});
+    $.when(d1, d2, d3, d4, d5).done(function() {App.page.render("artifact/show", data)});
   },
 
   'start': function() {
