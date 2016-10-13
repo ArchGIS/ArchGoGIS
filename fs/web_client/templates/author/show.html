@@ -28,7 +28,7 @@
   <h3><%= t('organization.plural') %>:</h3>
   <% if (jobs.length) { %>
     <% _.each(jobs, function(job, i) { %>
-      <a href="#organization/show/<%= orgs[i].id %>"><%= orgs[i].name %></a>,
+      <%= orgs[i].name %>,
       <p>
         <%= t('work-post') %>:
         <%= job.post_name  %>
