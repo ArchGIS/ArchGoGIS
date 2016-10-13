@@ -6,13 +6,10 @@
     <p>
       <h3><%= t("research.singular") %> №<%= counter++%>:
       <a href="#research/show/<%= researches[i].id %>">
-        <%= research.description %>
+        <%= authors[i].name %>, <%= research.year %>, <%= researches[i].type %>
       </a></h3>
     </p>
 
-    <p>Год :
-      <%= researches[i].year %>
-    </p>
     <p>Присвоенное памятнику название:
       <%= knowledges[i].monument_name %>
     </p>
@@ -22,9 +19,10 @@
     <p>Культура:
       <%= cultures[i].name %>
     </p>
-    <p>Тип исследования:
-      <%= researches[i].type %>
+    <p>Описание:
+      <%= research.description %>
     </p>
+    
     <p>Найденные артефакты:
       <% if (artifacts[i] && artifacts[i].length > 0) { %>
         <% var length = artifacts[i].length %>
@@ -50,54 +48,6 @@
     <hr>
   <% }); %>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-  <p><%= t("knowledge.prop.name") %>:
-    <%= _.pluck(knowledges, "monument_name").join(", ") %>
-  </p>
-
-  <p><%= t("knowledge.prop.culture") %>:
-    <%= _.pluck(cultures, "name").join(", ") %>
-  </p>
-
-  <p><%= t("knowledge.prop.epoch") %>:
-    <%= _.uniq(_.pluck(epochs, "name")).join(", ") %>
-  </p>
-
-  <h3><%= t("research.plural") %>:</h3>
-  <% _.each(researches, function(research, i) { %>
-    <p>
-      <a href="#research/show/<%= researches[i].id %>">
-        <%= research.description %> (<%= authors[i].name %>, <%= research.year %>)
-      </a>
-    </p>
-  <% }); %>
-  <h3><%= t("report.plural") %>:</h3>
-  <% _.each(reports, function(report, i) { %>
-    <p>
-      <a href="#report/show/<%= report.report[0].id %>">
-        <%= report.report[0].name %> (<%= report.author[0].name%>, <%= report.report[0].year%>)
-      </a>
-    </p>
-  <% }); %>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>
 </div>

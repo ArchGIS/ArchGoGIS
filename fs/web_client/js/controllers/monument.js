@@ -25,6 +25,9 @@ App.controllers.monument = new (App.View.extend({
       data.artifacts = [];
       data.reports = [];
 
+      var d1 = $.Deferred();
+      var d2 = $.Deferred();
+
       $.each(data.knowledges, function(id, knowledge) {
         query = JSON.stringify({
           "knowledge:Knowledge": {"id": knowledge.id+""},
@@ -35,6 +38,9 @@ App.controllers.monument = new (App.View.extend({
         $.post("/hquery/read", query).success(function(artifacts) {
           artifacts = JSON.parse(artifacts);
           data.artifacts.push(artifacts.artifacts);
+          if (data.knowledges.length == id+1) {
+            d1.resolve();
+          }
         })
 
         query = JSON.stringify({
@@ -48,6 +54,9 @@ App.controllers.monument = new (App.View.extend({
         $.post("/hquery/read", query).success(function(report) {
           report = JSON.parse(report);
           data.reports.push(report);
+          if (data.knowledges.length == id+1) {
+            d2.resolve();
+          }
         })
 
         data.placemarks.push({
@@ -57,7 +66,7 @@ App.controllers.monument = new (App.View.extend({
       });
 
       console.log(data);
-      App.page.render("monument_view", data);
+      $.when( d1, d2 ).done(App.page.render("monument_view", data));
     });
   },
 
