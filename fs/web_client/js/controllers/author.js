@@ -7,6 +7,7 @@ App.controllers.author = new (App.View.extend({
     var data = {};
     data['orgs'] = {};
     data['researches'] = {};
+    data['placemarks'] = [];
 
     var d1 = $.Deferred();
     var d2 = $.Deferred();
@@ -36,6 +37,17 @@ App.controllers.author = new (App.View.extend({
     $.post("/hquery/read", query).success(function(response) {
       response = JSON.parse(response);
       data = $.extend(data, response);
+
+      $.each(data.knowledges, function(id, know) {
+        data.placemarks.push({
+          "coords": [know.x, know.y],
+          "pref": {
+            "hintContent": know.monument_name,
+            "iconContent": id+1,
+          }
+        })
+      })
+
       d2.resolve()
     });
 
