@@ -13,5 +13,7 @@ var Config = service.Config{
 		{"/arch_maps", archMapHandler},
 		{"/filter_monuments", filterMonumentsHandler},
 		{"/filter_res", filterResHandler},
+		{"/filter_authors", filterAuthorHandler},
+		{"/filter_reports", filterReportHandler},
 	},
 }

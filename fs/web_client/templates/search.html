@@ -47,14 +47,18 @@
     </label>
   </div>
 
-  <div id="author-params" style="display: none">
+  <div class="flex-column" id="author-params" style="display: none">
     <label class="flex-row">
       <%= t("author.prop.name") %>
       <input type="text" id="author-input"/>
     </label>
+    <label class="flex-row">
+      <%= t("author.prop.year") %>
+      <input type="number" id="author-year"/>
+    </label>
   </div>
 
-  <div class="flex-column" id="report-params" style="display: none" data-url="research">
+  <div class="flex-column" id="report-params" style="display: none">
     <label class="flex-row">
       <%= t("author.name") %>
       <input type="text" id="report-author-input"/>
@@ -62,7 +66,7 @@
     <br/>
     <label class="flex-row">
       <%= t("report.year") %>
-      <input id="report-year-input">
+      <input type="number" id="report-year-input">
     </label>
   </div>
 

@@ -16,8 +16,6 @@ App.views.search = new (App.View.extend({
         'columnsMaker': function(monuments) {
           return _.map(monuments, function(mk) {
             return [App.models.Monument.href(mk[0], `${mk[1]} (${mk[3]} - ${mk[2]})`)];
-              // t('monument.types')[+mk[2]],
-              // t('epoch')[mk[3] - 1]
           });
         },
         'inputs': {
@@ -45,23 +43,26 @@ App.views.search = new (App.View.extend({
         'handler': searchAuthor,
         'heading': ['#', t('author.prop.name'), t('author.prop.year')],
         'columnsMaker': function(authors) {
-          return _.map(authors, function(a, n) {
-            return [App.models.Author.href(a.id, n+1), a.name, a.year];
+          return _.map(authors, function(a) {
+            return [App.models.Author.href(a[0], `${a[1]} ${a[2]}`)];
           });
         },
-        'inputs': {'author': App.page.get('author-input')}
+        'inputs': {
+          'author': $('#author-input'),
+          'year': $('#author-year')
+        }
       },
       'report-params': {
         'handler': searchReport,
         'heading': ['#', t('report.prop.description'), t('report.prop.type')],
         'columnsMaker': function(reports) {
-          return _.map(reports, function(r, n) {
-            return [App.models.Report.href(r.id, n+1), r.description, r.type];
+          return _.map(reports, function(r) {
+            return `${r[0]} (${r[2]} - ${r[1]})`;
           });
         },
         'inputs': {
-          'author': App.page.get('report-author-input'),
-          '$year': $('#report-year-input') 
+          'author': $('#report-author-input'),
+          'year': $('#report-year-input') 
         }
       }
     };
@@ -142,14 +143,45 @@ App.views.search = new (App.View.extend({
 
     // Поиск автора
     function searchAuthor(my) {
-      var authors = [];
-      resultProvider = () => authors;
+      var input = my.inputs;
 
-      my.inputs.author.on('autocompleteselect', function(event, ui) {
-        $results.show();
-        authors = grepObject('^' + ui.item.label, my.inputs.author.getRecords(), 'name');
-        $resultsCount.html(authors.length);     
-      });
+      var author = input.author.val(),
+          year   = input.year.val();
+
+
+      if (author || year) {
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_authors', {
+              'author': author,
+              'year': year
+            });
+
+            $.get(url)
+              .success((response) => {
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
+          });
+        }
+
+        find()
+          .then(function(response) {
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(`<p>${item}</p>`);
+              });
+            } else {
+              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+            }
+          }, function(error) {
+            console.log(error);
+          });
+      } else {
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+      }
     }
 
     // Поиск исследования
@@ -196,29 +228,45 @@ App.views.search = new (App.View.extend({
     }
 
     function searchReport(my) {
-      var reports = [];
-      var filteredReport = [];
-      resultProvider = () => filteredReport;
-     
-      function handleAuthorSelect(event, ui) {
-        App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
-          
-          my.inputs.$year.autocomplete({
-            'minLength': 0,
-            'source': _.map(_.uniq(reports, 'year'), function(report) {
-              return {'label': report.year, 'id': report.id}
-            })
-          })
-          .on('focus', () => my.inputs.$year.autocomplete('search'))
-          .on('autocompleteselect', function(event, ui) {
-            $results.show();
-            filteredReport = _.filter(reports, r => r.year == ui.item.label);
-            $resultsCount.html(filteredReport.length);
+      var input = my.inputs;
+
+      var author = input.author.val(),
+          year   = input.year.val();
+
+
+      if (author || year) {
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_reports', {
+              'author': author,
+              'year': year
+            });
+
+            $.get(url)
+              .success((response) => {
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
           });
-        });
+        }
+
+        find()
+          .then(function(response) {
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(`<p>${item}</p>`);
+              });
+            } else {
+              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+            }
+          }, function(error) {
+            console.log(error);
+          });
+      } else {
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
-      
-      my.inputs.author.on('autocompleteselect', handleAuthorSelect);
     }
   }
 }));
