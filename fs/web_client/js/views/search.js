@@ -6,9 +6,7 @@ App.views.search = new (App.View.extend({
     var grepObject = App.fn.grepObject;
     
     var $results = $('#search-results');
-    // var $resultsCount = $('#results-count');
 
-    var resultProvider = null;
     var $objectToggler = App.page.get('objectToggler');
     var object = null;
     var objects = {
@@ -34,13 +32,13 @@ App.views.search = new (App.View.extend({
         'handler': searchResearch,
         'heading': ['#', t('research.prop.description'), t('research.prop.type')],
         'columnsMaker': function(researches) {
-          return _.map(researches, function(r, n) {
-            return [App.models.Research.href(r.id, n+1), r.description, r.type];
+          return _.map(researches, function(r) {
+            return [App.models.Research.href(r[0], `${r[1]} (${r[3]} - ${r[2]})`)];
           });
         },
         'inputs': {
-          'author': App.page.get('research-author-input'),
-          '$year': $('#research-year-input') 
+          'author': $('#research-author-input'),
+          'year': $('#research-year-input') 
         }
       },
       'author-params': {
@@ -89,10 +87,9 @@ App.views.search = new (App.View.extend({
     $objectToggler.setCallback(function($object) {
       $results.empty();
       object = objects[$object.prop('id')];
-      // object.handler(object);
     });
     object = objects['monument-params'];
-    // object.handler(object);
+
 
     // Поиск памятника
     function searchMonument(my) {
@@ -104,13 +101,8 @@ App.views.search = new (App.View.extend({
           epoch   = input.epoch,
           culture = input.culture;
 
-      // input.monument.val('');
-      // input.year.val('');
-      // input.epoch.val('0');
-      // input.culture.val('0');
 
       if (mnt || year || author || epoch.val() != 0 || culture.val() != 0) {
-        // var find = App.models.Monument.findByNamePrefix(mnt);
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_monuments', {
@@ -119,7 +111,6 @@ App.views.search = new (App.View.extend({
               'author': author,
               'epoch': epoch.val() != 0 ? epoch.val() : '',
               'culture': culture.val() != 0 ? culture.val() : ''
-              // 'limit': 10
             });
 
             $.get(url)
@@ -132,7 +123,6 @@ App.views.search = new (App.View.extend({
 
         find()
           .then(function(response) {
-            // input.css('border', '');
             if (response.length) {
               var list = my.columnsMaker(response);
 
@@ -146,7 +136,6 @@ App.views.search = new (App.View.extend({
             console.log(error);
           });
       } else {
-        // input.monument.css('border', 'solid 1px #f33');
         $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
     }
@@ -165,29 +154,45 @@ App.views.search = new (App.View.extend({
 
     // Поиск исследования
     function searchResearch(my) {
-      var researches = [];
-      var filteredResearches = [];
-      resultProvider = () => filteredResearches;
-     
-      function handleAuthorSelect(event, ui) {
-        App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
-          
-          my.inputs.$year.autocomplete({
-            'minLength': 0,
-            'source': _.map(_.uniq(researches, 'year'), function(research) {
-              return {'label': research.year, 'id': research.id}
-            })
-          })
-          .on('focus', () => my.inputs.$year.autocomplete('search'))
-          .on('autocompleteselect', function(event, ui) {
-            $results.show();
-            filteredResearches = _.filter(researches, r => r.year == ui.item.label);
-            $resultsCount.html(filteredResearches.length);
+      var input = my.inputs;
+
+      var year   = input.year.val(),
+          author = input.author.val();
+
+
+      if (year || author) {
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_res', {
+              'year': year,
+              'author': author
+            });
+
+            $.get(url)
+              .success((response) => {
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
           });
-        });
+        }
+
+        find()
+          .then(function(response) {
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(`<p>${item}</p>`);
+              });
+            } else {
+              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+            }
+          }, function(error) {
+            console.log(error);
+          });
+      } else {
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
-      
-      my.inputs.author.on('autocompleteselect', handleAuthorSelect);
     }
 
     function searchReport(my) {
