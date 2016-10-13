@@ -113,16 +113,20 @@
   },
 
   "report": {
-    "singular": "Отчет",
+    "singular": "Отчёт",
     "plural": "Отчёты",
-    "year": "Год создания отчета",
+    "year": "Год создания отчёта",
     "prop": {
       "description": "Описание",
       "year": "Год создания",
       "type": "Тип"
     }
   },
-  
+    
+  "year": {
+    "year2": "года"
+  },
+
   "knowledge": {
     "singular": "Данные памятника в рамках исследования",
     "prop": {
@@ -138,7 +142,14 @@
   },
 
   "artifact": {
-    "singular": "Артефакт"
+    "singular": "Артефакт",
+    "monumentFound": "Найден на памятнике",
+    "yearFound": "Год находки",
+    "researches": "Упоминается в исследованиях",
+    "description": "Описание",
+    "material": "Материал",
+    "category": "Категория",
+    "storage": "Хранится"
   },
 
   "search": {

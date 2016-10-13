@@ -1,0 +1,68 @@
+<div class="content">
+  <h2><%= t('artifact.singular') %></h2>
+  <br>
+
+  <p>
+    <%= t('artifact.yearFound') %>:
+    <%= resFound[0].year %>
+  </p>
+
+  <p>
+    <%= t('artifact.monumentFound') %>:
+    <a href="#monument/show/<%= monFound[0].id %>">
+	    <%= knowFound[0].monument_name %>
+  	</a>
+  </p>
+
+  <p>
+    <%= t('artifact.description') %>:
+    <%= artifact.description %>
+  </p>
+
+  <p>
+    <%= t('artifact.material') %>:
+    <%= _.pluck(materials, 'name').join(", ") %>
+  </p>
+
+  <p>
+    <%= t('artifact.category') %>:
+    <%= _.pluck(categories, 'name').join(", ") %>
+  </p>
+
+  <p>
+    <h3><%= t('artifact.researches') %>:</h3>
+    <a href="#research/show/<%= resFound[0].id %>">
+    	<%= authorFound[0].name %>, <%= resFound[0].year %>, <%= resFound[0].type %>
+  	</a>
+  	- Найден
+
+  	<% if (researches.length > 0) { _.each(researches, function(research, i) { %>
+	    <p>
+	      <a href="#research/show/<%= researches[i].id %>">
+	        <%= authors[i].name %>, <%= research.year %>, <%= research.type %>
+	      </a></h3>
+	    </p>
+	   <% })} %>
+  </p>
+
+  <% if (intervals.length > 0) { %>
+	  <p>
+	    <h3><%= t('artifact.storage') %>:</h3>
+	  	<% _.each(intervals, function(interval, i) { %>
+		    <p> 
+		    	C <%= interval.period[0]%> <%= t('year.year2') %>
+		    	в "<%= storages[i].address %>" 
+		    	в городе <%= city[i].name %> 
+		    </p>
+		    <br>
+		   <% }) %>
+	  </p>
+  <% } %>
+  <p>
+    Фотографии: пока нет
+  </p>
+
+  <div class="maps">
+  <%= widget("Map", {}, "map") %>
+	</div>
+ </div>
