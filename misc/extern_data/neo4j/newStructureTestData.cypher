@@ -180,21 +180,21 @@ create (rt3:ResearchType {
 create (exc:Knowledge {
   id: 1,
   monument_name: 'Болгарский курган',
-  x: 49,
-  y: 55,
+  x: 55,
+  y: 49,
   description: 'Копаем оружие в Болгаре'
 })
 create (surv:Knowledge {
   id: 2,
   monument_name: 'Гробница в Болгаре',
-  x: 48.8,
-  y: 54.8,
+  y: 48.8,
+  x: 54.8,
   description: 'Расхищаем гробницу'
 })
 create (an:Knowledge {
   id: 3,
-  x: 48.6,
-  y: 54.6,
+  y: 48.6,
+  x: 54.6,
   monument_name: 'Курган в Болгаре',
   description: 'Изучаем курган'
 })
@@ -426,9 +426,9 @@ create (r1)-[:has]->(exc)
 create (r2)-[:has]->(surv)
 create (r3)-[:has]->(an)
 
-create (exc)-[:has]->(rep1)
-create (surv)-[:has]->(rep2)
-create (an)-[:has]->(rep3)
+create (r1)-[:hasreport]->(rep1)
+create (r2)-[:hasreport]->(rep2)
+create (r3)-[:hasreport]->(rep3)
 
 create (exc)-[:belongsto]->(mon1)
 create (surv)-[:belongsto]->(mon2)

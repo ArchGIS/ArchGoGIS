@@ -28,6 +28,25 @@ App.controllers.monument = new (App.View.extend({
       var d1 = $.Deferred();
       var d2 = $.Deferred();
 
+      $.each(data.researches, function(id, research) {
+        query = JSON.stringify({
+          "research:Research": {"id": research.id+""},
+          "report:Report": {"id": "*", "select": "*"},
+          "author:Author": {"id": "*", "select": "*"},
+          "research_hasreport_report": {},
+          "research_hasauthor_author": {},
+          "report_hasauthor_author": {}
+        });
+
+        $.post("/hquery/read", query).success(function(report) {
+          report = JSON.parse(report);
+          data.reports.push(report);
+          if (data.researches.length == id+1) {
+            d1.resolve();
+          }
+        })
+      })
+
       $.each(data.knowledges, function(id, knowledge) {
         query = JSON.stringify({
           "knowledge:Knowledge": {"id": knowledge.id+""},
@@ -39,34 +58,21 @@ App.controllers.monument = new (App.View.extend({
           artifacts = JSON.parse(artifacts);
           data.artifacts.push(artifacts.artifacts);
           if (data.knowledges.length == id+1) {
-            d1.resolve();
-          }
-        })
-
-        query = JSON.stringify({
-          "knowledge:Knowledge": {"id": knowledge.id+""},
-          "report:Report": {"id": "*", "select": "*"},
-          "author:Author": {"id": "*", "select": "*"},
-          "knowledge_has_report": {},
-          "report_hasauthor_author": {}
-        });
-
-        $.post("/hquery/read", query).success(function(report) {
-          report = JSON.parse(report);
-          data.reports.push(report);
-          if (data.knowledges.length == id+1) {
             d2.resolve();
           }
         })
 
         data.placemarks.push({
-          "coords": [knowledge.y, knowledge.x],
-          "pref": {"hintContent": knowledge.monument_name}
+          "coords": [knowledge.x, knowledge.y],
+          "pref": {
+            "hintContent": knowledge.monument_name,
+            "iconContent": id+1
+          }
         })
       });
 
       console.log(data);
-      $.when( d1, d2 ).done(App.page.render("monument_view", data));
+      $.when(d1, d2).done(App.page.render("monument_view", data));
     });
   },
 

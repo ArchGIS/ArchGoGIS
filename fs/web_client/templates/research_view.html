@@ -1,39 +1,20 @@
-<div class="block">
+<div class="content">
   <h2><%= t('research.singular') %></h2>
-
-  <div class="pure-g">
-    <div class="pure-u-1-2"><%= t('author.name') %></div>
-    <div class="pure-u-1-3"><%= author[0].name %></div>
-  </div>
-
   <br>
-
-  <div class="pure-g">
-    <div class="pure-u-1-2"><%= t('research.year') %></div>
-    <div class="pure-u-1-3"><%= maybe(research.year) %></div>
-  </div>
+  <p>
+    <%= t('author.singular') %>:
+    <a href="#author/show/<%= author[0].id %>">
+      <%= author[0].name %>
+    </a>
+  </p>
+  <p>
+    <%= t('research.year') %>:
+    <%= maybe(research.year) %>
+  </p>
 
   <h4><%= t('research.prop.description') %>:</h4>
   <p><%= maybe(research.description) %></p>
   
-  <h3><%= t('monument.plural') %>:</h3>
-  <% if (monuments.length) { %>
-    <div class="flow-block">
-    <% var mSort = _.sortBy(knowledge, 'monument_name'); %>
-    <% _.each(mSort, function(monument) { %>
-      <p>
-        <a href="#monument/show/<%= monument.id %>">
-          <%= monument.monument_name %>
-        </a>
-      </p>
-    <% }); %>
-    </div>
-  <% } else { %>
-    <p>
-      Нет памятников
-    </p>
-  <% } %>
-
   <h3><%= t('report.plural') %>:</h3>
   <% if (reports.length) { %>
     <div>
@@ -47,9 +28,49 @@
     </div>
   <% } else { %>
     <p>
-      Нет очётов
+      Нет отчёта
     </p>
   <% } %>
+
+  <hr>
+  <% var counter = 1 %>
+  <% _.each(monuments, function(monument, i) { %>
+    <a href="#monument/show/<%= monument.id %>">
+      <h3><%= t('monument.singular') %> №<%= counter++ %>:</h3>
+    </a>
+
+    <p>Присвоенное название:
+      <%= knowledges[i].monument_name %>
+    </p>
+    <p>Эпоха:
+      <%= epochs[i].name %>
+    </p>
+    <p>Культура:
+      <%= cultures[i].name %>
+    </p>
+
+    <p>Найденные артефакты:
+      <% if (artifacts[i] && artifacts[i].length > 0) { %>
+        <% var length = artifacts[i].length %>
+        <% _.each(artifacts[i], function(artifact, i) { %>
+          <a href="#artifact/show/<%= artifact.id %>">
+            <%= artifact.description%>
+          </a>
+          <% if (i < length-1) { %>
+            ,
+          <% } %>
+        <% }); %>
+      <% } else { %>
+        нет
+      <% } %>
+    </p>
+    
+    <hr>
+  <% }) %>
+
+<div class="maps">
+  <%= widget("Map", {"placemarks": placemarks}, "map") %>
+</div>
 </div>
 
 
