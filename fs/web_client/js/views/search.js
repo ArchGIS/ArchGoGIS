@@ -77,29 +77,12 @@ App.views.search = new (App.View.extend({
     }
 
     // Заполнение селекта эпох
-    var fillEpochSelector = function(selector) {
-      var query = JSON.stringify({
-        "rows:Epoch": {"id": "*", "select": "*"},
-      });
-
-      fillSelector(query, selector);
-    }
-
-    // Заполнение селекта культурной принадлежности
-    var fillCultureSelector = function(selector) {
-      var query = JSON.stringify({
-        "rows:Culture": {"id": "*", "select": "*"},
-      });
-
-      fillSelector(query, selector);
-    }
-
     // Выключение выбора эпохи и культуры по умолчанию
     var $epoch = $('#monument-epoch');
     var $culture = $('#monument-culture');
-    fillEpochSelector($epoch);
+    fillSelector($epoch, 'Epoch');
     $epoch.prepend('<option value="0" selected>Ничего не выбрано</option>');
-    fillCultureSelector($culture);
+    fillSelector($culture, 'Culture');
     $culture.prepend('<option value="0" selected>Ничего не выбрано</option>');
 
     // Смена искомого объекта.
