@@ -22,7 +22,13 @@ App.views.search = new (App.View.extend({
               // t('epoch')[mk[3] - 1]
           });
         },
-        'inputs': {'monument': $('#monument-input')}
+        'inputs': {
+          'monument': $('#monument-input'),
+          'year': $('#monument-year'),
+          'author': $('#monument-author'),
+          'epoch': $('#monument-epoch'),
+          'culture': $('#monument-culture')
+        }
       },
       'research-params': {
         'handler': searchResearch,
@@ -70,8 +76,35 @@ App.views.search = new (App.View.extend({
       object.handler(object);
     }
 
+    // Заполнение селекта эпох
+    var fillEpochSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:Epoch": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
+    // Заполнение селекта культурной принадлежности
+    var fillCultureSelector = function(selector) {
+      var query = JSON.stringify({
+        "rows:Culture": {"id": "*", "select": "*"},
+      });
+
+      fillSelector(query, selector);
+    }
+
+    // Выключение выбора эпохи и культуры по умолчанию
+    var $epoch = $('#monument-epoch');
+    var $culture = $('#monument-culture');
+    fillEpochSelector($epoch);
+    $epoch.prepend('<option value="0" selected>Ничего не выбрано</option>');
+    fillCultureSelector($culture);
+    $culture.prepend('<option value="0" selected>Ничего не выбрано</option>');
+
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
+      $results.empty();
       object = objects[$object.prop('id')];
       // object.handler(object);
     });
@@ -80,21 +113,48 @@ App.views.search = new (App.View.extend({
 
     // Поиск памятника
     function searchMonument(my) {
-      var input = my.inputs.monument;
-      var tmp = input.val();
-      input.val('');
+      var input = my.inputs;
 
-      if (tmp) {
-        var find = App.models.Monument.findByNamePrefix(tmp);
+      var mnt     = input.monument.val(),
+          year    = input.year.val(),
+          author  = input.author.val(),
+          epoch   = input.epoch,
+          culture = input.culture;
 
-        find
+      // input.monument.val('');
+      // input.year.val('');
+      // input.epoch.val('0');
+      // input.culture.val('0');
+
+      if (mnt || year || author || epoch.val() != 0 || culture.val() != 0) {
+        // var find = App.models.Monument.findByNamePrefix(mnt);
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_monuments', {
+              'name': mnt,
+              'year': year,
+              'author': author,
+              'epoch': epoch.val() != 0 ? epoch.val() : '',
+              'culture': culture.val() != 0 ? culture.val() : ''
+              // 'limit': 10
+            });
+
+            $.get(url)
+              .success((response) => {
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
+          });
+        }
+
+        find()
           .then(function(response) {
-            input.css('border', '');
+            // input.css('border', '');
             if (response.length) {
               var list = my.columnsMaker(response);
 
               _.each(list, function(item) {
-                $results.append(item + '<br />');
+                $results.append(`<p>${item}</p>`);
               });
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
@@ -103,23 +163,9 @@ App.views.search = new (App.View.extend({
             console.log(error);
           });
       } else {
-        input.css('border', 'solid 1px #f33');
-        $results.append('<p class="danger">Заполните поля, выделенные красным</p>')
+        // input.monument.css('border', 'solid 1px #f33');
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
-
-
-      // my.inputs.monument.on('autocompleteselect', function(event, ui) {
-      //   $results.show();
-        
-      //   // #FIXME: это очень плохое преобразование данных.
-      //   var records = my.inputs.monument.getRecords();
-      //   var matcher = new RegExp('^' + ui.item.label);
-      //   monuments = _.filter(records, function(record) {
-      //     return matcher.test(record[1].monument_name);
-      //   });
-
-      //   $resultsCount.html(monuments.length);
-      // });
     }
 
     // Поиск автора

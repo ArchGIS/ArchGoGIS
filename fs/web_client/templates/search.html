@@ -11,40 +11,58 @@
     ]}, "objectToggler") %>
   </label>
   <h4><%= t("search.criteria") %>:</h4>
-  <div class="flex-row" id="monument-params" style="display: none">
-    <label>
+  
+  <div class="flex-column" id="monument-params" style="display: none">
+    <label class="flex-row">
       <%= t("knowledge.prop.name") %>
-      <input type="text" id="monument-input" class="autoinput"/>
+      <input type="text" id="monument-input"/>
+    </label>
+    <label class="flex-row">
+      <%= t("research.year") %>
+      <input type="number" id="monument-year"/>
+    </label>
+    <label class="flex-row">
+      <%= t("author.name") %>
+      <input type="text" id="monument-author"/>
+    </label>
+    <label class="flex-row">
+      <%= t("monument.prop.epoch") %>
+      <select id="monument-epoch"/>
+    </label>
+    <label class="flex-row">
+      <%= t("knowledge.prop.culture") %>
+      <select id="monument-culture"/>
     </label>
   </div>
+
   <div class="flex-column" id="research-params" style="display: none" data-url="research">
     <label class="flex-row">
       <%= t("author.name") %>
-      <input type="text" id="research-author-input" class="autoinput"/>
+      <input type="text" id="research-author-input"/>
     </label>
     <br/>
     <label class="flex-row">
       <%= t("research.year") %>
-      <input type="number" id="research-year-input" class="autoinput"/>
+      <input type="number" id="research-year-input"/>
     </label>
   </div>
 
   <div id="author-params" style="display: none">
     <label class="flex-row">
       <%= t("author.prop.name") %>
-      <input type="text" id="author-input" class="autoinput"/>
+      <input type="text" id="author-input"/>
     </label>
   </div>
 
   <div class="flex-column" id="report-params" style="display: none" data-url="research">
     <label class="flex-row">
       <%= t("author.name") %>
-      <input type="text" id="report-author-input" class="autoinput"/>
+      <input type="text" id="report-author-input"/>
     </label>
     <br/>
     <label class="flex-row">
       <%= t("report.year") %>
-      <input id="report-year-input" class="autoinput">
+      <input id="report-year-input">
     </label>
   </div>
 
