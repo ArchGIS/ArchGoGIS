@@ -1,16 +1,20 @@
 <div class="content">
   <h2><%= t('author.singular') %></h2>
 
+  <p>
+    Фотографии: пока нет
+  </p>
+
   <br>
   <div class="pure-g">
-    <div class="pure-u-1-4"><%= t('author.prop.name') %></div>
+    <div class="pure-u-1-4"><%= t('author.prop.name') %>:</div>
     <div class="pure-u-1-3"><%= author.name %></div>
   </div>
 
   <br/>
 
   <div class="pure-g">
-    <div class="pure-u-1-4"><%= t('author.prop.year') %></div>
+    <div class="pure-u-1-4"><%= t('author.prop.year') %>:</div>
     <div class="pure-u-1-3"><%= (author.birthdate) %></div>
   </div>
 
@@ -24,6 +28,24 @@
   <% } else { %>
     <p>Нет исследований</p>     
   <% } %>     
+
+  <h3><%= t('author.prop.publications') %>:</h3>
+  <% if (pubs.length) { %>
+    <% _.each(pubs, function(pub, i) { %>
+      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - автор
+      <br><br>
+    <% }); %>
+  <% } %>
+  <% if (pubsco.length) { %>
+    <% _.each(pubsco, function(pub, i) { %>
+      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - соавтор
+      <br><br>
+    <% }); %>
+  <% } %>
+
+  <% if (!(pubs.length && pubsco.length)) { %>
+    <p>Нет публикаций</p>     
+  <% } %>  
 
   <h3><%= t('organization.plural') %>:</h3>
   <% if (jobs.length) { %>
@@ -41,10 +63,6 @@
     <p>Нет организаций</p>
   <% } %>
   <br>
-
-  <p>
-    Фотографии: пока нет
-  </p>
 
   <p>
     Биография:

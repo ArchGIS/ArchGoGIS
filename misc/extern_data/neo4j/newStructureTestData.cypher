@@ -199,34 +199,60 @@ create (an:Knowledge {
   description: 'Изучаем курган'
 })
 
-create (map:ArchMap {
+create (map:Publication {
+  id: 1,
   name: 'Карта кургана',
   published_at: 2007,
   volume: '1',
   isbn: '1241523-9837'
 })
-create (mono1:Monograph {
+create (mono1:Publication {
+  id: 2,
   name: 'Как я копал Курган',
   published_at: 2010,
-  isbn: '1241523-9137'
+  isbn: '1241523-9137',
+  pages: 200
 })
-create (mono2:Monograph {
+create (mono2:Publication {
+  id: 3,
   name: 'Анализ раскопок кургана',
   published_at: 2012,
-  isbn: '1241523-9137'
+  isbn: '1241523-9137',
+  pages: 150
 })
-create (dig:Digest {
+create (dig:Publication {
+  id: 4,
   name: 'Сборник легенд о гробнице царя',
   published_at: 2000,
-  isbn: '1241523-4137'
+  isbn: '1241523-4137',
+  pages: 120
 })
-create (jour:Journal {
+create (jour:Publication {
+  id: 5,
   name: 'Вестник Болгара',
   published_at: 2011,
   volume: 1,
   number: '37',
-  isbn: '1241523-4737'
+  isbn: '1241523-4737',
+  pages: 70
 })	
+
+create (publ1:PublicationType {
+  id: 1,
+  name: "Монография"
+})
+create (publ2:PublicationType {
+  id: 2,
+  name: "Журнал"
+})
+create (publ3:PublicationType {
+  id: 3,
+  name: "Сборник"
+})
+create (publ4:PublicationType {
+  id: 4,
+  name: "Археологическая карта"
+})
 
 create (art1:Article {
   name: 'Описание найденого в кургане оружия',
@@ -520,6 +546,12 @@ create (pub1)-[:has]->(mono1)
 create (pub1)-[:has]->(mono2)
 create (pub2)-[:has]->(map)
 
+create (map)-[:has]->(publ4)
+create (mono1)-[:has]->(publ1)
+create (mono2)-[:has]->(publ1)
+create (dig)-[:has]->(publ3)
+create (jour)-[:has]->(publ2)
+
 create (dig)-[:has]->(art2)
 create (jour)-[:has]->(art1)
 
@@ -527,9 +559,13 @@ create (mono1)-[:from]->(ref1)-[:to]->(map)
 create (jour)-[:from]->(ref2)-[:to]->(mono1)
 create (mono2)-[:from]->(ref3)-[:to]->(mono1)
 
-create (au1)-[:hasauthor]->(mono1)
-create (au2)-[:hasauthor]->(mono2)
-create (au1)-[:hascoauthor]->(mono2)
+create (mono1)-[:hasauthor]->(au1)
+create (mono2)-[:hasauthor]->(au2)
+create (mono2)-[:hascoauthor]->(au1)
+create (map)-[:hasauthor]->(au1)
+create (map)-[:hascoauthor]->(au2)
+create (jour)-[:hasauthor]->(au3)
+create (dig)-[:hasauthor]->(au3)
 
 create (mon1)-[:has]->(status)
 

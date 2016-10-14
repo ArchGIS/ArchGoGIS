@@ -6,11 +6,20 @@
     }
   },
   
-  "Literature": {
+  "publication": {
+    "singular": "Публикация",
+    "plural": "Публикации",
     "prop": {
       "isbn": "Номер ISBN (МСКН)",
+      "title": "Название",
       "udc": "Номер UDC (УКД)",
-      "publicationYear": "Год издания"
+      "year": "Год издания",
+      "type": "Тип публицации",
+      "pages": "Количество страниц",
+      "publisher": "Издатель",
+      "volume": "Том",
+      "number": "Номер",
+      "edition": "Выпуск"
     }
   },
 
@@ -69,13 +78,19 @@
     }
   },
   
+  "coauthor": {
+    "singular": "Соавтор",
+    "plural": "Соавторы"
+  },
+
   "author": {
     "name": "Имя автора",
     "singular": "Автор",
     "plural": "Авторы",
     "prop": {
       "name": "Имя",
-      "year": "Год рождения"
+      "year": "Год рождения",
+      "publications": "Публикации"
     }
   },
   
