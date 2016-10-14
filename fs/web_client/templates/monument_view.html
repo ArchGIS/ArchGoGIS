@@ -40,7 +40,7 @@
     </p>
     <% if (reports[i] && reports[i].report.length > 0) { %>
       <p>Отчет:
-        <%= App.models.Report.href(reports[i].report[0].id, `${reports[i].report[0].name} (${reports[i].author[0].name}, ${reports[i].report[0].year}`) %>
+        <%= App.models.Report.href(reports[i].report[0].id, `${reports[i].report[0].name} (${reports[i].author[0].name}, ${reports[i].report[0].year})`) %>
       </p>
     <% } %>
     <hr>
