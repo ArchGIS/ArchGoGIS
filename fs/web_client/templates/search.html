@@ -1,4 +1,4 @@
-<div class="block">
+<div class="content">
   <h2><%= t('search.head') %></h2>
 
   <label>
@@ -76,4 +76,8 @@
   </button>
 
   <div class="search-results" id="search-results"></div>
+
+  <div class="maps">
+    <%= widget("Map", {}, "map") %>
+  </div>
 </div>

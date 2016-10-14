@@ -59,6 +59,11 @@ App.widgets.Map = function(params, id) {
     }
   };
 
+  this.removeAll = function() {
+    map.geoObjects.removeAll()
+    placemarks = {};
+  };
+
   this.onPlacemark = function(id, event, callback) {
     placemarks[id].events.add(event, callback);
   };
