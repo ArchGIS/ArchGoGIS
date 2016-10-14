@@ -57,7 +57,7 @@ App.views.search = new (App.View.extend({
         'heading': ['#', t('report.prop.description'), t('report.prop.type')],
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return `${r[0]} (${r[2]} - ${r[1]})`;
+            return [App.models.Report.href(r[0], `${r[1]} (${r[3]} - ${r[2]})`)];
           });
         },
         'inputs': {

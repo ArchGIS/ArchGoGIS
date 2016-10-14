@@ -47,7 +47,7 @@ App.views.monument = new (App.View.extend({
     $('#send-button').on('click', function() {
       fillResearchInputs();
       postQuery();
-      // uploadFile('#report-file-input');
+      uploadFile('#report-file-input');
     });
 
     fillSelector($("#epoch-selector"), "Epoch");

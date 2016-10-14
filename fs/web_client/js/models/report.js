@@ -23,9 +23,9 @@ App.models.Report.findByAuthorId = function(authorId) {
 };
 
 App.models.Report.url = function(id) {
-  return id ? '#report/show/' + id : '#report/show';
+  return id ? `${dburl}/local_storage/${id}` : '#e404';
 };
 
 App.models.Report.href = function(id, text) {
-  return '<a href="' + App.models.Report.url(id) + '">' + text + '</a>';
+  return '<a target="_blank" href="' + App.models.Report.url(id) + '">' + text + '</a>';
 };
