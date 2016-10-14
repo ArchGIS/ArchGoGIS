@@ -63,10 +63,7 @@ App.views.monument = new (App.View.extend({
   },
 
   "show": function(argument) {
-    var map = App.page.get("map");
-    map.on("click", function(e) {
-      map.addPlacemark(e.get("coords"), {hintContent: "Да есть жеж!"});
-    })
+    App.views.functions.setAccordion("accordion");
   },
 
   "new_by_xlsx": function() {

@@ -270,3 +270,25 @@ input[type=text] {
 .search-results {
   margin-top: 1em;
 }
+
+.accordion-header {
+  cursor: pointer;
+  background: #e6e6e6 url("images/ui-bg_glass_75_e6e6e6_1x400.png") repeat-x scroll 50% 50%;
+  border: 1px solid #d3d3d3;
+  color: #555555;
+  font-weight: normal;
+  border-radius: 4px;
+  padding: 5px; 
+  margin-top: 2px;
+  margin-bottom: 0px;
+}
+.accordion-content {
+  padding: 10px;
+  padding-bottom: 0px;
+  border: 1px solid #d3d3d3;
+  border-top: 0px;
+  border-radius: 4px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  display: none;
+}
