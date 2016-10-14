@@ -15,7 +15,7 @@ App.Controller = Backbone.View.extend({});
 App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
-var dburl = "http://localhost:8080/";
+var dburl = "http://localhost:8080";
 
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
@@ -241,12 +241,10 @@ function fillSelector(selector, dataType) {
 
 function uploadFile (selector) {
   var file = $(selector)[0].files[0];
-  console.log(file)
 
   if (file) {
     var data = new FormData();
-    data.append('reportKey', file);
-    console.log(data);
+    data.append('reportKey', file, file.name);
 
     $.ajax({
       url: "/pfs/save",
@@ -256,8 +254,21 @@ function uploadFile (selector) {
       processData: false,
       contentType: false,
       success: function(response) {
-        console.log('Файл загружен');
+        console.log(response);
       }
     });
   }
+}
+
+function downloadFile (key) {
+  var data = {"key": key}
+
+  $.ajax({
+    url: "/pfs/load",
+    data: data,
+    type: "POST",
+    // dataType: "application/pdf",
+    processData: false,
+    contentType: false
+  });
 }
