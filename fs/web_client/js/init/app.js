@@ -75,39 +75,46 @@ function postQuery() {
     ["Artifact", "ArtifactImage", "has"]
   ]);
 
-  var defer = $.Deferred();
   var formdata = new FormData();
 
-  var files = $('input[type=file][used=true]');
+  var files = $('input[type=file][used!=false]');
+  var uploadedFilesCounter = 0;
+  var defer = $.Deferred();
 
   _.each(files, function(element, index) {
+
     if (element.files[0]) {
       var datafor = $(element).attr("data-for");
       var name = $(element).attr("name");
 
       uploadFile(element.files[0]).then(function(key) {
-        // console.log(json);
+        console.log(11);
         if (!json[datafor]) {
           json[datafor] = {};
         }
 
         json[datafor][`${name}/text`] = key;
         
-        if (index == files.length - 1) {
+        if (++uploadedFilesCounter == files.length) {
           defer.resolve();
         }
       });
     } else {
-      defer.resolve();
+      if (++uploadedFilesCounter == files.length) {
+        defer.resolve();
+      }
     }
   });
 
 
   $.when(defer).done(function() {
+    console.log(json);
     _.each(json, function(val, key) {
       formdata.append(key, JSON.stringify(val));
     });
 
+    console.log(formdata.getAll("aimg:Image"));
+    console.log(formdata.getAll("author:Author"));
 
     $.ajax({
       url: "/hquery/upsert",

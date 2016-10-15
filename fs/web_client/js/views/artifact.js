@@ -89,6 +89,8 @@ App.views.artifact = new (App.View.extend({
       return false;
     })
 
+    $("#container").tabs();
+
     $('#send-button').on('click', function() {
       if ( validateCreatePages() ) {
         postQuery();
@@ -96,6 +98,10 @@ App.views.artifact = new (App.View.extend({
         alert('Недостаточно данных. Заполните все подсвеченные красным поля!');
       }
     });
+
+    $('.next-button').on('click', function(e) {
+      $("#container").tabs({active: $(this).attr("active")});
+    })
 
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
@@ -107,6 +113,5 @@ App.views.artifact = new (App.View.extend({
       map: 'map'
     });
 
-    $("#container").tabs();
   }
 }));

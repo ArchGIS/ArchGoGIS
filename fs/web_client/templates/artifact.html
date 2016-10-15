@@ -1,5 +1,5 @@
 <div class="content">
-  <h2><%= t('monument.singular') %></h2>
+  <h2><%= t('artifact.create') %></h2>
   <div id="container">
     <ul>
       <li><a href="#home"><%= t('research.singular') %></a></li>
@@ -64,6 +64,10 @@
         <label for="research-year-input">Год</label>
         <input id="research-year-input" data-for="r:Research" type="number" name="year"></input>
       </div>
+      <button class="pure-button pure-button-primary next-button" active="1">
+        <i class="fa fa-cogs"></i>
+        Далее
+      </button>
     </div>
     <div id="menu1">
       <h3>Памятник</h3>
@@ -113,6 +117,10 @@
       <div>
         Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.54646846648, 49.56156165611.
       </div>
+      <button class="pure-button pure-button-primary next-button" active="2">
+        <i class="fa fa-cogs"></i>
+        Далее
+      </button>
     </div>
     
     <div id="menu2">
@@ -121,6 +129,10 @@
         <label for="complex-description-input">Описание</label>
         <input id="complex-description-input" data-for="c:Complex" type="text" name="description"></input>
       </div>
+      <button class="pure-button pure-button-primary next-button" active="3">
+        <i class="fa fa-cogs"></i>
+        Далее
+      </button>
     </div>
     <div id="menu3">
       <h3>Артефакт</h3>
@@ -141,7 +153,7 @@
 
       <div class="flex-row">
         <label for="artifact-photo-input">Фотография</label>
-        <input id="artifact-photo-input" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage" used="true"></input>
+        <input id="artifact-photo-input" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage"></input>
       </div>
 
       <button id="send-button" class="pure-button pure-button-primary">
