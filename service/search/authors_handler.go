@@ -14,8 +14,7 @@ import (
 
 const (
 	authorsCypher = "MATCH (a:Author)" +
-		"USING INDEX a:Author(name)" +
-		"WHERE a.name STARTS WITH {needle}" +
+		"WHERE a.name =~ {needle}" +
 		"RETURN a"
 )
 
@@ -41,7 +40,7 @@ func searchForAuthors(needle string) ([]byte, error) {
 	}
 
 	needle = norm.NormalPerson(needle)
-	resp, err := neo.Run(authorsCypher, neo.Params{"needle": `"` + needle + `"`})
+	resp, err := neo.Run(authorsCypher, neo.Params{"needle": `"(?ui)^.*` + needle + `.*$"`})
 	if err != nil {
 		return nil, errs.RetrieveError
 	}

@@ -72,7 +72,7 @@
         <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="false">
-        <label>Памятник</label>
+        <label>Выбрать существующий памятник</label>
         <input id="monument-input"></input>
         <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id"></input>
       </div>
@@ -80,24 +80,24 @@
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
         <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="flex-row">
         <label>Название памятника</label>
         <input id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name"></input>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="flex-row">
         <label>Описание памятника</label>
         <input id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="flex-row">
         <label for="epoch-selector">Эпоха</label>
         <select id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="flex-row">
         <label for="culture-selector">Культура</label>
         <select id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
       </div>
 
-      <div id="coord-picker" class="coords" toggle-by="new-monument-checkbox" need-option="true">
+      <div id="coord-picker" class="coords">
         <div class="coord">
           <label>Координата X
             <input id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
@@ -114,7 +114,10 @@
     
     <div id="menu2">
       <h3>Объект</h3>
-      Необязательная страница.
+      <div class="flex-row">
+        <label for="complex-description-input">Описание</label>
+        <input id="complex-description-input" data-for="c:Complex" type="text" name="description"></input>
+      </div>
     </div>
     <div id="menu3">
       <h3>Артефакт</h3>
@@ -132,23 +135,20 @@
         <label for="artifact-weight-input">Вес</label>
         <input id="artifact-weight-input" data-for="a:Artifact" type="text" name="weight"></input>
       </div>
-      
-      <div class="flex-row">
-        <label for="artifact-size-input">Габариты</label>
-        <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
-      </div>
-      
+
       <div class="flex-row">
         <label for="artifact-photo-input">Фотография</label>
         <input id="artifact-photo-input" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage" used="true"></input>
       </div>
+
+      <button class="pure-button pure-button-primary" onclick="postQuery()">
+        <i class="fa fa-cogs"></i>
+        Создать
+      </button>
+      
     </div>
   </div>
 
-  <button id="send-button" class="pure-button pure-button-primary">
-    <i class="fa fa-cogs"></i>
-    Создать
-  </button>
 </div>
 
 <div class="maps">

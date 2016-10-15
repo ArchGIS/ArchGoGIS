@@ -13,6 +13,7 @@ CREATE SEQUENCE n_heritage_status_id_seq;
 CREATE SEQUENCE n_epoch_id_seq;
 CREATE SEQUENCE n_culture_id_seq;
 CREATE SEQUENCE n_research_type_id_seq;
+CREATE SEQUENCE n_complex_id_seq;
 CREATE SEQUENCE n_image_id_seq;
 
 CREATE SEQUENCE local_storage_file_id_seq;

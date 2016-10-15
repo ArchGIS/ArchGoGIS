@@ -14,6 +14,7 @@ App.controllers.author = new (App.View.extend({
     var d1 = $.Deferred();
     var d2 = $.Deferred();
     var d3 = $.Deferred();
+    var d4 = $.Deferred();
 
     var query = JSON.stringify({
       "author:Author": {"id": id, "select": "*"},
@@ -37,10 +38,14 @@ App.controllers.author = new (App.View.extend({
       "author:Author": {"id": id, "select": "*"},
       "pubs:Publication": {"id": "*", "select": "*"},
       "pubtype:PublicationType": {"id": "*", "select": "*"},
-      "pubsco:Publication": {"id": "*", "select": "*"},
-      "pubcotype:PublicationType": {"id": "*", "select": "*"},
       "pubs_has_pubtype": {},
       "pubs_hasauthor_author": {},
+    });
+
+    var query_get_copublications = JSON.stringify({
+      "author:Author": {"id": id, "select": "*"},
+      "pubsco:Publication": {"id": "*", "select": "*"},
+      "pubcotype:PublicationType": {"id": "*", "select": "*"},
       "pubsco_hascoauthor_author": {},
       "pubsco_has_pubcotype": {},
     });
@@ -77,7 +82,13 @@ App.controllers.author = new (App.View.extend({
       d3.resolve()
     });
 
+    $.post("/hquery/read", query_get_copublications).success(function(response) {
+      response = JSON.parse(response);
+      data = $.extend(data, response);
+      d4.resolve()
+    });
+
     console.log(data);
-    $.when(d1, d2, d3).done(function() {App.page.render("author/show", data)});
+    $.when(d1, d2, d3, d4).done(function() {App.page.render("author/show", data)});
   }
 }));

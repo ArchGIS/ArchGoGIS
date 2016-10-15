@@ -7,6 +7,17 @@
       <%= author[0].name %>
     </a>
   </p>
+
+  <% if (coauthors.length) { %>
+    <%= t('coauthor.plural') %>:
+    <% _.each(coauthors, function(a, i) { %>
+      <a href="#author/show/<%= a.id %>"><%= a.name %></a>
+      <% if (coauthors.length > (i+1)) { %>
+        ,
+      <% } %>
+    <% }); %>
+  <% } %>
+  
   <p>
     <%= t('research.year') %>:
     <%= maybe(research.year) %>
