@@ -21,10 +21,10 @@ App.views.monument = new (App.View.extend({
       $("#report-input").autocomplete({
         source: [],
         minLength: 0,
-        select: function(event, ui) { 
+        select: function(event, ui) {
           $("#report-input-id").val(ui.item.id);
         }
-      }).focus(function(){            
+      }).focus(function() {
         $(this).autocomplete("search");
       });
     };
@@ -47,7 +47,6 @@ App.views.monument = new (App.View.extend({
     $('#send-button').on('click', function() {
       fillResearchInputs();
       postQuery();
-      uploadFile('#report-file-input');
     });
 
     fillSelector($("#epoch-selector"), "Epoch");
