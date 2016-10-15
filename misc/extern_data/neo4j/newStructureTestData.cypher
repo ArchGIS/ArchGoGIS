@@ -152,19 +152,19 @@ create (rep1:Report {
   id: 1,
   year: 2012,
   name: "Отчет об анализе",
-  fileid: 1
+  fileid: '10'
 })
 create (rep2:Report {
   id: 2,
   year: 2011,
   name: "Отчет о раскопках",
-  fileid: 2
+  fileid: '11'
 })
 create (rep3:Report {
   id: 3,
   year: 2006,
   name: "Отчет о разведке",
-  fileid: 3
+  fileid: '12'
 })
 
 create (rt1:ResearchType {
@@ -333,7 +333,26 @@ create (im6:Image {
   date: '14.07.2010',
   x: 10,
   y: 10
-})	
+})
+
+
+// Фото авторов
+create (im7:Image {
+  id: 7,
+  fileid: '7'
+})
+
+create (im8:Image {
+  id: 8,
+  fileid: '8'
+})
+
+create (im9:Image {
+  id: 9,
+  fileid: '9'
+})
+
+
 
 create (pub1:Publisher {
   name: 'Болгар-арт'
@@ -436,6 +455,10 @@ create (au1)-[:has]->(job1)
 create (au2)-[:has]->(job2)
 create (au3)-[:has]->(job3)
 create (au3)-[:has]->(job4)
+
+create (au1)-[:has]->(im7)
+create (au2)-[:has]->(im8)
+create (au3)-[:has]->(im9)
 
 create (job1)-[:belongsto]->(org2)
 create (job2)-[:belongsto]->(org2)
