@@ -5,7 +5,7 @@ App.widgets.SearchLine = function(params, id) {
   
   var $input = null;
   var records = {};
-  var tmpl = _.template(`<input id="<%= id %>" class="autoinput"></input>`);
+  var tmpl = _.template(`<input id="<%= id %>" class="form-control autoinput"></input>`);
   
   params = $.extend({
     'searchOnFocus': true

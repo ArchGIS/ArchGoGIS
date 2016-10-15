@@ -11,8 +11,9 @@
     <!-- styles -->
     <link rel="stylesheet" href="/vendor/pure-min.css">
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="/web_client/css/main.css">
+    <link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.min.css">
 
     <!-- icon -->
     <link rel="shortcut icon" href="/web_client/img/favicon.ico" type="image/x-icon">
@@ -22,39 +23,46 @@
     <script src="/vendor/jquery/jquery.ui.min.js"></script>
     <script src="/vendor/js/underscore.min.js"></script>
     <script src="/vendor/js/backbone.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
     <!-- К сожалению бесплатные карты от Яндекса только по такой загрузке... -->
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
   </head>
 
   <body>
-    <nav class="header">
-      <div class="pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a href="#" class="pure-menu-heading">
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">
           <i class="fa fa-globe fa-lg"></i>
           Arch Gis
         </a>
-        <ul class="pure-menu-list">
-          <!-- <li class="pure-menu-item">
-            <a href="#importXlsx/index" class="pure-menu-link">Импорт .xlsx</a>
-          </li> -->
-          <li class="pure-menu-item">
-            <a href="#wizard/create_data" class="pure-menu-link">Создать</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#wizard/create_data">Создать</a>
           </li>
-          <li class="pure-menu-item">
-            <a href="#search/index" class="pure-menu-link">Найти</a>
+          <li>
+            <a href="#search/index">Найти</a>
           </li>
-          <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">Пользователь</a>
-            <ul class="pure-menu-children">
-              <li class="pure-menu-item">
-                <a href="#" class="pure-menu-link">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Пользователь <span class="caret"></span></a>
+            <ul class="dropdown-menu" aria-labelledby="download">
+              <li>
+                <a href="#">
                   <i class="fa fa-user"></i>
                   Профиль<!-- <%= t('nav.profile') %> -->
                 </a>
               </li>
-              <li class="pure-menu-item">
-                <a href="#" class="pure-menu-link">
+              <li class="divider"></li>
+              <li>
+                <a href="#">
                   <i class="fa fa-sign-out"></i>
                   Выйти<!-- <%= t('nav.signout') %> -->
                 </a>
@@ -62,8 +70,11 @@
             </ul>
           </li>
         </ul>
+
       </div>
-    </nav>
+    </div>
+  </div>
+
 
     <div id="body">
       <div class="bread-crumbs"></div>

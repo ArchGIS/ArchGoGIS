@@ -5,58 +5,58 @@
     </ul>
     
     <div id="home">
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-number">Номер</label>
-        <input id="monument-number" data-for="map_References_m" type="text" name="number"></input>
+        <input class="form-control" id="monument-number" data-for="map_References_m" type="text" name="number"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-name">Название памятника</label>
-        <input id="monument-name" data-for="k:Knowledge" type="text" name="name"></input>
+        <input class="form-control" id="monument-name" data-for="k:Knowledge" type="text" name="name"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-x">X</label>
-        <input id="monument-x" data-for="m:Monument" type="text" name="x"></input>
+        <input class="form-control" id="monument-x" data-for="m:Monument" type="text" name="x"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-y">Y</label>
-        <input id="monument-y" data-for="m:Monument" type="text" name="y"></input>
+        <input class="form-control" id="monument-y" data-for="m:Monument" type="text" name="y"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-type">Тип памятника</label>
-        <input id="monument-type" data-for="m:Monument" type="text" name="type"></input>
+        <input class="form-control" id="monument-type" data-for="m:Monument" type="text" name="type"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-culture">Культура</label>
-        <input id="monument-culture" data-for="c:Culture" type="text" name="name"></input>
+        <input class="form-control" id="monument-culture" data-for="c:Culture" type="text" name="name"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-epoch">Эпоха</label>
-        <input id="monument-epoch" data-for="e:Epoch" type="text" name="name"></input>
+        <input class="form-control" id="monument-epoch" data-for="e:Epoch" type="text" name="name"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-description">Описание</label>
         <input id="monument-description" data-for="k:Knowledge" type="text" name="description"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-biblref">Библиографическая ссылка</label>
-        <input id="monument-biblref" type="text"></input>
+        <input class="form-control" id="monument-biblref" type="text"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="monument-page">Страница</label>
-        <input id="monument-page" data-for="map_References_m" type="text" name="page"></input>
+        <input class="form-control" id="monument-page" data-for="map_References_m" type="text" name="page"></input>
       </div>
     </div>
   </div>
-  <button class="pure-button pure-button-primary" onclick="createMonumentsFromXlsx()">
+  <button class="btn btn-primary" onclick="createMonumentsFromXlsx()">
     <i class="fa fa-cogs"></i>
     Создать
   </button>

@@ -5,50 +5,49 @@
   <div id="accordion">
     <% var counter=1 %>
     <% _.each(researches, function(research, i) { %>
-      <h3 class="accordion-header">
+      <h4 class="accordion-header">
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
         <%= t("research.singular") %> №<%= counter++%>:
         <%= authors[i].name %>, <%= research.year %>, <%= research.type %>
-      </h3>
+      </h4>
 
       <div class="accordion-content">
-        <a href="#research/show/<%= research.id %>">
-          Перейти к исследованию
-        </a>
-
-        <p>Присвоенное памятнику название:
-          <%= knowledges[i].monument_name %>
-        </p>
-        <p>Эпоха:
-          <%= epochs[i].name %>
-        </p>
-        <p>Культура:
-          <%= cultures[i].name %>
-        </p>
-        <p>Описание:
-          <%= research.description %>
-        </p>
-        
-        <p>Найденные артефакты:
-          <% if (artifacts[i] && artifacts[i].length > 0) { %>
-            <% var length = artifacts[i].length %>
-            <% _.each(artifacts[i], function(artifact, i) { %>
-              <a href="#artifact/show/<%= artifact.id %>">
-                <%= artifact.description%>
-              </a>
-              <% if (i < length-1) { %>
+        <dl>
+          <dt></dt>
+          <dd>
+            <a href="#research/show/<%= research.id %>">
+            Перейти к исследованию
+          </a>
+          </dd>
+          <dt>Присвоенное памятнику название:</dt>
+          <dd><%= knowledges[i].monument_name %></dd>
+          <dt>Эпоха:</dt>
+          <dd><%= epochs[i].name %></dd>
+          <dt>Культура:</dt>
+          <dd><%= cultures[i].name %></dd>
+          <dt>Описание:</dt>
+          <dd><%= research.description %></dd>
+          <dt>Найденные артефакты:</dt>
+          <dd>
+            <% if (artifacts[i] && artifacts[i].length > 0) { %>
+              <% var length = artifacts[i].length %>
+              <% _.each(artifacts[i], function(artifact, i) { %>
+                <a href="#artifact/show/<%= artifact.id %>">
+                  <%= artifact.description%>
+                </a>
+                <% if (i < length-1) { %>
                 ,
-              <% } %>
-            <% }); %>
-          <% } else { %>
-            нет
+                <% } %>
+              <% }); %>
+            <% } else { %>
+              нет
+            <% } %>
+          </dd>
+          <% if (reports[i] && reports[i].report.length > 0) { %>
+            <dt>Отчет:</dt>
+            <dd><%= App.models.Report.href(reports[i].report[0].fileid, `${reports[i].report[0].name} (${reports[i].author[0].name}, ${reports[i].report[0].year})`) %></dd>
           <% } %>
-        </p>
-        <% if (reports[i] && reports[i].report.length > 0) { %>
-          <p>Отчет:
-            <%= App.models.Report.href(reports[i].report[0].fileid, `${reports[i].report[0].name} (${reports[i].author[0].name}, ${reports[i].report[0].year})`) %>
-          </p>
-        <% } %>
+        </dl>
       </div>
     <% }); %>
   </div>

@@ -45,57 +45,62 @@
     <% var counter = 1 %>
     <% _.each(monuments, function(monument, i) { %>
       
-      <h3 class="accordion-header">
+      <h4 class="accordion-header">
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
         <%= t('monument.singular') %> №<%= counter++ %>: <%= knowledges[i].monument_name %>
-      </h3>
+      </h4>
       
       <div class="accordion-content">
-        <a href="#monument/show/<%= monument.id %>">
+        <dl>
+          <dt></dt>
+          <dd>
+            <a href="#monument/show/<%= monument.id %>">
             Перейти к памятнику
-        </a>
-        <p>Присвоенное название:
-          <%= knowledges[i].monument_name %>
-        </p>
-        <p>Эпоха:
-          <%= epochs[i].name %>
-        </p>
-        <p>Культура:
-          <%= cultures[i].name %>
-        </p>
-
-        <p>Найденные артефакты:
-          <% if (artifacts[i] && artifacts[i].length > 0) { %>
-            <% var length = artifacts[i].length %>
-            <% _.each(artifacts[i], function(artifact, i) { %>
-              <a href="#artifact/show/<%= artifact.id %>">
-                <%= artifact.description%>
-              </a>
-              <% if (i < length-1) { %>
+          </a>
+          </dd>
+          <dt>Присвоенное название:</dt>
+          <dd><%= knowledges[i].monument_name %></dd>
+          <dt>Эпоха:</dt>
+          <dd><%= epochs[i].name %></dd>
+          <dt>Культура:</dt>
+          <dd><%= cultures[i].name %></dd>
+          <dt>Найденные артефакты:</dt>
+          <dd>
+            <% if (artifacts[i] && artifacts[i].length > 0) { %>
+              <% var length = artifacts[i].length %>
+              <% _.each(artifacts[i], function(artifact, i) { %>
+                <a href="#artifact/show/<%= artifact.id %>">
+                  <%= artifact.description%>
+                </a>
+                <% if (i < length-1) { %>
                 ,
               <% } %>
             <% }); %>
-          <% } else { %>
-            нет
-          <% } %>
-        </p>
+            <% } else { %>
+              нет
+            <% } %>
+          </dd>
+        </dl>
       </div>
 
     <% }) %>
   </div>
 
   <% if (usedArtifacts.length > 0) { %>
-    <p>Упоминаемые артефакты:
+    <dl>
+      <dt>Упоминаемые артефакты:</dt>
+      <dd>
         <% var length = usedArtifacts.length %>
         <% _.each(usedArtifacts, function(artifact, i) { %>
-          <a href="#artifact/show/<%= artifact.id %>">
-            <%= artifact.description %>
-          </a>
-          <% if (i < length-1) { %>
-            ,
-          <% } %>
+        <a href="#artifact/show/<%= artifact.id %>">
+          <%= artifact.description %>
+        </a>
+        <% if (i < length-1) { %>
+        ,
+        <% } %>
         <% }); %>
-    </p>
+      </dd>
+    </dl>
   <% } %>
 
 <div class="maps">

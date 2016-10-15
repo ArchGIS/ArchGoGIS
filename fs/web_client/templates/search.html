@@ -13,64 +13,94 @@
   <h4><%= t("search.criteria") %>:</h4>
   
   <div class="flex-column" id="monument-params" style="display: none">
-    <label class="flex-row">
-      <%= t("knowledge.prop.name") %>
-      <input type="text" id="monument-input"/>
-    </label>
-    <label class="flex-row">
-      <%= t("research.year") %>
-      <input type="number" id="monument-year"/>
-    </label>
-    <label class="flex-row">
-      <%= t("author.name") %>
-      <input type="text" id="monument-author"/>
-    </label>
-    <label class="flex-row">
-      <%= t("monument.prop.epoch") %>
-      <select id="monument-epoch"/>
-    </label>
-    <label class="flex-row">
-      <%= t("knowledge.prop.culture") %>
-      <select id="monument-culture"/>
-    </label>
+    <div class="form-group">
+      <label for="monument-input" class="flex-row">
+        <%= t("knowledge.prop.name") %>
+      </label>
+      <input class="form-control" type="text" id="monument-input"/>
+    </div>
+    <div class="form-group">
+      <label for="monument-year" class="flex-row">
+        <%= t("research.year") %>
+      </label>
+      <input class="form-control" type="number" id="monument-year"/>
+    </div>
+    <div class="form-group">
+      <label for="monument-author" class="flex-row">
+        <%= t("author.name") %>
+      </label>
+      <input class="form-control" type="text" id="monument-author"/>
+    </div>
+    <div class="form-group">
+      <label for="monument-epoch" class="flex-row">
+        <%= t("monument.prop.epoch") %>
+      </label>
+      <select class="form-control" id="monument-epoch"/>
+    </div>
+    <div class="form-group">
+      <label for="monument-culture" class="flex-row">
+        <%= t("knowledge.prop.culture") %>
+      </label>
+      <select class="form-control" id="monument-culture"/>
+    </div>
   </div>
 
   <div class="flex-column" id="research-params" style="display: none">
-    <label class="flex-row">
-      <%= t("author.name") %>
-      <input type="text" id="research-author-input"/>
-    </label>
+    <div class="form-group">
+      <label for="research-author-input" class="flex-row">
+        <%= t("author.name") %>
+      </label>
+      <input class="form-control" type="text" id="research-author-input"/>
+    </div>
     <br/>
-    <label class="flex-row">
-      <%= t("research.year") %>
-      <input type="number" id="research-year-input"/>
-    </label>
+    <div class="form-group">
+      <label for="research-year-input" class="flex-row">
+        <%= t("research.year") %>
+      </label>
+      <input class="form-control" type="number" id="research-year-input"/>
+    </div>
+
+
+
   </div>
 
   <div class="flex-column" id="author-params" style="display: none">
-    <label class="flex-row">
-      <%= t("author.prop.name") %>
-      <input type="text" id="author-input"/>
-    </label>
-    <label class="flex-row">
-      <%= t("author.prop.year") %>
-      <input type="number" id="author-year"/>
-    </label>
+    <div class="form-group">
+      <label for="author-input" class="flex-row">
+        <%= t("author.prop.name") %>
+      </label>
+      <input class="form-control" type="text" id="author-input"/>
+    </div>
+    <div class="form-group">
+      <label for="author-year" class="flex-row">
+        <%= t("author.prop.year") %>
+      </label>
+      <input class="form-control" type="number" id="author-year"/>
+    </div>
+
+
   </div>
 
   <div class="flex-column" id="report-params" style="display: none">
-    <label class="flex-row">
-      <%= t("author.name") %>
-      <input type="text" id="report-author-input"/>
-    </label>
+    <div class="form-group">
+      <label for="report-author-input" class="flex-row">
+        <%= t("author.name") %>
+      </label>
+      <input class="form-control" type="text" id="report-author-input"/>
+    </div>
     <br/>
-    <label class="flex-row">
-      <%= t("report.year") %>
-      <input type="number" id="report-year-input">
-    </label>
+    <div class="form-group">
+      <label for="report-year-input" class="flex-row">
+        <%= t("report.year") %>
+      </label>
+      <input class="form-control" type="number" id="report-year-input">
+    </div>
+
+
+
   </div>
 
-  <button class="pure-button pure-button-primary" id="show-results-button">
+  <button class="btn btn-primary" id="show-results-button">
       <i class="fa fa-search"></i>
       <%= t("search.show-results") %>
   </button>

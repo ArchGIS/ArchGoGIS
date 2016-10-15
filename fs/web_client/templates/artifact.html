@@ -9,154 +9,163 @@
     </ul>
     
     <div id="home">
-      <h3>Исследование</h3>
-      <div>
-        <label for="new-author-checkbox">Добавить нового автора</label>
-        <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+      <legend>Исследование</legend>
+      <div class="checkbox">
+        <label for="new-author-checkbox">
+          <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить нового автора
+        </label>
+
       </div>
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="false">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="false">
         <label for="author-input">Автор исследования <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
       </div>
 
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-name-input">Имя <span class="required">*</span></label>
-        <input id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
+        <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
       </div>
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-birth-date-input">Год рождения</label>
-        <input id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
+        <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
       </div>
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-photo-input">Фотография</label>
         <input id="author-photo-input" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="coauthor-input">Соавторы</label>
         <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
         <input id="coauthor-input-id" data-few="true" data-for="co:Author" data-subclass="Coauthor" hidden type="id" name="id"></input>
       </div>
-      <div class="top-indent">
-        <label for="new-research-checkbox">Добавить новое исследование</label>
-        <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
+      <div class="checkbox">
+        <label for="new-research-checkbox">
+          <input id="new-research-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новое исследование
+        </label>
       </div>
-      <div class="flex-row" toggle-by="new-research-checkbox" need-option="false">
+      <div class="form-group" toggle-by="new-research-checkbox" need-option="false">
         <label for="research-input">Исследование <span class="required">*</span></label>
-        <input id="research-input"></input>
+        <input class="form-control" id="research-input"></input>
         <input id="research-input-id" data-for="r:Research" hidden type="id" name="id" data-req="up"></input>
       </div>
       
-      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-title-input">Название <span class="required">*</span></label>
-        <input id="research-title-input" data-for="r:Research" type="text" name="name" data-req></input>
+        <input class="form-control" id="research-title-input" data-for="r:Research" type="text" name="name" data-req></input>
       </div>
-      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-title-input">Описание</label>
-        <input id="research-title-input" data-for="r:Research" type="text" name="description"></input>
+        <input class="form-control" id="research-title-input" data-for="r:Research" type="text" name="description"></input>
       </div>
-      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-type-selector">Тип</label>
-        <select id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
+        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
       </div>
-      <div class="flex-row" toggle-by="new-research-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-year-input">Год</label>
-        <input id="research-year-input" data-for="r:Research" type="number" name="year"></input>
+        <input class="form-control" id="research-year-input" data-for="r:Research" type="number" name="year"></input>
       </div>
-      <button class="pure-button pure-button-primary next-button" active="1">
+      <button class="btn btn-primary" active="1">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
     </div>
     <div id="menu1">
-      <h3>Памятник</h3>
-      <div>
-        <label for="new-monument-checkbox">Добавить новый памятник</label>
-        <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
+      <legend>Памятник</legend>
+      <div class="checkbox">
+        <label for="new-monument-checkbox">
+          <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новый памятник
+        </label>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="false">
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="false">
         <label>Выбрать существующий памятник <span class="required">*</span></label>
-        <input id="monument-input"></input>
+        <input class="form-control" id="monument-input"></input>
         <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id" data-req="up"></input>
       </div>
 
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
         <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label>Название памятника <span class="required">*</span></label>
-        <input id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
+        <input class="form-control" id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label>Описание памятника</label>
-        <input id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
+        <input class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label for="epoch-selector">Эпоха</label>
-        <select id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
+        <select class="form-control" id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label for="culture-selector">Культура</label>
-        <select id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
+        <select class="form-control" id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
       </div>
 
       <div id="coord-picker" class="coords">
-        <div class="coord">
-          <label>Координата X
-            <input id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
+        <div class="form-group">
+          <label for="monument-x">
+            Координата X
           </label>
+          <input class="form-control" id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
         </div>
-        <div class="coord">
-          <label>Координата Y
-            <input id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
+        <div class="form-group">
+          <label for="monument-y">
+            Координата Y
           </label>
+          <input class="form-control" id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
         </div>
       </div>
 
-      <div>
+      <div class="alert alert-dismissible alert-info">
         Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.54646846648, 49.56156165611.
       </div>
-      <button class="pure-button pure-button-primary next-button" active="2">
+      <button class="btn btn-primary" active="2">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
     </div>
     
     <div id="menu2">
-      <h3>Объект</h3>
-      <div class="flex-row">
+      <legend>Объект</legend>
+      <div class="form-group">
         <label for="complex-description-input">Описание</label>
-        <input id="complex-description-input" data-for="c:Complex" type="text" name="description"></input>
+        <input class="form-control" id="complex-description-input" data-for="c:Complex" type="text" name="description"></input>
       </div>
-      <button class="pure-button pure-button-primary next-button" active="3">
+      <button class="btn btn-primary" active="3">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
     </div>
     <div id="menu3">
-      <h3>Артефакт</h3>
-      <div class="flex-row">
+      <legend>Артефакт</legend>
+      <div class="form-group">
         <label for="artifact-name-input">Название <span class="required">*</span></label>
-        <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name" data-req></input>
+        <input class="form-control" id="artifact-name-input" data-for="a:Artifact" type="text" name="name" data-req></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="artifact-name-input">Описание</label>
-        <input id="artifact-name-input" data-for="a:Artifact" type="text" name="description"></input>
+        <input class="form-control" id="artifact-name-input" data-for="a:Artifact" type="text" name="description"></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="artifact-weight-input">Вес (в кг) <span class="required">*</span></label>
-        <input id="artifact-weight-input" data-for="a:Artifact" type="number" name="weight" data-req></input>
+        <input class="form-control" id="artifact-weight-input" data-for="a:Artifact" type="number" name="weight" data-req></input>
       </div>
 
-      <div class="flex-row">
+      <div class="form-group">
         <label for="artifact-photo-input">Фотография</label>
         <input id="artifact-photo-input" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage"></input>
       </div>
 
-      <button id="send-button" class="pure-button pure-button-primary">
+      <button id="send-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
         Создать
       </button>

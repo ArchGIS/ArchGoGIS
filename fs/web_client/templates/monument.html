@@ -8,138 +8,147 @@
     </ul>
     
     <div id="home">
-      <h3>Исследование</h3>
-      <div>
-        <label for="new-author-checkbox">Добавить нового автора</label>
-        <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+      <legend>Исследование</legend>
+      <div class="checkbox">
+        <label for="new-author-checkbox">
+          <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить нового автора
+        </label>
+
       </div>
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="false">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="false">
         <label for="author-input">Автор исследования <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" type="hidden" name="id" data-req="up"></input>
       </div>
 
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-name-input">Имя <span class="required">*</span></label>
-        <input id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
+        <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
       </div>
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-birth-date-input">Год рождения</label>
-        <input id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
+        <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
       </div>
-      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="report-file-input">Фотография:</label>
         <input id="author-file-input" type="file" data-for="aimg:Image" data-subclass="AuthorImage" name="fileid"></input>
       </div>
 
-      <div class="top-indent">
-        <label for="new-report-checkbox">Добавить новый отчет</label>
-        <input id="new-report-checkbox" type="checkbox" dynamic="true"></input>
+      <div class="checkbox">
+        <label for="new-report-checkbox">
+          <input id="new-report-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новый отчет
+        </label>
       </div>
-      <div class="flex-row" toggle-by="new-report-checkbox" need-option="false">
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="false">
         <label for="report-input">Отчет <span class="required">*</span></label>
-        <input id="report-input"></input>
+        <input class="form-control" id="report-input"></input>
         <input id="report-input-id" data-for="r:Report" type="hidden" name="id" data-req="up"></input>
       </div>
       
-      <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-name-input">Название <span class="required">*</span></label>
-        <input id="report-name-input" data-for="r:Report" type="text" name="name" data-req></input>
+        <input class="form-control" id="report-name-input" data-for="r:Report" type="text" name="name" data-req></input>
       </div>
-      <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-year-input">Год</label>
-        <input id="report-year-input" data-for="r:Report" type="number" name="year"></input>
+        <input class="form-control" id="report-year-input" data-for="r:Report" type="number" name="year"></input>
       </div>
-      <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
         <input id="report-file-input" type="file" data-for="r:Report" name="file"></input>
       </div>
 
       <div hidden="true">
-        <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
-          <input id="research-name-input" data-for="rs:Research" type="text" name="name"></input>
+        <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+          <input class="form-control" id="research-name-input" data-for="rs:Research" type="text" name="name"></input>
         </div>
-        <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
-          <input id="research-year-input" data-for="rs:Research" type="number" name="year"></input>
+        <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+          <input class="form-control" id="research-year-input" data-for="rs:Research" type="number" name="year"></input>
         </div>
       </div>
-      <button class="pure-button pure-button-primary next-button" active="1">
+      <button class="btn btn-primary" active="1">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
     </div>
 
     <div id="menu1">
-      <h3>ОКН</h3>
+      <legend>ОКН</legend>
 
-      <div>
-        <label for="new-heritage-object-checkbox">Добавить ОКН</label>
-        <input id="new-heritage-object-checkbox" type="checkbox" dynamic="true"></input>
+      <div class="checkbox">
+        <label for="new-report-checkbox">
+          <input id="new-heritage-object-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить ОКН
+        </label>
       </div>
-      <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="false">
+      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="false">
         <label>Код</label>
-        <input id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
+        <input class="form-control" id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
       </div>
 
-      <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label>Код ОКН <span class="required">*</span></label>
-        <input id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code" data-req></input>
+        <input class="form-control" id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code" data-req></input>
       </div>
-      <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label>Описание</label>
-        <input id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></input>
+        <input class="form-control" id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></input>
       </div>
-      <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label>Описание границ</label>
-        <input id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></input>
+        <input class="form-control" id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></input>
       </div>
-      <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label>Предмет охраны</label>
-        <input id="heritage-object-security-input" data-for="hs:HeritageStatus" type="text" name="security"></input>
+        <input class="form-control" id="heritage-object-security-input" data-for="hs:HeritageStatus" type="text" name="security"></input>
       </div>
-      <button class="pure-button pure-button-primary next-button" active="2">
+      <button class="btn btn-primary" active="2">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
     </div>
 
     <div id="menu2">
-      <h3>Памятник</h3>
+      <legend>Памятник</legend>
 
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
         <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label>Название памятника <span class="required">*</span></label>
-        <input id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
+        <input class="form-control" id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
       </div>
-      <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
         <label>Описание памятника</label>
-        <input id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
+        <input class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label for="epoch-selector">Эпоха</label>
-        <select id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
+        <select class="form-control" id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
       </div>
-      <div class="flex-row">
+      <div class="form-group">
         <label for="culture-selector">Культура</label>
-        <select id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
+        <select class="form-control" id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
       </div>
 
-      <div id="coord-picker" class="coords">
-        <div class="coord">
-          <label>Координата X
-            <input id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
+      <div id="form-group" class="coords">
+        <div class="form-group">
+          <label for="monument-x">
+            Координата X
           </label>
+          <input class="form-control" id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
         </div>
-        <div class="coord">
-          <label>Координата Y
-            <input id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
+        <div class="form-group">
+          <label for="monument-y">
+            Координата Y
           </label>
+          <input class="form-control" id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
         </div>
         <!-- <i id="pick-coord" class="fa fa-map-marker"></i> -->
       </div>
-      <button id="send-button" class="pure-button pure-button-primary">
+      <button id="send-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
         Создать
       </button>

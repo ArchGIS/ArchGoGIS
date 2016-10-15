@@ -1,34 +1,38 @@
-<div class="block">
-  <h3>Создание данных</h3>
-  
-  <div class="pure-g">
-    <label>
-      <div class="pure-u-1">Что создаётся?</div>
-      <div class="pure-u-1">
-        <select class="pure-u-1" id="what-create">
-          <option value="artifact">Артефакт</option>
-          <option value="monument">Памятник</option>
-        </select>
-      </div>
-    </label>
-  </div>
+<div class="well bs-component block">
+    <h3>Создание данных</h3>
+    <br/>
+    <div class="form-horizontal">
+        <div class="form-group">
 
-  <br/>
+            <label class="col-sm-2 control-label" for="what-create">
+                Что создаётся?
+            </label>
+            <div class="col-sm-4">
+                <select class="form-control" id="what-create">
+                    <option value="artifact">Артефакт</option>
+                    <option value="monument">Памятник</option>
+                </select>
+            </div>
 
-  <div class="pure-g">
-    <label>
-      <div class="pure-u-1">На основе чего?</div>
-      <div class="pure-u-1">
-        <select class="pure-u-1-1" id="from-what-create">
-          <option value="#monument/new">Исследование</option>
-        </select>
-      </div>
-    </label>
-  </div>
+        </div>
 
-  <br/>
+        <br/>
 
-  <button id="goto-create" class="pure-button pure-button-primary">
-    Приступить к заполнению
-  </button>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="from-what-create">
+                На основе чего?
+            </label>
+            <div class="col-sm-4">
+                <select class="form-control" id="from-what-create">
+                    <option value="#monument/new">Исследование</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br/>
+
+    <button id="goto-create" class="btn btn-primary">
+        Приступить к заполнению
+    </button>
 </div>
