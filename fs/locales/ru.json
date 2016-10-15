@@ -165,7 +165,8 @@
     "description": "Описание",
     "material": "Материал",
     "category": "Категория",
-    "storage": "Хранится"
+    "storage": "Хранится",
+    "create": "Создание артефакта"
   },
 
   "search": {
