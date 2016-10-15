@@ -14,18 +14,18 @@
         <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
       </div>
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="false">
-        <label for="author-input">Автор исследования</label>
+        <label for="author-input">Автор исследования <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" type="hidden" name="id" data-req="up"></input>
       </div>
 
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
-        <label for="author-name-input">Имя</label>
+        <label for="author-name-input">Имя <span class="required">*</span></label>
         <input id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
       </div>
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
-        <label for="author-birth-date-input">Дата рождения</label>
-        <input id="author-birth-date-input" data-for="author:Author" type="text" name="birthdate"></input>
+        <label for="author-birth-date-input">Год рождения</label>
+        <input id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
       </div>
       <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
         <label for="report-file-input">Фотография:</label>
@@ -37,13 +37,13 @@
         <input id="new-report-checkbox" type="checkbox" dynamic="true"></input>
       </div>
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="false">
-        <label for="report-input">Отчет</label>
+        <label for="report-input">Отчет <span class="required">*</span></label>
         <input id="report-input"></input>
         <input id="report-input-id" data-for="r:Report" type="hidden" name="id" data-req="up"></input>
       </div>
       
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
-        <label for="report-name-input">Название</label>
+        <label for="report-name-input">Название <span class="required">*</span></label>
         <input id="report-name-input" data-for="r:Report" type="text" name="name" data-req></input>
       </div>
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
@@ -82,7 +82,7 @@
       </div>
 
       <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label>Код ОКН</label>
+        <label>Код ОКН <span class="required">*</span></label>
         <input id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code" data-req></input>
       </div>
       <div class="flex-row" toggle-by="new-heritage-object-checkbox" need-option="true">
@@ -110,7 +110,7 @@
         <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
       </div>
       <div class="flex-row">
-        <label>Название памятника</label>
+        <label>Название памятника <span class="required">*</span></label>
         <input id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
       </div>
       <div class="flex-row" toggle-by="new-monument-checkbox" need-option="true">

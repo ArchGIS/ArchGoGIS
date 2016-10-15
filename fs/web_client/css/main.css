@@ -263,6 +263,10 @@ input[type=text] {
   border: 1px solid #f33;
 }
 
+.required {
+  color: red;
+}
+
 .errors {
   font-size: 1.2em;
   color: orange;
