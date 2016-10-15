@@ -44,6 +44,7 @@ var (
 		{"Epoch", "n_epoch_id_seq"},
 		{"Culture", "n_culture_id_seq"},
 		{"ResearchType", "n_research_type_id_seq"},
+		{"Complex", "n_Complex_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

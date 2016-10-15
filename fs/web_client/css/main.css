@@ -292,3 +292,7 @@ input[type=text] {
   border-top-right-radius: 0px;
   display: none;
 }
+
+.ui-autocomplete li {
+  padding: 3px;
+}

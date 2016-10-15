@@ -65,8 +65,11 @@ function postQuery() {
     ["Knowledge", "Artifact", "founded"],
     ["Knowledge", "Epoch", "has"],
     ["Knowledge", "Culture", "has"],
+    ["Knowledge", "Complex", "has"],
+    ["Monument", "Complex", "has"],
     ["HeritageStatus", "Monument", "contains"],
     ["Research", "Report", "hasreport"],
+    ["Complex", "Artifact", "has"],
     ["Report", "Author", "hasauthor"]
   ]);
 

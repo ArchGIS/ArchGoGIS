@@ -7,7 +7,6 @@ App.views.artifact = new (App.View.extend({
     var fmt = App.fn.fmt;
 
     var authorSelectHandler = function(event, ui) {
-      console.log(ui.item.id);
       $('#author-input-id').val(ui.item.id);
 
       App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
@@ -24,26 +23,6 @@ App.views.artifact = new (App.View.extend({
         minLength: 0,
         select: function(event, ui) { 
           $("#research-input-id").val(ui.item.id);
-          
-          var args = {
-            "monument:Monument": {"id": "*", "select": "*"},
-            "researches:Research": {"id": $("#research-input-id").val()},
-            "knowledge:Knowledge": {"id": "*", "select": "*"},
-            "researches_has_knowledge": {},
-            "knowledge_belongsto_monument": {}
-          }
-          var monuments = [];
-
-          $.post(dburl+"hquery/read", JSON.stringify(args), function(data) {
-            var data = $.parseJSON(data).knowledge;
-            console.log(data)
-            _.each(data, function(res) {
-              monuments.push({label: fmt("$description", res), id: res.id})
-            });
-            $("#monument-input").autocomplete({
-              source: monuments
-            })
-          })
         }
       }).focus(function(){            
         $(this).autocomplete("search");
@@ -51,9 +30,21 @@ App.views.artifact = new (App.View.extend({
 
       $("#monument-input").autocomplete({
         source: function(request, response) {
-          response(window[""+$("#research-input-id").val()]);
+          var monuments = [];
+
+          App.models.Monument.findByNamePrefix(request.term)
+            .then(function(data) {
+              console.log(data);
+              if (data && !data.error) {
+                response(_.map(data, function(row) {
+                  return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
+                }))
+              } else {
+                response();
+              }
+            });
         },
-        minLength: 0,
+        minLength: 3,
         select: function(event, ui) { 
           $("#monument-input-id").val(ui.item.id);
         }

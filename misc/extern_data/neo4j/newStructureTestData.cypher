@@ -204,28 +204,32 @@ create (map:Publication {
   name: 'Карта кургана',
   published_at: 2007,
   volume: '1',
-  isbn: '1241523-9837'
+  isbn: '1241523-9837',
+  link: "https://www.google.ru"
 })
 create (mono1:Publication {
   id: 2,
   name: 'Как я копал Курган',
   published_at: 2010,
   isbn: '1241523-9137',
-  pages: 200
+  pages: 200,
+  link: "https://www.google.ru"
 })
 create (mono2:Publication {
   id: 3,
   name: 'Анализ раскопок кургана',
   published_at: 2012,
   isbn: '1241523-9137',
-  pages: 150
+  pages: 150,
+  link: "https://www.google.ru"
 })
 create (dig:Publication {
   id: 4,
   name: 'Сборник легенд о гробнице царя',
   published_at: 2000,
   isbn: '1241523-4137',
-  pages: 120
+  pages: 120,
+  link: "https://www.google.ru"
 })
 create (jour:Publication {
   id: 5,
@@ -234,7 +238,8 @@ create (jour:Publication {
   volume: 1,
   number: '37',
   isbn: '1241523-4737',
-  pages: 70
+  pages: 70,
+  link: "https://www.google.ru"
 })	
 
 create (publ1:PublicationType {

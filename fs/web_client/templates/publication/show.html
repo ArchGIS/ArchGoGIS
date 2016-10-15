@@ -1,73 +1,83 @@
 <div class="content">
-  <h2><%= t('publication.singular') %></h2>
-  <br>
-  <%= t('author.singular') %>:
-  <a href="#author/show/<%= author[0].id %>"><%= author[0].name %></a>
-  <br>
+	<h2><%= t('publication.singular') %></h2>
+	<br>
+	<%= t('author.singular') %>:
+	<a href="#author/show/<%= author[0].id %>"><%= author[0].name %></a>
+	<br>
 
-  <% if (coauthors.length) { %>
-  	<br>
-  	<%= t('coauthor.plural') %>:
-    <% _.each(coauthors, function(a, i) { %>
-      <a href="#author/show/<%= a.id %>"><%= a.name %></a>
-      <% if (coauthors.length > (i+1)) { %>
-      	,
-      <% } %>
-    <% }); %>
-  <% } %>
+	<% if (coauthors.length) { %>
+		<br>
+		<%= t('coauthor.plural') %>:
+		<% _.each(coauthors, function(a, i) { %>
+			<a href="#author/show/<%= a.id %>"><%= a.name %></a>
+			<% if (coauthors.length > (i+1)) { %>
+				,
+			<% } %>
+		<% }); %>
+	<% } %>
 
-  <p>
-	  <%= t('publication.prop.title') %>:
-	  <%= pub.name %>
+	<p>
+		<%= t('publication.prop.title') %>:
+		<%= pub.name %>
 	</p>
-  
-  <p>
-	  <%= t('publication.prop.publisher') %>:
-	  <%= publisher[0].name %>
-	</p>
-
-  <p>
-	  <%= t('publication.prop.year') %>:
-	  <%= pub.published_at %>
+	
+	<p>
+		<%= t('publication.prop.publisher') %>:
+		<%= publisher[0].name %>
 	</p>
 
-  <p>
-	  <%= t('publication.prop.type') %>:
-	  <%= pubtype[0].name %>
+	<p>
+		<%= t('publication.prop.year') %>:
+		<%= pub.published_at %>
+	</p>
+
+	<p>
+		<%= t('publication.prop.type') %>:
+		<%= pubtype[0].name %>
 	</p>
 
 	<% if (pub.volume) { %>
 		<p>
 			<%= t('publication.prop.volume') %>:
-		  <%= pub.volume %>
+			<%= pub.volume %>
 		</p>
 	<% }%>
 
 	<% if (pub.edition) { %>
 		<p>
 			<%= t('publication.prop.edition') %>:
-		  <%= pub.edition %>
+			<%= pub.edition %>
 		</p>
 	<% }%>
 
 	<% if (pub.number) { %>
 		<p>
 			<%= t('publication.prop.number') %>:
-		  <%= pub.number %>
+			<%= pub.number %>
 		</p>
 	<% }%>
 
 	<p>
-	  <%= t('publication.prop.isbn') %>:
-	  <%= pub.isbn %>
+		<%= t('publication.prop.isbn') %>:
+		<%= pub.isbn %>
 	</p>
 
-	<p>
-	  <%= t('publication.prop.pages') %>:
-	  <%= pub.pages %>
-	</p>
+	<% if (pub.pages) { %>
+		<p>
+			<%= t('publication.prop.pages') %>:
+			<%= pub.pages %>
+		</p>
+	<% }%>
+
+	<% if (pub.link) { %>
+		<p>
+			<a href="<%= pub.link %>">
+				<%= t('publication.prop.link') %>
+			</a>
+		</p>
+	<% }%>
 
 <div class="maps">
-  <%= widget("Map", {}, "map") %>
+	<%= widget("Map", {}, "map") %>
 </div>
 </div>

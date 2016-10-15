@@ -24,6 +24,12 @@ App.controllers.research = new (App.View.extend({
       "knowledges_has_epochs": {},
     });
 
+    var query_coauthors = JSON.stringify({
+      "research:Research": {"id": id, "select": "*"},
+      "coauthors:Author": {"id": "*", "select": "*"},
+      "research_hascoauthor_coauthors": {},
+    });
+
     var query_for_reports = JSON.stringify({
       "research:Research": {"id": id, "select": "*"},
       "author:Author": {"id": "*", "select": "*"},
@@ -40,7 +46,8 @@ App.controllers.research = new (App.View.extend({
       "research_has_knowledges": {}
     });
 
-    var d = $.Deferred();
+    var d1 = $.Deferred();
+    var d2 = $.Deferred();
     var data = {};
     $.post('/hquery/read', query).success(function(researchData) {
       data = JSON.parse(researchData);
@@ -48,6 +55,13 @@ App.controllers.research = new (App.View.extend({
       data['artifacts'] = [];
       data['placemarks'] = [];
       data['usedArtifacts'] = {};
+      data['coauthors'] = {};
+
+      $.post("/hquery/read", query_coauthors).success(function(coauthors) {
+        coauthors = JSON.parse(coauthors);
+        data = $.extend(data, coauthors);
+        d2.resolve();
+      });
 
       $.post("/hquery/read", query_used_artifacts).success(function(used_arifacts) {
         used_arifacts = JSON.parse(used_arifacts);
@@ -65,7 +79,7 @@ App.controllers.research = new (App.View.extend({
           artifacts = JSON.parse(artifacts);
           data.artifacts.push(artifacts.artifacts);
           if (data.knowledges.length == id+1) {
-            d.resolve();
+            d1.resolve();
           }
         })
 
@@ -82,7 +96,7 @@ App.controllers.research = new (App.View.extend({
 
         _.extend(data, JSON.parse(researchD));
         console.log(data);
-        $.when(d).done(function() {App.page.render('research_view', data)});
+        $.when(d1, d2).done(function() {App.page.render('research_view', data)});
       });
     });
   }
