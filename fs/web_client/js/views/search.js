@@ -87,6 +87,7 @@ App.views.search = new (App.View.extend({
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       $results.empty();
+      App.page.get("map").removeAll();
       object = objects[$object.prop('id')];
     });
     object = objects['monument-params'];
@@ -126,10 +127,20 @@ App.views.search = new (App.View.extend({
           .then(function(response) {
             if (response.length) {
               var list = my.columnsMaker(response);
+              var map = App.page.get("map");
+              map.removeAll();
 
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
+
+              var counter = 1;
+              _.each(response, function(item) {
+                map.addPlacemark([item[6], item[7]], {
+                  hintContent: item[1],
+                  iconContent: counter++
+                });
+              })
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
             }
@@ -212,10 +223,20 @@ App.views.search = new (App.View.extend({
           .then(function(response) {
             if (response.length) {
               var list = my.columnsMaker(response);
-
+              var map = App.page.get("map");
+              map.removeAll();
+              
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
+
+              var counter = 1;
+              _.each(response, function(item) {
+                map.addPlacemark([item[4], item[5]], {
+                  hintContent: item[1],
+                  iconContent: counter++
+                });
+              })
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
             }

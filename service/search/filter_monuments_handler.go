@@ -102,7 +102,7 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 
 		params["year"] = year
 	}
-	query = query + "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name"
+	query = query + "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name, k.x, k.y"
 
 	resp, err := neo.Run(query, params)//neo.Params{
 	// 	"mnt": `"(?ui)^.*` + mnt + `.*$"`,

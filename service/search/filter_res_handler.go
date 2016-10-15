@@ -15,7 +15,8 @@ import (
 
 const (
 	filterResCypher = "MATCH (r:Research)" +
-		"MATCH (a:Author)<-[:hasauthor]-(r)"
+		"MATCH (a:Author)<-[:hasauthor]-(r)" +
+		"MATCH (k:Knowledge)<-[:has]-(r)"
 )
 
 
@@ -53,7 +54,7 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
 	
-	query = query + "RETURN r.id, r.name, r.year, a.name"
+	query = query + "RETURN r.id, r.name, r.year, a.name, k.x, k.y"
 
 	resp, err := neo.Run(query, params)
 
