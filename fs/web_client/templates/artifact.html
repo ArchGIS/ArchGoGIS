@@ -28,6 +28,11 @@
         <label for="author-birth-date-input">Дата рождения</label>
         <input id="author-birth-date-input" data-for="author:Author" type="text" name="birthdate"></input>
       </div>
+      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+        <label for="author-photo-input">Фотография</label>
+        <input id="author-photo-input" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
+      </div>
+
       <div class="flex-row">
         <label for="coauthor-input">Соавторы</label>
         <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
@@ -117,22 +122,30 @@
         <label for="artifact-name-input">Название</label>
         <input id="artifact-name-input" data-for="a:Artifact" type="text" name="name"></input>
       </div>
+
       <div class="flex-row">
         <label for="artifact-name-input">Описание</label>
         <input id="artifact-name-input" data-for="a:Artifact" type="text" name="description"></input>
       </div>
+
       <div class="flex-row">
         <label for="artifact-weight-input">Вес</label>
         <input id="artifact-weight-input" data-for="a:Artifact" type="text" name="weight"></input>
       </div>
+      
       <div class="flex-row">
         <label for="artifact-size-input">Габариты</label>
         <input id="artifact-size-input" data-for="a:Artifact" type="text" name="size"></input>
       </div>
+      
+      <div class="flex-row">
+        <label for="artifact-photo-input">Фотография</label>
+        <input id="artifact-photo-input" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage" used="true"></input>
+      </div>
     </div>
   </div>
 
-  <button class="pure-button pure-button-primary" onclick="postQuery()">
+  <button id="send-button" class="pure-button pure-button-primary">
     <i class="fa fa-cogs"></i>
     Создать
   </button>
