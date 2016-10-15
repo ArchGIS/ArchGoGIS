@@ -28,12 +28,14 @@ App.controllers.artifact = new (App.View.extend({
     var d3 = $.Deferred();
     var d4 = $.Deferred();
     var d5 = $.Deferred();
+    var d6 = $.Deferred();
 
     data.categories = {};
     data.materials = {};
     data.researches = {};
     data.intervals = {};
     data.placemarks = [];
+    data.photos = [];
 
     var queryResearches = JSON.stringify({
       "artifact:Artifact": {"id": id, "select": "*"},
@@ -42,7 +44,7 @@ App.controllers.artifact = new (App.View.extend({
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges_has_artifact": {},
       "researches_has_knowledges": {},
-      "researches_hasauthor_authors": {},
+      "researches_hasauthor_authors": {}
     });
 
     var queryFound = JSON.stringify({
@@ -61,6 +63,12 @@ App.controllers.artifact = new (App.View.extend({
       "artifact:Artifact": {"id": id, "select": "*"},
       "categories:ArtifactCategory": {"id": "*", "select": "*"},
       "artifact_has_categories": {},
+    });
+
+    var query_photo = JSON.stringify({
+      "artifact:Artifact": {"id": id, "select": "*"},
+      "photos:Image": {"id": "*", "select": "*"},
+      "artifact_has_photos": {},
     });
 
     var query_mat = JSON.stringify({
@@ -117,8 +125,14 @@ App.controllers.artifact = new (App.View.extend({
       d4.resolve();
     })
 
+    $.post('/hquery/read', query_photo).success(function(response) {
+      response = JSON.parse(response);
+      data = $.extend(data, response);
+      d6.resolve();
+    })
+
     console.log(data);
-    $.when(d1, d2, d3, d4, d5).done(function() {App.page.render("artifact/show", data)});
+    $.when(d1, d2, d3, d4, d5, d6).done(function() {App.page.render("artifact/show", data)});
   },
 
   'start': function() {

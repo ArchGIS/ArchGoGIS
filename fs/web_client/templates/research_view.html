@@ -31,9 +31,7 @@
     <div>
     <% _.each(reports, function(report) { %>
       <p>
-        <a href="#report/show/<%= report.id %>">
-          <%= report.name %>
-        </a>
+        <%= App.models.Report.href(report.fileid, report.name) %>
       </p>
     <% }); %>
     </div>
@@ -91,7 +89,7 @@
         <% var length = usedArtifacts.length %>
         <% _.each(usedArtifacts, function(artifact, i) { %>
           <a href="#artifact/show/<%= artifact.id %>">
-            <%= artifact.description%>
+            <%= artifact.description %>
           </a>
           <% if (i < length-1) { %>
             ,

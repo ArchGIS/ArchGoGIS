@@ -53,7 +53,7 @@ func searchForFilterReport(author, year string) ([]byte, error) {
 		params["year"] = year
 	}
 	
-	query = query + "RETURN r.name, r.year, a.name"
+	query = query + "RETURN r.id, r.name, r.year, a.name"
 
 	resp, err := neo.Run(query, params)
 

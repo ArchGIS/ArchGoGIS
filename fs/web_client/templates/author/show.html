@@ -2,10 +2,15 @@
   <h2><%= t('author.singular') %></h2>
 
   <p>
-    Фотографии: пока нет
+    <% if (photo.length) { %>
+      <% _.each(photo, function(ph) { %>
+        <img src="<%= dburl + '/local_storage/' + ph.fileid %>" height="100px">
+      <% }); %>
+    <% } else { %>
+      <span>Пока нет</span>
+    <% } %>
   </p>
 
-  <br>
   <div class="pure-g">
     <div class="pure-u-1-4"><%= t('author.prop.name') %>:</div>
     <div class="pure-u-1-3"><%= author.name %></div>

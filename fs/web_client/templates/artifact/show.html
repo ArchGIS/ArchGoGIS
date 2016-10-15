@@ -1,6 +1,16 @@
 <div class="content">
   <h2><%= t('artifact.singular') %></h2>
-  <br>
+  
+  <p>
+    <!-- <h3>Фотографии:</h3> -->
+    <% if (photos.length) { %>
+      <% _.each(photos, function(photo) { %>
+        <img src="<%= dburl + '/local_storage/' + photo.fileid %>" height="100px">
+      <% }); %>
+    <% } else { %>
+      <span>Пока фотографий нет</span>
+    <% } %>
+  </p>
 
   <p>
     <%= t('artifact.yearFound') %>:
@@ -58,11 +68,8 @@
 		   <% }) %>
 	  </p>
   <% } %>
-  <p>
-    Фотографии: пока нет
-  </p>
 
   <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>
 	</div>
- </div>
+</div>

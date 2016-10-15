@@ -15,7 +15,7 @@ App.Controller = Backbone.View.extend({});
 App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
-var dburl = "http://localhost:8080/";
+var dburl = "http://localhost:8080";
 
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
@@ -70,24 +70,56 @@ function postQuery() {
     ["HeritageStatus", "Monument", "contains"],
     ["Research", "Report", "hasreport"],
     ["Complex", "Artifact", "has"],
-    ["Report", "Author", "hasauthor"]
+    ["Report", "Author", "hasauthor"],
+    ["Author", "AuthorImage", "has"],
+    ["Artifact", "ArtifactImage", "has"]
   ]);
 
+  var defer = $.Deferred();
   var formdata = new FormData();
 
-  _.each(json, function(val, key) {
-    formdata.append(key, JSON.stringify(val));
-  })
+  var files = $('input[type=file][used=true]');
 
-  $.ajax({
-    url: "/hquery/upsert",
-    data: formdata,
-    type: "POST",
-    processData: false,
-    contentType: false,
-    success: function(response) {
-      alert('Успешно!');
+  _.each(files, function(element, index) {
+    if (element.files[0]) {
+      var datafor = $(element).attr("data-for");
+      var name = $(element).attr("name");
+
+      uploadFile(element.files[0]).then(function(key) {
+        // console.log(json);
+        if (!json[datafor]) {
+          json[datafor] = {};
+        }
+
+        json[datafor][`${name}/text`] = key;
+        
+        if (index == files.length - 1) {
+          defer.resolve();
+        }
+      });
+    } else {
+      defer.resolve();
     }
+  });
+
+
+  $.when(defer).done(function() {
+    _.each(json, function(val, key) {
+      formdata.append(key, JSON.stringify(val));
+    });
+
+
+    $.ajax({
+      url: "/hquery/upsert",
+      data: formdata,
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        console.log('upsert: ' + response);
+        alert('Успешно!');
+      }
+    });
   });
 }
 
@@ -125,7 +157,9 @@ function generateJson(relations) {
       inputObjName = dataFor.split(":")[0];
       objs[inputSubclass].push(inputObjName);
       json[dataFor] = json[dataFor] || {};
-      json[dataFor][name] = value;
+      if(type != "/file") {
+        json[dataFor][name] = value;
+      }
     }
   })
 
@@ -242,14 +276,10 @@ function fillSelector(selector, dataType) {
 }
 
 
-function uploadFile (selector) {
-  var file = $(selector)[0].files[0];
-  console.log(file)
-
-  if (file) {
+function uploadFile (file) {
+  return new Promise(function (resolve, reject) {
     var data = new FormData();
-    data.append('reportKey', file);
-    console.log(data);
+    data.append('reportKey', file, file.name);
 
     $.ajax({
       url: "/pfs/save",
@@ -259,8 +289,24 @@ function uploadFile (selector) {
       processData: false,
       contentType: false,
       success: function(response) {
-        console.log('Файл загружен');
+        resolve(response.key);
+      },
+      error: function(error) {
+        reject(error);
       }
     });
-  }
+  });
+}
+
+function downloadFile (key) {
+  var data = {"key": key}
+
+  $.ajax({
+    url: "/pfs/load",
+    data: data,
+    type: "POST",
+    // dataType: "application/pdf",
+    processData: false,
+    contentType: false
+  });
 }

@@ -151,17 +151,20 @@ create (r3:Research {
 create (rep1:Report {
   id: 1,
   year: 2012,
-  name: "Отчет об анализе"
+  name: "Отчет об анализе",
+  fileid: '10'
 })
 create (rep2:Report {
   id: 2,
   year: 2011,
-  name: "Отчет о раскопках"
+  name: "Отчет о раскопках",
+  fileid: '11'
 })
 create (rep3:Report {
   id: 3,
   year: 2006,
-  name: "Отчет о разведке"
+  name: "Отчет о разведке",
+  fileid: '12'
 })
 
 create (rt1:ResearchType {
@@ -290,7 +293,7 @@ create (status:HeritageStatus {
 
 create (im1:Image {
   id: 1,
-  resource_id: 'url',
+  fileid: '1',
   description: 'Оружие из кургана',
   date: '14.07.2010',
   x: 10,
@@ -298,7 +301,7 @@ create (im1:Image {
 })
 create (im2:Image {
   id: 2,
-  resource_id: 'url',
+  fileid: '2',
   description: 'Украшения царя',
   date: '14.07.2005',
   x: 10,
@@ -306,7 +309,7 @@ create (im2:Image {
 })	
 create (im3:Image {
   id: 3,
-  resource_id: 'url',
+  fileid: '3',
   description: 'Внутри гробницы',
   date: '14.07.2005',
   x: 10,
@@ -314,7 +317,7 @@ create (im3:Image {
 })	
 create (im4:Image {
   id: 4,
-  resource_id: 'url',
+  fileid: '4',
   description: 'Вход в курган',
   date: '14.07.2010',
   x: 10,
@@ -322,7 +325,7 @@ create (im4:Image {
 })	
 create (im5:Image {
   id: 5,
-  resource_id: 'url',
+  fileid: '5',
   description: 'Раскопки гробницы',
   date: '14.07.2005',
   x: 10,
@@ -330,12 +333,31 @@ create (im5:Image {
 })	
 create (im6:Image {
   id: 6,
-  resource_id: 'url',
+  fileid: '6',
   description: 'Раскопки кургана',
   date: '14.07.2010',
   x: 10,
   y: 10
-})	
+})
+
+
+// Фото авторов
+create (im7:Image {
+  id: 7,
+  fileid: '7'
+})
+
+create (im8:Image {
+  id: 8,
+  fileid: '8'
+})
+
+create (im9:Image {
+  id: 9,
+  fileid: '9'
+})
+
+
 
 create (pub1:Publisher {
   name: 'Болгар-арт'
@@ -438,6 +460,10 @@ create (au1)-[:has]->(job1)
 create (au2)-[:has]->(job2)
 create (au3)-[:has]->(job3)
 create (au3)-[:has]->(job4)
+
+create (au1)-[:has]->(im7)
+create (au2)-[:has]->(im8)
+create (au3)-[:has]->(im9)
 
 create (job1)-[:belongsto]->(org2)
 create (job2)-[:belongsto]->(org2)

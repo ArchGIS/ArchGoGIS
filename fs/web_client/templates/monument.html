@@ -27,6 +27,10 @@
         <label for="author-birth-date-input">Дата рождения</label>
         <input id="author-birth-date-input" data-for="author:Author" type="text" name="birthdate"></input>
       </div>
+      <div class="flex-row" toggle-by="new-author-checkbox" need-option="true">
+        <label for="report-file-input">Фотография:</label>
+        <input id="author-file-input" type="file" data-for="aimg:Image" data-subclass="AuthorImage" name="fileid"></input>
+      </div>
 
       <div class="top-indent">
         <label for="new-report-checkbox">Добавить новый отчет</label>
@@ -48,7 +52,7 @@
       </div>
       <div class="flex-row" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
-        <input id="report-file-input" type="file" name="files"></input>
+        <input id="report-file-input" type="file" data-for="r:Report" name="file"></input>
       </div>
 
       <div hidden="true">

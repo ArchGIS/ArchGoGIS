@@ -18,10 +18,12 @@ App.controllers.author = new (App.View.extend({
 
     var query = JSON.stringify({
       "author:Author": {"id": id, "select": "*"},
+      "photo:Image": {"id": "*", "select": "*"},
       "researches:Research": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
       "researches_hasauthor_author": {},
       "researches_has_knowledges": {},
+      "author_has_photo": {}
     });
 
     var query_get_orgs = JSON.stringify({
@@ -50,6 +52,9 @@ App.controllers.author = new (App.View.extend({
 
     $.post("/hquery/read", query_get_orgs).success(function(response) {
       response = JSON.parse(response);
+      if (!response['jobs']) {
+        response['jobs'] = {};
+      }
       data = $.extend(data, response);
       d1.resolve()
     });
