@@ -9,10 +9,10 @@ CREATE SEQUENCE n_organization_seq;
 CREATE SEQUENCE n_report_id_seq;
 CREATE SEQUENCE n_file_id_seq;
 CREATE SEQUENCE n_monument_analysis_id_seq;
-CREATE SEQUENCE n_report_id_seq;
 CREATE SEQUENCE n_heritage_status_id_seq;
 CREATE SEQUENCE n_epoch_id_seq;
 CREATE SEQUENCE n_culture_id_seq;
 CREATE SEQUENCE n_research_type_id_seq;
+CREATE SEQUENCE n_image_id_seq;
 
 CREATE SEQUENCE local_storage_file_id_seq;
