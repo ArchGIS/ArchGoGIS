@@ -1,7 +1,7 @@
 'use strict';
 
 App.blocks.coordpicker = function($el, params) {
-  var $button = $('<i id="pick-coord" class="fa fa-map-marker"></i>');
+  var $button = $('<span class="pure-button"><i id="pick-coord" class="fa fa-map-marker"></i></span>');
   var $x = $(params.inputs[0]);
   var $y = $(params.inputs[1]);
   

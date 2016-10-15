@@ -90,7 +90,11 @@ App.views.artifact = new (App.View.extend({
     })
 
     $('#send-button').on('click', function() {
-      postQuery();
+      if ( validateCreatePages() ) {
+        postQuery();
+      } else {
+        alert('Недостаточно данных. Заполните все подсвеченные красным поля!');
+      }
     });
 
     fillSelector($("#epoch-selector"), "Epoch");

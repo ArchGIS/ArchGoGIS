@@ -255,11 +255,12 @@ input[type=text] {
  
 .danger {
   color: red;
-  font-size: 1.5em;
 }
 
-.error-message {
-  /*display: none;*/
+.error-input {
+  /*color: red;*/
+  font-size: 0.8em;
+  border: 1px solid #f33;
 }
 
 .errors {

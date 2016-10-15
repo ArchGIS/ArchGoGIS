@@ -310,3 +310,28 @@ function downloadFile (key) {
     contentType: false
   });
 }
+
+
+function validateCreatePages () {
+  var isValid = true;
+  var inputs = $('input[data-req][used!=false]');
+  inputs.removeClass('error-input');
+  inputs.prev().removeClass('error-input');
+
+  _.each(inputs, function (input) {
+    $(input).blur(function () {
+      console.log($(input).attr('data-req'));
+      if ( !$(this).val() ) {
+        if ($(input).attr('data-req') == 'up') {
+          $(input).prev().addClass('error-input');
+        } else {
+          $(this).addClass('error-input');
+        }
+        isValid = false;
+      }
+    });
+  });
+
+  inputs.blur();
+  return isValid;
+}
