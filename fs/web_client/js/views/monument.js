@@ -57,8 +57,12 @@ App.views.monument = new (App.View.extend({
       inputs: ['#monument-x', '#monument-y'],
       map: 'map'
     });
-
+    
     $("#container").tabs();
+
+    $('.next-button').on('click', function(e) {
+      $("#container").tabs({active: $(this).attr("active")});
+    })
   },
 
   "show": function(argument) {

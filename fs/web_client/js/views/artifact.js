@@ -89,9 +89,15 @@ App.views.artifact = new (App.View.extend({
       return false;
     })
 
+    $("#container").tabs();
+
     $('#send-button').on('click', function() {
       postQuery();
     });
+
+    $('.next-button').on('click', function(e) {
+      $("#container").tabs({active: $(this).attr("active")});
+    })
 
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
@@ -103,6 +109,5 @@ App.views.artifact = new (App.View.extend({
       map: 'map'
     });
 
-    $("#container").tabs();
   }
 }));
