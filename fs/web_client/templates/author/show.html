@@ -2,8 +2,12 @@
   <h2><%= t('author.singular') %></h2>
 
   <p>
-    <% if (photo) { %>
-      <img src="<%= dburl + '/local_storage/' + photo[0].fileid %>" height="100px">
+    <% if (photo.length) { %>
+      <% _.each(photo, function(ph) { %>
+        <img src="<%= dburl + '/local_storage/' + ph.fileid %>" height="100px">
+      <% }); %>
+    <% } else { %>
+      <span>Пока нет</span>
     <% } %>
   </p>
 

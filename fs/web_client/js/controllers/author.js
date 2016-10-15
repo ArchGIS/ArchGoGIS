@@ -47,6 +47,9 @@ App.controllers.author = new (App.View.extend({
 
     $.post("/hquery/read", query_get_orgs).success(function(response) {
       response = JSON.parse(response);
+      if (!response['jobs']) {
+        response['jobs'] = {};
+      }
       data = $.extend(data, response);
       d1.resolve()
     });

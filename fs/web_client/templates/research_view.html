@@ -20,7 +20,7 @@
     <div>
     <% _.each(reports, function(report) { %>
       <p>
-        <%= App.models.Report.href(report.id, report.name) %>
+        <%= App.models.Report.href(report.fileid, report.name) %>
       </p>
     <% }); %>
     </div>
