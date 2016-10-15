@@ -13,8 +13,10 @@ App.controllers.author = new (App.View.extend({
 
     var query = JSON.stringify({
       "author:Author": {"id": id, "select": "*"},
+      "photo:Image": {"id": "*", "select": "*"},
       "researches:Research": {"id": "*", "select": "*"},
-      "researches_hasauthor_author": {}
+      "researches_hasauthor_author": {},
+      "author_has_photo": {}
     });
 
     $.post("/hquery/read", query).success(function(response) {
