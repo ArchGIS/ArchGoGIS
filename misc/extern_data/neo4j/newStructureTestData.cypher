@@ -1,15 +1,35 @@
 // Заполнить БД
-create (middle_age:Epoch {
+create (mesolit:Epoch {
   id: 1,
-  name: 'Средневековье'
+  name: 'Мезолит'
+})
+create (paleolit:Epoch {
+  id: 2,
+  name: 'Палеолит'
+})
+create (neolit:Epoch {
+  id: 3,
+  name: 'Неолит'
+})
+create (bronze_age:Epoch {
+  id: 4,
+  name: 'Бронзовый век'
 })
 create (iron_age:Epoch {
-  id: 2,
-  name: 'Железный век'
+  id: 5,
+  name: 'Ранний железный век'
 })
-create (mesolit:Epoch {
-  id: 3,
-  name: 'Мезолит'
+create (migration_age:Epoch {
+  id: 6,
+  name: 'Эпоха великого переселения'
+})
+create (middle_age:Epoch {
+  id: 7,
+  name: 'Средневековье'
+})
+create (new_age:Epoch {
+  id: 8,
+  name: 'Новое время'
 })
 
 create (yellow:Tag {

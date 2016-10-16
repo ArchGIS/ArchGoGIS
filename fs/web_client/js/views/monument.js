@@ -65,7 +65,7 @@ App.views.monument = new (App.View.extend({
     
     $("#container").tabs();
 
-    $('.next-button').on('click', function(e) {
+    $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});
     })
   },

@@ -1,13 +1,13 @@
 'use strict';
 
-App.widgets.Toggler = function(params, id) {
+App.widgets.Toggler = function(params, id, attributes) {
   var type = _.keys(params)[0];
   var params = params[type];
   var $el = null;
   var callback = null;
-  
+  console.log(attributes);
   var selectTmpl = _.template(`
-    <select id="<%= id %>">
+    <select id="<%= id %>" ${attributes}>
       <% _.each(options, function(option) { %>
         <option><%= option %></option>
       <% }); %>
