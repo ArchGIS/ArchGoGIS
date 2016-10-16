@@ -1,5 +1,5 @@
 <div class="content">
-  <h2><%= t('research.singular') %></h2>
+  <h2><%= t('research.singular') %> "<%= research.name %>"</h2>
   <br>
   <p>
     <%= t('author.singular') %>:
@@ -18,10 +18,12 @@
     <% }); %>
   <% } %>
   
-  <p>
-    <%= t('research.year') %>:
-    <%= maybe(research.year) %>
-  </p>
+  <% if (coauthors.length) { %>
+    <p>
+      <%= t('research.year') %>:
+      <%= maybe(research.year) %>
+    </p>
+  <% } %>
 
   <h4><%= t('research.prop.description') %>:</h4>
   <p><%= maybe(research.description) %></p>
@@ -47,7 +49,7 @@
       
       <h4 class="accordion-header">
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-        <%= t('monument.singular') %> №<%= counter++ %>: <%= knowledges[i].monument_name %>
+        <%= t('monument.singular') %> №<%= counter++ %>: <b><%= knowledges[i].monument_name %></b>
       </h4>
       
       <div class="accordion-content">
@@ -58,11 +60,11 @@
             Перейти к памятнику
           </a>
           </dd>
-          <dt>Присвоенное название:</dt>
+          <dt>Название, данное исследователем:</dt>
           <dd><%= knowledges[i].monument_name %></dd>
           <dt>Эпоха:</dt>
-          <dd><%= epochs[i].name %></dd>
-          <dt>Культура:</dt>
+          <dd><%= epoch[i].name %></dd>
+          <dt>Культурная принадлежность, определенная исследователем:</dt>
           <dd><%= cultures[i].name %></dd>
           <dt>Найденные артефакты:</dt>
           <dd>

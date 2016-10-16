@@ -11,13 +11,17 @@ App.controllers.monument = new (App.View.extend({
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
       "cultures:Culture": {"id": "*", "select": "*"},
-      "epochs:Epoch": {"id": "*", "select": "*"},
       "researches_hasauthor_authors": {},
       "researches_has_knowledges": {},
       "knowledges_belongsto_monument": {},
       "knowledges_has_cultures": {},
-      "knowledges_has_epochs": {},
     });
+
+    var query_epoch = JSON.stringify({
+      "monument:Monument": {"id": id},
+      "epoch:Epoch": {"id": "*", "select": "*"},
+      "monument_has_epoch": {},
+    })
 
     $.post("/hquery/read", query).success(function(data) {
       data = JSON.parse(data);
@@ -27,6 +31,19 @@ App.controllers.monument = new (App.View.extend({
 
       var d1 = $.Deferred();
       var d2 = $.Deferred();
+      var d3 = $.Deferred();
+
+      var names = {};
+      $.each(data.knowledges, function(id, k) {
+        if (names[k.monument_name]) {
+          names[k.monument_name]++;
+        } else {
+          names[k.monument_name] = 1;
+        }
+      })
+
+      data.mainName = _(names).invert()[_(names).max()];
+      data.allNames = _.keys(names).join(', ');
 
       $.each(data.researches, function(id, research) {
         query = JSON.stringify({
@@ -45,6 +62,12 @@ App.controllers.monument = new (App.View.extend({
             d1.resolve();
           }
         })
+      })
+
+      $.post("/hquery/read", query_epoch).success(function(response) {
+        response = JSON.parse(response);
+        data = $.extend(data, response);
+        d3.resolve();
       })
 
       $.each(data.knowledges, function(id, knowledge) {

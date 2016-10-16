@@ -15,13 +15,13 @@ App.controllers.research = new (App.View.extend({
       "author:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
       "monuments:Monument": {"id": "*", "select": "*"},
-      "epochs:Epoch": {"id": "*", "select": "*"},
+      "epoch:Epoch": {"id": "*", "select": "*"},
       "cultures:Culture": {"id": "*", "select": "*"},
       "research_hasauthor_author": {},
       "research_has_knowledges": {},
       "knowledges_belongsto_monuments": {},
       "knowledges_has_cultures": {},
-      "knowledges_has_epochs": {},
+      "monuments_has_epoch": {},
     });
 
     var query_coauthors = JSON.stringify({

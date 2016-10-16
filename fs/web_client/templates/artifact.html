@@ -30,7 +30,7 @@
       <div class="checkbox" toggle-by="new-author-checkbox" need-option="true">
         <label for="more-author-checkbox">
           <input id="more-author-checkbox" type="checkbox" dynamic="true"></input>
-          Дополнительная информация от авторе
+          Дополнительная информация об авторе
         </label>
       </div>
       
@@ -71,6 +71,17 @@
       <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-year-input">Год</label>
         <input class="form-control" id="research-year-input" data-for="r:Research" type="number" name="year"></input>
+      </div>
+
+      <div class="checkbox" toggle-by="new-research-checkbox" need-option="true">
+        <label for="more-research-checkbox">
+          <input id="more-research-checkbox" type="checkbox" dynamic="true"></input>
+          Дополнительная информация об исследовании
+        </label>
+      </div>
+      <div class="form-group" toggle-by="more-research-checkbox" need-option="true">
+        <label for="research-description-input">Описание исследования</label>
+        <textarea class="form-control" id="research-description-input" data-for="r:Research" type="text" name="description"></textarea>
       </div>
 
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
@@ -134,7 +145,7 @@
         <label>Описание памятника</label>
         <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
         <label for="epoch-selector">Эпоха</label>
         <select class="form-control" id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
       </div>
