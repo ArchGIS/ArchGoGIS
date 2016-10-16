@@ -73,7 +73,9 @@ function postQuery() {
     ["Report", "Author", "hasauthor"],
     ["Author", "AuthorImage", "has"],
     ["Artifact", "ArtifactImage", "has"],
-    ["HeritageStatus", "File", "has"]
+    ["HeritageStatus", "File", "has"],
+    ["Organization", "City", "has"],
+    ["Organization", "Report", "has"]
   ]);
 
   var formdata = new FormData();

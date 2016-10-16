@@ -15,5 +15,7 @@ CREATE SEQUENCE n_culture_id_seq;
 CREATE SEQUENCE n_research_type_id_seq;
 CREATE SEQUENCE n_complex_id_seq;
 CREATE SEQUENCE n_image_id_seq;
+CREATE SEQUENCE n_city_id_seq;
+CREATE SEQUENCE n_author_job_id_seq;
 
 CREATE SEQUENCE local_storage_file_id_seq;
