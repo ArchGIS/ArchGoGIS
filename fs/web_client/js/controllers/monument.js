@@ -116,6 +116,12 @@ App.controllers.monument = new (App.View.extend({
         'etl': function(cities) {
           return _.map(cities, city => ({'id': city.id, 'label': city.name}));
         }
+      },
+      'oknInputOptions': {
+        'source': App.models.Okn.findByNamePrefix,
+        'etl': function(okns) {
+          return _.map(okns, okn => ({'id': okn.id, 'label': okn.name}));
+        }
       }
     });
   },

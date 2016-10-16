@@ -109,7 +109,9 @@
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="false">
         <label for="heritage-object-input">Название</label>
-        <input class="form-control" id="heritage-object-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
+        <%= widget("SearchLine", oknInputOptions, "heritage-object-input") %>
+        <input id="heritage-object-input-id" data-for="hs:HeritageStatus" hidden type="id" name="id" data-req="up"></input>
+        <!-- <input class="form-control" id="heritage-object-input" data-for="hs:HeritageStatus" type="text" name="code"></input> -->
       </div>
 
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
