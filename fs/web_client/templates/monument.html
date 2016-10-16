@@ -57,7 +57,7 @@
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
-        <input id="report-file-input" type="file" data-for="r:Report" name="file"></input>
+        <input id="report-file-input" type="file" data-for="r:Report" name="fileid"></input>
       </div>
 
       <div hidden="true">
@@ -95,11 +95,11 @@
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label for="heritage-object-description-input">Описание</label>
-        <input class="form-control" id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></input>
+        <textarea class="form-control" id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></textarea>
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label for="heritage-object-border-input">Описание границ</label>
-        <input class="form-control" id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></input>
+        <textarea class="form-control" id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></textarea>
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label for="heritage-object-security-input">Предмет охраны</label>
@@ -107,7 +107,7 @@
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label for="heritage-object-files-input">Файл документа</label>
-        <input class="form-control" id="heritage-object-files-input" data-for="file:File" type="file" name="file"></input>
+        <input class="form-control" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
       </div>
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
@@ -127,7 +127,7 @@
       </div>
       <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
         <label for="monument-desc-input">Описание памятника</label>
-        <input class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
+        <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
       </div>
       <div class="form-group">
         <label for="epoch-selector">Эпоха</label>
