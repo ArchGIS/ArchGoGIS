@@ -67,12 +67,13 @@ function postQuery() {
     ["Knowledge", "Culture", "has"],
     ["Knowledge", "Complex", "has"],
     ["Monument", "Complex", "has"],
-    ["HeritageStatus", "Monument", "contains"],
+    ["HeritageStatus", "Monument", "has"],
     ["Research", "Report", "hasreport"],
     ["Complex", "Artifact", "has"],
     ["Report", "Author", "hasauthor"],
     ["Author", "AuthorImage", "has"],
-    ["Artifact", "ArtifactImage", "has"]
+    ["Artifact", "ArtifactImage", "has"],
+    ["HeritageStatus", "File", "has"]
   ]);
 
   var formdata = new FormData();
@@ -88,7 +89,6 @@ function postQuery() {
       var name = $(element).attr("name");
 
       uploadFile(element.files[0]).then(function(key) {
-        console.log(11);
         if (!json[datafor]) {
           json[datafor] = {};
         }
@@ -113,8 +113,7 @@ function postQuery() {
       formdata.append(key, JSON.stringify(val));
     });
 
-    console.log(formdata.getAll("aimg:Image"));
-    console.log(formdata.getAll("author:Author"));
+    console.log(formdata.getAll("file:File"));
 
     $.ajax({
       url: "/hquery/upsert",
@@ -181,16 +180,6 @@ function generateJson(relations) {
       }
     })
   })
-
-  // Может быть в следующий раз
-  // var required = $("[required][used!=false]");
-  // $.each(required, function(key, input) {
-  //   dataFor = $(input).attr("data-for");
-  //   if (!json[dataFor]) {
-  //     json[dataFor] = {};
-  //   }
-  //   console.log(dataFor);
-  // });
 
   console.log(json)
   console.log(objs)

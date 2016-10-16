@@ -49,11 +49,15 @@ var (
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{
-		{"Describes"},
-		{"Has"},
-		{"Contains"},
-		{"Created"},
-		{"HelpedToCreate"},
-		{"WorkedIn"},
+		{"describes"},
+		{"has"},
+		{"hasauthor"},
+		{"hascoauthor"},
+		{"contains"},
+		{"created"},
+		{"belongsto"},
+		{"founded"},
+		{"hasreport"},
+		{"workedIn"},
 	}
 )
