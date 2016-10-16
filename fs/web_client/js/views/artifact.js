@@ -99,7 +99,7 @@ App.views.artifact = new (App.View.extend({
       }
     });
 
-    $('.next-button').on('click', function(e) {
+    $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});
     })
 

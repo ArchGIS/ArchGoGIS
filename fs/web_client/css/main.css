@@ -269,8 +269,8 @@ input[type=text] {
 
 .error-input {
   /*color: red;*/
-  font-size: 0.8em;
-  border: 1px solid #f33;
+  font-size: 0.8em; 
+  border: 1px solid #f33 !important;
 }
 
 .required {

@@ -58,18 +58,31 @@
         <input class="form-control" id="research-title-input" data-for="r:Research" type="text" name="name" data-req></input>
       </div>
       <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
-        <label for="research-title-input">Описание</label>
-        <input class="form-control" id="research-title-input" data-for="r:Research" type="text" name="description"></input>
-      </div>
-      <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-type-selector">Тип</label>
-        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
+        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"  dynamic="true"></select>
       </div>
       <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-year-input">Год</label>
         <input class="form-control" id="research-year-input" data-for="r:Research" type="number" name="year"></input>
       </div>
-      <button class="btn btn-primary" active="1">
+
+      <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
+        <h4 for="report-input">Добавление отчёта:</h4>
+      </div>
+      <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
+        <label for="report-name-input">Название <span class="required">*</span></label>
+        <input class="form-control" id="report-name-input" data-for="rep:Report" type="text" name="name" data-req></input>
+      </div>
+      <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
+        <label for="report-year-input">Год</label>
+        <input class="form-control" id="report-year-input" data-for="rep:Report" type="number" name="year"></input>
+      </div>
+      <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
+        <label for="report-file-input">Файл отчета</label>
+        <input id="report-file-input" type="file" data-for="rep:Report" name="file"></input>
+      </div>
+
+      <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
@@ -126,7 +139,7 @@
       <div class="alert alert-dismissible alert-info">
         Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.54646846648, 49.56156165611.
       </div>
-      <button class="btn btn-primary" active="2">
+      <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
@@ -138,7 +151,7 @@
         <label for="complex-description-input">Описание</label>
         <input class="form-control" id="complex-description-input" data-for="c:Complex" type="text" name="description"></input>
       </div>
-      <button class="btn btn-primary" active="3">
+      <button class="btn btn-primary btn-next" active="3">
         <i class="fa fa-cogs"></i>
         Далее
       </button>

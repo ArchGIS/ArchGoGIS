@@ -339,6 +339,7 @@ function validateCreatePages () {
     });
   });
 
+  console.log(inputs);
   inputs.blur();
   return isValid;
 }
