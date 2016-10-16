@@ -43,13 +43,16 @@ create (funny:Tag {
 })
 
 create (kazan:City {
-  name: 'Казань'
+  name: 'Казань',
+  id: 1
 })
 create (piter:City {
-  name: 'Санкт-Петербург'
+  name: 'Санкт-Петербург',
+  id: 2
 })
 create (bolgar:City {
-  name: 'Болгар'
+  name: 'Болгар',
+  id: 3
 })
 
 create (tatar:Culture {
@@ -308,7 +311,7 @@ create (mon2:Monument {
 })
 
 create (status:HeritageStatus {
-  code: '555-3307'
+  name: 'Каменные памятники'
 })
 
 create (im1:Image {
@@ -489,6 +492,10 @@ create (job1)-[:belongsto]->(org2)
 create (job2)-[:belongsto]->(org2)
 create (job3)-[:belongsto]->(org2)
 create (job4)-[:belongsto]->(org1)
+
+create (org1)-[:has]->(bolgar)
+create (org2)-[:has]->(kazan)
+create (org3)-[:has]->(piter)
 
 create (r2)-[:hasauthor]->(au1)
 create (r3)-[:hasauthor]->(au1)
