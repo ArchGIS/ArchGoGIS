@@ -53,11 +53,42 @@ App.views.artifact = new (App.View.extend({
       });
     };
 
+    var citySelectHandler = function(event, ui) {
+      console.log(ui.item.id);
+      $('#report-city-input-id').val(ui.item.id);
+
+      App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
+        $('#report-organization-input').autocomplete({
+          source: _.map(orgs, function(org) {
+            return {'label': org.name, 'id': org.id}
+          })
+        });
+      });
+
+      $("#report-organization-input").autocomplete({
+        source: [],
+        minLength: 0,
+        select: function(event, ui) {
+          $("#report-organization-input-id").val(ui.item.id);
+        }
+      }).focus(function() {
+        $(this).autocomplete("search");
+      });
+    };
+
     var lastSelectedAuthorId = 0;
     App.page.get('author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         authorSelectHandler(event, ui);
+      } 
+    });
+
+    var lastSelectedCityId = 0;
+    $('#report-city-input').on('autocompleteselect', function(event, ui) {
+      if (lastSelectedCityId != ui.item.id) {
+        lastSelectedCityId = ui.item.id;
+        citySelectHandler(event, ui);
       } 
     });
 
