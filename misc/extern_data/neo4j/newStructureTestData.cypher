@@ -54,6 +54,10 @@ create (bolgar:City {
   name: 'Болгар',
   id: 3
 })
+create (moscow:City {
+  name: 'Москва',
+  id: 4
+})
 
 create (tatar:Culture {
   id: 1,
@@ -153,22 +157,19 @@ create (r1:Research {
   id: 1,
   year: 2011,
   name: 'Болгар-2011',
-  description: 'Анализируем Болгар',
-  type: 'Аналитическое'
+  description: 'Анализируем Болгар'
 })
 create (r2:Research {
   id: 2,
   year: 2010,
   name: 'Болгар-2010',
-  description: 'Поиск оружия',
-  type: 'Раскопки'
+  description: 'Поиск оружия'
 })
 create (r3:Research {
   id: 3,
   year: 2005,
   name: 'Болгар-2005',
-  description: 'Разведка',
-  type: 'Разведка'
+  description: 'Разведка'
 })
 
 create (rep1:Report {
@@ -369,33 +370,35 @@ create (im7:Image {
   id: 7,
   fileid: '7'
 })
-
 create (im8:Image {
   id: 8,
   fileid: '8'
 })
-
 create (im9:Image {
   id: 9,
   fileid: '9'
 })
 
 
-
 create (pub1:Publisher {
+  id:1,
   name: 'Болгар-арт'
 })
 create (pub2:Publisher {
+  id:2,
   name: 'Рускарт'
 })
 
 create (org1:Organization {
+  id:1,
   name: 'Сообщество копателей'
 })
 create (org2:Organization {
+  id:2,
   name: 'Ассоциация археологов Татарстана'
 })
 create (org3:Organization {
+  id:3,
   name: 'Питерский музей'
 })
 
@@ -425,12 +428,15 @@ create (stor8:StorageInterval {
 })
 
 create (store1:Storage {
+  id:1,
   address: 'Где-то в Питере'
 })
 create (store2:Storage {
+  id:2,
   address: 'Музей Казани'
 })
 create (store3:Storage {
+  id:3,
   address: 'Казанское хранилище'
 })
 
@@ -452,27 +458,39 @@ create (ref3:ShortBibliographicRef {
 
 create (arti1:Artifact {
   id: 1,
-  description: 'Железный меч'
+  name: 'Железный меч',
+  description: 'Железный меч',
+  year: '2000'
 })
 create (arti2:Artifact {
   id: 2,
-  description: 'Часть деревянного щита'
+  name: 'Часть деревянного щита',
+  description: 'Часть деревянного щита',
+  year: '2000'
 })
 create (arti3:Artifact {
   id: 3,
-  description: 'Плащ'
+  description: 'Плащ',
+  name: 'Плащ',
+  year: '2000'
 })
 create (arti4:Artifact {
   id: 4,
-  description: 'Золотое кольцо'
+  description: 'Золотое кольцо',
+  name: 'Золотое кольцо',
+  year: '2000'
 })
 create (arti5:Artifact {
   id: 5,
-  description: 'Картина с котятами'
+  name: 'Картина с котятами',
+  description: 'Картина с котятами',
+  year: '2000'
 })
 create (arti6:Artifact {
   id: 6,
-  description: 'Сапфировое ожерелье'
+  name: 'Сапфировое ожерелье',
+  description: 'Сапфировое ожерелье',
+  year: '2000'
 })
 
 create (r1)-[:has]->(rt1)

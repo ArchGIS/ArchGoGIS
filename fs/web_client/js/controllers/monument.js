@@ -11,8 +11,10 @@ App.controllers.monument = new (App.View.extend({
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
       "cultures:Culture": {"id": "*", "select": "*"},
+      "resType:ResearchType": {"id": "*", "select": "*"},
       "researches_hasauthor_authors": {},
       "researches_has_knowledges": {},
+      "researches_has_resType": {},
       "knowledges_belongsto_monument": {},
       "knowledges_has_cultures": {},
     });

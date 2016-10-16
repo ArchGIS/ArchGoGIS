@@ -12,7 +12,7 @@
       <h4 class="accordion-header">
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
         <%= t("research.singular") %> №<%= counter++%>:
-        <b><%= authors[i].name %>, <%= research.year %>, <%= research.type %></b>
+        <b><%= authors[i].name %>, <%= research.year %>, <%= resType[i].name %></b>
       </h4>
 
       <div class="accordion-content">
@@ -27,15 +27,17 @@
           <dd><%= knowledges[i].monument_name %></dd>
           <dt>Культурная принадлежность, определенная исследователем:</dt>
           <dd><%= cultures[i].name %></dd>
-          <dt>Описание:</dt>
-          <dd><%= research.description %></dd>
+          <% if (research.description) { %>
+            <dt>Описание:</dt>
+            <dd><%= research.description %></dd>
+          <% } %>
           <dt>Найденные артефакты:</dt>
           <dd>
             <% if (artifacts[i] && artifacts[i].length > 0) { %>
               <% var length = artifacts[i].length %>
               <% _.each(artifacts[i], function(artifact, i) { %>
                 <a href="#artifact/show/<%= artifact.id %>">
-                  <%= artifact.description%>
+                  <%= artifact.name%>
                 </a>
                 <% if (i < length-1) { %>
                 ,
