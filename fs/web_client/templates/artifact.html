@@ -81,12 +81,12 @@
         <input class="form-control" id="report-name-input" data-for="rep:Report" type="text" name="name" data-req></input>
       </div>
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
-        <label for="report-year-input">Год</label>
-        <input class="form-control" id="report-year-input" data-for="rep:Report" type="number" name="year"></input>
+        <label for="report-year-input">Год <span class="required">*</span></label>
+        <input class="form-control" id="report-year-input" data-for="rep:Report" type="number" name="year" data-req></input>
       </div>
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
         <label for="report-file-input">Файл отчета</label>
-        <input id="report-file-input" type="file" data-for="rep:Report" name="file"></input>
+        <input id="report-file-input" type="file" data-for="rep:Report" name="fileid"></input>
       </div>
 
       <button class="btn btn-primary btn-next" active="1">
@@ -117,7 +117,7 @@
       </div>
       <div class="form-group">
         <label>Описание памятника</label>
-        <input class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
+        <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
       </div>
       <div class="form-group">
         <label for="epoch-selector">Эпоха</label>
@@ -156,7 +156,7 @@
       <legend>Объект</legend>
       <div class="form-group">
         <label for="complex-description-input">Описание</label>
-        <input class="form-control" id="complex-description-input" data-for="c:Complex" type="text" name="description"></input>
+        <textarea class="form-control" id="complex-description-input" data-for="c:Complex" type="text" name="description"></textarea>
       </div>
       <button class="btn btn-primary btn-next" active="3">
         <i class="fa fa-cogs"></i>
@@ -172,7 +172,7 @@
 
       <div class="form-group">
         <label for="artifact-name-input">Описание</label>
-        <input class="form-control" id="artifact-name-input" data-for="a:Artifact" type="text" name="description"></input>
+        <textarea class="form-control" id="artifact-name-input" data-for="a:Artifact" type="text" name="description"></textarea>
       </div>
 
       <div class="form-group">

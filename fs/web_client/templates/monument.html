@@ -52,7 +52,7 @@
       <div class="form-group" toggle-by="new-report-checkbox" need-option="false">
         <label for="report-input">Отчет <span class="required">*</span></label>
         <input class="form-control" id="report-input"></input>
-        <input id="report-input-id" data-for="r:Report" type="hidden" name="id" data-req="up"></input>
+        <input id="report-input-id" data-for="r:Report" type="id" hidden name="id" data-req="up"></input>
       </div>
       
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
@@ -60,12 +60,12 @@
         <input class="form-control" id="report-name-input" data-for="r:Report" type="text" name="name" data-req></input>
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
-        <label for="report-year-input">Год</label>
-        <input class="form-control" id="report-year-input" data-for="r:Report" type="number" name="year"></input>
+        <label for="report-year-input">Год <span class="required">*</span></label>
+        <input class="form-control" id="report-year-input" data-for="r:Report" type="number" name="year" data-req></input>
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
-        <input id="report-file-input" type="file" data-for="r:Report" name="file"></input>
+        <input id="report-file-input" type="file" data-for="r:Report" name="fileid"></input>
       </div>
 
       <div hidden="true">
@@ -76,6 +76,7 @@
           <input class="form-control" id="research-year-input" data-for="rs:Research" type="number" name="year"></input>
         </div>
       </div>
+
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
         Далее
@@ -86,31 +87,35 @@
       <legend>ОКН</legend>
 
       <div class="checkbox">
-        <label for="new-report-checkbox">
+        <label for="new-heritage-object-checkbox">
           <input id="new-heritage-object-checkbox" type="checkbox" dynamic="true"></input>
           Добавить ОКН
         </label>
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="false">
-        <label>Код</label>
-        <input class="form-control" id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
+        <label for="heritage-object-input">Название</label>
+        <input class="form-control" id="heritage-object-input" data-for="hs:HeritageStatus" type="text" name="code"></input>
       </div>
 
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label>Код ОКН <span class="required">*</span></label>
-        <input class="form-control" id="heritage-object-code-input" data-for="hs:HeritageStatus" type="text" name="code" data-req></input>
+        <label for="heritage-object-name-input">Название <span class="required">*</span></label>
+        <input class="form-control" id="heritage-object-name-input" data-for="hs:HeritageStatus" type="text" name="code" data-req></input>
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label>Описание</label>
-        <input class="form-control" id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></input>
+        <label for="heritage-object-description-input">Описание</label>
+        <textarea class="form-control" id="heritage-object-description-input" data-for="hs:HeritageStatus" type="text" name="description"></textarea>
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label>Описание границ</label>
-        <input class="form-control" id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></input>
+        <label for="heritage-object-border-input">Описание границ</label>
+        <textarea class="form-control" id="heritage-object-border-input" data-for="hs:HeritageStatus" type="text" name="border"></textarea>
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label>Предмет охраны</label>
+        <label for="heritage-object-security-input">Предмет охраны</label>
         <input class="form-control" id="heritage-object-security-input" data-for="hs:HeritageStatus" type="text" name="security"></input>
+      </div>
+      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
+        <label for="heritage-object-files-input">Файл документа</label>
+        <input class="form-control" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
       </div>
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
@@ -125,12 +130,12 @@
         <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
       </div>
       <div class="form-group">
-        <label>Название памятника <span class="required">*</span></label>
+        <label for="monument-name-input">Название памятника <span class="required">*</span></label>
         <input class="form-control" id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
       </div>
       <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
-        <label>Описание памятника</label>
-        <input class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></input>
+        <label for="monument-desc-input">Описание памятника</label>
+        <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
       </div>
       <div class="form-group">
         <label for="epoch-selector">Эпоха</label>
@@ -154,7 +159,6 @@
           </label>
           <input class="form-control" id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
         </div>
-        <!-- <i id="pick-coord" class="fa fa-map-marker"></i> -->
       </div>
       <button id="send-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>

@@ -50,7 +50,7 @@ App.views.monument = new (App.View.extend({
       if ( validateCreatePages() ) {
         postQuery();
       } else {
-        alert('Недостаточно данных. Заполните все подсвеченные красным поля!');
+        alert('Недостаточно данных. Заполните все обязательные поля!');
       }
     });
 
