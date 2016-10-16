@@ -33,6 +33,18 @@ App.controllers.monument = new (App.View.extend({
       var d2 = $.Deferred();
       var d3 = $.Deferred();
 
+      var names = {};
+      $.each(data.knowledges, function(id, k) {
+        if (names[k.monument_name]) {
+          names[k.monument_name]++;
+        } else {
+          names[k.monument_name] = 1;
+        }
+      })
+
+      data.mainName = _(names).invert()[_(names).max()];
+      data.allNames = _.keys(names).join(', ');
+
       $.each(data.researches, function(id, research) {
         query = JSON.stringify({
           "research:Research": {"id": research.id+""},
