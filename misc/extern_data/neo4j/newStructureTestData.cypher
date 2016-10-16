@@ -534,12 +534,12 @@ create (an)-[:has]->(cir1)
 create (surv)-[:has]->(square)
 create (surv)-[:has]->(cir2)
 
-create (exc)-[:has]->(middle_age)
-create (exc)-[:has]->(mongol)
-create (an)-[:has]->(middle_age)
-create (an)-[:has]->(tatar)
-create (surv)-[:has]->(iron_age)
+create (mon1)-[:has]->(middle_age)
+create (mon2)-[:has]->(iron_age)
+
 create (surv)-[:has]->(fin)
+create (exc)-[:has]->(mongol)
+create (an)-[:has]->(tatar)
 
 create (arti1)-[:has]->(im1)
 create (arti2)-[:has]->(im1)

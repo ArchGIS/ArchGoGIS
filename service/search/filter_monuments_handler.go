@@ -19,7 +19,7 @@ const (
 		"MATCH (k:Knowledge)-[:belongsto]->(m)" +
 		"MATCH (r:Research)-[:has]->(k)" +
 		"MATCH (a:Author)<-[:hasauthor]-(r)" +
-		"MATCH (e:Epoch)<-[:has]-(k)" +
+		"MATCH (e:Epoch)<-[:has]-(m)" +
 		"MATCH (c:Culture)<-[:has]-(k)"
 )
 		// "WHERE k.monument_name =~ {needle}" +
