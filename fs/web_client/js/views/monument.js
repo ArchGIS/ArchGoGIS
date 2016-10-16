@@ -13,7 +13,7 @@ App.views.monument = new (App.View.extend({
       App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
         $('#report-input').autocomplete({
           source: _.map(reports, function(report) {
-            return {'label': fmt('$description ($year)', report), 'id': report.id}
+            return {'label': fmt('$name ($year)', report), 'id': report.id}
           })
         });
       });
