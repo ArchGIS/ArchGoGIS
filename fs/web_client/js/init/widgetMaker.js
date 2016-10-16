@@ -7,18 +7,19 @@ App.widgetMaker = new function() {
   // Последний выданный id для виджета.
   var lastId = 0;
 
-  this.createWidget = function(widgetName, params, id) {
+  this.createWidget = function(widgetName, params, id, attributes) {
+    attributes = attributes || "";
     if (App.widgets[widgetName]) {
       var widget = null;
       
       if (id) {
       	// Явно переданный id. Widget сохраняем в объектах страницы.
       	// Далее его можно получить через App.page.get(id).
-      	widget = new App.widgets[widgetName](params, id);
+      	widget = new App.widgets[widgetName](params, id, attributes);
       	App.page.registerObject(id, widget);
       } else {
       	// Генерируем id сами, не добавляем Widget в пул объектов страницы.
-      	widget = new App.widgets[widgetName](params, 'widget--' + lastId++);
+      	widget = new App.widgets[widgetName](params, 'widget--' + lastId++, attributes);
       }
       
       deferred.push(widget);
