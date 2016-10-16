@@ -47,6 +47,12 @@ function showField(select) {
     } else {
       obj.hide().attr("used", false);
       obj.contents().attr("used", false);
+
+      if (obj.has("[type='checkbox']").length > 0) {
+        var checkbox = obj.find("[type='checkbox']");
+        checkbox.prop("checked", false);
+        checkbox.trigger("change");
+      }
     }
 
     if (obj.has("select").length > 0) {

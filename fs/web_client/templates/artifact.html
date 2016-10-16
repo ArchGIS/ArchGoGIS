@@ -15,23 +15,30 @@
           <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
           Добавить нового автора
         </label>
-
       </div>
+
       <div class="form-group" toggle-by="new-author-checkbox" need-option="false">
         <label for="author-input">Автор исследования <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
       </div>
-
       <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
         <label for="author-name-input">Имя <span class="required">*</span></label>
         <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
       </div>
-      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
+
+      <div class="checkbox" toggle-by="new-author-checkbox" need-option="true">
+        <label for="more-author-checkbox">
+          <input id="more-author-checkbox" type="checkbox" dynamic="true"></input>
+          Дополнительная информация от авторе
+        </label>
+      </div>
+      
+      <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
         <label for="author-birth-date-input">Год рождения</label>
         <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
       </div>
-      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
+      <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
         <label for="author-photo-input">Фотография</label>
         <input id="author-photo-input" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
       </div>
@@ -59,7 +66,7 @@
       </div>
       <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-type-selector">Тип</label>
-        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"  dynamic="true"></select>
+        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id" dynamic="true"></select>
       </div>
       <div class="form-group" toggle-by="new-research-checkbox" need-option="true">
         <label for="research-year-input">Год</label>
@@ -67,7 +74,7 @@
       </div>
 
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
-        <h4 for="report-input">Добавление отчёта:</h4>
+        <h4 for="report-input">Добавление отчёта для исследования:</h4>
       </div>
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
         <label for="report-name-input">Название <span class="required">*</span></label>
