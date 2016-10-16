@@ -87,6 +87,12 @@ App.controllers.monument = new (App.View.extend({
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
+      },
+      'citiesInputOptions': {
+        'source': App.models.City.findByNamePrefix,
+        'etl': function(cities) {
+          return _.map(cities, city => ({'id': city.id, 'label': city.name}));
+        }
       }
     });
   },
