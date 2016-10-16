@@ -68,7 +68,7 @@ a:hover {
 .maps {
   position: fixed;
   left: calc(50% + 1em);
-  top: 3em;
+  top: 60px;
   width: calc(100% - 50% - 1.5em);
   height: 90%;
   border: 1px solid;
@@ -319,5 +319,6 @@ dt {
   margin-right: 20px;
 }
 .coords > .btn {
-  margin-top: 25px;
+  position: relative;
+  top: 6px;
 }
