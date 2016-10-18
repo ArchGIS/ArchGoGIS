@@ -19,6 +19,9 @@ App.views.wizard = new (App.View.extend({
       },
       "artifact": {
         "#artifact/new": t("research.singular")
+      },
+      "research": {
+        "#research/new": t("report.singular")
       }
     };
     
