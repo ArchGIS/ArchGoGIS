@@ -21,7 +21,9 @@ App.controllers.author = new (App.View.extend({
 		var query = JSON.stringify({
 			"author:Author": {"id": id, "select": "*"},
 			"researches:Research": {"id": "*", "select": "*"},
+			"resType:ResearchType": {"id": "*", "select": "*"},
 			"researches_hasauthor_author": {},
+			"researches_hasauthor_resType": {},
 		});
 
 		var query_photos = JSON.stringify({

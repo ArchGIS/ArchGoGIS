@@ -25,10 +25,12 @@
     </p>
   <% } %>
 
-  <p>
-    <%= t('research.type') %>:
-    <%= maybe(rt[0].name) %>
-  </p>
+  <% if (rt[0].name) { %>
+    <p>
+      <%= t('research.type') %>:
+      <%= maybe(rt[0].name) %>
+    </p>
+  <% } %>
 
   <h4><%= t('research.prop.description') %>:</h4>
   <p><%= maybe(research.description) %></p>

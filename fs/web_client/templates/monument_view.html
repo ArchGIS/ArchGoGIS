@@ -12,7 +12,11 @@
       <h4 class="accordion-header">
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
         <%= t("research.singular") %> №<%= counter++%>:
-        <b><%= authors[i].name %>, <%= research.year %>, <%= resType[i].name %></b>
+        <b><%= authors[i].name %>, <%= research.year %>
+        <% if (resType[i]) { %>
+          , <%= resType[i].name %>
+        <% } %>
+        </b>
       </h4>
 
       <div class="accordion-content">

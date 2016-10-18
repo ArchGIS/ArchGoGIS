@@ -11,12 +11,20 @@ App.controllers.monument = new (App.View.extend({
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
       "cultures:Culture": {"id": "*", "select": "*"},
-      "resType:ResearchType": {"id": "*", "select": "*"},
       "researches_hasauthor_authors": {},
+      "researches_has_knowledges": {},
+      "knowledges_belongsto_monument": {},
+      "knowledges_has_cultures": {},
+    });
+
+    var query_get_resType = JSON.stringify({
+      "monument:Monument": {"id": id},
+      "researches:Research": {"id": "*"},
+      "knowledges:Knowledge": {"id": "*"},
+      "resType:ResearchType": {"id": "*", "select": "*"},
       "researches_has_knowledges": {},
       "researches_has_resType": {},
       "knowledges_belongsto_monument": {},
-      "knowledges_has_cultures": {},
     });
 
     var query_epoch = JSON.stringify({
@@ -30,10 +38,12 @@ App.controllers.monument = new (App.View.extend({
       data.placemarks = [];
       data.artifacts = [];
       data.reports = [];
+      data.resType = {};
 
       var d1 = $.Deferred();
       var d2 = $.Deferred();
       var d3 = $.Deferred();
+      var d4 = $.Deferred();
 
       var names = {};
       $.each(data.knowledges, function(id, k) {
@@ -72,6 +82,12 @@ App.controllers.monument = new (App.View.extend({
         d3.resolve();
       })
 
+      $.post("/hquery/read", query_get_resType).success(function(response) {
+        response = JSON.parse(response);
+        data = $.extend(data, response);
+        d4.resolve();
+      })
+
       $.each(data.knowledges, function(id, knowledge) {
         query = JSON.stringify({
           "knowledge:Knowledge": {"id": knowledge.id+""},
@@ -97,7 +113,7 @@ App.controllers.monument = new (App.View.extend({
       });
 
       console.log(data);
-      $.when(d1, d2).done(function() {App.page.render("monument_view", data)});
+      $.when(d1, d2, d3, d4).done(function() {App.page.render("monument_view", data)});
     });
   },
 
