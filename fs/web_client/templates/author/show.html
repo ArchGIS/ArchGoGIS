@@ -1,74 +1,81 @@
 <div class="content">
-  <h2><%= t('author.researcher') %></h2>
+    <h2><%= t('author.researcher') %></h2>
+    <p>
+        <% if (photos.length) { %>
+        <% _.each(photos, function(ph) { %>
+        <img src="<%= dburl + '/local_storage/' + ph.fileid %>" height="100px">
+        <% }); %>
+        <% } else { %>
+        <span>Пока нет</span>
+        <% } %>
+    </p>
+    <dl>
+        <dt><%= t('author.prop.name') %>:</dt>
+        <dd><%= author.name %></dd>
+        <dt><%= t('author.prop.year') %>:</dt>
+        <dd><%= (author.birthdate) %></dd>
+    </dl>
 
-  <% if (photos.length) { %>
-    <% _.each(photos, function(ph) { %>
-      <img src="<%= dburl + '/local_storage/' + ph.fileid %>" height="100px">
-    <% }); %>
-  <% } %>
-  <br>
-
-  <dt><%= t('author.prop.name') %>:</dt>
-  <dd><%= author.name %></dd>
-
-  <dt><%= t('author.prop.year') %>:</dt>
-  <dd><%= (author.birthdate) %></dd>
-
-  <h3><%= t('research.plural') %>:</h3>
-  <% if (researches.length) { %>
+    <h3><%= t('research.plural') %>:</h3>
+    <% if (researches.length) { %>
     <% _.each(researches, function(r, i) { %>
       <%= i + 1 %>)
       <a href="#research/show/<%= r.id %>"><%= r.name %> (<%= resType[i].name%>, <%= r.year%>)</a>
       <br><br>
     <% }); %>
-  <% } else { %>
-    <p>Нет исследований</p>     
-  <% } %>     
+    <% } else { %>
+    <p>Нет исследований</p>
+    <% } %>
 
-  <h3><%= t('author.prop.publications') %>:</h3>
-  <% if (pubs.length) { %>
+    <h3><%= t('author.prop.publications') %>:</h3>
+    <% if (pubs.length) { %>
     <% _.each(pubs, function(pub, i) { %>
-      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - автор
-      <br><br>
+    <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - автор
+    <br><br>
     <% }); %>
-  <% } %>
-  <% if (pubsco.length) { %>
+    <% } %>
+    <% if (pubsco.length) { %>
     <% _.each(pubsco, function(pub, i) { %>
-      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - соавтор
-      <br><br>
+    <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - соавтор
+    <br><br>
     <% }); %>
-  <% } %>
+    <% } %>
 
-  <% if (!(pubs.length && pubsco.length)) { %>
-    <p>Нет публикаций</p>     
-  <% } %>  
+    <% if (!(pubs.length && pubsco.length)) { %>
+    <p>Нет публикаций</p>
+    <% } %>
 
-  <h3><%= t('organization.plural') %>:</h3>
-  <% if (jobs.length) { %>
-    <% _.each(jobs, function(job, i) { %>
-      <%= orgs[i].name %>,
-      <p>
-        <%= t('work-post') %>:
-        <%= job.post_name  %>
-        <%= t('since') %>
-        <%= job.period[0] %>
-      </p>
-      <br>
-    <% }); %>
-  <% } else { %>
+    <h3><%= t('organization.plural') %>:</h3>
+    <% if (jobs.length) { %>
+    <dl>
+        <% _.each(jobs, function(job, i) { %>
+        <dt><%= orgs[i].name %></dt>
+        <dd>
+            <%= t('work-post') %>:
+            <%= job.post_name %>
+            <%= t('since') %>
+            <%= job.period[0] %>
+        </dd>
+        <br>
+        <% }); %>
+    </dl>
+    <% } else { %>
     <p>Нет организаций</p>
-  <% } %>
-  <br>
-
-  <p>
-    Биография:
-  </p>
-  <% if (author.biography) { %>
-    <%= author.biography %>
-  <% } else { %>
-    Не заполнено
-  <% } %>
-<div class="maps">
-  <%= widget("Map", {"placemarks": placemarks}, "map") %>
-</div>
+    <% } %>
+    <br>
+    <dl>
+        <dt>
+            Биография:
+        </dt>
+        <dd>
+            <% if (author.biography) { %>
+            <%= author.biography %>
+            <% } else { %>
+            Не заполнено
+            <% } %>
+        </dd>
+    </dl>
+    <div class="maps">
+        <%= widget("Map", {"placemarks": placemarks}, "map") %>
+    </div>
 </div>
