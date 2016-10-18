@@ -1,72 +1,73 @@
 <div class="content">
 	<h2><%= t('publication.singular') %></h2>
-	<br>
-	<%= t('author.singular') %>:
-	<a href="#author/show/<%= author[0].id %>"><%= author[0].name %></a>
-	<br>
+	<dl>
+		<dt><%= t('author.singular') %>:</dt>
+		<dd><a href="#author/show/<%= author[0].id %>"><%= author[0].name %></a></dd>
+	</dl>
 
 	<% if (coauthors.length) { %>
-		<br>
-		<%= t('coauthor.plural') %>:
+	<dl>
+		<dt><%= t('coauthor.plural') %>:</dt>
 		<% _.each(coauthors, function(a, i) { %>
-			<a href="#author/show/<%= a.id %>"><%= a.name %></a>
-			<% if (coauthors.length > (i+1)) { %>
+			<dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
+			<!-- <% if (coauthors.length > (i+1)) { %>
 				,
-			<% } %>
+			<% } %> -->
 		<% }); %>
+	</dl>
 	<% } %>
 
-	<p>
-		<%= t('publication.prop.title') %>:
-		<%= pub.name %>
-	</p>
+	<dl>
+		<dt><%= t('publication.prop.title') %>:</dt>
+		<dd><%= pub.name %></dd>
+	</dl>
 	
-	<p>
-		<%= t('publication.prop.publisher') %>:
-		<%= publisher[0].name %>
-	</p>
+	<dl>
+		<dt><%= t('publication.prop.publisher') %>:</dt>
+		<dd><%= publisher[0].name %></dd>
+	</dl>
 
-	<p>
-		<%= t('publication.prop.year') %>:
-		<%= pub.published_at %>
-	</p>
+	<dl>
+		<dt><%= t('publication.prop.year') %>:</dt>
+		<dd><%= pub.published_at %></dd>
+	</dl>
 
-	<p>
-		<%= t('publication.prop.type') %>:
-		<%= pubtype[0].name %>
-	</p>
+	<dl>
+		<dt><%= t('publication.prop.type') %>:</dt>
+		<dd><%= pubtype[0].name %></dd>
+	</dl>
 
 	<% if (pub.volume) { %>
-		<p>
-			<%= t('publication.prop.volume') %>:
-			<%= pub.volume %>
-		</p>
+		<dl>
+			<dt><%= t('publication.prop.volume') %>:</dt>
+			<dd><%= pub.volume %></dd>
+		</dl>
 	<% }%>
 
 	<% if (pub.edition) { %>
-		<p>
-			<%= t('publication.prop.edition') %>:
-			<%= pub.edition %>
-		</p>
+		<dl>
+			<dt><%= t('publication.prop.edition') %>:</dt>
+			<dd><%= pub.edition %></dd>
+		</dl>
 	<% }%>
 
 	<% if (pub.number) { %>
-		<p>
-			<%= t('publication.prop.number') %>:
-			<%= pub.number %>
-		</p>
+		<dl>
+			<dt><%= t('publication.prop.number') %>:</dt>
+			<dd><%= pub.number %></dd>
+		</dl>
 	<% }%>
 
-	<p>
-		<%= t('publication.prop.isbn') %>:
-		<%= pub.isbn %>
-	</p>
+	<dl>
+		<dt><%= t('publication.prop.isbn') %>:</dt>
+		<dd><%= pub.isbn %></dd>
+	</dl>
 
 	<% if (pub.pages) { %>
-		<p>
-			<%= t('publication.prop.pages') %>:
-			<%= pub.pages %>
-		</p>
+		<dl>
+			<dt><%= t('publication.prop.pages') %>:</dt>
+			<dd><%= pub.pages %></dd>
+		</dl>
 	<% }%>
 
 	<% if (pub.link) { %>
