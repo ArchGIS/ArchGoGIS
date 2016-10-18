@@ -8,13 +8,21 @@ App.views.research = new (App.View.extend({
 	"new": function(argument) {
 		var counter = 1;
 		var fmt = App.fn.fmt;
-		
+		var reportName;
+		var reportYear;
+
 		fillSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
 		setSelectsEvents();
 
 		var fillResearchInputs = function(){
-			var year = $("#research-year-input").val();
-			var name = $("#report-name-input").val() + " - " + year;
+			if ($("#report-input-id").val()) {
+				var year = reportName
+				var name = reportYear + " - " + year;
+			} else {
+				var year = $("#research-year-input").val();
+				var name = $("#report-name-input").val() + " - " + year;
+			}
+
 			$("#research-name-input").val(name);
 		};
 
@@ -34,7 +42,7 @@ App.views.research = new (App.View.extend({
 			App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
 				$('#report-input').autocomplete({
 					source: _.map(reports, function(report) {
-						return {'label': fmt('$name ($year)', report), 'id': report.id}
+						return {'label': fmt('$name ($year)', report), 'id': report.id, 'year': report.year, 'name': report.name}
 					})
 				});
 			});
@@ -43,6 +51,8 @@ App.views.research = new (App.View.extend({
 				source: [],
 				minLength: 0,
 				select: function(event, ui) {
+					reportName = ui.item.name;
+					reportYear = ui.item.year;
 					$("#report-input-id").val(ui.item.id);
 				}
 			}).focus(function() {

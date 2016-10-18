@@ -89,6 +89,7 @@ function postQuery() {
   var formdata = new FormData();
 
   var files = $('input[type=file][used!=false]');
+  console.log(files);
   var uploadedFilesCounter = 0;
   var defer = $.Deferred();
 
@@ -116,6 +117,9 @@ function postQuery() {
     }
   });
 
+  if (files.length == 0) {
+    defer.resolve();
+  }
 
   $.when(defer).done(function() {
     console.log(json);
