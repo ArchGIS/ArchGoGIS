@@ -15,8 +15,8 @@ App.Controller = Backbone.View.extend({});
 App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
-// var dburl = "http://localhost:8080";
-var dburl = "http://85.143.214.248:8080";
+var dburl = "http://localhost:8080";
+// var dburl = "http://85.143.214.248:8080";
 
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");

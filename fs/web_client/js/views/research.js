@@ -13,10 +13,10 @@ App.views.research = new (App.View.extend({
 		setSelectsEvents();
 
 		var fillResearchInputs = function(){
-      var year = $("#research-year-input").val();
-      var name = $("#report-name-input").val() + " - " + year;
-      $("#research-name-input").val(name);
-    };
+			var year = $("#research-year-input").val();
+			var name = $("#report-name-input").val() + " - " + year;
+			$("#research-name-input").val(name);
+		};
 
 		$('#send-button').on('click', function() {
 			fillResearchInputs();
@@ -29,65 +29,65 @@ App.views.research = new (App.View.extend({
 		});
 
 		var authorSelectHandler = function(event, ui) {
-      $('#author-input-id').val(ui.item.id);
+			$('#author-input-id').val(ui.item.id);
 
-      App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
-        $('#report-input').autocomplete({
-          source: _.map(reports, function(report) {
-            return {'label': fmt('$name ($year)', report), 'id': report.id}
-          })
-        });
-      });
+			App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
+				$('#report-input').autocomplete({
+					source: _.map(reports, function(report) {
+						return {'label': fmt('$name ($year)', report), 'id': report.id}
+					})
+				});
+			});
 
-      $("#report-input").autocomplete({
-        source: [],
-        minLength: 0,
-        select: function(event, ui) {
-          $("#report-input-id").val(ui.item.id);
-        }
-      }).focus(function() {
-        $(this).autocomplete("search");
-      });
-    };
+			$("#report-input").autocomplete({
+				source: [],
+				minLength: 0,
+				select: function(event, ui) {
+					$("#report-input-id").val(ui.item.id);
+				}
+			}).focus(function() {
+				$(this).autocomplete("search");
+			});
+		};
 
-    var citySelectHandler = function(event, ui) {
-      console.log(ui.item.id);
-      $('#report-city-input-id').val(ui.item.id);
+		var citySelectHandler = function(event, ui) {
+			console.log(ui.item.id);
+			$('#report-city-input-id').val(ui.item.id);
 
-      App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
-        $('#report-organization-input').autocomplete({
-          source: _.map(orgs, function(org) {
-            return {'label': org.name, 'id': org.id}
-          })
-        });
-      });
+			App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
+				$('#report-organization-input').autocomplete({
+					source: _.map(orgs, function(org) {
+						return {'label': org.name, 'id': org.id}
+					})
+				});
+			});
 
-      $("#report-organization-input").autocomplete({
-        source: [],
-        minLength: 0,
-        select: function(event, ui) {
-          $("#report-organization-input-id").val(ui.item.id);
-        }
-      }).focus(function() {
-        $(this).autocomplete("search");
-      });
-    };
+			$("#report-organization-input").autocomplete({
+				source: [],
+				minLength: 0,
+				select: function(event, ui) {
+					$("#report-organization-input-id").val(ui.item.id);
+				}
+			}).focus(function() {
+				$(this).autocomplete("search");
+			});
+		};
 
 		var lastSelectedAuthorId = 0;
 		$('#author-input').on('autocompleteselect', function(event, ui) {
-      if (lastSelectedAuthorId != ui.item.id) {
-        lastSelectedAuthorId = ui.item.id;
-        authorSelectHandler(event, ui);
-      } 
-    });
+			if (lastSelectedAuthorId != ui.item.id) {
+				lastSelectedAuthorId = ui.item.id;
+				authorSelectHandler(event, ui);
+			} 
+		});
 
 		var lastSelectedCityId = 0;
-    $('#report-city-input').on('autocompleteselect', function(event, ui) {
-      if (lastSelectedCityId != ui.item.id) {
-        lastSelectedCityId = ui.item.id;
-        citySelectHandler(event, ui);
-      } 
-    });
+		$('#report-city-input').on('autocompleteselect', function(event, ui) {
+			if (lastSelectedCityId != ui.item.id) {
+				lastSelectedCityId = ui.item.id;
+				citySelectHandler(event, ui);
+			} 
+		});
 
 		function addCoord (name, id, datafor) {
 			return $("<div>")
@@ -107,12 +107,12 @@ App.views.research = new (App.View.extend({
 		}
 
 		function addExcName(id) {
-      return $("<div>")
-      	.addClass("form-group")
-      	.append($("<label>")
+			return $("<div>")
+				.addClass("form-group")
+				.append($("<label>")
 						.attr("for", `excavation-name-input-${id}`)
 						.text(`Название ${id}`))
-      	.append($("<input>")
+				.append($("<input>")
 						.addClass("form-control")
 						.attr({
 							"id": `excavation-name-input-${id}`,
@@ -123,12 +123,12 @@ App.views.research = new (App.View.extend({
 		}
 
 		function addExcArea(id) {
-      return $("<div>")
-      	.addClass("form-group")
-      	.append($("<label>")
+			return $("<div>")
+				.addClass("form-group")
+				.append($("<label>")
 						.attr("for", `excavation-area-input-${id}`)
 						.text(`Выкопанная площадь (м²)`))
-      	.append($("<input>")
+				.append($("<input>")
 						.addClass("form-control")
 						.attr({
 							"id": `excavation-area-input-${id}`,
