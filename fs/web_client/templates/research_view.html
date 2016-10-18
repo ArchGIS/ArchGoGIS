@@ -1,41 +1,43 @@
 <div class="content">
   <h2><%= t('research.singular') %> "<%= research.name %>"</h2>
   <br>
-  <p>
-    <%= t('author.singular') %>:
-    <a href="#author/show/<%= author[0].id %>">
+  <dl>
+    <dt><%= t('author.singular') %>:</dt>
+    <dd><a href="#author/show/<%= author[0].id %>">
       <%= author[0].name %>
-    </a>
-  </p>
+    </a></dd>
+  </dl>
 
   <% if (coauthors.length) { %>
-    <%= t('coauthor.plural') %>:
+  <dl>
+    <dt><%= t('coauthor.plural') %>:</dt>
     <% _.each(coauthors, function(a, i) { %>
-      <a href="#author/show/<%= a.id %>"><%= a.name %></a>
-      <% if (coauthors.length > (i+1)) { %>
+      <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
+      <!-- <% if (coauthors.length > (i+1)) { %>
         ,
-      <% } %>
+      <% } %> -->
     <% }); %>
+  </dl>
   <% } %>
   
   <% if (research.year) { %>
-    <p>
-      <%= t('research.year') %>:
-      <%= maybe(research.year) %>
-    </p>
+    <dl>
+      <dt><%= t('research.year') %>:</dt>
+      <dd><%= maybe(research.year) %></dd>
+    </dl>
   <% } %>
 
   <% if (resType[0]) { %>
-    <p>
-      <%= t('research.type') %>:
-      <%= maybe(resType[0].name) %>
-    </p>
+    <dl>
+      <dt><%= t('research.type') %>:</dt>
+      <dd><%= maybe(resType[0].name) %></dd>
+    </dl>
   <% } %>
 
   <h4><%= t('research.prop.description') %>:</h4>
   <p><%= maybe(research.description) %></p>
   
-  <h3><%= t('report.plural') %>:</h3>
+  <h4><%= t('report.plural') %>:</h4>
   <% if (reports.length) { %>
     <div>
     <% _.each(reports, function(report) { %>
