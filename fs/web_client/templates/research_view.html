@@ -18,10 +18,17 @@
     <% }); %>
   <% } %>
   
-  <% if (coauthors.length) { %>
+  <% if (research.year) { %>
     <p>
       <%= t('research.year') %>:
       <%= maybe(research.year) %>
+    </p>
+  <% } %>
+
+  <% if (resType[0]) { %>
+    <p>
+      <%= t('research.type') %>:
+      <%= maybe(resType[0].name) %>
     </p>
   <% } %>
 

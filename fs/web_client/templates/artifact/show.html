@@ -1,43 +1,48 @@
 <div class="content">
   <h2><%= t('artifact.singular') %></h2>
   
-  <p>
-    <!-- <h3>Фотографии:</h3> -->
-    <% if (photos.length) { %>
-      <% _.each(photos, function(photo) { %>
-        <img src="<%= dburl + '/local_storage/' + photo.fileid %>" height="100px">
-      <% }); %>
-    <% } else { %>
-      <span>Пока фотографий нет</span>
-    <% } %>
-  </p>
+  <% if (photos.length) { %>
+    <% _.each(photos, function(photo) { %>
+      <img src="<%= dburl + '/local_storage/' + photo.fileid %>" height="100px">
+    <% }); %>
+  <% } else { %>
+    <span>Пока фотографий нет</span>
+  <% } %>
+  <br>
 
-  <p>
-    <%= t('artifact.yearFound') %>:
-    <%= resFound[0].year %>
-  </p>
+  <% if (artifact.year) { %>
+    <dt><%= t('artifact.yearFound') %>:</dt>
+    <dd><%= artifact.year %></dd>
+  <% } %>
+  
+  <% if (artifact.name) { %>
+    <dt><%= t('artifact.name') %>:</dt>
+    <dd><%= artifact.name %></dd>
+  <% } %>
 
-  <p>
-    <%= t('artifact.monumentFound') %>:
+  <dt><%= t('artifact.monumentFound') %>:</dt>
+  <dd>
     <a href="#monument/show/<%= monFound[0].id %>">
-	    <%= knowFound[0].monument_name %>
-  	</a>
-  </p>
+      <%= knowFound[0].monument_name %>
+    </a>
+  </dd>
+  
+  
+  <% if (artifact.description) { %>
+    <dt><%= t('artifact.description') %>:</dt>
+    <dd><%= artifact.description %></dd>
+  <% } %>
 
-  <p>
-    <%= t('artifact.description') %>:
-    <%= artifact.description %>
-  </p>
+  <% if (materials.length > 0) { %>
+    <dt><%= t('artifact.material') %>:</dt>
+    <dd><%= _.pluck(materials, 'name').join(", ") %></dd>
+  <% } %>
 
-  <p>
-    <%= t('artifact.material') %>:
-    <%= _.pluck(materials, 'name').join(", ") %>
-  </p>
-
-  <p>
-    <%= t('artifact.category') %>:
-    <%= _.pluck(categories, 'name').join(", ") %>
-  </p>
+  
+  <% if (categories.length > 0) { %>
+    <dt><%= t('artifact.category') %>:</dt>
+    <dd><%= _.pluck(categories, 'name').join(", ") %></dd>
+  <% } %>
 
   <p>
     <h3><%= t('artifact.researches') %>:</h3>

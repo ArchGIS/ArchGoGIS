@@ -11,12 +11,14 @@ App.controllers.author = new (App.View.extend({
 		data['pubs'] = {};
 		data['pubsco'] = {};
 		data['photos'] = {};
+		data['resType'] = {};
 
 		var d1 = $.Deferred();
 		var d2 = $.Deferred();
 		var d3 = $.Deferred();
 		var d4 = $.Deferred();
 		var d5 = $.Deferred();
+		var d6 = $.Deferred();
 
 		var query = JSON.stringify({
 			"author:Author": {"id": id, "select": "*"},
@@ -67,6 +69,7 @@ App.controllers.author = new (App.View.extend({
 			response = JSON.parse(response);
 			data = $.extend(data, response);
 			var queryCounter = 0;
+			var queryCounter2 = 0;
 			var monumentCounter = 1;
 
 			$.each(data.researches, function(resid, research) {
@@ -78,7 +81,6 @@ App.controllers.author = new (App.View.extend({
 
 				$.post("/hquery/read", query_knowledge).success(function(response) {
 					response = JSON.parse(response);
-					console.log(response);
 					$.each(response.knowledges, function(knowid, knowledge) {
 
 						data.placemarks.push({
@@ -92,6 +94,21 @@ App.controllers.author = new (App.View.extend({
 
 					if (++queryCounter == data.researches.length) {
 						d2.resolve()
+					}
+				})
+
+				var query_get_resType = JSON.stringify({
+					"researches:Research": {"id": research.id+""},
+					"resType:ResearchType": {"id": "*", "select": "*"},
+					"researches_has_resType": {},
+				});
+
+				$.post("/hquery/read", query_get_resType).success(function(response) {
+					response = JSON.parse(response);
+					data.resType[queryCounter2] = response.resType[0];
+
+					if (++queryCounter2 == data.researches.length) {
+						d6.resolve()
 					}
 				})
 			})
@@ -117,6 +134,6 @@ App.controllers.author = new (App.View.extend({
 		});
 
 		console.log(data);
-		$.when(d1, d2, d3, d4, d5).done(function() {App.page.render("author/show", data)});
+		$.when(d1, d2, d3, d4, d5, d6).done(function() {App.page.render("author/show", data)});
 	}
 }));
