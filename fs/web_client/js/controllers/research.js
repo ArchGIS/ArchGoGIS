@@ -17,14 +17,18 @@ App.controllers.research = new (App.View.extend({
       "monuments:Monument": {"id": "*", "select": "*"},
       "epoch:Epoch": {"id": "*", "select": "*"},
       "cultures:Culture": {"id": "*", "select": "*"},
-      "rt:ResearchType": {"id": "*", "select": "*"},
       "research_hasauthor_author": {},
       "research_has_knowledges": {},
-      "research_has_rt": {},
       "knowledges_belongsto_monuments": {},
       "knowledges_has_cultures": {},
       "monuments_has_epoch": {},
     });
+
+    var query_get_resType = JSON.stringify({
+      "research:Research": {"id": id},
+      "resType:ResearchType": {"id": "*", "select": "*"},
+      "research_has_resType": {},
+    })
 
     var query_coauthors = JSON.stringify({
       "research:Research": {"id": id, "select": "*"},
@@ -50,6 +54,7 @@ App.controllers.research = new (App.View.extend({
 
     var d1 = $.Deferred();
     var d2 = $.Deferred();
+    var d3 = $.Deferred();
     var data = {};
     $.post('/hquery/read', query).success(function(researchData) {
       data = JSON.parse(researchData);
@@ -58,6 +63,7 @@ App.controllers.research = new (App.View.extend({
       data['placemarks'] = [];
       data['usedArtifacts'] = {};
       data['coauthors'] = {};
+      data['resType'] = {};
 
       $.post("/hquery/read", query_coauthors).success(function(coauthors) {
         coauthors = JSON.parse(coauthors);
@@ -68,6 +74,12 @@ App.controllers.research = new (App.View.extend({
       $.post("/hquery/read", query_used_artifacts).success(function(used_arifacts) {
         used_arifacts = JSON.parse(used_arifacts);
         data = $.extend(data, used_arifacts);
+      });
+
+      $.post("/hquery/read", query_get_resType).success(function(response) {
+        response = JSON.parse(response);
+        data = $.extend(data, response);
+        d3.resolve();
       });
 
       $.each(data.knowledges, function(id, knowledge) {
@@ -98,7 +110,7 @@ App.controllers.research = new (App.View.extend({
 
         _.extend(data, JSON.parse(researchD));
         console.log(data);
-        $.when(d1, d2).done(function() {App.page.render('research_view', data)});
+        $.when(d1, d2, d3).done(function() {App.page.render('research_view', data)});
       });
     });
   }
