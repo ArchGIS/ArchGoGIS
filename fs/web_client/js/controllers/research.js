@@ -3,7 +3,20 @@
 
 App.controllers.research = new (App.View.extend({
   'new': function() {
-    App.page.render('research');
+    App.page.render('research', {
+      'authorsInputOptions': {
+        'source': App.models.Author.findByNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        }
+      },
+      'citiesInputOptions': {
+        'source': App.models.City.findByNamePrefix,
+        'etl': function(cities) {
+          return _.map(cities, city => ({'id': city.id, 'label': city.name}));
+        }
+      }
+    })
   },
 
   'show': function() {
