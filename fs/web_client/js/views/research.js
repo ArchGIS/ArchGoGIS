@@ -256,13 +256,18 @@ App.views.research = new (App.View.extend({
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;
     });
+    
+    var excCounter = 1;
+    $("#add-exc-button-0").on('click', function(e) {
+      addNewCoords($(this), 0, excCounter++)
+    })
 
     $('#add-exc-button').trigger("click");
 
     $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});
     })
-    
+
     $("#container").tabs();
   }
 }))
