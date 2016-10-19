@@ -15,8 +15,8 @@ App.Controller = Backbone.View.extend({});
 App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
-var dburl = "http://localhost:8080";
-// var dburl = "http://85.143.214.248:8080";
+// var dburl = "http://localhost:8080";
+var dburl = "http://85.143.214.248:8080";
 
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
@@ -73,6 +73,7 @@ function postQuery() {
     ["Knowledge", "Culture", "has"],
     ["Knowledge", "Complex", "has"],
     ["Research", "Excavation", "has"],
+    ["Monument", "MonExcavation", "has"],
     ["Monument", "Complex", "has"],
     ["Monument", "Epoch", "has"],
     ["HeritageStatus", "Monument", "has"],
@@ -182,18 +183,21 @@ function generateJson(relations) {
       }
     }
   })
-
+  
   _.each(relations, function(relation) {
     if (objs[relation[0]]) {
       objs[relation[0]] = $.unique(objs[relation[0]]);
     }
     
-    _.each(objs[relation[0]], function(val) {
-      console.log(_.uniq(objs[relation[1]]));
+    _.each(objs[relation[0]], function(objName, id) {
       var allNames = _.uniq(objs[relation[1]])
       if (objs[relation[1]]) {
-        $.each(allNames, function(id, name) {
-          json[val+"_"+relation[2]+"_"+name] = {};
+        _.each(allNames, function(name, id) {
+          var objId1 = objName.split("-")[1];
+          var objId2 = name.split("-")[1];
+          if (!(objId1 && objId2) || (objId1 == objId2)) {
+            json[objName+"_"+relation[2]+"_"+name] = {};
+          }
         })
       }
     })
@@ -274,6 +278,7 @@ function createMonumentsFromXlsx() {
 }
 
 function fillSelector(selector, dataType, notLike) {
+  console.log(selector);
   var query = {};
   var notLike = notLike || "";
   query["rows:"+dataType] = {"id": "*", "select": "*"};

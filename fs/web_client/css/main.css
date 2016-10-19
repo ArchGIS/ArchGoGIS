@@ -306,6 +306,8 @@ input[type=text] {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   display: none;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .ui-autocomplete li {
@@ -321,4 +323,12 @@ dt {
 .coords > .btn {
   position: relative;
   top: 6px;
+}
+
+.btn {
+  margin-top: 15px;
+}
+
+.btn:hover {
+  margin-top: 15px !important;
 }

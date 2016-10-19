@@ -137,8 +137,6 @@ App.controllers.research = new (App.View.extend({
 					})
 				});
 
-				console.log(data.knowledges);
-				console.log(data);
 				if (!data.knowledges) {
 					d1.resolve();
 					console.log("d1 complete");
