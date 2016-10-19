@@ -13,9 +13,6 @@
     <dt><%= t('coauthor.plural') %>:</dt>
     <% _.each(coauthors, function(a, i) { %>
       <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
-      <!-- <% if (coauthors.length > (i+1)) { %>
-        ,
-      <% } %> -->
     <% }); %>
   </dl>
   <% } %>
