@@ -167,56 +167,62 @@ App.views.research = new (App.View.extend({
 
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
-      var newMonument = $(`<legend>Памятник №${monId}</legend>
-      <div class="checkbox">
-        <label for="new-monument-checkbox-${monId}">
-          <input id="new-monument-checkbox-${monId}" type="checkbox" dynamic="true"></input>
-          Добавить новый памятник
-        </label>
-      </div>
-      <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="false">
-        <label>Выбрать существующий памятник <span class="required">*</span></label>
-        <input class="form-control" id="monument-input-${monId}"></input>
-        <input id="monument-input-id-${monId}" data-for="m-${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
-      </div>
-
-      <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
-        <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="m-${monId}:Monument" type="text" name="tmp"></input>
-      </div>
-      <div class="form-group">
-        <label>Название памятника <span class="required">*</span></label>
-        <input class="form-control" id="monument-name-input-${monId}" data-for="k-${monId}:Knowledge" type="text" name="monument_name" data-req></input>
-      </div>
-      <div class="form-group">
-        <label>Описание памятника</label>
-        <textarea class="form-control" id="monument-desc-input-${monId}" data-for="k-${monId}:Knowledge" type="text" name="description"></textarea>
-      </div>
-      <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
-        <label for="epoch-selector-${monId}">Эпоха</label>
-        <select class="form-control" id="epoch-selector-${monId}" data-for="e-${monId}:Epoch" type="id" name="id"></select>
-      </div>
-      <div class="form-group">
-        <label for="culture-selector-${monId}">Культура</label>
-        <select class="form-control" id="culture-selector-${monId}" data-for="c-${monId}:Culture" type="id" name="id"></select>
-      </div>
-
-      <div id="coord-picker-${monId}" class="coords">
-        <div class="form-group">
-          <label for="monument-x-${monId}">
-            Координата X
+      var newMonument = $(`
+      <h4 class="accordion-header" id="monument-header-${monId}">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+        Памятник №${monId}
+      </h4>
+      <div class="accordion-content">
+        <div class="checkbox">
+          <label for="new-monument-checkbox-${monId}">
+            <input id="new-monument-checkbox-${monId}" type="checkbox" dynamic="true"></input>
+            Добавить новый памятник
           </label>
-          <input class="form-control" id="monument-x-${monId}" data-for="k-${monId}:Knowledge" type="number" name="x"></input>
+        </div>
+        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="false">
+          <label>Выбрать существующий памятник <span class="required">*</span></label>
+          <input class="form-control" id="monument-input-${monId}"></input>
+          <input id="monument-input-id-${monId}" data-for="m-${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
+        </div>
+
+        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
+          <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="m-${monId}:Monument" type="text" name="tmp"></input>
         </div>
         <div class="form-group">
-          <label for="monument-y-${monId}">
-            Координата Y
-          </label>
-          <input class="form-control" id="monument-y-${monId}" data-for="k-${monId}:Knowledge" type="number" name="y"></input>
+          <label>Название памятника <span class="required">*</span></label>
+          <input class="form-control" id="monument-name-input-${monId}" data-for="k-${monId}:Knowledge" type="text" name="monument_name" data-req></input>
         </div>
-      </div>
-      <br>
-      <div class="form-group">
-        <h4 for="report-input">Археологические вскрытия:</h4>
+        <div class="form-group">
+          <label>Описание памятника</label>
+          <textarea class="form-control" id="monument-desc-input-${monId}" data-for="k-${monId}:Knowledge" type="text" name="description"></textarea>
+        </div>
+        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
+          <label for="epoch-selector-${monId}">Эпоха</label>
+          <select class="form-control" id="epoch-selector-${monId}" data-for="e-${monId}:Epoch" type="id" name="id"></select>
+        </div>
+        <div class="form-group">
+          <label for="culture-selector-${monId}">Культура</label>
+          <select class="form-control" id="culture-selector-${monId}" data-for="c-${monId}:Culture" type="id" name="id"></select>
+        </div>
+
+        <div id="coord-picker-${monId}" class="coords">
+          <div class="form-group">
+            <label for="monument-x-${monId}">
+              Координата X
+            </label>
+            <input class="form-control" id="monument-x-${monId}" data-for="k-${monId}:Knowledge" type="number" name="x"></input>
+          </div>
+          <div class="form-group">
+            <label for="monument-y-${monId}">
+              Координата Y
+            </label>
+            <input class="form-control" id="monument-y-${monId}" data-for="k-${monId}:Knowledge" type="number" name="y"></input>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <h4 for="report-input">Археологические вскрытия:</h4>
+        </div>
       </div>
       `)
 
@@ -231,14 +237,11 @@ App.views.research = new (App.View.extend({
         map: 'map'
       }, monId);
 
-      $(this).before(`
+      $(`#monument-header-${monId}`).next().append(`
         <button id="add-exc-button-${monId}" class="btn btn-primary">
           <i class="fa fa-cogs"></i>
           Добавить раскоп
         </button>
-        <br>
-        <br>
-        <br>
       `);
 
       (function () {
@@ -250,11 +253,16 @@ App.views.research = new (App.View.extend({
         })
       })()
 
+      App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;
     });
 
     $('#add-exc-button').trigger("click");
 
+    $('.btn-next').on('click', function(e) {
+      $("#container").tabs({active: $(this).attr("active")});
+    })
+    
     $("#container").tabs();
   }
 }))
