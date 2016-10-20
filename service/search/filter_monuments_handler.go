@@ -22,9 +22,6 @@ const (
 		"MATCH (e:Epoch)<-[:has]-(m)" +
 		"MATCH (c:Culture)<-[:has]-(k)"
 )
-		// "WHERE k.monument_name =~ {needle}" +
-		// "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name"
-// )
 
 
 func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
@@ -104,14 +101,8 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 	}
 	query = query + "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name, k.x, k.y"
 
-	resp, err := neo.Run(query, params)//neo.Params{
-	// 	"mnt": `"(?ui)^.*` + mnt + `.*$"`,
-	// 	"year": year,
-	// 	"author": `"(?ui)^.*` + author + `.*$"`,
-	// 	"epoch": `"` + epoch + `"`,
-	// 	"culture": `"` + culture + `"`,
-	// })
-
+	resp, err := neo.Run(query, params)
+	
 	if err != nil {
 		echo.ServerError.Print(err)
 		return nil, errs.RetrieveError

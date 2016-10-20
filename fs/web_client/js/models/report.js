@@ -9,11 +9,6 @@ App.models.Report.findByAuthorId = function(authorId) {
       'r:Report': {'id': '*', 'select': '*'},
       'r_hasauthor_a': {}
     });
-
-    // var query = JSON.stringify({
-    //   "author:Author.getBy": +id,
-    //   "r:Report.getBy": "author",
-    // });
     
     $.post('/hquery/read', query)
       .success(response => resolve($.parseJSON(response).r))
