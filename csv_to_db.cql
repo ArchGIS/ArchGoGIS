@@ -57,7 +57,7 @@ MATCH (aut:Author {id: line.IDAutor})
 MATCH (city:City {id: line.IDPubPlace})
 MATCH (stor:Storage {id: line.IDStorePlace})
 CREATE (report:Report {id: line.IDReport, name: line.RepName, year: line.RepYear, number: line.RepNumber})
-CREATE (report)-[:has]->(aut)
+CREATE (report)-[:hasauthor]->(aut)
 CREATE (report)-[:in]->(stor)
 CREATE (stor)-[:has]->(city); // исправить множественные связи!
 
