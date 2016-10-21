@@ -109,7 +109,7 @@ App.views.research = new (App.View.extend({
             .addClass("form-control")
             .attr({
               "id": `${name}-${monId}-${id}`,
-              "data-for": `exc-${monId}-${id}:Excavation`,
+              "data-for": `excdel${monId}del${id}:Excavation`,
               "type": "number",
               "name": name
             }))
@@ -125,7 +125,7 @@ App.views.research = new (App.View.extend({
             .addClass("form-control")
             .attr({
               "id": `excavation-name-input-${id}`,
-              "data-for": `exc-${monId}-${id}:Excavation`,
+              "data-for": `excdel${monId}del${id}:Excavation`,
               "type": "text",
               "name": "name"
             }))
@@ -141,7 +141,7 @@ App.views.research = new (App.View.extend({
             .addClass("form-control")
             .attr({
               "id": `excavation-area-input-${id}`,
-              "data-for": `exc-${monId}-${id}:Excavation`,
+              "data-for": `excdel${monId}del${id}:Excavation`,
               "type": "number",
               "name": "area"
             }))
@@ -182,27 +182,27 @@ App.views.research = new (App.View.extend({
         <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="false">
           <label>Выбрать существующий памятник <span class="required">*</span></label>
           <input class="form-control" id="monument-input-${monId}"></input>
-          <input id="monument-input-id-${monId}" data-for="m-${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
+          <input id="monument-input-id-${monId}" data-for="mdel${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
         </div>
 
         <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
-          <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="m-${monId}:Monument" type="text" name="tmp"></input>
+          <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="mdel${monId}:Monument" type="text" name="tmp"></input>
         </div>
         <div class="form-group">
           <label>Название памятника <span class="required">*</span></label>
-          <input class="form-control" id="monument-name-input-${monId}" data-for="k-${monId}:Knowledge" type="text" name="monument_name" data-req></input>
+          <input class="form-control" id="monument-name-input-${monId}" data-for="kdel${monId}:Knowledge" type="text" name="monument_name" data-req></input>
         </div>
         <div class="form-group">
           <label>Описание памятника</label>
-          <textarea class="form-control" id="monument-desc-input-${monId}" data-for="k-${monId}:Knowledge" type="text" name="description"></textarea>
+          <textarea class="form-control" id="monument-desc-input-${monId}" data-for="kdel${monId}:Knowledge" type="text" name="description"></textarea>
         </div>
         <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
           <label for="epoch-selector-${monId}">Эпоха</label>
-          <select class="form-control" id="epoch-selector-${monId}" data-for="e-${monId}:Epoch" type="id" name="id"></select>
+          <select class="form-control" id="epoch-selector-${monId}" data-for="edel${monId}:Epoch" type="id" name="id"></select>
         </div>
         <div class="form-group">
           <label for="culture-selector-${monId}">Культура</label>
-          <select class="form-control" id="culture-selector-${monId}" data-for="c-${monId}:Culture" type="id" name="id"></select>
+          <select class="form-control" id="culture-selector-${monId}" data-for="cdel${monId}:Culture" type="id" name="id"></select>
         </div>
 
         <div id="coord-picker-${monId}" class="coords">
@@ -210,13 +210,13 @@ App.views.research = new (App.View.extend({
             <label for="monument-x-${monId}">
               Координата X
             </label>
-            <input class="form-control" id="monument-x-${monId}" data-for="k-${monId}:Knowledge" type="number" name="x"></input>
+            <input class="form-control" id="monument-x-${monId}" data-for="kdel${monId}:Knowledge" type="number" name="x"></input>
           </div>
           <div class="form-group">
             <label for="monument-y-${monId}">
               Координата Y
             </label>
-            <input class="form-control" id="monument-y-${monId}" data-for="k-${monId}:Knowledge" type="number" name="y"></input>
+            <input class="form-control" id="monument-y-${monId}" data-for="kdel${monId}:Knowledge" type="number" name="y"></input>
           </div>
         </div>
         <br>
