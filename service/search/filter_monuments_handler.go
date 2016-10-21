@@ -18,9 +18,7 @@ const (
 	filterMonumentsCypher = "MATCH (m:Monument)" +
 		"MATCH (k:Knowledge)-[:belongsto]->(m)" +
 		"MATCH (r:Research)-[:has]->(k)" +
-		"MATCH (a:Author)<-[:hasauthor]-(r)" +
-		"MATCH (e:Epoch)<-[:has]-(m)" +
-		"MATCH (c:Culture)<-[:has]-(k)"
+		"MATCH (a:Author)<-[:hasauthor]-(r)"
 )
 
 
@@ -70,6 +68,20 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
+	if year != "" {
+		if first {
+			query = query + "AND r.year = {year} "
+		} else {
+			query = query + "r.year = {year} "
+		}
+
+		params["year"] = year
+	}
+
+	query = query +
+		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
+		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)"
+
 	if epoch != "" {
 		if first {
 			query = query + "AND e.id = {epoch} "
@@ -90,19 +102,11 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 
 		params["culture"] = culture
 	}
-	if year != "" {
-		if first {
-			query = query + "AND r.year = {year} "
-		} else {
-			query = query + "r.year = {year} "
-		}
-
-		params["year"] = year
-	}
+	
 	query = query + "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name, k.x, k.y"
 
 	resp, err := neo.Run(query, params)
-	
+
 	if err != nil {
 		echo.ServerError.Print(err)
 		return nil, errs.RetrieveError
