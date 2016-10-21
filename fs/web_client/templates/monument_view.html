@@ -62,6 +62,9 @@
               <% var length = exc[i].length %>
               <% _.each(exc[i], function(exc, i) { %>
                 <%= exc.name%>
+                <% if (exc.area) { %>
+                  (<%= exc.area%> м²)
+                <% } %>
                 <% if (i < length-1) { %>
                 ,
                 <% } %>
