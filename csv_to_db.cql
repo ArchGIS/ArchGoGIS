@@ -1,44 +1,36 @@
 LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
 WITH line
-CREATE (a:Author {id: line.IDAutor, name: line.AutorName})
-RETURN a;
+CREATE (a:Author {id: line.IDAutor, name: line.AutorName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCulture.csv" AS line
 WITH line
-CREATE (c:Culture {id: line.IDCulture, name: line.CultureName})
-RETURN c;
+CREATE (c:Culture {id: line.IDCulture, name: line.CultureName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCultureLayer.csv" AS line
 WITH line
-CREATE (e:Epoch {id: line.IDCultureLayer, name: line.CultureLayer})
-RETURN e;
+CREATE (e:Epoch {id: line.IDCultureLayer, name: line.CultureLayer});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefMonType.csv" AS line
 WITH line
-CREATE (mt:MonumentType {id: line.IDMonType, name: line.MonType})
-RETURN mt;
+CREATE (mt:MonumentType {id: line.IDMonType, name: line.MonType});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefPubPlace.csv" AS line
 WITH line
-CREATE (city:City {id: line.IDPubPlace, name: line.PubPlaceName})
-RETURN city;
+CREATE (city:City {id: line.IDPubPlace, name: line.PubPlaceName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefStorePlace.csv" AS line
 WITH line
-CREATE (stor:Storage {id: line.IDStorePlace, name: line.StorePlaceName})
-RETURN stor;
+CREATE (stor:Storage {id: line.IDStorePlace, name: line.StorePlaceName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefState.csv" AS line
 WITH line
-CREATE (st:State {id: line.IDState, name: line.StateName})
-RETURN st;
+CREATE (st:State {id: line.IDState, name: line.StateName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefRegion.csv" AS line
 WITH line
 MATCH (st:State {id: line.IDState})
 CREATE (region:Region {id: line.IDRegion, name: line.RegionName})
-CREATE (st)-[:has]->(region)
-RETURN st, region;
+CREATE (st)-[:has]->(region);
 
 LOAD CSV WITH HEADERS FROM "file:///TMonument.csv" AS line
 WITH line
@@ -59,7 +51,7 @@ MATCH (stor:Storage {id: line.IDStorePlace})
 CREATE (report:Report {id: line.IDReport, name: line.RepName, year: line.RepYear, number: line.RepNumber})
 CREATE (report)-[:hasauthor]->(aut)
 CREATE (report)-[:in]->(stor)
-CREATE (stor)-[:has]->(city); // исправить множественные связи!
+CREATE UNIQUE (stor)-[:has]->(city);
 
 LOAD CSV WITH HEADERS FROM "file:///TRefPublication.csv" AS line
 WITH line
@@ -68,14 +60,6 @@ MATCH (city:City {id: line.IDPubPlace})
 CREATE (pub:Publication {id: line.IDPublication, name: line.PubName, year: line.PubYear})
 CREATE (pub)-[:hasauthor]->(aut)
 CREATE (pub)-[:in]->(city);
-
-LOAD CSV WITH HEADERS FROM "file:///TRefArchiveSource.csv" AS line
-WITH line
-MATCH (aut:Author {id: line.IDAutor})
-MATCH (st:Storage {id: line.IDStorePlace})
-CREATE (pub:Publication {id: line.IDArchiveSource, name: line.ArchiveSourceName, year: line.SourceYear})
-CREATE (pub)-[:hasauthor]->(aut)
-CREATE (pub)-[:in]->(st);
 
 LOAD CSV WITH HEADERS FROM "file:///TResearching.csv" AS line
 WITH line
@@ -91,4 +75,8 @@ MATCH (res:Research {id: line.IDResearching})
 MATCH (k:Knowledge {id: line.IDMonument})
 MATCH (rep:Report {id: line.IDReport})
 MATCH (res)-[:has]->(k)
-CREATE (res)-[:has]->(rep);
+CREATE UNIQUE (res)-[:has]->(rep);
+
+MATCH (m:Monument)
+MATCH (e:Epoch {id: "5"})
+CREATE (m)-[:has]->(e);
