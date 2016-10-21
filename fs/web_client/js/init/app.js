@@ -73,7 +73,7 @@ function postQuery() {
     ["Knowledge", "Culture", "has"],
     ["Knowledge", "Complex", "has"],
     ["Research", "Excavation", "has"],
-    ["Monument", "MonExcavation", "has"],
+    ["Monument", "Excavation", "has"],
     ["Monument", "Complex", "has"],
     ["Monument", "Epoch", "has"],
     ["HeritageStatus", "Monument", "has"],
@@ -193,8 +193,8 @@ function generateJson(relations) {
       var allNames = _.uniq(objs[relation[1]])
       if (objs[relation[1]]) {
         _.each(allNames, function(name, id) {
-          var objId1 = objName.split("-")[1];
-          var objId2 = name.split("-")[1];
+          var objId1 = objName.split("del")[1];
+          var objId2 = name.split("del")[1];
           if (!(objId1 && objId2) || (objId1 == objId2)) {
             json[objName+"_"+relation[2]+"_"+name] = {};
           }
