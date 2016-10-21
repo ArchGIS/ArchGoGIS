@@ -55,6 +55,21 @@
             <dt>Отчет:</dt>
             <dd><%= App.models.Report.href(reports[i].report[0].fileid, `${reports[i].report[0].name} (${reports[i].author[0].name}, ${reports[i].report[0].year})`) %></dd>
           <% } %>
+
+          <dt>Археологические вскрытия:</dt>
+          <dd>
+            <% if (exc[i] && exc[i].length > 0) { %>
+              <% var length = exc[i].length %>
+              <% _.each(exc[i], function(exc, i) { %>
+                <%= exc.name%>
+                <% if (i < length-1) { %>
+                ,
+                <% } %>
+              <% }); %>
+            <% } else { %>
+              нет
+            <% } %>
+          </dd>
         </dl>
       </div>
     <% }); %>

@@ -39,11 +39,13 @@ App.controllers.monument = new (App.View.extend({
       data.artifacts = [];
       data.reports = [];
       data.resType = {};
+      data.exc = {};
 
       var d1 = $.Deferred();
       var d2 = $.Deferred();
       var d3 = $.Deferred();
       var d4 = $.Deferred();
+      var d5 = $.Deferred();
 
       var names = {};
       $.each(data.knowledges, function(id, k) {
@@ -88,6 +90,39 @@ App.controllers.monument = new (App.View.extend({
         d4.resolve();
       })
 
+      if (data.researches) {
+        var counter = 0;
+        _.each(data.researches, function(research, resid) {
+          var query_excavations = JSON.stringify({
+            "monument:Monument": {"id": id},
+            "r:Research": {"id": `${research.id}`},
+            "exc:Excavation": {"id": "*", "select": "*"},
+            "monument_has_exc": {},
+            "r_has_exc": {},
+          })
+
+          $.post("/hquery/read", query_excavations).success(function(response) {
+            response = JSON.parse(response);
+            data.exc[resid] = response.exc;
+            _.each(response.exc, function(exc, id) {
+              data.placemarks.push({
+                "coords": [exc.x, exc.y],
+                "pref": {
+                  "hintContent": exc.name,
+                  "iconContent": `${resid+1}-${id+1}`
+                }
+              })
+            })
+
+            if (++counter == Object.keys(data.researches).length) {
+              d5.resolve();
+            }
+          })
+        })
+      } else {
+        d5.resolve();
+      }
+
       $.each(data.knowledges, function(id, knowledge) {
         query = JSON.stringify({
           "knowledge:Knowledge": {"id": knowledge.id+""},
@@ -113,7 +148,7 @@ App.controllers.monument = new (App.View.extend({
       });
 
       console.log(data);
-      $.when(d1, d2, d3, d4).done(function() {App.page.render("monument_view", data)});
+      $.when(d1, d2, d3, d4, d5).done(function() {App.page.render("monument_view", data)});
     });
   },
 

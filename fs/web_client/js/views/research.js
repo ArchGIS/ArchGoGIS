@@ -151,8 +151,8 @@ App.views.research = new (App.View.extend({
       var coords = $("<div>")
         .addClass("coords")
         .attr("id", `coord-picker-${monId}-${counter}`)
-        .append(addCoord("X", monId, counter))
-        .append(addCoord("Y", monId, counter))
+        .append(addCoord("x", monId, counter))
+        .append(addCoord("y", monId, counter))
 
       btn.before(addExcName(monId, counter));
       btn.before(addExcArea(monId, counter));
@@ -160,7 +160,7 @@ App.views.research = new (App.View.extend({
 
       var coordpicker = App.blocks.coordpicker;
       coordpicker($(`#coord-picker-${monId}-${counter}`), {
-        inputs: [`#X-${monId}-${counter}`, `#Y-${monId}-${counter}`],
+        inputs: [`#x-${monId}-${counter}`, `#y-${monId}-${counter}`],
         map: 'map'
       }, `${monId}-${counter}`);
     }
@@ -208,13 +208,13 @@ App.views.research = new (App.View.extend({
         <div id="coord-picker-${monId}" class="coords">
           <div class="form-group">
             <label for="monument-x-${monId}">
-              Координата X
+              Координата x
             </label>
             <input class="form-control" id="monument-x-${monId}" data-for="kdel${monId}:Knowledge" type="number" name="x"></input>
           </div>
           <div class="form-group">
             <label for="monument-y-${monId}">
-              Координата Y
+              Координата y
             </label>
             <input class="form-control" id="monument-y-${monId}" data-for="kdel${monId}:Knowledge" type="number" name="y"></input>
           </div>
