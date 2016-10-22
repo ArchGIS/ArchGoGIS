@@ -80,7 +80,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 		input = parsing.MustFetchJson(r.Body)
 	}
 
-	fmt.Printf("%+v\n", input)
+	fmt.Printf("%#v\n", input)
 	w.Write(processRequest(input))
 }
 
@@ -103,6 +103,7 @@ func processRequest(input map[string]map[string]string) []byte {
 
 	if data.updateSize() > 0 {
 		tx.SetBatch(makeUpdateBatch(data))
+		echo.Info.Printf("Upsert query: %s", tx.Query)
 
 		resp, err := tx.Run()
 		if err != nil {
