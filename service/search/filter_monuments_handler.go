@@ -51,10 +51,10 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 
 	// needle = norm.NormalMonument(needle)
 	params := neo.Params{}
-	query := filterMonumentsCypher + "WHERE "
+	query := filterMonumentsCypher
 	first := false
 	if mnt != "" {
-		query = query + "k.monument_name =~ {mnt} "
+		query = query + "WHERE k.monument_name =~ {mnt} "
 		first = true
 		params["mnt"] = `"(?ui)^.*` + mnt + `.*$"`
 	}
@@ -62,7 +62,7 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 		if first {
 			query = query + "AND a.name =~ {author} "
 		} else {
-			query = query + "a.name =~ {author} "
+			query = query + "WHERE a.name =~ {author} "
 			first = true
 		}
 
@@ -72,7 +72,7 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 		if first {
 			query = query + "AND r.year = {year} "
 		} else {
-			query = query + "r.year = {year} "
+			query = query + "WHERE r.year = {year} "
 		}
 
 		params["year"] = year
@@ -82,27 +82,23 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
 		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)"
 
+	first = false
 	if epoch != "" {
-		if first {
-			query = query + "AND e.id = {epoch} "
-		} else {
-			query = query + "e.id = {epoch} "
-			first = true
-		}
-
+		query = query + "WHERE e.id = {epoch} "
+		first = true
 		params["epoch"] = epoch
 	}
 	if culture != "" {
 		if first {
 			query = query + "AND c.id = {culture} "
 		} else {
-			query = query + "c.id = {culture} "
+			query = query + "WHERE c.id = {culture} "
 			first = true
 		}
 
 		params["culture"] = culture
 	}
-	
+
 	query = query + "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name, k.x, k.y"
 
 	resp, err := neo.Run(query, params)
