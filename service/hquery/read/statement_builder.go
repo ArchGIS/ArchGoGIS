@@ -1,9 +1,10 @@
 package read
 
 import (
+	"strings"
+
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/read/ast"
-	"strings"
 )
 
 func NewStatementBuilder(data *Data) *StatementBuilder {

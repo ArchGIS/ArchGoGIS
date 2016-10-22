@@ -1,12 +1,13 @@
 package read
 
 import (
-	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"io"
+	"strings"
+
+	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/parsing"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/read/ast"
-	"strings"
 	"github.com/ArchGIS/ArchGoGIS/throw"
 )
 

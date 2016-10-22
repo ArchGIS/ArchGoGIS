@@ -1,13 +1,14 @@
 package parsing
 
 import (
-	"github.com/ArchGIS/ArchGoGIS/cfg"
-	"github.com/ArchGIS/ArchGoGIS/echo"
 	"encoding/json"
 	"io"
+	"strings"
+
+	"github.com/ArchGIS/ArchGoGIS/cfg"
+	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/valid"
-	"strings"
 	"github.com/ArchGIS/ArchGoGIS/throw"
 )
 

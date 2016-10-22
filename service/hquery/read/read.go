@@ -1,11 +1,12 @@
 package read
 
 import (
+	"io"
+	"net/http"
+
 	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/ext/xstr"
-	"io"
-	"net/http"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/format"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/shared"
