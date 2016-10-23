@@ -1,0 +1,2 @@
+#!/bin/bash
+kill $(ps aux | grep '[A]rchGoGIS' | awk '{print $2}')

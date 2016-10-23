@@ -1,5 +1,0 @@
-#!/bin/bash
-go build run_server.go
-if [[ $? == "0" ]]; then
-  rm run_server
-fi
