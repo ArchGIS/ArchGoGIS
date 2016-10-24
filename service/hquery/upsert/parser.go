@@ -1,10 +1,11 @@
 package upsert
 
 import (
+	"strings"
+
 	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/upsert/ast"
-	"strings"
 	"github.com/ArchGIS/ArchGoGIS/throw"
 )
 

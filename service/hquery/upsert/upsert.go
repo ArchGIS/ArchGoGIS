@@ -1,24 +1,24 @@
 package upsert
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"mime"
+	"net/http"
+
 	"github.com/ArchGIS/ArchGoGIS/assert"
 	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/db/pg/seq"
 	"github.com/ArchGIS/ArchGoGIS/echo"
-	"encoding/json"
-	"fmt"
-	// "io"
-	"mime"
-	"net/http"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/parsing"
-	// "service/hquery/shared"
-	"io/ioutil"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/upsert/builder"
 	"github.com/ArchGIS/ArchGoGIS/throw"
 	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
+	// "github.com/ArchGIS/ArchGoGIS/service/hquery/shared"
 )
 
 func Handler(w web.ResponseWriter, r *http.Request) {
@@ -98,12 +98,13 @@ func mustPassValidation(data *Data) {
 func processRequest(input map[string]map[string]string) []byte {
 	data := mustParse(input)
 	mustPassValidation(data)
+	// fmt.Printf("Data: %#v", data.updateSize())
 
 	var tx neo.TxQuery
 
 	if data.updateSize() > 0 {
 		tx.SetBatch(makeUpdateBatch(data))
-		echo.Info.Printf("Upsert query: %s", tx.Query)
+		fmt.Printf("Upsert query: %#v", tx.Query)
 
 		resp, err := tx.Run()
 		fmt.Printf("Response from neo4j: %#v\n", resp)

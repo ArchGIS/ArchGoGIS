@@ -1,9 +1,10 @@
 package builder
 
 import (
+	"strings"
+
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/upsert/ast"
-	"strings"
 )
 
 func NewStatementBuilder(paramCount int) *StatementBuilder {

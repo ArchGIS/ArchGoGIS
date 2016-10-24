@@ -1,8 +1,9 @@
 package neo
 
 import (
-	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"encoding/base64"
+
+	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/web/req"
 )
 

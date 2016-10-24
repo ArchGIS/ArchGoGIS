@@ -77,14 +77,14 @@ function postQuery() {
     ["Monument", "Complex", "has"],
     ["Monument", "Epoch", "has"],
     ["HeritageStatus", "Monument", "has"],
-    ["Research", "Report", "hasreport"],
+    ["Research", "Report", "has"],
     ["Complex", "Artifact", "has"],
     ["Report", "Author", "hasauthor"],
     ["Author", "AuthorImage", "has"],
     ["Artifact", "ArtifactImage", "has"],
     ["HeritageStatus", "File", "has"],
     ["Organization", "City", "has"],
-    ["Organization", "Report", "has"]
+    ["Report", "Organization", "in"]
   ]);
 
   var formdata = new FormData();
@@ -106,7 +106,7 @@ function postQuery() {
         }
 
         json[datafor][`${name}/text`] = key;
-        
+
         if (++uploadedFilesCounter == files.length) {
           defer.resolve();
         }
@@ -166,7 +166,7 @@ function generateJson(relations) {
     if ($(input).attr("data-few")) {
       value = value.split(",")
       counter = 0;
-      
+
       _.each(value, function(val) {
         inputObjName = dataFor.split(":")[0]+counter;
         objs[inputSubclass].push(inputObjName);
@@ -183,12 +183,12 @@ function generateJson(relations) {
       }
     }
   })
-  
+
   _.each(relations, function(relation) {
     if (objs[relation[0]]) {
       objs[relation[0]] = $.unique(objs[relation[0]]);
     }
-    
+
     _.each(objs[relation[0]], function(objName, id) {
       var allNames = _.uniq(objs[relation[1]])
       if (objs[relation[1]]) {
@@ -206,7 +206,7 @@ function generateJson(relations) {
   console.log(json)
   console.log(objs)
   return json;
-} 
+}
 
 
 function getXlsxData() {
@@ -262,7 +262,7 @@ function createMonumentsFromXlsx() {
 
   var query = queryTemplate;
   var dataFor;
-  var inputName; 
+  var inputName;
   var counter = 0;
 
   $.each(inputs, function(key, val) {
