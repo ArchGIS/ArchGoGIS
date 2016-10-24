@@ -20,7 +20,7 @@ CREATE (city:City {id: line.IDPubPlace, name: line.PubPlaceName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefStorePlace.csv" AS line
 WITH line
-CREATE (stor:Storage {id: line.IDStorePlace, name: line.StorePlaceName});
+CREATE (org:Organisation {id: line.IDStorePlace, name: line.StorePlaceName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefState.csv" AS line
 WITH line
@@ -47,11 +47,11 @@ LOAD CSV WITH HEADERS FROM "file:///TRefReport.csv" AS line
 WITH line
 MATCH (aut:Author {id: line.IDAutor})
 MATCH (city:City {id: line.IDPubPlace})
-MATCH (stor:Storage {id: line.IDStorePlace})
+MATCH (org:Organisation {id: line.IDStorePlace})
 CREATE (report:Report {id: line.IDReport, name: line.RepName, year: line.RepYear, number: line.RepNumber})
 CREATE (report)-[:hasauthor]->(aut)
-CREATE (report)-[:in]->(stor)
-CREATE UNIQUE (stor)-[:has]->(city);
+CREATE (report)-[:in]->(org)
+CREATE UNIQUE (org)-[:has]->(city);
 
 LOAD CSV WITH HEADERS FROM "file:///TRefPublication.csv" AS line
 WITH line
@@ -80,3 +80,7 @@ CREATE UNIQUE (res)-[:has]->(rep);
 MATCH (m:Monument)
 MATCH (e:Epoch {id: "5"})
 CREATE (m)-[:has]->(e);
+
+create (rt1:ResearchType {id: 1, name: 'Аналитическое'});
+create (rt2:ResearchType {id: 2, name: 'Раскопки'});
+create (rt3:ResearchType {id: 3, name: 'Разведка'});

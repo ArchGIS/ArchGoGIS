@@ -2,6 +2,7 @@ package builder
 
 import (
 	"bytes"
+
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/upsert/ast"
 )
 

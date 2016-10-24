@@ -1,9 +1,10 @@
 package ast
 
 import (
+	"strings"
+
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/errs"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/valid"
-	"strings"
 	"github.com/ArchGIS/ArchGoGIS/throw"
 )
 

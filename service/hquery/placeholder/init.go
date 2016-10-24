@@ -1,8 +1,9 @@
 package placeholder
 
 import (
-	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"fmt"
+
+	"github.com/ArchGIS/ArchGoGIS/cfg"
 )
 
 var placeholders []string

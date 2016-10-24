@@ -1,9 +1,10 @@
 package neo
 
 import (
+	"encoding/json"
+
 	"github.com/ArchGIS/ArchGoGIS/db/neo/errs"
 	"github.com/ArchGIS/ArchGoGIS/echo"
-	"encoding/json"
 )
 
 func newResponse(input []byte) (*Response, error) {
