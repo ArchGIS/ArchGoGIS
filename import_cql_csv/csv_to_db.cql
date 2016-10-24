@@ -3,12 +3,12 @@ WITH line
 CREATE (a:Author {id: line.IDAutor, name: line.AutorName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCulture.csv" AS line
-WITH line
-CREATE (c:Culture {id: line.IDCulture, name: line.CultureName});
+WITH line, toInt(line.IDCulture) as idCulture
+CREATE (c:Culture {id: idCulture, name: line.CultureName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCultureLayer.csv" AS line
-WITH line
-CREATE (e:Epoch {id: line.IDCultureLayer, name: line.CultureLayer});
+WITH line, toInt(line.IDCultureLayer) as id
+CREATE (e:Epoch {id: id, name: line.CultureLayer});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefMonType.csv" AS line
 WITH line

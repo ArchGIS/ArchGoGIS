@@ -103,7 +103,7 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 
 		my.buf.WriteStringf(
 			"(%s)-[:%s]->(%s)",
-			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
+			edge.Lhs, edge.Type, edge.Rhs,
 		)
 
 		if i != len(my.optionalEdges)-1 {
