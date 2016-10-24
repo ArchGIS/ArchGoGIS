@@ -106,6 +106,7 @@ func processRequest(input map[string]map[string]string) []byte {
 		echo.Info.Printf("Upsert query: %s", tx.Query)
 
 		resp, err := tx.Run()
+		fmt.Printf("Response from neo4j: %#v\n", resp)
 		if err != nil {
 			tx.Rollback()
 			echo.ServerError.Print(err)
