@@ -5,12 +5,12 @@ App.controllers.monument = new (App.View.extend({
     App.url.setMapping(['id']);
     var monId = App.url.get('id');
     var tmplData = {
-      "epoch": {},
-      "researches": {},
-      "cultures": {},
-      "artifacts": {},
-      "reports": {},
-      "excavations": {}
+      "epoch": [],
+      "researches": [],
+      "cultures": [],
+      "artifacts": [],
+      "reports": [],
+      "excavations": []
     };
 
     var d1 = $.Deferred(),

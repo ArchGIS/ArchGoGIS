@@ -22,8 +22,13 @@ App.template = new function() {
     }
   }
 
-  function maybe(object, defaultText) {
+  function maybe(object, defaultText, key) {
+    key = key || "";
     defaultText = defaultText || "Нет данных";
+
+    if (key) {
+      return object["key"] ? object["key"] : defaultText;
+    }
     return object ? object : defaultText;
   }
 
