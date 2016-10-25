@@ -1,6 +1,6 @@
 LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
-WITH line
-CREATE (a:Author {id: line.IDAutor, name: line.AutorName});
+WITH line, toInt(line.IDAutor) as id
+CREATE (a:Author {id: id, name: line.AutorName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCulture.csv" AS line
 WITH line, toInt(line.IDCulture) as idCulture
@@ -11,34 +11,34 @@ WITH line, toInt(line.IDCultureLayer) as id
 CREATE (e:Epoch {id: id, name: line.CultureLayer});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefMonType.csv" AS line
-WITH line
-CREATE (mt:MonumentType {id: line.IDMonType, name: line.MonType});
+WITH line, toInt(line.IDMonType) as id
+CREATE (mt:MonumentType {id: id, name: line.MonType});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefPubPlace.csv" AS line
-WITH line
-CREATE (city:City {id: line.IDPubPlace, name: line.PubPlaceName});
+WITH line, toInt(line.IDPubPlace) as id
+CREATE (city:City {id: id, name: line.PubPlaceName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefStorePlace.csv" AS line
-WITH line
-CREATE (org:Organisation {id: line.IDStorePlace, name: line.StorePlaceName});
+WITH line, toInt(line.IDStorePlace) as id
+CREATE (org:Organisation {id: id, name: line.StorePlaceName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefState.csv" AS line
-WITH line
-CREATE (st:State {id: line.IDState, name: line.StateName});
+WITH line, toInt(line.IDState) as id
+CREATE (st:State {id: id, name: line.StateName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefRegion.csv" AS line
-WITH line
-MATCH (st:State {id: line.IDState})
-CREATE (region:Region {id: line.IDRegion, name: line.RegionName})
+WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDState) as idSt
+MATCH (st:State {id: idSt})
+CREATE (region:Region {id: idReg, name: line.RegionName})
 CREATE (st)-[:has]->(region);
 
 LOAD CSV WITH HEADERS FROM "file:///TMonument.csv" AS line
-WITH line
-MATCH (mt:MonumentType {id: line.IDMonType})
-MATCH (state:State {id: line.IDState})
-MATCH (region:Region {id: line.IDRegion})
-CREATE (mon:Monument {id: line.IDMonument})
-CREATE (k:Knowledge {id: line.IDMonument, monument_name: line.MonName, description: line.MonDescription, x: line.MonDecimalLatitude, y: line.MonDecimalLongitude})
+WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDState) as idSt, toInt(line.IDMonument) as idMon
+MATCH (mt:MonumentType {id: idMT})
+MATCH (state:State {id: idSt})
+MATCH (region:Region {id: idReg})
+CREATE (mon:Monument {id: idMon})
+CREATE (k:Knowledge {id: idMon, monument_name: line.MonName, description: line.MonDescription, x: line.MonDecimalLatitude, y: line.MonDecimalLongitude})
 CREATE (k)-[:belongsto]->(mon)
 CREATE (mon)-[:has]->(mt)
 CREATE (mon)-[:in]->(region);
