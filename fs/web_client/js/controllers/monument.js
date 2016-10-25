@@ -4,7 +4,14 @@ App.controllers.monument = new (App.View.extend({
   'show': function() {
     App.url.setMapping(['id']);
     var monId = App.url.get('id');
-    var tmplData = {};
+    var tmplData = {
+      "epoch": {},
+      "researches": {},
+      "cultures": {},
+      "artifacts": {},
+      "reports": {},
+      "excavations": {}
+    };
 
     var d1 = $.Deferred(),
         d2 = $.Deferred(),

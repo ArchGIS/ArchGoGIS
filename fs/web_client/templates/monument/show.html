@@ -3,19 +3,23 @@
   <br>
   <dt>Все названия памятника:</dt>
   <dd><%= allNames %></dd>
-  <dt>Эпоха:</dt>
-  <dd><%= epoch[0].name %></dd>
-  <br>
+  <% if (epoch) { %>
+    <dt>Эпоха:</dt>
+    <dd><%= epoch[0].name %></dd>
+    <br>
+  <% } %>
   <div id="accordion">
     <% var counter=1 %>
     <% _.each(researches, function(research, i) { %>
       <h4 class="accordion-header">
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
         <%= t("research.singular") %> №<%= counter++%>:
-        <b><%= authors[i].name %>, <%= research.year %>
-        <% if (resType[i]) { %>
-          , <%= resType[i].name %>
-        <% } %>
+        <b>
+          <%= maybe(authors[i].name, "Неизвестный автор") %>, 
+          <%= maybe(research.year, "год не указан") %>
+          <% if (resType[i]) { %>
+            , <%= maybe(resType[i].name, "без типа") %>
+          <% } %>
         </b>
       </h4>
 
@@ -29,8 +33,10 @@
           </dd>
           <dt>Название, данное исследователем:</dt>
           <dd><%= knowledges[i].monument_name %></dd>
-          <dt>Культурная принадлежность, определенная исследователем:</dt>
-          <dd><%= cultures[i].name %></dd>
+          <% if (cultures[i]) { %>
+            <dt>Культурная принадлежность, определенная исследователем:</dt>
+            <dd><%= cultures[i].name %></dd>
+          <% } %>
           <% if (research.description) { %>
             <dt>Описание:</dt>
             <dd><%= research.description %></dd>
@@ -53,7 +59,14 @@
           </dd>
           <% if (reports[i] && reports[i].length > 0) { %>
             <dt>Отчет:</dt>
-            <dd><%= App.models.Report.href(reports[i][0].fileid, `${reports[i][0].name} (${authors[i].name}, ${reports[i][0].year})`) %></dd>
+            <dd>
+              <% var reportTitle = `${maybe(reports[i][0].name, "Нет названия")} (${maybe(authors[i].name, "автор неизвестен")}, ${maybe(reports[i][0].year, "год не указан")})` %>
+              <% if (reports[i][0].fileid) { %>
+                <%= App.models.Report.href(reports[i][0].fileid, reportTitle) %>
+              <% } else {%>
+                <%= reportTitle %>
+              <% } %>
+            </dd>
           <% } %>
 
           <dt>Археологические вскрытия:</dt>
@@ -61,9 +74,9 @@
             <% if (excavations[i] && excavations[i].length > 0) { %>
               <% var length = excavations[i].length %>
               <% _.each(excavations[i], function(excavations, i) { %>
-                <%= excavations.name%>
+                <%= maybe(excavations.name, `без названия ${i}`)%>
                 <% if (excavations.area) { %>
-                  (<%= excavations.area%> м²)
+                  (<%= excavations.area %> м²)
                 <% } %>
                 <% if (i < length-1) { %>
                 ,

@@ -22,10 +22,11 @@ App.template = new function() {
     }
   }
 
-  function maybe(object) {
-    return object ? object : 'Нет данных';
+  function maybe(object, defaultText) {
+    defaultText = defaultText || "Нет данных";
+    return object ? object : defaultText;
   }
-  
+
   // То, что передаётся в каждый шаблон в любом случае.
   var defaultContext = {
     't': App.locale.translate,
