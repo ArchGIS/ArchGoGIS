@@ -35,7 +35,7 @@
     <% if (reports.length) { %>
       <div>
       <% _.each(reports, function(report, i) { %>
-        <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(authors[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
+        <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
         <% if (reports[i].fileid) { %>
           <%= App.models.Report.href(reports[i].fileid, reportTitle) %>
         <% } else {%>
