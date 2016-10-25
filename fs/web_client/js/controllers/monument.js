@@ -3,22 +3,36 @@
 App.controllers.monument = new (App.View.extend({
   'show': function() {
     App.url.setMapping(['id']);
-    var id = App.url.get('id');
+    var monId = App.url.get('id');
+    var tmplData = {};
 
-    var query = JSON.stringify({
-      "monument:Monument": {"id": id, "select": "*"},
+    var d1 = $.Deferred(),
+        d2 = $.Deferred(),
+        d3 = $.Deferred(),
+        d4 = $.Deferred(),
+        d5 = $.Deferred(),
+        d6 = $.Deferred();
+
+    var query_main_info = JSON.stringify({
+      "monument:Monument": {"id": monId, "select": "*"},
       "researches:Research": {"id": "*", "select": "*"},
       "authors:Author": {"id": "*", "select": "*"},
       "knowledges:Knowledge": {"id": "*", "select": "*"},
-      "cultures:Culture": {"id": "*", "select": "*"},
       "researches_hasauthor_authors": {},
       "researches_has_knowledges": {},
+      "knowledges_belongsto_monument": {},
+    });
+
+    var query_cultures = JSON.stringify({
+      "monument:Monument": {"id": monId},
+      "knowledges:Knowledge": {"id": "*"},
+      "cultures:Culture": {"id": "*", "select": "*"},
       "knowledges_belongsto_monument": {},
       "knowledges_has_cultures": {},
     });
 
-    var query_get_resType = JSON.stringify({
-      "monument:Monument": {"id": id},
+    var query_research_types = JSON.stringify({
+      "monument:Monument": {"id": monId},
       "researches:Research": {"id": "*"},
       "knowledges:Knowledge": {"id": "*"},
       "resType:ResearchType": {"id": "*", "select": "*"},
@@ -28,127 +42,96 @@ App.controllers.monument = new (App.View.extend({
     });
 
     var query_epoch = JSON.stringify({
-      "monument:Monument": {"id": id},
+      "monument:Monument": {"id": monId},
       "epoch:Epoch": {"id": "*", "select": "*"},
       "monument_has_epoch": {},
     })
 
-    $.post("/hquery/read", query).success(function(data) {
-      data = JSON.parse(data);
-      data.placemarks = [];
-      data.artifacts = [];
-      data.reports = [];
-      data.resType = {};
-      data.exc = {};
+    var query_reports = JSON.stringify({
+      "research:Research": {"id": "NEED"},
+      "report:Report": {"id": "*", "select": "*"},
+      "author:Author": {"id": "*"},
+      "research_hasreport_report": {},
+      "research_hasauthor_author": {},
+      "report_hasauthor_author": {}
+    });
 
-      var d1 = $.Deferred();
-      var d2 = $.Deferred();
-      var d3 = $.Deferred();
-      var d4 = $.Deferred();
-      var d5 = $.Deferred();
+    var query_excavations = JSON.stringify({
+      "monument:Monument": {"id": monId},
+      "r:Research": {"id": "NEED"},
+      "exc:Excavation": {"id": "*", "select": "*"},
+      "monument_has_exc": {},
+      "r_has_exc": {},
+    })
 
+    var query_artifacts = JSON.stringify({
+      "knowledge:Knowledge": {"id": "NEED"},
+      "artifacts:Artifact": {"id": "*", "select": "*"},
+      "knowledge_founded_artifacts": {}
+    });
+
+    $.when(App.models.fn.sendQueryWithPromise(query_main_info)).then(function(response) {
+      _.extend(tmplData, response);
+
+      var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
+      var knowledgeIds = _.map(tmplData.knowledges, function(know) {return know.id.toString()});
+
+      $.when(App.models.fn.sendQueriesWithDeferred(query_reports, researchIds, d1)).then(function(response) {
+        tmplData.reports = response;
+      });
+      $.when(App.models.fn.sendQueriesWithDeferred(query_excavations, researchIds, d2)).then(function(response) {
+        tmplData.excavations = response;
+      });
+      $.when(App.models.fn.sendQueriesWithDeferred(query_artifacts, knowledgeIds, d3)).then(function(response) {
+        tmplData.artifacts = response;
+      });
+    })
+
+    $.when(App.models.fn.sendQueryWithDeferred(query_research_types, d4)).then(function(response) {
+      _.extend(tmplData, response);
+    })
+
+    $.when(App.models.fn.sendQueryWithDeferred(query_epoch, d5)).then(function(response) {
+      _.extend(tmplData, response);
+    })
+
+    $.when(App.models.fn.sendQueryWithDeferred(query_cultures, d6)).then(function(response) {
+      _.extend(tmplData, response);
+    })
+
+    $.when(d1, d2, d3, d4, d5, d6).done(function() {
       var names = {};
-      $.each(data.knowledges, function(id, k) {
-        if (names[k.monument_name]) {
-          names[k.monument_name]++;
-        } else {
-          names[k.monument_name] = 1;
-        }
+      _.each(tmplData.knowledges, function(k, id) {
+        (names[k.monument_name]) ? names[k.monument_name]++ : names[k.monument_name] = 1;
       })
+      tmplData.mainName = _(names).invert()[_(names).max()];
+      tmplData.allNames = _.keys(names).join(', ');
+      tmplData.placemarks = [];
 
-      data.mainName = _(names).invert()[_(names).max()];
-      data.allNames = _.keys(names).join(', ');
-
-      $.each(data.researches, function(id, research) {
-        query = JSON.stringify({
-          "research:Research": {"id": research.id+""},
-          "report:Report": {"id": "*", "select": "*"},
-          "author:Author": {"id": "*", "select": "*"},
-          "research_hasreport_report": {},
-          "research_hasauthor_author": {},
-          "report_hasauthor_author": {}
-        });
-
-        $.post("/hquery/read", query).success(function(report) {
-          report = JSON.parse(report);
-          data.reports.push(report);
-          if (data.researches.length == id+1) {
-            d1.resolve();
-          }
-        })
-      })
-
-      $.post("/hquery/read", query_epoch).success(function(response) {
-        response = JSON.parse(response);
-        data = $.extend(data, response);
-        d3.resolve();
-      })
-
-      $.post("/hquery/read", query_get_resType).success(function(response) {
-        response = JSON.parse(response);
-        data = $.extend(data, response);
-        d4.resolve();
-      })
-
-      if (data.researches) {
-        var counter = 0;
-        _.each(data.researches, function(research, resid) {
-          var query_excavations = JSON.stringify({
-            "monument:Monument": {"id": id},
-            "r:Research": {"id": `${research.id}`},
-            "exc:Excavation": {"id": "*", "select": "*"},
-            "monument_has_exc": {},
-            "r_has_exc": {},
-          })
-
-          $.post("/hquery/read", query_excavations).success(function(response) {
-            response = JSON.parse(response);
-            data.exc[resid] = response.exc;
-            _.each(response.exc, function(exc, id) {
-              data.placemarks.push({
-                "coords": [exc.x, exc.y],
-                "pref": {
-                  "hintContent": exc.name,
-                  "iconContent": `${resid+1}-${id+1}`
-                }
-              })
-            })
-
-            if (++counter == Object.keys(data.researches).length) {
-              d5.resolve();
+      _.each(tmplData.excavations, function(resExc, resId) {
+        _.each(resExc, function(exc, excId) {
+          tmplData.placemarks.push({
+            "coords": [exc.x, exc.y],
+            "pref": {
+              "hintContent": exc.name,
+              "iconContent": `${resId+1}-${excId+1}`
             }
           })
         })
-      } else {
-        d5.resolve();
-      }
+      })
 
-      $.each(data.knowledges, function(id, knowledge) {
-        query = JSON.stringify({
-          "knowledge:Knowledge": {"id": knowledge.id+""},
-          "artifacts:Artifact": {"id": "*", "select": "*"},
-          "knowledge_founded_artifacts": {}
-        });
-
-        $.post("/hquery/read", query).success(function(artifacts) {
-          artifacts = JSON.parse(artifacts);
-          data.artifacts.push(artifacts.artifacts);
-          if (data.knowledges.length == id+1) {
-            d2.resolve();
-          }
-        })
-
-        data.placemarks.push({
-          "coords": [knowledge.x, knowledge.y],
+      _.each(tmplData.knowledges, function(know, knowId) {
+        tmplData.placemarks.push({
+          "coords": [know.x, know.y],
           "pref": {
-            "hintContent": knowledge.monument_name,
-            "iconContent": id+1
+            "hintContent": know.monument_name,
+            "iconContent": knowId+1
           }
         })
-      });
+      })
 
-      console.log(data);
-      $.when(d1, d2, d3, d4, d5).done(function() {App.page.render("monument_view", data)});
+      console.log(tmplData);
+      App.page.render("monument/show", tmplData)
     });
   },
 
