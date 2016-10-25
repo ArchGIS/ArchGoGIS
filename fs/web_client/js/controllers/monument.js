@@ -40,13 +40,9 @@ App.controllers.monument = new (App.View.extend({
     });
 
     var query_research_types = JSON.stringify({
-      "monument:Monument": {"id": monId},
-      "researches:Research": {"id": "*"},
-      "knowledges:Knowledge": {"id": "*"},
+      "researches:Research": {"id": "NEED"},
       "resType:ResearchType": {"id": "*", "select": "*"},
-      "researches_has_knowledges": {},
       "researches_has_resType": {},
-      "knowledges_belongsto_monument": {},
     });
 
     var query_epoch = JSON.stringify({
@@ -93,10 +89,9 @@ App.controllers.monument = new (App.View.extend({
       $.when(App.models.fn.sendQueriesWithDeferred(query_artifacts, knowledgeIds, d3)).then(function(response) {
         tmplData.artifacts = response;
       });
-    })
-
-    $.when(App.models.fn.sendQueryWithDeferred(query_research_types, d4)).then(function(response) {
-      _.extend(tmplData, response);
+      $.when(App.models.fn.sendQueriesWithDeferred(query_research_types, researchIds, d4)).then(function(response) {
+        tmplData.resTypes = response;
+      })
     })
 
     $.when(App.models.fn.sendQueryWithDeferred(query_epoch, d5)).then(function(response) {

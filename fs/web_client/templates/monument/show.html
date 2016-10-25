@@ -17,8 +17,8 @@
         <b>
           <%= maybe(authors[i], "Неизвестный автор", "name") %>, 
           <%= maybe(research, "год не указан", "year") %>
-          <% if (resType[i]) { %>
-            , <%= maybe(resType[i], "без типа", "name") %>
+          <% if (resTypes[i]) { %>
+            , <%= maybe(resTypes[i][0], "без типа", "name") %>
           <% } %>
         </b>
       </h4>
