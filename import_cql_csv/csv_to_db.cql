@@ -65,7 +65,7 @@ WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDMonument) as idKnow, toInt
 MATCH (aut:Author {id: idAut})
 MATCH (t:Temp {id: idKnow})
 MATCH (m:Monument {id: t.id})
-CREATE (res:Research {id: idRes, year: resYear})
+CREATE (res:Research {id: idRes, year: resYear, name: toString(t.monument_name + "-" + resYear)})
 CREATE (k:Knowledge {id: t.id, monument_name: t.monument_name, description: t.description, x: t.x, y: t.y})
 CREATE (res)-[:hasauthor]->(aut)
 CREATE (res)-[:has]->(k)
