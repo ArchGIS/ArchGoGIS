@@ -10,7 +10,8 @@ App.controllers.monument = new (App.View.extend({
       "cultures": [],
       "artifacts": [],
       "reports": [],
-      "excavations": []
+      "excavations": [],
+      "placemarks": []
     };
 
     var d1 = $.Deferred(),
@@ -113,7 +114,6 @@ App.controllers.monument = new (App.View.extend({
       })
       tmplData.mainName = _(names).invert()[_(names).max()];
       tmplData.allNames = _.keys(names).join(', ');
-      tmplData.placemarks = [];
 
       _.each(tmplData.excavations, function(resExc, resId) {
         _.each(resExc, function(exc, excId) {

@@ -1,5 +1,5 @@
 <div class="content">
-  <h2><%= t('research.singular') %> "<%= research.name %>"</h2>
+  <h2><%= t('research.singular') %> "<%= maybe(research, "Нет названия", "name") %>"</h2>
   <br>
   <dl>
     <dt><%= t('author.singular') %>:</dt>
@@ -17,37 +17,36 @@
   </dl>
   <% } %>
   
-  <% if (research.year) { %>
-    <dl>
-      <dt><%= t('research.year') %>:</dt>
-      <dd><%= maybe(research.year) %></dd>
-    </dl>
-  <% } %>
+  <dl>
+    <dt><%= t('research.year') %>:</dt>
+    <dd><%= maybe(research, "Не указан", "year") %></dd>
+  </dl>
 
-  <% if (resType[0]) { %>
-    <dl>
-      <dt><%= t('research.type') %>:</dt>
-      <dd><%= maybe(resType[0].name) %></dd>
-    </dl>
-  <% } %>
+  <dl>
+    <dt><%= t('research.type') %>:</dt>
+    <dd><%= maybe(resType, "Не указано", "name") %></dd>
+  </dl>
 
-  <h4><%= t('research.prop.description') %>:</h4>
-  <p><%= maybe(research.description) %></p>
+  <dt><%= t('research.prop.description') %>:</dt>
+  <dd><%= maybe(research, "Отсутствует", "description" ) %></dd>
   
-  <h4><%= t('report.singular') %>:</h4>
-  <% if (reports.length) { %>
-    <div>
-    <% _.each(reports, function(report) { %>
-      <p>
-        <%= App.models.Report.href(report.fileid, report.name) %>
-      </p>
-    <% }); %>
-    </div>
-  <% } else { %>
-    <p>
-      Нет отчёта
-    </p>
-  <% } %>
+  <dt><%= t('report.singular') %>:</dt>
+  <dd>
+    <% if (reports.length) { %>
+      <div>
+      <% _.each(reports, function(report, i) { %>
+        <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(authors[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
+        <% if (reports[i].fileid) { %>
+          <%= App.models.Report.href(reports[i].fileid, reportTitle) %>
+        <% } else {%>
+          <%= reportTitle %>
+        <% } %>
+      <% }); %>
+      </div>
+    <% } else { %>
+        Нет отчёта
+    <% } %>
+  </dd>
 
   <div id="accordion">
     <% var counter = 1 %>
@@ -69,16 +68,16 @@
           <dt>Название, данное исследователем:</dt>
           <dd><%= knowledges[i].monument_name %></dd>
           <dt>Эпоха:</dt>
-          <dd><%= epoch[i].name %></dd>
+          <dd><%= maybe(epochs[i], "Нет данных", "name") %></dd>
           <dt>Культурная принадлежность, определенная исследователем:</dt>
-          <dd><%= cultures[i].name %></dd>
+          <dd><%= maybe(cultures[i], "Нет данных", "name") %></dd>
           <dt>Найденные артефакты:</dt>
           <dd>
             <% if (artifacts[i] && artifacts[i].length > 0) { %>
               <% var length = artifacts[i].length %>
               <% _.each(artifacts[i], function(artifact, i) { %>
                 <a href="#artifact/show/<%= artifact.id %>">
-                  <%= artifact.description%>
+                  <%= artifact.name%>
                 </a>
                 <% if (i < length-1) { %>
                 ,
@@ -91,12 +90,12 @@
 
           <dt>Археологические вскрытия:</dt>
           <dd>
-            <% if (exc[i] && exc[i].length > 0) { %>
-              <% var length = exc[i].length %>
-              <% _.each(exc[i], function(exc, i) { %>
-                <%= exc.name%>
-                <% if (exc.area) { %>
-                  (<%= exc.area%> м²)
+            <% if (excavations[i] && excavations[i].length > 0) { %>
+              <% var length = excavations[i].length %>
+              <% _.each(excavations[i], function(excavation, i) { %>
+                <%= maybe(excavation, `без названия ${i}`, "name")%>
+                <% if (excavation.area) { %>
+                  (<%= excavation.area%> м²)
                 <% } %>
                 <% if (i < length-1) { %>
                 ,
@@ -119,7 +118,7 @@
         <% var length = usedArtifacts.length %>
         <% _.each(usedArtifacts, function(artifact, i) { %>
         <a href="#artifact/show/<%= artifact.id %>">
-          <%= artifact.description %>
+          <%= artifact.name %>
         </a>
         <% if (i < length-1) { %>
         ,

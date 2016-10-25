@@ -18,16 +18,15 @@ App.template = new function() {
     if (opts.name) {
       // Создание input'а на основе модели
       var labelText = t(opts.name + ".prop." + name);
-      
     }
   }
 
   function maybe(object, defaultText, key) {
     key = key || "";
     defaultText = defaultText || "Нет данных";
-
-    if (key) {
-      return object["key"] ? object["key"] : defaultText;
+    console.log(object, key);
+    if (key && object) {
+      return object[key] ? object[key] : defaultText;
     }
     return object ? object : defaultText;
   }

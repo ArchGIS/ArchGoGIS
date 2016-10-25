@@ -15,10 +15,10 @@
         <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
         <%= t("research.singular") %> №<%= counter++%>:
         <b>
-          <%= maybe(authors[i].name, "Неизвестный автор") %>, 
-          <%= maybe(research.year, "год не указан") %>
+          <%= maybe(authors[i], "Неизвестный автор", "name") %>, 
+          <%= maybe(research, "год не указан", "year") %>
           <% if (resType[i]) { %>
-            , <%= maybe(resType[i].name, "без типа") %>
+            , <%= maybe(resType[i], "без типа", "name") %>
           <% } %>
         </b>
       </h4>
@@ -33,7 +33,7 @@
           </dd>
           <dt>Название, данное исследователем:</dt>
           <dd><%= knowledges[i].monument_name %></dd>
-          <% if (cultures[i]) { %>
+          <% if (_.keys(cultures[i]).length) { %>
             <dt>Культурная принадлежность, определенная исследователем:</dt>
             <dd><%= cultures[i].name %></dd>
           <% } %>
@@ -60,7 +60,7 @@
           <% if (reports[i] && reports[i].length > 0) { %>
             <dt>Отчет:</dt>
             <dd>
-              <% var reportTitle = `${maybe(reports[i][0].name, "Нет названия")} (${maybe(authors[i].name, "автор неизвестен")}, ${maybe(reports[i][0].year, "год не указан")})` %>
+              <% var reportTitle = `${maybe(reports[i][0], "Нет названия", "name")} (${maybe(authors[i], "автор неизвестен", "name")}, ${maybe(reports[i][0], "год не указан", "year")})` %>
               <% if (reports[i][0].fileid) { %>
                 <%= App.models.Report.href(reports[i][0].fileid, reportTitle) %>
               <% } else {%>
@@ -73,10 +73,10 @@
           <dd>
             <% if (excavations[i] && excavations[i].length > 0) { %>
               <% var length = excavations[i].length %>
-              <% _.each(excavations[i], function(excavations, i) { %>
-                <%= maybe(excavations.name, `без названия ${i}`)%>
-                <% if (excavations.area) { %>
-                  (<%= excavations.area %> м²)
+              <% _.each(excavations[i], function(excavation, i) { %>
+                <%= maybe(excavation, `без названия ${i}`, "name")%>
+                <% if (excavation.area) { %>
+                  (<%= excavation.area %> м²)
                 <% } %>
                 <% if (i < length-1) { %>
                 ,
