@@ -24,7 +24,7 @@ App.template = new function() {
   function maybe(object, defaultText, key) {
     key = key || "";
     defaultText = defaultText || "Нет данных";
-    console.log(object, key);
+
     if (key && object) {
       return object[key] ? object[key] : defaultText;
     }

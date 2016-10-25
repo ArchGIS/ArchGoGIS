@@ -27,7 +27,7 @@ App.models.fn = {
         if (_.keys(response).length > 1) {
           fullResponse[id] = response;
         } else {
-          fullResponse[id] = _.values(response)[0][0];
+          fullResponse[id] = _.values(response)[0];
         }
 
         if (++counter == data.length) {

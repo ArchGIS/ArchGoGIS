@@ -24,7 +24,7 @@
 
   <dl>
     <dt><%= t('research.type') %>:</dt>
-    <dd><%= maybe(resType, "Не указано", "name") %></dd>
+    <dd><%= maybe(resType[0], "Не указано", "name") %></dd>
   </dl>
 
   <dt><%= t('research.prop.description') %>:</dt>
@@ -68,9 +68,9 @@
           <dt>Название, данное исследователем:</dt>
           <dd><%= knowledges[i].monument_name %></dd>
           <dt>Эпоха:</dt>
-          <dd><%= maybe(epochs[i], "Нет данных", "name") %></dd>
+          <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
           <dt>Культурная принадлежность, определенная исследователем:</dt>
-          <dd><%= maybe(cultures[i], "Нет данных", "name") %></dd>
+          <dd><%= maybe(cultures[i][0], "Нет данных", "name") %></dd>
           <dt>Найденные артефакты:</dt>
           <dd>
             <% if (artifacts[i] && artifacts[i].length > 0) { %>
