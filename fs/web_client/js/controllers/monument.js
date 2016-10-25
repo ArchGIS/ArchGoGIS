@@ -70,41 +70,28 @@ App.controllers.monument = new (App.View.extend({
       "knowledge_founded_artifacts": {}
     });
 
-    var query_test = JSON.stringify({
-      "monument:Monument": {"id": monId, "select": "*"},
-      "?epoch:Epoch": {"id": "*", "select": "*"},
-      "monType:MonumentType": {"id": "*", "select": "*"},
-      "?monument_has_epoch": {},
-      "monument_has_monType": {},
-    });
-
-    $.when(App.models.fn.sendQueryWithPromise(query_test)).then(function(response) {
-      console.log(response);
-      // _.extend(tmplData, response);
-    })
-
     $.when(App.models.fn.sendQueryWithPromise(query_main_info)).then(function(response) {
       _.extend(tmplData, response);
 
       var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
       var knowledgeIds = _.map(tmplData.knowledges, function(know) {return know.id.toString()});
 
-      $.when(App.models.fn.sendQueriesWithDeferred(query_reports, researchIds, d3)).then(function(response) {
+      $.when(App.models.fn.sendQueriesWithDeferred(query_reports, researchIds, d1)).then(function(response) {
         tmplData.reports = response;
       });
-      $.when(App.models.fn.sendQueriesWithDeferred(query_excavations, researchIds, d4)).then(function(response) {
+      $.when(App.models.fn.sendQueriesWithDeferred(query_excavations, researchIds, d2)).then(function(response) {
         tmplData.excavations = response;
       });
-      $.when(App.models.fn.sendQueriesWithDeferred(query_artifacts, knowledgeIds, d5)).then(function(response) {
+      $.when(App.models.fn.sendQueriesWithDeferred(query_artifacts, knowledgeIds, d3)).then(function(response) {
         tmplData.artifacts = response;
       });
     })
 
-    $.when(App.models.fn.sendQueryWithDeferred(query_research_types, d1)).then(function(response) {
+    $.when(App.models.fn.sendQueryWithDeferred(query_research_types, d4)).then(function(response) {
       _.extend(tmplData, response);
     })
 
-    $.when(App.models.fn.sendQueryWithDeferred(query_epoch, d2)).then(function(response) {
+    $.when(App.models.fn.sendQueryWithDeferred(query_epoch, d5)).then(function(response) {
       _.extend(tmplData, response);
     })
 
