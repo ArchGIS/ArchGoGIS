@@ -44,43 +44,43 @@ CREATE (mon)-[:has]->(mt)
 CREATE (mon)-[:in]->(region);
 
 LOAD CSV WITH HEADERS FROM "file:///TRefReport.csv" AS line
-WITH line
-MATCH (aut:Author {id: line.IDAutor})
-MATCH (city:City {id: line.IDPubPlace})
-MATCH (org:Organisation {id: line.IDStorePlace})
-CREATE (report:Report {id: line.IDReport, name: line.RepName, year: line.RepYear, number: line.RepNumber})
+WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDPubPlace) as idPlace, toInt(line.IDStorePlace) as idOrg, toInt(line.IDReport) as idRep, toInt(line.RepYear) as repYear
+MATCH (aut:Author {id: idAut})
+MATCH (city:City {id: idPlace})
+MATCH (org:Organisation {id: idOrg})
+CREATE (report:Report {id: idRep, name: line.RepName, year: repYear, number: line.RepNumber})
 CREATE (report)-[:hasauthor]->(aut)
 CREATE (report)-[:in]->(org)
 CREATE UNIQUE (org)-[:has]->(city);
 
 LOAD CSV WITH HEADERS FROM "file:///TRefPublication.csv" AS line
-WITH line
-MATCH (aut:Author {id: line.IDAutor})
-MATCH (city:City {id: line.IDPubPlace})
-CREATE (pub:Publication {id: line.IDPublication, name: line.PubName, year: line.PubYear})
+WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDPubPlace) as idPlace, toInt(line.IDPublication) as idPub, toInt(line.PubYear) as pubYear
+MATCH (aut:Author {id: idAut})
+MATCH (city:City {id: idPlace})
+CREATE (pub:Publication {id: idPub, name: line.PubName, year: pubYear})
 CREATE (pub)-[:hasauthor]->(aut)
 CREATE (pub)-[:in]->(city);
 
 LOAD CSV WITH HEADERS FROM "file:///TResearching.csv" AS line
-WITH line
-MATCH (aut:Author {id: line.IDAutor})
-MATCH (k:Knowledge {id: line.IDMonument})
-CREATE (res:Research {id: line.IDResearching, year: line.ResYear})
+WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDMonument) as idKnow, toInt(line.IDResearching) as idRes, toInt(line.ResYear) as resYear
+MATCH (aut:Author {id: idAut})
+MATCH (k:Knowledge {id: idKnow})
+CREATE (res:Research {id: idRes, year: resYear})
 CREATE (res)-[:hasauthor]->(aut)
 CREATE (res)-[:has]->(k);
 
 LOAD CSV WITH HEADERS FROM "file:///TReport.csv" AS line
-WITH line
-MATCH (res:Research {id: line.IDResearching})
-MATCH (k:Knowledge {id: line.IDMonument})
-MATCH (rep:Report {id: line.IDReport})
+WITH line, toInt(line.IDReport) as idRep, toInt(line.IDMonument) as idKnow, toInt(line.IDResearching) as idRes
+MATCH (res:Research {id: idRes})
+MATCH (k:Knowledge {id: idKnow})
+MATCH (rep:Report {id: idRep})
 MATCH (res)-[:has]->(k)
 CREATE UNIQUE (res)-[:has]->(rep);
 
 MATCH (m:Monument)
-MATCH (e:Epoch {id: "5"})
+MATCH (e:Epoch {id: 5})
 CREATE (m)-[:has]->(e);
 
-create (rt1:ResearchType {id: 1, name: 'Аналитическое'});
-create (rt2:ResearchType {id: 2, name: 'Раскопки'});
+create (rt1:ResearchType {id: 1, name: 'Аналитическое'})
+create (rt2:ResearchType {id: 2, name: 'Раскопки'})
 create (rt3:ResearchType {id: 3, name: 'Разведка'});
