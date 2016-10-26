@@ -14,6 +14,10 @@ LOAD CSV WITH HEADERS FROM "file:///TRefMonType.csv" AS line
 WITH line, toInt(line.IDMonType) as id
 CREATE (mt:MonumentType {id: id, name: line.MonType});
 
+LOAD CSV WITH HEADERS FROM "file:///TRefResType.csv" AS line
+WITH line, toInt(line.IDResType) as id
+CREATE (:ResearchType {id: id, name: line.ResTypeName});
+
 LOAD CSV WITH HEADERS FROM "file:///TRefPubPlace.csv" AS line
 WITH line, toInt(line.IDPubPlace) as id
 CREATE (city:City {id: id, name: line.PubPlaceName});
@@ -33,11 +37,11 @@ CREATE (region:Region {id: idReg, name: line.RegionName})
 CREATE (st)-[:has]->(region);
 
 LOAD CSV WITH HEADERS FROM "file:///TMonument.csv" AS line
-WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDState) as idSt, toInt(line.IDMonument) as idMon
+WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDState) as idSt, toInt(line.IDMonument) as idMon, toInt(line.MonNumber) as monNum
 MATCH (mt:MonumentType {id: idMT})
 MATCH (state:State {id: idSt})
 MATCH (region:Region {id: idReg})
-CREATE (mon:Monument {id: idMon})
+CREATE (mon:Monument {id: idMon, number: monNum})
 CREATE (k:Temp {id: idMon, monument_name: line.MonName, description: line.MonDescription, x: line.MonDecimalLatitude, y: line.MonDecimalLongitude})
 CREATE (mon)-[:has]->(mt)
 CREATE (mon)-[:in]->(region);
@@ -61,14 +65,16 @@ CREATE (pub)-[:hasauthor]->(aut)
 CREATE (pub)-[:in]->(city);
 
 LOAD CSV WITH HEADERS FROM "file:///TResearching.csv" AS line
-WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDMonument) as idKnow, toInt(line.IDResearching) as idRes, toInt(line.ResYear) as resYear
+WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDMonument) as idKnow, toInt(line.IDResearching) as idRes, toInt(line.ResYear) as resYear, toInt(line.IDResType) as idType
 MATCH (aut:Author {id: idAut})
 MATCH (t:Temp {id: idKnow})
 MATCH (m:Monument {id: t.id})
+MATCH (rt:ResearchType {id: idType})
 CREATE (res:Research {id: idRes, year: resYear, name: toString(t.monument_name + "-" + resYear)})
 CREATE (k:Knowledge {id: t.id, monument_name: t.monument_name, description: t.description, x: t.x, y: t.y})
 CREATE (res)-[:hasauthor]->(aut)
 CREATE (res)-[:has]->(k)
+CREATE (res)-[:has]->(rt)
 CREATE (k)-[:belongsto]->(m);
 
 LOAD CSV WITH HEADERS FROM "file:///TReport.csv" AS line
@@ -82,7 +88,3 @@ CREATE UNIQUE (res)-[:has]->(rep);
 MATCH (m:Monument)
 MATCH (e:Epoch {id: 5})
 CREATE (m)-[:has]->(e);
-
-create (rt1:ResearchType {id: 1, name: 'Аналитическое'})
-create (rt2:ResearchType {id: 2, name: 'Раскопки'})
-create (rt3:ResearchType {id: 3, name: 'Разведка'});
