@@ -21,7 +21,6 @@ App.controllers.research = new (App.View.extend({
 
   'show': function() {
     App.url.setMapping(['id']);
-    var id = App.url.get("id");
     var resId = App.url.get("id");
     var tmplData = {
       "epochs": [],
@@ -177,7 +176,8 @@ App.controllers.research = new (App.View.extend({
           })
         })
       })
-
+      console.log(tmplData.epochs);
+      console.log(tmplData.cultures);
       App.page.render('research/show', tmplData)
     });
   }

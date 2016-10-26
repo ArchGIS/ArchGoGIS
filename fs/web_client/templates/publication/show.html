@@ -10,9 +10,6 @@
 		<dt><%= t('coauthor.plural') %>:</dt>
 		<% _.each(coauthors, function(a, i) { %>
 			<dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
-			<!-- <% if (coauthors.length > (i+1)) { %>
-				,
-			<% } %> -->
 		<% }); %>
 	</dl>
 	<% } %>
@@ -24,17 +21,17 @@
 	
 	<dl>
 		<dt><%= t('publication.prop.publisher') %>:</dt>
-		<dd><%= publisher[0].name %></dd>
+		<dd><%= maybe(publisher[0], "Не указан", "name") %></dd>
 	</dl>
 
 	<dl>
 		<dt><%= t('publication.prop.year') %>:</dt>
-		<dd><%= pub.published_at %></dd>
+		<dd><%= maybe(pub[0], "Не указан", "year") %></dd>
 	</dl>
 
 	<dl>
 		<dt><%= t('publication.prop.type') %>:</dt>
-		<dd><%= pubtype[0].name %></dd>
+		<dd><%= maybe(pubtype[0], "Не указан", "name") %></dd>
 	</dl>
 
 	<% if (pub.volume) { %>
@@ -60,7 +57,7 @@
 
 	<dl>
 		<dt><%= t('publication.prop.isbn') %>:</dt>
-		<dd><%= pub.isbn %></dd>
+		<dd><%= maybe(pubtype[0], "Не указан", "isbn") %></dd>
 	</dl>
 
 	<% if (pub.pages) { %>

@@ -11,40 +11,40 @@
     <dt><%= t('author.prop.name') %>:</dt>
     <dd><%= author.name %></dd>
     <dt><%= t('author.prop.year') %>:</dt>
-    <dd><%= (author.birthdate) %></dd>
+    <dd><%= maybe(author.birthdate, "Не указан") %></dd>
   </dl>
 
   <h3><%= t('research.plural') %>:</h3>
   <% if (researches.length) { %>
-  <% _.each(researches, function(r, i) { %>
-    <%= i + 1 %>)
-    <a href="#research/show/<%= r.id %>"><%= r.name %> (
-    <% if (resType[i]) { %>
-      <%= resType[i].name%>, 
-    <% } %>
-    <%= r.year%>)</a>
-    <br><br>
-  <% }); %>
+    <% _.each(researches, function(r, i) { %>
+      <%= i + 1 %>)
+      <a href="#research/show/<%= r.id %>"><%= r.name %> (
+      <% if (resType[i]) { %>
+        <%= resType[i].name%>, 
+      <% } %>
+      <%= r.year%>)</a>
+      <br><br>
+    <% }); %>
   <% } else { %>
-  <p>Нет исследований</p>
+    <p>Нет исследований</p>
   <% } %>
 
   <h3><%= t('author.prop.publications') %>:</h3>
   <% if (pubs.length) { %>
-  <% _.each(pubs, function(pub, i) { %>
-  <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - автор
-  <br><br>
-  <% }); %>
+    <% _.each(pubs, function(pub, i) { %>
+      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.year%></a> - автор
+      <br><br>
+    <% }); %>
   <% } %>
-  <% if (pubsco.length) { %>
-  <% _.each(pubsco, function(pub, i) { %>
-  <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.published_at%></a> - соавтор
-  <br><br>
-  <% }); %>
+  <% if (copubs.length) { %>
+    <% _.each(copubs, function(pub, i) { %>
+      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.year%></a> - соавтор
+      <br><br>
+    <% }); %>
   <% } %>
 
-  <% if (!(pubs.length && pubsco.length)) { %>
-  <p>Нет публикаций</p>
+  <% if (!(pubs.length || copubs.length)) { %>
+    <p>Нет публикаций</p>
   <% } %>
 
   <h3><%= t('organization.plural') %>:</h3>

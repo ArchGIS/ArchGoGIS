@@ -36,6 +36,10 @@ App.models.fn = {
       });
     })
 
+    if (data.length == 0) {
+      deferred.resolve(fullResponse);
+    }
+
     return deferred.promise();
   }
 }
