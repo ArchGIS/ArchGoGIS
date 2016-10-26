@@ -88,3 +88,13 @@ CREATE UNIQUE (res)-[:has]->(rep);
 MATCH (m:Monument)
 MATCH (e:Epoch {id: 5})
 CREATE (m)-[:has]->(e);
+
+
+
+
+
+
+LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
+WITH line, toInt(line.IDAutor) as id
+WHERE NOT line.AutorName =~ '.*,.*'
+CREATE (a:Author {id: id, name: line.AutorName});
