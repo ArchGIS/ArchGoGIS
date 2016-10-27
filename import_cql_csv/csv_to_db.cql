@@ -89,6 +89,8 @@ MATCH (m:Monument)
 MATCH (e:Epoch {id: 5})
 CREATE (m)-[:has]->(e);
 
+MATCH (t:Temp)
+DELETE t;
 
 
 
@@ -98,3 +100,18 @@ LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
 WITH line, toInt(line.IDAutor) as id
 WHERE NOT line.AutorName =~ '.*,.*'
 CREATE (a:Author {id: id, name: line.AutorName});
+
+
+LOAD CSV WITH HEADERS FROM "file:///TResearching.csv" AS line
+WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDMonument) as idKnow, toInt(line.IDResearching) as idRes, toInt(line.ResYear) as resYear, toInt(line.IDResType) as idType
+
+match (a:Author {id: idAut})
+match (rt:ResearchType {id: idType})
+merge (res:Research {year: resYear})
+merge (res)-[:hasauthor]->(a)
+merge (res)-[:has]->(rt)
+on create set res.id = idRes
+merge (k:Knowledge {id: idKnow})
+merge (m:Monument {id: idKnow})
+merge (k)-[:belongsto]->(m)
+merge (res)-[:has]->(k);
