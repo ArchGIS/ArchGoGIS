@@ -115,3 +115,30 @@ merge (k:Knowledge {id: idKnow})
 merge (m:Monument {id: idKnow})
 merge (k)-[:belongsto]->(m)
 merge (res)-[:has]->(k);
+
+
+
+optional match (a:Author {id: idAut})
+optional match (c:Coat {id: idAut})
+match (rt:ResearchType {id: idType})
+foreach(ign IN case when c is null then [1] else [] end |
+  merge (res:Research {year: resYear})
+  merge (res)-[:hasauthor]->(a)
+  merge (res)-[:has]->(rt)
+  on create set res.id = idRes
+  merge (k:Knowledge {id: idKnow})
+  merge (m:Monument {id: idKnow})
+  merge (k)-[:belongsto]->(m)
+  merge (res)-[:has]->(k)
+)
+foreach(ign IN case when a is null then [1] else [] end |
+	merge (a)-[:has]->(m:Mut {id: 1})
+)
+
+
+LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
+WITH line, toInt(line.IDAutor) as id
+foreach(ign IN case when NOT line.AutorName =~ '.*,.*' then [1] else [] end | CREATE (a:Author {id: id, name: line.AutorName}))
+foreach(ign IN case when line.AutorName =~ '.*,.*' then [1] else [] end |
+  CREATE (atmp:AuTemp {id: id, autIds: split(line.AutorName, ",")})
+)
