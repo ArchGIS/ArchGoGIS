@@ -105,7 +105,7 @@ App.controllers.monument = new (App.View.extend({
           }
         })
       })
-
+      console.log(tmplData);
       App.page.render("monument/show", tmplData)
     }
 
