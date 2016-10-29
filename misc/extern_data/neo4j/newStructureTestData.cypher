@@ -528,9 +528,9 @@ create (r1)-[:has]->(an)
 create (r2)-[:has]->(surv)
 create (r3)-[:has]->(exc)
 
-create (r1)-[:hasreport]->(rep1)
-create (r2)-[:hasreport]->(rep2)
-create (r3)-[:hasreport]->(rep3)
+create (r1)-[:has]->(rep1)
+create (r2)-[:has]->(rep2)
+create (r3)-[:has]->(rep3)
 
 create (exc)-[:belongsto]->(mon1)
 create (surv)-[:belongsto]->(mon2)

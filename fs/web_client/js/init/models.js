@@ -1,7 +1,7 @@
 'use strict';
 
 App.models.fn = {
-  "sendQueryWithPromise": function(query) {
+  "sendQuery": function(query) {
     var d = $.Deferred();
     this.sendQueryWithDeferred(query, d);
     return d.promise();
@@ -16,30 +16,55 @@ App.models.fn = {
     return deferred.promise();
   },
 
-  "sendQueriesWithDeferred": function(query, data, deferred) {
+  "sendQueries": function(query, params) {
     var counter = 0;
     var fullResponse = [];
+    var deferred = $.Deferred();
 
-    _.each(data, function(val, id) {
+    _.each(params, function(val, id) {
       var completedQuery = query.replace(/NEED/g, val);
       $.post("/hquery/read", completedQuery).success(function(response) {
         response = JSON.parse(response);
+
         if (_.keys(response).length > 1) {
           fullResponse[id] = response;
         } else {
           fullResponse[id] = _.values(response)[0];
         }
 
-        if (++counter == data.length) {
+        if (++counter == params.length) {
           deferred.resolve(fullResponse);
         }
       });
     })
 
-    if (data.length == 0) {
+    if (params.length == 0) {
       deferred.resolve(fullResponse);
     }
 
     return deferred.promise();
+  },
+
+  "getData": function(queries, callback, needParams, params) {
+    needParams = needParams || false;
+    var data = {};
+
+    _.each(queries, function(query, key) {
+      if (needParams) {
+        $.when(App.models.fn.sendQueries(query, params)).then(function(response) {
+          data[key] = response;
+          callback();
+        });
+      } else {
+        $.when(App.models.fn.sendQuery(query)).then(function(response) {
+          _.each(response, function(val, key){
+            data[key] = val;
+          })
+          callback();
+        });
+      }
+    })
+
+    return data;
   }
 }
