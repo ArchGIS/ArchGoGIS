@@ -16,7 +16,7 @@ import (
 const (
 	filterResCypher = "MATCH (r:Research)" +
 		"MATCH (a:Author)<-[:hasauthor]-(r)" +
-		"MATCH (m:Monument)<-[:belongsto]-(k:Knowledge)<-[:has]-(r)"
+		"MATCH (k:Knowledge)<-[:has]-(r)"
 )
 
 func filterResHandler(w web.ResponseWriter, r *http.Request) {
@@ -52,18 +52,24 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
 
-	query = query + "OPTIONAL MATCH (m)-[:has]->(monType:MonumentType) "
+	query = query + "OPTIONAL MATCH (r)-[:has]->(resType:ResearchType) "
 
 	query = query + "WITH {" +
 		"resId: r.id, " +
 		"resName: r.name, " +
 		"resYear: r.year, " +
+		"resTypeId: resType.id, " +
 		"autName: a.name, " +
-		"x: k.x, " +
-		"y: k.y, " +
-		"monType: monType.name" +
-		"monTypeId: monType.id} AS resp " +
+		"x: COLLECT(k.x), " +
+		"y: COLLECT(k.y)} AS resp " +
 		"RETURN resp"
+
+		// MATCH (k:Knowledge)<-[:has]-(r)
+		// WITH {resID: r.id,
+		// 	autName: a.name,
+		// 	x: COLLECT(k.x),
+		// 	y: COLLECT(k.y)} AS resp
+		// RETURN resp
 
 	resp, err := neo.Run(query, params)
 

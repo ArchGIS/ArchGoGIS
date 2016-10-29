@@ -136,10 +136,12 @@ App.views.search = new (App.View.extend({
 
               var counter = 1;
               _.each(response, function(item) {
-                map.addPlacemark([item[0].x, item[0].y], {
-                  hintContent: item[0].monName,
-                  iconContent: counter++
-                });
+                var type = item[0].monTypeId || 10;
+                map.addPlacemark(
+                  [item[0].x, item[0].y],
+                  {hintContent: item[0].monName},
+                  {preset: `monType${type}`}
+                );
               })
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
@@ -232,10 +234,14 @@ App.views.search = new (App.View.extend({
 
               var counter = 1;
               _.each(response, function(item) {
-                map.addPlacemark([item[0].x, item[0].y], {
-                  hintContent: item[0].resName,
-                  iconContent: counter++
-                });
+                var type = item[0].resTypeId || 1;
+                for (var i=0; i < item[0].x.length; i++) {
+                  map.addPlacemark(
+                    [item[0].x[i], item[0].y[i]],
+                    {hintContent: item[0].resName},
+                    {preset: `resType${type}`}
+                  );
+                }
               })
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
