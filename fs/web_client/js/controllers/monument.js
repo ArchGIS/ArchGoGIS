@@ -8,7 +8,6 @@ App.controllers.monument = new (App.View.extend({
     var data = [];
     var model = App.models.fn;
 
-
     var queries = {
       complex: {
         mainInfo: JSON.stringify({
@@ -64,7 +63,7 @@ App.controllers.monument = new (App.View.extend({
         artifacts: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
-          "knowledge_founded_artifacts": {}
+          "knowledge_found_artifacts": {}
         })
       }
     }

@@ -65,10 +65,8 @@ App.controllers.research = new (App.View.extend({
         }),
         usedArtifacts: JSON.stringify({
           "research:Research": {"id": resId},
-          "knowledges:Knowledge": {"id": "*"},
           "usedArtifacts:Artifact": {"id": "*", "select": "*"},
-          "knowledges_has_usedArtifacts": {},
-          "research_has_knowledges": {}
+          "research_used_usedArtifacts": {}
         })
       },
 
@@ -101,7 +99,7 @@ App.controllers.research = new (App.View.extend({
         artifacts: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
-          "knowledge_founded_artifacts": {}
+          "knowledge_found_artifacts": {}
         })
       }
     }

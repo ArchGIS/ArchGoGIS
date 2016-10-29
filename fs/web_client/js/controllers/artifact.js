@@ -27,118 +27,134 @@ App.controllers.artifact = new (App.View.extend({
 
   'show': function() {
     App.url.setMapping(['id']);
-    var id = App.url.get('id');
-    var data = {};
-    var d1 = $.Deferred();
-    var d2 = $.Deferred();
-    var d3 = $.Deferred();
-    var d4 = $.Deferred();
-    var d5 = $.Deferred();
-    var d6 = $.Deferred();
+    var aid = App.url.get('id');
+    var data = [];
+    var tmplData = {};
+    var model = App.models.fn;
 
-    data.categories = {};
-    data.materials = {};
-    data.researches = {};
-    data.intervals = {};
-    data.placemarks = [];
-    data.photos = [];
+    var queries = {
+      complex: {
+        foundIn: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "knowFound:Knowledge": {"id": "*", "select": "*"},
+          "monFound:Monument": {"id": "*", "select": "*"},
+          "resFound:Research": {"id": "*", "select": "*"},
+          "authorFound:Author": {"id": "*", "select": "*"},
+          "knowFound_found_artifact": {},
+          "knowFound_belongsto_monFound": {},
+          "resFound_has_knowFound": {},
+          "resFound_hasauthor_authorFound": {},
+        }),
+        usedIn: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "researches:Research": {"id": "*", "select": "*"},
+          "authors:Author": {"id": "*", "select": "*"},
+          "researches_used_artifact": {},
+          "researches_hasauthor_authors": {}
+        }),
+      },
 
-    var queryResearches = JSON.stringify({
-      "artifact:Artifact": {"id": id, "select": "*"},
-      "researches:Research": {"id": "*", "select": "*"},
-      "knowledges:Knowledge":  {"id": "*", "select": "*"},
-      "authors:Author": {"id": "*", "select": "*"},
-      "knowledges_has_artifact": {},
-      "researches_has_knowledges": {},
-      "researches_hasauthor_authors": {}
-    });
+      single: {
+        artifact: JSON.stringify({
+          "artifact:Artifact": {"id": aid, "select": "*"}
+        }),
+        category: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "categories:ArtifactCategory": {"id": "*", "select": "*"},
+          "artifact_has_categories": {},
+        }),
+        photos: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "photos:Image": {"id": "*", "select": "*"},
+          "artifact_has_photos": {},
+        }),
+        materials: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "materials:ArtifactMaterial": {"id": "*", "select": "*"},
+          "artifact_has_materials": {},
+        }),
+        orgs: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "intervals:StorageInterval": {"id": "*", "select": "*"},
+          "org:Organization": {"id": "*", "select": "*"},
+          "artifact_has_intervals": {},
+          "intervals_belongsto_org": {},
+        })
+      },
 
-    var queryFound = JSON.stringify({
-      "artifact:Artifact": {"id": id, "select": "*"},
-      "knowFound:Knowledge": {"id": "*", "select": "*"},
-      "monFound:Monument": {"id": "*", "select": "*"},
-      "resFound:Research": {"id": "*", "select": "*"},
-      "authorFound:Author": {"id": "*", "select": "*"},
-      "knowFound_founded_artifact": {},
-      "knowFound_belongsto_monFound": {},
-      "resFound_has_knowFound": {},
-      "resFound_hasauthor_authorFound": {},
-    });
+      monument: {
+        monType: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "monType:MonumentType": {"id": "*", "select": "*"},
+          "m_has_monType": {},
+        }),
+      },
 
-    var query_cat = JSON.stringify({
-      "artifact:Artifact": {"id": id, "select": "*"},
-      "categories:ArtifactCategory": {"id": "*", "select": "*"},
-      "artifact_has_categories": {},
-    });
+      researchUsed: {
+        resUsedType: JSON.stringify({
+          "r:Research": {"id": "NEED"},
+          "resType:ResearchType": {"id": "*", "select": "*"},
+          "r_has_resType": {},
+        }),
+      },
 
-    var query_photo = JSON.stringify({
-      "artifact:Artifact": {"id": id, "select": "*"},
-      "photos:Image": {"id": "*", "select": "*"},
-      "artifact_has_photos": {},
-    });
+      researchFound: {
+        resFoundType: JSON.stringify({
+          "r:Research": {"id": "NEED"},
+          "resType:ResearchType": {"id": "*", "select": "*"},
+          "r_has_resType": {},
+        }),
+      }
+    }
 
-    var query_mat = JSON.stringify({
-      "artifact:Artifact": {"id": id, "select": "*"},
-      "materials:ArtifactMaterial": {"id": "*", "select": "*"},
-      "artifact_has_materials": {},
-    });
+    var render = function() {
+      _.each(data, function(val, id) {
+        _.extend(tmplData, val);
+      })
+      console.log(tmplData);
 
-    var query_storage = JSON.stringify({
-      "artifact:Artifact": {"id": id, "select": "*"},
-      "intervals:StorageInterval": {"id": "*", "select": "*"},
-      "storages:Storage": {"id": "*", "select": "*"},
-      "city:City": {"id": "*", "select": "*"},
-      "artifact_has_intervals": {},
-      "storages_has_intervals": {},
-      "storages_has_city": {},
-    });
-
-    $.post('/hquery/read', queryFound).success(function(response) {
-      response = JSON.parse(response);
-      data = $.extend(data, response);
-      
-      data.placemarks.push({
-        "coords": [data.knowFound[0].x, data.knowFound[0].y],
-        "pref": {
-          "hintContent": data.knowFound[0].monument_name
+      tmplData.placemarks = [];
+      var type = (tmplData.monType[0][0]) ? tmplData.monType[0][0].id : 10;
+      tmplData.placemarks.push({
+        coords: [tmplData.knowFound[0].x, tmplData.knowFound[0].y],
+        pref: {
+          hintContent: tmplData.knowFound[0].monument_name
+        },
+        opts: {
+          preset: `monType${type}`
         }
       })
 
-      d1.resolve();
+      App.page.render("artifact/show", tmplData);
+    }
+
+    var queryCounter = _.reduce(queries, function(memo, obj) {
+      return memo + _.size(obj)
+    }, 0)
+
+    var callRender = _.after(queryCounter, render);
+
+    $.when(model.sendQuery(queries.complex.foundIn)).then(function(response) {
+      _.extend(tmplData, response);
+
+      var monumentId = [tmplData.monFound[0].id];
+      var researchId = [tmplData.resFound[0].id]
+
+      data.push(model.getData(queries.monument, callRender, true, monumentId));
+      data.push(model.getData(queries.researchFound, callRender, true, researchId));
+      callRender();
     })
 
-    $.post('/hquery/read', queryResearches).success(function(response) {
-      response = JSON.parse(response);
-      data = $.extend(data, response);
-      d5.resolve();
+    $.when(model.sendQuery(queries.complex.usedIn)).then(function(response) {
+      _.extend(tmplData, response);
+
+      var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
+      
+      data.push(model.getData(queries.researchUsed, callRender, true, researchIds));
+      callRender();
     })
 
-    $.post('/hquery/read', query_cat).success(function(response) {
-      response = JSON.parse(response);
-      data = $.extend(data, response);
-      d2.resolve();
-    })
-
-    $.post('/hquery/read', query_mat).success(function(response) {
-      response = JSON.parse(response);
-      data = $.extend(data, response);
-      d3.resolve();
-    })
-
-    $.post('/hquery/read', query_storage).success(function(response) {
-      response = JSON.parse(response);
-      data = $.extend(data, response);
-      d4.resolve();
-    })
-
-    $.post('/hquery/read', query_photo).success(function(response) {
-      response = JSON.parse(response);
-      data = $.extend(data, response);
-      d6.resolve();
-    })
-
-    console.log(data);
-    $.when(d1, d2, d3, d4, d5, d6).done(function() {App.page.render("artifact/show", data)});
+    data.push(model.getData(queries.single, callRender));
   },
 
   'start': function() {

@@ -55,6 +55,9 @@ App.models.fn = {
           data[key] = response;
           callback();
         });
+        if (!params.length) {
+          callback();
+        }
       } else {
         $.when(App.models.fn.sendQuery(query)).then(function(response) {
           _.each(response, function(val, key){

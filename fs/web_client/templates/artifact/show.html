@@ -5,9 +5,8 @@
     <% _.each(photos, function(photo) { %>
       <img src="<%= dburl + '/local_storage/' + photo.fileid %>" height="100px">
     <% }); %>
-  <% } else { %>
-    <span>Пока фотографий нет</span>
   <% } %>
+  <br>
   <br>
 
   <% if (artifact.year) { %>
@@ -27,54 +26,63 @@
     </a>
   </dd>
   
-  
   <% if (artifact.description) { %>
     <dt><%= t('artifact.description') %>:</dt>
     <dd><%= artifact.description %></dd>
+  <% } else { %>
+    <dd>Отсутсвует</dd>
   <% } %>
 
   <% if (materials.length > 0) { %>
     <dt><%= t('artifact.material') %>:</dt>
     <dd><%= _.pluck(materials, 'name').join(", ") %></dd>
+  <% } else { %>
+    <dd>Нет данных</dd>
   <% } %>
 
   
   <% if (categories.length > 0) { %>
     <dt><%= t('artifact.category') %>:</dt>
     <dd><%= _.pluck(categories, 'name').join(", ") %></dd>
+  <% } else { %>
+    <dd>Нет данных</dd>
   <% } %>
 
   <p>
     <h3><%= t('artifact.researches') %>:</h3>
     <a href="#research/show/<%= resFound[0].id %>">
-    	<%= authorFound[0].name %>, <%= resFound[0].year %>, <%= resFound[0].type %>
-  	</a>
-  	- Найден
+      <%= authorFound[0].name %>,
+      <%= maybe(resFound[0], "год не указан", "year") %>,
+      <%= maybe(resFoundType[0][0], "тип не указан", "name") %>
+    </a>
+    - Найден
 
-  	<% if (researches.length > 0) { _.each(researches, function(research, i) { %>
-	    <p>
-	      <a href="#research/show/<%= researches[i].id %>">
-	        <%= authors[i].name %>, <%= research.year %>, <%= research.type %>
-	      </a></h3>
-	    </p>
-	   <% })} %>
+    <% if (researches.length > 0) { %>
+      <% _.each(researches, function(research, i) { %>
+        <p>
+          <a href="#research/show/<%= researches[i].id %>">
+            <%= authors[i].name %>,
+            <%= maybe(research, "год не указан", "year") %>,
+            <%= maybe(resUsedType[i][0], "тип не указан", "name") %>
+          </a></h3>
+        </p>
+     <% }) %>
+    <% } %>
   </p>
 
   <% if (intervals.length > 0) { %>
-	  <p>
-	    <h3><%= t('artifact.storage') %>:</h3>
-	  	<% _.each(intervals, function(interval, i) { %>
-		    <p> 
-		    	C <%= interval.period[0]%> <%= t('year.year2') %>
-		    	в "<%= storages[i].address %>" 
-		    	в городе <%= city[i].name %> 
-		    </p>
-		    <br>
-		   <% }) %>
-	  </p>
+    <p>
+      <h3><%= t('artifact.storage') %>:</h3>
+      <% _.each(intervals, function(interval, i) { %>
+        <p> 
+          C <%= interval.period[0]%> <%= t('year.year2') %>
+        </p>
+        <br>
+       <% }) %>
+    </p>
   <% } %>
 
   <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>
-	</div>
+  </div>
 </div>
