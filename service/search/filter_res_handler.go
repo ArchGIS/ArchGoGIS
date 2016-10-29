@@ -61,7 +61,8 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 		"autName: a.name, " +
 		"x: k.x, " +
 		"y: k.y, " +
-		"monType: monType.name} AS resp " +
+		"monType: monType.name" +
+		"monTypeId: monType.id} AS resp " +
 		"RETURN resp"
 
 	resp, err := neo.Run(query, params)
