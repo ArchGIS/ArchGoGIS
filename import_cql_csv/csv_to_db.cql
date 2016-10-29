@@ -1,7 +1,3 @@
-LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
-WITH line, toInt(line.IDAutor) as id
-CREATE (a:Author {id: id, name: line.AutorName});
-
 LOAD CSV WITH HEADERS FROM "file:///TRefCulture.csv" AS line
 WITH line, toInt(line.IDCulture) as idCulture
 CREATE (c:Culture {id: idCulture, name: line.CultureName});
@@ -10,13 +6,6 @@ LOAD CSV WITH HEADERS FROM "file:///TRefCultureLayer.csv" AS line
 WITH line, toInt(line.IDCultureLayer) as id
 CREATE (e:Epoch {id: id, name: line.CultureLayer});
 
-LOAD CSV WITH HEADERS FROM "file:///TRefMonType.csv" AS line
-WITH line, toInt(line.IDMonType) as id
-CREATE (mt:MonumentType {id: id, name: line.MonType});
-
-LOAD CSV WITH HEADERS FROM "file:///TRefResType.csv" AS line
-WITH line, toInt(line.IDResType) as id
-CREATE (:ResearchType {id: id, name: line.ResTypeName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefPubPlace.csv" AS line
 WITH line, toInt(line.IDPubPlace) as id
@@ -26,25 +15,6 @@ LOAD CSV WITH HEADERS FROM "file:///TRefStorePlace.csv" AS line
 WITH line, toInt(line.IDStorePlace) as id
 CREATE (org:Organisation {id: id, name: line.StorePlaceName});
 
-LOAD CSV WITH HEADERS FROM "file:///TRefState.csv" AS line
-WITH line, toInt(line.IDState) as id
-CREATE (st:State {id: id, name: line.StateName});
-
-LOAD CSV WITH HEADERS FROM "file:///TRefRegion.csv" AS line
-WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDState) as idSt
-MATCH (st:State {id: idSt})
-CREATE (region:Region {id: idReg, name: line.RegionName})
-CREATE (st)-[:has]->(region);
-
-LOAD CSV WITH HEADERS FROM "file:///TMonument.csv" AS line
-WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDState) as idSt, toInt(line.IDMonument) as idMon, toInt(line.MonNumber) as monNum
-MATCH (mt:MonumentType {id: idMT})
-MATCH (state:State {id: idSt})
-MATCH (region:Region {id: idReg})
-CREATE (mon:Monument {id: idMon, number: monNum})
-CREATE (k:Temp {id: idMon, monument_name: line.MonName, description: line.MonDescription, x: line.MonDecimalLatitude, y: line.MonDecimalLongitude})
-CREATE (mon)-[:has]->(mt)
-CREATE (mon)-[:in]->(region);
 
 LOAD CSV WITH HEADERS FROM "file:///TRefReport.csv" AS line
 WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDPubPlace) as idPlace, toInt(line.IDStorePlace) as idOrg, toInt(line.IDReport) as idRep, toInt(line.RepYear) as repYear
@@ -89,56 +59,88 @@ MATCH (m:Monument)
 MATCH (e:Epoch {id: 5})
 CREATE (m)-[:has]->(e);
 
-MATCH (t:Temp)
-DELETE t;
 
 
 
 
+
+
+LOAD CSV WITH HEADERS FROM "file:///TRefMonType.csv" AS line
+WITH line, toInt(line.IDMonType) as id
+CREATE (mt:MonumentType {id: id, name: line.MonType});
+
+LOAD CSV WITH HEADERS FROM "file:///TRefState.csv" AS line
+WITH line, toInt(line.IDState) as id
+CREATE (st:State {id: id, name: line.StateName});
+
+LOAD CSV WITH HEADERS FROM "file:///TRefRegion.csv" AS line
+WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDState) as idSt
+MATCH (st:State {id: idSt})
+CREATE (region:Region {id: idReg, name: line.RegionName})
+CREATE (st)-[:has]->(region);
+
+LOAD CSV WITH HEADERS FROM "file:///TMonument.csv" AS line
+WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDState) as idSt, toInt(line.IDMonument) as idMon, toInt(line.MonNumber) as monNum
+MATCH (mt:MonumentType {id: idMT})
+MATCH (state:State {id: idSt})
+MATCH (region:Region {id: idReg})
+CREATE (mon:Monument {id: idMon, number: monNum})
+CREATE (k:Temp {id: idMon, monument_name: line.MonName, description: line.MonDescription, x: line.MonDecimalLatitude, y: line.MonDecimalLongitude})
+CREATE (mon)-[:has]->(mt)
+CREATE (mon)-[:in]->(region);
+
+
+LOAD CSV WITH HEADERS FROM "file:///TRefResType.csv" AS line
+WITH line, toInt(line.IDResType) AS id
+CREATE (:ResearchType {id: id, name: line.ResTypeName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
-WITH line, toInt(line.IDAutor) as id
-WHERE NOT line.AutorName =~ '.*,.*'
-CREATE (a:Author {id: id, name: line.AutorName});
-
+WITH line, toInt(line.IDAutor) AS id
+FOREACH(ign IN CASE WHEN NOT line.AutorName =~ '.*,.*' THEN [1] ELSE [] END | CREATE (a:Author {id: id, name: line.AutorName}))
+FOREACH(ign IN CASE WHEN line.AutorName =~ '.*,.*' THEN [1] ELSE [] END |
+  CREATE (atmp:AuTemp {id: id, autIds: split(line.AutorName, ", ")})
+);
 
 LOAD CSV WITH HEADERS FROM "file:///TResearching.csv" AS line
-WITH line, toInt(line.IDAutor) as idAut, toInt(line.IDMonument) as idKnow, toInt(line.IDResearching) as idRes, toInt(line.ResYear) as resYear, toInt(line.IDResType) as idType
-
-match (a:Author {id: idAut})
-match (rt:ResearchType {id: idType})
-merge (res:Research {year: resYear})
-merge (res)-[:hasauthor]->(a)
-merge (res)-[:has]->(rt)
-on create set res.id = idRes
-merge (k:Knowledge {id: idKnow})
-merge (m:Monument {id: idKnow})
-merge (k)-[:belongsto]->(m)
-merge (res)-[:has]->(k);
-
-
-
-optional match (a:Author {id: idAut})
-optional match (c:Coat {id: idAut})
-match (rt:ResearchType {id: idType})
-foreach(ign IN case when c is null then [1] else [] end |
-  merge (res:Research {year: resYear})
-  merge (res)-[:hasauthor]->(a)
-  merge (res)-[:has]->(rt)
-  on create set res.id = idRes
-  merge (k:Knowledge {id: idKnow})
-  merge (m:Monument {id: idKnow})
-  merge (k)-[:belongsto]->(m)
-  merge (res)-[:has]->(k)
-)
-foreach(ign IN case when a is null then [1] else [] end |
-	merge (a)-[:has]->(m:Mut {id: 1})
+WITH line, toInt(line.IDAutor) AS idAut, toInt(line.IDMonument) AS idKnow, toInt(line.IDResearching) AS idRes, toInt(line.ResYear) AS resYear, toInt(line.IDResType) AS idType
+MATCH (rt:ResearchType {id: idType})
+MATCH (t:Temp {id: idKnow})
+MATCH (m:Monument {id: t.id})
+OPTIONAL MATCH (a:Author {id: idAut})
+OPTIONAL MATCH (c:AuTemp {id: idAut})
+FOREACH(ign IN CASE WHEN a IS NOT NULL AND resYear IS NOT NULL THEN [1] ELSE [] END |
+  MERGE (rt)<-[:has]-(res:Research {year: resYear})-[:hasauthor]->(a)
+  ON CREATE SET res.id = idRes,
+    res.name = toString(t.monument_name + "-" + resYear)
+  MERGE (res)-[:has]->(k:Knowledge {id: idKnow})-[:belongsto]->(m)
+  ON CREATE SET k.monument_name = t.monument_name,
+    k.description = t.description,
+    k.x = t.x,
+    k.y = t.y
 )
 
+FOREACH (ign IN CASE WHEN c IS NOT NULL AND resYear IS NOT NULL THEN [1] ELSE [] END |
+  MERGE (author:Author {name: c.autIds[0]})
+  MERGE (rt)<-[:has]-(res:Research {year: resYear})-[:hasauthor]->(author)
+  ON CREATE SET res.id = idRes,
+    res.name = toString(t.monument_name + "-" + resYear)
 
-LOAD CSV WITH HEADERS FROM "file:///TRefAutor.csv" AS line
-WITH line, toInt(line.IDAutor) as id
-foreach(ign IN case when NOT line.AutorName =~ '.*,.*' then [1] else [] end | CREATE (a:Author {id: id, name: line.AutorName}))
-foreach(ign IN case when line.AutorName =~ '.*,.*' then [1] else [] end |
-  CREATE (atmp:AuTemp {id: id, autIds: split(line.AutorName, ",")})
-)
+  FOREACH (val IN tail(c.autIds) |
+    MERGE (coaut:Author {name: val})
+    MERGE (res)-[:hascoauthor]->(coaut)
+  )
+
+  MERGE (res)-[:has]->(k:Knowledge {id: idKnow})-[:belongsto]->(m)
+  ON CREATE SET k.monument_name = t.monument_name,
+    k.description = t.description,
+    k.x = t.x,
+    k.y = t.y
+);
+
+
+
+
+
+
+MATCH (t:Temp)
+DELETE t;
