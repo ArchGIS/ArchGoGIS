@@ -2,8 +2,8 @@ package search
 
 import (
 	"bytes"
-	"unsafe"
 	"net/http"
+	"unsafe"
 
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
@@ -19,12 +19,10 @@ const (
 		"MATCH (k:Knowledge)<-[:has]-(r)"
 )
 
-
 func filterResHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterRes(
 		r.URL.Query().Get("year"),
 		r.URL.Query().Get("author"))
-
 
 	if err == nil {
 		w.Write(result)
@@ -53,8 +51,25 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
-	
-	query = query + "RETURN r.id, r.name, r.year, a.name, k.x, k.y"
+
+	query = query + "OPTIONAL MATCH (r)-[:has]->(resType:ResearchType) "
+
+	query = query + "WITH {" +
+		"resId: r.id, " +
+		"resName: r.name, " +
+		"resYear: r.year, " +
+		"resTypeId: resType.id, " +
+		"autName: a.name, " +
+		"x: COLLECT(k.x), " +
+		"y: COLLECT(k.y)} AS resp " +
+		"RETURN resp"
+
+		// MATCH (k:Knowledge)<-[:has]-(r)
+		// WITH {resID: r.id,
+		// 	autName: a.name,
+		// 	x: COLLECT(k.x),
+		// 	y: COLLECT(k.y)} AS resp
+		// RETURN resp
 
 	resp, err := neo.Run(query, params)
 
