@@ -67,13 +67,6 @@ FOREACH (ign IN CASE WHEN c IS NOT NULL AND resYear IS NOT NULL THEN [1] ELSE []
 );
 
 
-MATCH (t:Temp)
-DELETE t;
-
-MATCH (m:Monument)
-MATCH (e:Epoch {id: 5})
-CREATE (m)-[:has]->(e);
-
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCulture.csv" AS line
 WITH line, toInt(line.IDCulture) as idCulture
@@ -118,3 +111,11 @@ MATCH (k:Knowledge {id: idKnow})
 MATCH (rep:Report {id: idRep})
 MATCH (res)-[:has]->(k)
 CREATE UNIQUE (res)-[:has]->(rep);
+
+
+MATCH (t:Temp)
+DELETE t;
+
+MATCH (m:Monument)
+MATCH (e:Epoch {id: 5})
+CREATE (m)-[:has]->(e);
