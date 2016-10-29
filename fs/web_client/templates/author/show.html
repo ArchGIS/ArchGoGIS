@@ -19,8 +19,8 @@
     <% _.each(researches, function(r, i) { %>
       <%= i + 1 %>)
       <a href="#research/show/<%= r.id %>"><%= r.name %> (
-      <% if (resType[i]) { %>
-        <%= resType[i].name%>, 
+      <% if (resTypes[i][0]) { %>
+        <%= resTypes[i][0].name%>, 
       <% } %>
       <%= r.year%>)</a>
       <br><br>
@@ -32,13 +32,13 @@
   <h3><%= t('author.prop.publications') %>:</h3>
   <% if (pubs.length) { %>
     <% _.each(pubs, function(pub, i) { %>
-      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.year%></a> - автор
+      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= maybe(pub.year, "год неизвестен")%></a> - автор
       <br><br>
     <% }); %>
   <% } %>
   <% if (copubs.length) { %>
     <% _.each(copubs, function(pub, i) { %>
-      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= pub.year%></a> - соавтор
+      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= maybe(pub.year, "год неизвестен")%></a> - соавтор
       <br><br>
     <% }); %>
   <% } %>
