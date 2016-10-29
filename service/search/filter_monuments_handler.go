@@ -3,13 +3,15 @@ package search
 import (
 	"bytes"
 	// "github.com/ArchGIS/ArchGoGIS/cfg"
+	"net/http"
+
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
-	"net/http"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
 	// "unicode/utf8"
 	"unsafe"
+
 	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
@@ -20,7 +22,6 @@ const (
 		"MATCH (r:Research)-[:has]->(k)" +
 		"MATCH (a:Author)<-[:hasauthor]-(r)"
 )
-
 
 func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterMonuments(
@@ -38,17 +39,6 @@ func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 }
 
 func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte, error) {
-	// if needle == "" {
-	// 	return nil, errs.FilterIsEmpty
-	// }
-
-	// runes := utf8.RuneCountInString(needle)
-	// if runes < cfg.SearchMinPrefixLen {
-	// 	return nil, errs.PrefixIsTooShort
-	// } else if runes > cfg.SearchMaxPrefixLen {
-	// 	return nil, errs.PrefixIsTooLong
-	// }
-
 	// needle = norm.NormalMonument(needle)
 	params := neo.Params{}
 	query := filterMonumentsCypher
@@ -79,6 +69,7 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 	}
 
 	query = query +
+		"OPTIONAL MATCH (m)-[:has]->(monType:MonumentType)" +
 		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
 		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)"
 
@@ -99,7 +90,17 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 		params["culture"] = culture
 	}
 
-	query = query + "RETURN m.id, k.monument_name, r.year, a.name, e.name, c.name, k.x, k.y"
+	query = query + "WITH {" +
+		"monId: m.id, " +
+		"monName: k.monument_name, " +
+		"resYear: r.year, " +
+		"autName: a.name, " +
+		"ep: e.name, " +
+		"cult: c.name, " +
+		"x: k.x, " +
+		"y: k.y, " +
+		"monType: monType.name} AS resp " +
+		"RETURN resp"
 
 	resp, err := neo.Run(query, params)
 

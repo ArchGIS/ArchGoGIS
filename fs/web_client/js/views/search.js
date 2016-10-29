@@ -4,7 +4,7 @@ App.views.search = new (App.View.extend({
   'index': function() {
     var t = App.locale.translate;
     var grepObject = App.fn.grepObject;
-    
+
     var $results = $('#search-results');
 
     var $objectToggler = App.page.get('objectToggler');
@@ -15,7 +15,7 @@ App.views.search = new (App.View.extend({
         'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
           return _.map(monuments, function(mk) {
-            return [App.models.Monument.href(mk[0], `${mk[1]} (${mk[3]} - ${mk[2]})`)];
+            return [App.models.Monument.href(mk[0].monId, `${mk[0].monName} (${mk[0].autName} - ${mk[0].resYear})`)];
           });
         },
         'inputs': {
@@ -31,12 +31,12 @@ App.views.search = new (App.View.extend({
         'heading': ['#', t('research.prop.description'), t('research.prop.type')],
         'columnsMaker': function(researches) {
           return _.map(researches, function(r) {
-            return [App.models.Research.href(r[0], `${r[1] ? r[1] : ''} (${r[3]} - ${r[2]})`)];
+            return [App.models.Research.href(r[0].resId, `${r[0].resName ? r[0].resName : ''} (${r[0].autName} - ${r[0].resYear})`)];
           });
         },
         'inputs': {
           'author': $('#research-author-input'),
-          'year': $('#research-year-input') 
+          'year': $('#research-year-input')
         }
       },
       'author-params': {
@@ -62,13 +62,13 @@ App.views.search = new (App.View.extend({
         },
         'inputs': {
           'author': $('#report-author-input'),
-          'year': $('#report-year-input') 
+          'year': $('#report-year-input')
         }
       }
     };
 
     $('#show-results-button').on('click', showResults);
-    
+
     // Заполнение и отрисовка таблицы результатов.
     function showResults() {
       $results.empty();
@@ -136,8 +136,8 @@ App.views.search = new (App.View.extend({
 
               var counter = 1;
               _.each(response, function(item) {
-                map.addPlacemark([item[6], item[7]], {
-                  hintContent: item[1],
+                map.addPlacemark([item[0].x, item[0].y], {
+                  hintContent: item[0].monName,
                   iconContent: counter++
                 });
               })
@@ -225,15 +225,15 @@ App.views.search = new (App.View.extend({
               var list = my.columnsMaker(response);
               var map = App.page.get("map");
               map.removeAll();
-              
+
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
 
               var counter = 1;
               _.each(response, function(item) {
-                map.addPlacemark([item[4], item[5]], {
-                  hintContent: item[1],
+                map.addPlacemark([item[0].x, item[0].y], {
+                  hintContent: item[0].resName,
                   iconContent: counter++
                 });
               })
