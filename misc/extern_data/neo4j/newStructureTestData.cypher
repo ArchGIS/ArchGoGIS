@@ -73,9 +73,11 @@ create (mongol:Culture {
 })
 
 create (mound:MonumentType {
+  id: 1,
   name: 'Курган'
 })
 create (tomb:MonumentType {
+  id: 2,
   name: 'Гробница'
 })
 
@@ -121,17 +123,17 @@ create (gems:ArtifactMaterial {
 })
 
 create (au1:Author {
-  id: 1,
+  id: 9997,
   name: 'Николай',
   birthdate: 1965
 })
 create (au2:Author {
-  id: 2,
+  id: 9998,
   name: 'Булат',
   birthdate: 1980
 })
 create (au3:Author {
-  id: 3,
+  id: 9999,
   name: 'Джек',
   birthdate: 1985
 })
@@ -192,15 +194,15 @@ create (rep3:Report {
 })
 
 create (rt1:ResearchType {
-  id: 1,
+  id: 2,
   name: 'Аналитическое'
 })
 create (rt2:ResearchType {
-  id: 2,
+  id: 3,
   name: 'Раскопки'
 })
 create (rt3:ResearchType {
-  id: 3,
+  id: 4,
   name: 'Разведка'
 })
 
@@ -427,19 +429,6 @@ create (stor8:StorageInterval {
   period: [2012]
 })
 
-create (store1:Storage {
-  id:1,
-  address: 'Где-то в Питере'
-})
-create (store2:Storage {
-  id:2,
-  address: 'Музей Казани'
-})
-create (store3:Storage {
-  id:3,
-  address: 'Казанское хранилище'
-})
-
 create (ref1:ShortBibliographicRef {
   pages: [14, 15],
   number: 'Карта №3',
@@ -528,23 +517,23 @@ create (r1)-[:has]->(an)
 create (r2)-[:has]->(surv)
 create (r3)-[:has]->(exc)
 
-create (r1)-[:hasreport]->(rep1)
-create (r2)-[:hasreport]->(rep2)
-create (r3)-[:hasreport]->(rep3)
+create (r1)-[:has]->(rep1)
+create (r2)-[:has]->(rep2)
+create (r3)-[:has]->(rep3)
 
 create (exc)-[:belongsto]->(mon1)
 create (surv)-[:belongsto]->(mon2)
 create (an)-[:belongsto]->(mon1)
 
-create (exc)-[:founded]->(arti1)
-create (exc)-[:founded]->(arti2)
-create (exc)-[:founded]->(arti3)
-create (an)-[:has]->(arti1)
-create (an)-[:has]->(arti2)
-create (an)-[:has]->(arti3)
-create (surv)-[:founded]->(arti4)
-create (surv)-[:founded]->(arti5)
-create (surv)-[:founded]->(arti6)
+create (exc)-[:found]->(arti1)
+create (exc)-[:found]->(arti2)
+create (exc)-[:found]->(arti3)
+create (r1)-[:used]->(arti1)
+create (r1)-[:used]->(arti2)
+create (r1)-[:used]->(arti3)
+create (surv)-[:found]->(arti4)
+create (surv)-[:found]->(arti5)
+create (surv)-[:found]->(arti6)
 
 create (exc)-[:has_monument_photo]->(im4)
 create (an)-[:has_monument_photo]->(im4)
@@ -600,21 +589,17 @@ create (arti1)-[:has]->(stor8)
 create (arti2)-[:has]->(stor5)
 create (arti3)-[:has]->(stor6)
 
-create (store3)-[:has]->(stor4)
-create (store3)-[:has]->(stor5)
-create (store3)-[:has]->(stor6)
-create (store2)-[:has]->(col1)
-create (store1)-[:has]->(col2)
+create (stor4)-[:belongsto]->(org3)
+create (stor5)-[:belongsto]->(org3)
+create (stor6)-[:belongsto]->(org3)
+create (org2)-[:has]->(col1)
+create (org1)-[:has]->(col2)
 
-create (col1)-[:has]->(stor1)
-create (col1)-[:has]->(stor2)
-create (col1)-[:has]->(stor3)
-create (col2)-[:has]->(stor7)
-create (col2)-[:has]->(stor8)
-
-create (org2)-[:has]->(store3)
-create (org2)-[:has]->(store2)
-create (org3)-[:has]->(store1)
+create (stor1)-[:belongsto]->(col1)
+create (stor2)-[:belongsto]->(col1)
+create (stor3)-[:belongsto]->(col1)
+create (stor7)-[:belongsto]->(col2)
+create (stor8)-[:belongsto]->(col2)
 
 create (pub1)-[:has]->(jour)
 create (pub1)-[:has]->(dig)
@@ -650,14 +635,6 @@ create (mon2)-[:has]->(tomb)
 
 create (pub1)-[:has]->(kazan)
 create (pub2)-[:has]->(piter)
-
-create (store2)-[:has]->(kazan)
-create (store3)-[:has]->(kazan)
-create (store1)-[:has]->(piter)
-
-create (org1)-[:has]->(kazan)
-create (org2)-[:has]->(kazan)
-create (org3)-[:has]->(piter)
 
 create (arti1)-[:has]->(big)
 create (arti2)-[:has]->(big)

@@ -47,7 +47,7 @@
         Нет отчёта
     <% } %>
   </dd>
-
+  <br>
   <div id="accordion">
     <% var counter = 1 %>
     <% _.each(monuments, function(monument, i) { %>
@@ -69,6 +69,8 @@
           <dd><%= knowledges[i].monument_name %></dd>
           <dt>Эпоха:</dt>
           <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
+          <dt>Тип:</dt>
+          <dd><%= maybe(monTypes[i][0], "Нет данных", "name") %></dd>
           <dt>Культурная принадлежность, определенная исследователем:</dt>
           <dd><%= maybe(cultures[i][0], "Нет данных", "name") %></dd>
           <dt>Найденные артефакты:</dt>

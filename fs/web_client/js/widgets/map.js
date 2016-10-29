@@ -24,7 +24,7 @@ App.widgets.Map = function(params, id) {
       'rulerControl'
     ]
   }, params);
- 
+  
   this.early = () => tmpl({'id': id});
   this.later = () => ymaps.ready(() => {
     map = new ymaps.Map(id, {
@@ -44,6 +44,24 @@ App.widgets.Map = function(params, id) {
     if (params.placemarks) {
       $.each(params.placemarks, function(id, placemark) {
         thisRef.addPlacemark(placemark.coords, placemark.pref, placemark.opts);
+      })
+    }
+
+    for (var i=1; i<=10; i++) {   //Добавляем в карту значки типов памятников
+      ymaps.option.presetStorage.add(`monType${i}`, {
+        iconLayout: 'default#image',
+        iconImageHref: `/web_client/img/monTypes/monType${i}.png`,
+        iconImageSize: [12, 12],
+        iconImageOffset: [-6, -6],
+      })
+    }
+
+    for (var i=1; i<=4; i++) {   //Добавляем в карту значки типов исследований
+      ymaps.option.presetStorage.add(`resType${i}`, {
+        iconLayout: 'default#image',
+        iconImageHref: `/web_client/img/resTypes/resType${i}.png`,
+        iconImageSize: [12, 12],
+        iconImageOffset: [-6, -6],
       })
     }
   });

@@ -69,7 +69,7 @@ function postQuery() {
     ["Research", "Knowledge", "has"],
     ["Research", "ResearchType", "has"],
     ["Knowledge", "Monument", "belongsto"],
-    ["Knowledge", "Artifact", "founded"],
+    ["Knowledge", "Artifact", "found"],
     ["Knowledge", "Culture", "has"],
     ["Knowledge", "Complex", "has"],
     ["Research", "Excavation", "has"],
