@@ -47,13 +47,15 @@ App.widgets.Map = function(params, id) {
       })
     }
 
-    for (var i=1; i<=10; i++) {   //Добавляем в карту значки типов памятников
-      ymaps.option.presetStorage.add(`monType${i}`, {
-        iconLayout: 'default#image',
-        iconImageHref: `/web_client/img/monTypes/monType${i}.png`,
-        iconImageSize: [12, 12],
-        iconImageOffset: [-6, -6],
-      })
+    for (var type=1; type<=9; type++) {   //Добавляем в карту значки типов памятников
+      for (var epoch=0; epoch<=7; epoch++) {   //Добавляем в карту значки типов памятников
+        ymaps.option.presetStorage.add(`monType${type}_${epoch}`, {
+          iconLayout: 'default#image',
+          iconImageHref: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
+          iconImageSize: [12, 12],
+          iconImageOffset: [-6, -6],
+        })
+      }
     }
 
     for (var i=1; i<=4; i++) {   //Добавляем в карту значки типов исследований

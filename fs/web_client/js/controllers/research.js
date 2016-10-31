@@ -110,9 +110,9 @@ App.controllers.research = new (App.View.extend({
       })
       console.log(tmplData);
 
+      var type = (tmplData.resType[0] && tmplData.resType[0].id) ? tmplData.resType[0].id : 1;
       tmplData.placemarks = [];
       _.each(tmplData.knowledges, function(k, kid) {
-        var type = (tmplData.monTypes[kid][0]) ? tmplData.monTypes[kid][0].id : 10;
 
         tmplData.placemarks.push({
           coords: [k.x, k.y],
@@ -120,7 +120,7 @@ App.controllers.research = new (App.View.extend({
             hintContent: k.monument_name
           },
           opts: {
-            preset: `monType${type}`
+            preset: `resType${type}`
           }
         })
       })
