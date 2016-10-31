@@ -138,7 +138,12 @@ function postQuery() {
       contentType: false,
       success: function(response) {
         console.log('upsert: ' + response);
-        alert('Успешно!');
+
+        if (response.length == 4) {
+          alert('При обработке данных на сервере произошла ошибка');
+        } else {
+          alert('Успешно!');
+        }
       }
     });
   });
