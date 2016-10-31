@@ -47,19 +47,30 @@ App.widgets.Map = function(params, id) {
       })
     }
 
-    for (var i=1; i<=10; i++) {   //Добавляем в карту значки типов памятников
-      ymaps.option.presetStorage.add(`monType${i}`, {
-        iconLayout: 'default#image',
-        iconImageHref: `/web_client/img/monTypes/monType${i}.png`,
-        iconImageSize: [12, 12],
-        iconImageOffset: [-6, -6],
-      })
+    for (var type=1; type<=10; type++) {   //Добавляем в карту значки типов памятников
+      for (var epoch=0; epoch<=7; epoch++) {   //Добавляем в карту значки типов памятников
+        ymaps.option.presetStorage.add(`monType${type}_${epoch}`, {
+          iconLayout: 'default#image',
+          iconImageHref: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
+          iconImageSize: [12, 12],
+          iconImageOffset: [-6, -6],
+        })
+      }
     }
 
     for (var i=1; i<=4; i++) {   //Добавляем в карту значки типов исследований
       ymaps.option.presetStorage.add(`resType${i}`, {
         iconLayout: 'default#image',
         iconImageHref: `/web_client/img/resTypes/resType${i}.png`,
+        iconImageSize: [16, 16],
+        iconImageOffset: [-8, -8],
+      })
+    }
+
+    for (var i=1; i<=2; i++) {   //Добавляем в карту раскопов и шурфов типов исследований
+      ymaps.option.presetStorage.add(`excType${i}`, {
+        iconLayout: 'default#image',
+        iconImageHref: `/web_client/img/excTypes/excType${i}.png`,
         iconImageSize: [12, 12],
         iconImageOffset: [-6, -6],
       })

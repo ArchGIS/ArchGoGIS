@@ -76,6 +76,7 @@ function postQuery() {
     ["Monument", "Excavation", "has"],
     ["Monument", "Complex", "has"],
     ["Monument", "Epoch", "has"],
+    ["Monument", "MonumentType", "has"],
     ["HeritageStatus", "Monument", "has"],
     ["Research", "Report", "has"],
     ["Complex", "Artifact", "has"],

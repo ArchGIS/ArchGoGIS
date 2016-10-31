@@ -34,6 +34,11 @@ App.controllers.monument = new (App.View.extend({
           "epoch:Epoch": {"id": "*", "select": "*"},
           "monument_has_epoch": {},
         }),
+        monType: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "monType:MonumentType": {"id": "*", "select": "*"},
+          "monument_has_monType": {},
+        })
       },
 
       research: {
@@ -83,18 +88,21 @@ App.controllers.monument = new (App.View.extend({
       tmplData.placemarks = [];
       _.each(tmplData.excavations, function(resExc, resId) {
         _.each(resExc, function(exc, excId) {
+          var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: exc.name,
-              iconContent: `${resId+1}-${excId+1}`
+              hintContent: exc.name
+            },
+            opts: {
+              preset: `excType${type}`
             }
           })
         })
       })
 
       _.each(tmplData.knowledges, function(know, kid) {
-        var type = (tmplData.resTypes[kid][0]) ? tmplData.resTypes[kid][0].id : 1;
+        var type = (tmplData.resTypes[kid][0] && tmplData.resTypes[kid][0].id) ? tmplData.resTypes[kid][0].id : 1;
         tmplData.placemarks.push({
           coords: [know.x, know.y],
           pref: {

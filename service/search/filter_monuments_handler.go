@@ -95,7 +95,7 @@ func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte,
 		"monName: k.monument_name, " +
 		"resYear: r.year, " +
 		"autName: a.name, " +
-		"ep: e.name, " +
+		"ep: e.id, " +
 		"cult: c.name, " +
 		"x: k.x, " +
 		"y: k.y, " +

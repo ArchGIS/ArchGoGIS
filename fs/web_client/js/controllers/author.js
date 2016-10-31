@@ -67,9 +67,11 @@ App.controllers.author = new (App.View.extend({
           "knowledges:Knowledge": {"id": "*", "select": "*"},
           "m:Monument": {"id": "*"},
           "monType:MonumentType": {"id": "*", "select": "*"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
           "researches_has_knowledges": {},
           "knowledges_belongsto_m": {},
-          "m_has_monType": {}
+          "m_has_monType": {},
+          "m_has_epoch": {}
         }),
         resTypes: JSON.stringify({
           "researches:Research": {"id":"NEED"},
@@ -88,13 +90,15 @@ App.controllers.author = new (App.View.extend({
       _.each(tmplData.monuments, function(resMonuments, resId) {
         _.each(resMonuments.knowledges, function(know, kid) {
           var type = resMonuments.monType[kid].id || 10;
+          var epoch = resMonuments.epoch[kid].id || 0;
+          console.log(`monType${type}_${epoch}`);
           tmplData.placemarks.push({
             coords: [know.x, know.y],
             pref: {
               hintContent: know.monument_name
             },
             opts: {
-              preset: `monType${type}`
+              preset: `monType${type}_${epoch}`
             }
           })
         })

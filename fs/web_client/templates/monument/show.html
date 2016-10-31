@@ -3,11 +3,13 @@
   <br>
   <dt>Все названия памятника:</dt>
   <dd><%= allNames %></dd>
-  <% if (epoch[0]) { %>
-    <dt>Эпоха:</dt>
-    <dd><%= epoch[0].name %></dd>
-    <br>
-  <% } %>
+
+  <dt><%= t("monument.prop.epoch") %>:</dt>
+  <dd><%= maybe(epoch[0], "Не указана","name") %></dd>
+
+  <dt><%= t("monument.prop.type") %>:</dt>
+  <dd><%= maybe(monType[0], "Не указан","name") %></dd>
+  <br>
   <div id="accordion">
     <% var counter=1 %>
     <% _.each(researches, function(research, i) { %>

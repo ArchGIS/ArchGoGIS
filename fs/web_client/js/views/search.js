@@ -137,10 +137,12 @@ App.views.search = new (App.View.extend({
               var counter = 1;
               _.each(response, function(item) {
                 var type = item[0].monTypeId || 10;
+                var epoch = item[0].ep || 0;
+
                 map.addPlacemark(
                   [item[0].x, item[0].y],
                   {hintContent: item[0].monName},
-                  {preset: `monType${type}`}
+                  {preset: `monType${type}_${epoch}`}
                 );
               })
             } else {

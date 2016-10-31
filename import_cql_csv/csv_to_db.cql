@@ -117,5 +117,5 @@ MATCH (t:Temp)
 DELETE t;
 
 MATCH (m:Monument)
-MATCH (e:Epoch {id: 5})
+MATCH (e:Epoch {id: 3})
 CREATE (m)-[:has]->(e);
