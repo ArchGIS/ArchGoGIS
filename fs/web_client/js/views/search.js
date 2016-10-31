@@ -31,7 +31,7 @@ App.views.search = new (App.View.extend({
         'heading': ['#', t('research.prop.description'), t('research.prop.type')],
         'columnsMaker': function(researches) {
           return _.map(researches, function(r) {
-            return [App.models.Research.href(r[0].resId, `${r[0].resName ? r[0].resName : ''} (${r[0].autName} - ${r[0].resYear})`)];
+            return [App.models.Research.href(r[0].resId, `${r[0].resName ? r[0].resName : ''}`)];
           });
         },
         'inputs': {

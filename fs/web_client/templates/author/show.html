@@ -18,11 +18,11 @@
   <% if (researches.length) { %>
     <% _.each(researches, function(r, i) { %>
       <%= i + 1 %>)
-      <a href="#research/show/<%= r.id %>"><%= r.name %> (
-      <% if (resTypes[i][0]) { %>
-        <%= resTypes[i][0].name%>, 
-      <% } %>
-      <%= r.year%>)</a>
+      <a href="#research/show/<%= r.id %>"><%= r.name %>
+      <!-- <% if (resTypes[i][0]) { %>
+        (<%= resTypes[i][0].name%>,
+      <% } %> -->
+      <!-- <%= r.year%>)--></a>
       <br><br>
     <% }); %>
   <% } else { %>
