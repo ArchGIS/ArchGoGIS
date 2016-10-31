@@ -93,9 +93,8 @@ App.controllers.monument = new (App.View.extend({
         })
       })
 
-      var epoch = (tmplData.epoch[0] && tmplData.epoch[0].id) ? tmplData.epoch[0].id : 0; 
       _.each(tmplData.knowledges, function(know, kid) {
-        var type = (tmplData.resTypes[kid][0]) ? tmplData.resTypes[kid][0].id : 1;
+        var type = (tmplData.resTypes[kid][0] && tmplData.resTypes[kid][0].id) ? tmplData.resTypes[kid][0].id : 1;
         tmplData.placemarks.push({
           coords: [know.x, know.y],
           pref: {
