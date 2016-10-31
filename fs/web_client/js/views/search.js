@@ -152,16 +152,13 @@ App.views.search = new (App.View.extend({
     function searchAuthor(my) {
       var input = my.inputs;
 
-      var author = input.author.val(),
-          year   = input.year.val();
-
+      var author = input.author.val();
 
       if (author || year) {
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_authors', {
-              'author': author,
-              'year': year
+              'author': author
             });
 
             $.get(url)

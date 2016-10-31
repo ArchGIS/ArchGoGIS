@@ -2,8 +2,8 @@ package search
 
 import (
 	"bytes"
-	"unsafe"
 	"net/http"
+	"unsafe"
 
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
@@ -17,12 +17,9 @@ const (
 	filterAuthorCypher = "MATCH (a:Author)"
 )
 
-
 func filterAuthorHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterAuthor(
-		r.URL.Query().Get("author"),
-		r.URL.Query().Get("year"))
-
+		r.URL.Query().Get("author"))
 
 	if err == nil {
 		w.Write(result)
@@ -31,27 +28,16 @@ func filterAuthorHandler(w web.ResponseWriter, r *http.Request) {
 	}
 }
 
-func searchForFilterAuthor(author, year string) ([]byte, error) {
+func searchForFilterAuthor(author string) ([]byte, error) {
 	params := neo.Params{}
 	query := filterAuthorCypher + "WHERE "
-	first := false
 
 	if author != "" {
 		query = query + "a.name =~ {author} "
-		first = true
+
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
-	if year != "" {
-		if first {
-			query = query + "AND a.birthdate = {year} "
-		} else {
-			query = query + "a.birthdate = {year} "
-			// first = true
-		}
 
-		params["year"] = year
-	}
-	
 	query = query + "RETURN a.id, a.name, a.birthdate"
 
 	resp, err := neo.Run(query, params)
