@@ -25,11 +25,7 @@ const (
 
 func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterMonuments(
-		r.URL.Query().Get("name"),
-		r.URL.Query().Get("author"),
-		r.URL.Query().Get("epoch"),
-		r.URL.Query().Get("culture"),
-		r.URL.Query().Get("year"))
+		r.URL.Query().Get("name"))
 
 	if err == nil {
 		w.Write(result)
@@ -38,57 +34,20 @@ func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 	}
 }
 
-func searchForFilterMonuments(mnt, author, epoch, culture, year string) ([]byte, error) {
+func searchForFilterMonuments(mnt string) ([]byte, error) {
 	// needle = norm.NormalMonument(needle)
 	params := neo.Params{}
 	query := filterMonumentsCypher
-	first := false
+
 	if mnt != "" {
 		query = query + "WHERE k.monument_name =~ {mnt} "
-		first = true
 		params["mnt"] = `"(?ui)^.*` + mnt + `.*$"`
-	}
-	if author != "" {
-		if first {
-			query = query + "AND a.name =~ {author} "
-		} else {
-			query = query + "WHERE a.name =~ {author} "
-			first = true
-		}
-
-		params["author"] = `"(?ui)^.*` + author + `.*$"`
-	}
-	if year != "" {
-		if first {
-			query = query + "AND r.year = {year} "
-		} else {
-			query = query + "WHERE r.year = {year} "
-		}
-
-		params["year"] = year
 	}
 
 	query = query +
 		"OPTIONAL MATCH (m)-[:has]->(monType:MonumentType)" +
 		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
 		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)"
-
-	first = false
-	if epoch != "" {
-		query = query + "WHERE e.id = {epoch} "
-		first = true
-		params["epoch"] = epoch
-	}
-	if culture != "" {
-		if first {
-			query = query + "AND c.id = {culture} "
-		} else {
-			query = query + "WHERE c.id = {culture} "
-			first = true
-		}
-
-		params["culture"] = culture
-	}
 
 	query = query + "WITH {" +
 		"monId: m.id, " +

@@ -97,22 +97,14 @@ App.views.search = new (App.View.extend({
     function searchMonument(my) {
       var input = my.inputs;
 
-      var mnt     = input.monument.val(),
-          year    = input.year.val(),
-          author  = input.author.val(),
-          epoch   = input.epoch,
-          culture = input.culture;
+      var mnt = input.monument.val();
 
 
-      if (mnt || year || author || epoch.val() != 0 || culture.val() != 0) {
+      if (mnt) {
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_monuments', {
-              'name': mnt,
-              'year': year,
-              'author': author,
-              'epoch': epoch.val() != 0 ? epoch.val() : '',
-              'culture': culture.val() != 0 ? culture.val() : ''
+              'name': mnt
             });
 
             $.get(url)
