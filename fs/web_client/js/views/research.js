@@ -200,6 +200,10 @@ App.views.research = new (App.View.extend({
           <label for="epoch-selector-${monId}">Эпоха</label>
           <select class="form-control" id="epoch-selector-${monId}" data-for="edel${monId}:Epoch" type="id" name="id"></select>
         </div>
+        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
+          <label for="mon-type-selector-${monId}">Тип</label>
+          <select class="form-control" id="mon-type-selector-${monId}" data-for="mtdel${monId}:MonumentType" type="id" name="id"></select>
+        </div>
         <div class="form-group">
           <label for="culture-selector-${monId}">Культура</label>
           <select class="form-control" id="culture-selector-${monId}" data-for="cdel${monId}:Culture" type="id" name="id"></select>
@@ -229,6 +233,7 @@ App.views.research = new (App.View.extend({
       $(this).before(newMonument);
       fillSelector($(`#epoch-selector-${monId}`), "Epoch");
       fillSelector($(`#culture-selector-${monId}`), "Culture");
+      fillSelector($(`#mon-type-selector-${monId}`), "MonumentType");
       setSelectsEvents();
 
       var coordpicker = App.blocks.coordpicker;

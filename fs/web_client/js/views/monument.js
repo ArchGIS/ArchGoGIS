@@ -87,6 +87,7 @@ App.views.monument = new (App.View.extend({
 
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
+    fillSelector($("#mon-type-selector"), "MonumentType");
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {

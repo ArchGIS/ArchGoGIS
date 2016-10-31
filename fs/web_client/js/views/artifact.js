@@ -137,6 +137,7 @@ App.views.artifact = new (App.View.extend({
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
     fillSelector($("#research-type-selector"), "ResearchType");
+    fillSelector($("#mon-type-selector"), "MonumentType");
     setSelectsEvents();
 
     coordpicker($('#coord-picker'), {
