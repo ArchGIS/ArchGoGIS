@@ -83,11 +83,14 @@ App.controllers.monument = new (App.View.extend({
       tmplData.placemarks = [];
       _.each(tmplData.excavations, function(resExc, resId) {
         _.each(resExc, function(exc, excId) {
+          var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: exc.name,
-              iconContent: `${resId+1}-${excId+1}`
+              hintContent: exc.name
+            },
+            opts: {
+              preset: `excType${type}`
             }
           })
         })
