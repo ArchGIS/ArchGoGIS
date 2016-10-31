@@ -34,6 +34,11 @@ App.controllers.monument = new (App.View.extend({
           "epoch:Epoch": {"id": "*", "select": "*"},
           "monument_has_epoch": {},
         }),
+        monType: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "monType:MonumentType": {"id": "*", "select": "*"},
+          "monument_has_monType": {},
+        })
       },
 
       research: {
