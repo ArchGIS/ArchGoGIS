@@ -130,7 +130,8 @@
       </div>
       <div class="form-group" toggle-by="new-monument-checkbox" need-option="false">
         <label>Выбрать существующий памятник <span class="required">*</span></label>
-        <input class="form-control" id="monument-input"></input>
+        <!-- <input class="form-control" id="monument-input"></input> -->
+        <%= widget("SearchLine", monInputOptions, "monument-input") %>
         <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id" data-req="up"></input>
       </div>
 

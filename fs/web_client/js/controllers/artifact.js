@@ -21,6 +21,12 @@ App.controllers.artifact = new (App.View.extend({
         'etl': function(cities) {
           return _.map(cities, city => ({'id': city.id, 'label': city.name}));
         }
+      },
+      'monInputOptions': {
+        'source': App.models.Monument.findByNamePrefix,
+        'etl': function(mons) {
+          return _.map(mons, m => ({'id': m[0], 'label': m[1]}));
+        }
       }
     });
   },
@@ -149,7 +155,7 @@ App.controllers.artifact = new (App.View.extend({
       _.extend(tmplData, response);
 
       var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
-      
+
       data.push(model.getData(queries.researchUsed, callRender, true, researchIds));
       callRender();
     })
