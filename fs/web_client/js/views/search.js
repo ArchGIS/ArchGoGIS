@@ -20,10 +20,7 @@ App.views.search = new (App.View.extend({
         },
         'inputs': {
           'monument': $('#monument-input'),
-          'year': $('#monument-year'),
-          'author': $('#monument-author'),
-          'epoch': $('#monument-epoch'),
-          'culture': $('#monument-culture')
+          'epoch': $('#monument-epoch')
         }
       },
       'research-params': {
@@ -48,8 +45,7 @@ App.views.search = new (App.View.extend({
           });
         },
         'inputs': {
-          'author': $('#author-input'),
-          'year': $('#author-year')
+          'author': $('#author-input')
         }
       },
       'report-params': {
@@ -69,7 +65,7 @@ App.views.search = new (App.View.extend({
 
     $('#show-results-button').on('click', showResults);
 
-    // Заполнение и отрисовка таблицы результатов.
+    // Заполнение и отрисовка результатов.
     function showResults() {
       $results.empty();
       object.handler(object);
@@ -97,14 +93,16 @@ App.views.search = new (App.View.extend({
     function searchMonument(my) {
       var input = my.inputs;
 
-      var mnt = input.monument.val();
+      var mnt   = input.monument.val(),
+          epoch = input.epoch;
 
 
-      if (mnt) {
+      if (mnt || epoch) {
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_monuments', {
-              'name': mnt
+              'name': mnt,
+              'epoch': epoch.val() != 0 ? epoch.val() : ''
             });
 
             $.get(url)

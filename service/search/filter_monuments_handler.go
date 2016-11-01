@@ -2,18 +2,17 @@ package search
 
 import (
 	"bytes"
-	// "github.com/ArchGIS/ArchGoGIS/cfg"
 	"net/http"
+	"unsafe"
+	// "unicode/utf8"
 
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	// "unicode/utf8"
-	"unsafe"
-
 	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
+	// "github.com/ArchGIS/ArchGoGIS/cfg"
 )
 
 const (
@@ -25,7 +24,8 @@ const (
 
 func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterMonuments(
-		r.URL.Query().Get("name"))
+		r.URL.Query().Get("name"),
+		r.URL.Query().Get("epoch"))
 
 	if err == nil {
 		w.Write(result)
@@ -34,7 +34,7 @@ func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 	}
 }
 
-func searchForFilterMonuments(mnt string) ([]byte, error) {
+func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 	// needle = norm.NormalMonument(needle)
 	params := neo.Params{}
 	query := filterMonumentsCypher
@@ -48,6 +48,11 @@ func searchForFilterMonuments(mnt string) ([]byte, error) {
 		"OPTIONAL MATCH (m)-[:has]->(monType:MonumentType)" +
 		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
 		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)"
+
+	if epoch != "" {
+		query = query + "WHERE e.id = {epoch} "
+		params["epoch"] = epoch
+	}
 
 	query = query + "WITH {" +
 		"monId: m.id, " +
