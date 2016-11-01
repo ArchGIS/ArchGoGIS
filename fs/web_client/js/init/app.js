@@ -129,8 +129,6 @@ function postQuery() {
       formdata.append(key, JSON.stringify(val));
     });
 
-    console.log(formdata.getAll("file:File"));
-
     $.ajax({
       url: "/hquery/upsert",
       data: formdata,
@@ -159,7 +157,7 @@ function generateJson(relations) {
     dataFor = $(input).attr("data-for");
     type = ($(input).attr("type") != "id") ? ("/" + $(input).attr("type")) : "";
     name = $(input).attr("name") + type;
-    value = $(input).val();
+    value = $(input).val().replace(/\n/g, "\\n");
     inputClass = dataFor.split(":")[1];
     inputSubclass = $(input).attr("data-subclass") || inputClass;
 
