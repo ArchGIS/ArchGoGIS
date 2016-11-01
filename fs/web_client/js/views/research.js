@@ -61,7 +61,6 @@ App.views.research = new (App.View.extend({
     };
 
     var citySelectHandler = function(event, ui) {
-      console.log(ui.item.id);
       $('#report-city-input-id').val(ui.item.id);
 
       App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
@@ -88,7 +87,7 @@ App.views.research = new (App.View.extend({
       if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         authorSelectHandler(event, ui);
-      } 
+      }
     });
 
     var lastSelectedCityId = 0;
@@ -96,7 +95,7 @@ App.views.research = new (App.View.extend({
       if (lastSelectedCityId != ui.item.id) {
         lastSelectedCityId = ui.item.id;
         citySelectHandler(event, ui);
-      } 
+      }
     });
 
     function addCoord (name, monId, id) {
@@ -181,6 +180,7 @@ App.views.research = new (App.View.extend({
         </div>
         <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="false">
           <label>Выбрать существующий памятник <span class="required">*</span></label>
+          <!-- <%= widget("SearchLine", monInputOptions, "monument-input") %> -->
           <input class="form-control" id="monument-input-${monId}"></input>
           <input id="monument-input-id-${monId}" data-for="mdel${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
         </div>
@@ -228,7 +228,7 @@ App.views.research = new (App.View.extend({
           <h4 for="report-input">Археологические вскрытия:</h4>
         </div>
       </div>
-      `)
+      `);
 
       $(this).before(newMonument);
       fillSelector($(`#epoch-selector-${monId}`), "Epoch");
@@ -256,12 +256,22 @@ App.views.research = new (App.View.extend({
           console.log(localMonId);
           addNewCoords($(this), localMonId, counter++)
         })
-      })()
+      })();
+
+      var lastSelectedMonId = 0;
+      $(`#monument-input-id-${monId}`).on('autocompleteselect', function(event, ui) {
+        if (lastSelectedMonId != ui.item.id) {
+          lastSelectedMonId = ui.item.id;
+          (function(event, ui) {
+            $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
+          })();
+        }
+      });
 
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;
     });
-    
+
     var excCounter = 1;
     $("#add-exc-button-0").on('click', function(e) {
       addNewCoords($(this), 0, excCounter++)
