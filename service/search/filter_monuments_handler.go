@@ -47,14 +47,15 @@ func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 	query = query +
 		"OPTIONAL MATCH (m)-[:has]->(monType:MonumentType)" +
 		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
-		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)"
+		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)" +
+		"WITH m, k, r, a, monType, e, c "
 
 	if epoch != "" {
 		query = query + "WHERE e.id = {epoch} "
 		params["epoch"] = epoch
 	}
 
-	query = query + "WITH {" +
+	query = query + "RETURN {" +
 		"monId: m.id, " +
 		"monName: k.monument_name, " +
 		"resYear: r.year, " +
@@ -64,8 +65,7 @@ func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 		"x: k.x, " +
 		"y: k.y, " +
 		"monType: monType.name, " +
-		"monTypeId: monType.id} AS resp " +
-		"RETURN resp"
+		"monTypeId: monType.id}"
 
 	resp, err := neo.Run(query, params)
 
