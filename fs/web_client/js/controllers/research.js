@@ -15,12 +15,6 @@ App.controllers.research = new (App.View.extend({
         'etl': function(cities) {
           return _.map(cities, city => ({'id': city.id, 'label': city.name}));
         }
-      },
-      'monInputOptions': {
-        'source': App.models.Monument.findByNamePrefix,
-        'etl': function(mons) {
-          return _.map(mons, m => ({'id': m[0], 'label': m[1]}));
-        }
       }
     })
   },

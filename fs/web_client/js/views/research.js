@@ -180,7 +180,7 @@ App.views.research = new (App.View.extend({
         </div>
         <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="false">
           <label>Выбрать существующий памятник <span class="required">*</span></label>
-          <!-- <%= widget("SearchLine", monInputOptions, "monument-input") %> -->
+          <!-- <%= widget("SearchLine", monInputOptions, "monument-input-${monId}") %> -->
           <input class="form-control" id="monument-input-${monId}"></input>
           <input id="monument-input-id-${monId}" data-for="mdel${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
         </div>
@@ -259,13 +259,36 @@ App.views.research = new (App.View.extend({
       })();
 
       var lastSelectedMonId = 0;
-      $(`#monument-input-id-${monId}`).on('autocompleteselect', function(event, ui) {
+      $(`#monument-input-${monId}`).on('autocompleteselect', function(event, ui) {
         if (lastSelectedMonId != ui.item.id) {
           lastSelectedMonId = ui.item.id;
           (function(event, ui) {
             $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           })();
         }
+      });
+      $(`#monument-input-${monId}`).autocomplete({
+        source: function(request, response) {
+          var monuments = [];
+
+          App.models.Monument.findByNamePrefix(request.term)
+            .then(function(data) {
+              console.log(data);
+              if (data && !data.error) {
+                response(_.map(data, function(row) {
+                  return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
+                }))
+              } else {
+                response();
+              }
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+          $(`#monument-input-id-${monId}`).val(ui.item.id);
+        }
+      }).focus(function(){
+        $(this).autocomplete("search");
       });
 
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
