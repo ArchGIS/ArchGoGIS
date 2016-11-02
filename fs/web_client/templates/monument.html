@@ -6,7 +6,7 @@
       <li><a href="#menu1"><%= t('okn.singular') %></a></li>
       <li><a href="#menu2"><%= t('monument.singular') %></a></li>
     </ul>
-    
+
     <div id="home">
       <legend>Сведения об исследовании</legend>
       <div class="checkbox">
@@ -33,7 +33,7 @@
           Дополнительная информация от авторе
         </label>
       </div>
-      
+
       <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
         <label for="author-birth-date-input">Год рождения</label>
         <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
@@ -54,7 +54,7 @@
         <input class="form-control" id="report-input"></input>
         <input id="report-input-id" data-for="r:Report" type="id" hidden name="id" data-req="up"></input>
       </div>
-      
+
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-name-input">Название <span class="required">*</span></label>
         <input class="form-control" id="report-name-input" data-for="r:Report" type="text" name="name" data-req></input>
@@ -157,9 +157,20 @@
         <label for="mon-type-selector">Тип</label>
         <select class="form-control" id="mon-type-selector"  data-for="mt:MonumentType" type="id" name="id"></select>
       </div>
-      <div class="form-group">
+
+      <div class="checkbox">
+        <label for="new-culture-checkbox">
+          <input id="new-culture-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новую культурную принадлежность
+        </label>
+      </div>
+      <div class="form-group" toggle-by="new-culture-checkbox" need-option="false">
         <label for="culture-selector">Культура</label>
-        <select class="form-control" id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
+        <select class="form-control" id="culture-selector" data-for="c:Culture" type="id" name="id"></select>
+      </div>
+      <div class="form-group" toggle-by="new-culture-checkbox" need-option="true">
+        <label for="culture-input">Введите культурную принадлежность</label>
+        <input id="culture-input" data-for="c:Culture" type="text" name="name" class="form-control" />
       </div>
 
       <div id="coord-picker" class="coords">

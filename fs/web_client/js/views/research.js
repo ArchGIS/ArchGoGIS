@@ -204,9 +204,20 @@ App.views.research = new (App.View.extend({
           <label for="mon-type-selector-${monId}">Тип</label>
           <select class="form-control" id="mon-type-selector-${monId}" data-for="mtdel${monId}:MonumentType" type="id" name="id"></select>
         </div>
-        <div class="form-group">
+
+        <div class="checkbox">
+          <label for="new-culture-checkbox">
+            <input id="new-culture-checkbox" type="checkbox" dynamic="true"></input>
+            Добавить новую культурную принадлежность
+          </label>
+        </div>
+        <div class="form-group" toggle-by="new-culture-checkbox" need-option="false">
           <label for="culture-selector-${monId}">Культура</label>
           <select class="form-control" id="culture-selector-${monId}" data-for="cdel${monId}:Culture" type="id" name="id"></select>
+        </div>
+        <div class="form-group" toggle-by="new-culture-checkbox" need-option="true">
+          <label for="culture-input-${monId}">Введите культурную принадлежность</label>
+          <input id="culture-input-${monId}" data-for="cdel${monId}:Culture" type="text" name="name" class="form-control" />
         </div>
 
         <div id="coord-picker-${monId}" class="coords">
