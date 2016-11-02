@@ -14,8 +14,14 @@ App.views.search = new (App.View.extend({
         'handler': searchMonument,
         'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
-          return _.map(monuments, function(mk) {
-            return [App.models.Monument.href(mk[0].monId, `${mk[0].monName} (${mk[0].autName} - ${mk[0].resYear})`)];
+          return _.map(_.reduce(monuments, function(memo, obj, key) {
+            if (!_.find(memo, function(memoobj) { return memoobj.monId == obj[0].monId})) {
+              memo[key] = obj[0];
+            }
+            console.log(memo);
+            return memo;
+          }, {}), function(mk) {
+            return [App.models.Monument.href(mk.monId, `${mk.monName} (${mk.monType})`)];
           });
         },
         'inputs': {
@@ -116,6 +122,7 @@ App.views.search = new (App.View.extend({
         find()
           .then(function(response) {
             if (response.length) {
+              console.log(response);
               var list = my.columnsMaker(response);
               var map = App.page.get("map");
               map.removeAll();
