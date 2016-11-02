@@ -153,9 +153,20 @@
         <label for="mon-type-selector">Тип</label>
         <select class="form-control" id="mon-type-selector"  data-for="mt:MonumentType" type="id" name="id"></select>
       </div>
-      <div class="form-group">
+
+      <div class="checkbox">
+        <label for="new-culture-checkbox">
+          <input id="new-culture-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новую культурную принадлежность
+        </label>
+      </div>
+      <div class="form-group" toggle-by="new-culture-checkbox" need-option="false">
         <label for="culture-selector">Культура</label>
         <select class="form-control" id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
+      </div>
+      <div class="form-group" toggle-by="new-culture-checkbox" need-option="true">
+        <label for="culture-input">Введите культурную принадлежность</label>
+        <input id="culture-input" data-for="c:Culture" type="text" name="name" class="form-control" />
       </div>
 
       <div id="coord-picker" class="coords">
