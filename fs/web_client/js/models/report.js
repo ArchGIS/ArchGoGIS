@@ -7,11 +7,16 @@ App.models.Report.findByAuthorId = function(authorId) {
     var query = JSON.stringify({
       'a:Author': {'id': authorId.toString()},
       'r:Report': {'id': '*', 'select': '*'},
-      'r_hasauthor_a': {}
+      'res:Research': {'id': '*', 'select': '*'},
+      'rt:ResearchType': {'id': '*', 'select': '*'},
+      'r_hasauthor_a': {},
+      'res_has_r': {},
+      'res_has_rt': {},
+      'res_hasauthor_a': {}
     });
     
     $.post('/hquery/read', query)
-      .success(response => resolve($.parseJSON(response).r))
+      .success(response => resolve($.parseJSON(response)))
       .error(reject);
   });
   

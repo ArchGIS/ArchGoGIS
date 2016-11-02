@@ -230,9 +230,10 @@ input[type=text] {
 
 .ui-autocomplete {
   border: 1px solid #ccc;
+  width: 40%;
 }
 
-.ui-autocomplete .ui-menu-item {
+.ui-menu-item {
   border-bottom: 1px solid #aaa;
 }
 
