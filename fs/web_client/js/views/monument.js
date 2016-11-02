@@ -6,12 +6,9 @@ App.views.monument = new (App.View.extend({
     var fmt = App.fn.fmt;
     
     var authorSelectHandler = function(event, ui) {
-      console.log(ui.item.id);
       $('#author-input-id').val(ui.item.id);
 
       App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
-          console.log(reports);
-
         $('#report-input').autocomplete({
           source: _.map(reports.r, function(r, key) {
             return {'label': `${r.name} (${r.year}, ${reports.rt[key].name})`, 'id': r.id, 'resId': reports.res[key].id}
@@ -24,6 +21,7 @@ App.views.monument = new (App.View.extend({
         minLength: 0,
         select: function(event, ui) {
           var resId = ui.item.resId;
+
           $("#research-input-id").val(resId);
           $("#report-input-id").val(ui.item.id);
         }
@@ -33,7 +31,6 @@ App.views.monument = new (App.View.extend({
     };
 
     var citySelectHandler = function(event, ui) {
-      console.log(ui.item.id);
       $('#report-city-input-id').val(ui.item.id);
 
       App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
@@ -71,7 +68,18 @@ App.views.monument = new (App.View.extend({
       } 
     });
 
+    var fillResearchInputs = function() {
+      if ($("#new-report-checkbox").is(":checked") == true) {
+        var year = $("#report-year-input").val();
+        var name = $("#report-name-input").val() + " - " + year;
+        $("#research-input-name").val(name);
+        $("#research-input-year").val(year);
+      }
+    };
+
     $('#send-button').on('click', function() {
+      fillResearchInputs();
+
       if ( validateCreatePages() ) {
         postQuery();
       } else {
@@ -82,6 +90,7 @@ App.views.monument = new (App.View.extend({
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
     fillSelector($("#mon-type-selector"), "MonumentType");
+    fillSelector($("#research-type-selector"), "ResearchType");
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {

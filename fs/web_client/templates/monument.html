@@ -82,9 +82,21 @@
         <label for="report-file-input">Файл отчета</label>
         <input id="report-file-input" type="file" data-for="r:Report" name="fileid"></input>
       </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="research-type-selector">Тип исследования</label>
+        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
+      </div>
 
       <div class="form-group" hidden>
         <input class="form-control" id="research-input-id" data-for="rs:Research" type="id" name="id"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true" hidden>
+        <input class="form-control" id="research-input-year" data-for="rs:Research" type="number" name="year"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true" hidden>
+        <input class="form-control" id="research-input-name" data-for="rs:Research" type="text" name="name"></input>
       </div>
 
       <button class="btn btn-primary btn-next" active="1">
