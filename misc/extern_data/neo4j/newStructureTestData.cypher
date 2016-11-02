@@ -173,6 +173,12 @@ create (r3:Research {
   name: 'Болгар-2005',
   description: 'Разведка'
 })
+create (r4:Research {
+  id: 4,
+  year: 2005,
+  name: 'Болгар-2005',
+  description: 'Аналитика'
+})
 
 create (rep1:Report {
   id: 1,
@@ -189,7 +195,7 @@ create (rep2:Report {
 create (rep3:Report {
   id: 3,
   year: 2006,
-  name: "Отчет о разведке",
+  name: "Отчет о разведке. Здесь должно быть очень длинное название, которое совсем не помещается в одну строку.",
   fileid: '12'
 })
 
@@ -485,6 +491,7 @@ create (arti6:Artifact {
 create (r1)-[:has]->(rt1)
 create (r2)-[:has]->(rt2)
 create (r3)-[:has]->(rt3)
+create (r4)-[:has]->(rt1)
 
 create (au1)-[:has]->(job1)
 create (au2)-[:has]->(job2)
@@ -506,6 +513,7 @@ create (org3)-[:has]->(piter)
 
 create (r2)-[:hasauthor]->(au1)
 create (r3)-[:hasauthor]->(au1)
+create (r4)-[:hasauthor]->(au1)
 create (r1)-[:hasauthor]->(au2)
 create (r1)-[:hascoauthor]->(au1)
 
@@ -520,6 +528,7 @@ create (r3)-[:has]->(exc)
 create (r1)-[:has]->(rep1)
 create (r2)-[:has]->(rep2)
 create (r3)-[:has]->(rep3)
+create (r4)-[:has]->(rep3)
 
 create (exc)-[:belongsto]->(mon1)
 create (surv)-[:belongsto]->(mon2)

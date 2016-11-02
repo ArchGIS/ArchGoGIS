@@ -3,8 +3,6 @@
 App.views.monument = new (App.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
-    var reportName;
-    var reportYear;
     var fmt = App.fn.fmt;
     
     var authorSelectHandler = function(event, ui) {
@@ -12,9 +10,11 @@ App.views.monument = new (App.View.extend({
       $('#author-input-id').val(ui.item.id);
 
       App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
+          console.log(reports);
+
         $('#report-input').autocomplete({
-          source: _.map(reports, function(report) {
-            return {'label': fmt('$name ($year)', report), 'id': report.id, 'year': report.year, 'name': report.name}
+          source: _.map(reports.r, function(r, key) {
+            return {'label': `${r.name} (${r.year}, ${reports.rt[key].name})`, 'id': r.id, 'resId': reports.res[key].id}
           })
         });
       });
@@ -23,8 +23,8 @@ App.views.monument = new (App.View.extend({
         source: [],
         minLength: 0,
         select: function(event, ui) {
-          reportName = ui.item.name;
-          reportYear = ui.item.year;
+          var resId = ui.item.resId;
+          $("#research-input-id").val(resId);
           $("#report-input-id").val(ui.item.id);
         }
       }).focus(function() {
@@ -54,19 +54,6 @@ App.views.monument = new (App.View.extend({
         $(this).autocomplete("search");
       });
     };
-    
-    var fillResearchInputs = function() {
-      if ($("#report-input-id").val()) {
-        var year = reportYear
-        var name = reportName + " - " + year;
-      } else {
-        var year = $("#report-year-input").val();
-        var name = $("#report-name-input").val() + " - " + year;
-      }
-      
-      $("#research-name-input").val(name);
-      $("#research-year-input").val(year);
-    };
 
     var lastSelectedAuthorId = 0;
     $('#author-input').on('autocompleteselect', function(event, ui) {
@@ -85,8 +72,6 @@ App.views.monument = new (App.View.extend({
     });
 
     $('#send-button').on('click', function() {
-      fillResearchInputs();
-      
       if ( validateCreatePages() ) {
         postQuery();
       } else {
@@ -97,7 +82,6 @@ App.views.monument = new (App.View.extend({
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
     fillSelector($("#mon-type-selector"), "MonumentType");
-    fillSelector($("#research-type-selector"), "ResearchType");
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {
