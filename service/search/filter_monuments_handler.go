@@ -61,6 +61,7 @@ func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 		"resYear: r.year, " +
 		"autName: a.name, " +
 		"ep: e.id, " +
+		"epName: e.name, " +
 		"cult: c.name, " +
 		"x: k.x, " +
 		"y: k.y, " +

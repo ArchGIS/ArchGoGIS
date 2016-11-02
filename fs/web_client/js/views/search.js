@@ -21,7 +21,7 @@ App.views.search = new (App.View.extend({
             console.log(memo);
             return memo;
           }, {}), function(mk) {
-            return [App.models.Monument.href(mk.monId, `${mk.monName} (${mk.monType})`)];
+            return [App.models.Monument.href(mk.monId, `${mk.monName} (${mk.epName}, ${mk.monType})`)];
           });
         },
         'inputs': {
