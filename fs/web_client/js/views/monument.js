@@ -3,7 +3,8 @@
 App.views.monument = new (App.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
-
+    var reportName;
+    var reportYear;
     var fmt = App.fn.fmt;
     
     var authorSelectHandler = function(event, ui) {
@@ -13,7 +14,7 @@ App.views.monument = new (App.View.extend({
       App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
         $('#report-input').autocomplete({
           source: _.map(reports, function(report) {
-            return {'label': fmt('$name ($year)', report), 'id': report.id}
+            return {'label': fmt('$name ($year)', report), 'id': report.id, 'year': report.year, 'name': report.name}
           })
         });
       });
@@ -22,6 +23,8 @@ App.views.monument = new (App.View.extend({
         source: [],
         minLength: 0,
         select: function(event, ui) {
+          reportName = ui.item.name;
+          reportYear = ui.item.year;
           $("#report-input-id").val(ui.item.id);
         }
       }).focus(function() {
@@ -52,9 +55,15 @@ App.views.monument = new (App.View.extend({
       });
     };
     
-    var fillResearchInputs = function(){
-      var year = $("#report-year-input").val();
-      var name = $("#report-name-input").val() + " - " + year;
+    var fillResearchInputs = function() {
+      if ($("#report-input-id").val()) {
+        var year = reportYear
+        var name = reportName + " - " + year;
+      } else {
+        var year = $("#report-year-input").val();
+        var name = $("#report-name-input").val() + " - " + year;
+      }
+      
       $("#research-name-input").val(name);
       $("#research-year-input").val(year);
     };
@@ -88,6 +97,7 @@ App.views.monument = new (App.View.extend({
     fillSelector($("#epoch-selector"), "Epoch");
     fillSelector($("#culture-selector"), "Culture");
     fillSelector($("#mon-type-selector"), "MonumentType");
+    fillSelector($("#research-type-selector"), "ResearchType");
     setSelectsEvents();
     
     coordpicker($('#coord-picker'), {

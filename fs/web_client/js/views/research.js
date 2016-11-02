@@ -14,10 +14,10 @@ App.views.research = new (App.View.extend({
     fillSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
     setSelectsEvents();
 
-    var fillResearchInputs = function(){
+    var fillResearchInputs = function() {
       if ($("#report-input-id").val()) {
-        var year = reportName
-        var name = reportYear + " - " + year;
+        var year = reportYear
+        var name = reportName + " - " + year;
       } else {
         var year = $("#research-year-input").val();
         var name = $("#report-name-input").val() + " - " + year;
