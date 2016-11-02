@@ -117,5 +117,15 @@ MATCH (t:Temp)
 DELETE t;
 
 MATCH (m:Monument)
-MATCH (e:Epoch {id: 5})
+MATCH (e:Epoch {id: 3})
 CREATE (m)-[:has]->(e);
+
+
+LOAD CSV WITH HEADERS FROM "file:///d:/Server/import/new_mon_coords.csv" AS line
+WITH line, toInt(line.ID) as id
+MERGE (mon:Monument {number: id})<-[:belongsto]-(k:Knowledge)
+  ON MATCH SET k.x = line.N,
+               k.y = line.E
+  ON CREATE SET k.x = line.N,
+                k.y = line.E,
+                k.monument_name = line.Name
