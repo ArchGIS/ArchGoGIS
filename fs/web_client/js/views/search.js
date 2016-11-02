@@ -15,7 +15,7 @@ App.views.search = new (App.View.extend({
         'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
           return _.map(_.reduce(monuments, function(memo, obj, key) {
-            if (!_.find(memo, function(memoobj) { return memoobj.monId == obj[0].monId})) {
+            if (!_.find(memo, function(memoobj) { return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)})) {
               memo[key] = obj[0];
             }
             console.log(memo);
