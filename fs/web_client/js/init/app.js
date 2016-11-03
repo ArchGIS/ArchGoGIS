@@ -91,12 +91,11 @@ function postQuery() {
   var formdata = new FormData();
 
   var files = $('input[type=file][used!=false]');
-  console.log(files);
   var uploadedFilesCounter = 0;
+
   var defer = $.Deferred();
 
   _.each(files, function(element, index) {
-
     if (element.files[0]) {
       var datafor = $(element).attr("data-for");
       var name = $(element).attr("name");
@@ -207,8 +206,6 @@ function generateJson(relations) {
     })
   })
 
-  console.log(json)
-  console.log(objs)
   return json;
 }
 
