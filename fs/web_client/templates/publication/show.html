@@ -57,7 +57,7 @@
 
 	<dl>
 		<dt><%= t('publication.prop.isbn') %>:</dt>
-		<dd><%= maybe(pubtype[0], "Не указан", "isbn") %></dd>
+		<dd><%= maybe(pub, "Не указан", "isbn") %></dd>
 	</dl>
 
 	<% if (pub.pages) { %>
