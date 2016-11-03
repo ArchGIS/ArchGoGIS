@@ -16,7 +16,7 @@ App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
 
-var dburl = `${window.location.protocol}//${window.location.host}`;
+var dburl = `${location.protocol}//${location.host}`;
 
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
@@ -91,12 +91,11 @@ function postQuery() {
   var formdata = new FormData();
 
   var files = $('input[type=file][used!=false]');
-  console.log(files);
   var uploadedFilesCounter = 0;
+
   var defer = $.Deferred();
 
   _.each(files, function(element, index) {
-
     if (element.files[0]) {
       var datafor = $(element).attr("data-for");
       var name = $(element).attr("name");
@@ -207,79 +206,9 @@ function generateJson(relations) {
     })
   })
 
-  console.log(json)
-  console.log(objs)
   return json;
 }
 
-
-function getXlsxData() {
-  App.store.xlsxData = '{"Header":["Номер","Название памятника","X","Y","Тип памятника","Культура","Эпоха","Описание","Библиографическая ссылка","Страница"],"Rows":[["333","Памятник1","11111","2223","Городище","Татарская","Средневековье","Пам1","фыва","123"],["222","Памятник2","2222","3333","Могильник","Монгольская","XII век","Пам2","авыф","234"]]}';
-  App.store.xlsxData = $.parseJSON(App.store.xlsxData)
-}
-
-function addPages() {
-  var count = App.store.xlsxData.Rows.length;
-  for (var i=1; i<=count; i++) {
-    $("#tabs").append('<li onclick=fillXlsxData('+(i-1)+')><a href="#home">'+i+'</a></li>');
-  }
-  $("#container").tabs();
-}
-
-function setInputEvents() {
-  var inputs = $.find('input');
-  $.each(inputs, function(key, val) {
-    $(val).on("change", function(q) {changeXlsxValue(key, $(val).val())})
-  })
-}
-
-function changeXlsxValue(id, value) {
-  App.store.xlsxData["Rows"][App.store.tabId][id] = value;
-}
-
-function fillXlsxData(id) {
-  id = id || 0;
-  var counter = 0;
-  var inputs = $.find('input');
-  $.each(inputs, function(key, val) {
-    $(val).val(App.store.xlsxData["Rows"][id][counter++]);
-  })
-  App.store.tabId = id;
-}
-
-function createMonumentsFromXlsx() {
-  var queryTemplate = {
-    "map:Literature": {"id":0},
-    "e:Epoch": {},
-    "map_References_m": {},
-    "k:Knowledge": {},
-    "m:Monument": {},
-    "c:Culture": {},
-    "e_Has_m": {},
-    "r_Contains_k": {},
-    "r_Has_map": {},
-    "k_Describes_m": {},
-    "c_Has_m": {}
-  }
-
-  var inputs = $.find('input');
-
-  var query = queryTemplate;
-  var dataFor;
-  var inputName;
-  var counter = 0;
-
-  $.each(inputs, function(key, val) {
-    dataFor = $(val).attr("data-for");
-    inputName = $(val).attr("name");
-
-    if (dataFor) {
-      query[dataFor][inputName] = App.store.xlsxData["Rows"][0][counter++]
-    }
-  })
-
-  console.log(query);
-}
 
 function fillSelector(selector, data, notLike) {
   console.log(data, selector);
@@ -355,7 +284,6 @@ function validateCreatePages () {
 
   _.each(inputs, function (input) {
     $(input).blur(function () {
-      console.log($(input).attr('data-req'));
       if ( !$(this).val() ) {
         if ($(input).attr('data-req') == 'up') {
           $(input).prev().addClass('error-input');
@@ -367,7 +295,6 @@ function validateCreatePages () {
     });
   });
 
-  console.log(inputs);
   inputs.blur();
   return isValid;
 }
