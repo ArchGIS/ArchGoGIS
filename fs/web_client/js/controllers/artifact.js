@@ -88,6 +88,11 @@ App.controllers.artifact = new (App.View.extend({
           "monType:MonumentType": {"id": "*", "select": "*"},
           "m_has_monType": {},
         }),
+        epoch: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "e:Epoch": {"id": "*", "select": "*"},
+          "m_has_e": {},
+        })
       },
 
       researchUsed: {
@@ -115,13 +120,14 @@ App.controllers.artifact = new (App.View.extend({
 
       tmplData.placemarks = [];
       var type = (tmplData.monType[0][0]) ? tmplData.monType[0][0].id : 10;
+      var epoch = (tmplData.epoch[0][0]) ? tmplData.epoch[0][0].id : 10;
       tmplData.placemarks.push({
         coords: [tmplData.knowFound[0].x, tmplData.knowFound[0].y],
         pref: {
           hintContent: tmplData.knowFound[0].monument_name
         },
         opts: {
-          preset: `monType${type}`
+          preset: `monType${type}_${epoch}`
         }
       })
 

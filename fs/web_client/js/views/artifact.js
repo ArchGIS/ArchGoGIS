@@ -12,7 +12,7 @@ App.views.artifact = new (App.View.extend({
       App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
         $('#research-input').autocomplete({
           source: _.map(researches, function(research) {
-            return {'label': fmt('$description ($year)', research), 'id': research.id}
+            return {'label': fmt('$name ($year)', research), 'id': research.id}
           })
         });
       });

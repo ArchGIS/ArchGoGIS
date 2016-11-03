@@ -8,7 +8,7 @@ App.views.monument = new (App.View.extend({
     var authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
 
-      App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
+      App.models.Report.findByAuthorIdFullInfo(ui.item.id).then(function(reports) {
         $('#report-input').autocomplete({
           source: _.map(reports.r, function(r, key) {
             return {'label': `${r.name} (${r.year}, ${reports.rt[key].name})`, 'id': r.id, 'resId': reports.res[key].id}

@@ -44,8 +44,8 @@ App.views.research = new (App.View.extend({
 
       App.models.Report.findByAuthorId(ui.item.id).then(function(reports) {
         $('#report-input').autocomplete({
-          source: _.map(reports, function(report) {
-            return {'label': fmt('$name ($year)', report), 'id': report.id, 'year': report.year, 'name': report.name}
+          source: _.map(reports, function(r) {
+            return {'label': `${r.name} (${r.year})`, 'id': r.id, 'year': r.year, 'name': r.name}
           })
         });
       });
@@ -269,7 +269,32 @@ App.views.research = new (App.View.extend({
         $(`#add-exc-button-${localMonId}`).on('click', function(e) {
           console.log(localMonId);
           addNewCoords($(this), localMonId, counter++)
-        })
+        });
+
+        $(`#monument-input-${localMonId}`).autocomplete({
+          source: function(request, response) {
+            var monuments = [];
+            
+            App.models.Monument.findByNamePrefix(request.term)
+              .then(function(data) {
+                console.log(data);
+                if (data && !data.error) {
+                  response(_.map(data, function(row) {
+                    return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
+                  }))
+                } else {
+                  response();
+                }
+              });
+          },
+          minLength: 3,
+          select: function(event, ui) {
+            console.log(localMonId);
+            $(`#monument-input-id-${localMonId}`).val(ui.item.id);
+          }
+        }).focus(function(){
+          $(this).autocomplete("search");
+        });
       })();
 
       var lastSelectedMonId = 0;
@@ -281,29 +306,8 @@ App.views.research = new (App.View.extend({
           })();
         }
       });
-      $(`#monument-input-${monId}`).autocomplete({
-        source: function(request, response) {
-          var monuments = [];
 
-          App.models.Monument.findByNamePrefix(request.term)
-            .then(function(data) {
-              console.log(data);
-              if (data && !data.error) {
-                response(_.map(data, function(row) {
-                  return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
-                }))
-              } else {
-                response();
-              }
-            });
-        },
-        minLength: 3,
-        select: function(event, ui) {
-          $(`#monument-input-id-${monId}`).val(ui.item.id);
-        }
-      }).focus(function(){
-        $(this).autocomplete("search");
-      });
+
 
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;
