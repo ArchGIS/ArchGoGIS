@@ -81,9 +81,9 @@ App.views.search = new (App.View.extend({
     // Выключение выбора эпохи и культуры по умолчанию
     var $epoch = $('#monument-epoch');
     var $culture = $('#monument-culture');
-    fillSelector($epoch, 'Epoch');
+    getDataForSelector($epoch, 'Epoch');
     $epoch.prepend('<option value="0" selected>Ничего не выбрано</option>');
-    fillSelector($culture, 'Culture');
+    getDataForSelector($culture, 'Culture');
     $culture.prepend('<option value="0" selected>Ничего не выбрано</option>');
 
     // Смена искомого объекта.

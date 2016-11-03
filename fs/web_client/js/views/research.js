@@ -11,8 +11,8 @@ App.views.research = new (App.View.extend({
     var loading = App.fn.loading;
     var reportName;
     var reportYear;
-
-    fillSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
+    
+    getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
     setSelectsEvents();
 
     var fillResearchInputs = function() {
@@ -245,9 +245,9 @@ App.views.research = new (App.View.extend({
       `);
 
       $(this).before(newMonument);
-      fillSelector($(`#epoch-selector-${monId}`), "Epoch");
-      fillSelector($(`#culture-selector-${monId}`), "Culture");
-      fillSelector($(`#mon-type-selector-${monId}`), "MonumentType");
+      getDataForSelector($(`#epoch-selector-${monId}`), "Epoch");
+      getDataForSelector($(`#culture-selector-${monId}`), "Culture");
+      getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
       setSelectsEvents();
 
       var coordpicker = App.blocks.coordpicker;

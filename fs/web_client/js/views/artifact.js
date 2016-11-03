@@ -137,10 +137,10 @@ App.views.artifact = new (App.View.extend({
       $("#container").tabs({active: $(this).attr("active")});
     })
 
-    fillSelector($("#epoch-selector"), "Epoch");
-    fillSelector($("#culture-selector"), "Culture");
-    fillSelector($("#research-type-selector"), "ResearchType");
-    fillSelector($("#mon-type-selector"), "MonumentType");
+    getDataForSelector($("#epoch-selector"), "Epoch");
+    getDataForSelector($("#culture-selector"), "Culture");
+    getDataForSelector($("#research-type-selector"), "ResearchType");
+    getDataForSelector($("#mon-type-selector"), "MonumentType");
     setSelectsEvents();
 
     coordpicker($('#coord-picker'), {

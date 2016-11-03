@@ -281,24 +281,33 @@ function createMonumentsFromXlsx() {
   console.log(query);
 }
 
-function fillSelector(selector, dataType, notLike) {
-  console.log(selector);
+function fillSelector(selector, data, notLike) {
+  $.each(data.rows, function(id, row) {
+    if (row.name != notLike) {
+      $("<option></option>")
+      .text(row.name)
+      .val(row.id)
+      .appendTo(selector);
+    }
+  })
+}
+
+function getDataForSelector(selector, dataType, notLike) {
   var query = {};
   var notLike = notLike || "";
-  query["rows:"+dataType] = {"id": "*", "select": "*"};
-  query = JSON.stringify(query);
 
-  $.post("/hquery/read", query).success(function(response) {
-    var data = JSON.parse(response);
-    $.each(data.rows, function(id, row) {
-      if (row.name != notLike) {
-        $("<option></option>")
-        .text(row.name)
-        .val(row.id)
-        .appendTo(selector);
-      }
-    })
-  });
+  if (App.store.selectData[dataType]) {
+    fillSelector(selector, App.store[dataType], notLike);
+  } else {
+    query["rows:"+dataType] = {"id": "*", "select": "*"};
+    query = JSON.stringify(query);
+
+    $.post("/hquery/read", query).success(function(response) {
+      var data = JSON.parse(response);
+      App.store.selectData[dataType] = data;
+      fillSelector(selector, data, notLike);
+    });
+  }
 }
 
 function uploadFile (file) {
