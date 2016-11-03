@@ -8,6 +8,7 @@ App.views.research = new (App.View.extend({
   "new": function(argument) {
     var counter = 1;
     var fmt = App.fn.fmt;
+    var loading = App.fn.loading;
     var reportName;
     var reportYear;
 
@@ -30,7 +31,9 @@ App.views.research = new (App.View.extend({
       fillResearchInputs();
 
       if ( validateCreatePages() ) {
+        var tmp = loading.call(this);
         postQuery();
+        loading.call(this, tmp);
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');
       }

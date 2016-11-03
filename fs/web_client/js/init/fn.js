@@ -6,7 +6,7 @@ App.fn.fmt = function(pattern, object) {
   });
 };
 
-/** 
+/**
  * Возвращает из items только те,
  * у которых строковое свойство item[key] удовлетворяет
  * регулярному выражению pattern.
@@ -23,4 +23,19 @@ App.fn.grepObject = function(pattern, items, key) {
 App.fn.sequence = function(initial) {
   initial = initial || 0;
   return () => initial++;
+};
+
+App.fn.loading = function (load) {
+  var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>
+                  <span class="sr-only">Loading...</span>`;
+  var saveTmpl = '';
+
+  if (load) {
+    $(this).html(load);
+  } else {
+    saveTmpl = $(this).html();
+    $(this).html(template);
+  }
+
+  return saveTmpl;
 };
