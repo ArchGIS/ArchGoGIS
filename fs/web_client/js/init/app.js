@@ -283,7 +283,6 @@ function validateCreatePages () {
 
   _.each(inputs, function (input) {
     $(input).blur(function () {
-      console.log($(input).attr('data-req'));
       if ( !$(this).val() ) {
         if ($(input).attr('data-req') == 'up') {
           $(input).prev().addClass('error-input');
@@ -295,7 +294,6 @@ function validateCreatePages () {
     });
   });
 
-  console.log(inputs);
   inputs.blur();
   return isValid;
 }
