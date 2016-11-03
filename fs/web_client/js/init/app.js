@@ -282,6 +282,7 @@ function createMonumentsFromXlsx() {
 }
 
 function fillSelector(selector, data, notLike) {
+  console.log(data, selector);
   $.each(data.rows, function(id, row) {
     if (row.name != notLike) {
       $("<option></option>")
@@ -297,7 +298,7 @@ function getDataForSelector(selector, dataType, notLike) {
   var notLike = notLike || "";
 
   if (App.store.selectData[dataType]) {
-    fillSelector(selector, App.store[dataType], notLike);
+    fillSelector(selector, App.store.selectData[dataType], notLike);
   } else {
     query["rows:"+dataType] = {"id": "*", "select": "*"};
     query = JSON.stringify(query);
