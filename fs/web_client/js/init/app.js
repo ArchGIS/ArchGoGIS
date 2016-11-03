@@ -16,7 +16,7 @@ App.View = Backbone.View.extend({});
 App.Model = Backbone.Model.extend({});
 
 
-var dburl = `${window.location.protocol}//${window.location.host}`;
+var dburl = `${location.protocol}//${location.host}`;
 
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
