@@ -2,5 +2,5 @@ package cfg
 
 const (
 	SearchMinPrefixLen = 3
-	SearchMaxPrefixLen = 12
+	SearchMaxPrefixLen = 512
 )
