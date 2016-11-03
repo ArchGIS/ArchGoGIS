@@ -40,7 +40,7 @@
       </div>
       <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
         <label for="author-photo-input">Фотография</label>
-        <input id="author-photo-input" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
+        <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
       </div>
 
       <div class="form-group">
@@ -99,7 +99,6 @@
         <label for="report-city-input">Город</label>
         <%= widget("SearchLine", citiesInputOptions, "report-city-input") %>
         <input id="report-city-input-id" data-for="city:City" hidden type="id" name="id"></input>
-        <!-- <input class="form-control" id="report-city-input" data-for="city:City" type="text" name="name"></input> -->
       </div>
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
         <label for="report-organization-input">Организация (место хранения)</label>
@@ -112,7 +111,7 @@
       </div>
       <div class="form-group" toggle-by="research-type-selector" need-option="2.3">
         <label for="report-file-input">Файл отчета</label>
-        <input id="report-file-input" type="file" data-for="rep:Report" name="fileid"></input>
+        <input id="report-file-input" accept=".doc,.docx,.pdf" type="file" data-for="rep:Report" name="fileid"></input>
       </div>
 
       <button class="btn btn-primary btn-next" active="1">
@@ -228,7 +227,7 @@
 
       <div class="form-group">
         <label for="artifact-photo-input">Фотография</label>
-        <input id="artifact-photo-input" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage"></input>
+        <input id="artifact-photo-input" accept="image/jpeg,image/x-png" data-for="artimage:Image" type="file" name="fileid" data-subclass="ArtifactImage"></input>
       </div>
 
       <button id="send-button" class="btn btn-primary">

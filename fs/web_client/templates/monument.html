@@ -40,7 +40,7 @@
       </div>
       <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
         <label for="author-photo-input">Фотография</label>
-        <input id="author-photo-input" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
+        <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
       </div>
 
       <div class="checkbox">
@@ -67,7 +67,6 @@
         <label for="report-city-input">Город</label>
         <%= widget("SearchLine", citiesInputOptions, "report-city-input") %>
         <input id="report-city-input-id" data-for="city:City" hidden type="id" name="id"></input>
-        <!-- <input class="form-control" id="report-city-input" data-for="city:City" type="text" name="name"></input> -->
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-organization-input">Организация</label>
@@ -80,7 +79,7 @@
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
-        <input id="report-file-input" type="file" data-for="r:Report" name="fileid"></input>
+        <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="r:Report" name="fileid"></input>
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="research-type-selector">Тип исследования</label>
@@ -118,7 +117,6 @@
         <label for="heritage-object-input">Название</label>
         <%= widget("SearchLine", oknInputOptions, "heritage-object-input") %>
         <input id="heritage-object-input-id" data-for="hs:HeritageStatus" hidden type="id" name="id"></input>
-        <!-- <input class="form-control" id="heritage-object-input" data-for="hs:HeritageStatus" type="text" name="code"></input> -->
       </div>
 
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
@@ -139,7 +137,7 @@
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label for="heritage-object-files-input">Файл документа</label>
-        <input class="form-control" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
+        <input class="form-control" accept=".pdf,.doc,.docx" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
       </div>
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
