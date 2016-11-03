@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Возвращает новую строку.
+ * Заменяет в pattern символы вида: $symbols
+ * Вместо них подставляются свойства object.
+ *
+ * @param string pattern
+ * @param object object
+ */
 App.fn.fmt = function(pattern, object) {
   return pattern.replace(/\$(\w+)/g, function(unused, word) {
     return object[word] || word;
