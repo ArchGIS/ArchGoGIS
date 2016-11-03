@@ -2,7 +2,7 @@
 
 App.models.Report = function() {};
 
-App.models.Report.findByAuthorId = function(authorId) {
+App.models.Report.findByAuthorIdFullInfo = function(authorId) {
   return new Promise(function(resolve, reject) {
     var query = JSON.stringify({
       'a:Author': {'id': authorId.toString()},
@@ -19,7 +19,20 @@ App.models.Report.findByAuthorId = function(authorId) {
       .success(response => resolve($.parseJSON(response)))
       .error(reject);
   });
-  
+};
+
+App.models.Report.findByAuthorId = function(authorId) {
+  return new Promise(function(resolve, reject) {
+    var query = JSON.stringify({
+      'a:Author': {'id': authorId.toString()},
+      'r:Report': {'id': '*', 'select': '*'},
+      'r_hasauthor_a': {},
+    });
+    
+    $.post('/hquery/read', query)
+      .success(response => resolve($.parseJSON(response).r))
+      .error(reject);
+  });
 };
 
 App.models.Report.url = function(id) {
