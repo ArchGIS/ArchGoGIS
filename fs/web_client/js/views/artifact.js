@@ -89,6 +89,26 @@ App.views.artifact = new (App.View.extend({
       }
     });
 
+
+    $('#author-photo-input').change(function () {
+      var tenMBinBytes = 10490000;
+      var jqObj = $(this);
+
+      if (jqObj[0].files[0] && jqObj[0].files[0].size > tenMBinBytes) {
+        jqObj.val('');
+      }
+    });
+
+    $('#artifact-photo-input').change(function () {
+      var tenMBinBytes = 10490000;
+      var jqObj = $(this);
+
+      if (jqObj[0].files[0] && jqObj[0].files[0].size > tenMBinBytes) {
+        jqObj.val('');
+      }
+    });
+
+
     $("#coauthor-input").bind("keyup", function(event) {
       if (event.keyCode === $.ui.keyCode.BACKSPACE) {
         var coauthors = _.values(App.store.coauthors);

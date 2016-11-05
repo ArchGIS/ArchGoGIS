@@ -68,6 +68,17 @@ App.views.monument = new (App.View.extend({
       } 
     });
 
+
+    $('#author-photo-input').change(function () {
+      var tenMBinBytes = 10490000;
+      var jqObj = $(this);
+
+      if (jqObj[0].files[0] && jqObj[0].files[0].size > tenMBinBytes) {
+        jqObj.val('');
+      }
+    });
+
+
     var fillResearchInputs = function() {
       if ($("#new-report-checkbox").is(":checked") == true) {
         var year = $("#report-year-input").val();
