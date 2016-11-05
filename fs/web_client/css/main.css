@@ -97,14 +97,6 @@ footer {
   margin-left: 1em;
 }
 
-/*.flow-block {
-  width: 97%;
-  height: 20em;
-  padding-left: 1em;
-  overflow: auto;
-  border: 1px double #aaa;
-}*/
-
 /* ######################## */
 
 .switch {
@@ -216,9 +208,6 @@ input {
   border-radius: 0;
 }
 
-input[type=text] {
-    /*width: 200px;*/
-}
 
 .coords {
   display: flex;
@@ -230,37 +219,17 @@ input[type=text] {
 
 .ui-autocomplete {
   border: 1px solid #ccc;
+  padding: 1px;
   width: 40%;
-  height: 300px;
+  height: auto;
+  max-height: 300px;
   overflow: auto;
-}
-
-.ui-menu-item {
-  border-bottom: 1px solid #aaa;
-}
-
-.ui-autocomlete:last-child {
-  border-bottom: none;
 }
 
 .flex-column {
   display: flex;
   flex-direction: column;
 }
-
-/*.flex-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 60%;
-  align-items: center;
-}*/
-/*
-.flex-row label {
-  margin-right: 1em;
-  /*padding-top: 1em;
-  line-height: 1;
-}*/
 
 /*
    Сообщения
@@ -271,7 +240,6 @@ input[type=text] {
 }
 
 .error-input {
-  /*color: red;*/
   font-size: 0.8em; 
   border: 1px solid #f33 !important;
 }
