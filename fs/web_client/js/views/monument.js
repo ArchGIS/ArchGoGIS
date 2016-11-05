@@ -78,6 +78,24 @@ App.views.monument = new (App.View.extend({
       }
     });
 
+    $('#report-file-input').change(function () {
+      var fiftyMBinBytes = 52430000;
+      var jqObj = $(this);
+
+      if (jqObj[0].files[0] && jqObj[0].files[0].size > fiftyMBinBytes) {
+        jqObj.val('');
+      }
+    });
+
+    $('#heritage-object-files-input').change(function () {
+      var fiftyMBinBytes = 52430000;
+      var jqObj = $(this);
+
+      if (jqObj[0].files[0] && jqObj[0].files[0].size > fiftyMBinBytes) {
+        jqObj.val('');
+      }
+    });
+
 
     var fillResearchInputs = function() {
       if ($("#new-report-checkbox").is(":checked") == true) {

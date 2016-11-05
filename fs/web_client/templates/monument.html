@@ -84,6 +84,10 @@
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-file-input">Файл отчета</label>
         <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="r:Report" name="fileid"></input>
+        <br>
+        <div class="alert alert-dismissible alert-info">
+          Максимальный размер документа 50 МБ.
+        </div>
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="research-type-selector">Тип исследования</label>
@@ -141,7 +145,11 @@
       </div>
       <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
         <label for="heritage-object-files-input">Файл документа</label>
-        <input class="form-control" accept=".pdf,.doc,.docx" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
+        <input accept=".pdf,.doc,.docx" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
+        <br>
+        <div class="alert alert-dismissible alert-info">
+          Максимальный размер документа 50 МБ.
+        </div>
       </div>
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>

@@ -101,6 +101,7 @@ App.views.research = new (App.View.extend({
       }
     });
 
+
     $('#author-photo-input').change(function () {
       var tenMBinBytes = 10490000;
       var jqObj = $(this);
@@ -109,6 +110,16 @@ App.views.research = new (App.View.extend({
         jqObj.val('');
       }
     });
+
+    $('#report-file-input').change(function () {
+      var fiftyMBinBytes = 52430000;
+      var jqObj = $(this);
+
+      if (jqObj[0].files[0] && jqObj[0].files[0].size > fiftyMBinBytes) {
+        jqObj.val('');
+      }
+    });
+
 
     function addCoord (name, monId, id) {
       return $("<div>")
