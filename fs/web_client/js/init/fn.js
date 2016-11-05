@@ -45,6 +45,26 @@ App.fn.sequence = function(initial) {
   return () => initial++;
 };
 
+/**
+ * Проверяет превышение размера файла
+ * указанного в аргументе size.
+ * И очищает input от файла в случае превышения.
+ * 
+ * @param int size
+ */
+App.fn.checkFileSize = function (size) {
+  function convertMbToBytes(mb) {
+    return mb * 1024 * 1024;
+  }
+
+  var mbInBytes = convertMbToBytes(size);
+  var jqObj = $(this);
+
+  if (jqObj[0].files[0] && jqObj[0].files[0].size > mbInBytes) {
+    jqObj.val('');
+  }
+};
+
 App.fn.loading = function (load) {
   var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>
                   <span class="sr-only">Loading...</span>`;

@@ -102,23 +102,12 @@ App.views.research = new (App.View.extend({
     });
 
 
-    $('#author-photo-input').change(function () {
-      var tenMBinBytes = 10490000;
-      var jqObj = $(this);
+    var checkFileSize = App.fn.checkFileSize;
+    var $authorPhoto = $('#author-photo-input');
+    $authorPhoto.change(checkFileSize.bind($authorPhoto, 10));
 
-      if (jqObj[0].files[0] && jqObj[0].files[0].size > tenMBinBytes) {
-        jqObj.val('');
-      }
-    });
-
-    $('#report-file-input').change(function () {
-      var fiftyMBinBytes = 52430000;
-      var jqObj = $(this);
-
-      if (jqObj[0].files[0] && jqObj[0].files[0].size > fiftyMBinBytes) {
-        jqObj.val('');
-      }
-    });
+    var $reportDoc = $('#report-file-input');
+    $reportDoc.change(checkFileSize.bind($reportDoc, 50));
 
 
     function addCoord (name, monId, id) {
