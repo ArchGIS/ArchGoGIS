@@ -298,7 +298,6 @@ App.views.research = new (App.View.extend({
             
             App.models.Monument.findByNamePrefix(request.term)
               .then(function(data) {
-                console.log(data);
                 if (data && !data.error) {
                   response(_.map(data, function(row) {
                     return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}

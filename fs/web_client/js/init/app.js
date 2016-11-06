@@ -211,7 +211,6 @@ function generateJson(relations) {
 
 
 function fillSelector(selector, data, notLike) {
-  console.log(data, selector);
   $.each(data.rows, function(id, row) {
     if (row.name != notLike) {
       $("<option></option>")
