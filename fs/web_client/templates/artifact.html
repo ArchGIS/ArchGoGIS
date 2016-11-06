@@ -136,7 +136,7 @@
         </label>
       </div>
       <div class="form-group" toggle-by="new-monument-checkbox" need-option="false">
-        <label>Выбрать существующий памятник <span class="required">*</span></label>
+        <label for="monument-input">Выбрать существующий памятник <span class="required">*</span></label>
         <input class="form-control" id="monument-input"></input>
         <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id" data-req="up"></input>
       </div>
@@ -145,11 +145,11 @@
         <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
       </div>
       <div class="form-group">
-        <label>Название памятника <span class="required">*</span></label>
+        <label for="monument-name-input">Название памятника <span class="required">*</span></label>
         <input class="form-control" id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
       </div>
       <div class="form-group">
-        <label>Описание памятника</label>
+        <label for="monument-desc-input">Описание памятника</label>
         <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
       </div>
       <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
