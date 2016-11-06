@@ -65,6 +65,17 @@ App.fn.checkFileSize = function (size) {
   }
 };
 
+App.fn.checkYear = function () {
+  var presentYear = (new Date()).getFullYear();
+  var input = $(this);
+
+  if (+input.val() < 0) {
+    input.val(0);
+  } else if (+input.val() > presentYear) {
+    input.val(presentYear);
+  }
+};
+
 App.fn.loading = function (load) {
   var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>
                   <span class="sr-only">Loading...</span>`;

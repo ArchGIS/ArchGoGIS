@@ -69,6 +69,7 @@ App.views.monument = new (App.View.extend({
     });
 
 
+    // События для прослушивания размера файлов
     var checkFileSize = App.fn.checkFileSize;
     var $authorPhoto = $('#author-photo-input');
     $authorPhoto.change(checkFileSize.bind($authorPhoto, 10));
@@ -78,6 +79,14 @@ App.views.monument = new (App.View.extend({
 
     var $reportDoc = $('#report-file-input');
     $reportDoc.change(checkFileSize.bind($reportDoc, 50));
+
+    // События для выбора года из диапазона от 0 до текущего года
+    var checkYear = App.fn.checkYear;
+    var $authorYear = $('#author-birth-date-input');
+    $authorYear.bind('keyup mouseup', checkYear.bind($authorYear));
+
+    var $repYear = $('#report-year-input');
+    $repYear.bind('keyup mouseup', checkYear.bind($repYear));
 
 
     var fillResearchInputs = function() {
