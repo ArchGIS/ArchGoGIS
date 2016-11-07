@@ -3,8 +3,10 @@
 App.views.artifact = new (App.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
-
     var fmt = App.fn.fmt;
+
+    var resSelName = '',
+        monSelName = '';
 
     var authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
@@ -22,6 +24,7 @@ App.views.artifact = new (App.View.extend({
         minLength: 0,
         select: function(event, ui) {
           $("#research-input-id").val(ui.item.id);
+          resSelName = ui.item.name;
         }
       }).focus(function() {
         $(this).autocomplete("search");
@@ -68,6 +71,7 @@ App.views.artifact = new (App.View.extend({
       minLength: 3,
       select: function(event, ui) {
         $("#monument-input-id").val(ui.item.id);
+        monSelName = ui.item.name;
       }
     }).focus(function(){
       $(this).autocomplete("search");
@@ -84,9 +88,11 @@ App.views.artifact = new (App.View.extend({
     });
 
     var lastSelectedCityId = 0;
+    var lastSelectedCityName = '';
     $('#report-city-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedCityId != ui.item.id) {
         lastSelectedCityId = ui.item.id;
+        lastSelectedCityName = ui.item.name;
         citySelectHandler(event, ui);
       }
     });
@@ -117,30 +123,11 @@ App.views.artifact = new (App.View.extend({
     var $artYear = $('#artifact-year-input');
     $artYear.bind('keyup mouseup', checkYear.bind($artYear));
 
-
-    var $authorInput = $('#author-input');
-    var tip = new Opentip($authorInput, {
-      showOn: null,
-      style: 'alert',
-      target: true,
-      tipJoint: "bottom"
-    });
-
-    $authorInput.on('focus', () => {
-      tip.hide();
-    });
-
-    $authorInput.on('change', () => {
-      var hiddenId = $('#author-input-id').val();
-      if ( hiddenId && lastSelectedAuthorName === $authorInput.val() ) {
-        tip.hide();
-      } else {
-        tip.setContent(`Такого автора не существует.
-          Введите часть имени автора и выберите из выпадающего списка подходящий вариант.
-          Если такой вариант не нашёлся, то добавьте нового.`);
-        tip.show();
-      }
-    });
+    // Валидация полей с автокомплитом
+    App.fn.validInput('#author-input', lastSelectedAuthorName);
+    App.fn.validInput('#research-input', resSelName);
+    App.fn.validInput('#report-city-input', lastSelectedCityName);
+    App.fn.validInput('#monument-input', monSelName);
 
 
     $("#coauthor-input").bind("keyup", function(event) {
