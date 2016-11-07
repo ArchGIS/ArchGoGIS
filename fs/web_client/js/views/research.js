@@ -9,7 +9,8 @@ App.views.research = new (App.View.extend({
     var counter = 1;
     var fmt = App.fn.fmt;
     var loading = App.fn.loading;
-    var reportName;
+    var reportName,
+        orgName = '';
     var reportYear;
     
     getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
@@ -79,6 +80,7 @@ App.views.research = new (App.View.extend({
         minLength: 0,
         select: function(event, ui) {
           $("#report-organization-input-id").val(ui.item.id);
+          orgName = ui.item.name;
         }
       }).focus(function() {
         $(this).autocomplete("search");
@@ -86,17 +88,21 @@ App.views.research = new (App.View.extend({
     };
 
     var lastSelectedAuthorId = 0;
+    var lastSelectedAuthorName = '';
     $('#author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
+        lastSelectedAuthorName = ui.item.name;
         authorSelectHandler(event, ui);
       }
     });
 
     var lastSelectedCityId = 0;
+    var lastSelectedCityName = '';
     $('#report-city-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedCityId != ui.item.id) {
         lastSelectedCityId = ui.item.id;
+        lastSelectedCityName = ui.item.name;
         citySelectHandler(event, ui);
       }
     });
@@ -120,6 +126,13 @@ App.views.research = new (App.View.extend({
 
     var $repYear = $('#report-year-input');
     $repYear.bind('keyup mouseup', checkYear.bind($repYear));
+
+    // Валидация полей с автокомплитом
+    var validate = App.fn.validInput;
+    validate('#author-input', lastSelectedAuthorName);
+    validate('#report-input', reportName);
+    validate('#report-city-input', lastSelectedCityName);
+    validate('#report-organization-input', orgName);
 
 
     function addCoord (name, monId, id) {
@@ -318,14 +331,16 @@ App.views.research = new (App.View.extend({
       })();
 
       var lastSelectedMonId = 0;
+      var monSelName = '';
       $(`#monument-input-${monId}`).on('autocompleteselect', function(event, ui) {
         if (lastSelectedMonId != ui.item.id) {
           lastSelectedMonId = ui.item.id;
-          (function(event, ui) {
-            $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
-          })();
+          $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
+          monSelName = ui.item.name;
         }
       });
+
+      validate(`#monument-input-${monId}`, monSelName);
 
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;

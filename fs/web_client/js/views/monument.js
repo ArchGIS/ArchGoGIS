@@ -5,6 +5,10 @@ App.views.monument = new (App.View.extend({
     var coordpicker = App.blocks.coordpicker;
     var fmt = App.fn.fmt;
     
+    var repSelName = '',
+        oknSelName = '',
+        orgName = '';
+
     var authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
 
@@ -24,6 +28,7 @@ App.views.monument = new (App.View.extend({
 
           $("#research-input-id").val(resId);
           $("#report-input-id").val(ui.item.id);
+          repSelName = ui.item.name;
         }
       }).focus(function() {
         $(this).autocomplete("search");
@@ -46,6 +51,7 @@ App.views.monument = new (App.View.extend({
         minLength: 0,
         select: function(event, ui) {
           $("#report-organization-input-id").val(ui.item.id);
+          orgName = ui.item.name;
         }
       }).focus(function() {
         $(this).autocomplete("search");
@@ -53,19 +59,47 @@ App.views.monument = new (App.View.extend({
     };
 
     var lastSelectedAuthorId = 0;
+    var lastSelectedAuthorName = '';
     $('#author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
+        lastSelectedAuthorName = ui.item.name;
         authorSelectHandler(event, ui);
       } 
     });
 
     var lastSelectedCityId = 0;
+    var lastSelectedCityName = '';
     $('#report-city-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedCityId != ui.item.id) {
         lastSelectedCityId = ui.item.id;
+        lastSelectedCityName = ui.item.name;
         citySelectHandler(event, ui);
       } 
+    });
+
+    $("#heritage-object-input").autocomplete({
+      source: function(request, response) {
+        var okns = [];
+
+        App.models.Okn.findByNamePrefix(request.term)
+          .then(function(data) {
+            if (data && !data.error) {
+              response(_.map(data, function(row) {
+                return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
+              }))
+            } else {
+              response();
+            }
+          });
+      },
+      minLength: 3,
+      select: function(event, ui) {
+        $("#heritage-object-input-id").val(ui.item.id);
+        oknSelName = ui.item.name;
+      }
+    }).focus(function(){
+      $(this).autocomplete("search");
     });
 
 
@@ -87,6 +121,14 @@ App.views.monument = new (App.View.extend({
 
     var $repYear = $('#report-year-input');
     $repYear.bind('keyup mouseup', checkYear.bind($repYear));
+
+    // Валидация полей с автокомплитом
+    var validate = App.fn.validInput;
+    validate('#author-input', lastSelectedAuthorName);
+    validate('#report-input', repSelName);
+    validate('#report-city-input', lastSelectedCityName);
+    validate('#report-organization-input', orgName);
+    validate('#heritage-object-input', oknSelName);
 
 
     var fillResearchInputs = function() {

@@ -6,7 +6,8 @@ App.views.artifact = new (App.View.extend({
     var fmt = App.fn.fmt;
 
     var resSelName = '',
-        monSelName = '';
+        monSelName = '',
+        orgName = '';
 
     var authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
@@ -47,6 +48,7 @@ App.views.artifact = new (App.View.extend({
         minLength: 0,
         select: function(event, ui) {
           $("#report-organization-input-id").val(ui.item.id);
+          orgName = ui.item.name;
         }
       }).focus(function() {
         $(this).autocomplete("search");
@@ -124,10 +126,12 @@ App.views.artifact = new (App.View.extend({
     $artYear.bind('keyup mouseup', checkYear.bind($artYear));
 
     // Валидация полей с автокомплитом
-    App.fn.validInput('#author-input', lastSelectedAuthorName);
-    App.fn.validInput('#research-input', resSelName);
-    App.fn.validInput('#report-city-input', lastSelectedCityName);
-    App.fn.validInput('#monument-input', monSelName);
+    var validate = App.fn.validInput;
+    validate('#author-input', lastSelectedAuthorName);
+    validate('#research-input', resSelName);
+    validate('#report-city-input', lastSelectedCityName);
+    validate('#report-organization-input', orgName);
+    validate('#monument-input', monSelName);
 
 
     $("#coauthor-input").bind("keyup", function(event) {
