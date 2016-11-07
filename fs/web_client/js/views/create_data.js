@@ -25,7 +25,7 @@ App.views.wizard = new (App.View.extend({
         "#research/new": t("report.singular")
       },
       "heritage": {
-        "#heritage/new": t("doc.singular.registration")+"/"+t("doc.singula.surveyMap")
+        "#heritage/new": t("doc.registration.singular")+"/"+t("doc.surveyMap.singular")
       }
     };
     
