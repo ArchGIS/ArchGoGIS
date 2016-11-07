@@ -18,7 +18,6 @@ App.views.search = new (App.View.extend({
             if (!_.find(memo, function(memoobj) { return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)})) {
               memo[key] = obj[0];
             }
-            console.log(memo);
             return memo;
           }, {}), function(mk) {
             return [App.models.Monument.href(mk.monId, `${mk.monName} (${mk.epName}, ${mk.monType})`)];

@@ -11,11 +11,31 @@ App.views.heritage = new (App.View.extend({
     });
 
     $(".date-picker").datepicker({
-    	dateFormat: "dd.mm.yy"
+      dateFormat: "dd.mm.yy"
     });
 
     var $heritageFile = $('#heritage-file-input');
     $heritageFile.change(App.fn.checkFileSize.bind($heritageFile, 50));
+
+    var mapId = 1;
+    $('#add-map-button').on('click', function(e) {
+      var localMapId = mapId;
+      var params = {
+        mapId: localMapId
+      }
+
+      App.template.get("heritage/addSurveyMap", function(tmpl) {
+        $('#add-map-button').before(tmpl(params));
+        $(`#map${localMapId}`).tabs({active: $(this).attr("active")});
+
+        $(".date-picker").datepicker({
+          dateFormat: "dd.mm.yy"
+        });
+
+        App.views.functions.setAccordionHeader($(`#map-header-${localMapId}`));
+      })
+      mapId++;
+    });
 
     setSelectsEvents();
 

@@ -1,0 +1,116 @@
+<h4 class="accordion-header" id="map-header-<%=mapId%>">
+  <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+  <%= t('doc.surveyMap.singular') %> №<%=mapId%>
+</h4>
+
+<div class="accordion-content">
+  <div id="map<%=mapId%>">
+    <ul>
+      <li><a href="#use<%=mapId%>"><%= t('doc.surveyMap.use') %></a></li>
+      <li><a href="#state<%=mapId%>"><%= t('doc.surveyMap.state') %></a></li>
+    </ul>
+
+    <div id="use<%=mapId%>">
+      <div class="form-group">
+        <label for="map-own-type-input-<%=mapId%>">Вид собственности</label>
+        <input class="form-control" id="map-own-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="ownType"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-disposal-type-input-<%=mapId%>">Вид распоряжения</label>
+        <input class="form-control" id="map-disposal-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposalType"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-disposer-code-input-<%=mapId%>">Код собственника (распорядителя) по ОКАТО</label>
+        <input class="form-control" id="map-disposer-code-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposalCode"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-disposer-vat-input-<%=mapId%>">ИНН собственника (распорядителя)</label>
+        <input class="form-control" id="map-disposer-vat-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposerVat"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-disposer-kpp-input-<%=mapId%>">КПП собственника (распорядителя)</label>
+        <input class="form-control" id="map-disposer-kpp-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposerKpp"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-doc-type-input-<%=mapId%>">Вид документа о передаче объекта собственнику (распорядителю)</label>
+        <input class="form-control" id="map-doc-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docType"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-doc-date-input-<%=mapId%>">Дата документа о передаче собственнику (распорядителю)</label>
+        <input class="form-control data-picker" id="map-doc-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docDate"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-doc-num-input-<%=mapId%>">Номер документа о передаче собственнику (распорядителю)</label>
+        <input class="form-control" id="map-doc-num-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docNum"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-start-date-input-<%=mapId%>">Дата начала владения (распоряжения) по документу об охране</label>
+        <input class="form-control date-picker" id="map-start-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="startDate"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-end-date-input-<%=mapId%>">Дата окончания владения (распоряжения) по документу об охране</label>
+        <input class="form-control date-picker" id="map-end-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="endDate"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-doc-security-type-input-<%=mapId%>">Вид охранного документа</label>
+        <input class="form-control" id="map-doc-security-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docSecurityType"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-doc-security-date-input-<%=mapId%>">Дата охранного документа</label>
+        <input class="form-control date-picker" id="map-doc-security-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docSecurityDate"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-doc-security-num-input-<%=mapId%>">Номер охранного документа</label>
+        <input class="form-control" id="map-doc-security-num-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docSecurityNum"></input>
+      </div>
+
+      <div class="form-group">
+        Использование по первоначальному функциональному назначению
+        <p>
+          <input id="map-use-initial-yes-<%=mapId%>" name="useInitial-<%=mapId%>" type="radio" value="1" data-for="map_<%=mapId%>:SurveyMap" checked>Да
+          <input id="map-use-initial-no-<%=mapId%>" name="useInitial-<%=mapId%>" type="radio" value="2" data-for="map_<%=mapId%>:SurveyMap">Нет
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label for="heritage-purpose-selector">Функциональное назначение</label>
+        <select class="form-control" id="heritage-purpose-selector" data-for="fp:FunctionalPurpose" type="id" name="id">
+          <option value="1">Опция 1</option>
+          <option value="2">Опция 2</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="heritage-availability-selector">Доступность памятника</label>
+        <select class="form-control" id="heritage-availability-selector" data-for="avail:Availability" type="id" name="id">
+          <option value="1">Опция 1</option>
+          <option value="2">Опция 2</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="heritage-usage-type-selector">Вид пользования</label>
+        <select class="form-control" id="heritage-usage-type-selector" data-for="ut:UsageType" type="id" name="id">
+          <option value="1">Опция 1</option>
+          <option value="2">Опция 2</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div id="state<%=mapId%>">
+    </div>
+  </div> 
+</div>
