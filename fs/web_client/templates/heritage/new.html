@@ -6,7 +6,7 @@
     <ul>
       <li><a href="#home"><%= t('heritage.singular') %></a></li>
       <li><a href="#menu1"><%= t('doc.surveyMap.plural') %></a></li>
-      <li><a href="#menu2"><%= t('photo.singular') %></a></li>
+      <li><a href="#menu2"><%= t('photo.plural') %></a></li>
     </ul>
 
     <div id="home">
@@ -121,7 +121,14 @@
         Добавить карту обследования
       </button>
     </div>
-    <div id="menu2"></div>
+
+    <div id="menu2">
+      <button id="add-photo-button" class="btn btn-primary">
+        <i class="fa fa-cogs"></i>
+        Добавить фото
+      </button>
+    </div>
+
   <div class="maps">
     <%= widget("Map", {}, "map") %>
   </div>

@@ -37,6 +37,25 @@ App.views.heritage = new (App.View.extend({
       mapId++;
     });
 
+    var photoId = 1;
+    $('#add-photo-button').on('click', function(e) {
+      var localPhotoId = photoId;
+      var params = {
+        photoId: localPhotoId
+      }
+
+      App.template.get("heritage/addPhoto", function(tmpl) {
+        $('#add-photo-button').before(tmpl(params));
+
+        $(".date-picker").datepicker({
+          dateFormat: "dd.mm.yy"
+        });
+
+        App.views.functions.setAccordionHeader($(`#photo-header-${localPhotoId}`));
+      })
+      photoId++;
+    });
+
     setSelectsEvents();
 
     $('.btn-next').on('click', function(e) {

@@ -124,7 +124,8 @@
   },
 
   "photo": {
-    "singular": "Фото"
+    "singular": "Фотография",
+    "plural": "Фотографии"
   },
 
   "monument": {
