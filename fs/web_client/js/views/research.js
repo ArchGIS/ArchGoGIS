@@ -6,9 +6,11 @@ App.views.research = new (App.View.extend({
   },
 
   "new": function(argument) {
-    var counter = 1;
     var fmt = App.fn.fmt;
     var loading = App.fn.loading;
+    var excludeIdent = App.fn.excludeIdentical;
+
+    var counter = 1;
     var reportName,
         orgName = '';
     var reportYear;
@@ -322,7 +324,6 @@ App.views.research = new (App.View.extend({
           },
           minLength: 3,
           select: function(event, ui) {
-            console.log(localMonId);
             $(`#monument-input-id-${localMonId}`).val(ui.item.id);
           }
         }).focus(function(){

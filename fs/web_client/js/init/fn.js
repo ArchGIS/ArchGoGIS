@@ -116,3 +116,16 @@ App.fn.loading = function (load) {
 
   return saveTmpl;
 };
+
+App.fn.excludeIdentical = (monuments) => {
+  var results = _.reduce(monuments, (memo, obj, key) => {
+    if (!_.find(memo, (memoobj) => {
+        return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)
+      })) {
+      memo[key] = obj[0];
+    }
+    return memo;
+  }, {});
+
+  return results;
+};

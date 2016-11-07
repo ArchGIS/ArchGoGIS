@@ -4,6 +4,7 @@ App.views.search = new (App.View.extend({
   'index': function() {
     var t = App.locale.translate;
     var grepObject = App.fn.grepObject;
+    var excludeIdent = App.fn.excludeIdentical;
 
     var $results = $('#search-results');
 
@@ -13,12 +14,7 @@ App.views.search = new (App.View.extend({
       'monument-params': {
         'handler': searchMonument,
         'columnsMaker': function(monuments) {
-          return _.map(_.reduce(monuments, function(memo, obj, key) {
-            if (!_.find(memo, function(memoobj) { return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)})) {
-              memo[key] = obj[0];
-            }
-            return memo;
-          }, {}), function(mk) {
+          return _.map(excludeIdent(monuments), function(mk) {
             return [App.models.Monument.href(mk.monId, `${mk.monName} (${mk.epName}, ${mk.monType})`)];
           });
         },
