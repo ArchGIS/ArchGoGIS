@@ -12,7 +12,6 @@ App.views.search = new (App.View.extend({
     var objects = {
       'monument-params': {
         'handler': searchMonument,
-        'heading': ['#', t('monument.prop.type'), t('monument.prop.epoch')],
         'columnsMaker': function(monuments) {
           return _.map(_.reduce(monuments, function(memo, obj, key) {
             if (!_.find(memo, function(memoobj) { return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)})) {
@@ -30,7 +29,6 @@ App.views.search = new (App.View.extend({
       },
       'research-params': {
         'handler': searchResearch,
-        'heading': ['#', t('research.prop.description'), t('research.prop.type')],
         'columnsMaker': function(researches) {
           return _.map(researches, function(r) {
             return [App.models.Research.href(r[0].resId, `${r[0].resName ? r[0].resName : ''}`)];
@@ -43,7 +41,6 @@ App.views.search = new (App.View.extend({
       },
       'author-params': {
         'handler': searchAuthor,
-        'heading': ['#', t('author.prop.name'), t('author.prop.year')],
         'columnsMaker': function(authors) {
           return _.map(authors, function(a) {
             return [App.models.Author.href(a[0], `${a[1]} ${a[2] ? a[2] : ''}`)];
@@ -55,7 +52,6 @@ App.views.search = new (App.View.extend({
       },
       'report-params': {
         'handler': searchReport,
-        'heading': ['#', t('report.prop.description'), t('report.prop.type')],
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
             return [App.models.Report.href(r[0], `${r[1] ? r[1] : ''} (${r[3]} - ${r[2]})`)];
