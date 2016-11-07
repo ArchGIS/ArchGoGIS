@@ -1,0 +1,44 @@
+<h4 class="accordion-header" id="photo-header-<%=photoId%>">
+  <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+  <%= t('photo.singular') %> №<%=photoId%>
+</h4>
+  
+<div class="accordion-content">
+  <div class="form-group">
+    <label for="photo-file-input-<%=photoId%>">Фотография</label>
+    <input id="photo-file-input-<%=photoId%>" data-for="photo_<%=photoId%>:Image" type="file" name="fileid"></input>
+    <div class="alert alert-dismissible alert-info">
+      Максимальный размер фотографии 10 МБ.
+    </div>
+
+    <div class="form-group">
+      <label for="photo-create-date-input-<%=photoId%>">Дата создания фотографии</label>
+      <input class="form-control date-picker" id="photo-create-date-input-<%=photoId%>" data-for="photo_<%=photoId%>:Image" type="text" name="createDate"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="photo-monument-part-input-<%=photoId%>">Элемент памятника</label>
+      <input class="form-control" id="photo-monument-part-input-<%=photoId%>" data-for="photo_<%=photoId%>:Image" type="text" name="monumentPart"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="photo-view-selector">Ракурс</label>
+      <select class="form-control" id="photo-view-selector" data-for="pov:PointOfView" type="id" name="id">
+        <option value="1">Север</option>
+        <option value="2">Северо-восток</option>
+        <option value="3">Восток</option>
+        <option value="4">Юго-восток</option>
+        <option value="5">Юг</option>
+        <option value="6">Юго-запад</option>
+        <option value="7">Запад</option>
+        <option value="8">Северо-запад</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="photo-author-input-<%=photoId%>">Автор</label>
+      <input class="form-control" id="photo-author-input-<%=photoId%>" data-for="photo_<%=photoId%>:Image" type="text" name="author"></input>
+    </div>
+
+  </div>
+</div>

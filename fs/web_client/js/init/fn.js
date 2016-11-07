@@ -76,6 +76,32 @@ App.fn.checkYear = function () {
   }
 };
 
+App.fn.validInput = (input, name) => {
+  var $authorInput = $(input);
+  var tip = new Opentip($authorInput, {
+    showOn: null,
+    style: 'alert',
+    target: true,
+    tipJoint: "bottom"
+  });
+
+  $authorInput.on('focus', () => {
+    tip.hide();
+  });
+
+  $authorInput.on('change', () => {
+    var hiddenId = $(input + '-id').val();
+    if ( hiddenId && name === $authorInput.val() ) {
+      tip.hide();
+    } else {
+      tip.setContent(`Неправильный ввод.
+        Введите часть искомого слова и выберите из выпадающего списка подходящий вариант.
+        Если такой вариант не нашёлся, то создайте новую сущность.`);
+      tip.show();
+    }
+  });
+}
+
 App.fn.loading = function (load) {
   var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>
                   <span class="sr-only">Loading...</span>`;
