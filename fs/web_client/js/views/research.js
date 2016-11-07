@@ -328,8 +328,6 @@ App.views.research = new (App.View.extend({
         }
       });
 
-
-
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;
     });

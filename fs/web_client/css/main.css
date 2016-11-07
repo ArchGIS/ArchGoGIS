@@ -303,3 +303,7 @@ dt {
 .btn:hover {
   margin-top: 15px !important;
 }
+
+.alert-info {
+  margin-top: 15px;
+}

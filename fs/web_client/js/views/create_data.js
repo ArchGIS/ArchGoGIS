@@ -1,3 +1,4 @@
+
 'use strict';
 
 App.views.wizard = new (App.View.extend({
@@ -22,6 +23,9 @@ App.views.wizard = new (App.View.extend({
       },
       "research": {
         "#research/new": t("report.singular")
+      },
+      "heritage": {
+        "#heritage/new": t("doc.singular.registration")+"/"+t("doc.singula.surveyMap")
       }
     };
     
