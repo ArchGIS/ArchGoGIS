@@ -74,9 +74,11 @@ App.views.artifact = new (App.View.extend({
     });
 
     var lastSelectedAuthorId = 0;
+    var lastSelectedAuthorName = '';
     App.page.get('author-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
+        lastSelectedAuthorName = ui.item.name;
         authorSelectHandler(event, ui);
       }
     });
@@ -114,6 +116,31 @@ App.views.artifact = new (App.View.extend({
 
     var $artYear = $('#artifact-year-input');
     $artYear.bind('keyup mouseup', checkYear.bind($artYear));
+
+
+    var $authorInput = $('#author-input');
+    var tip = new Opentip($authorInput, {
+      showOn: null,
+      style: 'alert',
+      target: true,
+      tipJoint: "bottom"
+    });
+
+    $authorInput.on('focus', () => {
+      tip.hide();
+    });
+
+    $authorInput.on('change', () => {
+      var hiddenId = $('#author-input-id').val();
+      if ( hiddenId && lastSelectedAuthorName === $authorInput.val() ) {
+        tip.hide();
+      } else {
+        tip.setContent(`Такого автора не существует.
+          Введите часть имени автора и выберите из выпадающего списка подходящий вариант.
+          Если такой вариант не нашёлся, то добавьте нового.`);
+        tip.show();
+      }
+    });
 
 
     $("#coauthor-input").bind("keyup", function(event) {
