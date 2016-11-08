@@ -26,7 +26,7 @@ body {
 body, button, input, select, textarea,
 .pure-g [class *= "pure-u"],
 .ui-widget {
-    font-family: 'Open Sans', sans-serif; !important;
+    font-family: 'Open Sans', sans-serif, !important;
 }
 
 *:focus {
