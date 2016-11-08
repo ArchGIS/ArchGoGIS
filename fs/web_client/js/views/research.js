@@ -314,8 +314,8 @@ App.views.research = new (App.View.extend({
             App.models.Monument.findByNamePrefix(request.term)
               .then(function(data) {
                 if (data && !data.error) {
-                  response(_.map(data, function(row) {
-                    return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
+                  response(_.map(excludeIdent(data), function(row) {
+                    return {'label': `${row.monName}`, 'id': row.monId}
                   }))
                 } else {
                   response();

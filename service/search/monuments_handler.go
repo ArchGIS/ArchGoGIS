@@ -21,7 +21,11 @@ const (
 		"MATCH (r:Research)-[:has]->(k)" +
 		"MATCH (a:Author)<-[:hasauthor]-(r)" +
 		"WHERE k.monument_name =~ {needle}" +
-		"RETURN m.id, k.monument_name, r.year, a.name"
+		"RETURN {" + 
+		"monId: m.id, " +
+		"monName: k.monument_name, " +
+		"resYear: r.year, " +
+		"autName: a.name}"
 )
 
 func monumentsHandler(w web.ResponseWriter, r *http.Request) {
