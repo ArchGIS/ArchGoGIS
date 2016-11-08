@@ -65,6 +65,11 @@ App.fn.checkFileSize = function (size) {
   }
 };
 
+/**
+ * Проверяет выход за пределы значения,
+ * введённого пользователем  для поля год
+ * в диапазоне [0, Текущий год].
+ */
 App.fn.checkYear = function () {
   var presentYear = (new Date()).getFullYear();
   var input = $(this);
@@ -76,6 +81,15 @@ App.fn.checkYear = function () {
   }
 };
 
+/**
+ * Проверяет правильность заполнения полей с автокомплитом.
+ * В случае ошибки пользователя появляется сообщение об ошибке.
+ * Параметр input - строка для оборачивания в Jquery-объект.
+ * Параметр name нужен для проверки последних введённых данных в поле.
+ * 
+ * @param string input
+ * @param string name
+ */
 App.fn.validInput = (input, name) => {
   var $authorInput = $(input);
   var tip = new Opentip($authorInput, {
@@ -117,7 +131,14 @@ App.fn.loading = function (load) {
   return saveTmpl;
 };
 
-App.fn.excludeIdentical = (monuments) => {
+/**
+ * Возвращает объект, в котором оставлены только
+ * уникальные памятники. Нужен для фильтрации результатов
+ * поиска памятников.
+ * 
+ * @param array monuments
+ */
+App.fn.excludeIdentMonuments = (monuments) => {
   var results = _.reduce(monuments, (memo, obj, key) => {
     if (!_.find(memo, (memoobj) => {
         return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)

@@ -4,7 +4,7 @@ App.views.artifact = new (App.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
     var fmt = App.fn.fmt;
-    var excludeIdent = App.fn.excludeIdentical;
+    var excludeIdent = App.fn.excludeIdentMonuments;
 
     var resSelName = '',
         monSelName = '',

@@ -8,7 +8,7 @@ App.views.research = new (App.View.extend({
   "new": function(argument) {
     var fmt = App.fn.fmt;
     var loading = App.fn.loading;
-    var excludeIdent = App.fn.excludeIdentical;
+    var excludeIdent = App.fn.excludeIdentMonuments;
 
     var counter = 1;
     var reportName,
