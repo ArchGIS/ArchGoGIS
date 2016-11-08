@@ -84,7 +84,7 @@ App.fn.checkYear = function () {
 /**
  * Проверяет правильность заполнения полей с автокомплитом.
  * В случае ошибки пользователя появляется сообщение об ошибке.
- * Параметр input - строка для оборачивания в Jquery-объект.
+ * Параметр input - id тэга для оборачивания в Jquery-объект.
  * Параметр name нужен для проверки последних введённых данных в поле.
  * 
  * @param string input
@@ -105,7 +105,8 @@ App.fn.validInput = (input, name) => {
 
   $authorInput.on('change', () => {
     var hiddenId = $(input + '-id').val();
-    if ( hiddenId && name === $authorInput.val() ) {
+
+    if (hiddenId && name === $authorInput.val()) {
       tip.hide();
     } else {
       tip.setContent(`Неправильный ввод.
@@ -114,21 +115,6 @@ App.fn.validInput = (input, name) => {
       tip.show();
     }
   });
-}
-
-App.fn.loading = function (load) {
-  var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>
-                  <span class="sr-only">Loading...</span>`;
-  var saveTmpl = '';
-
-  if (load) {
-    $(this).html(load);
-  } else {
-    saveTmpl = $(this).html();
-    $(this).html(template);
-  }
-
-  return saveTmpl;
 };
 
 /**

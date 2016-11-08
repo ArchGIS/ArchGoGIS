@@ -63,6 +63,8 @@ function showField(select) {
 }
 
 function postQuery() {
+  var iconButton = loading();
+
   var json = generateJson([
     ["Research", "Author", "hasauthor"],
     ["Research", "Coauthor", "hascoauthor"],
@@ -139,6 +141,7 @@ function postQuery() {
       contentType: false,
       success: function(response) {
         console.log('upsert: ' + response);
+        loading(iconButton);
 
         if (response.length == 4) {
           alert('При обработке данных на сервере произошла ошибка');
@@ -149,6 +152,23 @@ function postQuery() {
     });
   });
 }
+
+function loading(load) {
+  var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>`;
+  var icon = $('#send-button i');
+  var saveTmpl;
+
+  if (load) {
+    icon.parent().removeProp('disabled');
+    icon.replaceWith(load);
+  } else {
+    icon.parent().prop('disabled', true);
+    saveTmpl = icon.get(0);
+    icon.replaceWith(template);
+  }
+
+  return saveTmpl;
+};
 
 function generateJson(relations) {
   var type, json = {};
