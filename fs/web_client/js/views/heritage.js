@@ -36,6 +36,18 @@ App.views.heritage = new (App.View.extend({
 
         App.views.functions.setAccordionHeader($(`#map-header-${localMapId}`));
       })
+
+      App.template.get("heritage/stateTable", function(tmpl) {
+        $(`#state${localMapId}`).append(tmpl(params));
+
+        App.template.get("heritage/tableRow", function(tmpl) {
+          var rows = $(`#map-table-${localMapId}`).find("tr:gt(0)");
+          _.each(rows, function(row, id) {
+            $(row).append(tmpl({rowNum: id}))
+          })
+        })
+      });
+
       mapId++;
     });
 
