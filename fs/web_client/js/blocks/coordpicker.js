@@ -13,6 +13,8 @@ App.blocks.coordpicker = function($el, params, id) {
   function updateInputValues(coords) {
     $x.val(coords[0]);
     $y.val(coords[1]);
+    $x.trigger("change");
+    $y.trigger("change");
   }
 
   function updatePlacemark() {
