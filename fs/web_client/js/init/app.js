@@ -18,6 +18,13 @@ App.Model = Backbone.Model.extend({});
 
 var dburl = `${location.protocol}//${location.host}`;
 
+$('#modalWindow').easyModal({
+  top: 200,
+  overlay: 0.4,
+  overlayClose: false,
+  closeOnEscape: false
+});
+
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
 
@@ -146,7 +153,7 @@ function postQuery() {
         if (response.length == 4) {
           alert('При обработке данных на сервере произошла ошибка');
         } else {
-          alert('Успешно!');
+          $('#modalWindow').trigger('openModal');
         }
       }
     });
