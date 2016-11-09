@@ -13,9 +13,8 @@ CREATE (region:Region {id: idReg, name: line.RegionName})
 CREATE (st)-[:has]->(region);
 
 LOAD CSV WITH HEADERS FROM "file:///d:/Server/import/TMonument.csv" AS line
-WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDState) as idSt, toInt(line.IDMonument) as idMon, toInt(line.MonNumber) as monNum
+WITH line, toInt(line.IDRegion) as idReg, toInt(line.IDMonType) as idMT, toInt(line.IDMonument) as idMon, toInt(line.MonNumber) as monNum
 MATCH (mt:MonumentType {id: idMT})
-MATCH (state:State {id: idSt})
 MATCH (region:Region {id: idReg})
 CREATE (mon:Monument {id: 99999999999999 + idMon, number: monNum})
 CREATE (k:Temp {id: 99999999999999 + idMon, monument_name: line.MonName, description: line.MonDescription, x: line.MonDecimalLatitude, y: line.MonDecimalLongitude})
@@ -116,6 +115,9 @@ CREATE UNIQUE (res)-[:has]->(rep);
 MATCH (t:Temp)
 DELETE t;
 
+MATCH (temp:AuTemp)
+DELETE temp;
+
 MATCH (m:Monument)
 MATCH (e:Epoch {id: 3})
 CREATE (m)-[:has]->(e);
@@ -128,4 +130,19 @@ MERGE (mon:Monument {number: id})<-[:belongsto]-(k:Knowledge)
                k.y = line.E
   ON CREATE SET k.x = line.N,
                 k.y = line.E,
-                k.monument_name = line.Name
+                k.monument_name = line.Name;
+
+
+LOAD CSV WITH HEADERS FROM "file:///d:/Server/import/old_mon.csv" AS line
+WITH line, toInt(line.MonNumber) as idMon, toInt(line.IDMonType) as idMT
+MERGE (m:Monument {number: idMon})<-[:belongsto]-(k:Knowledge)
+  ON MATCH SET k.monument_name = k.monument_name +
+  CASE idMT
+    WHEN 1 THEN " городище"
+    WHEN 2 THEN " селище"
+    WHEN 3 THEN " местонахождение"
+    WHEN 4 THEN " погребение"
+    WHEN 5 THEN " могильник"
+    ELSE ""
+  END
+;
