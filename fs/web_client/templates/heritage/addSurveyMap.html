@@ -6,19 +6,109 @@
 <div class="accordion-content">
   <div id="map<%=mapId%>">
     <ul>
+      <li><a href="#general<%=mapId%>"><%= t('doc.surveyMap.general') %></a></li>
       <li><a href="#use<%=mapId%>"><%= t('doc.surveyMap.use') %></a></li>
       <li><a href="#state<%=mapId%>"><%= t('doc.surveyMap.state') %></a></li>
     </ul>
 
-    <div id="use<%=mapId%>">
+    <div id="general<%=mapId%>">
       <div class="form-group">
-        <label for="map-own-type-input-<%=mapId%>">Вид собственности</label>
-        <input class="form-control" id="map-own-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="ownType"></input>
+        <label for="map-create-date-input-<%=mapId%>">Дата составления карты</label>
+        <input class="form-control date-picker" id="map-create-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="createDate"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-disposal-type-input-<%=mapId%>">Вид распоряжения</label>
-        <input class="form-control" id="map-disposal-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposalType"></input>
+        Код ОКН:
+        <span data-from="heritage-code-input"></span>
+      </div>
+
+      <div class="form-group">
+        Наименование:</label>
+        <span data-from="heritage-name-input"></span>
+      </div>
+
+      <div class="form-group">
+        Адрес:</label>
+        <span data-from="heritage-address-input"></span>
+      </div>
+
+      <div class="form-group">
+        Координаты:</label>
+        X = <span data-from="heritage-x"></span>,
+        Y = <span data-from="heritage-y"></span>
+      </div>
+
+      <div class="form-group">
+        Датировка:</label>
+        <span data-from="heritage-date-input"></span>
+      </div>
+
+      <div class="form-group">
+        Статус:</label>
+        <span data-from="heritage-status-selector"></span>
+      </div>
+
+      <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
+        Категория охраны:
+        <span data-from="heritage-security-type-selector"></span>
+      </div>
+
+      <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
+        Вид документа о постановке на государственную охрану:
+        <span data-from="heritage-doc-type-input"></span>
+      </div>
+
+      <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
+        Номер документа о постановке на государственную охрану:
+        <span data-from="heritage-doc-num-input"></span>
+      </div>
+
+      <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
+        Дата документа о постановке на государственную охрану:
+        <span data-from="heritage-doc-date-input"></span>
+      </div>
+
+      <div class="form-group">
+        Описание границ:
+        <span data-from="heritage-border-desc-input"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="map-rod-number-input">Учетный номер БТИ</label>
+        <input class="form-control" id="map-rod-number-input" data-for="map_<%=mapId%>:SurveyMap" type="text" name="rodNum"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-rod-passport-input">Номер паспорта БТИ</label>
+        <input class="form-control" id="map-rod-passport-input" data-for="map_<%=mapId%>:SurveyMap" type="text" name="rodPassport"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-rod-date-input">Дата выдачи паспорта БТИ</label>
+        <input class="form-control date-picker" id="map-rod-date-input" data-for="map_<%=mapId%>:SurveyMap" type="text" name="rodDate"></input>
+      </div>
+
+      <div class="form-group">
+        <label for="map-area-input">Общая площадь (км²)</label>
+        <input class="form-control" id="map-area-input" data-for="map_<%=mapId%>:SurveyMap" type="number" name="area"></input>
+      </div>
+    </div>
+
+    <div id="use<%=mapId%>">
+      <div class="form-group">
+        <label for="map-own-type-selector-<%=mapId%>">Вид собственности</label>
+        <select class="form-control" id="map-own-type-selector-<%=mapId%>" data-for="ownType_<%=mapId%>:OwnType" type="id" name="id">
+          <option value="1">Опция 1</option>
+          <option value="2">Опция 2</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="map-disposal-type-selector-<%=mapId%>">Вид распоряжения</label>
+        <select class="form-control" id="map-disposal-type-selector-<%=mapId%>" data-for="dispType_<%=mapId%>:DisposalType" type="id" name="id">
+          <option value="1">Опция 1</option>
+          <option value="2">Опция 2</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -86,7 +176,7 @@
 
       <div class="form-group">
         <label for="heritage-purpose-selector">Функциональное назначение</label>
-        <select class="form-control" id="heritage-purpose-selector" data-for="fp:FunctionalPurpose" type="id" name="id">
+        <select class="form-control" id="heritage-purpose-selector-<%=mapId%>" data-for="fp_<%=mapId%>:FunctionalPurpose" type="id" name="id">
           <option value="1">Опция 1</option>
           <option value="2">Опция 2</option>
         </select>
@@ -94,7 +184,7 @@
 
       <div class="form-group">
         <label for="heritage-availability-selector">Доступность памятника</label>
-        <select class="form-control" id="heritage-availability-selector" data-for="avail:Availability" type="id" name="id">
+        <select class="form-control" id="heritage-availability-selector-<%=mapId%>" data-for="avail_<%=mapId%>:Availability" type="id" name="id">
           <option value="1">Опция 1</option>
           <option value="2">Опция 2</option>
         </select>
@@ -102,15 +192,10 @@
 
       <div class="form-group">
         <label for="heritage-usage-type-selector">Вид пользования</label>
-        <select class="form-control" id="heritage-usage-type-selector" data-for="ut:UsageType" type="id" name="id">
+        <select class="form-control" id="heritage-usage-type-selector-<%=mapId%>" data-for="ut_<%=mapId%>:UsageType" type="id" name="id">
           <option value="1">Опция 1</option>
           <option value="2">Опция 2</option>
         </select>
-      </div>
-
-      <div class="form-group">
-        <label for="map-create-date-input-<%=mapId%>">Дата составления карты</label>
-        <input class="form-control date-picker" id="map-create-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="createDate"></input>
       </div>
 
       <div class="form-group">

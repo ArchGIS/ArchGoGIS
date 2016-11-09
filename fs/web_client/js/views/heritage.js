@@ -32,6 +32,8 @@ App.views.heritage = new (App.View.extend({
           dateFormat: "dd.mm.yy"
         });
 
+        $("[data-has-display]").trigger("change");
+
         App.views.functions.setAccordionHeader($(`#map-header-${localMapId}`));
       })
       mapId++;
@@ -55,6 +57,24 @@ App.views.heritage = new (App.View.extend({
       })
       photoId++;
     });
+
+    var $inputsWithDisplay = $("[data-has-display]");
+    _.each($inputsWithDisplay, function(input, key) {
+      $(input).on("change", function() {
+        var inputId = $(this).attr("id");
+        var inputVal;
+
+        if ($(this).has("option").length) {
+          inputVal = $(this).find("option:selected").text();
+        } else {
+          inputVal = $(this).val();
+        }
+
+        inputVal = inputVal || "Не указано";
+        var displays = $(`[data-from=${inputId}]`);
+        displays.text(inputVal);
+      })
+    })
 
     setSelectsEvents();
 

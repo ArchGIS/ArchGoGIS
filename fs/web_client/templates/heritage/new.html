@@ -12,17 +12,17 @@
     <div id="home">
       <div class="form-group">
         <label for="heritage-code-input">Код ОКН</label>
-        <input class="form-control" id="heritage-code-input" data-for="heritage:Heritage" type="text" name="code"></input>
+        <input class="form-control" id="heritage-code-input" data-for="heritage:Heritage" type="text" name="code" data-has-display></input>
       </div>
 
       <div class="form-group">
         <label for="heritage-name-input">Наименование<span class="required">*</span></label>
-        <input class="form-control" id="heritage-name-input" data-for="heritage:Heritage" type="text" name="name" data-req></input>
+        <input class="form-control" id="heritage-name-input" data-for="heritage:Heritage" type="text" name="name" data-req data-has-display></input>
       </div>
 
       <div class="form-group">
         <label for="heritage-address-input">Адрес</label>
-        <input class="form-control" id="heritage-address-input" data-for="heritage:Heritage" type="text" name="address"></input>
+        <input class="form-control" id="heritage-address-input" data-for="heritage:Heritage" type="text" name="address" data-has-display></input>
       </div>
 
       <div id="coord-picker" class="coords">
@@ -30,24 +30,24 @@
           <label for="heritage-x">
             Координата X<span class="required">*</span>
           </label>
-          <input class="form-control" id="heritage-x" data-for="heritage:Heritage" type="number" name="x" data-req></input>
+          <input class="form-control" id="heritage-x" data-for="heritage:Heritage" type="number" name="x" data-req data-has-display></input>
         </div>
         <div class="form-group">
           <label for="heritage-y">
             Координата Y<span class="required">*</span>
           </label>
-          <input class="form-control" id="heritage-y" data-for="heritage:Heritage" type="number" name="y" data-req></input>
+          <input class="form-control" id="heritage-y" data-for="heritage:Heritage" type="number" name="y" data-req data-has-display></input>
         </div>
       </div>
 
       <div class="form-group">
         <label for="heritage-date-input">Датировка</label>
-        <input class="form-control date-picker" id="heritage-date-input" data-for="heritage:Heritage" type="text" name="date"></input>
+        <input class="form-control date-picker" id="heritage-date-input" data-for="heritage:Heritage" type="text" name="date" data-has-display></input>
       </div>
 
       <div class="form-group">
         <label for="heritage-status-selector">Статус</label>
-        <select class="form-control" id="heritage-status-selector" data-for="hs:HeritageStatus" type="id" name="id" dynamic="true">
+        <select class="form-control" id="heritage-status-selector" data-for="hs:HeritageStatus" type="id" name="id" dynamic="true" data-has-display>
           <option value="1">Выявленный</option>
           <option value="2">Находится на государственной охране</option>
         </select>
@@ -55,7 +55,7 @@
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-security-type-selector">Категория охраны</label>
-        <select class="form-control" id="heritage-security-type-selector" data-for="st:SecurityType" type="id" name="id">
+        <select class="form-control" id="heritage-security-type-selector" data-for="st:SecurityType" type="id" name="id" data-has-display>
           <option value="1">Федеральная</option>
           <option value="2">Региональная</option>
         </select>
@@ -63,42 +63,22 @@
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-doc-type-input">Вид документа о постановке на государственную охрану</label>
-        <input class="form-control" id="heritage-doc-type-input" data-for="heritage:Heritage" type="text" name="docType"></input>
+        <input class="form-control" id="heritage-doc-type-input" data-for="heritage:Heritage" type="text" name="docType" data-has-display></input>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-doc-num-input">Номер документа о постановке на государственную охрану</label>
-        <input class="form-control" id="heritage-doc-num-input" data-for="heritage:Heritage" type="text" name="docNum"></input>
+        <input class="form-control" id="heritage-doc-num-input" data-for="heritage:Heritage" type="text" name="docNum" data-has-display></input>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-doc-date-input">Дата документа о постановке на государственную охрану</label>
-        <input class="form-control date-picker" id="heritage-doc-date-input" data-for="heritage:Heritage" type="text" name="docDate"></input>
+        <input class="form-control date-picker" id="heritage-doc-date-input" data-for="heritage:Heritage" type="text" name="docDate" data-has-display></input>
       </div>
 
       <div class="form-group">
         <label for="heritage-border-desc-input">Описание границ</label>
-        <input class="form-control" id="heritage-border-desc-input" data-for="heritage:Heritage" type="text" name="borderDesc"></input>
-      </div>
-
-      <div class="form-group">
-        <label for="heritage-rod-number-input">Учетный номер БТИ</label>
-        <input class="form-control" id="heritage-rod-number-input" data-for="heritage:Heritage" type="text" name="rodNum"></input>
-      </div>
-
-      <div class="form-group">
-        <label for="heritage-rod-passport-input">Номер паспорта БТИ</label>
-        <input class="form-control" id="heritage-rod-passport-input" data-for="heritage:Heritage" type="text" name="rodPassport"></input>
-      </div>
-
-      <div class="form-group">
-        <label for="heritage-rod-date-input">Дата выдачи паспорта БТИ</label>
-        <input class="form-control date-picker" id="heritage-rod-date-input" data-for="heritage:Heritage" type="text" name="rodDate"></input>
-      </div>
-
-      <div class="form-group">
-        <label for="heritage-area-input">Общая площадь (км²)</label>
-        <input class="form-control" id="heritage-area-input" data-for="heritage:Heritage" type="number" name="area"></input>
+        <input class="form-control" id="heritage-border-desc-input" data-for="heritage:Heritage" type="text" name="borderDesc" data-has-display></input>
       </div>
 
       <div class="form-group">
