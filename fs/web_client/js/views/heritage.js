@@ -81,7 +81,7 @@ App.views.heritage = new (App.View.extend({
         } else {
           inputVal = $(this).val();
         }
-
+        console.log(inputVal)
         inputVal = inputVal || "Не указано";
         var displays = $(`[data-from=${inputId}]`);
         displays.text(inputVal);
