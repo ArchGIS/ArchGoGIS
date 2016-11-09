@@ -167,7 +167,7 @@ App.views.artifact = new (App.View.extend({
 
     $('#send-button').on('click', function() {
       if ( validateCreatePages() ) {
-        postQuery();
+        postQuery('a');
       } else {
         alert('Недостаточно данных. Заполните все подсвеченные красным поля!');
       }
