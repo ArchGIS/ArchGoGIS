@@ -10,7 +10,7 @@ App.models.Org.findByCityId = function(id) {
     var query = JSON.stringify({
       'c:City': {'id': id.toString()},
       'o:Organization': {'id': '*', 'select': '*'},
-      'o_has_c': {}
+      'o__has__c': {}
     });
 
     $.post('/hquery/read', query)

@@ -21,7 +21,7 @@ App.models.Research.findByAuthorId = function(authorId) {
     var query = JSON.stringify({
       'a:Author': {'id': authorId.toString()},
       'r:Research': {'id': '*', 'select': '*'},
-      'r_hasauthor_a': {}
+      'r__hasauthor__a': {}
     });
     
     $.post('/hquery/read', query)

@@ -40,17 +40,17 @@ App.controllers.artifact = new (App.View.extend({
           "monFound:Monument": {"id": "*", "select": "*"},
           "resFound:Research": {"id": "*", "select": "*"},
           "authorFound:Author": {"id": "*", "select": "*"},
-          "knowFound_found_artifact": {},
-          "knowFound_belongsto_monFound": {},
-          "resFound_has_knowFound": {},
-          "resFound_hasauthor_authorFound": {},
+          "knowFound__found__artifact": {},
+          "knowFound__belongsto__monFound": {},
+          "resFound__has__knowFound": {},
+          "resFound__hasauthor__authorFound": {},
         }),
         usedIn: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "researches:Research": {"id": "*", "select": "*"},
           "authors:Author": {"id": "*", "select": "*"},
-          "researches_used_artifact": {},
-          "researches_hasauthor_authors": {}
+          "researches__used__artifact": {},
+          "researches__hasauthor__authors": {}
         }),
       },
 
@@ -61,24 +61,24 @@ App.controllers.artifact = new (App.View.extend({
         category: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "categories:ArtifactCategory": {"id": "*", "select": "*"},
-          "artifact_has_categories": {},
+          "artifact__has__categories": {},
         }),
         photos: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "photos:Image": {"id": "*", "select": "*"},
-          "artifact_has_photos": {},
+          "artifact__has__photos": {},
         }),
         materials: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "materials:ArtifactMaterial": {"id": "*", "select": "*"},
-          "artifact_has_materials": {},
+          "artifact__has__materials": {},
         }),
         orgs: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "intervals:StorageInterval": {"id": "*", "select": "*"},
           "org:Organization": {"id": "*", "select": "*"},
-          "artifact_has_intervals": {},
-          "intervals_belongsto_org": {},
+          "artifact__has__intervals": {},
+          "intervals__belongsto__org": {},
         })
       },
 
@@ -86,12 +86,12 @@ App.controllers.artifact = new (App.View.extend({
         monType: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "monType:MonumentType": {"id": "*", "select": "*"},
-          "m_has_monType": {},
+          "m__has__monType": {},
         }),
         epoch: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "e:Epoch": {"id": "*", "select": "*"},
-          "m_has_e": {},
+          "m__has__e": {},
         })
       },
 
@@ -99,7 +99,7 @@ App.controllers.artifact = new (App.View.extend({
         resUsedType: JSON.stringify({
           "r:Research": {"id": "NEED"},
           "resType:ResearchType": {"id": "*", "select": "*"},
-          "r_has_resType": {},
+          "r__has__resType": {},
         }),
       },
 
@@ -107,7 +107,7 @@ App.controllers.artifact = new (App.View.extend({
         resFoundType: JSON.stringify({
           "r:Research": {"id": "NEED"},
           "resType:ResearchType": {"id": "*", "select": "*"},
-          "r_has_resType": {},
+          "r__has__resType": {},
         }),
       }
     }
