@@ -143,3 +143,99 @@ MERGE (m:Monument {number: idMon})<-[:belongsto]-(k:Knowledge)
     ELSE ""
   END
 ;
+
+create (status1:HeritageStatus {
+  id: 1,
+  name: 'Выявленный'
+});
+create (status2:HeritageStatus {
+  id: 2,
+  name: 'Находится на государственной охране'
+});
+
+create (sec1:SecurityType {
+  id: 1,
+  name: 'Федеральная'
+});
+create (sec2:SecurityType {
+  id: 2,
+  name: 'Региональная'
+});
+
+create (sw1:CardinalDirection {
+  id: 1,
+  name: 'Север'
+});
+create (sw2:CardinalDirection {
+  id: 2,
+  name: 'Северо-восток'
+});
+create (sw3:CardinalDirection {
+  id: 3,
+  name: 'Восток'
+});
+create (sw4:CardinalDirection {
+  id: 4,
+  name: 'Юго-восток'
+});
+create (sw5:CardinalDirection {
+  id: 5,
+  name: 'Юг'
+});
+create (sw6:CardinalDirection {
+  id: 6,
+  name: 'Юго-запад'
+});
+create (sw7:CardinalDirection {
+  id: 7,
+  name: 'Запад'
+});
+create (sw8:CardinalDirection {
+  id: 8,
+  name: 'Северо-запад'
+});
+
+create (ot1:OwnType {
+  id: 1,
+  name: 'Опция 1'
+});
+create (ot2:OwnType {
+  id: 2,
+  name: 'Опция 2'
+});
+
+create (dt1:DisposalType {
+  id: 1,
+  name: 'Опция 1'
+});
+create (dt2:DisposalType {
+  id: 2,
+  name: 'Опция 2'
+});
+
+create (fp1:FunctionalPurpose {
+  id: 1,
+  name: 'Опция 1'
+});
+create (fp2:FunctionalPurpose {
+  id: 2,
+  name: 'Опция 2'
+});
+
+create (avail1:Availability {
+  id: 1,
+  name: 'Опция 1'
+});
+create (avail2:Availability {
+  id: 2,
+  name: 'Опция 2'
+});
+
+create (ut1:UsageType {
+  id: 1,
+  name: 'Опция 1'
+});
+create (ut2:UsageType {
+  id: 2,
+  name: 'Опция 2'
+});

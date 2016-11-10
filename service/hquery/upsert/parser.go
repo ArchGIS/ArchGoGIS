@@ -41,7 +41,7 @@ func (my *Parser) mustParse() {
 }
 
 func (my *Parser) mustParseOne(tag string, rawProps map[string]string) {
-	if strings.Contains(tag, "_") {
+	if strings.Contains(tag, "__") {
 		my.mustParseEdge(tag, rawProps)
 	} else {
 		my.mustParseNode(tag, rawProps)

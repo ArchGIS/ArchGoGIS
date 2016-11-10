@@ -81,16 +81,24 @@ function postQuery() {
     ["Monument", "MonumentType", "has"],
     ["Heritage", "Monument", "has"],
     ["Heritage", "HeritageStatus", "has"],
+    ["Heritage", "SecurityType", "has"],
     ["Heritage", "SurveyMap", "has"],
-    ["HeritageStatus", "SecurityType", "has"],
+    ["Heritage", "Image", "has"],
     ["Research", "Report", "has"],
+    ["Research", "Image", "has"],
     ["Complex", "Artifact", "has"],
     ["Report", "Author", "hasauthor"],
     ["Author", "AuthorImage", "has"],
     ["Artifact", "ArtifactImage", "has"],
     ["Heritage", "File", "has"],
     ["Organization", "City", "has"],
-    ["Report", "Organization", "in"]
+    ["Report", "Organization", "in"],
+    ["SurveyMap", "OwnType", "has"],
+    ["SurveyMap", "DisposalType", "has"],
+    ["SurveyMap", "FunctionalPurpose", "has"],
+    ["SurveyMap", "Availability", "has"],
+    ["SurveyMap", "UsageType", "has"],
+    ["Image", "CardinalDirection", "has"]
   ]);
 
   var formdata = new FormData();
@@ -173,23 +181,26 @@ function loading(load) {
 function generateJson(relations) {
   var type, json = {};
   var inputs = $("[data-for][used!=false]");
-  var dataFor, name, value, inputName, counter, inputClass, inputSubclass, inputObjName, objs = {};
+  var $input, dataFor, dataType, name, value, inputName, counter, 
+      inputClass, inputSubclass, inputObjName, objs = {};
 
   $.each(inputs, function(key, input) {
-    dataFor = $(input).attr("data-for");
-    type = ($(input).attr("type") != "id") ? ("/" + $(input).attr("type")) : "";
-    name = $(input).attr("name") + type;
-    value = $(input).val().replace(/\n/g, "\\n");
+    $input = $(input);
+    dataFor = $input.attr("data-for");
+    dataType = $input.attr("data-type") || $input.attr("type");
+    type = (dataType != "id") ? ("/" + dataType) : "";
+    name = ($input.attr("data-name") || $input.attr("name")) + type;
+    value = $input.val().replace(/\n/g, "\\n");
     inputClass = dataFor.split(":")[1];
-    inputSubclass = $(input).attr("data-subclass") || inputClass;
+    inputSubclass = $input.attr("data-subclass") || inputClass;
 
-    if (!value) {
+    if (!value || ($input.attr("type") == "radio" && $input.is(":checked") == false)) {
       return true;
     }
 
     objs[inputSubclass] = objs[inputSubclass] || [];
 
-    if ($(input).attr("data-few")) {
+    if ($input.attr("data-few")) {
       value = value.split(",")
       counter = 0;
 
@@ -219,10 +230,10 @@ function generateJson(relations) {
       var allNames = _.uniq(objs[relation[1]])
       if (objs[relation[1]]) {
         _.each(allNames, function(name, id) {
-          var objId1 = objName.split("del")[1];
-          var objId2 = name.split("del")[1];
+          var objId1 = objName.split("_")[1];
+          var objId2 = name.split("_")[1];
           if (!(objId1 && objId2) || (objId1 == objId2)) {
-            json[objName+"_"+relation[2]+"_"+name] = {};
+            json[objName+"__"+relation[2]+"__"+name] = {};
           }
         })
       }

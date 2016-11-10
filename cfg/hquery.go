@@ -49,6 +49,8 @@ var (
 		{"City", "n_city_id_seq"},
 		{"AuthorJob", "n_author_job_id_seq"},
 		{"Excavation", "n_excavation_id_seq"},
+		{"SurveyMap", "n_survey_map_id_seq"},
+		{"Heritage", "n_Heritage_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

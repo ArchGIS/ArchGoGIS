@@ -18,5 +18,7 @@ CREATE SEQUENCE n_image_id_seq;
 CREATE SEQUENCE n_city_id_seq;
 CREATE SEQUENCE n_author_job_id_seq;
 CREATE SEQUENCE n_excavation_id_seq;
+CREATE SEQUENCE n_heritage_id_seq;
+CREATE SEQUENCE n_survey_map_id_seq;
 
 CREATE SEQUENCE local_storage_file_id_seq;
