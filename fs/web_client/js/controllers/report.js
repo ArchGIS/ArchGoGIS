@@ -11,11 +11,11 @@ App.controllers.report = new (App.View.extend({
       "res:Research": {"id": "*", "select": "*"},
       "k:Knowledge": {"id": "*", "select": "*"},
       "m:Monument": {"id": "*", "select": "*"},
-      "res_hasauthor_a": {},
-      "res_has_k": {},
-      "rep_hasauthor_a": {},
-      "k_has_rep": {},
-      "k_belongsto_m": {}
+      "res__hasauthor__a": {},
+      "res__has__k": {},
+      "rep__hasauthor__a": {},
+      "k__has__rep": {},
+      "k__belongsto__m": {}
     };
 
     $.post('/hquery/read', JSON.stringify(query))

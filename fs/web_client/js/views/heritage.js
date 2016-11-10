@@ -45,7 +45,18 @@ App.views.heritage = new (App.View.extend({
           _.each(rows, function(row, id) {
             $(row).append(tmpl({rowNum: id}))
           })
+
+          $(`#state${localMapId} .map-row-exist`).on("change", function() {
+            var value = ($(this).val() == 0) ? true : false;
+            $(this).parentsUntil("tbody").last().find(".map-table-row").prop("disabled", value)
+          })
         })
+        console.log($(`#map-own-type-selector-${localMapId}`))
+        getDataForSelector($(`#map-own-type-selector-${localMapId}`), "OwnType");
+        getDataForSelector($(`#map-disposal-type-selector-${localMapId}`), "DisposalType");
+        getDataForSelector($(`#map-purpose-selector-${localMapId}`), "FunctionalPurpose");
+        getDataForSelector($(`#map-availability-selector-${localMapId}`), "Availability");
+        getDataForSelector($(`#map-usage-type-selector-${localMapId}`), "UsageType");
       });
 
       mapId++;
@@ -65,6 +76,7 @@ App.views.heritage = new (App.View.extend({
           dateFormat: "dd.mm.yy"
         });
 
+        getDataForSelector($(`#photo-view-selector-${localPhotoId}`), "CardinalDirection");
         App.views.functions.setAccordionHeader($(`#photo-header-${localPhotoId}`));
       })
       photoId++;
@@ -81,14 +93,24 @@ App.views.heritage = new (App.View.extend({
         } else {
           inputVal = $(this).val();
         }
-        console.log(inputVal)
+
         inputVal = inputVal || "Не указано";
         var displays = $(`[data-from=${inputId}]`);
         displays.text(inputVal);
       })
     })
 
+    getDataForSelector($("#heritage-status-selector"), "HeritageStatus");
+    getDataForSelector($("#heritage-security-type-selector"), "SecurityType");
     setSelectsEvents();
+
+    $('#send-button').on('click', function() {
+      if ( validateCreatePages() ) {
+        postQuery();
+      } else {
+        alert('Недостаточно данных. Заполните все обязательные поля!');
+      }
+    });
 
     $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});

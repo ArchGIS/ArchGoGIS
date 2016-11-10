@@ -13,17 +13,17 @@ App.controllers.author = new (App.View.extend({
         researches: JSON.stringify({
           "author:Author": {"id": aid},
           "researches:Research": {"id": "*", "select": "*"},
-          "researches_hasauthor_author": {},
+          "researches__hasauthor__author": {},
         }),
         publications: JSON.stringify({
           "author:Author": {"id": aid},
           "pubs:Publication": {"id": "*", "select": "*"},
-          "pubs_hasauthor_author": {},
+          "pubs__hasauthor__author": {},
         }),
         copublications: JSON.stringify({
           "author:Author": {"id": aid},
           "copubs:Publication": {"id": "*", "select": "*"},
-          "copubs_hascoauthor_author": {},
+          "copubs__hascoauthor__author": {},
         })
       },
 
@@ -34,14 +34,14 @@ App.controllers.author = new (App.View.extend({
         photos: JSON.stringify({
           "author:Author": {"id": aid},
           "photos:Image": {"id": "*", "select": "*"},
-          "author_has_photos": {}
+          "author__has__photos": {}
         }),
         orgs: JSON.stringify({
           "author:Author": {"id": aid},
           "jobs:AuthorJob": {"id": "*", "select": "*"},
           "orgs:Organization": {"id": "*", "select": "*"},
-          "author_has_jobs": {},
-          "jobs_belongsto_orgs": {},
+          "author__has__jobs": {},
+          "jobs__belongsto__orgs": {},
         })
       },
 
@@ -49,7 +49,7 @@ App.controllers.author = new (App.View.extend({
         publicationTypes: JSON.stringify({
           "pub:Publication": {"id": "NEED"},
           "pubtype:PublicationType": {"id": "*", "select": "*"},
-          "pub_has_pubtype": {},
+          "pub__has__pubtype": {},
         }),
       },
 
@@ -57,7 +57,7 @@ App.controllers.author = new (App.View.extend({
         copublicationTypes: JSON.stringify({
           "copub:Publication": {"id": "NEED"},
           "copubtype:PublicationType": {"id": "*", "select": "*"},
-          "copub_has_copubtype": {},
+          "copub__has__copubtype": {},
         })
       },
 
@@ -68,15 +68,15 @@ App.controllers.author = new (App.View.extend({
           "m:Monument": {"id": "*"},
           "monType:MonumentType": {"id": "*", "select": "*"},
           "epoch:Epoch": {"id": "*", "select": "*"},
-          "researches_has_knowledges": {},
-          "knowledges_belongsto_m": {},
-          "m_has_monType": {},
-          "m_has_epoch": {}
+          "researches__has__knowledges": {},
+          "knowledges__belongsto__m": {},
+          "m__has__monType": {},
+          "m__has__epoch": {}
         }),
         resTypes: JSON.stringify({
           "researches:Research": {"id":"NEED"},
           "resType:ResearchType": {"id": "*", "select": "*"},
-          "researches_has_resType": {},
+          "researches__has__resType": {},
         })
       }
     }

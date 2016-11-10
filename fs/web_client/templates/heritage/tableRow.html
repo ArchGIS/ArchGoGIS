@@ -1,30 +1,33 @@
 <td class="menu">
-  <select id="exist${rowNum}">
+  <select id="exist${rowNum}" class="map-row-exist">
+    <option value="0">Нет</option>
     <option value="1">Да</option>
-    <option value="2">Нет</option>
   </select>
 </td>
 <td class="menu">
-  <select id="material${rowNum}">
+  <select id="material${rowNum}" class="map-table-row" disabled>
+    <option value="0">-</option>
     <option value="1">Дерево</option>
     <option value="2">Камень</option>
   </select>
 </td>
 <td class="menu">
-  <select id="condition${rowNum}">
+  <select id="condition${rowNum}" class="map-table-row" disabled>
+    <option value="0">-</option>
     <option value="1">Отличное</option>
     <option value="2">Удовлет.</option>
   </select>
 </td>
 <td class="menu">
-  <select id="defects${rowNum}">
-    <option value="1">Отсутствуют</option>
+  <select id="defects${rowNum}" class="map-table-row" disabled>
+    <option value="0">-</option>
+    <option value="1">Щербины</option>
     <option value="2">Трещины</option>
   </select>
 </td>
 <td class="menu">
-  <select id="security${rowNum}">
+  <select id="security${rowNum}" class="map-table-row" disabled>
+    <option value="0">Нет</option>
     <option value="1">Да</option>
-    <option value="2">Нет</option>
   </select>
 </td>

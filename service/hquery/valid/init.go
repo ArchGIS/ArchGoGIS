@@ -5,5 +5,5 @@ import (
 )
 
 func init() {
-	identifierMatcher = regexp.MustCompile(`^[a-zA-Z]\w*$`)
+	identifierMatcher = regexp.MustCompile(`^[a-zA-Z0-9\-_]*$`)
 }

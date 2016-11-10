@@ -97,18 +97,12 @@
     <div id="use<%=mapId%>">
       <div class="form-group">
         <label for="map-own-type-selector-<%=mapId%>">Вид собственности</label>
-        <select class="form-control" id="map-own-type-selector-<%=mapId%>" data-for="ownType_<%=mapId%>:OwnType" type="id" name="id">
-          <option value="1">Опция 1</option>
-          <option value="2">Опция 2</option>
-        </select>
+        <select class="form-control" id="map-own-type-selector-<%=mapId%>" data-for="ownType_<%=mapId%>:OwnType" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
         <label for="map-disposal-type-selector-<%=mapId%>">Вид распоряжения</label>
-        <select class="form-control" id="map-disposal-type-selector-<%=mapId%>" data-for="dispType_<%=mapId%>:DisposalType" type="id" name="id">
-          <option value="1">Опция 1</option>
-          <option value="2">Опция 2</option>
-        </select>
+        <select class="form-control" id="map-disposal-type-selector-<%=mapId%>" data-for="dispType_<%=mapId%>:DisposalType" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
@@ -133,7 +127,7 @@
 
       <div class="form-group">
         <label for="map-doc-date-input-<%=mapId%>">Дата документа о передаче собственнику (распорядителю)</label>
-        <input class="form-control data-picker" id="map-doc-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docDate"></input>
+        <input class="form-control date-picker" id="map-doc-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docDate"></input>
       </div>
 
       <div class="form-group">
@@ -169,33 +163,24 @@
       <div class="form-group">
         Использование по первоначальному функциональному назначению
         <p>
-          <input id="map-use-initial-yes-<%=mapId%>" name="useInitial-<%=mapId%>" type="radio" value="1" data-for="map_<%=mapId%>:SurveyMap" checked>Да
-          <input id="map-use-initial-no-<%=mapId%>" name="useInitial-<%=mapId%>" type="radio" value="2" data-for="map_<%=mapId%>:SurveyMap">Нет
+          <input id="map-use-initial-yes-<%=mapId%>" data-name="useInitial" name="useInitial-<%=mapId%>" data-type="number" type="radio" value="1" data-for="map_<%=mapId%>:SurveyMap" checked>Да
+          <input id="map-use-initial-no-<%=mapId%>" data-name="useInitial" name="useInitial-<%=mapId%>" data-type="number" type="radio" value="2" data-for="map_<%=mapId%>:SurveyMap">Нет
         </p>
       </div>
 
       <div class="form-group">
-        <label for="heritage-purpose-selector">Функциональное назначение</label>
-        <select class="form-control" id="heritage-purpose-selector-<%=mapId%>" data-for="fp_<%=mapId%>:FunctionalPurpose" type="id" name="id">
-          <option value="1">Опция 1</option>
-          <option value="2">Опция 2</option>
-        </select>
+        <label for="map-purpose-selector">Функциональное назначение</label>
+        <select class="form-control" id="map-purpose-selector-<%=mapId%>" data-for="fp_<%=mapId%>:FunctionalPurpose" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
-        <label for="heritage-availability-selector">Доступность памятника</label>
-        <select class="form-control" id="heritage-availability-selector-<%=mapId%>" data-for="avail_<%=mapId%>:Availability" type="id" name="id">
-          <option value="1">Опция 1</option>
-          <option value="2">Опция 2</option>
-        </select>
+        <label for="map-availability-selector">Доступность памятника</label>
+        <select class="form-control" id="map-availability-selector-<%=mapId%>" data-for="avail_<%=mapId%>:Availability" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
-        <label for="heritage-usage-type-selector">Вид пользования</label>
-        <select class="form-control" id="heritage-usage-type-selector-<%=mapId%>" data-for="ut_<%=mapId%>:UsageType" type="id" name="id">
-          <option value="1">Опция 1</option>
-          <option value="2">Опция 2</option>
-        </select>
+        <label for="map-usage-type-selector">Вид пользования</label>
+        <select class="form-control" id="map-usage-type-selector-<%=mapId%>" data-for="ut_<%=mapId%>:UsageType" type="id" name="id"></select>
       </div>
 
       <div class="form-group">

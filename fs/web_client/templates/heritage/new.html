@@ -47,18 +47,12 @@
 
       <div class="form-group">
         <label for="heritage-status-selector">Статус</label>
-        <select class="form-control" id="heritage-status-selector" data-for="hs:HeritageStatus" type="id" name="id" dynamic="true" data-has-display>
-          <option value="1">Выявленный</option>
-          <option value="2">Находится на государственной охране</option>
-        </select>
+        <select class="form-control" id="heritage-status-selector" data-for="hs:HeritageStatus" type="id" name="id" dynamic="true" data-has-display></select>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-security-type-selector">Категория охраны</label>
-        <select class="form-control" id="heritage-security-type-selector" data-for="st:SecurityType" type="id" name="id" data-has-display>
-          <option value="1">Федеральная</option>
-          <option value="2">Региональная</option>
-        </select>
+        <select class="form-control" id="heritage-security-type-selector" data-for="st:SecurityType" type="id" name="id" data-has-display></select>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
@@ -109,6 +103,12 @@
       </button>
     </div>
 
+    <button id="send-button" class="btn btn-primary">
+      <i class="fa fa-cogs"></i>
+      Создать
+    </button>
+  </div>
+  
   <div class="maps">
     <%= widget("Map", {}, "map") %>
   </div>

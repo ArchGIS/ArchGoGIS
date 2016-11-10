@@ -32,8 +32,8 @@ App.controllers.research = new (App.View.extend({
           "research:Research": {"id": resId},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
           "monuments:Monument": {"id": "*", "select": "*"},
-          "research_has_knowledges": {},
-          "knowledges_belongsto_monuments": {},
+          "research__has__knowledges": {},
+          "knowledges__belongsto__monuments": {},
         })
       },
 
@@ -44,29 +44,29 @@ App.controllers.research = new (App.View.extend({
         author: JSON.stringify({
           "research:Research": {"id": resId},
           "author:Author": {"id": "*", "select": "*"},
-          "research_hasauthor_author": {},
+          "research__hasauthor__author": {},
         }),
         coauthors: JSON.stringify({
           "research:Research": {"id": resId},
           "coauthors:Author": {"id": "*", "select": "*"},
-          "research_hascoauthor_coauthors": {},
+          "research__hascoauthor__coauthors": {},
         }),
         resType: JSON.stringify({
           "research:Research": {"id": resId},
           "resType:ResearchType": {"id": "*", "select": "*"},
-          "research_has_resType": {},
+          "research__has__resType": {},
         }),
         report: JSON.stringify({
           "research:Research": {"id": resId},
           "author:Author": {"id": "*"},
           "reports:Report": {"id": "*", "select": "*"},
-          "reports_hasauthor_author": {},
-          "research_has_reports": {}
+          "reports__hasauthor__author": {},
+          "research__has__reports": {}
         }),
         usedArtifacts: JSON.stringify({
           "research:Research": {"id": resId},
           "usedArtifacts:Artifact": {"id": "*", "select": "*"},
-          "research_used_usedArtifacts": {}
+          "research__used__usedArtifacts": {}
         })
       },
 
@@ -74,19 +74,19 @@ App.controllers.research = new (App.View.extend({
         epochs: JSON.stringify({
           "monuments:Monument": {"id": "NEED"},
           "epoch:Epoch": {"id": "*", "select": "*"},
-          "monuments_has_epoch": {},
+          "monuments__has__epoch": {},
         }),
         monTypes: JSON.stringify({
           "monument:Monument": {"id": "NEED"},
           "monType:MonumentType": {"id": "*", "select": "*"},
-          "monument_has_monType": {},
+          "monument__has__monType": {},
         }),
         excavations: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "r:Research": {"id": resId},
           "exc:Excavation": {"id": "*", "select": "*"},
-          "m_has_exc": {},
-          "r_has_exc": {}
+          "m__has__exc": {},
+          "r__has__exc": {}
         })
       },
 
@@ -94,12 +94,12 @@ App.controllers.research = new (App.View.extend({
         cultures: JSON.stringify({
           "knowledges:Knowledge": {"id": "NEED"},
           "cultures:Culture": {"id": "*", "select": "*"},
-          "knowledges_has_cultures": {},
+          "knowledges__has__cultures": {},
         }),
         artifacts: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
-          "knowledge_found_artifacts": {}
+          "knowledge__found__artifacts": {}
         })
       }
     }

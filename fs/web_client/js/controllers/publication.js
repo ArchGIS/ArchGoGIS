@@ -16,22 +16,22 @@ App.controllers.publication = new (App.View.extend({
         pubType: JSON.stringify({
           "pub:Publication": {"id": pid},
           "pubtype:PublicationType": {"id": "*", "select": "*"},
-          "pub_has_pubtype": {},
+          "pub__has__pubtype": {},
         }),
         publisher: JSON.stringify({
           "pub:Publication": {"id": pid},
           "publisher:Publisher" :  {"id": "*", "select": "*"},
-          "publisher_has_pub": {},
+          "publisher__has__pub": {},
         }),
         authors: JSON.stringify({
           "pub:Publication": {"id": pid},
           "author:Author": {"id": "*", "select": "*"},
-          "pub_hasauthor_author": {},
+          "pub__hasauthor__author": {},
         }),
         coauthors: JSON.stringify({
           "pub:Publication": {"id": pid},
           "coauthors:Author": {"id": "*", "select": "*"},
-          "pub_hascoauthor_coauthors": {},
+          "pub__hascoauthor__coauthors": {},
         })
       }
     }

@@ -9,10 +9,10 @@ App.models.Report.findByAuthorIdFullInfo = function(authorId) {
       'r:Report': {'id': '*', 'select': '*'},
       'res:Research': {'id': '*', 'select': '*'},
       'rt:ResearchType': {'id': '*', 'select': '*'},
-      'r_hasauthor_a': {},
-      'res_has_r': {},
-      'res_has_rt': {},
-      'res_hasauthor_a': {}
+      'r__hasauthor__a': {},
+      'res__has__r': {},
+      'res__has__rt': {},
+      'res__hasauthor__a': {}
     });
     
     $.post('/hquery/read', query)
@@ -26,7 +26,7 @@ App.models.Report.findByAuthorId = function(authorId) {
     var query = JSON.stringify({
       'a:Author': {'id': authorId.toString()},
       'r:Report': {'id': '*', 'select': '*'},
-      'r_hasauthor_a': {},
+      'r__hasauthor__a': {},
     });
     
     $.post('/hquery/read', query)

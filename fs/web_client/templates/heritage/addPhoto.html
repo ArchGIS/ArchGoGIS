@@ -23,16 +23,7 @@
 
     <div class="form-group">
       <label for="photo-view-selector">Ракурс</label>
-      <select class="form-control" id="photo-view-selector" data-for="pov:PointOfView" type="id" name="id">
-        <option value="1">Север</option>
-        <option value="2">Северо-восток</option>
-        <option value="3">Восток</option>
-        <option value="4">Юго-восток</option>
-        <option value="5">Юг</option>
-        <option value="6">Юго-запад</option>
-        <option value="7">Запад</option>
-        <option value="8">Северо-запад</option>
-      </select>
+      <select class="form-control" id="photo-view-selector-<%=photoId%>" data-for="cd_<%=photoId%>:CardinalDirection" type="id" name="id"></select>
     </div>
 
     <div class="form-group">
