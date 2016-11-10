@@ -96,11 +96,8 @@ App.fn.validInput = (input, name) => {
     showOn: null,
     style: 'alert',
     target: true,
-    tipJoint: "bottom"
-  });
-
-  $authorInput.on('focus', () => {
-    tip.hide();
+    tipJoint: 'bottom',
+    hideOn: 'focus'
   });
 
   $authorInput.on('change', () => {
