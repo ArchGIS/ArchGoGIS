@@ -115,6 +115,9 @@ CREATE UNIQUE (res)-[:has]->(rep);
 MATCH (t:Temp)
 DELETE t;
 
+MATCH (temp:AuTemp)
+DELETE temp;
+
 MATCH (m:Monument)
 MATCH (e:Epoch {id: 3})
 CREATE (m)-[:has]->(e);

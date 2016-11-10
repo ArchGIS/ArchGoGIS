@@ -308,6 +308,16 @@ dt {
   margin-top: 15px;
 }
 
+/* Модальные окна */
+.modal {
+	width: 500px;
+  height: 150px;
+	background: #FFF;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  padding: 0 10px;
+}
+
+/* Таблицы ОКН */
 .map-state-table th {
   padding: 3px;
   border: 1px solid gray;

@@ -33,7 +33,7 @@ App.views.research = new (App.View.extend({
       fillResearchInputs();
 
       if ( validateCreatePages() ) {
-        postQuery();
+        postQuery('r');
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');
       }

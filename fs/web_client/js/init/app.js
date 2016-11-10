@@ -18,6 +18,18 @@ App.Model = Backbone.Model.extend({});
 
 var dburl = `${location.protocol}//${location.host}`;
 
+var modal = $('#modalWindow');
+modal.easyModal({
+  top: 200,
+  overlay: 0.4,
+  overlayClose: false,
+  closeOnEscape: false
+});
+
+$('#modalWindow a').on('click', (e) => {
+  modal.trigger('closeModal');
+});
+
 function setSelectsEvents() {
   var selects = $("[dynamic=true]");
 
@@ -62,7 +74,7 @@ function showField(select) {
   })
 }
 
-function postQuery() {
+function postQuery(objectId) {
   var iconButton = loading();
 
   var json = generateJson([
@@ -154,7 +166,8 @@ function postQuery() {
         if (response.length == 4) {
           alert('При обработке данных на сервере произошла ошибка');
         } else {
-          alert('Успешно!');
+          $('#toObject').attr('href', location.hash.replace('new', 'show/') + JSON.parse(response)[objectId]);
+          modal.trigger('openModal');
         }
       }
     });
