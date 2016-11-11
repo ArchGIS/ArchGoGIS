@@ -199,46 +199,190 @@ create (sw8:CardinalDirection {
 });
 
 create (ot1:OwnType {
-  id: 1,
-  name: 'Опция 1'
+  id: 11,
+  name: 'Собственность физического лица'
 });
 create (ot2:OwnType {
-  id: 2,
-  name: 'Опция 2'
+  id: 12,
+  name: 'Собственность юридического лица'
+});
+create (ot3:OwnType {
+  id: 13,
+  name: 'Федеральная собственность'
+});
+create (ot4:OwnType {
+  id: 14,
+  name: 'Собственность субъекта Российской Федерации'
+});
+create (ot5:OwnType {
+  id: 15,
+  name: 'Муниципальная собственность'
 });
 
 create (dt1:DisposalType {
-  id: 1,
-  name: 'Опция 1'
+  id: 21,
+  name: 'Оперативное управление'
 });
 create (dt2:DisposalType {
-  id: 2,
-  name: 'Опция 2'
+  id: 22,
+  name: 'Хозяйственное ведение'
 });
 
 create (fp1:FunctionalPurpose {
-  id: 1,
-  name: 'Опция 1'
+  id: 20,
+  name: 'Культурно-просветительное'
 });
 create (fp2:FunctionalPurpose {
-  id: 2,
-  name: 'Опция 2'
+  id: 21,
+  name: 'Музей'
+});
+create (fp3:FunctionalPurpose {
+  id: 22,
+  name: 'Библиотека'
+});
+create (fp4:FunctionalPurpose {
+  id: 23,
+  name: 'Клуб'
+});
+create (fp5:FunctionalPurpose {
+  id: 24,
+  name: 'Парк'
+});
+create (fp6:FunctionalPurpose {
+  id: 25,
+  name: 'Театр, цирк, концертная организация'
+});
+create (fp7:FunctionalPurpose {
+  id: 26,
+  name: 'Кинотеатр'
+});
+create (fp8:FunctionalPurpose {
+  id: 27,
+  name: 'Фондохранилище'
+});
+create (fp9:FunctionalPurpose {
+  id: 28,
+  name: 'Выставка (экспозиция);'
+});
+create (fp10:FunctionalPurpose {
+  id: 29,
+  name: 'Прочие КПУ и ТЗП'
+});
+create (fp11:FunctionalPurpose {
+  id: 30,
+  name: 'Туристско-экскурсионное'
+});
+create (fp12:FunctionalPurpose {
+  id: 40,
+  name: 'Лечебно-оздоровительное'
+});
+create (fp13:FunctionalPurpose {
+  id: 41,
+  name: 'Больница'
+});
+create (fp14:FunctionalPurpose {
+  id: 42,
+  name: 'Санаторий'
+});
+create (fp15:FunctionalPurpose {
+  id: 43,
+  name: 'Дом отдыха'
+});
+create (fp16:FunctionalPurpose {
+  id: 44,
+  name: 'Спортивные сооружения'
+});
+create (fp17:FunctionalPurpose {
+  id: 49,
+  name: 'Прочие виды лечебно-оздоровительного использования'
+});
+create (fp18:FunctionalPurpose {
+  id: 50,
+  name: 'Жилые помещения'
+});
+create (fp19:FunctionalPurpose {
+  id: 60,
+  name: 'Хозяйственное'
+});
+create (fp20:FunctionalPurpose {
+  id: 61,
+  name: 'Учреждение'
+});
+create (fp21:FunctionalPurpose {
+  id: 62,
+  name: 'Торговое'
+});
+create (fp22:FunctionalPurpose {
+  id: 63,
+  name: 'Промышленное'
+});
+create (fp23:FunctionalPurpose {
+  id: 64,
+  name: 'Склад'
+});
+create (fp24:FunctionalPurpose {
+  id: 69,
+  name: 'Прочие виды хозяйственного использования'
+});
+create (fp25:FunctionalPurpose {
+  id: 70,
+  name: 'Не используется'
+});
+create (fp26:FunctionalPurpose {
+  id: 71,
+  name: 'Не может использоваться в утилитарных целях'
+});
+create (fp27:FunctionalPurpose {
+  id: 80,
+  name: 'Учебное заведение'
+});
+create (fp28:FunctionalPurpose {
+  id: 81,
+  name: 'Учебное заведение системы МК РФ'
+});
+create (fp29:FunctionalPurpose {
+  id: 82,
+  name: 'Учебное заведение других ведомств'
 });
 
 create (avail1:Availability {
-  id: 1,
-  name: 'Опция 1'
+  id: 0,
+  name: 'Нет доступа'
 });
 create (avail2:Availability {
+  id: 1,
+  name: 'Внешний осмотр'
+});
+create (avail3:Availability {
   id: 2,
-  name: 'Опция 2'
+  name: 'Ограниченный доступ'
+});
+create (avail4:Availability {
+  id: 3,
+  name: 'Свободный доступ'
+});
+create (avail5:Availability {
+  id: 4,
+  name: 'Музеефицирован'
 });
 
 create (ut1:UsageType {
-  id: 1,
-  name: 'Опция 1'
+  id: 31,
+  name: 'Аренда'
 });
 create (ut2:UsageType {
-  id: 2,
-  name: 'Опция 2'
+  id: 32,
+  name: 'Субаренда'
+});
+create (ut3:UsageType {
+  id: 33,
+  name: 'Безвозмездное пользование бессрочное'
+});
+create (ut4:UsageType {
+  id: 34,
+  name: 'Безвозмездное пользование без указания срока'
+});
+create (ut5:UsageType {
+  id: 35,
+  name: 'Безвозмездное пользование временное'
 });
