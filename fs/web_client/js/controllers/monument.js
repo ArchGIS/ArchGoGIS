@@ -51,7 +51,7 @@ App.controllers.monument = new (App.View.extend({
           "research:Research": {"id": "NEED"},
           "report:Report": {"id": "*", "select": "*"},
           "author:Author": {"id": "*"},
-          "research__hasreport__report": {},
+          "research__has__report": {},
           "research__hasauthor__author": {},
           "report__hasauthor__author": {}
         }),

@@ -187,6 +187,10 @@ App.views.artifact = new (App.View.extend({
       inputs: ['#monument-x', '#monument-y'],
       map: 'map'
     });
+  },
 
+  'href': function(id, text) {
+    return `<a target="_blank" href="#artifact/show/${id}">${text}</a>`;
   }
+
 }));
