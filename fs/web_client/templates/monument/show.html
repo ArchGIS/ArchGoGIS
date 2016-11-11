@@ -100,8 +100,8 @@
           let year = rep.year || "год не указан";
           let repTitle = `${rep.name} (${authors[i].name}, ${year})`;
           return App.models.Report.href(rep.fileid, repTitle);
-        }).join(", ")
-      })).join(", ") %>
+        }).join("<br>")
+      })).join("<br>") %>
     </div>
 
     <div id="excavations"> 
