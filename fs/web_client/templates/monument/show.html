@@ -5,6 +5,7 @@
     <ul>
       <li><a href="#general"><%= t('common.general') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#reports"><%= t('report.plural') %></a></li>
       <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
       <li><a href="#future">*</a></li>
@@ -30,8 +31,8 @@
       Общая площадь
       <%= _.reduce(excavations, function(area, list) {
         return area + _.reduce(list, function(area, exc) {
-            return area + (exc.area || 0);
-          }, 0);
+          return area + (exc.area || 0);
+        }, 0);
       }, 0) %>
       м²</dd>
 
@@ -93,46 +94,33 @@
       </div>
     </div>
 
-    <div id="excavations"> 
-      <div class="accordion">
-        <% _.each(researches, function(research, i) { %>
-          <% if (!excavations[i].length) {return true} %>
-          <h4 class="accordion-header">
-            <%= t("research.singular") %> №<%= i+1 %>:
-            <b>
-              <%= App.views.research.getFullResearchTitle(authors[i].name, research.year, resTypes[i][0].name) %>
-            </b>
-          </h4>
+    <div id="reports">
+      <%= _.compact(_.map(reports, function(resReps, i) {
+        return _.map(resReps, function(rep, t) {
+          let year = rep.year || "год не указан";
+          let repTitle = `${rep.name} (${authors[i].name}, ${year})`;
+          return App.models.Report.href(rep.fileid, repTitle);
+        }).join(", ")
+      })).join(", ") %>
+    </div>
 
-          <div class="accordion-content">
-            <%= _.map(excavations[i], function(exc, key) {
-              let name = exc.name || `без названия ${key+1}`;
-              let area = (exc.area) ? `(${exc.area} м²)` : ''
-              return name + area;
-            }).join(", ") %>
-          </div>
-        <% }) %>
-      </div>
+    <div id="excavations"> 
+      <%= _.compact(_.map(excavations, function(resExc, i) {
+        return _.map(resExc, function(exc, t) {
+          let area = exc.area || 0;
+          let name = exc.name || "без названия";
+          return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year})` 
+        }).join(", ")
+      })).join(", ") %>
     </div>
 
     <div id="artifacts">
-      <div class="accordion">
-        <% _.each(researches, function(research, i) { %>
-          <% if (!artifacts[i].length) {return true} %>
-          <h4 class="accordion-header">
-            <%= t("research.singular") %> №<%= i+1 %>:
-            <b>
-              <%= App.views.research.getFullResearchTitle(authors[i].name, research.year, resTypes[i][0].name) %>
-            </b>
-          </h4>
-
-          <div class="accordion-content">
-            <%= _.map(artifacts[i], function(arti, key) {
-              return App.views.artifact.href(arti.id, arti.name);
-            }).join(", ") %>
-          </div>
-        <% }) %>
-      </div>
+      <%= _.compact(_.map(artifacts, function(resArti, i) {
+        return _.map(resArti, function(arti, t) {
+          let artiTitle = `${arti.name} (${authors[i].name}, ${researches[i].year})`;
+          return App.views.artifact.href(arti.id, artiTitle);
+        }).join(", ")
+      })).join(", ") %>
     </div>
   </div>
 

@@ -124,6 +124,8 @@ App.controllers.monument = new (App.View.extend({
     var callRender = _.after(queryCounter, render);
 
     $.when(model.sendQuery(queries.complex.mainInfo)).then(function(response) {
+      // response = _.sort(response)
+      console.log(response)
       _.extend(tmplData, response);
 
       var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
