@@ -1,4 +1,8 @@
 { 
+  "common": {
+    "general": "Общие сведения"
+  },
+
   "LiteratureRef": {
     "plural": "Библиографические ссылки",
     "prop": {

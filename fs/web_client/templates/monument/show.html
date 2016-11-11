@@ -1,35 +1,45 @@
 <div class="content">  
   <h2><%= t("monument.info") %> "<%= mainName%>"</h2>
-  <br>
-  <dt>Все названия памятника:</dt>
-  <dd><%= allNames %></dd>
-
-  <dt><%= t("monument.prop.epoch") %>:</dt>
-  <dd><%= maybe(epoch[0], "Не указана","name") %></dd>
-
-  <dt><%= t("monument.prop.type") %>:</dt>
-  <dd><%= maybe(monType[0], "Не указан","name") %></dd>
-
-  <dt><%= t("research.genitivePl") %>:</dt>
-  <dd><%= _.size(researches) %></dd>
-
-  <dt><%= t("excavation.genitivePl") %>:</dt>
-  <dd><%= _.reduce(excavations, function(size, list) {
-    return size + _.size(list)
-  }, 0) %></dd>
-
-  <dt><%= t("artifact.genitivePl") %>:</dt>
-  <dd><%= _.reduce(artifacts, function(size, list) {
-    return size + _.size(list)
-  }, 0) %></dd>
-  <br>
-
+  
   <div id="container">
     <ul>
+      <li><a href="#general"><%= t('common.general') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
       <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
+      <li><a href="#future">*</a></li>
     </ul>
+
+    <div id="general">
+      <dt>Все названия памятника:</dt>
+      <dd><%= allNames %></dd>
+
+      <dt><%= t("monument.prop.epoch") %>:</dt>
+      <dd><%= maybe(epoch[0], "Не указана","name") %></dd>
+
+      <dt><%= t("monument.prop.type") %>:</dt>
+      <dd><%= maybe(monType[0], "Не указан","name") %></dd>
+
+      <dt><%= t("research.genitivePl") %>:</dt>
+      <dd><%= _.size(researches) %></dd>
+
+      <dt><%= t("excavation.genitivePl") %>:</dt>
+      <dd><%= _.reduce(excavations, function(size, list) {
+        return size + _.size(list)
+      }, 0) %>;
+      Общая площадь
+      <%= _.reduce(excavations, function(area, list) {
+        return area + _.reduce(list, function(area, exc) {
+            return area + (exc.area || 0);
+          }, 0);
+      }, 0) %>
+      м²</dd>
+
+      <dt><%= t("artifact.genitivePl") %>:</dt>
+      <dd><%= _.reduce(artifacts, function(size, list) {
+        return size + _.size(list)
+      }, 0) %></dd>
+    </div>
 
     <div id="researches">
       <div class="accordion">
@@ -124,6 +134,9 @@
         <% }) %>
       </div>
     </div>
+  </div>
+
+  <div id="future">
   </div>
 
   <div class="maps">
