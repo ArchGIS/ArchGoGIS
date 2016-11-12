@@ -6,7 +6,7 @@ App.views.monument = new (App.View.extend({
     var fmt = App.fn.fmt;
     
     var repSelName = '',
-        oknSelName = '',
+        heritageSelName = '',
         orgName = '';
 
     var authorSelectHandler = function(event, ui) {
@@ -80,9 +80,9 @@ App.views.monument = new (App.View.extend({
 
     $("#heritage-input").autocomplete({
       source: function(request, response) {
-        var okns = [];
+        var heritages = [];
 
-        App.models.Okn.findByNamePrefix(request.term)
+        App.models.Heritage.findByNamePrefix(request.term)
           .then(function(data) {
             if (data && !data.error) {
               response(_.map(data, function(row) {
@@ -96,7 +96,7 @@ App.views.monument = new (App.View.extend({
       minLength: 3,
       select: function(event, ui) {
         $("#heritage-input-id").val(ui.item.id);
-        oknSelName = ui.item.name;
+        heritageSelName = ui.item.name;
       }
     }).focus(function(){
       $(this).autocomplete("search");
@@ -169,7 +169,8 @@ App.views.monument = new (App.View.extend({
   },
 
   "show": function(argument) {
-    App.views.functions.setAccordion("accordion");
+    $("#container").tabs();
+    App.views.functions.setAccordion(".accordion");
   },
 
   "new_by_xlsx": function() {

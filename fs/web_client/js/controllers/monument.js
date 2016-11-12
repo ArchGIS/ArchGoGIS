@@ -51,7 +51,7 @@ App.controllers.monument = new (App.View.extend({
           "research:Research": {"id": "NEED"},
           "report:Report": {"id": "*", "select": "*"},
           "author:Author": {"id": "*"},
-          "research__hasreport__report": {},
+          "research__has__report": {},
           "research__hasauthor__author": {},
           "report__hasauthor__author": {}
         }),
@@ -124,6 +124,8 @@ App.controllers.monument = new (App.View.extend({
     var callRender = _.after(queryCounter, render);
 
     $.when(model.sendQuery(queries.complex.mainInfo)).then(function(response) {
+      // response = _.sort(response)
+      console.log(response)
       _.extend(tmplData, response);
 
       var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});

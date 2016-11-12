@@ -2,7 +2,7 @@
 
 App.views.research = new (App.View.extend({
   "show": function(argument) {
-    App.views.functions.setAccordion("accordion");
+    App.views.functions.setAccordion("#accordion");
   },
 
   "new": function(argument) {
@@ -356,5 +356,13 @@ App.views.research = new (App.View.extend({
     })
 
     $("#container").tabs();
+  },
+
+  "getFullResearchTitle": function(authorName, resYear, resType) {
+    return [
+      (authorName || "Неизвестный автор"),
+      (resYear || "год не указан"),
+      (resType || "без типа")
+    ].join(", ");
   }
 }))

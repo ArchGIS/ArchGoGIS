@@ -1,8 +1,8 @@
 'use strict';
 
 App.views.functions = {
-  "setAccordion": function(accordionId) {
-    var headers = $('#' + accordionId + ' .accordion-header');
+  "setAccordion": function(accordionSelector) {
+    var headers = $(accordionSelector + ' .accordion-header');
 
     headers.click(function() {
       var panel = $(this).next();
