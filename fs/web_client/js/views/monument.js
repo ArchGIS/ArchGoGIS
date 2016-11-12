@@ -78,7 +78,7 @@ App.views.monument = new (App.View.extend({
       } 
     });
 
-    $("#heritage-object-input").autocomplete({
+    $("#heritage-input").autocomplete({
       source: function(request, response) {
         var okns = [];
 
@@ -95,7 +95,7 @@ App.views.monument = new (App.View.extend({
       },
       minLength: 3,
       select: function(event, ui) {
-        $("#heritage-object-input-id").val(ui.item.id);
+        $("#heritage-input-id").val(ui.item.id);
         oknSelName = ui.item.name;
       }
     }).focus(function(){
@@ -108,7 +108,7 @@ App.views.monument = new (App.View.extend({
     var $authorPhoto = $('#author-photo-input');
     $authorPhoto.change(checkFileSize.bind($authorPhoto, 10));
 
-    var $heritage = $('#heritage-object-files-input');
+    var $heritage = $('#heritage-files-input');
     $heritage.change(checkFileSize.bind($heritage, 50));
 
     var $reportDoc = $('#report-file-input');
@@ -124,11 +124,11 @@ App.views.monument = new (App.View.extend({
 
     // Валидация полей с автокомплитом
     var validate = App.fn.validInput;
-    validate('#author-input', lastSelectedAuthorName);
-    validate('#report-input', repSelName);
-    validate('#report-city-input', lastSelectedCityName);
-    validate('#report-organization-input', orgName);
-    validate('#heritage-object-input', oknSelName);
+    validate('author-input', lastSelectedAuthorName);
+    validate('report-input', repSelName);
+    validate('report-city-input', lastSelectedCityName);
+    validate('report-organization-input', orgName);
+    validate('heritage-input', oknSelName);
 
 
     var fillResearchInputs = function() {

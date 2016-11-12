@@ -128,10 +128,10 @@ App.views.research = new (App.View.extend({
 
     // Валидация полей с автокомплитом
     var validate = App.fn.validInput;
-    validate('#author-input', lastSelectedAuthorName);
-    validate('#report-input', reportName);
-    validate('#report-city-input', lastSelectedCityName);
-    validate('#report-organization-input', orgName);
+    validate('author-input', lastSelectedAuthorName);
+    validate('report-input', reportName);
+    validate('report-city-input', lastSelectedCityName);
+    validate('report-organization-input', orgName);
 
 
     function addCoord (name, monId, id) {

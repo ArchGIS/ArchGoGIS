@@ -91,8 +91,9 @@ App.fn.checkYear = function () {
  * @param string name
  */
 App.fn.validInput = (input, name) => {
-  var $authorInput = $(input);
-  var tip = new Opentip($authorInput, {
+  var $input = $('#' + input);
+
+  var tip = new Opentip($input, {
     showOn: null,
     style: 'alert',
     target: true,
@@ -100,10 +101,10 @@ App.fn.validInput = (input, name) => {
     hideOn: 'focus'
   });
 
-  $authorInput.on('change', () => {
-    var hiddenId = $(input + '-id').val();
+  $input.on('change', () => {
+    var hiddenId = $(`#${input}-id`).val();
 
-    if (hiddenId && name === $authorInput.val()) {
+    if (hiddenId && name === $input.val()) {
       tip.hide();
     } else {
       tip.setContent(`Неправильный ввод.

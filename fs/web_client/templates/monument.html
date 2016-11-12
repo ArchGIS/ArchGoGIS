@@ -116,32 +116,32 @@
       <legend>Сведения об объекте культурного наследия</legend>
 
       <div class="checkbox">
-        <label for="new-heritage-object-checkbox">
-          <input id="new-heritage-object-checkbox" type="checkbox" dynamic="true"></input>
+        <label for="new-heritage-checkbox">
+          <input id="new-heritage-checkbox" type="checkbox" dynamic="true"></input>
           Добавить ОКН
         </label>
       </div>
-      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="false">
-        <label for="heritage-object-input">Название</label>
-        <input class="form-control" id="heritage-object-input"></input>
-        <input id="heritage-object-input-id" data-for="heritage:Heritage" hidden type="id" name="id"></input>
+      <div class="form-group" toggle-by="new-heritage-checkbox" need-option="false">
+        <label for="heritage-input">Название</label>
+        <input class="form-control" id="heritage-input"></input>
+        <input id="heritage-input-id" data-for="heritage:Heritage" hidden type="id" name="id"></input>
       </div>
 
-      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label for="heritage-object-name-input">Название <span class="required">*</span></label>
-        <input class="form-control" id="heritage-object-name-input" data-for="heritage:Heritage" type="text" name="code" data-req></input>
+      <div class="form-group" toggle-by="new-heritage-checkbox" need-option="true">
+        <label for="heritage-name-input">Название <span class="required">*</span></label>
+        <input class="form-control" id="heritage-name-input" data-for="heritage:Heritage" type="text" name="code" data-req></input>
       </div>
-      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label for="heritage-object-border-input">Описание границ</label>
-        <textarea class="form-control" id="heritage-object-border-input" data-for="heritage:Heritage" type="text" name="border"></textarea>
+      <div class="form-group" toggle-by="new-heritage-checkbox" need-option="true">
+        <label for="heritage-border-input">Описание границ</label>
+        <textarea class="form-control" id="heritage-border-input" data-for="heritage:Heritage" type="text" name="border"></textarea>
       </div>
-      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label for="heritage-object-security-input">Предмет охраны</label>
-        <input class="form-control" id="heritage-object-security-input" data-for="heritage:Heritage" type="text" name="security"></input>
+      <div class="form-group" toggle-by="new-heritage-checkbox" need-option="true">
+        <label for="heritage-security-input">Предмет охраны</label>
+        <input class="form-control" id="heritage-security-input" data-for="heritage:Heritage" type="text" name="security"></input>
       </div>
-      <div class="form-group" toggle-by="new-heritage-object-checkbox" need-option="true">
-        <label for="heritage-object-files-input">Файл документа</label>
-        <input accept=".pdf,.doc,.docx" id="heritage-object-files-input" data-for="file:File" type="file" name="fileid"></input>
+      <div class="form-group" toggle-by="new-heritage-checkbox" need-option="true">
+        <label for="heritage-files-input">Файл документа</label>
+        <input accept=".pdf,.doc,.docx" id="heritage-files-input" data-for="file:File" type="file" name="fileid"></input>
         <br>
         <div class="alert alert-dismissible alert-info">
           Максимальный размер документа 50 МБ.

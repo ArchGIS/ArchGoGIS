@@ -128,11 +128,11 @@ App.views.artifact = new (App.View.extend({
 
     // Валидация полей с автокомплитом
     var validate = App.fn.validInput;
-    validate('#author-input', lastSelectedAuthorName);
-    validate('#research-input', resSelName);
-    validate('#report-city-input', lastSelectedCityName);
-    validate('#report-organization-input', orgName);
-    validate('#monument-input', monSelName);
+    validate('author-input', lastSelectedAuthorName);
+    validate('research-input', resSelName);
+    validate('report-city-input', lastSelectedCityName);
+    validate('report-organization-input', orgName);
+    validate('monument-input', monSelName);
 
 
     $("#coauthor-input").bind("keyup", function(event) {
