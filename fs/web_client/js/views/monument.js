@@ -128,7 +128,7 @@ App.views.monument = new (App.View.extend({
     validate('report-input', repSelName);
     validate('report-city-input', lastSelectedCityName);
     validate('report-organization-input', orgName);
-    validate('heritage-input', oknSelName);
+    validate('heritage-input', heritageSelName);
 
 
     var fillResearchInputs = function() {
