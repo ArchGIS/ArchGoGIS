@@ -218,12 +218,15 @@ input {
 }
 
 .ui-autocomplete {
-  border: 1px solid #ccc;
-  padding: 1px;
   width: 40%;
   height: auto;
   max-height: 300px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ui-autocomplete li {
+  padding: 3px 10px;
 }
 
 .flex-column {
@@ -281,9 +284,6 @@ input {
   margin-bottom: 10px;
 }
 
-.ui-autocomplete li {
-  padding: 3px;
-}
 
 dt {
   margin-top: 10px;
