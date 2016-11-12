@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * Возвращает новую строку.
  * Заменяет в pattern символы вида: $symbols
  * Вместо них подставляются свойства object.
  *
- * @param string pattern
- * @param object object
+ * @param {string} pattern
+ * @param {Object} object
+ * @returns {string} pattern with object properties replacements
  */
-App.fn.fmt = function(pattern, object) {
-  return pattern.replace(/\$(\w+)/g, function(unused, word) {
+App.fn.fmt = (pattern, object) => {
+  return pattern.replace(/\$(\w+)/g, (unused, word) => {
     return object[word] || word;
   });
 };
@@ -19,28 +19,29 @@ App.fn.fmt = function(pattern, object) {
  * у которых строковое свойство item[key] удовлетворяет
  * регулярному выражению pattern.
  *
- * @param string pattern
- * @param array items
- * @param string key
+ * @param {string} pattern
+ * @param {Array} items
+ * @param {string} key
+ * @returns {Array} just items that have item[key]
  */
-App.fn.grepObject = function(pattern, items, key) {
-  var matcher = new RegExp(pattern, 'i');
+App.fn.grepObject = (pattern, items, key) => {
+  let matcher = new RegExp(pattern, 'i');
   return _.filter(items, item => matcher.test(item[key]));
 };
 
 /**
  * Возвращает функцию-счётчик.
  * Пример использования:
- * next = App.fn.sequence()
- * next() = 0
- * next() = 1
- * next() = 2
+ * next = App.fn.counter()
+ * next() // возвратит 0
+ * next() // возвратит 1
  * И так далее.
  * Можно задавать начало счётчика в аргументе.
  *
- * @param int initial
+ * @param {int} initial
+ * @returns {Function} were initial plus one
  */
-App.fn.sequence = function(initial) {
+App.fn.counter = (initial) => {
   initial = initial || 0;
   return () => initial++;
 };
@@ -50,15 +51,15 @@ App.fn.sequence = function(initial) {
  * указанного в аргументе size.
  * И очищает input от файла в случае превышения.
  * 
- * @param int size
+ * @param {int} size
  */
-App.fn.checkFileSize = function (size) {
+App.fn.checkFileSize = (size) => {
   function convertMbToBytes(mb) {
     return mb * 1024 * 1024;
   }
 
-  var mbInBytes = convertMbToBytes(size);
-  var jqObj = $(this);
+  let mbInBytes = convertMbToBytes(size);
+  const jqObj = $(this);
 
   if (jqObj[0].files[0] && jqObj[0].files[0].size > mbInBytes) {
     jqObj.val('');
@@ -70,9 +71,10 @@ App.fn.checkFileSize = function (size) {
  * введённого пользователем  для поля год
  * в диапазоне [0, Текущий год].
  */
-App.fn.checkYear = function () {
-  var presentYear = (new Date()).getFullYear();
-  var input = $(this);
+App.fn.checkYear = () => {
+  const input = $(this);
+
+  let presentYear = new Date().getFullYear();
 
   if (+input.val() < 0) {
     input.val(0);
@@ -87,13 +89,13 @@ App.fn.checkYear = function () {
  * Параметр input - id тэга для оборачивания в Jquery-объект.
  * Параметр name нужен для проверки последних введённых данных в поле.
  * 
- * @param string input
- * @param string name
+ * @param {string} input
+ * @param {string} name
  */
 App.fn.validInput = (input, name) => {
-  var $input = $('#' + input);
+  const $input = $('#' + input);
 
-  var tip = new Opentip($input, {
+  const tip = new Opentip($input, {
     showOn: null,
     style: 'alert',
     target: true,
@@ -102,7 +104,7 @@ App.fn.validInput = (input, name) => {
   });
 
   $input.on('change', () => {
-    var hiddenId = $(`#${input}-id`).val();
+    let hiddenId = $(`#${input}-id`).val();
 
     if (hiddenId && name === $input.val()) {
       tip.hide();
@@ -116,14 +118,13 @@ App.fn.validInput = (input, name) => {
 };
 
 /**
- * Возвращает объект, в котором оставлены только
- * уникальные памятники. Нужен для фильтрации результатов
- * поиска памятников.
+ * Фильтрация результатов поиска памятников.
  * 
- * @param array monuments
+ * @param {Array} monuments
+ * @returns {Array} uniq results from monuments
  */
 App.fn.excludeIdentMonuments = (monuments) => {
-  var results = _.reduce(monuments, (memo, obj, key) => {
+  let results = _.reduce(monuments, (memo, obj, key) => {
     if (!_.find(memo, (memoobj) => {
         return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)
       })) {
