@@ -3,7 +3,6 @@
 App.views.search = new (App.View.extend({
   'index': function() {
     var t = App.locale.translate;
-    var grepObject = App.fn.grepObject;
     var excludeIdent = App.fn.excludeIdentMonuments;
 
     var $results = $('#search-results');
