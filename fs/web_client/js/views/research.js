@@ -19,7 +19,7 @@ App.views.research = new (Backbone.View.extend({
 
     var fillResearchInputs = function() {
       if ($("#report-input-id").val()) {
-        var year = reportYear
+        var year = reportYear;
         var name = reportName + " - " + year;
       } else {
         var year = $("#research-year-input").val();
@@ -136,50 +136,53 @@ App.views.research = new (Backbone.View.extend({
 
     function addCoord (name, monId, id) {
       return $("<div>")
-          .addClass("form-group")
-          .append($("<label>")
-            .attr("for", name+id)
-            .text(`Координата ${name}`))
-          .append($("<input>")
-            .addClass("form-control")
-            .attr({
-              "id": `${name}-${monId}-${id}`,
-              "data-for": `exc_${monId}_${id}:Excavation`,
-              "type": "number",
-              "name": name
-            }))
+        .addClass("form-group")
+        .append($("<label>")
+          .attr("for", name+id)
+          .text(`Координата ${name}`))
+        .append($("<input>")
+          .addClass("form-control")
+          .attr({
+            "id": `${name}-${monId}-${id}`,
+            "data-for": `exc_${monId}_${id}:Excavation`,
+            "type": "number",
+            "name": name
+          })
+        );
     }
 
     function addExcName(monId, id) {
       return $("<div>")
         .addClass("form-group")
         .append($("<label>")
-            .attr("for", `excavation-name-input-${id}`)
-            .text(`Название ${id}`))
+          .attr("for", `excavation-name-input-${id}`)
+          .text(`Название ${id}`))
         .append($("<input>")
-            .addClass("form-control")
-            .attr({
-              "id": `excavation-name-input-${id}`,
-              "data-for": `exc_${monId}_${id}:Excavation`,
-              "type": "text",
-              "name": "name"
-            }))
+          .addClass("form-control")
+          .attr({
+            "id": `excavation-name-input-${id}`,
+            "data-for": `exc_${monId}_${id}:Excavation`,
+            "type": "text",
+            "name": "name"
+          })
+        );
     }
 
     function addExcArea(monId, id) {
       return $("<div>")
         .addClass("form-group")
         .append($("<label>")
-            .attr("for", `excavation-area-input-${id}`)
-            .text(`Вскрытая площадь (м²)`))
+          .attr("for", `excavation-area-input-${id}`)
+          .text(`Вскрытая площадь (м²)`))
         .append($("<input>")
-            .addClass("form-control")
-            .attr({
-              "id": `excavation-area-input-${id}`,
-              "data-for": `exc_${monId}_${id}:Excavation`,
-              "type": "number",
-              "name": "area"
-            }))
+          .addClass("form-control")
+          .attr({
+            "id": `excavation-area-input-${id}`,
+            "data-for": `exc_${monId}_${id}:Excavation`,
+            "type": "number",
+            "name": "area"
+          })
+        );
     }
 
     function addNewCoords(btn, monId, counter) {
@@ -187,7 +190,7 @@ App.views.research = new (Backbone.View.extend({
         .addClass("coords")
         .attr("id", `coord-picker-${monId}-${counter}`)
         .append(addCoord("x", monId, counter))
-        .append(addCoord("y", monId, counter))
+        .append(addCoord("y", monId, counter));
 
       btn.before(addExcName(monId, counter));
       btn.before(addExcArea(monId, counter));
@@ -346,14 +349,14 @@ App.views.research = new (Backbone.View.extend({
 
     var excCounter = 1;
     $("#add-exc-button-0").on('click', function(e) {
-      addNewCoords($(this), 0, excCounter++)
-    })
+      addNewCoords($(this), 0, excCounter++);
+    });
 
     $('#add-exc-button').trigger("click");
 
     $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});
-    })
+    });
 
     $("#container").tabs();
   },
@@ -365,4 +368,4 @@ App.views.research = new (Backbone.View.extend({
       (resType || "без типа")
     ].join(", ");
   }
-}))
+}));
