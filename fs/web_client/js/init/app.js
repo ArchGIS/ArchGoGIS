@@ -315,11 +315,11 @@ function isValidForm () {
   inputs.removeClass('error-input');
   inputs.prev().removeClass('error-input');
 
-  _.each(inputs, (input) => {
+  _.each(inputs, function(input) {
     const $input = $(input);
-    const $this = $(this);
 
-    $input.blur(() => {
+    $input.blur(function() {
+      const $this = $(this);
       if ( !$this.val() ) {
         if ($input.attr('data-req') == 'up') {
           $input.prev().addClass('error-input');
