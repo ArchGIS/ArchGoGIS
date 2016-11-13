@@ -19,7 +19,7 @@
     <% _.each(researches, function(r, i) { %>
       <%= i + 1 %>)
       <a href="#research/show/<%= r.id %>"><%= r.name %></a>
-      <br><br>
+      <br>
     <% }); %>
   <% } else { %>
     <p>Нет исследований</p>
@@ -29,13 +29,13 @@
   <% if (pubs.length) { %>
     <% _.each(pubs, function(pub, i) { %>
       <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= maybe(pub.year, "год неизвестен")%></a> - автор
-      <br><br>
+      <br>
     <% }); %>
   <% } %>
   <% if (copubs.length) { %>
     <% _.each(copubs, function(pub, i) { %>
       <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= maybe(pub.year, "год неизвестен")%></a> - соавтор
-      <br><br>
+      <br>
     <% }); %>
   <% } %>
 
