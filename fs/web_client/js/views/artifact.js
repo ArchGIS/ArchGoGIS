@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.artifact = new (App.View.extend({
+App.views.artifact = new (Backbone.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
     var fmt = App.fn.fmt;
@@ -166,7 +166,7 @@ App.views.artifact = new (App.View.extend({
     $("#container").tabs();
 
     $('#send-button').on('click', function() {
-      if ( validateCreatePages() ) {
+      if ( isValidForm() ) {
         postQuery('a');
       } else {
         alert('Недостаточно данных. Заполните все подсвеченные красным поля!');

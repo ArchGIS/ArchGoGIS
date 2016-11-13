@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.research = new (App.View.extend({
+App.views.research = new (Backbone.View.extend({
   "show": function(argument) {
     App.views.functions.setAccordion("#accordion");
   },
@@ -32,7 +32,7 @@ App.views.research = new (App.View.extend({
     $('#send-button').on('click', function() {
       fillResearchInputs();
 
-      if ( validateCreatePages() ) {
+      if ( isValidForm() ) {
         postQuery('r');
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');
@@ -338,7 +338,7 @@ App.views.research = new (App.View.extend({
         }
       });
 
-      validate(`#monument-input-${monId}`, monSelName);
+      validate(`monument-input-${monId}`, monSelName);
 
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;

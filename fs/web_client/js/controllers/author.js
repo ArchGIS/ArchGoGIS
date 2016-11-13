@@ -1,6 +1,6 @@
 'use strict';
 
-App.controllers.author = new (App.View.extend({
+App.controllers.author = new (Backbone.View.extend({
   "show": function() {
     App.url.setMapping(["id"]);
     var aid = App.url.get("id");

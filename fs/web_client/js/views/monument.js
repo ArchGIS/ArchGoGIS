@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.monument = new (App.View.extend({
+App.views.monument = new (Backbone.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
     var fmt = App.fn.fmt;
@@ -143,7 +143,7 @@ App.views.monument = new (App.View.extend({
     $('#send-button').on('click', function() {
       fillResearchInputs();
 
-      if ( validateCreatePages() ) {
+      if ( isValidForm() ) {
         postQuery('m');
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');

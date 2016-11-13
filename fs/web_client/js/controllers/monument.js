@@ -1,6 +1,6 @@
 'use strict';
 
-App.controllers.monument = new (App.View.extend({
+App.controllers.monument = new (Backbone.View.extend({
   'show': function() {
     App.url.setMapping(['id']);
     var monId = App.url.get('id');

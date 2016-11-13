@@ -1,6 +1,6 @@
 "use strict";
 
-App.views.importXlsx = new (App.View.extend({
+App.views.importXlsx = new (Backbone.View.extend({
   "index": function() {
     var requestToExcelParser = function(file) {
       // Отправляем запрос парсеру, получаем JSON-ответ

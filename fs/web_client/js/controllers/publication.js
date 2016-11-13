@@ -1,6 +1,6 @@
 'use strict';
 
-App.controllers.publication = new (App.View.extend({
+App.controllers.publication = new (Backbone.View.extend({
   "show": function() {
   	App.url.setMapping(["id"]);
     var pid = App.url.get("id");

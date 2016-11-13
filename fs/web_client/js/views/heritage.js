@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.heritage = new (App.View.extend({
+App.views.heritage = new (Backbone.View.extend({
   "new": function(argument) {
     $("#container").tabs();
     var coordpicker = App.blocks.coordpicker;
@@ -105,7 +105,7 @@ App.views.heritage = new (App.View.extend({
     setSelectsEvents();
 
     $('#send-button').on('click', function() {
-      if ( validateCreatePages() ) {
+      if ( isValidForm() ) {
         postQuery();
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');

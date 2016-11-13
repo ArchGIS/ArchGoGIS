@@ -1,6 +1,6 @@
 "use strict";
 
-App.controllers.importXlsx = new (App.View.extend({
+App.controllers.importXlsx = new (Backbone.View.extend({
   "index": function() {
     App.page.render("import_xlsx/main", {
       "archmapSearchOptions": {

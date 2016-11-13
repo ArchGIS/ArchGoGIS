@@ -1,7 +1,7 @@
 
 'use strict';
 
-App.views.wizard = new (App.View.extend({
+App.views.wizard = new (Backbone.View.extend({
   'create_data': function() {
     var $sources = $("#from-what-create");
     var t = App.locale.translate;

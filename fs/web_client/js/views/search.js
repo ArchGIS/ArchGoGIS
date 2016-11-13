@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.search = new (App.View.extend({
+App.views.search = new (Backbone.View.extend({
   'index': function() {
     var t = App.locale.translate;
     var excludeIdent = App.fn.excludeIdentMonuments;

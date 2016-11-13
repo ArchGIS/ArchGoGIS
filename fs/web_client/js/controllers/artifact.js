@@ -1,6 +1,6 @@
 'use strict';
 
-App.controllers.artifact = new (App.View.extend({
+App.controllers.artifact = new (Backbone.View.extend({
   'new': function() {
     App.page.render('artifact', {
       'param': 'test data',

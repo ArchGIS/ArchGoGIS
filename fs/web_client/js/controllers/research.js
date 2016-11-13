@@ -1,7 +1,7 @@
 'use strict';
 
 
-App.controllers.research = new (App.View.extend({
+App.controllers.research = new (Backbone.View.extend({
   'new': function() {
     App.page.render('research', {
       'authorsInputOptions': {
