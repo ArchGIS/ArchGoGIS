@@ -53,7 +53,7 @@ App.fn.counter = (initial) => {
  * 
  * @param {int} size
  */
-App.fn.checkFileSize = (size) => {
+App.fn.checkFileSize = function(size) {
   function convertMbToBytes(mb) {
     return mb * 1024 * 1024;
   }
@@ -71,7 +71,7 @@ App.fn.checkFileSize = (size) => {
  * введённого пользователем  для поля год
  * в диапазоне [0, Текущий год].
  */
-App.fn.checkYear = () => {
+App.fn.checkYear = function() {
   const input = $(this);
 
   let presentYear = new Date().getFullYear();
@@ -92,7 +92,7 @@ App.fn.checkYear = () => {
  * @param {string} input
  * @param {string} name
  */
-App.fn.validInput = (input, name) => {
+App.fn.validInput = function(input, name) {
   const $input = $('#' + input);
 
   const tip = new Opentip($input, {
