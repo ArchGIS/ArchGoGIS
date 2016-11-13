@@ -1,7 +1,7 @@
 'use strict';
 
 // Контейнеры
-var App = {
+window.App = {
   'widgets': {},
   'blocks': {},
   'controllers': {},
