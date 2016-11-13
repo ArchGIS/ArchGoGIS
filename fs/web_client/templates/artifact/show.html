@@ -3,7 +3,7 @@
   
   <% if (photos.length) { %>
     <% _.each(photos, function(photo) { %>
-      <img src="<%= dburl + '/local_storage/' + photo.fileid %>" height="100px">
+      <img src="<%= HOST_URL + '/local_storage/' + photo.fileid %>" height="100px">
     <% }); %>
   <% } %>
   <br>

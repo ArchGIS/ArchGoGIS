@@ -10,15 +10,10 @@ var App = {
   'fn': {}
 };
 
-// Зачатки переопределённых базовых классов Backbone?
-App.Controller = Backbone.View.extend({});
-App.View = Backbone.View.extend({});
-App.Model = Backbone.Model.extend({});
 
+const HOST_URL = `${location.protocol}//${location.host}`;
 
-var dburl = `${location.protocol}//${location.host}`;
-
-var modal = $('#modalWindow');
+const modal = $('#modalWindow');
 modal.easyModal({
   top: 200,
   overlay: 0.4,
@@ -31,30 +26,33 @@ $('#modalWindow a').on('click', (e) => {
 });
 
 function setSelectsEvents() {
-  var selects = $("[dynamic=true]");
+  let selects = $("[dynamic=true]");
 
-  $.each(selects, function(key, select) {
-    var obj = $(select);
-    obj.on("change", function() {showField(obj)});
+  $.each(selects, (key, select) => {
+    const obj = $(select);
+    obj.on("change", () => { showField(obj) });
     obj.trigger("change");
   })
 }
 
 function showField(select) {
-  var selectName = select.attr("id");
-  var dynamicFields = $("[toggle-by="+selectName+"]");
-  if (select.attr("type") == "checkbox") {
-    var selectedValue = (select.is(":checked")) ? "true" : "false";
+  let selectName = select.attr("id");
+  const dynamicFields = $(`[toggle-by=${selectName}]`);
+  let selectedValue = "";
+
+  if (select.attr("type") === "checkbox") {
+    selectedValue = (select.is(":checked")) ? "true" : "false";
   } else {
-    var selectedValue = select.find("option:selected").val();
+    selectedValue = select.find("option:selected").val();
   }
-  var requiredOptions, obj;
 
-  $.each(dynamicFields, function(key, field) {
+  let requiredOptions, obj;
+
+  $.each(dynamicFields, (key, field) => {
     obj = $(field);
-
     requiredOptions = obj.attr("need-option").split(".");
-    if ($(select).is("[used!=false]") == true && $.inArray(selectedValue, requiredOptions) != -1) {
+
+    if ($(select).is("[used!=false]") === true && $.inArray(selectedValue, requiredOptions) !== -1) {
       obj.show().attr("used", true);
       obj.contents().attr("used", true);
     } else {
@@ -62,7 +60,7 @@ function showField(select) {
       obj.contents().attr("used", false);
 
       if (obj.has("[type='checkbox']").length > 0) {
-        var checkbox = obj.find("[type='checkbox']");
+        const checkbox = obj.find("[type='checkbox']");
         checkbox.prop("checked", false);
         checkbox.trigger("change");
       }
@@ -75,9 +73,9 @@ function showField(select) {
 }
 
 function postQuery(objectId) {
-  var iconButton = loading();
+  let iconButton = loading();
 
-  var json = generateJson([
+  let json = generateJson([
     ["Research", "Author", "hasauthor"],
     ["Research", "Coauthor", "hascoauthor"],
     ["Research", "Knowledge", "has"],
@@ -113,17 +111,17 @@ function postQuery(objectId) {
     ["Image", "CardinalDirection", "has"]
   ]);
 
-  var formdata = new FormData();
+  let formdata = new FormData();
 
-  var files = $('input[type=file][used!=false]');
-  var uploadedFilesCounter = 0;
+  const files = $('input[type=file][used!=false]');
+  let uploadedFilesCounter = 0;
 
-  var defer = $.Deferred();
+  let defer = $.Deferred();
 
-  _.each(files, function(element, index) {
+  _.each(files, (element, index) => {
     if (element.files[0]) {
-      var datafor = $(element).attr("data-for");
-      var name = $(element).attr("name");
+      let datafor = $(element).attr("data-for");
+      let name = $(element).attr("name");
 
       uploadFile(element.files[0]).then(function(key) {
         if (!json[datafor]) {
@@ -132,24 +130,23 @@ function postQuery(objectId) {
 
         json[datafor][`${name}/text`] = key;
 
-        if (++uploadedFilesCounter == files.length) {
+        if (++uploadedFilesCounter === files.length) {
           defer.resolve();
         }
       });
-    } else {
-      if (++uploadedFilesCounter == files.length) {
-        defer.resolve();
-      }
+    } else if (++uploadedFilesCounter === files.length) {
+      defer.resolve();
     }
   });
 
-  if (files.length == 0) {
+  if (files.length === 0) {
     defer.resolve();
   }
 
-  $.when(defer).done(function() {
+  $.when(defer).done(() => {
     console.log(json);
-    _.each(json, function(val, key) {
+
+    _.each(json, (val, key) => {
       formdata.append(key, JSON.stringify(val));
     });
 
@@ -159,7 +156,7 @@ function postQuery(objectId) {
       type: "POST",
       processData: false,
       contentType: false,
-      success: function(response) {
+      success: (response) => {
         console.log('upsert: ' + response);
         loading(iconButton);
 
@@ -175,9 +172,9 @@ function postQuery(objectId) {
 }
 
 function loading(load) {
-  var template = `<i class="fa fa-spinner fa-pulse fa-fw"></i>`;
-  var icon = $('#send-button i');
-  var saveTmpl;
+  const template = '<i class="fa fa-spinner fa-pulse fa-fw"></i>';
+  const icon = $('#send-button i');
+  let saveTmpl;
 
   if (load) {
     icon.parent().removeProp('disabled');
@@ -192,12 +189,12 @@ function loading(load) {
 };
 
 function generateJson(relations) {
-  var type, json = {};
-  var inputs = $("[data-for][used!=false]");
-  var $input, dataFor, dataType, name, value, inputName, counter, 
+  let type, json = {};
+  const inputs = $("[data-for][used!=false]");
+  let $input, dataFor, dataType, name, value, inputName, counter,
       inputClass, inputSubclass, inputObjName, objs = {};
 
-  $.each(inputs, function(key, input) {
+  $.each(inputs, (key, input) => {
     $input = $(input);
     dataFor = $input.attr("data-for");
     dataType = $input.attr("data-type") || $input.attr("type");
@@ -223,30 +220,32 @@ function generateJson(relations) {
         json[inputObjName+":"+inputClass] = {};
         json[inputObjName+":"+inputClass]["id"] = val;
         counter++;
-      })
+      });
     } else {
       inputObjName = dataFor.split(":")[0];
       objs[inputSubclass].push(inputObjName);
       json[dataFor] = json[dataFor] || {};
-      if(type != "/file") {
+      if (type != "/file") {
         json[dataFor][name] = value;
       }
     }
   })
 
-  _.each(relations, function(relation) {
+  _.each(relations, (relation) => {
     if (objs[relation[0]]) {
       objs[relation[0]] = $.unique(objs[relation[0]]);
     }
 
-    _.each(objs[relation[0]], function(objName, id) {
-      var allNames = _.uniq(objs[relation[1]])
+    _.each(objs[relation[0]], (objName, id) => {
+      const allNames = _.uniq(objs[relation[1]]);
+
       if (objs[relation[1]]) {
-        _.each(allNames, function(name, id) {
-          var objId1 = objName.split("_")[1];
-          var objId2 = name.split("_")[1];
-          if (!(objId1 && objId2) || (objId1 == objId2)) {
-            json[objName+"__"+relation[2]+"__"+name] = {};
+        _.each(allNames, (name, id) => {
+          let objId1 = objName.split("_")[1];
+          let objId2 = name.split("_")[1];
+
+          if (!(objId1 && objId2) || (objId1 === objId2)) {
+            json[`${objName}__${relation[2]}__${name}`] = {};
           }
         })
       }
@@ -258,28 +257,28 @@ function generateJson(relations) {
 
 
 function fillSelector(selector, data, notLike) {
-  $.each(data.rows, function(id, row) {
+  $.each(data.rows, (id, row) => {
     if (row.name != notLike) {
       $("<option></option>")
-      .text(row.name)
-      .val(row.id)
-      .appendTo(selector);
+        .text(row.name)
+        .val(row.id)
+        .appendTo(selector);
     }
   })
 }
 
 function getDataForSelector(selector, dataType, notLike) {
-  var query = {};
-  var notLike = notLike || "";
+  let query = {};
+  notLike = notLike || "";
 
   if (App.store.selectData[dataType]) {
     fillSelector(selector, App.store.selectData[dataType], notLike);
   } else {
-    query["rows:"+dataType] = {"id": "*", "select": "*"};
+    query[`rows:${dataType}`] = {"id": "*", "select": "*"};
     query = JSON.stringify(query);
 
-    $.post("/hquery/read", query).success(function(response) {
-      var data = JSON.parse(response);
+    $.post("/hquery/read", query).success((response) => {
+      const data = JSON.parse(response);
       App.store.selectData[dataType] = data;
       fillSelector(selector, data, notLike);
     });
@@ -287,8 +286,8 @@ function getDataForSelector(selector, dataType, notLike) {
 }
 
 function uploadFile (file) {
-  return new Promise(function (resolve, reject) {
-    var data = new FormData();
+  return new Promise((resolve, reject) => {
+    let data = new FormData();
     data.append('reportKey', file, file.name);
 
     $.ajax({
@@ -298,43 +297,34 @@ function uploadFile (file) {
       dataType: 'json',
       processData: false,
       contentType: false,
-      success: function(response) {
+      success: (response) => {
         resolve(response.key);
       },
-      error: function(error) {
+      error: (error) => {
         reject(error);
       }
     });
   });
 }
 
-function downloadFile (key) {
-  var data = {"key": key}
 
-  $.ajax({
-    url: "/pfs/load",
-    data: data,
-    type: "POST",
-    // dataType: "application/pdf",
-    processData: false,
-    contentType: false
-  });
-}
+function isValidForm () {
+  let isValid = true;
+  const inputs = $('input[data-req][used!=false]');
 
-
-function validateCreatePages () {
-  var isValid = true;
-  var inputs = $('input[data-req][used!=false]');
   inputs.removeClass('error-input');
   inputs.prev().removeClass('error-input');
 
-  _.each(inputs, function (input) {
-    $(input).blur(function () {
-      if ( !$(this).val() ) {
-        if ($(input).attr('data-req') == 'up') {
-          $(input).prev().addClass('error-input');
+  _.each(inputs, (input) => {
+    const $input = $(input);
+    const $this = $(this);
+
+    $input.blur(() => {
+      if ( !$this.val() ) {
+        if ($input.attr('data-req') == 'up') {
+          $input.prev().addClass('error-input');
         } else {
-          $(this).addClass('error-input');
+          $this.addClass('error-input');
         }
         isValid = false;
       }

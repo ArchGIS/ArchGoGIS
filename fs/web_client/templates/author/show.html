@@ -3,7 +3,7 @@
   <p>
     <% if (photos.length) { %>
       <% _.each(photos, function(ph) { %>
-      <img src="<%= dburl + '/local_storage/' + ph.fileid %>" height="100px">
+      <img src="<%= HOST_URL + '/local_storage/' + ph.fileid %>" height="100px">
       <% }); %>
     <% } %>
   </p>
@@ -18,11 +18,7 @@
   <% if (researches.length) { %>
     <% _.each(researches, function(r, i) { %>
       <%= i + 1 %>)
-      <a href="#research/show/<%= r.id %>"><%= r.name %>
-      <!-- <% if (resTypes[i][0]) { %>
-        (<%= resTypes[i][0].name%>,
-      <% } %> -->
-      <!-- <%= r.year%>)--></a>
+      <a href="#research/show/<%= r.id %>"><%= r.name %></a>
       <br><br>
     <% }); %>
   <% } else { %>
