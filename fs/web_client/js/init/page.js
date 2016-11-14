@@ -25,7 +25,7 @@ App.page = new function() {
       App.locale.set(App.url.get('lang'));
       $body.html(tmpl(templateParams));
       _.invoke(hooks.afterRender, 'call');
-      App.widgetMaker.runDefers()
+      App.widgetMaker.runDefers();
       App.blockMaker.runInitializers();
 
       // Если есть view, то запускаем и его
