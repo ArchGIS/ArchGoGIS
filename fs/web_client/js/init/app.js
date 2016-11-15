@@ -300,7 +300,7 @@ function getDataForSelector(selector, dataType, notLike) {
 function uploadFile (file) {
   return new Promise((resolve, reject) => {
     let data = new FormData();
-    data.append('reportKey', file, file.name);
+    data.append('key', file, file.name);
 
     $.ajax({
       url: "/pfs/save",
