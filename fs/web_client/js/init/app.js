@@ -297,6 +297,12 @@ function getDataForSelector(selector, dataType, notLike) {
   }
 }
 
+/**
+ * Загрузка файла на сервер.
+ * 
+ * @param {Object} file
+ * @returns {Promise} async request
+ */
 function uploadFile (file) {
   return new Promise((resolve, reject) => {
     let data = new FormData();
