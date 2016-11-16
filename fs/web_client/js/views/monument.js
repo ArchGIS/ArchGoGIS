@@ -79,8 +79,9 @@ App.views.monument = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $('script.add-author').html() );
-
-        $input.parent().replaceWith( tmpl() );
+        $('.find-author').replaceWith( tmpl() );
+        tmpl = _.template( $('script.add-report').html() );
+        $('.find-report').replaceWith( tmpl() );
 
         $('#' + addNameToString(id)).val(inputValue);
         setSelectsEvents();
@@ -88,6 +89,42 @@ App.views.monument = new (Backbone.View.extend({
         lastSelectedAuthorId = ui.item.id;
         lastSelectedAuthorName = ui.item.name;
         authorSelectHandler(event, ui);
+      }
+    });
+
+    $('#report-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $('#report-input').on('autocompleteresponse', function(event, ui) {
+      if (ui.content.length === 0) {
+        ui.content.push({
+          'label': 'Ничего не найдено. Добавить?',
+          'value': 'Ничего не найдено. Добавить?'
+        });
+      }
+    });
+
+    $('#report-input').on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        function addNameToString(arr) {
+          var mass = id.split('-');
+          mass[2] = mass[1];
+          mass[1] = 'name';
+
+          return mass.join('-');
+        }
+
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-report').html() );
+
+        $input.parent().replaceWith( tmpl() );
+
+        $('#' + addNameToString(id)).val(inputValue);
+        // setSelectsEvents();
       }
     });
 
@@ -147,11 +184,11 @@ App.views.monument = new (Backbone.View.extend({
 
     // Валидация полей с автокомплитом
     var validate = App.fn.validInput;
-    validate('author-input', lastSelectedAuthorName);
-    validate('report-input', repSelName);
-    validate('report-city-input', lastSelectedCityName);
-    validate('report-organization-input', orgName);
-    validate('heritage-input', heritageSelName);
+    // validate('author-input', lastSelectedAuthorName);
+    // validate('report-input', repSelName);
+    // validate('report-city-input', lastSelectedCityName);
+    // validate('report-organization-input', orgName);
+    // validate('heritage-input', heritageSelName);
 
 
     var fillResearchInputs = function() {
