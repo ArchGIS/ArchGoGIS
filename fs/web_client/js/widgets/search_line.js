@@ -37,6 +37,11 @@ App.widgets.SearchLine = function(params, id) {
 		            result = params.etl(result);
               }
               items = _.uniq(result, 'label');
+
+              if (!items.length) {
+                items.push('Ничего не найдено. Добавить?');
+              }
+
               response(items);
             }
           );

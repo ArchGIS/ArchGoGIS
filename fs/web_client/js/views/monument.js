@@ -60,12 +60,35 @@ App.views.monument = new (Backbone.View.extend({
 
     var lastSelectedAuthorId = 0;
     var lastSelectedAuthorName = '';
+    $('#author-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
     $('#author-input').on('autocompleteselect', function(event, ui) {
-      if (lastSelectedAuthorId != ui.item.id) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        function addNameToString(arr) {
+          var mass = id.split('-');
+          mass[2] = mass[1];
+          mass[1] = 'name';
+
+          return mass.join('-');
+        }
+
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-author').html() );
+
+        $input.parent().html( tmpl() );
+
+        $('#' + addNameToString(id)).val(inputValue);
+        setSelectsEvents();
+      } else if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         lastSelectedAuthorName = ui.item.name;
         authorSelectHandler(event, ui);
-      } 
+      }
     });
 
     var lastSelectedCityId = 0;

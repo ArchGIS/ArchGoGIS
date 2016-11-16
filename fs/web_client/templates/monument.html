@@ -9,43 +9,15 @@
 
     <div id="home">
       <legend>Сведения об исследовании</legend>
-      <div class="checkbox">
-        <label for="new-author-checkbox">
-          <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
-          Добавить нового автора
-        </label>
 
-      </div>
-      <div class="form-group" toggle-by="new-author-checkbox" need-option="false">
-        <label for="author-input">Автор исследования <span class="required">*</span></label>
+      <div class="form-group">
+        <h4>Введите существующего автора исследования</h4>
+        <label for="author-input">Имя автора <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
       </div>
 
-      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
-        <label for="author-name-input">Имя <span class="required">*</span></label>
-        <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
-      </div>
-
-      <div class="checkbox" toggle-by="new-author-checkbox" need-option="true">
-        <label for="more-author-checkbox">
-          <input id="more-author-checkbox" type="checkbox" dynamic="true"></input>
-          Дополнительная информация от авторе
-        </label>
-      </div>
-
-      <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-        <label for="author-birth-date-input">Год рождения</label>
-        <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
-      </div>
-      <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-        <label for="author-photo-input">Фотография</label>
-        <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
-        <br>
-        <div class="alert alert-dismissible alert-info">
-          Максимальный размер фотографии 10 МБ.
-        </div>
-      </div>
+      <hr>
 
       <div class="checkbox">
         <label for="new-report-checkbox">
@@ -215,3 +187,32 @@
 <div class="maps">
   <%= widget("Map", {}, "map") %>
 </div>
+
+
+<script type="text/template" class="add-author">
+  <div class="form-group">
+    <h4>Добавление нового автора</h4>
+    <label for="author-name-input">Имя автора <span class="required">*</span></label>
+    <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input id="more-author-checkbox" type="checkbox" dynamic="true"></input>
+      Дополнительная информация от авторе
+    </label>
+  </div>
+
+  <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
+    <label for="author-birth-date-input">Год рождения</label>
+    <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
+  </div>
+  <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
+    <label for="author-photo-input">Фотография</label>
+    <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
+    <br>
+    <div class="alert alert-dismissible alert-info">
+      Максимальный размер фотографии 10 МБ.
+    </div>
+  </div>
+</script>
