@@ -179,6 +179,18 @@ function postQuery(objectId) {
   });
 }
 
+/**
+ * Отображение процесса выполнения запроса.
+ * Предполагается запуск ф-ии 2 раза,
+ * чтобы она корректно отработала.
+ * Первый запуск проводится без аргумента,
+ * меняет иконку на кнопке на загрузочную, возвращает DOM-элемент.
+ * При втором запуске этот DOM-элемент передаётся
+ * как аргумент и возвращается на своё место.
+ * 
+ * @param {Object} load
+ * @returns {Object} DOM-element in previous state of button
+ */
 function loading(load) {
   const template = '<i class="fa fa-spinner fa-pulse fa-fw"></i>';
   const icon = $('#send-button i');
@@ -293,10 +305,16 @@ function getDataForSelector(selector, dataType, notLike) {
   }
 }
 
+/**
+ * Загрузка файла на сервер.
+ * 
+ * @param {Object} file
+ * @returns {Promise} async request
+ */
 function uploadFile (file) {
   return new Promise((resolve, reject) => {
     let data = new FormData();
-    data.append('reportKey', file, file.name);
+    data.append('key', file, file.name);
 
     $.ajax({
       url: "/pfs/save",

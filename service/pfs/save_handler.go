@@ -11,7 +11,7 @@ import (
 
 const (
 	maxMemory       = 32 << 20
-	FILE_INPUT_NAME = "reportKey"
+	FILE_INPUT_NAME = "key"
 )
 
 func saveHandler(w web.ResponseWriter, r *http.Request) {
