@@ -211,50 +211,35 @@ App.views.research = new (Backbone.View.extend({
         Памятник №${monId}
       </h4>
       <div class="accordion-content">
-        <div class="checkbox">
-          <label for="new-monument-checkbox-${monId}">
-            <input id="new-monument-checkbox-${monId}" type="checkbox" dynamic="true"></input>
-            Добавить новый памятник
-          </label>
-        </div>
-        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="false">
+
+        <div class="form-group find-monument">
           <label>Выбрать существующий памятник <span class="required">*</span></label>
-          <!-- <%= widget("SearchLine", monInputOptions, "monument-input-${monId}") %> -->
           <input class="form-control" id="monument-input-${monId}"></input>
           <input id="monument-input-id-${monId}" data-for="m_${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
         </div>
 
-        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
-          <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="m_${monId}:Monument" type="text" name="tmp"></input>
-        </div>
+
         <div class="form-group">
           <label>Название памятника <span class="required">*</span></label>
           <input class="form-control" id="monument-name-input-${monId}" data-for="k_${monId}:Knowledge" type="text" name="monument_name" data-req></input>
         </div>
         <div class="form-group">
-          <label>Описание памятника</label>
+          <label for="monument-desc-input-${monId}">Описание памятника</label>
           <textarea class="form-control" id="monument-desc-input-${monId}" data-for="k_${monId}:Knowledge" type="text" name="description"></textarea>
         </div>
-        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
-          <label for="epoch-selector-${monId}">Эпоха</label>
-          <select class="form-control" id="epoch-selector-${monId}" data-for="e_${monId}:Epoch" type="id" name="id"></select>
-        </div>
-        <div class="form-group" toggle-by="new-monument-checkbox-${monId}" need-option="true">
-          <label for="mon-type-selector-${monId}">Тип</label>
-          <select class="form-control" id="mon-type-selector-${monId}" data-for="mt_${monId}:MonumentType" type="id" name="id"></select>
-        </div>
+        
 
         <div class="checkbox">
-          <label for="new-culture-checkbox">
-            <input id="new-culture-checkbox" type="checkbox" dynamic="true"></input>
+          <label for="new-culture-checkbox-${monId}">
+            <input id="new-culture-checkbox-${monId}" type="checkbox" dynamic="true"></input>
             Добавить новую культурную принадлежность
           </label>
         </div>
-        <div class="form-group" toggle-by="new-culture-checkbox" need-option="false">
+        <div class="form-group" toggle-by="new-culture-checkbox-${monId}" need-option="false">
           <label for="culture-selector-${monId}">Культура</label>
           <select class="form-control" id="culture-selector-${monId}" data-for="c_${monId}:Culture" type="id" name="id"></select>
         </div>
-        <div class="form-group" toggle-by="new-culture-checkbox" need-option="true">
+        <div class="form-group" toggle-by="new-culture-checkbox-${monId}" need-option="true">
           <label for="culture-input-${monId}">Введите культурную принадлежность</label>
           <input id="culture-input-${monId}" data-for="c_${monId}:Culture" type="text" name="name" class="form-control" />
         </div>
@@ -278,6 +263,23 @@ App.views.research = new (Backbone.View.extend({
           <h4 for="report-input">Археологические вскрытия:</h4>
         </div>
       </div>
+
+      <!-- Создание нового памятника -->
+      <script type="text/template" class="add-monument-${monId}">
+        <h4>Добавление нового памятника</h4>
+        <div class="form-group">
+          <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="m_${monId}:Monument" type="text" name="tmp"></input>
+        </div>
+
+        <div class="form-group">
+          <label for="epoch-selector-${monId}">Эпоха</label>
+          <select class="form-control" id="epoch-selector-${monId}" data-for="e_${monId}:Epoch" type="id" name="id"></select>
+        </div>
+        <div class="form-group">
+          <label for="mon-type-selector-${monId}">Тип</label>
+          <select class="form-control" id="mon-type-selector-${monId}" data-for="mt_${monId}:MonumentType" type="id" name="id"></select>
+        </div>
+      </script>
       `);
 
       $(this).before(newMonument);
@@ -314,9 +316,15 @@ App.views.research = new (Backbone.View.extend({
             App.models.Monument.findByNamePrefix(request.term)
               .then(function(data) {
                 if (data && !data.error) {
-                  response(_.map(excludeIdent(data), function(row) {
+                  let results = _.map(excludeIdent(data), function(row) {
                     return {'label': `${row.monName}`, 'id': row.monId}
-                  }))
+                  });
+
+                  if (!results.length) {
+                    results.push('Ничего не найдено. Добавить?');
+                  }
+
+                  response(results);
                 } else {
                   response();
                 }
@@ -331,17 +339,50 @@ App.views.research = new (Backbone.View.extend({
         });
       })();
 
-      var lastSelectedMonId = 0;
-      var monSelName = '';
+      $(`#monument-input-${monId}`).on('autocompletefocus', function(event, ui) {
+        event.preventDefault();
+      });
+
+      let lastSelectedMonId = 0;
+      let monSelName = '';
       $(`#monument-input-${monId}`).on('autocompleteselect', function(event, ui) {
-        if (lastSelectedMonId != ui.item.id) {
+        if (ui.item.value === 'Ничего не найдено. Добавить?') {
+          function addNameToString(arr) {
+            var mass = id.split('-');
+            mass[2] = mass[1];
+            mass[1] = 'name';
+
+            return mass.join('-');
+          }
+
+          let $input = $(this);
+          let id = $input.attr('id');
+          let inputValue = $input.val();
+
+          let tmpl = _.template( $(`script.add-monument-${monId - 1}`).html() );
+          $('.find-monument').replaceWith( tmpl({'monId': monId}) );
+
+          $('#' + addNameToString(id)).val(inputValue);
+
+          fillSelector($(`#epoch-selector-${monId - 1}`), App.store.selectData.Epoch);
+          fillSelector($(`#mon-type-selector-${monId - 1}`), App.store.selectData.MonumentType);
+        } else if (lastSelectedAuthorId != ui.item.id) {
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
         }
       });
 
-      validate(`monument-input-${monId}`, monSelName);
+      
+      // $(`#monument-input-${monId}`).on('autocompleteselect', function(event, ui) {
+      //   if (lastSelectedMonId != ui.item.id) {
+      //     lastSelectedMonId = ui.item.id;
+      //     $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
+      //     monSelName = ui.item.name;
+      //   }
+      // });
+
+      // validate(`monument-input-${monId}`, monSelName);
 
       App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
       monId++;
