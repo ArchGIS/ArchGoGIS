@@ -80,7 +80,7 @@ App.views.monument = new (Backbone.View.extend({
 
         let tmpl = _.template( $('script.add-author').html() );
 
-        $input.parent().html( tmpl() );
+        $input.parent().replaceWith( tmpl() );
 
         $('#' + addNameToString(id)).val(inputValue);
         setSelectsEvents();
