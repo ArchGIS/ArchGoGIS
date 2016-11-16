@@ -7,7 +7,10 @@ App.models.Monument = function Monument() {
 
 App.models.Monument.findByNamePrefix = function(name) {
   return new Promise(function(resolve, reject) {
-    var url = App.url.make('/search/monuments', {'needle': name, 'limit': 10});
+    var url = App.url.make('/search/filter_monuments', {
+      'name': name,
+      'epoch': ''
+    });
 
     $.get(url)
       .success(response => resolve($.parseJSON(response)))
