@@ -115,11 +115,9 @@ App.controllers.monument = new (Backbone.View.extend({
       })
       console.log(tmplData);
       App.page.render("monument/show", tmplData)
-    }
+    };
 
-    var queryCounter = _.reduce(queries, function(memo, obj) {
-      return memo + _.size(obj)
-    }, 0)
+    var queryCounter = _.reduce(queries, (memo, obj) => { return memo + _.size(obj) }, 0);
 
     var callRender = _.after(queryCounter, render);
 
