@@ -5,7 +5,7 @@ App.widgets.Toggler = function(params, id, attributes) {
   var params = params[type];
   var $el = null;
   var callback = null;
-  console.log(attributes);
+
   var selectTmpl = _.template(`
     <select id="<%= id %>" ${attributes}>
       <% _.each(options, function(option) { %>
