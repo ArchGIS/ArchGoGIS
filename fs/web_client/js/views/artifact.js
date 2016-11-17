@@ -383,6 +383,7 @@ App.views.artifact = new (Backbone.View.extend({
     getDataForSelector($("#arti-culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
     getDataForSelector($("#arti-date-scale-selector"), "DateScale");
+    getDataForSelector($("#research-type-selector"), "ResearchType");
 
     $("#container").tabs();
     setSelectsEvents();

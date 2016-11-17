@@ -69,6 +69,10 @@
         <input class="form-control" id="report-year-input" data-for="r:Report" type="number" name="year" data-req></input>
       </div>
       <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="research-type-selector">Тип исследования</label>
+        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
         <label for="report-city-input">Город</label>
         <%= widget("SearchLine", citiesInputOptions, "report-city-input") %>
         <input id="report-city-input-id" data-for="city:City" hidden type="id" name="id"></input>
@@ -89,10 +93,6 @@
         <div class="alert alert-dismissible alert-info">
           Максимальный размер документа 50 МБ.
         </div>
-      </div>
-      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
-        <label for="research-type-selector">Тип исследования</label>
-        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
       </div>
 
       <div class="form-group" hidden>
@@ -185,10 +185,6 @@
         <label for="monument-desc-input">Описание памятника</label>
         <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
       </div>
-      <div class="form-group" toggle-by="more-monument-checkbox" need-option="true">
-        <label for="monument-object-input">Название объекта</label>
-        <textarea class="form-control" id="monument-object-input" data-for="complex:Complex" type="text" name="name"></textarea>
-      </div>
 
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
@@ -212,6 +208,10 @@
       <div class="form-group">
         <label for="exc-depth-input">Глубина (см)</label>
         <input class="form-control" id="exc-depth-input" data-for="exc:Excavation" type="number" name="depth"></input>
+      </div>
+      <div class="form-group">
+        <label for="monument-object-input">Название объекта</label>
+        <input class="form-control" id="monument-object-input" data-for="complex:Complex" type="text" name="name"></input>
       </div>
 
       <div id="exc-coord-picker" class="coords">
