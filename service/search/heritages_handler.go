@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	oknsCypher = "MATCH (o:Heritage)" +
+	oknsCypher = "MATCH (o:HeritageStatus)" +
 		"WHERE o.name =~ {needle}" +
 		"RETURN o"
 )
