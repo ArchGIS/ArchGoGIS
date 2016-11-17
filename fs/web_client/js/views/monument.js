@@ -211,10 +211,28 @@ App.views.monument = new (Backbone.View.extend({
     });
 
     getDataForSelector($("#epoch-selector"), "Epoch");
-    getDataForSelector($("#culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
     getDataForSelector($("#research-type-selector"), "ResearchType");
     setSelectsEvents();
+
+    let d_culture = $.Deferred();
+    (function() {
+      let query = {};
+      query['rows:Culture'] = {"id": "*", "select": "*"};
+      query = JSON.stringify(query);
+
+      $.post("/hquery/read", query).success((response) => {
+        App.store.selectData.Culture = JSON.parse(response);
+        d_culture.resolve();
+      });
+    }());
+
+    $.when( d_culture ).done(() => {
+      $('#culture-input').autocomplete({
+        source: _.pluck(App.store.selectData.Culture.rows, 'name'),
+        minLength: 0
+      })
+    });
     
     coordpicker($('#coord-picker'), {
       inputs: ['#monument-x', '#monument-y'],
