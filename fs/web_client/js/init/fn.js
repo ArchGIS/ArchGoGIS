@@ -135,3 +135,11 @@ App.fn.excludeIdentMonuments = (monuments) => {
 
   return results;
 };
+
+
+App.fn.addNameToId = (id) => {
+  let mass = id.split('-');
+  mass.splice(1, 0, 'name');
+
+  return mass.join('-');
+};
