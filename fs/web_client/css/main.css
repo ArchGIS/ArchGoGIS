@@ -65,7 +65,11 @@ a:hover {
   width: 100%;
 }
 
-.maps {
+#top-menu {
+  width: 100%;
+}
+
+.-s {
   position: fixed;
   left: calc(50% + 1em);
   top: 60px;
@@ -336,4 +340,8 @@ dt {
 
 .map-state-table > tbody > tr > td > select {
   border: 0px;
+}
+
+.map-table-row {
+  max-width: 85px;
 }
