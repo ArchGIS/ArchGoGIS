@@ -69,7 +69,7 @@ a:hover {
   width: 100%;
 }
 
-.-s {
+.maps {
   position: fixed;
   left: calc(50% + 1em);
   top: 60px;
