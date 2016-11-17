@@ -228,12 +228,59 @@ App.views.monument = new (Backbone.View.extend({
     }());
 
     $.when( d_culture ).done(() => {
+      let items = _.map(App.store.selectData.Culture.rows, culture => ({'id': culture.id, 'label': culture.name}));
+      let grepObject = App.fn.grepObject;
+
       $('#culture-input').autocomplete({
-        source: _.pluck(App.store.selectData.Culture.rows, 'name'),
+        source: function(req, res) {
+          let term = req.term.toLowerCase();
+          
+          res(grepObject(term, items, 'label'));
+        },
         minLength: 0
-      })
+      }).focus(function() {
+        $(this).autocomplete("search");
+      });
+    });
+
+    $('#culture-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $('#culture-input').on('autocompleteresponse', function(event, ui) {
+      if (ui.content.length === 0) {
+        ui.content.push({
+          'value': 'Ничего не найдено. Добавить?',
+          'label': 'Ничего не найдено. Добавить?'
+        });
+      }
     });
     
+    $('#culture-input').on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        function addNameToString(arr) {
+          var mass = id.split('-');
+          mass[2] = mass[1];
+          mass[1] = 'name';
+
+          return mass.join('-');
+        }
+
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-culture').html() );
+
+        $input.parent().replaceWith( tmpl() );
+
+        $('#' + addNameToString(id)).val(inputValue);
+      } else {
+        $('#culture-input-id').val(ui.item.id);
+      }
+    });
+
+
     coordpicker($('#coord-picker'), {
       inputs: ['#monument-x', '#monument-y'],
       map: 'map'

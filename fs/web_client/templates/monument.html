@@ -100,7 +100,8 @@
 
       <div class="form-group">
         <label for="culture-input">Культурная принадлежность</label>
-        <input id="culture-input" data-for="c:Culture" type="text" name="name" class="form-control" />
+        <input id="culture-input" class="form-control">
+        <input id="culture-input-id" hidden data-for="c:Culture" type="id" name="id">
       </div>
 
       <div id="coord-picker" class="coords">
@@ -203,5 +204,12 @@
 
   <div class="form-group" hidden>
     <input class="form-control" id="research-input-name" data-for="rs:Research" type="text" name="name"></input>
+  </div>
+</script>
+
+<script type="text/template" class="add-culture">
+  <div class="form-group">
+    <label for="culture-name-input">Новая культурная принадлежность</label>
+    <input id="culture-name-input" class="form-control" data-for="c:Culture" type="text" name="name">
   </div>
 </script>
