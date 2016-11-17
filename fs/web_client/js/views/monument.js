@@ -4,6 +4,7 @@ App.views.monument = new (Backbone.View.extend({
   'new': function() {
     var coordpicker = App.blocks.coordpicker;
     var fmt = App.fn.fmt;
+    let addName = App.fn.addNameToId;
     
     var repSelName = '',
         heritageSelName = '',
@@ -66,14 +67,6 @@ App.views.monument = new (Backbone.View.extend({
 
     $('#author-input').on('autocompleteselect', function(event, ui) {
       if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        function addNameToString(arr) {
-          var mass = id.split('-');
-          mass[2] = mass[1];
-          mass[1] = 'name';
-
-          return mass.join('-');
-        }
-
         let $input = $(this);
         let id = $input.attr('id');
         let inputValue = $input.val();
@@ -83,8 +76,9 @@ App.views.monument = new (Backbone.View.extend({
         tmpl = _.template( $('script.add-report').html() );
         $('.find-report').replaceWith( tmpl() );
 
-        $('#' + addNameToString(id)).val(inputValue);
+        $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
+        fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
       } else if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         lastSelectedAuthorName = ui.item.name;
@@ -107,14 +101,6 @@ App.views.monument = new (Backbone.View.extend({
 
     $('#report-input').on('autocompleteselect', function(event, ui) {
       if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        function addNameToString(arr) {
-          var mass = id.split('-');
-          mass[2] = mass[1];
-          mass[1] = 'name';
-
-          return mass.join('-');
-        }
-
         let $input = $(this);
         let id = $input.attr('id');
         let inputValue = $input.val();
@@ -123,8 +109,8 @@ App.views.monument = new (Backbone.View.extend({
 
         $input.parent().replaceWith( tmpl() );
 
-        $('#' + addNameToString(id)).val(inputValue);
-        // setSelectsEvents();
+        $('#' + addName(id)).val(inputValue);
+        fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
       }
     });
 
@@ -138,28 +124,25 @@ App.views.monument = new (Backbone.View.extend({
       } 
     });
 
-    $("#heritage-input").autocomplete({
-      source: function(request, response) {
-        var heritages = [];
 
-        App.models.Heritage.findByNamePrefix(request.term)
-          .then(function(data) {
-            if (data && !data.error) {
-              response(_.map(data, function(row) {
-                return {'label': `${row[1]} (${row[3]}, ${row[2]})`, 'id': row[0]}
-              }))
-            } else {
-              response();
-            }
-          });
-      },
-      minLength: 3,
-      select: function(event, ui) {
-        $("#heritage-input-id").val(ui.item.id);
-        heritageSelName = ui.item.name;
+    $('#heritage-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+    
+    $('#heritage-input').on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-heritage').html() );
+
+        $input.parent().replaceWith( tmpl() );
+
+        $('#' + addName(id)).val(inputValue);
+      } else {
+        $('#heritage-input-id').val(ui.item.id);
       }
-    }).focus(function(){
-      $(this).autocomplete("search");
     });
 
 
@@ -183,7 +166,7 @@ App.views.monument = new (Backbone.View.extend({
     $repYear.bind('keyup mouseup', checkYear.bind($repYear));
 
     // Валидация полей с автокомплитом
-    var validate = App.fn.validInput;
+    // var validate = App.fn.validInput;
     // validate('author-input', lastSelectedAuthorName);
     // validate('report-input', repSelName);
     // validate('report-city-input', lastSelectedCityName);
@@ -258,14 +241,6 @@ App.views.monument = new (Backbone.View.extend({
     
     $('#culture-input').on('autocompleteselect', function(event, ui) {
       if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        function addNameToString(arr) {
-          var mass = id.split('-');
-          mass[2] = mass[1];
-          mass[1] = 'name';
-
-          return mass.join('-');
-        }
-
         let $input = $(this);
         let id = $input.attr('id');
         let inputValue = $input.val();
@@ -274,7 +249,7 @@ App.views.monument = new (Backbone.View.extend({
 
         $input.parent().replaceWith( tmpl() );
 
-        $('#' + addNameToString(id)).val(inputValue);
+        $('#' + addName(id)).val(inputValue);
       } else {
         $('#culture-input-id').val(ui.item.id);
       }

@@ -154,6 +154,12 @@ App.controllers.monument = new (Backbone.View.extend({
         'etl': function(cities) {
           return _.map(cities, city => ({'id': city.id, 'label': city.name}));
         }
+      },
+      'heritageInputOptions': {
+        'source': App.models.Heritage.findByNamePrefix,
+        'etl': function(herits) {
+          return _.map(herits, h => ({'id': h.id, 'label': h.name}));
+        }
       }
     });
   },
