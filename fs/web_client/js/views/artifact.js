@@ -411,6 +411,10 @@ App.views.artifact = new (Backbone.View.extend({
       photoId++;
     });
 
+    $('.btn-next').on('click', function(e) {
+      $("#container").tabs({active: $(this).attr("active")});
+    })
+    
     $('#send-button').on('click', function() {
       fillResearchInputs();
 

@@ -106,7 +106,7 @@ App.views.heritage = new (Backbone.View.extend({
 
     $('#send-button').on('click', function() {
       if ( isValidForm() ) {
-        postQuery();
+        postQuery("heritage");
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');
       }

@@ -218,13 +218,13 @@ function generateJson(relations) {
     $input = $(input);
     dataFor = $input.attr("data-for");
     dataType = $input.attr("data-type") || $input.attr("type");
-    type = (dataType != "id") ? ("/" + dataType) : "";
+    type = (dataType != "id" && dataType != "table") ? ("/" + dataType) : "";
     name = ($input.attr("data-name") || $input.attr("name")) + type;
     value = $input.val().replace(/\n/g, "\\n");
     inputClass = dataFor.split(":")[1];
     inputSubclass = $input.attr("data-subclass") || inputClass;
 
-    if (!value || ($input.attr("type") == "radio" && $input.is(":checked") == false)) {
+    if (!(value || $input.is("table")) || ($input.attr("type") == "radio" && $input.is(":checked") == false)) {
       return true;
     }
 
@@ -242,6 +242,20 @@ function generateJson(relations) {
         counter++;
       });
     } else {
+      if ($input.is("table")) {
+        let $rows = $input.find("tbody > tr");
+        let data = {};
+
+        _.each($rows, function(row, rowNum) {
+          let selects = $(row).find("select")
+          data[rowNum] = {};
+          _.each(selects, function(select, key) {
+            data[rowNum][key] = $(select).val();
+          })
+        })
+        value = JSON.stringify(data);
+      }
+      
       inputObjName = dataFor.split(":")[0];
       objs[inputSubclass].push(inputObjName);
       json[dataFor] = json[dataFor] || {};
