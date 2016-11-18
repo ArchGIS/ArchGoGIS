@@ -72,17 +72,22 @@ App.views.artifact = new (Backbone.View.extend({
             }
           });
       },
-      minLength: 3,
-      select: function(event, ui) {
-        $("#monument-input-id").val(ui.item.id);
-        monSelName = ui.item.name;
-      }
-    }).focus(function(){
+      minLength: 3
+    }).focus(function() {
       $(this).autocomplete("search");
     });
 
     $(`#monument-input`).on('autocompletefocus', function(event, ui) {
       event.preventDefault();
+    });
+
+    $('#monument-input').on('autocompleteresponse', function(event, ui) {
+      if (ui.content.length === 0) {
+        ui.content.push({
+          'label': 'Ничего не найдено. Добавить?',
+          'value': 'Ничего не найдено. Добавить?'
+        });
+      }
     });
 
     let lastSelectedMonId = 0;
@@ -93,7 +98,7 @@ App.views.artifact = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $(`script.add-monument`).html() );
-        $(`.find-monument`).replaceWith( tmpl({'monId': localMonId}) );
+        $(`.find-monument`).replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
 
@@ -155,7 +160,7 @@ App.views.artifact = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $(`script.add-culture`).html() );
-        $(`.find-culture`).replaceWith( tmpl({'monId': localMonId}) );
+        $(`.find-culture`).replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
       } else {
@@ -178,6 +183,8 @@ App.views.artifact = new (Backbone.View.extend({
 
         let tmpl = _.template( $('script.add-author').html() );
         $('.find-author').replaceWith( tmpl() );
+        tmpl = _.template( $('script.add-research').html() );
+        $('.find-research').replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
@@ -210,8 +217,7 @@ App.views.artifact = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $('script.add-research').html() );
-
-        $input.parent().replaceWith( tmpl() );
+        $('.find-research').replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
