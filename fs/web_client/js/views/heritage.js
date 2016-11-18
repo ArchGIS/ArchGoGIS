@@ -116,4 +116,23 @@ App.views.heritage = new (Backbone.View.extend({
       $("#container").tabs({active: $(this).attr("active")});
     })
   },
+
+  'show': function(arg) {
+    console.log(arg)
+    _.each(arg.stateTables, function(table, id) {
+      App.template.get("heritage/stateTable", function(tmpl) {
+        $(`#state${id}`).append(tmpl({mapId: id}));
+
+        var rows = $(`#map-table-${id}`).find("tr:gt(0)");
+        _.each(rows, function(row, rowNum) {
+          for (let i=0; i<5; i++) {
+            $(row).append(`<td class="map-table-row">${table[rowNum][i]}</td>`)
+          }
+        })
+      });
+    })
+
+    $(".tabs").tabs();
+    App.views.functions.setAccordion(".accordion");
+  }
 }));

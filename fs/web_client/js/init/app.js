@@ -244,16 +244,17 @@ function generateJson(relations) {
     } else {
       if ($input.is("table")) {
         let $rows = $input.find("tbody > tr");
-        let data = {};
+        let data = [];
 
         _.each($rows, function(row, rowNum) {
           let selects = $(row).find("select")
-          data[rowNum] = {};
+          data[rowNum] = [];
           _.each(selects, function(select, key) {
             data[rowNum][key] = $(select).val();
           })
         })
-        value = JSON.stringify(data);
+        
+        value = JSON.stringify(data).replace(/\"/g, "\'");
       }
       
       inputObjName = dataFor.split(":")[0];

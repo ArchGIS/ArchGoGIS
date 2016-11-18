@@ -1,0 +1,157 @@
+<div class="content">  
+  <h2><%= t("heritage.info") %></h2>
+  
+  <div id="container" class="tabs">
+    <ul>
+      <li><a href="#general"><%= t('common.general') %></a></li>
+      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
+      <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#surveyMaps"><%= t('doc.surveyMap.plural') %></a></li>
+      <li><a href="#topoplans"><%= t('topoplan.plural') %></a></li>
+      <li><a href="#plural"><%= t('photo.plural') %></a></li>
+    </ul>
+
+    <div id="general">
+      <dt>Код ОКН:</dt>
+      <dd><%= maybe(heritage, "Не указан","code") %></dd>
+
+      <dt>Наименование:</dt>
+      <dd><%= maybe(heritage, "Не указан","name") %></dd>
+
+      <dt>Адрес:</dt>
+      <dd><%= maybe(heritage, "Не указан","address") %></dd>
+
+      <dt>Датировка:</dt>
+      <dd><%= maybe(heritage, "Не указана","date") %></dd>
+
+      <dt>Статус:</dt>
+      <dd><%= maybe(herStatus[0], "Не указан", "name") %></dd>
+
+      <% if (secType[0].name) { %>
+        <dt>Категория охраны:</dt>
+        <dd><%= maybe(secType[0], "Не указана","name") %></dd>
+
+        <dt>Вид документа о постановке на государственную охрану:</dt>
+        <dd><%= maybe(heritage, "Не указан","docType") %></dd>
+
+        <dt>Номер документа о постановке на государственную охрану:</dt>
+        <dd><%= maybe(heritage, "Не указан","docNum") %></dd>
+
+        <dt>Дата документа о постановке на государственную охрану:</dt>
+        <dd><%= maybe(heritage, "Не указана","docDate") %></dd>
+      <% } %>
+
+      <dt>Описание границ:</dt>
+      <dd><%= maybe(heritage, "Не указано","borderDesc") %></dd>
+
+      <dt>Документ о постановке на учет:</dt>
+      <dd><%= App.models.Report.href(heritage.fileid, "Документ") %></dd>
+
+    </div>
+
+    <div id="monuments"></div>
+    <div id="researches"></div>
+    <div id="surveyMaps">
+      <% _.each(surveyMaps, function(map, i) { %>
+        <div class="accordion">
+          <h4 class="accordion-header">
+            <%= t("doc.surveyMap.singular") %> №<%= i+1 %>
+          </h4>
+
+          <div class="accordion-content">
+            <div class="tabs">
+              <ul>
+                <li><a href="#general<%=i%>"><%= t('doc.surveyMap.general') %></a></li>
+                <li><a href="#use<%=i%>"><%= t('doc.surveyMap.use') %></a></li>
+                <li><a href="#state<%=i%>"><%= t('doc.surveyMap.state') %></a></li>
+              </ul>
+
+              <div id="general<%=i%>">
+                <dt>Дата составления карты:</dt>
+                <dd><%= maybe(map, "Не указана", "createDate") %></dd>
+
+                <dt>Учетный номер БТИ:</dt>
+                <dd><%= maybe(map, "Не указан", "rodNumber") %></dd>
+
+                <dt>Номер паспорта БТИ:</dt>
+                <dd><%= maybe(map, "Не указан", "rodPassport") %></dd>
+
+                <dt>Дата выдачи паспорта БТИ:</dt>
+                <dd><%= maybe(map, "Не указана", "rodDate") %></dd>
+
+                <dt>Общая площадь (м²):</dt>
+                <dd><%= maybe(map, "Не указана", "area") %></dd>
+
+                <dt>Карта обследования:</dt>
+                <dd><%= App.models.Report.href(map.fileid, "Документ") %></dd>
+              </div>
+
+              <div id="use<%=i%>">
+                <dt>Вид собственности:</dt>
+                <dd><%= maybe(lists[i].ot[0], "Не указан", "name") %></dd>
+
+                <dt>Вид распоряжения:</dt>
+                <dd><%= maybe(lists[i].dt[0], "Не указан", "name") %></dd>
+
+                <dt>Код собственника (распорядителя) по ОКАТО:</dt>
+                <dd><%= maybe(map, "Не указан", "disposalCode") %></dd>
+
+                <dt>ИНН собственника (распорядителя):</dt>
+                <dd><%= maybe(map, "Не указан", "disposerVat") %></dd>
+
+                <dt>КПП собственника (распорядителя):</dt>
+                <dd><%= maybe(map, "Не указан", "disposerKpp") %></dd>
+
+                <dt>Вид документа о передаче объекта собственнику (распорядителю):</dt>
+                <dd><%= maybe(map, "Не указан", "docType") %></dd>
+
+                <dt>Дата документа о передаче собственнику (распорядителю):</dt>
+                <dd><%= maybe(map, "Не указана", "docDate") %></dd>
+
+                <dt>Номер документа о передаче собственнику (распорядителю):</dt>
+                <dd><%= maybe(map, "Не указан", "docNum") %></dd> 
+
+                <dt>Дата начала владения (распоряжения) по документу об охране:</dt>
+                <dd><%= maybe(map, "Не указана", "startDate") %></dd>
+
+                <dt>Дата окончания владения (распоряжения) по документу об охране:</dt>
+                <dd><%= maybe(map, "Не указана", "endDate") %></dd>
+
+                <dt>Вид охранного документа:</dt>
+                <dd><%= maybe(map, "Не указан", "docSecurityType") %></dd>
+
+                <dt>Дата охранного документа:</dt>
+                <dd><%= maybe(map, "Не указана", "docSecurityDate") %></dd>
+
+                <dt>Номер охранного документа:</dt>
+                <dd><%= maybe(map, "Не указан", "docSecurityNum") %></dd>
+
+                <dt>Использование по первоначальному функциональному назначению:</dt>
+                <dd>
+                  <%= (map.useInitial) ? "Да" : "Нет" %>
+                </dd>
+
+                <dt>Функциональное назначение:</dt>
+                <dd><%= maybe(lists[i].fp[0], "Не указано", "name") %></dd>
+
+                <dt>Доступность памятника:</dt>
+                <dd><%= maybe(lists[i].avail[0], "Не указана", "name") %></dd>
+
+                <dt>Вид пользования:</dt>
+                <dd><%= maybe(lists[i].ut[0], "Не указан", "name") %></dd>
+              </div>
+              <div id="state<%=i%>">
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %> 
+    </div>
+    <div id="topoplans"></div>
+    <div id="plural"></div>
+  </div>
+
+  <div class="maps">
+    <%= widget("Map", {}, "map") %>
+  </div>
+</div>

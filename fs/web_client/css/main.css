@@ -344,4 +344,5 @@ dt {
 
 .map-table-row {
   max-width: 85px;
+  word-break: break-all;
 }

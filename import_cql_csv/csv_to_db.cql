@@ -517,3 +517,150 @@ create (am22:ArtifactMaterial {
   id: 22,
   name: 'Кашин'
 });
+
+create (mm1:MonumentMaterial {
+  id: 0,
+  name: '-'
+});
+create (mm2:MonumentMaterial {
+  id: 100,
+  name: 'Дерево'
+});
+create (mm3:MonumentMaterial {
+  id: 200,
+  name: 'Кирпич'
+});
+create (mm4:MonumentMaterial {
+  id: 300,
+  name: 'Бетон'
+});
+create (mm5:MonumentMaterial {
+  id: 400,
+  name: 'Земля'
+});
+create (mm6:MonumentMaterial {
+  id: 500,
+  name: 'Гипс'
+});
+create (mm7:MonumentMaterial {
+  id: 600,
+  name: 'Камень'
+});
+create (mm8:MonumentMaterial {
+  id: 670,
+  name: 'Гранит'
+});
+create (mm9:MonumentMaterial {
+  id: 680,
+  name: 'Известняк'
+});
+
+create (ms1:MonumentState {
+  id: 0,
+  name: '-'
+});
+create (ms2:MonumentState {
+  id: 1,
+  name: 'Удовлетворительное'
+});
+create (ms3:MonumentState {
+  id: 2,
+  name: 'Неудовлетворительное'
+});
+create (ms4:MonumentState {
+  id: 3,
+  name: 'Аварийное'
+});
+create (ms5:MonumentState {
+  id: 4,
+  name: 'Разрушен'
+});
+
+create (mf1:MonumentDefect {
+  id: 0,
+  name: '-'
+});
+create (mf2:MonumentDefect {
+  id: 10,
+  name: 'Разрушено'
+});
+create (mf3:MonumentDefect {
+  id: 20,
+  name: 'Отсутсвует'
+});
+create (mf4:MonumentDefect {
+  id: 30,
+  name: 'Обрушение'
+});
+create (mf5:MonumentDefect {
+  id: 110,
+  name: 'Вертикальные трещины'
+});
+create (mf6:MonumentDefect {
+  id: 130,
+  name: 'Горизонтальные трещины'
+});
+create (mf7:MonumentDefect {
+  id: 150,
+  name: 'Косые(наклонные) трещины'
+});
+create (mf8:MonumentDefect {
+  id: 170,
+  name: 'Смешанные трещины'
+});
+create (mf9:MonumentDefect {
+  id: 200,
+  name: 'Осыпание красочного слоя'
+});
+create (mf10:MonumentDefect {
+  id: 220,
+  name: 'Отслоение штукатурки'
+});
+create (mf11:MonumentDefect {
+  id: 240,
+  name: 'Выкрашиване кладки'
+});
+create (mf12:MonumentDefect {
+  id: 260,
+  name: 'Высолы'
+});
+create (mf13:MonumentDefect {
+  id: 300,
+  name: 'Коррозия металла'
+});
+create (mf14:MonumentDefect {
+  id: 400,
+  name: 'Деформация вертикальная'
+});
+create (mf15:MonumentDefect {
+  id: 420,
+  name: 'Деформация горизонтальная'
+});
+create (mf16:MonumentDefect {
+  id: 440,
+  name: 'Деформация изгибная'
+});
+create (mf17:MonumentDefect {
+  id: 460,
+  name: 'Деформация смешанная'
+});
+create (mf18:MonumentDefect {
+  id: 500,
+  name: 'Поражение гнилью'
+});
+create (mf19:MonumentDefect {
+  id: 600,
+  name: 'Поражение грибком'
+});
+create (mf20:MonumentDefect {
+  id: 700,
+  name: 'Нарушение целостности культурного слоя природное'
+});
+create (mf21:MonumentDefect {
+  id: 730,
+  name: 'Нарушение целостности культурного слоя антропогенное'
+});
+create (mf22:MonumentDefect {
+  id: 750,
+  name: 'Нарушение целостности техногенное культурного слоя'
+});
