@@ -137,7 +137,7 @@ App.views.monument = new (Backbone.View.extend({
 
         let tmpl = _.template( $('script.add-heritage').html() );
 
-        $input.parent().replaceWith( tmpl() );
+        $('.find-heritage').replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
       } else {
