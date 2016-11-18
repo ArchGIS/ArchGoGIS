@@ -1,0 +1,24 @@
+<h4 class="accordion-header" id="photo-header-<%= photoId %>">
+  <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+  <%= t('photo.singular') %> №<%= photoId %>
+</h4>
+  
+<div class="accordion-content">
+  <div class="form-group">
+    <label for="photo-file-input-<%= photoId %>">Фотография</label>
+    <input id="photo-file-input-<%= photoId %>" data-for="photo_<%= photoId %>:Image" data-subclass="monumentImage" type="file" name="fileid"></input>
+    <div class="alert alert-dismissible alert-info">
+      Максимальный размер фотографии 10 МБ.
+    </div>
+
+    <div class="form-group">
+      <label for="photo-monument-part-input-<%= photoId %>">Элемент памятника</label>
+      <input class="form-control" id="photo-monument-part-input-<%= photoId %>" data-for="photo_<%= photoId %>:Image" data-subclass="monumentImage" type="text" name="monumentPart"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="photo-view-selector-<%= photoId %>">Ракурс</label>
+      <select class="form-control" id="photo-view-selector-<%= photoId %>" data-for="cd_<%= photoId %>:CardinalDirection" type="id" name="id"></select>
+    </div>
+  </div>
+</div>
