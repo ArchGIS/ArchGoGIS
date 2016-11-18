@@ -23,14 +23,7 @@ App.views.monument = new (Backbone.View.extend({
 
       $("#report-input").autocomplete({
         source: [],
-        minLength: 0,
-        select: function(event, ui) {
-          var resId = ui.item.resId;
-
-          $("#research-input-id").val(resId);
-          $("#report-input-id").val(ui.item.id);
-          repSelName = ui.item.name;
-        }
+        minLength: 0
       }).focus(function() {
         $(this).autocomplete("search");
       });
@@ -110,7 +103,13 @@ App.views.monument = new (Backbone.View.extend({
         $input.parent().replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
+        setSelectsEvents();
+        fillResearchInputs();
         fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
+      } else {
+        $("#research-input-id").val(ui.item.resId);
+        $("#report-input-id").val(ui.item.id);
+        repSelName = ui.item.name;
       }
     });
 
@@ -174,13 +173,11 @@ App.views.monument = new (Backbone.View.extend({
     // validate('heritage-input', heritageSelName);
 
 
-    var fillResearchInputs = function() {
-      if ($("#new-report-checkbox").is(":checked") == true) {
-        var year = $("#report-year-input").val();
-        var name = $("#report-name-input").val() + " - " + year;
-        $("#research-input-name").val(name);
-        $("#research-input-year").val(year);
-      }
+    function fillResearchInputs() {
+      var year = $("#report-year-input").val();
+      var name = $("#report-name-input").val() + " - " + year;
+      $("#research-input-name").val(name);
+      $("#research-input-year").val(year);
     };
 
     $('#send-button').on('click', function() {
@@ -253,6 +250,38 @@ App.views.monument = new (Backbone.View.extend({
       } else {
         $('#culture-input-id').val(ui.item.id);
       }
+    });
+
+
+    let photoId = 1;
+    $('#add-photo-button').on('click', function(e) {
+      let localPhotoId = photoId;
+      let params = {
+        photoId: localPhotoId
+      }
+
+      App.template.get("monument/addPhoto", function(tmpl) {
+        $('#add-photo-button').before(tmpl(params));
+
+        getDataForSelector($(`#photo-view-selector-${localPhotoId}`), "CardinalDirection");
+        App.views.functions.setAccordionHeader($(`#photo-header-${localPhotoId}`));
+      })
+      photoId++;
+    });
+
+    let topoId = 1;
+    $('#add-topo-button').on('click', function(e) {
+      let localTopoId = topoId;
+      let params = {
+        topoId: localTopoId
+      }
+
+      App.template.get("monument/addTopoplan", function(tmpl) {
+        $('#add-topo-button').before(tmpl(params));
+
+        App.views.functions.setAccordionHeader($(`#topo-header-${localTopoId}`));
+      })
+      topoId++;
     });
 
 

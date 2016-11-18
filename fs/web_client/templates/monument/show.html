@@ -8,7 +8,8 @@
       <li><a href="#reports"><%= t('report.plural') %></a></li>
       <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
-      <li><a href="#future">*</a></li>
+      <li><a href="#photos"><%= t('photo.plural') %></a></li>
+      <li><a href="#topos"><%= t('topoplan.singular') %></a></li>
     </ul>
 
     <div id="general">
@@ -122,9 +123,18 @@
         }).join(", ")
       })).join(", ") %>
     </div>
-  </div>
 
-  <div id="future">
+    <div id="photos">
+      <!--<% _.each(photos[0], (el, i, list) => { %>
+        <%= App.fn.monImageCard(el) %>
+      <% }) %>-->
+    </div>
+
+    <div id="topos">
+      <% _.each(topos[0], (el, i, list) => { %>
+        <%= App.fn.monImageCard(el) %>
+      <% }) %>
+    </div>
   </div>
 
   <div class="maps">

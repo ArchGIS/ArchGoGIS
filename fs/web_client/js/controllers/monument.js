@@ -69,7 +69,17 @@ App.controllers.monument = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "NEED"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
           "knowledge__found__artifacts": {}
-        })
+        }),
+        photos: JSON.stringify({
+          "knowledge:Knowledge": {"id": "NEED"},
+          "photo:Image": {"id": "*", "select": "*"},
+          "knowledge__has__photo": {}
+        }),
+        topos: JSON.stringify({
+          "knowledge:Knowledge": {"id": "NEED"},
+          "topo:Image": {"id": "*", "select": "*"},
+          "knowledge__hastopo__topo": {}
+        }) 
       }
     }
 

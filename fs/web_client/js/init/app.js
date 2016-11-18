@@ -90,6 +90,8 @@ function postQuery(objectId) {
     ["Monument", "Complex", "has"],
     ["Monument", "Epoch", "has"],
     ["Monument", "MonumentType", "has"],
+    ["Knowledge", "monumentImage", "has"],
+    ["Knowledge", "monumentTopo", "hastopo"],
     ["Heritage", "Monument", "has"],
     ["Heritage", "HeritageStatus", "has"],
     ["Heritage", "SecurityType", "has"],
@@ -116,7 +118,8 @@ function postQuery(objectId) {
     ["SurveyMap", "FunctionalPurpose", "has"],
     ["SurveyMap", "Availability", "has"],
     ["SurveyMap", "UsageType", "has"],
-    ["Image", "CardinalDirection", "has"]
+    ["Image", "CardinalDirection", "has"],
+    ["monumentImage", "CardinalDirection", "has"]
   ]);
 
   let formdata = new FormData();

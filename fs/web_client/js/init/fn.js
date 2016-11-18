@@ -143,3 +143,22 @@ App.fn.addNameToId = (id) => {
 
   return mass.join('-');
 };
+
+App.fn.monImageCard = (params) => {
+  params.author = params.author || 'Неизвестен';
+  params.year = params.year || 'Не задано';
+
+  let tmpl = _.template(`
+    <div class="media">
+      <a class="pull-left" href="<%= HOST_URL %>/local_storage/<%= fileid %>" target="_blank">
+        <img class="media-object" src="<%= HOST_URL %>/local_storage/<%= fileid %>" width="300" alt="Card image cap">
+      </a>
+      <div class="media-body">
+        <p>Автор: <%= author %></p>
+        <p>Год съёмки: <%= year %></p>
+      </div>
+    </div>
+  `);
+
+  return tmpl(params);
+};
