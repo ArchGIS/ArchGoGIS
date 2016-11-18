@@ -92,6 +92,14 @@
         <label for="map-area-input">Общая площадь (м²)</label>
         <input class="form-control" id="map-area-input" data-for="map_<%=mapId%>:SurveyMap" type="number" name="area"></input>
       </div>
+
+      <div class="form-group">
+        <label for="map-file-input-<%=mapId%>">Карта обследования</label>
+        <input id="map-file-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="file" name="fileid"></input>
+        <div class="alert alert-dismissible alert-info">
+          Максимальный размер документа 50 МБ.
+        </div>
+      </div>
     </div>
 
     <div id="use<%=mapId%>">
@@ -107,17 +115,17 @@
 
       <div class="form-group">
         <label for="map-disposer-code-input-<%=mapId%>">Код собственника (распорядителя) по ОКАТО</label>
-        <input class="form-control" id="map-disposer-code-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposalCode"></input>
+        <input class="form-control" id="map-disposer-code-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="disposalCode"></input>
       </div>
 
       <div class="form-group">
         <label for="map-disposer-vat-input-<%=mapId%>">ИНН собственника (распорядителя)</label>
-        <input class="form-control" id="map-disposer-vat-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposerVat"></input>
+        <input class="form-control" id="map-disposer-vat-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="disposerVat"></input>
       </div>
 
       <div class="form-group">
         <label for="map-disposer-kpp-input-<%=mapId%>">КПП собственника (распорядителя)</label>
-        <input class="form-control" id="map-disposer-kpp-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="number" name="disposerKpp"></input>
+        <input class="form-control" id="map-disposer-kpp-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="disposerKpp"></input>
       </div>
 
       <div class="form-group">
@@ -181,14 +189,6 @@
       <div class="form-group">
         <label for="map-usage-type-selector">Вид пользования</label>
         <select class="form-control" id="map-usage-type-selector-<%=mapId%>" data-for="ut_<%=mapId%>:UsageType" type="id" name="id"></select>
-      </div>
-
-      <div class="form-group">
-        <label for="map-file-input-<%=mapId%>">Карта обследования</label>
-        <input id="map-file-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="file" name="fileid"></input>
-        <div class="alert alert-dismissible alert-info">
-          Максимальный размер документа 50 МБ.
-        </div>
       </div>
 
     </div>

@@ -1,0 +1,303 @@
+<div class="content">
+  <h2><%= t('artifact.create') %></h2>
+  <div id="container">
+    <ul>
+      <li><a href="#home"><%= t('research.singular') %></a></li>
+      <li><a href="#menu1"><%= t('monument.singular') %></a></li>
+      <li><a href="#menu2"><%= t('excavation.singular') %></a></li>
+      <li><a href="#menu3"><%= t('artifact.singular') %></a></li>
+    </ul>
+
+    <div id="home">
+    	<legend>Сведения об исследовании</legend>
+      <div class="checkbox">
+        <label for="new-author-checkbox">
+          <input id="new-author-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить нового автора
+        </label>
+      </div>
+
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="false">
+        <label for="author-input">Автор исследования <span class="required">*</span></label>
+        <%= widget("SearchLine", authorsInputOptions, "author-input") %>
+        <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-author-checkbox" need-option="true">
+        <label for="author-name-input">Имя <span class="required">*</span></label>
+        <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
+      </div>
+
+      <div class="checkbox" toggle-by="new-author-checkbox" need-option="true">
+        <label for="more-author-checkbox">
+          <input id="more-author-checkbox" type="checkbox" dynamic="true"></input>
+          Дополнительная информация от авторе
+        </label>
+      </div>
+
+      <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
+        <label for="author-birth-date-input">Год рождения</label>
+        <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
+      </div>
+      <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
+        <label for="author-photo-input">Фотография</label>
+        <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
+        <br>
+        <div class="alert alert-dismissible alert-info">
+          Максимальный размер фотографии 10 МБ.
+        </div>
+      </div>
+
+      <div class="checkbox">
+        <label for="new-report-checkbox">
+          <input id="new-report-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новый отчет
+        </label>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="false">
+        <label for="report-input">Отчет <span class="required">*</span></label>
+        <input class="form-control" id="report-input"></input>
+        <input id="report-input-id" data-for="r:Report" type="id" hidden name="id" data-req="up"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="report-name-input">Название отчёта<span class="required">*</span></label>
+        <input class="form-control" id="report-name-input" data-for="r:Report" type="text" name="name" data-req></input>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="report-year-input">Год написания отчёта<span class="required">*</span></label>
+        <input class="form-control" id="report-year-input" data-for="r:Report" type="number" name="year" data-req></input>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="research-year-input">Год проведения исследования<span class="required">*</span></label>
+        <input class="form-control" id="research-year-input" data-for="rs:Research" type="number" name="year" data-req></input>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="research-type-selector">Тип исследования</label>
+        <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id"></select>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="report-city-input">Город</label>
+        <%= widget("SearchLine", citiesInputOptions, "report-city-input") %>
+        <input id="report-city-input-id" data-for="city:City" hidden type="id" name="id"></input>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="report-organization-input">Организация</label>
+        <input class="form-control" id="report-organization-input"></input>
+        <input id="report-organization-input-id" data-for="org:Organization" type="id" hidden name="id"></input>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="report-code-input">Номер</label>
+        <input class="form-control" id="report-code-input" data-for="r:Report" type="text" name="code"></input>
+      </div>
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true">
+        <label for="report-file-input">Файл отчета</label>
+        <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="r:Report" name="fileid"></input>
+        <br>
+        <div class="alert alert-dismissible alert-info">
+          Максимальный размер документа 50 МБ.
+        </div>
+      </div>
+
+      <div class="form-group" hidden>
+        <input class="form-control" id="research-input-id" data-for="rs:Research" type="id" name="id"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true" hidden>
+        <input class="form-control" id="research-input-year" data-for="rs:Research" type="number" name="year"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-report-checkbox" need-option="true" hidden>
+        <input class="form-control" id="research-input-name" data-for="rs:Research" type="text" name="name"></input>
+      </div>
+
+      <button class="btn btn-primary btn-next" active="1">
+        <i class="fa fa-cogs"></i>
+        Далее
+      </button>
+    </div>
+
+    <div id="menu1">
+      <legend>Сведения о памятнике</legend>
+      <div class="checkbox">
+        <label for="new-monument-checkbox">
+          <input id="new-monument-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новый памятник
+        </label>
+      </div>
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="false">
+        <label for="monument-input">Выбрать существующий памятник <span class="required">*</span></label>
+        <input class="form-control" id="monument-input"></input>
+        <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id" data-req="up"></input>
+      </div>
+
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
+        <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
+      </div>
+      <div class="form-group">
+        <label for="monument-name-input">Название памятника <span class="required">*</span></label>
+        <input class="form-control" id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
+      </div>
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
+        <label for="epoch-selector">Эпоха</label>
+        <select class="form-control" id="epoch-selector"  data-for="e:Epoch" type="id" name="id"></select>
+      </div>
+      <div class="form-group" toggle-by="new-monument-checkbox" need-option="true">
+        <label for="mon-type-selector">Тип</label>
+        <select class="form-control" id="mon-type-selector"  data-for="mt:MonumentType" type="id" name="id"></select>
+      </div>
+
+      <div id="monument-coord-picker" class="coords">
+        <div class="form-group">
+          <label for="monument-x">
+            Координата X
+          </label>
+          <input class="form-control" id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
+        </div>
+        <div class="form-group">
+          <label for="monument-y">
+            Координата Y
+          </label>
+          <input class="form-control" id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
+        </div>
+      </div>
+      <div class="alert alert-dismissible alert-info">
+        Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
+      </div>
+
+      <div class="checkbox">
+        <label for="more-monument-checkbox">
+          <input id="more-monument-checkbox" type="checkbox" dynamic="true"></input>
+          Дополнительная информация о памятнике
+        </label>
+      </div>
+      <div class="checkbox" toggle-by="more-monument-checkbox" need-option="true">
+        <label for="new-culture-checkbox">
+          <input id="new-culture-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новую культурную принадлежность
+        </label>
+      </div>
+      <div class="form-group" toggle-by="new-culture-checkbox" need-option="false">
+        <label for="culture-selector">Культура</label>
+        <select class="form-control" id="culture-selector"  data-for="c:Culture" type="id" name="id"></select>
+      </div>
+      <div class="form-group" toggle-by="new-culture-checkbox" need-option="true">
+        <label for="culture-input">Введите культурную принадлежность</label>
+        <input id="culture-input" data-for="c:Culture" type="text" name="name" class="form-control" />
+      </div>
+      <div class="form-group" toggle-by="more-monument-checkbox" need-option="true">
+        <label for="monument-desc-input">Описание памятника</label>
+        <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
+      </div>
+
+      <button class="btn btn-primary btn-next" active="2">
+        <i class="fa fa-cogs"></i>
+        Далее
+      </button>
+    </div>
+
+    <div id="menu2">
+      <div class="form-group">
+        <label for="exc-name-input">Название вскрытия</label>
+        <input class="form-control" id="exc-name-input" data-for="exc:Excavation" type="text" name="name"></input>
+      </div>
+      <div class="form-group">
+        <label for="exc-area-input">Площадь (м²)</label>
+        <input class="form-control" id="exc-area-input" data-for="exc:Excavation" type="number" name="area"></input>
+      </div>
+      <div class="form-group">
+        <label for="exc-region-input">Участок(квадрат)</label>
+        <input class="form-control" id="exc-region-input" data-for="arti:Artifact" type="text" name="excRegion"></input>
+      </div>
+      <div class="form-group">
+        <label for="exc-depth-input">Глубина (см)</label>
+        <input class="form-control" id="exc-depth-input" data-for="exc:Excavation" type="number" name="depth"></input>
+      </div>
+      <div class="form-group">
+        <label for="monument-object-input">Название объекта</label>
+        <input class="form-control" id="monument-object-input" data-for="complex:Complex" type="text" name="name"></input>
+      </div>
+
+      <div id="exc-coord-picker" class="coords">
+        <div class="form-group">
+          <label for="exc-x">
+            Координата X
+          </label>
+          <input class="form-control" id="exc-x" data-for="exc:Excavation" type="number" name="x"></input>
+        </div>
+        <div class="form-group">
+          <label for="exc-y">
+            Координата Y
+          </label>
+          <input class="form-control" id="exc-y" data-for="exc:Excavation" type="number" name="y"></input>
+        </div>
+      </div>
+      <div class="alert alert-dismissible alert-info">
+        Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
+      </div>
+
+      <button class="btn btn-primary btn-next" active="2">
+        <i class="fa fa-cogs"></i>
+        Далее
+      </button>
+    </div>
+
+    <div id="menu3">
+      <div class="form-group">
+        <label for="arti-name-input">Название<span class="required">*</span></label>
+        <input class="form-control" id="arti-name-input" data-for="arti:Artifact" type="text" name="name" data-req></input>
+      </div>
+      <div class="form-group">
+        <label for="arti-category-input">Категория</label>
+        <input id="arti-category-input" class="form-control autoinput"></input>
+        <input id="arti-category-input-id" data-few="true" data-for="ac:ArtifactCategory" hidden type="id" name="id"></input>
+      </div>
+      <div class="form-group">
+        <label for="arti-material-input">Материал</label>
+        <input id="arti-material-input" class="form-control autoinput"></input>
+        <input id="arti-material-input-id" data-few="true" data-for="am:ArtifactMaterial" hidden type="id" name="id"></input>
+      </div>
+      <div class="form-group">
+        Датировка
+        <select class="form-control" id="arti-date-scale-selector"  data-for="ds:DateScale" type="id" name="id"></select>
+      </div>
+      <div class="form-inline">
+        <label for="arti-date-bottom">От</label>
+        <input id="arti-date-bottom" data-for="arti:Artifact" class="form-control mini" type="text" name="dateBottom"></input>
+        <label for="arti-date-top">До</label>
+        <input id="arti-date-top" data-for="arti:Artifact" class="form-control input" type="text" name="dateTop"></input>
+      </div>
+      <div class="checkbox" need-option="true">
+        <label for="new-arti-culture-checkbox">
+          <input id="new-arti-culture-checkbox" type="checkbox" dynamic="true"></input>
+          Добавить новую культурную принадлежность
+        </label>
+      </div>
+      <div class="form-group" toggle-by="new-arti-culture-checkbox" need-option="false">
+        <label for="arti-culture-selector">Культура</label>
+        <select class="form-control" id="arti-culture-selector" data-for="artiC:Culture" type="id" name="id" data-subclass="artiCulture"></select>
+      </div>
+      <div class="form-group" toggle-by="new-arti-culture-checkbox" need-option="true">
+        <label for="arti-culture-input">Введите культурную принадлежность</label>
+        <input id="arti-culture-input" data-for="artiC:Culture" type="text" name="name" class="form-control" data-subclass="artiCulture"/>
+      </div>
+      <div class="form-group">
+        <label for="arti-desc-input">Описание</label>
+        <textarea class="form-control" id="arti-desc-input" data-for="arti:Artifact" type="text" name="description"></textarea>
+      </div>
+
+      <button id="add-photo-button" class="btn btn-primary">
+        <i class="fa fa-cogs"></i>
+        Добавить фото
+      </button>
+      <button id="send-button" class="btn btn-primary">
+        <i class="fa fa-cogs"></i>
+        Создать
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="maps">
+  <%= widget("Map", {}, "map") %>
+</div>

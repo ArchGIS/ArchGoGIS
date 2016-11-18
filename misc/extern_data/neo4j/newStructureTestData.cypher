@@ -100,25 +100,45 @@ create (cir2:CircleArea {
 })
 
 create (weapon:ArtifactCategory {
+  id: 1,
   name: 'Оружие'
 })
 create (armor:ArtifactCategory {
+  id: 2,
   name: 'Доспехи'
 })
 create (jewelry:ArtifactCategory {
+  id: 3,
   name: 'Украшения'
 })
 
+create (ds1:DateScale {
+  id: 1,
+  name: 'Года'
+})
+create (ds2:DateScale {
+  id: 2,
+  name: 'Века'
+})
+create (ds3:DateScale {
+  id: 3,
+  name: 'Тысячелетия'
+})
+
 create (metal:ArtifactMaterial {
+  id: 1,
   name: 'Металл'
 })
 create (wood:ArtifactMaterial {
+  id: 2,
   name: 'Дерево'
 })
 create (fabric:ArtifactMaterial {
+  id: 3,
   name: 'Ткань'
 })
 create (gems:ArtifactMaterial {
+  id: 4,
   name: 'Драгоценные камни'
 })
 

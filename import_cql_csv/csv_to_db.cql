@@ -386,3 +386,134 @@ create (ut5:UsageType {
   id: 35,
   name: 'Безвозмездное пользование временное'
 });
+
+create (ac1:ArtifactCategory {
+  id: 1,
+  name: 'Посуда'
+});
+create (ac2:ArtifactCategory {
+  id: 2,
+  name: 'Детали костюма'
+});
+create (ac3:ArtifactCategory {
+  id: 3,
+  name: 'Оружие'
+});
+create (ac4:ArtifactCategory {
+  id: 4,
+  name: 'Орудия труда'
+});
+create (ac5:ArtifactCategory {
+  id: 5,
+  name: 'Ритуальные предметы'
+});
+create (ac6:ArtifactCategory {
+  id: 6,
+  name: 'Украшения'
+});
+create (ac7:ArtifactCategory {
+  id: 7,
+  name: 'Конское снаряжение'
+});
+
+create (ds1:DateScale {
+  id: 1,
+  name: 'Года'
+});
+create (ds2:DateScale {
+  id: 2,
+  name: 'Века'
+});
+create (ds3:DateScale {
+  id: 3,
+  name: 'Тысячелетия'
+});
+
+create (am1:ArtifactMaterial {
+  id: 1,
+  name: 'Кремень'
+});
+create (am2:ArtifactMaterial {
+  id: 2,
+  name: 'Обсидиан'
+});
+create (am3:ArtifactMaterial {
+  id: 3,
+  name: 'Кварц'
+});
+create (am4:ArtifactMaterial {
+  id: 4,
+  name: 'Сланец'
+});
+create (am5:ArtifactMaterial {
+  id: 5,
+  name: 'Слюда'
+});
+create (am6:ArtifactMaterial {
+  id: 6,
+  name: 'Нефрит'
+});
+create (am7:ArtifactMaterial {
+  id: 7,
+  name: 'Жадеит'
+});
+create (am8:ArtifactMaterial {
+  id: 8,
+  name: 'Керамика'
+});
+create (am9:ArtifactMaterial {
+  id: 9,
+  name: 'Кость'
+});
+create (am10:ArtifactMaterial {
+  id: 10,
+  name: 'Текстиль'
+});
+create (am11:ArtifactMaterial {
+  id: 11,
+  name: 'Дерево'
+});
+create (am12:ArtifactMaterial {
+  id: 12,
+  name: 'Сплав цветных металлов'
+});
+create (am13:ArtifactMaterial {
+  id: 13,
+  name: 'Медь'
+});
+create (am14:ArtifactMaterial {
+  id: 14,
+  name: 'Кожа'
+});
+create (am15:ArtifactMaterial {
+  id: 15,
+  name: 'Железо'
+});
+create (am16:ArtifactMaterial {
+  id: 16,
+  name: 'Золото'
+});
+create (am17:ArtifactMaterial {
+  id: 17,
+  name: 'Серебро'
+});
+create (am18:ArtifactMaterial {
+  id: 18,
+  name: 'Известянк'
+});
+create (am19:ArtifactMaterial {
+  id: 19,
+  name: 'Стекло'
+});
+create (am20:ArtifactMaterial {
+  id: 20,
+  name: 'Янтарь'
+});
+create (am21:ArtifactMaterial {
+  id: 21,
+  name: 'Полудрагоценные камни'
+});
+create (am22:ArtifactMaterial {
+  id: 22,
+  name: 'Кашин'
+});

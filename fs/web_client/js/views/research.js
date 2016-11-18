@@ -361,7 +361,7 @@ App.views.research = new (Backbone.View.extend({
               .then(function(data) {
                 if (data && !data.error) {
                   let results = _.map(excludeIdent(data), function(row) {
-                    return {'label': `${row.monName}`, 'id': row.monId}
+                    return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId}
                   });
 
                   if (!results.length) {

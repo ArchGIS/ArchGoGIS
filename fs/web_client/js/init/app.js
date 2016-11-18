@@ -55,15 +55,17 @@ function showField(select) {
     if ($(select).is("[used!=false]") === true && $.inArray(selectedValue, requiredOptions) !== -1) {
       obj.show().attr("used", true);
       obj.contents().attr("used", true);
+      obj.contents().contents().attr("used", true);
     } else {
       obj.hide().attr("used", false);
       obj.contents().attr("used", false);
+      obj.contents().contents().attr("used", false);
+    }
 
-      if (obj.has("[type='checkbox']").length > 0) {
-        const checkbox = obj.find("[type='checkbox']");
-        checkbox.prop("checked", false);
-        checkbox.trigger("change");
-      }
+    if (obj.has("[type='checkbox']").length > 0) {
+      const checkbox = obj.find("[type='checkbox']");
+      checkbox.prop("checked", false);
+      checkbox.trigger("change");
     }
 
     if (obj.has("select").length > 0) {
@@ -83,7 +85,6 @@ function postQuery(objectId) {
     ["Knowledge", "Monument", "belongsto"],
     ["Knowledge", "Artifact", "found"],
     ["Knowledge", "Culture", "has"],
-    ["Knowledge", "Complex", "has"],
     ["Research", "Excavation", "has"],
     ["Monument", "Excavation", "has"],
     ["Monument", "Complex", "has"],
@@ -97,9 +98,16 @@ function postQuery(objectId) {
     ["Research", "Report", "has"],
     ["Research", "Image", "has"],
     ["Complex", "Artifact", "has"],
+    ["Complex", "Excavation", "has"],
+    ["Excavation", "Artifact", "has"],
     ["Report", "Author", "hasauthor"],
     ["Author", "AuthorImage", "has"],
     ["Artifact", "ArtifactImage", "has"],
+    ["Artifact", "artiCulture", "has"],
+    ["Artifact", "artiImage", "has"],
+    ["Artifact", "DateScale", "has"],
+    ["Artifact", "ArtifactCategory", "has"],
+    ["Artifact", "ArtifactMaterial", "has"],
     ["Heritage", "File", "has"],
     ["Organization", "City", "has"],
     ["Report", "Organization", "in"],
@@ -210,13 +218,13 @@ function generateJson(relations) {
     $input = $(input);
     dataFor = $input.attr("data-for");
     dataType = $input.attr("data-type") || $input.attr("type");
-    type = (dataType != "id") ? ("/" + dataType) : "";
+    type = (dataType != "id" && dataType != "table") ? ("/" + dataType) : "";
     name = ($input.attr("data-name") || $input.attr("name")) + type;
     value = $input.val().replace(/\n/g, "\\n");
     inputClass = dataFor.split(":")[1];
     inputSubclass = $input.attr("data-subclass") || inputClass;
 
-    if (!value || ($input.attr("type") == "radio" && $input.is(":checked") == false)) {
+    if (!(value || $input.is("table")) || ($input.attr("type") == "radio" && $input.is(":checked") == false)) {
       return true;
     }
 
@@ -234,6 +242,20 @@ function generateJson(relations) {
         counter++;
       });
     } else {
+      if ($input.is("table")) {
+        let $rows = $input.find("tbody > tr");
+        let data = {};
+
+        _.each($rows, function(row, rowNum) {
+          let selects = $(row).find("select")
+          data[rowNum] = {};
+          _.each(selects, function(select, key) {
+            data[rowNum][key] = $(select).val();
+          })
+        })
+        value = JSON.stringify(data);
+      }
+      
       inputObjName = dataFor.split(":")[0];
       objs[inputSubclass].push(inputObjName);
       json[dataFor] = json[dataFor] || {};
