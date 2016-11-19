@@ -41,6 +41,9 @@
       <dd><%= _.reduce(artifacts, function(size, list) {
         return size + _.size(list)
       }, 0) %></dd>
+
+      <!--<dt><%= t("heritage.singular") %></dt>
+      <dd></dd>-->
     </div>
 
     <div id="researches">
@@ -125,15 +128,11 @@
     </div>
 
     <div id="photos">
-      <!--<% _.each(photos[0], (el, i, list) => { %>
-        <%= App.fn.monImageCard(el) %>
-      <% }) %>-->
+      <%= App.fn.monImageCard(photos[0]) %>
     </div>
 
     <div id="topos">
-      <% _.each(topos[0], (el, i, list) => { %>
-        <%= App.fn.monImageCard(el) %>
-      <% }) %>
+      <%= App.fn.monTopoCard(topos[0]) %>
     </div>
   </div>
 

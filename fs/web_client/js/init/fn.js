@@ -144,9 +144,8 @@ App.fn.addNameToId = (id) => {
   return mass.join('-');
 };
 
-App.fn.monImageCard = (params) => {
-  params.author = params.author || 'Неизвестен';
-  params.year = params.year || 'Не задано';
+App.fn.monTopoCard = (topos) => {
+  let imagesHtml = '';
 
   let tmpl = _.template(`
     <div class="media">
@@ -160,5 +159,39 @@ App.fn.monImageCard = (params) => {
     </div>
   `);
 
-  return tmpl(params);
+  _.times(topos.length, (i) => {
+    imagesHtml += tmpl({
+      fileid: topos[i].fileid,
+      year: topos[i].year || 'Не задано',
+      author: topos[i].author || 'Неизвестен'
+    });
+  });
+
+  return imagesHtml;
+};
+
+App.fn.monImageCard = (params) => {
+  let imagesHtml = '';
+
+  let tmpl = _.template(`
+    <div class="media">
+      <a class="pull-left" href="<%= HOST_URL %>/local_storage/<%= fileid %>" target="_blank">
+        <img class="media-object" src="<%= HOST_URL %>/local_storage/<%= fileid %>" width="300" alt="Фотография памятника">
+      </a>
+      <div class="media-body">
+        <p>Элемент памятника: <%= monumentPart %></p>
+        <p>Ракурс: <%= direction %></p>
+      </div>
+    </div>
+  `);
+
+  _.times(params.photo.length, (i) => {
+    imagesHtml += tmpl({
+      fileid: params.photo[i].fileid,
+      monumentPart: params.photo[i].monumentPart || 'Не задано',
+      direction: params.cd[i].name
+    });
+  });
+
+  return imagesHtml;
 };
