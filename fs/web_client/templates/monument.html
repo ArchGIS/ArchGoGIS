@@ -42,7 +42,7 @@
       <div class="form-group find-heritage">
         <label for="heritage-input">Название</label>
         <%= widget("SearchLine", heritageInputOptions, "heritage-input") %>
-        <input id="heritage-input-id" data-for="heritage:HeritageStatus" hidden type="id" name="id">
+        <input id="heritage-input-id" data-for="heritage:Heritage" hidden type="id" name="id">
       </div>
 
       <button class="btn btn-primary btn-next" active="2">
@@ -219,15 +219,15 @@
   <h4>Создание нового ОКН</h4>
   <div class="form-group">
     <label for="heritage-name-input">Название <span class="required">*</span></label>
-    <input class="form-control" id="heritage-name-input" data-for="heritage:HeritageStatus" type="text" name="code" data-req>
+    <input class="form-control" id="heritage-name-input" data-for="heritage:Heritage" type="text" name="code" data-req>
   </div>
   <div class="form-group">
     <label for="heritage-border-input">Описание границ</label>
-    <textarea class="form-control" id="heritage-border-input" data-for="heritage:HeritageStatus" type="text" name="border"></textarea>
+    <textarea class="form-control" id="heritage-border-input" data-for="heritage:Heritage" type="text" name="border"></textarea>
   </div>
   <div class="form-group">
     <label for="heritage-security-input">Предмет охраны</label>
-    <input class="form-control" id="heritage-security-input" data-for="heritage:HeritageStatus" type="text" name="security">
+    <input class="form-control" id="heritage-security-input" data-for="heritage:Heritage" type="text" name="security">
   </div>
   <div class="form-group">
     <label for="heritage-files-input">Файл документа</label>
