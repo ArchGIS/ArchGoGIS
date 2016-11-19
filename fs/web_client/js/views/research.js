@@ -3,6 +3,7 @@
 App.views.research = new (Backbone.View.extend({
   "show": function(argument) {
     App.views.functions.setAccordion("#accordion");
+    $('#container').tabs();
   },
 
   "new": function(argument) {
