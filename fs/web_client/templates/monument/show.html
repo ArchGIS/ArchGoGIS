@@ -42,8 +42,13 @@
         return size + _.size(list)
       }, 0) %></dd>
 
-      <!--<dt><%= t("heritage.singular") %></dt>
-      <dd></dd>-->
+      <dt><%= t("heritage.singular") %></dt>
+      <dd><% if (heritage[0]) { %>
+        <a href="#heritage/show/<%= heritage[0].id %>"><%= heritage[0].name %></a>
+      <% } else { %>
+        Отсутствует или не задано
+      <% } %>
+      </dd>
     </div>
 
     <div id="researches">
