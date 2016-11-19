@@ -69,7 +69,7 @@ FOREACH (ign IN CASE WHEN c IS NOT NULL AND resYear IS NOT NULL THEN [1] ELSE []
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCulture.csv" AS line
 WITH line, toInt(line.IDCulture) as idCulture
-CREATE (c:Culture {id: idCulture, name: line.CultureName});
+CREATE (c:Culture {id: 99999999999999 + idCulture, name: line.CultureName});
 
 LOAD CSV WITH HEADERS FROM "file:///TRefCultureLayer.csv" AS line
 WITH line, toInt(line.IDCultureLayer) as id
