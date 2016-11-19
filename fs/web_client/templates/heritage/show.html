@@ -1,5 +1,5 @@
 <div class="content">  
-  <h2><%= t("heritage.info") %></h2>
+  <h2><%= t("heritage.info") %> "<%= heritage.name %>"</h2>
   
   <div id="container" class="tabs">
     <ul>
@@ -8,7 +8,7 @@
       <li><a href="#researches"><%= t('research.plural') %></a></li>
       <li><a href="#surveyMaps"><%= t('doc.surveyMap.plural') %></a></li>
       <li><a href="#topoplans"><%= t('topoplan.plural') %></a></li>
-      <li><a href="#plural"><%= t('photo.plural') %></a></li>
+      <li><a href="#photos"><%= t('photo.plural') %></a></li>
     </ul>
 
     <div id="general">
@@ -49,11 +49,39 @@
 
     </div>
 
-    <div id="monuments"></div>
+    <div id="monuments">
+      <div class="accordion">
+        <% _.each(monuments, function(monument, i) { %>
+          
+          <h4 class="accordion-header">
+            <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+            <%= t('monument.singular') %> №<%= i+1 %></b>
+          </h4>
+          
+          <div class="accordion-content">
+            <dl>
+              <dt></dt>
+              <dd>
+                <a href="#monument/show/<%= monument.id %>">
+                Перейти к памятнику
+              </a>
+              </dd>
+              <dt>Названия памятника:</dt>
+              <dd><%= _.map(knowledges[i], function(k, i) {return k.monument_name}).join(", ") %></dd>
+              <dt>Эпоха:</dt>
+              <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
+              <dt>Тип:</dt>
+              <dd><%= maybe(monTypes[i][0], "Нет данных", "name") %></dd>
+            </dl>
+          </div>
+
+        <% }) %>
+      </div>
+    </div>
     <div id="researches"></div>
     <div id="surveyMaps">
-      <% _.each(surveyMaps, function(map, i) { %>
-        <div class="accordion">
+      <div class="accordion">
+        <% _.each(surveyMaps, function(map, i) { %>
           <h4 class="accordion-header">
             <%= t("doc.surveyMap.singular") %> №<%= i+1 %>
           </h4>
@@ -71,7 +99,7 @@
                 <dd><%= maybe(map, "Не указана", "createDate") %></dd>
 
                 <dt>Учетный номер БТИ:</dt>
-                <dd><%= maybe(map, "Не указан", "rodNumber") %></dd>
+                <dd><%= maybe(map, "Не указан", "rodNum") %></dd>
 
                 <dt>Номер паспорта БТИ:</dt>
                 <dd><%= maybe(map, "Не указан", "rodPassport") %></dd>
@@ -144,11 +172,11 @@
               </div>
             </div>
           </div>
-        </div>
-      <% }) %> 
+        <% }) %> 
+      </div>
     </div>
     <div id="topoplans"></div>
-    <div id="plural"></div>
+    <div id="photos"></div>
   </div>
 
   <div class="maps">

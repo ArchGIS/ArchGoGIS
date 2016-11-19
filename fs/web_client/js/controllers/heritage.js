@@ -19,6 +19,12 @@ App.controllers.heritage = new (Backbone.View.extend({
           "surveyMaps:SurveyMap": {"id": "*", "select": "*"},
           "h__has__surveyMaps": {}
         }),
+
+        monuments: JSON.stringify({
+          "h:Heritage": {"id": hId},
+          "monuments:Monument": {"id": "*", "select": "*"},
+          "h__has__monuments": {},
+        }),
       },
 
       single: {
@@ -64,6 +70,26 @@ App.controllers.heritage = new (Backbone.View.extend({
           "map__has__fp": {},
           "map__has__dt": {},
           "map__has__ot": {}
+        }),
+      },
+
+      monument: {
+        knowledges: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "knowledges__belongsto__m": {}
+        }),
+
+        epochs: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "epochs:Epoch": {"id": "*", "select": "*"},
+          "m__has__epochs": {}
+        }),
+
+        monTypes: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "monTypes:MonumentType": {"id": "*", "select": "*"},
+          "m__has__monTypes": {}
         }),
       }
     }
@@ -115,6 +141,15 @@ App.controllers.heritage = new (Backbone.View.extend({
       var mapIds = _.map(tmplData.surveyMaps, function(map) {return map.id.toString()});
 
       data.push(model.getData(queries.surveyMap, callRender, true, mapIds));
+      callRender();
+    })
+
+    $.when(model.sendQuery(queries.complex.monuments)).then(function(response) {
+      _.extend(tmplData, response);
+
+      var monIds = _.map(tmplData.monuments, function(mon) {return mon.id.toString()});
+
+      data.push(model.getData(queries.monument, callRender, true, monIds));
       callRender();
     })
 
