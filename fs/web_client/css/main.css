@@ -363,13 +363,6 @@ dt {
   z-index: -1;
 }
 
-.navbar-default .navbar-collapse {
-  display: flex !important;
-  max-width: 100%;
-  height: 50px !important;
-  overflow: hidden !important;
-}
-
 .navbar-right{
   display: flex;
   flex-wrap: wrap;
@@ -412,6 +405,25 @@ dt {
 
 .ui-tabs .ui-tabs-panel{
   overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .navbar-default .navbar-collapse.collapse {
+    display: flex !important;
+    max-width: 100%;
+    height: 50px !important;
+    overflow: hidden !important;
+  }
+
+  .toggle:checked ~ .navbar-collapse.collapse {
+    height: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .navigation__toggle{
+    display: none;
+  }
 }
 
 /*main page*/
@@ -476,3 +488,4 @@ ul.system-statistic {
   font-style: normal;
   font-weight: 400;
 }
+
