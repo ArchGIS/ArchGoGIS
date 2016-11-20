@@ -59,6 +59,26 @@
             Нет отчёта
         <% } %>
       </dd>
+
+      <dt><%= t("monument.count") %>:</dt>
+      <dd><%= _.size(monuments) %></dd>
+
+      <% if (resType[0].name === 'Раскопки' || resType[0].name === 'Разведка') { %>
+        <dt><%= t("excavation.genitivePl") %>:</dt>
+        <dd><%= _.reduce(excavations, function(size, list) {
+          return size + _.size(list)
+        }, 0) %>;
+        Общая площадь
+        <%= _.reduce(excavations, function(area, list) {
+          return area + _.reduce(list, function(area, exc) {
+            return area + (exc.area || 0);
+          }, 0);
+        }, 0) %>
+        м²</dd>
+      <% } %>
+
+      <dt><%= t("artifact.genitivePl") %>:</dt>
+      <dd><%= _.size(artifacts[0]) %></dd>
     </div>
 
     <div id="monuments">
@@ -130,31 +150,40 @@
 
 
     <div id="artifacts">
-      <% if (usedArtifacts.length > 0) { %>
+      <% if (artifacts[0].length > 0) { %>
         <dl>
           <dt>Упоминаемые артефакты:</dt>
           <dd>
-            <% var length = usedArtifacts.length %>
-            <% _.each(usedArtifacts, function(artifact, i) { %>
-            <a href="#artifact/show/<%= artifact.id %>">
-              <%= artifact.name %>
-            </a>
-            <% if (i < length-1) { %>
-            ,
-            <% } %>
+            <% var length = artifacts[0].length %>
+            <% _.each(artifacts[0], function(artifact, i) { %>
+              <a href="#artifact/show/<%= artifact.id %>">
+                <%= artifact.name %>
+              </a>
+              <% if (i < length-1) { %>,<% } %>
             <% }); %>
           </dd>
         </dl>
+      <% } else { %>
+        Нет артефактов
       <% } %>
     </div>
 
     <div id="heritages">
+      <% if (heritages[0].length) { %>
+        <% _.each(heritages[0], (el) => { %>
+          <a href="#heritage/show/<%= el.id %>"><%= el.name %></a>
+        <% }) %>
+      <% } else { %>
+        Отсутствует или не задано
+      <% } %>
     </div>
 
     <div id="topos">
+      <%= App.fn.monTopoCard(topos[0]) %>
     </div>
 
     <div id="another">
+      Заглушка для будущих вкладок
     </div>
   </div>
 </div>

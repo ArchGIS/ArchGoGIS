@@ -87,6 +87,11 @@ App.controllers.research = new (Backbone.View.extend({
           "exc:Excavation": {"id": "*", "select": "*"},
           "m__has__exc": {},
           "r__has__exc": {}
+        }),
+        heritages: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "heritage:Heritage": {"id": "*", "select": "*"},
+          "heritage__has__monument": {}
         })
       },
 
@@ -100,7 +105,12 @@ App.controllers.research = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "NEED"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
           "knowledge__found__artifacts": {}
-        })
+        }),
+        topos: JSON.stringify({
+          "knowledge:Knowledge": {"id": "NEED"},
+          "topo:Image": {"id": "*", "select": "*"},
+          "knowledge__hastopo__topo": {}
+        }) 
       }
     }
 
