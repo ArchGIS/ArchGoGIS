@@ -40,10 +40,6 @@ App.controllers.heritage = new (Backbone.View.extend({
           "h__has__secType": {},
         }),
 
-        secType: JSON.stringify({
-          "secType:SecurityType": {"id": "*", "select": "*"},
-        }),
-
         monMaterial: JSON.stringify({
           "monMaterial:MonumentMaterial": {"id": "*", "select": "*"},
         }),
