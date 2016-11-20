@@ -391,8 +391,7 @@ App.views.artifact = new (Backbone.View.extend({
           .then(function(data) {
             if (data && !data.error) {
               response(_.map(excludeIdent(data), function(row) {
-                console.log(row)
-                return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId};
+                return {'label': `${row.monName}`, 'id': row.monId};
               }))
             } else {
               response();
