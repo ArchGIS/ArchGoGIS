@@ -56,9 +56,13 @@ a:hover {
 }
 
 .content {
-  width: 70%;
+  width: 49%;
   margin-top: 60px;
   padding-left: 1em;
+}
+
+.content.wide-content {
+  width: 70%;
 }
 
 #container {
@@ -71,11 +75,16 @@ a:hover {
 
 .maps {
   position: fixed;
-  left: calc(70% + 1em);
+  left: calc(50% + 1em);
   top: 60px;
-  width: calc(100% - 70% - 1.5em);
+  width: calc(100% - 50% - 1.5em);
   height: 90%;
   border: 1px solid;
+}
+
+.maps.small-map {
+  left: calc(70% + 1em);
+  width: calc(100% - 70% - 1.5em);
 }
 
 .block {
