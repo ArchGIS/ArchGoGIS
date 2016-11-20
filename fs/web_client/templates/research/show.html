@@ -6,6 +6,7 @@
       <li><a href="#common"><%= t('common.general') %></a></li>
       <li><a href="#monuments"><%= t('monument.plural') %></a></li>
       <li><a href="#heritages"><%= t('heritage.singular') %></a></li>
+      <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#topos"><%= t('topoplan.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
       <li><a href="#another">*</a></li>
@@ -176,6 +177,16 @@
       <% } else { %>
         Отсутствует или не задано
       <% } %>
+    </div>
+
+    <div id="excavations"> 
+      <%= _.compact(_.map(excavations, function(resExc, i) {
+        return _.map(resExc, function(exc, t) {
+          let area = exc.area || 0;
+          let name = exc.name || "без названия";
+          return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year})` 
+        }).join(", ")
+      })).join(", ") %>
     </div>
 
     <div id="topos">
