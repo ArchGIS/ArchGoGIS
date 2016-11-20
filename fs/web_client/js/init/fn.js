@@ -167,6 +167,10 @@ App.fn.monTopoCard = (topos) => {
     });
   });
 
+  if (topos.length === 0) {
+    imagesHtml += 'Нет топопланов';
+  }
+
   return imagesHtml;
 };
 
