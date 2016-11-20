@@ -197,5 +197,9 @@ App.fn.monImageCard = (params) => {
     });
   });
 
+  if (params.photo.length === 0) {
+    imagesHtml += 'Нет фотографий';
+  }
+
   return imagesHtml;
 };
