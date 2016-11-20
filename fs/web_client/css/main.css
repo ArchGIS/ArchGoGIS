@@ -297,7 +297,7 @@ dt {
 }
 .coords > .btn {
   position: relative;
-  top: 6px;
+  /*top: 6px;*/
 }
 
 .btn {
@@ -412,4 +412,67 @@ dt {
 
 .ui-tabs .ui-tabs-panel{
   overflow-x: auto;
+}
+
+/*main page*/
+.main-page {
+  position: relative;
+}
+
+.main-page-bg {
+  background-image: url(https://psv4.vk.me/c812738/u32401695/docs/70e86e6ca79d/Zaglavnaya_stranitsa…5pIc_JIAU5vj8zWzeAGaomLYJFEOnDAs359DPyIlZAoGGGlSGMVR99-FP2DPHJlLCEBsON8mpw);
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  position: absolute;
+  top: -20px;
+  filter: blur(1px);
+  opacity: 0.9;
+}
+
+.main-page-content {
+  display: block;
+  position: relative;
+  padding: 15px;
+  margin: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  top: 20px;
+}
+
+.main-page-content h1 {
+  text-align: center;
+  font-weight: 300;
+  color: rgb(23, 23, 23);
+}
+
+h2.greeting-text {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 300;
+}
+
+ul.system-statistic {
+  padding: 0;
+  list-style: none;
+  margin-top: 45px;
+  font-size: 18px;
+  font-weight: 200;
+}
+
+.system-statistic .list-header {
+  font-weight: 400;
+  padding-left: 0px;
+  padding-bottom: 10px;
+}
+
+.system-statistic > li {
+  padding-bottom: 5px;
+  padding-left: 15px;
+  font-style: italic;
+}
+
+.system-statistic > li > span {
+  font-style: normal;
+  font-weight: 400;
 }
