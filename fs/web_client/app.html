@@ -23,6 +23,7 @@
   <body>
   <div class="navbar navbar-default navbar-fixed-top">
     <div class="container" id="top-menu">
+      <input type="checkbox" id="more" aria-hidden="true" class="toggle" tabindex="-1">
       <div class="navbar-header">
         <a href="#" class="navbar-brand">
           <i class="fa fa-globe fa-lg"></i>
@@ -60,26 +61,22 @@
           <li>
             <a href="#search/index">Быстрый поиск</a>
           </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Пользователь <span class="caret"></span></a>
-            <ul class="dropdown-menu" aria-labelledby="download">
-              <li>
-                <a href="#">
-                  <i class="fa fa-user"></i>
-                  Профиль<!-- <%= t('nav.profile') %> -->
-                </a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-sign-out"></i>
-                  Выйти<!-- <%= t('nav.signout') %> -->
-                </a>
-              </li>
-            </ul>
+          <li>
+            <a href="#">
+              <i class="fa fa-user"></i>
+              Профиль<!-- <%= t('nav.profile') %> -->
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-sign-out"></i>
+              Выйти<!-- <%= t('nav.signout') %> -->
+            </a>
           </li>
         </ul>
-
+        <div class="navigation__toggle">
+          <label for="more" aria-hidden="true" class="navigation__link">Еще </label>
+        </div>
       </div>
     </div>
   </div>
@@ -87,6 +84,23 @@
 
     <div id="body">
       <div class="bread-crumbs"></div>
+      <div class="main-page"><div class="main-page-bg"></div><div class="main-page-content">
+        <h1>Информационная система учета данных археологических исследований "ArchGIS"</h1>
+
+        <h2 class="greeting-text">Добро пожаловать в информационную систему ArchGIS! </h2>
+        <ul class="system-statistic">
+          <li class="list-header">На текущий момент в системе учтены:</li>
+          <li>Объектов культурного наследия - <span>(12)</span></li>
+          <li>Памятников археологии - <span>(12)</span></li>
+          <li>Археологических исследований - <span>(12)</span></li>
+          <li>Артефактов - <span>(12)</span></li>
+          <li>Отчетов об археологических исследованиях - <span>(12)</span></li>
+          <li>Монографий - <span>(12)</span></li>
+          <li>Статей - <span>(12)</span></li>
+          <li>Архивных документов - <span>(12)</span></li>
+          <li>Исследователей-археологов - <span>(12)</span></li>
+        </ul>
+      </div> </div>
     </div>
 
     <footer>
