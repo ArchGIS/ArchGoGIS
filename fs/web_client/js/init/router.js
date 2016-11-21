@@ -51,7 +51,8 @@
       '*actions': function(dispathInfo) {
         try {
           if (!dispathInfo) {
-            return; // Скорее всего, это root action, но мы его пока не обрабатываем.
+            App.controllers.main.index();
+            return;
           }
           
           parseUrl(dispathInfo);
