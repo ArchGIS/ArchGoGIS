@@ -7,16 +7,17 @@ import (
 )
 
 const (
-	MAX_LENGTH = 60
+	// MaxLength is constraint for names of things
+	MaxLength = 60
 )
 
-// Нормализация имён памятников
+// NormalMonument normalize monuments name
 func NormalMonument(input string) string {
 	slice := strings.Fields(input)
 
 	// Приведение обычных слов к нормальному виду, в римских цифрах меняется только 'l'=>'I'
 	for i, v := range slice {
-		if !IsRomeNumber(v) {
+		if !isRomeNumber(v) {
 			slice[i] = standartNormal(v)
 		} else if strings.ContainsRune(v, 'l') {
 			num := v
@@ -30,8 +31,7 @@ func NormalMonument(input string) string {
 	return result
 }
 
-// Проверка слова на римское число
-func IsRomeNumber(input string) bool {
+func isRomeNumber(input string) bool {
 	const alphabet = "lIVXLCDM"
 	isRN := true
 
@@ -52,7 +52,7 @@ func standartNormal(val string) string {
 	return word
 }
 
-// Нормализация имён людей
+// NormalPerson normalize persons name
 func NormalPerson(input string) string {
 	words := strings.Fields(input)
 	slice := make([]string, 0)
@@ -62,13 +62,13 @@ func NormalPerson(input string) string {
 	for _, v := range words {
 		if utf8.RuneCountInString(v) == 1 {
 			short += v
-			countOfShorts += 1
+			countOfShorts++
 			continue
 		}
 
 		if strings.ContainsRune(v, '.') {
 			short += v
-			countOfShorts += 1
+			countOfShorts++
 		} else {
 			slice = append(slice, standartNormal(v))
 		}
@@ -83,13 +83,13 @@ func NormalPerson(input string) string {
 	return result
 }
 
-// Валидация имён людей
+// ValidatePersonName returns empty string if ok
 func ValidatePersonName(name string) string {
 	const N = 4
 	re := regexp.MustCompile("^[^\\sa-zA-Zа-яА-Я-]+$")
 
-	if utf8.RuneCountInString(name) > MAX_LENGTH {
-		return ("too long string")
+	if utf8.RuneCountInString(name) > MaxLength {
+		return "too long string"
 	}
 
 	words := strings.Fields(name)
@@ -107,9 +107,9 @@ func ValidatePersonName(name string) string {
 	return ""
 }
 
-// Валидация имён памятников
+// ValidateMonumentName returns empty string if ok
 func ValidateMonumentName(name string) string {
-	if utf8.RuneCountInString(name) > MAX_LENGTH {
+	if utf8.RuneCountInString(name) > MaxLength {
 		return ("too long string")
 	}
 
