@@ -31,6 +31,7 @@ const (
 
 func monumentsHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForMonuments(r.URL.Query().Get("needle"))
+
 	if err == nil {
 		w.Write(result)
 	} else {

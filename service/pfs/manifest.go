@@ -1,4 +1,4 @@
-// Persistent file storage
+// Package pfs is persistent file storage
 package pfs
 
 import (
@@ -6,6 +6,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/web"
 )
 
+// Config is map URL to handlers 
 var Config = service.Config{
 	StaticPath:  "local_storage",
 	ServiceName: "pfs",
