@@ -27,7 +27,7 @@ App.views.functions = {
     });
   },
 
-  "monImageCard": (params) => {
+  "getImageCard": (params) => {
     let imagesHtml = '';
 
     let tmpl = _.template(`
@@ -57,7 +57,7 @@ App.views.functions = {
     return imagesHtml;
   },
 
-  "monTopoCard": (topos) => {
+  "getTopoCard": (topos) => {
     let imagesHtml = '';
 
     let tmpl = _.template(`
