@@ -502,3 +502,8 @@ ul.system-statistic {
 .ui-tabs .ui-tabs-panel{
   padding: 1em;
 }
+
+.left-p {
+  padding-top: 40px;
+  padding-left: 100px;
+}
