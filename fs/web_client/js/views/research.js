@@ -216,6 +216,23 @@ App.views.research = new (Backbone.View.extend({
         );
     }
 
+    function addExcBoss(monId, id) {
+      return $("<div>")
+        .addClass("form-group")
+        .append($("<label>")
+          .attr("for", `excavation-boss-input-${id}`)
+          .text(`Руководитель раскопа`))
+        .append($("<input>")
+          .addClass("form-control")
+          .attr({
+            "id": `excavation-boss-input-${id}`,
+            "data-for": `exc_${monId}_${id}:Excavation`,
+            "type": "text",
+            "name": "boss"
+          })
+        );
+    }
+
     function addExcArea(monId, id) {
       return $("<div>")
         .addClass("form-group")
@@ -241,6 +258,7 @@ App.views.research = new (Backbone.View.extend({
         .append(addCoord("y", monId, counter));
 
       btn.before(addExcName(monId, counter));
+      btn.before(addExcBoss(monId, counter));
       btn.before(addExcArea(monId, counter));
       btn.before(coords);
 
