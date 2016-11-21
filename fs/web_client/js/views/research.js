@@ -221,7 +221,7 @@ App.views.research = new (Backbone.View.extend({
         .addClass("form-group")
         .append($("<label>")
           .attr("for", `excavation-boss-input-${id}`)
-          .text(`Руководитель раскопа`))
+          .text(`Руководитель работ`))
         .append($("<input>")
           .addClass("form-control")
           .attr({
