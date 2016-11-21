@@ -1,12 +1,13 @@
 package search
 
 import (
+	"net/http"
+	"unicode/utf8"
+
 	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
-	"net/http"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"unicode/utf8"
 	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
@@ -19,6 +20,7 @@ const (
 
 func archMapsHandler(w web.ResponseWriter, r *http.Request) {
 	result, err := searchForArchMaps(r.URL.Query().Get("needle"))
+
 	if err == nil {
 		w.Write(result)
 	} else {
@@ -45,18 +47,18 @@ func searchForArchMaps(needle string) ([]byte, error) {
 
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("[]"), nil
-	} else {
-		// Подготавливаем ответ.
-		var buf ext.Xbuf
-
-		buf.WriteByte('[')
-		for _, row := range resp.Results[0].Data {
-			buf.Write(row.Row[0])
-			buf.WriteByte(',')
-		}
-		buf.DropLastByte()
-		buf.WriteByte(']')
-
-		return buf.Bytes(), nil
 	}
+
+	// Подготавливаем ответ.
+	var buf ext.Xbuf
+
+	buf.WriteByte('[')
+	for _, row := range resp.Results[0].Data {
+		buf.Write(row.Row[0])
+		buf.WriteByte(',')
+	}
+	buf.DropLastByte()
+	buf.WriteByte(']')
+
+	return buf.Bytes(), nil
 }
