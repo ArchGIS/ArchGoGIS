@@ -184,8 +184,10 @@
         return _.map(resExc, function(exc, t) {
           let area = exc.area || 0;
           let name = exc.name || "без названия";
-          return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year})` 
-        }).join(", ")
+          let boss = exc.boss || "не задан";
+          return `${name} - ${area}м² (${author[0].name}, ${research.year},
+                  руководитель вскрытия: ${boss})<br>`
+        }).join("")
       })).join(", ") %>
     </div>
 
