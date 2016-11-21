@@ -35,7 +35,6 @@ func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 }
 
 func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
-	// needle = norm.NormalMonument(needle)
 	params := neo.Params{}
 	query := filterMonumentsCypher
 
@@ -77,23 +76,23 @@ func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("[]"), nil
-	} else {
-		// Подготавливаем ответ.
-		var buf ext.Xbuf
-
-		buf.WriteByte('[')
-		for _, row := range resp.Results[0].Data {
-			// #FIXME: перепиши меня, когда будет время!
-			buf.WriteByte('[')
-			buf.Write(
-				bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
-			)
-			buf.WriteByte(']')
-			buf.WriteByte(',')
-		}
-		buf.DropLastByte()
-		buf.WriteByte(']')
-
-		return buf.Bytes(), nil
 	}
+
+	// Подготавливаем ответ.
+	var buf ext.Xbuf
+
+	buf.WriteByte('[')
+	for _, row := range resp.Results[0].Data {
+		// #FIXME: перепиши меня, когда будет время!
+		buf.WriteByte('[')
+		buf.Write(
+			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
+		)
+		buf.WriteByte(']')
+		buf.WriteByte(',')
+	}
+	buf.DropLastByte()
+	buf.WriteByte(']')
+
+	return buf.Bytes(), nil
 }
