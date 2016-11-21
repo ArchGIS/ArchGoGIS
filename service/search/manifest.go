@@ -5,6 +5,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/web"
 )
 
+// Config is map URLs to Handlers
 var Config = service.Config{
 	ServiceName: "search",
 	Routes: []web.Route{
