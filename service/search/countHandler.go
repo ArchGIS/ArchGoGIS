@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"unsafe"
 	"net/http"
-	"unicode/utf8"
+	"encoding/json"
+	"io"
+	"strings"
+	"strconv"
 
-  "github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
@@ -15,8 +17,19 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
+type counts map[string][]string
+
+const (
+	matchQuery  = "OPTIONAL MATCH (x{index}:{node}) " +
+							 	"WITH COUNT (x{index}) as x{index}"
+	returnQuery = "x{index}"
+)
+
 func countHandler(w web.ResponseWriter, r *http.Request) {
-  result, err := searchCounts(r.URL.Query().Get("needle"))
+	input := make(map[string][]string)
+	input = mustFetchJSON(r.Body)
+
+  result, err := searchCounts(input["counts"])
 
 	if err == nil {
 		w.Write(result)
@@ -25,19 +38,40 @@ func countHandler(w web.ResponseWriter, r *http.Request) {
 	}
 }
 
-func searchCounts(needle string) ([]byte, error) {
-	if needle == "" {
-		return nil, errs.FilterIsEmpty
+func mustFetchJSON(reader io.ReadCloser) counts {
+	var input counts
+	json.NewDecoder(reader).Decode(&input)
+
+	return input
+}
+
+func searchCounts(needle []string) ([]byte, error) {
+	var matchStatement string
+	returnStatement := "RETURN"
+	var withStates string
+
+	for i, node := range needle {
+		var query string
+		var returns string
+
+		query = strings.Replace(matchQuery, "{index}", strconv.Itoa(i), -1)
+		query = strings.Replace(query, "{node}", node, -1)
+
+		query += withStates
+		withStates += ", x" + strconv.Itoa(i)
+		
+		returns = strings.Replace(returnQuery, "{index}", strconv.Itoa(i), -1)
+
+		matchStatement += query + " "
+		returnStatement += " " + returns
+		if i != len(needle) -1 {
+			returnStatement += ","
+		}
 	}
 
-	runes := utf8.RuneCountInString(needle)
-	if runes < cfg.SearchMinPrefixLen {
-		return nil, errs.PrefixIsTooShort
-	} else if runes > cfg.SearchMaxPrefixLen {
-		return nil, errs.PrefixIsTooLong
-	}
+	query := matchStatement + returnStatement
 
-	resp, err := neo.Run(monumentsCypher, neo.Params{"needle": `"(?ui)^.*` + needle + `.*$"`})
+	resp, err := neo.Run(query, neo.Params{})
 	if err != nil {
 		echo.ServerError.Print(err)
 		return nil, errs.RetrieveError
@@ -50,7 +84,7 @@ func searchCounts(needle string) ([]byte, error) {
 	// Подготавливаем ответ.
 	var buf ext.Xbuf
 
-	buf.WriteByte('[')
+	// buf.WriteByte('[')
 	for _, row := range resp.Results[0].Data {
 		// #FIXME: перепиши меня, когда будет время!
 		buf.WriteByte('[')
@@ -58,10 +92,10 @@ func searchCounts(needle string) ([]byte, error) {
 			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
 		)
 		buf.WriteByte(']')
-		buf.WriteByte(',')
+		// buf.WriteByte(',')
 	}
-	buf.DropLastByte()
-	buf.WriteByte(']')
+	// buf.DropLastByte()
+	// buf.WriteByte(']')
 
 	return buf.Bytes(), nil
 }
