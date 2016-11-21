@@ -18,5 +18,6 @@ var Config = service.Config{
 		{"/filter_reports", filterReportHandler},
 		{"/cities", citiesHandler},
 		{"/okns", oknsHandler},
+		{"/count", countHandler},
 	},
 }
