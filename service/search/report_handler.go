@@ -2,17 +2,18 @@ package search
 
 import (
 	"bytes"
+	"unicode/utf8"
+	"unsafe"
+	"net/http"
+
 	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
-	"net/http"
-	// "github.com/ArchGIS/ArchGoGIS/norm"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"unicode/utf8"
-	"unsafe"
 	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
+	// "github.com/ArchGIS/ArchGoGIS/norm"
 )
 
 const (
@@ -53,23 +54,23 @@ func searchForreports(needle string) ([]byte, error) {
 
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("[]"), nil
-	} else {
-		// Подготавливаем ответ.
-		var buf ext.Xbuf
-
-		buf.WriteByte('[')
-		for _, row := range resp.Results[0].Data {
-			// #FIXME: перепиши меня, когда будет время!
-			buf.WriteByte('[')
-			buf.Write(
-				bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
-			)
-			buf.WriteByte(']')
-			buf.WriteByte(',')
-		}
-		buf.DropLastByte()
-		buf.WriteByte(']')
-
-		return buf.Bytes(), nil
 	}
+
+	// Подготавливаем ответ.
+	var buf ext.Xbuf
+
+	buf.WriteByte('[')
+	for _, row := range resp.Results[0].Data {
+		// #FIXME: перепиши меня, когда будет время!
+		buf.WriteByte('[')
+		buf.Write(
+			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
+		)
+		buf.WriteByte(']')
+		buf.WriteByte(',')
+	}
+	buf.DropLastByte()
+	buf.WriteByte(']')
+
+	return buf.Bytes(), nil
 }
