@@ -110,67 +110,8 @@ App.views.monument = new (Backbone.View.extend({
         $("#research-input-id").val(ui.item.resId);
         $("#report-input-id").val(ui.item.id);
         repSelName = ui.item.name;
-
-        let query = JSON.stringify({
-          "res:Research": {"id": ui.item.resId+"", "select": "*"},
-          "exc:Excavation": {"id": "*", "select": "*"},
-          "res__has__exc": {}
-        });
-
-        $.post('/hquery/read', query)
-        .success(function(excs) {
-          excs = JSON.parse(excs);
-
-          $('#exc-input').autocomplete({
-            source: _.map(excs.exc, function(r, key) {
-              return {'label': `${r.name} (Руководитель - ${r.boss})`, 'id': r.id}
-            }),
-            minLength: 0
-          }).focus(function() {
-            $(this).autocomplete("search");
-          });
-        });
       }
     });
-
-
-    $('#exc-input').on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
-
-    $('#exc-input').on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'label': 'Ничего не найдено. Добавить?',
-          'value': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
-
-    $('#exc-input').on('autocompleteselect', function(event, ui) {
-      if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
-
-        let tmpl = _.template( $('script.add-exc').html() );
-        $('.find-exc').replaceWith( tmpl() );
-
-        coordpicker($('#exc-coord-picker'), {
-          inputs: ['#exc-x', '#exc-y'],
-          map: 'map'
-        });
-
-        $('#' + addName(id)).val(inputValue);
-        // setSelectsEvents();
-        // fillResearchInputs();
-        // fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
-      } else {
-        $("#exc-input-id").val(ui.item.id);
-        // repSelName = ui.item.name;
-      }
-    });
-
 
     var lastSelectedCityId = 0;
     var lastSelectedCityName = '';
@@ -233,6 +174,7 @@ App.views.monument = new (Backbone.View.extend({
 
 
     function fillResearchInputs() {
+      var year = $("#report-year-input").val();
       var name = $("#report-name-input").val() + " - " + year;
       $("#research-input-name").val(name);
     };
@@ -310,18 +252,18 @@ App.views.monument = new (Backbone.View.extend({
     });
 
 
-    // let excId = 1;
-    // $('#add-exc-button').on('click', function(e) {
-    //   let localExcId = excId;
-    //   let params = {
-    //     excId: localExcId
-    //   }
+    let excId = 1;
+    $('#add-exc-button').on('click', function(e) {
+      let localExcId = excId;
+      let params = {
+        excId: localExcId
+      }
 
-    //   App.template.get("", function(tmpl) {
-    //     $('#add-exc-button').before(tmpl(params));
-    //   })
-    //   excId++;
-    // });
+      App.template.get("", function(tmpl) {
+        $('#add-exc-button').before(tmpl(params));
+      })
+      excId++;
+    });
 
     let photoId = 1;
     $('#add-photo-button').on('click', function(e) {
