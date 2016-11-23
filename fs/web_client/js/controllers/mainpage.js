@@ -18,7 +18,6 @@ App.controllers.main = new (Backbone.View.extend({
 
     $.post('/search/count', query)
       .success(function(counts) {
-        console.log(counts);
         App.page.render('mainpage', {'count': JSON.parse(counts)});
       });
   }
