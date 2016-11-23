@@ -61,7 +61,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchOkn,
         'columnsMaker': function(okns) {
           return _.map(okns, function(r) {
-            return App.models.Report.href(r.id, `${r.name ? r.name : 'Нет названия'}`);
+            return App.models.Heritage.href(r.id, `${r.name ? r.name : 'Нет названия'}`);
           });
         },
         'inputs': {
@@ -318,10 +318,22 @@ App.views.search = new (Backbone.View.extend({
           .then(function(response) {
             if (response.length) {
               var list = my.columnsMaker(response);
-
+              var map = App.page.get("map");
+              map.removeAll();
+              
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
+
+              var counter = 1;
+              _.each(response, function(item) {
+                console.log(response)
+                map.addPlacemark(
+                  [item.x, item.y],
+                  {hintContent: item.name},
+                  {preset: `heritage1`}
+                );
+              })
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
             }

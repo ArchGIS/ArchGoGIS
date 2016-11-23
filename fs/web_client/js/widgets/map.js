@@ -75,6 +75,13 @@ App.widgets.Map = function(params, id) {
         iconImageOffset: [-6, -6],
       })
     }
+
+    ymaps.option.presetStorage.add(`heritage1`, {
+      iconLayout: 'default#image',
+      iconImageHref: `/web_client/img/heritage/heritage1.png`,
+      iconImageSize: [12, 12],
+      iconImageOffset: [-6, -6],
+    })
   });
 
   this.center = function(coord, opts) {
