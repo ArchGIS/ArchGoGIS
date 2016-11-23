@@ -8,6 +8,7 @@
       [t("research.singular"), "#research-params"],
       [t("author.singular"), "#author-params"],
       [t("report.singular"), "#report-params"],
+      [t("heritage.singular"), "#okn-params"],
     ]}, "objectToggler", "class='form-control'")%>
   </label>
   <h4><%= t("search.criteria") %>:</h4>
@@ -65,6 +66,15 @@
         <%= t("report.year") %>
       </label>
       <input class="form-control" type="number" id="report-year-input">
+    </div>
+  </div>
+
+  <div class="flex-column" id="okn-params" style="display: none">
+    <div class="form-group">
+      <label for="heritage-input" class="flex-row">
+        <%= t("heritage.name") %>
+      </label>
+      <input class="form-control" type="text" id="heritage-input"/>
     </div>
   </div>
 
