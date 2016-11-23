@@ -56,6 +56,17 @@ App.views.search = new (Backbone.View.extend({
           'author': $('#report-author-input'),
           'year': $('#report-year-input')
         }
+      },
+      'okn-params': {
+        'handler': searchOkn,
+        'columnsMaker': function(okns) {
+          return _.map(okns, function(r) {
+            return App.models.Report.href(r.id, `${r.name ? r.name : 'Нет названия'}`);
+          });
+        },
+        'inputs': {
+          'okn': $('#heritage-input')
+        }
       }
     };
 
@@ -253,6 +264,46 @@ App.views.search = new (Backbone.View.extend({
             var url = App.url.make('/search/filter_reports', {
               'author': author,
               'year': year
+            });
+
+            $.get(url)
+              .success((response) => {
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
+          });
+        }
+
+        find()
+          .then(function(response) {
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(`<p>${item}</p>`);
+              });
+            } else {
+              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+            }
+          }, function(error) {
+            console.log(error);
+          });
+      } else {
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+      }
+    }
+
+    // Поиск ОКН
+    function searchOkn(my) {
+      var input = my.inputs;
+
+      var okn = input.okn.val();
+
+      if (okn) {
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/okns', {
+              'needle': okn
             });
 
             $.get(url)

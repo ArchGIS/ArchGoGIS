@@ -27,7 +27,7 @@
       <dt>Статус:</dt>
       <dd><%= maybe(herStatus[0], "Не указан", "name") %></dd>
 
-      <% if (secType[0].name) { %>
+      <% if ( _.size(secType[0]) ) { %>
         <dt>Категория охраны:</dt>
         <dd><%= maybe(secType[0], "Не указана","name") %></dd>
 
@@ -177,7 +177,7 @@
     </div>
     <div id="topoplans"></div>
     <div id="photos">
-      <%= App.views.functions.getImageCard(photo) %>
+      <%= App.views.functions.getImageCard({photo, cd}) %>
     </div>
   </div>
 
