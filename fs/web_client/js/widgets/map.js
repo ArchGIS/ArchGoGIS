@@ -47,7 +47,7 @@ App.widgets.Map = function(params, id) {
       })
     }
 
-    for (var type=1; type<=10; type++) {   //Добавляем в карту значки типов памятников
+    for (var type=1; type<=11; type++) {   //Добавляем в карту значки типов памятников
       for (var epoch=0; epoch<=7; epoch++) {   //Добавляем в карту значки типов памятников
         ymaps.option.presetStorage.add(`monType${type}_${epoch}`, {
           iconLayout: 'default#image',
@@ -75,6 +75,13 @@ App.widgets.Map = function(params, id) {
         iconImageOffset: [-6, -6],
       })
     }
+
+    ymaps.option.presetStorage.add(`heritage1`, {
+      iconLayout: 'default#image',
+      iconImageHref: `/web_client/img/heritage/heritage1.png`,
+      iconImageSize: [12, 12],
+      iconImageOffset: [-6, -6],
+    })
   });
 
   this.center = function(coord, opts) {

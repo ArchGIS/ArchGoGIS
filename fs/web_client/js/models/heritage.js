@@ -15,6 +15,14 @@ App.models.Heritage.findByNamePrefix = function(name) {
   });
 };
 
+App.models.Heritage.url = function(id) {
+  return id ? '#heritage/show/' + id : '#heritage/show';
+};
+
+App.models.Heritage.href = function(id, text) {
+  return '<a href="' + App.models.Heritage.url(id) + '">' + text + '</a>';
+};
+
 
 App.models.Heritage.scheme = App.models.proto.parseScheme("Heritage", {
   "name": {
