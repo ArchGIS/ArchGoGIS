@@ -14,10 +14,10 @@ App.views.artifact = new (Backbone.View.extend({
     var authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
 
-      App.models.Research.findByAuthorId(ui.item.id).then(function(researches) {
+      App.models.Research.findByAuthorId(ui.item.id).then(function(response) {
         $('#research-input').autocomplete({
-          source: _.map(researches, function(research) {
-            return {'label': fmt('$name ($year)', research), 'id': research.id}
+          source: _.map(response.res, function(res, i) {
+            return {'label': `${res.name} (${res.year}, ${response.rt[i].name})`, 'id': res.id}
           })
         });
       });

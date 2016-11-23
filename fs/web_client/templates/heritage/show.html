@@ -67,7 +67,7 @@
               </a>
               </dd>
               <dt>Названия памятника:</dt>
-              <dd><%= _.map(knowledges[i], function(k, i) {return k.monument_name}).join(", ") %></dd>
+              <dd><%= _.uniq(_.map(knowledges[i], function(k, i) {return k.monument_name})).join(", ") %></dd>
               <dt>Эпоха:</dt>
               <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
               <dt>Тип:</dt>
