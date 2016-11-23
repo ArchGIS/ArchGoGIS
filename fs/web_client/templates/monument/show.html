@@ -46,6 +46,7 @@
       <dd><% if (heritage[0]) { %>
         <% _.each(heritage, function(her, id) { %>
           <a href="#heritage/show/<%= her.id %>"><%= her.name %></a>
+          <br>
         <% }) %>
       <% } else { %>
         Отсутствует или не задано
