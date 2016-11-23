@@ -40,10 +40,6 @@ App.controllers.heritage = new (Backbone.View.extend({
           "h__has__secType": {},
         }),
 
-        secType: JSON.stringify({
-          "secType:SecurityType": {"id": "*", "select": "*"},
-        }),
-
         monMaterial: JSON.stringify({
           "monMaterial:MonumentMaterial": {"id": "*", "select": "*"},
         }),
@@ -91,7 +87,22 @@ App.controllers.heritage = new (Backbone.View.extend({
           "monTypes:MonumentType": {"id": "*", "select": "*"},
           "m__has__monTypes": {}
         }),
-      }
+      },
+
+      // research: {
+      //   researches: JSON.stringify({
+      //     "k:Knowledge": {"id": "NEED"},
+      //     "research:Research": {"id": "*", "select": "*"},
+      //     "resType:ResearchType": {"id": "*", "select": "*"},
+      //     "report:Report": {"id": "*", "select": "*"},
+      //     "author:Author": {"id": "*", "select": "*"},
+      //     "research__has__k": {},
+      //     "research__has__resType": {},
+      //     "research__has__report": {},
+      //     "research__hasauhthor__author": {},
+      //     "report__hasauhthor__author": {},
+      //   })
+      // }
     }
 
     var render = function() {
@@ -139,8 +150,8 @@ App.controllers.heritage = new (Backbone.View.extend({
       _.extend(tmplData, response);
 
       var mapIds = _.map(tmplData.surveyMaps, function(map) {return map.id.toString()});
-
       data.push(model.getData(queries.surveyMap, callRender, true, mapIds));
+     
       callRender();
     })
 
@@ -148,8 +159,12 @@ App.controllers.heritage = new (Backbone.View.extend({
       _.extend(tmplData, response);
 
       var monIds = _.map(tmplData.monuments, function(mon) {return mon.id.toString()});
+      var mons = model.getData(queries.monument, callRender, true, monIds);
+      data.push(mons);
+      // var knowIds = _.map(mons.surveyMaps, function(know) {return know.id.toString()});
+      // console.log(mons)
+      // data.push(model.getData(queries.surveyMap, callRender, true, mapIds));
 
-      data.push(model.getData(queries.monument, callRender, true, monIds));
       callRender();
     })
 
