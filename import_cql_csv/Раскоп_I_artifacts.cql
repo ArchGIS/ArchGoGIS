@@ -1,6 +1,6 @@
 LOAD CSV WITH HEADERS FROM "file:///Sviazhsk_artefakty.csv" AS line
 WITH line, toInt(line.Count) as count
-MATCH (exc:Excavation {id: 4})
+MATCH (exc:Excavation {id: 65})
 
 CREATE (art:Artifact {
 	id: 99999999999999 + count,
