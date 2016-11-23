@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 App.views.search = new (Backbone.View.extend({
   'index': function() {
@@ -299,11 +299,11 @@ App.views.search = new (Backbone.View.extend({
 
       var okn = input.okn.val();
 
-      if (okn) {
+      if (true) {
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/okns', {
-              'needle': okn
+              'needle': okn || "[а-я]"
             });
 
             $.get(url)

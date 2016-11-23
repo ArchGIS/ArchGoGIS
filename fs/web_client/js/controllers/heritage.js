@@ -144,6 +144,18 @@ App.controllers.heritage = new (Backbone.View.extend({
           stateTables[id][key][4] = (row[4] === "1") ? "Да" : "Нет";
         })
       })
+
+      tmplData.placemarks = [];
+      tmplData.placemarks.push({
+        coords: [tmplData.heritage.x, tmplData.heritage.y],
+        pref: {
+          hintContent: tmplData.heritage.name
+        },
+        opts: {
+          preset: `heritage1`
+        }
+      })
+
       console.log(tmplData);
       App.page.render("heritage/show", tmplData, {"stateTables": stateTables})
     }
