@@ -253,6 +253,19 @@ App.views.monument = new (Backbone.View.extend({
     });
 
 
+    let excId = 1;
+    $('#add-exc-button').on('click', function(e) {
+      let localExcId = excId;
+      let params = {
+        excId: localExcId
+      }
+
+      App.template.get("", function(tmpl) {
+        $('#add-exc-button').before(tmpl(params));
+      })
+      excId++;
+    });
+
     let photoId = 1;
     $('#add-photo-button').on('click', function(e) {
       let localPhotoId = photoId;
