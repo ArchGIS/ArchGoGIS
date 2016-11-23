@@ -113,31 +113,31 @@ App.views.monument = new (Backbone.View.extend({
 
         let query = JSON.stringify({
           "res:Research": {"id": ui.item.resId+"", "select": "*"},
-          "exc:Excavation": {"id": "*", "select": "*"},
-          "res__has__exc": {}
-        });
-
-        $.post('/hquery/read', query)
-        .success(function(excs) {
-          excs = JSON.parse(excs);
-
-          $('#exc-input').autocomplete({
-            source: _.map(excs.exc, function(r, key) {
-              return {'label': `${r.name} (Руководитель - ${r.boss})`, 'id': r.id}
-            }),
-            minLength: 0
-          }).focus(function() {
-            $(this).autocomplete("search");
+            "exc:Excavation": {"id": "*", "select": "*"},
+            "res__has__exc": {}
           });
-        });
-      }
-    });
-
-
+        
+          $.post('/hquery/read', query)
+          .success(function(excs) {
+            excs = JSON.parse(excs);
+        
+            $('#exc-input').autocomplete({
+              source: _.map(excs.exc, function(r, key) {
+                return {'label': `${r.name} (Руководитель - ${r.boss})`, 'id': r.id}
+              }),
+              minLength: 0
+            }).focus(function() {
+              $(this).autocomplete("search");
+            });
+          });
+        }
+      });
+        
+        
     $('#exc-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
     });
-
+    
     $('#exc-input').on('autocompleteresponse', function(event, ui) {
       if (ui.content.length === 0) {
         ui.content.push({
@@ -146,21 +146,21 @@ App.views.monument = new (Backbone.View.extend({
         });
       }
     });
-
+    
     $('#exc-input').on('autocompleteselect', function(event, ui) {
       if (ui.item.value === 'Ничего не найдено. Добавить?') {
         let $input = $(this);
         let id = $input.attr('id');
         let inputValue = $input.val();
-
+    
         let tmpl = _.template( $('script.add-exc').html() );
         $('.find-exc').replaceWith( tmpl() );
-
+    
         coordpicker($('#exc-coord-picker'), {
           inputs: ['#exc-x', '#exc-y'],
           map: 'map'
         });
-
+    
         $('#' + addName(id)).val(inputValue);
         // setSelectsEvents();
         // fillResearchInputs();
@@ -170,7 +170,6 @@ App.views.monument = new (Backbone.View.extend({
         // repSelName = ui.item.name;
       }
     });
-
 
     var lastSelectedCityId = 0;
     var lastSelectedCityName = '';
@@ -236,7 +235,6 @@ App.views.monument = new (Backbone.View.extend({
       var year = $("#report-year-input").val();
       var name = $("#report-name-input").val() + " - " + year;
       $("#research-input-name").val(name);
-      $("#research-input-year").val(year);
     };
 
     $('#send-button').on('click', function() {
