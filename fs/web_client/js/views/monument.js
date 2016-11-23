@@ -174,10 +174,8 @@ App.views.monument = new (Backbone.View.extend({
 
 
     function fillResearchInputs() {
-      var year = $("#report-year-input").val();
       var name = $("#report-name-input").val() + " - " + year;
       $("#research-input-name").val(name);
-      $("#research-input-year").val(year);
     };
 
     $('#send-button').on('click', function() {
