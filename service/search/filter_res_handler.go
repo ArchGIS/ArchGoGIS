@@ -64,13 +64,6 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 		"y: COLLECT(k.y)} AS resp " +
 		"RETURN resp"
 
-		// MATCH (k:Knowledge)<-[:has]-(r)
-		// WITH {resID: r.id,
-		// 	autName: a.name,
-		// 	x: COLLECT(k.x),
-		// 	y: COLLECT(k.y)} AS resp
-		// RETURN resp
-
 	resp, err := neo.Run(query, params)
 
 	if err != nil {
@@ -80,23 +73,23 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("[]"), nil
-	} else {
-		// Подготавливаем ответ.
-		var buf ext.Xbuf
-
-		buf.WriteByte('[')
-		for _, row := range resp.Results[0].Data {
-			// #FIXME: перепиши меня, когда будет время!
-			buf.WriteByte('[')
-			buf.Write(
-				bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
-			)
-			buf.WriteByte(']')
-			buf.WriteByte(',')
-		}
-		buf.DropLastByte()
-		buf.WriteByte(']')
-
-		return buf.Bytes(), nil
 	}
+
+	// Подготавливаем ответ.
+	var buf ext.Xbuf
+
+	buf.WriteByte('[')
+	for _, row := range resp.Results[0].Data {
+		// #FIXME: перепиши меня, когда будет время!
+		buf.WriteByte('[')
+		buf.Write(
+			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
+		)
+		buf.WriteByte(']')
+		buf.WriteByte(',')
+	}
+	buf.DropLastByte()
+	buf.WriteByte(']')
+
+	return buf.Bytes(), nil
 }

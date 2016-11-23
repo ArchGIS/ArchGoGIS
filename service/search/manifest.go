@@ -5,6 +5,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/web"
 )
 
+// Config is map URLs to Handlers
 var Config = service.Config{
 	ServiceName: "search",
 	Routes: []web.Route{
@@ -17,5 +18,6 @@ var Config = service.Config{
 		{"/filter_reports", filterReportHandler},
 		{"/cities", citiesHandler},
 		{"/okns", oknsHandler},
+		{"/count", countHandler},
 	},
 }

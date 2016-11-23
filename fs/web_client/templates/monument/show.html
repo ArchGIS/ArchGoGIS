@@ -9,7 +9,7 @@
       <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
       <li><a href="#photos"><%= t('photo.plural') %></a></li>
-      <li><a href="#topos"><%= t('topoplan.singular') %></a></li>
+      <li><a href="#topos"><%= t('topoplan.plural') %></a></li>
     </ul>
 
     <div id="general">
@@ -41,6 +41,14 @@
       <dd><%= _.reduce(artifacts, function(size, list) {
         return size + _.size(list)
       }, 0) %></dd>
+
+      <dt><%= t("heritage.singular") %></dt>
+      <dd><% if (heritage[0]) { %>
+        <a href="#heritage/show/<%= heritage[0].id %>"><%= heritage[0].name %></a>
+      <% } else { %>
+        Отсутствует или не задано
+      <% } %>
+      </dd>
     </div>
 
     <div id="researches">
@@ -110,7 +118,9 @@
         return _.map(resExc, function(exc, t) {
           let area = exc.area || 0;
           let name = exc.name || "без названия";
-          return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year})` 
+          let boss = exc.boss || "не задан";
+          return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year}),
+                  руководитель работ: ${boss})<br>`
         }).join(", ")
       })).join(", ") %>
     </div>
@@ -125,19 +135,15 @@
     </div>
 
     <div id="photos">
-      <!--<% _.each(photos[0], (el, i, list) => { %>
-        <%= App.fn.monImageCard(el) %>
-      <% }) %>-->
+      <%= App.views.functions.getImageCard(photos[0]) %>
     </div>
 
     <div id="topos">
-      <% _.each(topos[0], (el, i, list) => { %>
-        <%= App.fn.monImageCard(el) %>
-      <% }) %>
+      <%= App.views.functions.getTopoCard(topos[0]) %>
     </div>
   </div>
+</div>
 
-  <div class="maps">
-    <%= widget("Map", {"placemarks": placemarks}, "map") %>
-  </div>
+<div class="maps">
+  <%= widget("Map", {"placemarks": placemarks}, "map") %>
 </div>

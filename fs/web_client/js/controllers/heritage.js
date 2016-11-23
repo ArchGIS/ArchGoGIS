@@ -51,6 +51,14 @@ App.controllers.heritage = new (Backbone.View.extend({
         monDefect: JSON.stringify({
           "monDefect:MonumentDefect": {"id": "*", "select": "*"},
         }),
+
+        photo: JSON.stringify({
+          "h:Heritage": {"id": hId},
+          "photo:Image": {"id": "*", "select": "*"},
+          "cd:CardinalDirection": {"id": "*", "select": "*"},
+          "h__has__photo": {},
+          "photo__has__cd": {}
+        })
       },
 
       surveyMap: {

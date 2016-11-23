@@ -1,139 +1,207 @@
 <div class="content">
   <h2><%= t('research.singular') %> "<%= maybe(research, "Нет названия", "name") %>"</h2>
-  <br>
-  <dl>
-    <dt><%= t('author.singular') %>:</dt>
-    <dd><a href="#author/show/<%= author[0].id %>">
-      <%= author[0].name %>
-    </a></dd>
-  </dl>
 
-  <% if (coauthors.length) { %>
-  <dl>
-    <dt><%= t('coauthor.plural') %>:</dt>
-    <% _.each(coauthors, function(a, i) { %>
-      <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
-    <% }); %>
-  </dl>
-  <% } %>
-  
-  <dl>
-    <dt><%= t('research.year') %>:</dt>
-    <dd><%= maybe(research, "Не указан", "year") %></dd>
-  </dl>
+  <div id="container">
+    <ul>
+      <li><a href="#common"><%= t('common.general') %></a></li>
+      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
+      <li><a href="#heritages"><%= t('heritage.singular') %></a></li>
+      <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
+      <li><a href="#topos"><%= t('topoplan.plural') %></a></li>
+      <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
+      <li><a href="#another">*</a></li>
+    </ul>
 
-  <dl>
-    <dt><%= t('research.type') %>:</dt>
-    <dd><%= maybe(resType[0], "Не указано", "name") %></dd>
-  </dl>
+    <div id="common">
+      <dl>
+        <dt><%= t('author.singular') %>:</dt>
+        <dd><a href="#author/show/<%= author[0].id %>">
+          <%= author[0].name %>
+        </a></dd>
+      </dl>
 
-  <dt><%= t('research.prop.description') %>:</dt>
-  <dd><%= maybe(research, "Отсутствует", "description" ) %></dd>
-  
-  <dt><%= t('report.singular') %>:</dt>
-  <dd>
-    <% if (reports.length) { %>
-      <div>
-      <% _.each(reports, function(report, i) { %>
-        <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
-        <% if (reports[i].fileid) { %>
-          <%= App.models.Report.href(reports[i].fileid, reportTitle) %>
-        <% } else {%>
-          <%= reportTitle %>
+      <% if (coauthors.length) { %>
+      <dl>
+        <dt><%= t('coauthor.plural') %>:</dt>
+        <% _.each(coauthors, function(a, i) { %>
+          <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
+        <% }); %>
+      </dl>
+      <% } %>
+
+      <dl>
+        <dt><%= t('research.year') %>:</dt>
+        <dd><%= maybe(research, "Не указан", "year") %></dd>
+      </dl>
+
+      <dl>
+        <dt><%= t('research.type') %>:</dt>
+        <dd><%= maybe(resType[0], "Не указано", "name") %></dd>
+      </dl>
+
+      <dt><%= t('research.prop.description') %>:</dt>
+      <dd><%= maybe(research, "Отсутствует", "description" ) %></dd>
+      
+      <dt><%= t('report.singular') %>:</dt>
+      <dd>
+        <% if (reports.length) { %>
+          <div>
+          <% _.each(reports, function(report, i) { %>
+            <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
+            <% if (reports[i].fileid) { %>
+              <%= App.models.Report.href(reports[i].fileid, reportTitle) %>
+            <% } else {%>
+              <%= reportTitle %>
+            <% } %>
+            <br>
+          <% }); %>
+          </div>
+        <% } else { %>
+            Нет отчёта
         <% } %>
-        <br>
-      <% }); %>
-      </div>
-    <% } else { %>
-        Нет отчёта
-    <% } %>
-  </dd>
-  <br>
-  <div id="accordion">
-    <% var counter = 1 %>
-    <% _.each(monuments, function(monument, i) { %>
-      
-      <h4 class="accordion-header">
-        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-        <%= t('monument.singular') %> №<%= counter++ %>: <b><%= knowledges[i].monument_name %></b>
-      </h4>
-      
-      <div class="accordion-content">
-        <dl>
-          <dt></dt>
-          <dd>
-            <a href="#monument/show/<%= monument.id %>">
-            Перейти к памятнику
-          </a>
-          </dd>
-          <dt>Название, данное исследователем:</dt>
-          <dd><%= knowledges[i].monument_name %></dd>
-          <dt>Эпоха:</dt>
-          <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
-          <dt>Тип:</dt>
-          <dd><%= maybe(monTypes[i][0], "Нет данных", "name") %></dd>
-          <dt>Культурная принадлежность, определенная исследователем:</dt>
-          <dd><%= maybe(cultures[i][0], "Нет данных", "name") %></dd>
-          <dt>Найденные артефакты:</dt>
-          <dd>
-            <% if (artifacts[i] && artifacts[i].length > 0) { %>
-              <% var length = artifacts[i].length %>
-              <% _.each(artifacts[i], function(artifact, i) { %>
-                <a href="#artifact/show/<%= artifact.id %>">
-                  <%= artifact.name%>
-                </a>
-                <% if (i < length-1) { %>
-                ,
-              <% } %>
-            <% }); %>
-            <% } else { %>
-              нет
-            <% } %>
-          </dd>
+      </dd>
 
-          <dt>Археологические вскрытия:</dt>
+      <dt><%= t("monument.count") %>:</dt>
+      <dd><%= _.size(monuments) %></dd>
+
+      <% if (resType[0].name === 'Раскопки' || resType[0].name === 'Разведка') { %>
+        <dt><%= t("excavation.genitivePl") %>:</dt>
+        <dd><%= _.reduce(excavations, function(size, list) {
+          return size + _.size(list)
+        }, 0) %>;
+        Общая площадь
+        <%= _.reduce(excavations, function(area, list) {
+          return area + _.reduce(list, function(area, exc) {
+            return area + (exc.area || 0);
+          }, 0);
+        }, 0) %>
+        м²</dd>
+      <% } %>
+
+      <dt><%= t("artifact.genitivePl") %>:</dt>
+      <dd><%= _.size(artifacts[0]) %></dd>
+    </div>
+
+    <div id="monuments">
+      <div id="accordion">
+        <% var counter = 1 %>
+        <% _.each(monuments, function(monument, i) { %>
+          
+          <h4 class="accordion-header">
+            <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+            <%= t('monument.singular') %> №<%= counter++ %>: <b><%= knowledges[i].monument_name %></b>
+          </h4>
+          
+          <div class="accordion-content">
+            <dl>
+              <dt></dt>
+              <dd>
+                <a href="#monument/show/<%= monument.id %>">
+                Перейти к памятнику
+              </a>
+              </dd>
+              <dt>Название, данное исследователем:</dt>
+              <dd><%= knowledges[i].monument_name %></dd>
+              <dt>Эпоха:</dt>
+              <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
+              <dt>Тип:</dt>
+              <dd><%= maybe(monTypes[i][0], "Нет данных", "name") %></dd>
+              <dt>Культурная принадлежность, определенная исследователем:</dt>
+              <dd><%= maybe(cultures[i][0], "Нет данных", "name") %></dd>
+              <dt>Найденные артефакты:</dt>
+              <dd>
+                <% if (artifacts[i] && artifacts[i].length > 0) { %>
+                  <% var length = artifacts[i].length %>
+                  <% _.each(artifacts[i], function(artifact, i) { %>
+                    <a href="#artifact/show/<%= artifact.id %>">
+                      <%= artifact.name%>
+                    </a>
+                    <% if (i < length-1) { %>
+                    ,
+                  <% } %>
+                <% }); %>
+                <% } else { %>
+                  нет
+                <% } %>
+              </dd>
+
+              <dt>Археологические вскрытия:</dt>
+              <dd>
+                <% if (excavations[i] && excavations[i].length > 0) { %>
+                  <% var length = excavations[i].length %>
+                  <% _.each(excavations[i], function(excavation, i) { %>
+                    <%= maybe(excavation, `без названия ${i}`, "name")%>
+                    <% if (excavation.area) { %>
+                      (<%= excavation.area%> м²)
+                    <% } %>
+                    <% if (i < length-1) { %>
+                    ,
+                    <% } %>
+                  <% }); %>
+                <% } else { %>
+                  нет
+                <% } %>
+              </dd>
+            </dl>
+          </div>
+
+        <% }) %>
+      </div>
+    </div>
+
+
+    <div id="artifacts">
+      <% if (artifacts[0].length > 0) { %>
+        <dl>
+          <dt>Упоминаемые артефакты:</dt>
           <dd>
-            <% if (excavations[i] && excavations[i].length > 0) { %>
-              <% var length = excavations[i].length %>
-              <% _.each(excavations[i], function(excavation, i) { %>
-                <%= maybe(excavation, `без названия ${i}`, "name")%>
-                <% if (excavation.area) { %>
-                  (<%= excavation.area%> м²)
-                <% } %>
-                <% if (i < length-1) { %>
-                ,
-                <% } %>
-              <% }); %>
-            <% } else { %>
-              нет
-            <% } %>
+            <% var length = artifacts[0].length %>
+            <% _.each(artifacts[0], function(artifact, i) { %>
+              <a href="#artifact/show/<%= artifact.id %>">
+                <%= artifact.name %>
+              </a>
+              <% if (i < length-1) { %>,<% } %>
+            <% }); %>
           </dd>
         </dl>
-      </div>
+      <% } else { %>
+        Нет артефактов
+      <% } %>
+    </div>
 
-    <% }) %>
+    <div id="heritages">
+      <% if (heritages[0].length) { %>
+        <% _.each(heritages[0], (el) => { %>
+          <a href="#heritage/show/<%= el.id %>"><%= el.name %></a>
+        <% }) %>
+      <% } else { %>
+        Отсутствует или не задано
+      <% } %>
+    </div>
+
+    <div id="excavations"> 
+      <%= _.compact(_.map(excavations, function(resExc, i) {
+        return _.map(resExc, function(exc, t) {
+          let area = exc.area || 0;
+          let name = exc.name || "без названия";
+          let boss = exc.boss || "не задан";
+          return `${name} - ${area}м² (${author[0].name}, ${research.year},
+                  руководитель работ: ${boss})<br>`
+        }).join("")
+      })).join(", ") %>
+    </div>
+
+    <div id="topos">
+      <%= App.views.functions.getTopoCard(topos[0]) %>
+    </div>
+
+    <div id="another">
+      Заглушка для будущих вкладок
+    </div>
   </div>
+</div>
 
-  <% if (usedArtifacts.length > 0) { %>
-    <dl>
-      <dt>Упоминаемые артефакты:</dt>
-      <dd>
-        <% var length = usedArtifacts.length %>
-        <% _.each(usedArtifacts, function(artifact, i) { %>
-        <a href="#artifact/show/<%= artifact.id %>">
-          <%= artifact.name %>
-        </a>
-        <% if (i < length-1) { %>
-        ,
-        <% } %>
-        <% }); %>
-      </dd>
-    </dl>
-  <% } %>
 
 <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>
 </div>
-</div>
-
-

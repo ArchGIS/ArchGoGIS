@@ -38,6 +38,11 @@ App.controllers.monument = new (Backbone.View.extend({
           "monument:Monument": {"id": monId},
           "monType:MonumentType": {"id": "*", "select": "*"},
           "monument__has__monType": {},
+        }),
+        heritage: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "heritage:Heritage": {"id": "*", "select": "*"},
+          "heritage__has__monument": {}
         })
       },
 
@@ -73,7 +78,9 @@ App.controllers.monument = new (Backbone.View.extend({
         photos: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
           "photo:Image": {"id": "*", "select": "*"},
-          "knowledge__has__photo": {}
+          "cd:CardinalDirection": {"id": "*", "select": "*"},
+          "knowledge__has__photo": {},
+          "photo__has__cd": {}
         }),
         topos: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},

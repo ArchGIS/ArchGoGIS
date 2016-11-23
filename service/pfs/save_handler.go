@@ -1,23 +1,26 @@
 package pfs
 
 import (
-	"github.com/ArchGIS/ArchGoGIS/echo"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs/errs"
 	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
 const (
-	maxMemory       = 32 << 20
-	FILE_INPUT_NAME = "key"
+	// MaxMemory is constraint for files size
+	MaxMemory     = 32 << 20
+	// FileInputName is key for uploaded files
+	FileInputName = "key"
 )
 
 func saveHandler(w web.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(maxMemory)
+	r.ParseMultipartForm(MaxMemory)
 
-	file, _, err := r.FormFile(FILE_INPUT_NAME)
+	file, _, err := r.FormFile(FileInputName)
 	if err != nil {
 		echo.ClientError.Print(err)
 		w.Write(api.Error(errs.SaveFileDataError))
