@@ -323,9 +323,9 @@ App.views.monument = new (Backbone.View.extend({
     //   excId++;
     // });
 
-    let photoId = 1;
+    let nextPhotoId = App.fn.counter(1);
     $('#add-photo-button').on('click', function(e) {
-      let localPhotoId = photoId;
+      let localPhotoId = nextPhotoId();
       let params = {
         photoId: localPhotoId
       }
@@ -336,12 +336,11 @@ App.views.monument = new (Backbone.View.extend({
         getDataForSelector($(`#photo-view-selector-${localPhotoId}`), "CardinalDirection");
         App.views.functions.setAccordionHeader($(`#photo-header-${localPhotoId}`));
       })
-      photoId++;
     });
 
-    let topoId = 1;
+    let nextTopoId = App.fn.counter(1);
     $('#add-topo-button').on('click', function(e) {
-      let localTopoId = topoId;
+      let localTopoId = nextTopoId();
       let params = {
         topoId: localTopoId
       }
@@ -351,7 +350,6 @@ App.views.monument = new (Backbone.View.extend({
 
         App.views.functions.setAccordionHeader($(`#topo-header-${localTopoId}`));
       })
-      topoId++;
     });
 
 
