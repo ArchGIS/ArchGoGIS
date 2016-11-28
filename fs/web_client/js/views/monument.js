@@ -68,6 +68,7 @@ App.views.monument = new (Backbone.View.extend({
         $('.find-author').replaceWith( tmpl() );
         tmpl = _.template( $('script.add-report').html() );
         $('.find-report').replaceWith( tmpl() );
+        $('#author-birth-date-input').on('keyup mouseup', App.fn.checkYear);
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
