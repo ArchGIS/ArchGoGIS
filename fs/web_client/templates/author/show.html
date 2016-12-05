@@ -1,78 +1,96 @@
 <div class="content">
   <h2><%= t('author.researcher') %></h2>
-  <p>
-    <% if (photos.length) { %>
-      <% _.each(photos, function(ph) { %>
-      <img src="<%= HOST_URL + '/local_storage/' + ph.fileid %>" height="100px">
-      <% }); %>
-    <% } %>
-  </p>
-  <dl>
-    <dt><%= t('author.prop.name') %>:</dt>
-    <dd><%= author.name %></dd>
-    <dt><%= t('author.prop.year') %>:</dt>
-    <dd><%= maybe(author.birthdate, "Не указан") %></dd>
-  </dl>
 
-  <h3><%= t('research.plural') %>:</h3>
-  <% if (researches.length) { %>
-    <% _.each(researches, function(r, i) { %>
-      <%= i + 1 %>)
-      <a href="#research/show/<%= r.id %>"><%= r.name %></a>
-      <br>
-    <% }); %>
-  <% } else { %>
-    <p>Нет исследований</p>
-  <% } %>
+  <div class="tabs">
+    <ul>
+      <li><a href="#common"><%= t('common.general') %></a></li>
+      <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
+      <li><a href="#reports"><%= t('report.plural') %></a></li>
+      <li><a href="#publications"><%= t('publication.plural') %></a></li>
+      <li><a href="#another">*</a></li>
+    </ul>
 
-  <h3><%= t('author.prop.publications') %>:</h3>
-  <% if (pubs.length) { %>
-    <% _.each(pubs, function(pub, i) { %>
-      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= maybe(pub.year, "год неизвестен")%></a> - автор
-      <br>
-    <% }); %>
-  <% } %>
-  <% if (copubs.length) { %>
-    <% _.each(copubs, function(pub, i) { %>
-      <a href="#publication/show/<%= pub.id %>"><%= pub.name %> - <%= maybe(pub.year, "год неизвестен")%></a> - соавтор
-      <br>
-    <% }); %>
-  <% } %>
-
-  <% if (!(pubs.length || copubs.length)) { %>
-    <p>Нет публикаций</p>
-  <% } %>
-
-  <h3><%= t('organization.plural') %>:</h3>
-  <% if (jobs.length) { %>
-  <dl>
-    <% _.each(jobs, function(job, i) { %>
-    <dt><%= orgs[i].name %></dt>
-    <dd>
-      <%= t('work-post') %>:
-      <%= job.post_name %>
-      <%= t('since') %>
-      <%= job.period[0] %>
-    </dd>
-    <br>
-    <% }); %>
-  </dl>
-  <% } else { %>
-  <p>Нет организаций</p>
-  <% } %>
-  <br>
-  <dl>
-    <dt>
-      Биография:
-    </dt>
-    <dd>
-      <% if (author.biography) { %>
-      <%= author.biography %>
-      <% } else { %>
-      Не заполнено
+    <div id="common">
+      <% if (photos.length) { %>
+        <% _.each(photos, function(ph) { %>
+        <img src="<%= HOST_URL + '/local_storage/' + ph.fileid %>" height="100px">
+        <% }); %>
       <% } %>
-    </dd>
-  </dl>
+
+      <dl>
+        <dt><%= t('author.prop.name') %>:</dt>
+        <dd><%= author.name %></dd>
+        <dt><%= t('author.prop.year') %>:</dt>
+        <dd><%= maybe(author.birthdate, "Не указан") %></dd>
+      </dl>
+
+      <dl>
+        <% if (jobs.length) { %>
+          <dt><%= t('organization.plural') %>:</dt>
+          <% _.each(jobs, function(job, i) { %>
+            <dd><%= orgs[i].name %> (<%= job.period[0] %>-<%= maybe(job.period[1], "...") %>)</dd>
+          <% }); %>
+        <% } else { %>
+        <p>Нет данных</p>
+      <% } %>
+      </dl>
+
+      <dl>
+        <dt><%= t('author.prop.biography') %>:</dt>
+        <dd><%= maybe(author.biography, "Не заполнено") %></dd>
+      </dl>
+    </div>
+
+    <div id="researches">
+      <%= _.map(researches, function(res, i) {
+        let resTitle = `${res.name} (${resTypes[i][0].name}, ${res.year})`;
+        return App.models.Research.href(res.id, resTitle);
+      }).join("<br>") %>
+    </div>
+
+    <div id="monuments">
+      <%= _.compact(_.map(monuments, function(resMon, i) {
+        return _.map(resMon.knowledges, function(mon, t) {
+          let mid = `${resMon.m[t].id}`;
+          let monTitle = `${mon.monument_name} (${resMon.monType[t].name}, ${resMon.epoch[t].name})`;
+          return App.models.Monument.href(mid, monTitle);
+        }).join("</br>")
+      })).join("</br>") %>
+    </div>
+
+    <div id="reports">
+      <%= _.map(reports, function(rep, i) {
+        let year = rep.year || "год не указан";
+        let repTitle = `${rep.name} (${year})`;
+        return App.models.Research.href(rep.id, repTitle);
+      }).join("<br>") %>
+    </div>
+
+    <div id="publications">
+      <% if (pubs.length) { %>
+        <dt><%= t("author.singular") %>:</dt>
+        <%= _.map(pubs, function(pub, i) {
+          let year = pub.published_at || "год не указан";
+          let pubTitle = `${pub.name} (${year})`;
+          return App.models.Publication.href(pub.id, pubTitle);
+        }).join("<br>") %>
+      <% } %>
+
+      <% if (copubs.length) { %>
+        <dt><%= t("coauthor.singular") %>:</dt>
+        <%= _.map(copubs, function(pub, i) {
+          let year = pub.published_at || "год не указан";
+          let pubTitle = `${pub.name} (${year})`;
+          return App.models.Publication.href(pub.id, pubTitle);
+        }).join("<br>") %>
+      <% } %>
+    </div>
+
+    <div id="another">
+    </div>
+  </div>
+
   <div class="maps">
     <%= widget("Map", {"placemarks": placemarks}, "map") %>
   </div>

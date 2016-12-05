@@ -107,7 +107,8 @@
     "prop": {
       "name": "Имя",
       "year": "Год рождения",
-      "publications": "Публикации"
+      "publications": "Публикации",
+      "biography": "Биография"
     }
   },
   

@@ -36,6 +36,11 @@ App.controllers.author = new (Backbone.View.extend({
           "photos:Image": {"id": "*", "select": "*"},
           "author__has__photos": {}
         }),
+        reports: JSON.stringify({
+          "author:Author": {"id": aid},
+          "reports:Report": {"id": "*", "select": "*"},
+          "reports__hasauthor__author": {}
+        }),
         orgs: JSON.stringify({
           "author:Author": {"id": aid},
           "jobs:AuthorJob": {"id": "*", "select": "*"},
@@ -65,7 +70,7 @@ App.controllers.author = new (Backbone.View.extend({
         monuments: JSON.stringify({
           "researches:Research": {"id": "NEED"},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
-          "m:Monument": {"id": "*"},
+          "m:Monument": {"id": "*", "select": "*"},
           "monType:MonumentType": {"id": "*", "select": "*"},
           "epoch:Epoch": {"id": "*", "select": "*"},
           "researches__has__knowledges": {},
@@ -91,7 +96,7 @@ App.controllers.author = new (Backbone.View.extend({
         _.each(resMonuments.knowledges, function(know, kid) {
           var type = resMonuments.monType[kid].id || 10;
           var epoch = resMonuments.epoch[kid].id || 0;
-          console.log(`monType${type}_${epoch}`);
+
           tmplData.placemarks.push({
             coords: [know.x, know.y],
             pref: {
