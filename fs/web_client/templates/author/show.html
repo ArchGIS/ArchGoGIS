@@ -26,14 +26,14 @@
       </dl>
 
       <dl>
+        <dt><%= t('organization.plural') %>:</dt>
         <% if (jobs.length) { %>
-          <dt><%= t('organization.plural') %>:</dt>
           <% _.each(jobs, function(job, i) { %>
             <dd><%= orgs[i].name %> (<%= job.period[0] %>-<%= maybe(job.period[1], "...") %>)</dd>
           <% }); %>
         <% } else { %>
-        <p>Нет данных</p>
-      <% } %>
+          <p>Нет данных</p>
+        <% } %>
       </dl>
 
       <dl>

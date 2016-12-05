@@ -5,7 +5,7 @@ App.models.Publication = function Publication() {
 };
 
 App.models.Publication.url = function(id) {
-  return id ? '#Publication/show/' + id : '#publication/show';
+  return id ? '#publication/show/' + id : '#publication/show';
 };
 
 App.models.Publication.href = function(id, text) {
