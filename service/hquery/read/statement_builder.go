@@ -17,9 +17,9 @@ func NewStatementBuilder(data *Data) *StatementBuilder {
 func nodeMatchFmt(optional bool) string {
 	if optional {
 		return "OPTIONAL MATCH (%s)"
-	} else {
-		return "MATCH (%s)"
 	}
+
+	return "MATCH (%s)"
 }
 
 func (my *StatementBuilder) scanNodes(optional bool, nodes map[string]*ast.Node) []string {
@@ -83,7 +83,6 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 		)
 	}
 
-
 	optionalSelection := my.scanNodes(true, my.optionalNodes)
 
 	for _, edge := range my.optionalEdges {
@@ -108,8 +107,7 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 	my.buf.Truncate(my.buf.Len() - 1)
 
 	return neo.Statement{
-		my.buf.String(),
-		my.params,
+		Body:   my.buf.String(),
+		Params: my.params,
 	}
 }
-	
