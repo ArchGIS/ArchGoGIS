@@ -95,6 +95,47 @@ App.views.search = new (Backbone.View.extend({
     });
     object = objects['monument-params'];
 
+    // Добавление карты
+    let map = L.map('map').setView([55.78, 49.13], 13);
+    // L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    let layerdefs = {
+      mapnik: {
+        name: "Mapnik", js: [],
+        init: function() {return new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');}
+      }, ysat: {
+        name: "Yandex", js: ["../layer/tile/Yandex.js", "http://api-maps.yandex.ru/2.1/?&lang=ru-RU"],
+        init: function() {return new L.Yandex("satellite"); }
+      },
+      nyak: {
+        name: "НЯК", js: ["../layer/tile/Yandex.js", "http://api-maps.yandex.ru/2.0/?load=package.map&lang=ru-RU"],
+        init: function() {return new L.Yandex("publicMap"); }
+      },
+      traffic: {
+        name: "Пробки", js: ["../layer/tile/Yandex.js", "http://api-maps.yandex.ru/2.0/?load=package.map&lang=ru-RU"],
+        init: function() {return new L.Yandex("null", {traffic: true, opacity: 0.8, overlay: true}); },
+        overlay: true
+      },
+      mso: {
+        name: "Mapsurfer", js: [],
+        overlay: true,
+        init: function() {return new L.TileLayer('http://korona.geog.uni-heidelberg.de/tiles/hybrid/x={x}&y={y}&z={z}');}
+      }
+    };
+
+    let yndx = new L.DeferredLayer(layerdefs.nyak);
+    let ytraffic = new L.DeferredLayer(layerdefs.traffic);
+    let mso = new L.DeferredLayer(layerdefs.mso);
+
+    L.control.layers(
+      {
+        // 'OSM':osm,
+        "Yandex":yndx
+      },{
+        "Пробки":ytraffic,
+        "OpenMapSurfer":mso
+      }
+    ).addTo(map);
 
     // Поиск памятника
     function searchMonument(my) {
@@ -340,8 +381,6 @@ App.views.search = new (Backbone.View.extend({
           }, function(error) {
             console.log(error);
           });
-      } else {
-        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
     }
   }
