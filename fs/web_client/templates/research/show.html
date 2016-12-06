@@ -79,7 +79,10 @@
       <% } %>
 
       <dt><%= t("artifact.genitivePl") %>:</dt>
-      <dd><%= (artifacts[0]) ? _.size(artifacts[0]) : 0%></dd>
+      <dd>
+        <% let artiCount = _.reduce(artifacts, (count, resArti) => {return count + _.size(resArti)}, 0) %>
+        <%= artiCount %>
+      </dd>
     </div>
 
     <div id="monuments">
@@ -149,23 +152,31 @@
       </div>
     </div>
 
-
     <div id="artifacts">
-      <% if (artifacts[0] && artifacts[0].length > 0) { %>
+      <% if (artiCount) { %>
+        <dl>
+          <dt>Найденные артефакты:</dt>
+          <dd>
+            <%= _.compact(_.map(artifacts, function(resArti, i) {
+              return _.map(resArti, function(arti, t) {
+                let title = `${arti.name} (${author[0].name}, ${research.year})`;
+                return App.models.Artifact.href(arti.id, title);
+              }).join(", <br>")
+            })).join(", <br>") %>
+          </dd>
+        </dl>
+      <% } %>
+
+      <% if (usedArtifacts[0] && usedArtifacts[0].length > 0) { %>
         <dl>
           <dt>Упоминаемые артефакты:</dt>
           <dd>
-            <% var length = artifacts[0].length %>
-            <% _.each(artifacts[0], function(artifact, i) { %>
-              <a href="#artifact/show/<%= artifact.id %>">
-                <%= artifact.name %>
-              </a>
-              <% if (i < length-1) { %>,<% } %>
-            <% }); %>
+            <%= _.map(usedArtifacts, function(arti, i) {
+              let title = `${arti.name} (${author[0].name}, ${research.year})`;
+              return App.models.Artifact.href(arti.id, title);
+            }).join(", <br>") %>
           </dd>
         </dl>
-      <% } else { %>
-        Нет артефактов
       <% } %>
     </div>
 

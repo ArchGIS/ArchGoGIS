@@ -28,7 +28,7 @@ App.template = new function() {
       return object[key] ? object[key] : defaultText;
     }
 
-    return (typeof(object) != "object") ? object : defaultText;
+    return (object && typeof(object) != "object") ? object : defaultText;
   }
 
   // То, что передаётся в каждый шаблон в любом случае.

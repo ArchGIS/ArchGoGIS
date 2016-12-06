@@ -1,81 +1,80 @@
 <div class="content">
-	<h2><%= t('publication.singular') %></h2>
-	<dl>
-		<dt><%= t('author.singular') %>:</dt>
-		<dd><a href="#author/show/<%= author[0].id %>"><%= author[0].name %></a></dd>
-	</dl>
+  <h2><%= t('publication.singular') %> "<%= pub.name %>"</h2>
+  <br>
 
-	<% if (coauthors.length) { %>
-	<dl>
-		<dt><%= t('coauthor.plural') %>:</dt>
-		<% _.each(coauthors, function(a, i) { %>
-			<dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
-		<% }); %>
-	</dl>
-	<% } %>
+  <dl>
+    <dt><%= t('author.singular') %>:</dt>
+    <dd><a href="#author/show/<%= author[0].id %>"><%= author[0].name %></a></dd>
 
-	<dl>
-		<dt><%= t('publication.prop.title') %>:</dt>
-		<dd><%= pub.name %></dd>
-	</dl>
-	
-	<dl>
-		<dt><%= t('publication.prop.publisher') %>:</dt>
-		<dd><%= maybe(publisher[0], "Не указан", "name") %></dd>
-	</dl>
+    <% if (coauthors.length) { %>
+      <dt><%= t('coauthor.plural') %>:</dt>
+      <% _.each(coauthors, function(a, i) { %>
+        <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
+      <% }); %>
+    <% } %>
 
-	<dl>
-		<dt><%= t('publication.prop.year') %>:</dt>
-		<dd><%= maybe(pub[0], "Не указан", "year") %></dd>
-	</dl>
+    <dt><%= t('publication.prop.title') %>:</dt>
+    <dd><%= pub.name %></dd>
 
-	<dl>
-		<dt><%= t('publication.prop.type') %>:</dt>
-		<dd><%= maybe(pubtype[0], "Не указан", "name") %></dd>
-	</dl>
+    <dt><%= t('publication.prop.type') %>:</dt>
+    <dd><%= pubtype[0].name %></dd>
 
-	<% if (pub.volume) { %>
-		<dl>
-			<dt><%= t('publication.prop.volume') %>:</dt>
-			<dd><%= pub.volume %></dd>
-		</dl>
-	<% }%>
+    <dt><%= t('publication.prop.publisher') %>:</dt>
+    <dd><%= maybe(publisher[0], "Не указан", "name") %></dd>
 
-	<% if (pub.edition) { %>
-		<dl>
-			<dt><%= t('publication.prop.edition') %>:</dt>
-			<dd><%= pub.edition %></dd>
-		</dl>
-	<% }%>
+    <dt><%= t('publication.prop.year') %>:</dt>
+    <dd><%= maybe(pub[0], "Не указан", "puplished_at") %></dd>
 
-	<% if (pub.number) { %>
-		<dl>
-			<dt><%= t('publication.prop.number') %>:</dt>
-			<dd><%= pub.number %></dd>
-		</dl>
-	<% }%>
+    <% if (city.name) { %>
+      <dt><%= t('city.singular') %>:</dt>
+      <dd><%= city.name %></dd>
+    <% } %>
+    
+    <% if (pub.jour_name) { %>
+        <dt><%= t('publication.prop.jourName') %>:</dt>
+        <dd><%= pub.jour_name %></dd>
+    <% } %>
 
-	<dl>
-		<dt><%= t('publication.prop.isbn') %>:</dt>
-		<dd><%= maybe(pub, "Не указан", "isbn") %></dd>
-	</dl>
+    <% if (pub.volume) { %>
+        <dt><%= t('publication.prop.volume') %>:</dt>
+        <dd><%= pub.volume %></dd>
+    <% } %>
 
-	<% if (pub.pages) { %>
-		<dl>
-			<dt><%= t('publication.prop.pages') %>:</dt>
-			<dd><%= pub.pages %></dd>
-		</dl>
-	<% }%>
+    <% if (pub.edition) { %>
+        <dt><%= t('publication.prop.edition') %>:</dt>
+        <dd><%= pub.edition %></dd>
+    <% } %>
 
-	<% if (pub.link) { %>
-		<p>
-			<a href="<%= pub.link %>">
-				<%= t('publication.prop.link') %>
-			</a>
-		</p>
-	<% }%>
+    <% if (pub.number) { %>
+        <dt><%= t('publication.prop.number') %>:</dt>
+        <dd><%= pub.number %></dd>
+    <% } %>
+
+    <% if (pub.isbn) { %>
+      <dt><%= t('publication.prop.isbn') %>:</dt>
+      <dd><%= maybe(pub, "Не указан", "isbn") %></dd>
+    <% } %>
+
+    <% if (pub.issn) { %>
+      <dt><%= t('publication.prop.issn') %>:</dt>
+      <dd><%= maybe(pub, "Не указан", "issn") %></dd>
+    <% } %>
+
+    <% if (pub.pages) { %>
+        <dt><%= t('publication.prop.pages') %>:</dt>
+        <dd><%= pub.pages %></dd>
+    <% } %>
+  </dl>
+
+  <% if (pub.link) { %>
+    <p>
+      <a href="<%= pub.link %>">
+        <%= t('publication.prop.link') %>
+      </a>
+    </p>
+  <% }%>
 
 <div class="maps">
-	<%= widget("Map", {}, "map") %>
+  <%= widget("Map", {}, "map") %>
 </div>
 </div>
