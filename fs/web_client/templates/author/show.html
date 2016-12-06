@@ -63,7 +63,7 @@
       <%= _.map(reports, function(rep, i) {
         let year = rep.year || "год не указан";
         let repTitle = `${rep.name} (${year})`;
-        return App.models.Research.href(rep.id, repTitle);
+        return App.models.Report.href(rep.id, repTitle);
       }).join("<br>") %>
     </div>
 

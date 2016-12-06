@@ -49,7 +49,7 @@
           <% _.each(reports, function(report, i) { %>
             <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
             <% if (reports[i].fileid) { %>
-              <%= App.models.Report.href(reports[i].fileid, reportTitle) %>
+              <%= App.models.Report.href(reports[i].id, reportTitle) %>
             <% } else {%>
               <%= reportTitle %>
             <% } %>
@@ -79,7 +79,7 @@
       <% } %>
 
       <dt><%= t("artifact.genitivePl") %>:</dt>
-      <dd><%= _.size(artifacts[0]) %></dd>
+      <dd><%= (artifacts[0]) ? _.size(artifacts[0]) : 0%></dd>
     </div>
 
     <div id="monuments">
@@ -151,7 +151,7 @@
 
 
     <div id="artifacts">
-      <% if (artifacts[0].length > 0) { %>
+      <% if (artifacts[0] && artifacts[0].length > 0) { %>
         <dl>
           <dt>Упоминаемые артефакты:</dt>
           <dd>
@@ -170,7 +170,7 @@
     </div>
 
     <div id="heritages">
-      <% if (heritages[0].length) { %>
+      <% if (heritages[0] && heritages[0].length) { %>
         <% _.each(heritages[0], (el) => { %>
           <a href="#heritage/show/<%= el.id %>"><%= el.name %></a>
         <% }) %>
@@ -192,7 +192,7 @@
     </div>
 
     <div id="topos">
-      <%= App.views.functions.getTopoCard(topos[0]) %>
+      <%= (topos[0]) ? App.views.functions.getTopoCard(topos[0]) : "" %>
     </div>
 
     <div id="another">

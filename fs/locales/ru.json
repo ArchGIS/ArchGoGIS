@@ -1,6 +1,9 @@
 { 
   "common": {
-    "general": "Общие сведения"
+    "general": "Общие сведения",
+    "name": "Название",
+    "year": "Год",
+    "download": "Скачать"
   },
 
   "LiteratureRef": {
@@ -94,6 +97,11 @@
     }
   },
   
+  "city": {
+    "singular": "Город",
+    "plural": "Города"
+  },
+
   "coauthor": {
     "singular": "Соавтор",
     "plural": "Соавторы"
@@ -179,8 +187,10 @@
   "report": {
     "singular": "Отчёт",
     "plural": "Отчёты",
+    "storage": "Место хранения",
     "year": "Год создания отчёта",
     "prop": {
+      "number": "Номер",
       "description": "Описание",
       "year": "Год создания",
       "type": "Тип"

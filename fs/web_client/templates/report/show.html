@@ -1,22 +1,37 @@
-<div class="well bs-component block">
-  <h2><%= rep.name %></h2>
+<div class="content">
+  <h2><%= t("report.singular") %> "<%= report.name %>"</h2>
+  <br>
 
-  <p>
-    Год: <%= rep.year %>
-  </p>
-  <p>
-    <strong>Автор:</strong>
-    <a href="<%= App.models.Author.url(a[0].id) %>"><%= a[0].name %></a>
-  </p>
-  <p>
-    <strong>Памятники:</strong>
-    <!-- <%= _.pluck(k, 'name').join(', ') %> -->
-    <% for (var i=0; i<k.length; i++) { %>
-    <p>
-      <a href="#monument/show/<%= m[i].id %>">
-        <%= k[i].monument_name %>
-      </a>
-    </p>
-    <% } %>
-  </p>
+  <dt><%= t("author.singular") %>:</dt>
+  <dd><%= App.models.Author.href(author[0].id, author[0].name) %></dd>
+
+  <dt><%= t("research.plural") %>:</dt>
+  <dd>
+    <%= _.map(researches, function(res, i) {
+      let year = res.year || "год не указан";
+      let resTitle = `${res.name} (${resTypes[i].name}, ${year})`;
+      return App.models.Research.href(res.id, resTitle);
+    }).join("<br>") %>
+  </dd>
+
+  <dt><%= t("common.name") %>:</dt>
+  <dd><%= report.name %></dd>
+
+  <dt><%= t("common.year") %>:</dt>
+  <dd><%= report.year %></dd>
+
+  <dt><%= t("city.singular") %>:</dt>
+  <dd><%= maybe(city, "Нет информации", "name") %></dd>
+
+  <dt><%= t("report.storage") %>:</dt>
+  <dd><%= maybe(org, "Нет информации", "name") %></dd>
+
+  <dt><%= t("report.prop.number") %>:</dt>
+  <dd><%= maybe(report, "Нет информации", "number") %></dd>
+
+  <h4><%= App.models.File.href(report.fileid, t("common.download")) %></h4>
+
+  <div class="maps">
+    <%= widget("Map", {}, "map") %>
+  </div>
 </div>
