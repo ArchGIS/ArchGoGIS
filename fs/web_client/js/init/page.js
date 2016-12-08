@@ -35,11 +35,6 @@ App.page = new function() {
           view(viewContext);
         }
       }
-
-      // При наличии карты запускаем её инициализацию
-      if ( $('#map').get(0) ) {
-        let map = App.views.map();
-      }
     });
 
     $title.text(App.locale.translate([

@@ -4,6 +4,7 @@ App.views.search = new (Backbone.View.extend({
   'index': function() {
     var t = App.locale.translate;
     var excludeIdent = App.fn.excludeIdentMonuments;
+    let map = App.views.map();
 
     var $results = $('#search-results');
 
@@ -90,7 +91,7 @@ App.views.search = new (Backbone.View.extend({
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       $results.empty();
-      App.page.get("map").removeAll();
+      // App.page.get("map").removeAll();
       object = objects[$object.prop('id')];
     });
     object = objects['monument-params'];

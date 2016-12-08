@@ -40,4 +40,6 @@ App.views.map = function() {
       "Bing": bing
     }
   ).addTo(map);
+
+  return map;
 }
