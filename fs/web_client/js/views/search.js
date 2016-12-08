@@ -5,6 +5,7 @@ App.views.search = new (Backbone.View.extend({
     var t = App.locale.translate;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let map = App.views.map();
+    let markersLayer = new L.FeatureGroup();
 
     var $results = $('#search-results');
 
@@ -91,7 +92,7 @@ App.views.search = new (Backbone.View.extend({
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       $results.empty();
-      // App.page.get("map").removeAll();
+      markersLayer.clearLayers();
       object = objects[$object.prop('id')];
     });
     object = objects['monument-params'];
@@ -125,24 +126,34 @@ App.views.search = new (Backbone.View.extend({
             if (response.length) {
               console.log(response);
               var list = my.columnsMaker(response);
-              var map = App.page.get("map");
-              map.removeAll();
 
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
 
-              var counter = 1;
-              _.each(response, function(item) {
-                var type = item[0].monTypeId || 10;
-                var epoch = item[0].ep || 0;
+              markersLayer.clearLayers();
 
-                map.addPlacemark(
-                  [item[0].x, item[0].y],
-                  {hintContent: item[0].monName},
-                  {preset: `monType${type}_${epoch}`}
-                );
-              })
+              _.each(response, function(item) {
+                let type = item[0].monTypeId || 10;
+                let epoch = item[0].ep || 0;
+
+                let icon = L.icon({
+                  iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
+                  iconSize: [16, 16]
+                });
+
+                let marker = L.marker(new L.LatLng(item[0].x, item[0].y), {
+                  icon: icon
+                });
+
+                marker.bindPopup(item[0].monName, {
+                  showOnMouseOver: true
+                });
+
+                markersLayer.addLayer(marker);
+              });
+
+              map.addLayer(markersLayer);
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
             }
@@ -222,24 +233,35 @@ App.views.search = new (Backbone.View.extend({
           .then(function(response) {
             if (response.length) {
               var list = my.columnsMaker(response);
-              var map = App.page.get("map");
-              map.removeAll();
 
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
 
-              var counter = 1;
+              markersLayer.clearLayers();
+
               _.each(response, function(item) {
-                var type = item[0].resTypeId || 1;
+                let type = item[0].resTypeId || 1;
+
                 for (var i=0; i < item[0].x.length; i++) {
-                  map.addPlacemark(
-                    [item[0].x[i], item[0].y[i]],
-                    {hintContent: item[0].resName},
-                    {preset: `resType${type}`}
-                  );
+                  let icon = L.icon({
+                    iconUrl: `/web_client/img/resTypes/resType${type}.png`,
+                    iconSize: [16, 16]
+                  });
+
+                  let marker = L.marker(new L.LatLng(item[0].x[i], item[0].y[i]), {
+                    icon: icon
+                  });
+
+                  marker.bindPopup(item[0].resName, {
+                    showOnMouseOver: true
+                  });
+
+                  markersLayer.addLayer(marker);
                 }
-              })
+              });
+
+              map.addLayer(markersLayer);
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
             }
@@ -318,22 +340,31 @@ App.views.search = new (Backbone.View.extend({
           .then(function(response) {
             if (response.length) {
               var list = my.columnsMaker(response);
-              var map = App.page.get("map");
-              map.removeAll();
               
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
               });
 
-              var counter = 1;
+              markersLayer.clearLayers();
+
               _.each(response, function(item) {
-                console.log(response)
-                map.addPlacemark(
-                  [item.x, item.y],
-                  {hintContent: item.name},
-                  {preset: `heritage1`}
-                );
-              })
+                let icon = L.icon({
+                  iconUrl: `/web_client/img/heritage/heritage1.png`,
+                  iconSize: [16, 16]
+                });
+
+                let marker = L.marker(new L.LatLng(item.x, item.y), {
+                  icon: icon
+                });
+
+                marker.bindPopup(item.name, {
+                  showOnMouseOver: true
+                });
+
+                markersLayer.addLayer(marker);
+              });
+
+              map.addLayer(markersLayer);
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
             }
