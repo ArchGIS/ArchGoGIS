@@ -132,13 +132,13 @@
       <%= _.compact(_.map(artifacts, function(resArti, i) {
         return _.map(resArti, function(arti, t) {
           let artiTitle = `${arti.name} (${authors[i].name}, ${researches[i].year})`;
-          return App.views.artifact.href(arti.id, artiTitle);
-        }).join(", ")
-      })).join(", ") %>
+          return App.models.Artifact.href(arti.id, artiTitle);
+        }).join(", <br>")
+      })).join(", <br>") %>
     </div>
 
     <div id="photos">
-      <%= App.views.functions.getImageCard(photos[0]) %>
+      <%= App.views.functions.getMonImageCard(photos[0]) %>
     </div>
 
     <div id="topos">

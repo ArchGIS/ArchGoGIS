@@ -86,17 +86,22 @@ App.controllers.artifact = new (Backbone.View.extend({
           "photos:Image": {"id": "*", "select": "*"},
           "artifact__has__photos": {},
         }),
+        excavation: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "exc:excavation": {"id": "*", "select": "*"},
+          "exc__has__artifact": {},
+        }),
         materials: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "materials:ArtifactMaterial": {"id": "*", "select": "*"},
           "artifact__has__materials": {},
         }),
-        orgs: JSON.stringify({
+        collections: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "intervals:StorageInterval": {"id": "*", "select": "*"},
-          "org:Organization": {"id": "*", "select": "*"},
+          "colls:Collection": {"id": "*", "select": "*"},
           "artifact__has__intervals": {},
-          "intervals__belongsto__org": {},
+          "intervals__belongsto__colls": {},
         })
       },
 

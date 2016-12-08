@@ -5,7 +5,8 @@
       <li><a href="#home"><%= t('research.singular') %></a></li>
       <li><a href="#menu1"><%= t('monument.singular') %></a></li>
       <li><a href="#menu2"><%= t('excavation.singular') %></a></li>
-      <li><a href="#menu3"><%= t('artifact.singular') %></a></li>
+      <li><a href="#menu3"><%= t('collection.singular') %></a></li>
+      <li><a href="#menu4"><%= t('artifact.singular') %></a></li>
     </ul>
 
     <div id="home">
@@ -139,6 +140,14 @@
     </div>
 
     <div id="menu3">
+      <div class="form-group" id="find-collection">
+        <label for="collection-input">Название коллекции</label>
+        <input id="collection-input" class="form-control">
+        <input id="collection-input-id" hidden data-for="col:Collecction" type="id" name="id">
+      </div>
+    </div>
+
+    <div id="menu4">
       <div class="form-group">
         <label for="arti-name-input">Название<span class="required">*</span></label>
         <input class="form-control" id="arti-name-input" data-for="arti:Artifact" type="text" name="name" data-req></input>
@@ -303,6 +312,26 @@
   <div class="form-group">
     <label for="culture-name-input">Новая культурная принадлежность</label>
     <input id="culture-name-input" class="form-control" data-for="c:Culture" type="text" name="name">
+  </div>
+</script>
+
+<!-- Форма для добавления коллекции -->
+<script type="text/template" class="add-collection">
+  <div class="form-group">
+    <label for="collection-name-input">Новая коллекция</label>
+    <input id="collection-name-input" class="form-control" data-for="col:Collection" type="text" name="name">
+  </div>
+
+  <div class="form-group">
+    <label for="collection-city-input">Город</label>
+    <%= widget("SearchLine", citiesInputOptions, "collection-city-input") %>
+    <input id="collection-city-input-id" data-for="city:City" data-subclass="collCity" hidden type="id" name="id">
+  </div>
+
+  <div class="form-group">
+    <label for="collection-organization-input">Учреждение - место хранения коллекции</label>
+    <input class="form-control" id="collection-organization-input">
+    <input id="collection-organization-input-id" data-for="org:Organization" data-subclass="collOrg" type="id" hidden name="id">
   </div>
 </script>
 

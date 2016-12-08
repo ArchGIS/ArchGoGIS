@@ -3,7 +3,8 @@
     "general": "Общие сведения",
     "name": "Название",
     "year": "Год",
-    "download": "Скачать"
+    "download": "Скачать",
+    "description": "Описание"
   },
 
   "LiteratureRef": {
@@ -217,6 +218,16 @@
     "singular": "Объект"
   },
 
+  "date": {
+    "singular": "Датировка",
+    "plural": "Датировки"
+  },
+
+  "collection": {
+    "singular": "Коллекция",
+    "plural": "Коллекции"
+  },
+
   "artifact": {
     "singular": "Артефакт",
     "plural": "Артефакты",
@@ -227,6 +238,11 @@
     "description": "Описание",
     "material": "Материал",
     "category": "Категория",
+    "size": "Размер",
+    "weight": "Вес",
+    "tech": "Техника изготовления",
+    "keywords": "Ключевые слова",
+    "placeFound": "Место находки",
     "storage": "Хранится",
     "create": "Внесение данных об артефакте",
     "name": "Название артефакта"
