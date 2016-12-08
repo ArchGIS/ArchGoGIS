@@ -1,7 +1,7 @@
 'use strict';
 
 App.views.map = function() {
-  let map = L.map('map').setView([55.78, 49.13], 13);
+  let map = L.map('map').setView([55.78, 49.13], 6);
 
   let layerdefs = {
     mapnik: {
@@ -27,14 +27,14 @@ App.views.map = function() {
     }
   };
 
-  let yndx = new L.DeferredLayer(layerdefs.nyak).addTo(map);
+  let yndx = new L.DeferredLayer(layerdefs.nyak);
   let google = new L.DeferredLayer(layerdefs.google);
-  let osm = new L.DeferredLayer(layerdefs.mapnik);
+  let osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
   let bing = new L.DeferredLayer(layerdefs.bing);
 
   L.control.layers(
     {
-      'OSM':osm,
+      'OSM': osm,
       'Google': google,
       "Yandex": yndx,
       "Bing": bing
