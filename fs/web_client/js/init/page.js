@@ -36,6 +36,7 @@ App.page = new function() {
         }
       }
 
+      // При наличии карты запускаем её инициализацию
       if ( $('#map').get(0) ) {
         let map = App.views.map();
       }
