@@ -29,9 +29,6 @@ L.DeferredLayer = L.LayerGroup.extend({
 			return cb(args);
 		var _this = this;
 		var s = scripts.pop();
-		if ( s.includes('..') ) {
-			s = '/vendor/leaflet-plugins' + s.slice(2);
-		}
 		var c = this._script_cache[s];
 		if (c === undefined) {
 			c = {url: s, wait: []};
