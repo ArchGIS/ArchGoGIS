@@ -43,3 +43,48 @@ App.views.map = function() {
 
   return map;
 }
+
+
+App.views.mapControl = function() {
+  return {
+    leftMarker: (points) => {
+      let point = null;
+
+      point = _.min(points, (p) => {
+        return p[0]
+      })
+
+      return point
+    },
+
+    rightMarker: (points) => {
+      let point = null;
+
+      point = _.max(points, (p) => {
+        return p[0]
+      })
+
+      return point
+    },
+
+    upMarker: (points) => {
+      let point = null;
+
+      point = _.min(points, (p) => {
+        return p[0]
+      })
+
+      return point
+    },
+
+    downMarker: (points) => {
+      let point = null;
+
+      point = _.min(points, (p) => {
+        return p[0]
+      })
+
+      return point
+    },
+  }
+}
