@@ -1,7 +1,12 @@
 'use strict';
 
-App.views.map = function() {
+App.views.map = (types) => {
   let map = L.map('map').setView([55.78, 49.13], 6);
+
+  const entities = {
+    monument: 'Памятники',
+    excavation: 'Раскопы'
+  }
 
   let layerdefs = {
     mapnik: {
@@ -28,21 +33,36 @@ App.views.map = function() {
     }
   };
 
-  let yndx = new L.DeferredLayer(layerdefs.nyak).addTo(map);
-  let google = new L.DeferredLayer(layerdefs.google);
-  let osm = new L.DeferredLayer(layerdefs.mapnik);
-  let bing = new L.DeferredLayer(layerdefs.bing);
+  const yndx = new L.DeferredLayer(layerdefs.nyak);
+  const google = new L.DeferredLayer(layerdefs.google);
+  const osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
+  const bing = new L.DeferredLayer(layerdefs.bing);
 
-  L.control.layers(
+  let overlayLayers = null;
+
+  if (types) {
+    overlayLayers = _.reduce(types, (memo, type) => {
+      memo[type] = L.featureGroup();
+      return memo;
+    }, {});
+
+    overlayLayers[ _.keys(overlayLayers)[0] ].addTo(map);
+  }
+
+  const controls = L.control.layers(
     {
       'OSM': osm,
       'Google': google,
       "Yandex": yndx,
       "Bing": bing
-    }
+    },
+    overlayLayers
   ).addTo(map);
 
-  return map;
+  return {
+    map,
+    overlayLayers
+  }
 }
 
 

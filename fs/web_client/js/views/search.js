@@ -4,7 +4,7 @@ App.views.search = new (Backbone.View.extend({
   'index': function() {
     var t = App.locale.translate;
     var excludeIdent = App.fn.excludeIdentMonuments;
-    let map = App.views.map();
+    let map = App.views.map().map;
     let markersLayer = new L.FeatureGroup();
 
     var $results = $('#search-results');
