@@ -148,6 +148,7 @@ App.controllers.heritage = new (Backbone.View.extend({
       tmplData.placemarks = [];
       tmplData.placemarks.push({
         type: 'heritage',
+        id: tmplData.heritage.id,
         coords: [tmplData.heritage.x, tmplData.heritage.y],
         pref: {
           hintContent: tmplData.heritage.name
@@ -163,6 +164,7 @@ App.controllers.heritage = new (Backbone.View.extend({
         const epoch = tmplData.epochs[kid][0].id;
         tmplData.placemarks.push({
           type: 'monument',
+          id: know[0].id,
           coords: [know[0].x, know[0].y],
           pref: {
             hintContent: know[0].monument_name
