@@ -146,8 +146,18 @@ App.views.search = new (Backbone.View.extend({
                   icon: icon
                 });
 
-                marker.bindPopup(item[0].monName, {
-                  showOnMouseOver: true
+                marker.bindTooltip(item[0].monName, {
+                  direction: 'top'
+                });
+
+                marker.on('mouseover', function(e) {
+                  this.openTooltip();
+                });
+                marker.on('mouseout', function(e) {
+                  this.closeTooltip();
+                });
+                marker.on('click', function(e) {
+                  location.hash = `monument/show/${item[0].monId}`
                 });
 
                 markersLayer.addLayer(marker);
@@ -253,8 +263,18 @@ App.views.search = new (Backbone.View.extend({
                     icon: icon
                   });
 
-                  marker.bindPopup(item[0].resName, {
-                    showOnMouseOver: true
+                  marker.bindTooltip(item[0].resName, {
+                    direction: 'top'
+                  });
+
+                  marker.on('mouseover', function(e) {
+                    this.openTooltip();
+                  });
+                  marker.on('mouseout', function(e) {
+                    this.closeTooltip();
+                  });
+                  marker.on('click', function(e) {
+                    location.hash = `research/show/${item[0].resId}`
                   });
 
                   markersLayer.addLayer(marker);
@@ -357,8 +377,18 @@ App.views.search = new (Backbone.View.extend({
                   icon: icon
                 });
 
-                marker.bindPopup(item.name, {
-                  showOnMouseOver: true
+                marker.bindTooltip(item.name, {
+                  direction: 'top'
+                });
+
+                marker.on('mouseover', function(e) {
+                  this.openTooltip();
+                });
+                marker.on('mouseout', function(e) {
+                  this.closeTooltip();
+                });
+                marker.on('click', function(e) {
+                  location.hash = `heritage/show/${item.id}`
                 });
 
                 markersLayer.addLayer(marker);
