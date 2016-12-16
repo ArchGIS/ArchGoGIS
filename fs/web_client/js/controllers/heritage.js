@@ -147,6 +147,7 @@ App.controllers.heritage = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
       tmplData.placemarks.push({
+        type: 'heritage',
         coords: [tmplData.heritage.x, tmplData.heritage.y],
         pref: {
           hintContent: tmplData.heritage.name
@@ -154,10 +155,29 @@ App.controllers.heritage = new (Backbone.View.extend({
         opts: {
           preset: `heritage1`
         }
+      });
+
+      _.each(tmplData.knowledges, function(know, kid) {
+        const unknownType = 10;
+        const type = (tmplData.monTypes[kid][0] && tmplData.monTypes[kid][0].id) ? tmplData.monTypes[kid][0].id : unknownType;
+        const epoch = tmplData.epochs[kid][0].id;
+        tmplData.placemarks.push({
+          type: 'monument',
+          coords: [know[0].x, know[0].y],
+          pref: {
+            hintContent: know[0].monument_name
+          },
+          opts: {
+            preset: `monType${type}_${epoch}`
+          }
+        })
       })
 
       console.log(tmplData);
-      App.page.render("heritage/show", tmplData, {"stateTables": stateTables})
+      App.page.render("heritage/show", tmplData, {
+        "stateTables": stateTables,
+        placemarks: tmplData.placemarks
+      })
     }
 
     var queryCounter = _.reduce(queries, function(memo, obj) {

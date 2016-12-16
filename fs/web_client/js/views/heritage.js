@@ -118,6 +118,29 @@ App.views.heritage = new (Backbone.View.extend({
   },
 
   'show': function(arg) {
+    const types       = _.uniq( _.pluck(arg.placemarks, 'type') ),
+          mapInstance = App.views.map(types),
+          map         = mapInstance.map,
+          overlays    = mapInstance.overlayLayers;
+
+    _.each(arg.placemarks, function(item) {
+      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'monTypes' : 'heritage'}`;
+      const icon = L.icon({
+        iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
+        iconSize: [16, 16]
+      });
+
+      let marker = L.marker(new L.LatLng(item.coords[0], item.coords[1]), {
+        icon: icon
+      });
+
+      marker.bindPopup(item.pref.hintContent, {
+        showOnMouseOver: true
+      });
+
+      overlays[item.type].addLayer(marker);
+    });
+    
     console.log(arg)
     _.each(arg.stateTables, function(table, id) {
       App.template.get("heritage/stateTable", function(tmpl) {

@@ -1,7 +1,30 @@
 'use strict';
 
 App.views.research = new (Backbone.View.extend({
-  "show": function(argument) {
+  "show": function(placemarks) {
+    const types       = _.uniq( _.pluck(placemarks, 'type') ),
+          mapInstance = App.views.map(types),
+          map         = mapInstance.map,
+          overlays    = mapInstance.overlayLayers;
+
+    _.each(placemarks, function(item) {
+      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'resTypes' : 'excTypes'}`;
+      const icon = L.icon({
+        iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
+        iconSize: [16, 16]
+      });
+
+      let marker = L.marker(new L.LatLng(item.coords[0], item.coords[1]), {
+        icon: icon
+      });
+
+      marker.bindPopup(item.pref.hintContent, {
+        showOnMouseOver: true
+      });
+
+      overlays[item.type].addLayer(marker);
+    });
+
     App.views.functions.setAccordion("#accordion");
     $('#container').tabs();
   },

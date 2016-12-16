@@ -367,14 +367,14 @@ App.views.monument = new (Backbone.View.extend({
   },
 
   "show": function(placemarks) {
-    let map = App.views.map();
-    let markersLayer = new L.FeatureGroup();
-
-    let types = _.uniq( _.pluck(placemarks, 'type') );
+    const types       = _.uniq( _.pluck(placemarks, 'type') ),
+          mapInstance = App.views.map(types),
+          map         = mapInstance.map,
+          overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
-      let pathToIcon = `/web_client/img/${item.type === 'monument' ? 'resTypes' : 'excTypes'}`;
-      let icon = L.icon({
+      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'resTypes' : 'excTypes'}`;
+      const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]
       });
@@ -387,10 +387,9 @@ App.views.monument = new (Backbone.View.extend({
         showOnMouseOver: true
       });
 
-      markersLayer.addLayer(marker);
+      overlays[item.type].addLayer(marker);
     });
 
-    map.addLayer(markersLayer);
 
     $("#container").tabs();
     App.views.functions.setAccordion(".accordion");
