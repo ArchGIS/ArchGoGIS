@@ -383,8 +383,18 @@ App.views.monument = new (Backbone.View.extend({
         icon: icon
       });
 
-      marker.bindPopup(item.pref.hintContent, {
-        showOnMouseOver: true
+      marker.bindTooltip(item.pref.hintContent, {
+        direction: 'top'
+      });
+
+      marker.on('mouseover', function(e) {
+        this.openTooltip();
+      });
+      marker.on('mouseout', function(e) {
+        this.closeTooltip();
+      });
+      marker.on('click', function(e) {
+        location.hash = `${item.type}/show/${item.id}`
       });
 
       overlays[item.type].addLayer(marker);

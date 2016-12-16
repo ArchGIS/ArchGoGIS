@@ -108,6 +108,7 @@ App.controllers.monument = new (Backbone.View.extend({
           var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
+            id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
               hintContent: exc.name
@@ -123,6 +124,7 @@ App.controllers.monument = new (Backbone.View.extend({
         var type = (tmplData.resTypes[kid][0] && tmplData.resTypes[kid][0].id) ? tmplData.resTypes[kid][0].id : 1;
         tmplData.placemarks.push({
           type: 'monument',
+          id: know.id,
           coords: [know.x, know.y],
           pref: {
             hintContent: know.monument_name
