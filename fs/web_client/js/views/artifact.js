@@ -791,5 +791,6 @@ App.views.artifact = new (Backbone.View.extend({
 
   "show": function(argument) {
     $('.tabs').tabs();
+    App.views.functions.setAccordion(".accordion");
   },
 }));

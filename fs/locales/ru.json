@@ -4,7 +4,8 @@
     "name": "Название",
     "year": "Год",
     "download": "Скачать",
-    "description": "Описание"
+    "description": "Описание",
+    "culture": "Культураная принадлежность"
   },
 
   "LiteratureRef": {

@@ -45,28 +45,115 @@
         <dd><%= App.models.Monument.href(monFound[0].id, knowFound[0].monument_name) %></dd>
 
         <dt><%= t('excavation.singular') %>:</dt>
-        <dd><%= maybe(exc, "Нет данных" ,"name") %></dd>
+        <%  let excTitle = "" 
+            if (exc[0]) {
+              let excName = maybe(exc[0].name, "Без названия");
+              let excArea = (exc[0].area) ? ` — ${exc[0].area}м²` : "";
+              let excBoss = (exc[0].boss) ? ` (${exc[0].boss})` : "";
+              excTitle = `${excName} ${excArea} ${excBoss}`;
+            }
+        %>
+        <dd><%= maybe(excTitle, "Нет данных") %></dd>
 
         <dt><%= t('artifact.placeFound') %>:</dt>
-        <dd><%= "Нет данных" %></dd>
+        <%  let place = "" ;
+            let placeInfo = [];
+
+            placeInfo[0] = (artifact.excRegion) ? `Участок: ${artifact.excRegion}` : "";
+            placeInfo[1] = (artifact.depth) ? `Глубина: ${artifact.depth}см` : "";
+
+            place = _.compact(placeInfo).join("<br>");
+        %>
+        <dd><%= maybe(place, "Нет данных") %></dd>
 
         <dt><%= t('collection.plural') %>:</dt>
-        <dd><%= "Нет данных" %></dd>
+        <% 
+          let collectionsInfo = _.map(colls, function(coll, i) {
+            return `"${coll.name}" с ${intervals[i].yearSince} года`
+          }).join("<br>")
+        %>
+        <dd><%= maybe(collectionsInfo, "Нет данных") %></dd>
       </dl>
     </div>
 
     <div id="photos">
-      <% if (photos.length) { %>
-        <% _.each(photos, function(photo) { %>
-          <img src="<%= HOST_URL + '/local_storage/' + photo.fileid %>" height="100px">
-        <% }); %>
-      <% } %>
+      <% 
+        let html = [];
+        if (researches.length) {
+          _.each(researches, function(resInfo, i) {
+            if (photos[i].length) {
+              let resName = resInfo.research[0].name;
+              let authorName = resInfo.author[0].name || "Неизвестный автор";
+              let resType = resInfo.resType[0].name || "без типа";
+              let resYear = resInfo.research[0].year || "год не указан";
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              html.push(`<h3>${App.models.Research.href(resInfo.research[0].id, resTitle)}</h3>`)
+
+              html.push(_.map(photos[i], function(photo) {
+                return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
+              }))
+            }
+          });
+        } 
+      %>
+      <%= html.join("<br>") %>
     </div>
 
     <div id="dates">
+      <% 
+        let dates = [];
+        if (inters.length) {
+          _.each(inters, function(inter, i) {
+            if (inter.dateBottom) {
+              let resName = researches[i].research[0].name;
+              let authorName = researches[i].author[0].name || "Неизвестный автор";
+              let resType = researches[i].resType[0].name || "без типа";
+              let resYear = researches[i].research[0].year || "год не указан";
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              resTitle = App.models.Research.href(researches[i].research[0].id, resTitle);
+
+              let date = `${dateScale[i].name}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
+              dates.push(date)
+            }
+          });
+        } 
+      %>
+      <%= dates.join("<br>") %>
     </div>
 
     <div id="researches">
+      <div class="accordion">
+        <% _.each(researches, function(res, i) { %>
+          <h4 class="accordion-header">
+            <%= t("research.singular") %> №<%= i+1 %>:
+            <b><%= App.views.research.getFullResearchTitle(res.author[0].name, res.research[0].year, res.resType[0].name) %></b>
+          </h4>
+
+          <div class="accordion-content">
+            <dl>
+              <dd><%= App.models.Research.href(res.research[0].id, "Перейти к исследованию") %></dd>
+
+              <dt><%= t("common.description")%>:</dt>
+              <dd><%= maybe(inters[i].description, "Нет описания") %></dd>
+
+              <dt><%= t("common.culture") %>:</dt>
+              <dd><%= maybe(culture[i], "Нет данных", "name") %></dd>
+
+              <dt><%= t("date.singular") %>:</dt>
+              <% let date = `${dateScale[i].name}: ${inters[i].dateBottom} — ${inters[i].dateTop}` %>
+              <dd><%= maybe(date, "Нет данных") %></dd>
+
+              <dt><%= t("photo.plural") %>:</dt>
+              <dd>
+                <%= _.map(photos[i], function(photo) {
+                  return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
+                }).join("") %>
+              </dd>
+
+            </dl>
+          </div>
+        <% }); %>
+      </div>
     </div>
 
     <div id="another">

@@ -505,8 +505,8 @@ App.views.research = new (Backbone.View.extend({
   "getFullResearchTitle": function(authorName, resYear, resType) {
     return [
       (authorName || "Неизвестный автор"),
-      (resYear || "год не указан"),
-      (resType || "без типа")
+      (resType || "без типа"),
+      (resYear || "год не указан")
     ].join(", ");
   }
 }));
