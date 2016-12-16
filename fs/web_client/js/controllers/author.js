@@ -91,8 +91,10 @@ App.controllers.author = new (Backbone.View.extend({
         _.each(resMonuments.knowledges, function(know, kid) {
           var type = resMonuments.monType[kid].id || 10;
           var epoch = resMonuments.epoch[kid].id || 0;
-          console.log(`monType${type}_${epoch}`);
+
           tmplData.placemarks.push({
+            type: 'monument',
+            id: know.id,
             coords: [know.x, know.y],
             pref: {
               hintContent: know.monument_name
@@ -105,7 +107,7 @@ App.controllers.author = new (Backbone.View.extend({
       })
       
       console.log(tmplData);
-      App.page.render("author/show", tmplData);
+      App.page.render("author/show", tmplData, tmplData.placemarks);
     }
 
     var queryCounter = _.reduce(queries, function(memo, obj) {
