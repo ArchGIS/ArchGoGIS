@@ -126,6 +126,7 @@ App.controllers.research = new (Backbone.View.extend({
 
         tmplData.placemarks.push({
           type: 'monument',
+          id: k.id,
           coords: [k.x, k.y],
           pref: {
             hintContent: k.monument_name
@@ -141,6 +142,7 @@ App.controllers.research = new (Backbone.View.extend({
           var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
+            id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
               hintContent: exc.name,
