@@ -3,6 +3,7 @@
 App.controllers.monument = new (Backbone.View.extend({
   'show': function() {
     App.url.setMapping(['id']);
+    App.locale.set('ru');
     var monId = App.url.get('id');
     var tmplData = {};
     var data = [];
@@ -107,7 +108,7 @@ App.controllers.monument = new (Backbone.View.extend({
         _.each(resExc, function(exc, excId) {
           var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
-            type: 'excavation',
+            type: App.locale.translate('excavation.plural'),
             id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
@@ -123,7 +124,7 @@ App.controllers.monument = new (Backbone.View.extend({
       _.each(tmplData.knowledges, function(know, kid) {
         var type = (tmplData.resTypes[kid][0] && tmplData.resTypes[kid][0].id) ? tmplData.resTypes[kid][0].id : 1;
         tmplData.placemarks.push({
-          type: 'monument',
+          type: App.locale.translate('monument.plural'),
           id: know.id,
           coords: [know.x, know.y],
           pref: {
