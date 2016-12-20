@@ -3,6 +3,7 @@
 App.controllers.author = new (Backbone.View.extend({
   "show": function() {
     App.url.setMapping(["id"]);
+    App.locale.set('ru');
     var aid = App.url.get("id");
     var tmplData = {};
     var data = [];
@@ -93,7 +94,7 @@ App.controllers.author = new (Backbone.View.extend({
           var epoch = resMonuments.epoch[kid].id || 0;
 
           tmplData.placemarks.push({
-            type: 'monument',
+            type: App.locale.translate('monument.plural'),
             id: know.id,
             coords: [know.x, know.y],
             pref: {

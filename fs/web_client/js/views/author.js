@@ -8,13 +8,13 @@ App.views.author = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
-      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'monTypes' : 'excTypes'}`;
+      const pathToIcon = `/web_client/img/${item.type.indexOf('Памятник') !== -1  ? 'monTypes' : 'excTypes'}`;
       const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]
       });
 
-      let marker = L.marker(new L.LatLng(item.coords[0], item.coords[1]), {
+      let marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
         icon: icon
       });
 
