@@ -373,13 +373,13 @@ App.views.monument = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
-      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'resTypes' : 'excTypes'}`;
+      const pathToIcon = `/web_client/img/${item.type.indexOf('Памятник') !== -1 ? 'resTypes' : 'excTypes'}`;
       const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]
       });
 
-      let marker = L.marker(new L.LatLng(item.coords[0], item.coords[1]), {
+      let marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
         icon: icon
       });
 
@@ -411,9 +411,5 @@ App.views.monument = new (Backbone.View.extend({
 
   "new_by_arch_map": function(context) {
     console.log(context);
-  },
-
-  'create': function() {
-    alert(22)
   }
 }));
