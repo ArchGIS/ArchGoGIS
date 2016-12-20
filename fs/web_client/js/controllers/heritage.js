@@ -7,6 +7,7 @@ App.controllers.heritage = new (Backbone.View.extend({
 
   'show': function() {
     App.url.setMapping(['id']);
+    App.locale.set('ru');
     var hId = App.url.get('id');
     var tmplData = {};
     var data = [];
@@ -147,7 +148,7 @@ App.controllers.heritage = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
       tmplData.placemarks.push({
-        type: 'heritage',
+        type: App.locale.translate('heritage.singular'),
         id: tmplData.heritage.id,
         coords: [tmplData.heritage.x, tmplData.heritage.y],
         pref: {
@@ -163,7 +164,7 @@ App.controllers.heritage = new (Backbone.View.extend({
         const type = (tmplData.monTypes[kid][0] && tmplData.monTypes[kid][0].id) ? tmplData.monTypes[kid][0].id : unknownType;
         const epoch = tmplData.epochs[kid][0].id;
         tmplData.placemarks.push({
-          type: 'monument',
+          type: App.locale.translate('monument.plural'),
           id: know[0].id,
           coords: [know[0].x, know[0].y],
           pref: {
