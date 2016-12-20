@@ -744,6 +744,9 @@ App.views.artifact = new (Backbone.View.extend({
 
   'href': function(id, text) {
     return `<a target="_blank" href="#artifact/show/${id}">${text}</a>`;
-  }
+  },
 
+  'show': (placemarks) => {
+    
+  }
 }));
