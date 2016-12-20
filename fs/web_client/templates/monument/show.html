@@ -88,7 +88,7 @@
                 <dd>
                   <% var reportTitle = `${maybe(reports[i][0], "Нет названия", "name")} (${maybe(authors[i], "автор неизвестен", "name")}, ${maybe(reports[i][0], "год не указан", "year")})` %>
                   <% if (reports[i][0].fileid) { %>
-                    <%= App.models.Report.href(reports[i][0].fileid, reportTitle) %>
+                    <%= App.models.Report.href(reports[i][0].id, reportTitle) %>
                   <% } else {%>
                     <%= reportTitle %>
                   <% } %>
@@ -111,7 +111,7 @@
         return _.map(resReps, function(rep, t) {
           let year = rep.year || "год не указан";
           let repTitle = `${rep.name} (${authors[i].name}, ${year})`;
-          return App.models.Report.href(rep.fileid, repTitle);
+          return App.models.Report.href(rep.id, repTitle);
         }).join("<br>")
       })).join("<br>") %>
     </div>
@@ -123,22 +123,22 @@
           let name = exc.name || "без названия";
           let boss = exc.boss || "не задан";
           return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year}),
-                  руководитель работ: ${boss})<br>`
-        }).join(", ")
-      })).join(", ") %>
+                  руководитель работ: ${boss}`
+        }).join(", <br>")
+      })).join(", <br>") %>
     </div>
 
     <div id="artifacts">
       <%= _.compact(_.map(artifacts, function(resArti, i) {
         return _.map(resArti, function(arti, t) {
           let artiTitle = `${arti.name} (${authors[i].name}, ${researches[i].year})`;
-          return App.views.artifact.href(arti.id, artiTitle);
-        }).join(", ")
-      })).join(", ") %>
+          return App.models.Artifact.href(arti.id, artiTitle);
+        }).join(", <br>")
+      })).join(", <br>") %>
     </div>
 
     <div id="photos">
-      <%= App.views.functions.getImageCard(photos[0]) %>
+      <%= App.views.functions.getMonImageCard(photos[0]) %>
     </div>
 
     <div id="topos">

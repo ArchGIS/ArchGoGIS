@@ -24,11 +24,11 @@ App.template = new function() {
   function maybe(object, defaultText, key) {
     key = key || "";
     defaultText = defaultText || "Нет данных";
-
     if (key && object) {
       return object[key] ? object[key] : defaultText;
     }
-    return object ? object : defaultText;
+
+    return (object && typeof(object) != "object") ? object : defaultText;
   }
 
   // То, что передаётся в каждый шаблон в любом случае.

@@ -1,82 +1,164 @@
 <div class="content">
   <h2><%= t('artifact.singular') %></h2>
   
-  <% if (photos.length) { %>
-    <% _.each(photos, function(photo) { %>
-      <img src="<%= HOST_URL + '/local_storage/' + photo.fileid %>" height="100px">
-    <% }); %>
-  <% } %>
-  <br>
-  <br>
+  <div class="tabs">
+    <ul>
+      <li><a href="#common"><%= t('common.general') %></a></li>
+      <li><a href="#photos"><%= t('photo.plural') %></a></li>
+      <li><a href="#dates"><%= t('date.plural') %></a></li>
+      <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#another">*</a></li>
+    </ul>
 
-  <% if (artifact.year) { %>
-    <dt><%= t('artifact.yearFound') %>:</dt>
-    <dd><%= artifact.year %></dd>
-  <% } %>
-  
-  <% if (artifact.name) { %>
-    <dt><%= t('artifact.name') %>:</dt>
-    <dd><%= artifact.name %></dd>
-  <% } %>
+    <div id="common">
+      <dl>
+        <% if (artifact.name) { %>
+          <dt><%= t('artifact.name') %>:</dt>
+          <dd><%= artifact.name %></dd>
+        <% } %>
 
-  <dt><%= t('artifact.monumentFound') %>:</dt>
-  <dd>
-    <a href="#monument/show/<%= monFound[0].id %>">
-      <%= knowFound[0].monument_name %>
-    </a>
-  </dd>
+        <dt><%= t('artifact.category') %>:</dt>
+        <dd><%= (categories.length > 0) ? _.pluck(categories, 'name').join(", ") : "Нет данных" %></dd>
 
-  <dt><%= t('artifact.description') %>:</dt>
-  <dd><%= maybe(artifact.description, "Отсутсвует") %></dd>
+        <dt><%= t('artifact.material') %>:</dt>
+        <dd><%= (materials.length > 0) ? _.pluck(materials, 'name').join(", ") : "Нет данных" %></dd>
 
-  <dt><%= t('artifact.material') %>:</dt>
-  <% if (materials.length > 0) { %>
-    <dd><%= _.pluck(materials, 'name').join(", ") %></dd>
-  <% } else { %>
-    <dd>Нет данных</dd>
-  <% } %>
+        <dt><%= t('artifact.size') %>:</dt>
+        <dd><%= maybe(artifact.size, "Нет данных") %></dd>
 
-  
-  <dt><%= t('artifact.category') %>:</dt>
-  <% if (categories.length > 0) { %>
-    <dd><%= _.pluck(categories, 'name').join(", ") %></dd>
-  <% } else { %>
-    <dd>Нет данных</dd>
-  <% } %>
+        <dt><%= t('artifact.weight') %>:</dt>
+        <dd><%= maybe(artifact.weight, "Нет данных") %></dd>
 
-  <p>
-    <h3><%= t('artifact.researches') %>:</h3>
-    <a href="#research/show/<%= resFound[0].id %>">
-      <%= authorFound[0].name %>,
-      <%= maybe(resFound[0], "год не указан", "year") %>,
-      <%= maybe(resFoundType[0][0], "тип не указан", "name") %>
-    </a>
-    - Найден
+        <dt><%= t('artifact.tech') %>:</dt>
+        <dd><%= maybe(artifact.tech,  "Нет данных") %></dd>
 
-    <% if (researches.length > 0) { %>
-      <% _.each(researches, function(research, i) { %>
-        <p>
-          <a href="#research/show/<%= researches[i].id %>">
-            <%= authors[i].name %>,
-            <%= maybe(research, "год не указан", "year") %>,
-            <%= maybe(resUsedType[i][0], "тип не указан", "name") %>
-          </a></h3>
-        </p>
-     <% }) %>
-    <% } %>
-  </p>
+        <dt><%= t('artifact.keywords') %>:</dt>
+        <dd><%= "Нет данных" %></dd>
 
-  <% if (intervals.length > 0) { %>
-    <p>
-      <h3><%= t('artifact.storage') %>:</h3>
-      <% _.each(intervals, function(interval, i) { %>
-        <p> 
-          C <%= interval.period[0]%> <%= t('year.year2') %>
-        </p>
-        <br>
-       <% }) %>
-    </p>
-  <% } %>
+        <dt><%= t('common.description') %>:</dt>
+        <dd><%= maybe(artifact.description,  "Нет данных") %></dd>
+
+        <dt><%= t('artifact.yearFound') %>:</dt>
+        <dd><%= maybe(artifact.year,  "Нет данных") %></dd>
+
+        <dt><%= t('artifact.monumentFound') %>:</dt>
+        <dd><%= App.models.Monument.href(monFound[0].id, knowFound[0].monument_name) %></dd>
+
+        <dt><%= t('excavation.singular') %>:</dt>
+        <%  let excTitle = "" 
+            if (exc[0]) {
+              let excName = maybe(exc[0].name, "Без названия");
+              let excArea = (exc[0].area) ? ` — ${exc[0].area}м²` : "";
+              let excBoss = (exc[0].boss) ? ` (${exc[0].boss})` : "";
+              excTitle = `${excName} ${excArea} ${excBoss}`;
+            }
+        %>
+        <dd><%= maybe(excTitle, "Нет данных") %></dd>
+
+        <dt><%= t('artifact.placeFound') %>:</dt>
+        <%  let place = "" ;
+            let placeInfo = [];
+
+            placeInfo[0] = (artifact.excRegion) ? `Участок: ${artifact.excRegion}` : "";
+            placeInfo[1] = (artifact.depth) ? `Глубина: ${artifact.depth}см` : "";
+
+            place = _.compact(placeInfo).join("<br>");
+        %>
+        <dd><%= maybe(place, "Нет данных") %></dd>
+
+        <dt><%= t('collection.plural') %>:</dt>
+        <% 
+          let collectionsInfo = _.map(colls, function(coll, i) {
+            return `"${coll.name}" с ${intervals[i].yearSince} года`
+          }).join("<br>")
+        %>
+        <dd><%= maybe(collectionsInfo, "Нет данных") %></dd>
+      </dl>
+    </div>
+
+    <div id="photos">
+      <% 
+        let html = [];
+        if (researches.length) {
+          _.each(researches, function(resInfo, i) {
+            if (photos[i].length) {
+              let resName = resInfo.research[0].name;
+              let authorName = resInfo.author[0].name || "Неизвестный автор";
+              let resType = resInfo.resType[0].name || "без типа";
+              let resYear = resInfo.research[0].year || "год не указан";
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              html.push(`<h3>${App.models.Research.href(resInfo.research[0].id, resTitle)}</h3>`)
+
+              html.push(_.map(photos[i], function(photo) {
+                return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
+              }))
+            }
+          });
+        } 
+      %>
+      <%= html.join("<br>") %>
+    </div>
+
+    <div id="dates">
+      <% 
+        let dates = [];
+        if (inters.length) {
+          _.each(inters, function(inter, i) {
+            if (inter.dateBottom) {
+              let resName = researches[i].research[0].name;
+              let authorName = researches[i].author[0].name || "Неизвестный автор";
+              let resType = researches[i].resType[0].name || "без типа";
+              let resYear = researches[i].research[0].year || "год не указан";
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              resTitle = App.models.Research.href(researches[i].research[0].id, resTitle);
+
+              let date = `${dateScale[i].name}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
+              dates.push(date)
+            }
+          });
+        } 
+      %>
+      <%= dates.join("<br>") %>
+    </div>
+
+    <div id="researches">
+      <div class="accordion">
+        <% _.each(researches, function(res, i) { %>
+          <h4 class="accordion-header">
+            <%= t("research.singular") %> №<%= i+1 %>:
+            <b><%= App.views.research.getFullResearchTitle(res.author[0].name, res.research[0].year, res.resType[0].name) %></b>
+          </h4>
+
+          <div class="accordion-content">
+            <dl>
+              <dd><%= App.models.Research.href(res.research[0].id, "Перейти к исследованию") %></dd>
+
+              <dt><%= t("common.description")%>:</dt>
+              <dd><%= maybe(inters[i].description, "Нет описания") %></dd>
+
+              <dt><%= t("common.culture") %>:</dt>
+              <dd><%= maybe(culture[i], "Нет данных", "name") %></dd>
+
+              <dt><%= t("date.singular") %>:</dt>
+              <% let date = `${dateScale[i].name}: ${inters[i].dateBottom} — ${inters[i].dateTop}` %>
+              <dd><%= maybe(date, "Нет данных") %></dd>
+
+              <dt><%= t("photo.plural") %>:</dt>
+              <dd>
+                <%= _.map(photos[i], function(photo) {
+                  return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
+                }).join("") %>
+              </dd>
+
+            </dl>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <div id="another">
+    </div>
+  </div>
 
   <div class="maps">
   <%= widget("Map", {"placemarks": placemarks}, "map") %>

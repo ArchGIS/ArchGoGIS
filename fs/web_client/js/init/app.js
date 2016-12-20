@@ -104,12 +104,16 @@ function postQuery(objectId) {
     ["Excavation", "Artifact", "has"],
     ["Report", "Author", "hasauthor"],
     ["Author", "AuthorImage", "has"],
-    ["Artifact", "ArtifactImage", "has"],
-    ["Artifact", "artiCulture", "has"],
-    ["Artifact", "artiImage", "has"],
-    ["Artifact", "DateScale", "has"],
     ["Artifact", "ArtifactCategory", "has"],
     ["Artifact", "ArtifactMaterial", "has"],
+    ["Artifact", "Interpretation", "has"],
+    ["Research", "Interpretation", "has"],
+    ["Interpretation", "DateScale", "has"],
+    ["Interpretation", "ArtifactImage", "has"],
+    ["Interpretation", "artiImage", "has"],
+    ["Interpretation", "artiCulture", "has"],
+    ["Collection", "StorageInterval", "has"],
+    ["Artifact", "StorageInterval", "has"],
     ["Heritage", "File", "has"],
     ["Organization", "City", "has"],
     ["Report", "Organization", "in"],
@@ -354,7 +358,7 @@ function uploadFile (file) {
 
 function isValidForm () {
   let isValid = true;
-  const inputs = $('input[data-req][used!=false]');
+  const inputs = $('.content input[data-req][used!=false]');
 
   inputs.removeClass('error-input');
   inputs.prev().removeClass('error-input');

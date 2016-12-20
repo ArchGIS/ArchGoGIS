@@ -37,6 +37,11 @@ App.controllers.author = new (Backbone.View.extend({
           "photos:Image": {"id": "*", "select": "*"},
           "author__has__photos": {}
         }),
+        reports: JSON.stringify({
+          "author:Author": {"id": aid},
+          "reports:Report": {"id": "*", "select": "*"},
+          "reports__hasauthor__author": {}
+        }),
         orgs: JSON.stringify({
           "author:Author": {"id": aid},
           "jobs:AuthorJob": {"id": "*", "select": "*"},
@@ -66,7 +71,7 @@ App.controllers.author = new (Backbone.View.extend({
         monuments: JSON.stringify({
           "researches:Research": {"id": "NEED"},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
-          "m:Monument": {"id": "*"},
+          "m:Monument": {"id": "*", "select": "*"},
           "monType:MonumentType": {"id": "*", "select": "*"},
           "epoch:Epoch": {"id": "*", "select": "*"},
           "researches__has__knowledges": {},

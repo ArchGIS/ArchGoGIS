@@ -18,6 +18,16 @@ App.controllers.publication = new (Backbone.View.extend({
           "pubtype:PublicationType": {"id": "*", "select": "*"},
           "pub__has__pubtype": {},
         }),
+        city: JSON.stringify({
+          "pub:Publication": {"id": pid},
+          "city:City": {"id": "*", "select": "*"},
+          "pub__has__city": {},
+        }),
+        researches: JSON.stringify({
+          "pub:Publication": {"id": pid},
+          "researches:Research": {"id": "*", "select": "*"},
+          "researches__has__pub": {},
+        }),
         publisher: JSON.stringify({
           "pub:Publication": {"id": pid},
           "publisher:Publisher" :  {"id": "*", "select": "*"},

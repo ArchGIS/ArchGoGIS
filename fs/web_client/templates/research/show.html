@@ -18,68 +18,65 @@
         <dd><a href="#author/show/<%= author[0].id %>">
           <%= author[0].name %>
         </a></dd>
-      </dl>
 
-      <% if (coauthors.length) { %>
-      <dl>
-        <dt><%= t('coauthor.plural') %>:</dt>
-        <% _.each(coauthors, function(a, i) { %>
-          <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
-        <% }); %>
-      </dl>
-      <% } %>
+        <% if (coauthors.length) { %>
+          <dt><%= t('coauthor.plural') %>:</dt>
+          <% _.each(coauthors, function(a, i) { %>
+            <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
+          <% }); %>
+        <% } %>
 
-      <dl>
         <dt><%= t('research.year') %>:</dt>
         <dd><%= maybe(research, "Не указан", "year") %></dd>
-      </dl>
 
-      <dl>
         <dt><%= t('research.type') %>:</dt>
         <dd><%= maybe(resType[0], "Не указано", "name") %></dd>
-      </dl>
 
-      <dt><%= t('research.prop.description') %>:</dt>
-      <dd><%= maybe(research, "Отсутствует", "description" ) %></dd>
-      
-      <dt><%= t('report.singular') %>:</dt>
-      <dd>
-        <% if (reports.length) { %>
-          <div>
-          <% _.each(reports, function(report, i) { %>
-            <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
-            <% if (reports[i].fileid) { %>
-              <%= App.models.Report.href(reports[i].fileid, reportTitle) %>
-            <% } else {%>
-              <%= reportTitle %>
-            <% } %>
-            <br>
-          <% }); %>
-          </div>
-        <% } else { %>
-            Нет отчёта
+        <dt><%= t('research.prop.description') %>:</dt>
+        <dd><%= maybe(research, "Отсутствует", "description" ) %></dd>
+        
+        <dt><%= t('report.singular') %>:</dt>
+        <dd>
+          <% if (reports.length) { %>
+            <div>
+            <% _.each(reports, function(report, i) { %>
+              <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
+              <% if (reports[i].fileid) { %>
+                <%= App.models.Report.href(reports[i].id, reportTitle) %>
+              <% } else {%>
+                <%= reportTitle %>
+              <% } %>
+              <br>
+            <% }); %>
+            </div>
+          <% } else { %>
+              Нет отчёта
+          <% } %>
+        </dd>
+
+        <dt><%= t("monument.count") %>:</dt>
+        <dd><%= _.size(monuments) %></dd>
+
+        <% if (resType[0].name === 'Раскопки' || resType[0].name === 'Разведка') { %>
+          <dt><%= t("excavation.genitivePl") %>:</dt>
+          <dd><%= _.reduce(excavations, function(size, list) {
+            return size + _.size(list)
+          }, 0) %>;
+          Общая площадь
+          <%= _.reduce(excavations, function(area, list) {
+            return area + _.reduce(list, function(area, exc) {
+              return area + (exc.area || 0);
+            }, 0);
+          }, 0) %>
+          м²</dd>
         <% } %>
-      </dd>
 
-      <dt><%= t("monument.count") %>:</dt>
-      <dd><%= _.size(monuments) %></dd>
-
-      <% if (resType[0].name === 'Раскопки' || resType[0].name === 'Разведка') { %>
-        <dt><%= t("excavation.genitivePl") %>:</dt>
-        <dd><%= _.reduce(excavations, function(size, list) {
-          return size + _.size(list)
-        }, 0) %>;
-        Общая площадь
-        <%= _.reduce(excavations, function(area, list) {
-          return area + _.reduce(list, function(area, exc) {
-            return area + (exc.area || 0);
-          }, 0);
-        }, 0) %>
-        м²</dd>
-      <% } %>
-
-      <dt><%= t("artifact.genitivePl") %>:</dt>
-      <dd><%= _.size(artifacts[0]) %></dd>
+        <dt><%= t("artifact.genitivePl") %>:</dt>
+        <dd>
+          <% let artiCount = _.reduce(artifacts, (count, resArti) => {return count + _.size(resArti)}, 0) %>
+          <%= artiCount %>
+        </dd>
+      </dl>
     </div>
 
     <div id="monuments">
@@ -149,28 +146,36 @@
       </div>
     </div>
 
-
     <div id="artifacts">
-      <% if (artifacts[0].length > 0) { %>
+      <% if (artiCount) { %>
+        <dl>
+          <dt>Найденные артефакты:</dt>
+          <dd>
+            <%= _.compact(_.map(artifacts, function(resArti, i) {
+              return _.map(resArti, function(arti, t) {
+                let title = `${arti.name} (${author[0].name}, ${research.year})`;
+                return App.models.Artifact.href(arti.id, title);
+              }).join(", <br>")
+            })).join(", <br>") %>
+          </dd>
+        </dl>
+      <% } %>
+
+      <% if (usedArtifacts[0] && usedArtifacts[0].length > 0) { %>
         <dl>
           <dt>Упоминаемые артефакты:</dt>
           <dd>
-            <% var length = artifacts[0].length %>
-            <% _.each(artifacts[0], function(artifact, i) { %>
-              <a href="#artifact/show/<%= artifact.id %>">
-                <%= artifact.name %>
-              </a>
-              <% if (i < length-1) { %>,<% } %>
-            <% }); %>
+            <%= _.map(usedArtifacts, function(arti, i) {
+              let title = `${arti.name} (${author[0].name}, ${research.year})`;
+              return App.models.Artifact.href(arti.id, title);
+            }).join(", <br>") %>
           </dd>
         </dl>
-      <% } else { %>
-        Нет артефактов
       <% } %>
     </div>
 
     <div id="heritages">
-      <% if (heritages[0].length) { %>
+      <% if (heritages[0] && heritages[0].length) { %>
         <% _.each(heritages[0], (el) => { %>
           <a href="#heritage/show/<%= el.id %>"><%= el.name %></a>
         <% }) %>
@@ -192,7 +197,7 @@
     </div>
 
     <div id="topos">
-      <%= App.views.functions.getTopoCard(topos[0]) %>
+      <%= (topos[0]) ? App.views.functions.getTopoCard(topos[0]) : "" %>
     </div>
 
     <div id="another">

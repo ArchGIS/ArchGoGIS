@@ -27,7 +27,7 @@ App.views.functions = {
     });
   },
 
-  "getImageCard": (params) => {
+  "getMonImageCard": (params) => {
     let imagesHtml = '';
 
     let tmpl = _.template(`

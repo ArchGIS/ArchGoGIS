@@ -2,25 +2,54 @@
 
 App.controllers.report = new (Backbone.View.extend({
   'show': function() {
-    App.url.setMapping(['id']);
-    var id = App.url.get("id");
+    App.url.setMapping(["id"]);
+    var rid = App.url.get("id");
+    var tmplData = {};
+    var data = [];
+    var model = App.models.fn;
 
-    var query = {
-      "rep:Report": {"id": id, "select": "*"},
-      "a:Author": {"id": "*", "select": "*"},
-      "res:Research": {"id": "*", "select": "*"},
-      "k:Knowledge": {"id": "*", "select": "*"},
-      "m:Monument": {"id": "*", "select": "*"},
-      "res__hasauthor__a": {},
-      "res__has__k": {},
-      "rep__hasauthor__a": {},
-      "k__has__rep": {},
-      "k__belongsto__m": {}
-    };
+    var queries = {
+      single: {
+        report: JSON.stringify({
+          "report:Report": {"id": rid, "select": "*"},
+        }),
+        researches: JSON.stringify({
+          "r:Report": {"id": rid},
+          "researches:Research": {"id": "*", "select": "*"},
+          "resTypes:ResearchType": {"id": "*", "select": "*"},
+          "researches__has__r": {},
+          "researches__has__resTypes": {}
+        }),
+        author: JSON.stringify({
+          "r:Report": {"id": rid},
+          "author:Author": {"id": "*", "select": "*"},
+          "r__hasauthor__author": {}
+        }),
+        org: JSON.stringify({
+          "r:Report": {"id": rid},
+          "org:Organization": {"id": "*", "select": "*"},
+          "city:City": {"id": "*", "select": "*"},
+          "r__in__org": {},
+          "org__has__city": {},
+        })
+      },
+    }
 
-    $.post('/hquery/read', JSON.stringify(query))
-      .success(function(reportData) {
-        App.page.render('report/show', JSON.parse(reportData));
-      });
+    var render = function() {
+      _.each(data, function(val, id) {
+        _.extend(tmplData, val);
+      })
+      
+      console.log(tmplData);
+      App.page.render("report/show", tmplData);
+    }
+
+    var queryCounter = _.reduce(queries, function(memo, obj) {
+      return memo + _.size(obj)
+    }, 0)
+
+    var callRender = _.after(queryCounter, render);
+
+    data.push(model.getData(queries.single, callRender));
   }
 }));

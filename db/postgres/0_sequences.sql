@@ -21,6 +21,9 @@ DROP SEQUENCE n_excavation_id_seq;
 DROP SEQUENCE local_storage_file_id_seq;
 DROP SEQUENCE n_heritage_id_seq;
 DROP SEQUENCE n_survey_map_id_seq;
+DROP SEQUENCE n_interpretation_id_seq;
+DROP SEQUENCE n_storage_interval_id_seq;
+DROP SEQUENCE n_collection_id_seq;
 
 CREATE SEQUENCE n_author_id_seq;
 CREATE SEQUENCE n_monument_id_seq;
@@ -45,3 +48,6 @@ CREATE SEQUENCE n_excavation_id_seq;
 CREATE SEQUENCE local_storage_file_id_seq;
 CREATE SEQUENCE n_heritage_id_seq;
 CREATE SEQUENCE n_survey_map_id_seq;
+CREATE SEQUENCE n_interpretation_id_seq;
+CREATE SEQUENCE n_storage_interval_id_seq;
+CREATE SEQUENCE n_collection_id_seq;

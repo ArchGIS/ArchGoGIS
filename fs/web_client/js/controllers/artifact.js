@@ -63,12 +63,12 @@ App.controllers.artifact = new (Backbone.View.extend({
           "resFound__has__knowFound": {},
           "resFound__hasauthor__authorFound": {},
         }),
-        usedIn: JSON.stringify({
+        interpretations: JSON.stringify({
           "artifact:Artifact": {"id": aid},
-          "researches:Research": {"id": "*", "select": "*"},
-          "authors:Author": {"id": "*", "select": "*"},
-          "researches__used__artifact": {},
-          "researches__hasauthor__authors": {}
+          "inters:Interpretation": {"id": "*", "select": "*"},
+          "dateScale:DateScale": {"id": "*", "select": "*"},
+          "artifact__has__inters": {},
+          "inters__has__dateScale": {},
         }),
       },
 
@@ -81,22 +81,22 @@ App.controllers.artifact = new (Backbone.View.extend({
           "categories:ArtifactCategory": {"id": "*", "select": "*"},
           "artifact__has__categories": {},
         }),
-        photos: JSON.stringify({
+        excavation: JSON.stringify({
           "artifact:Artifact": {"id": aid},
-          "photos:Image": {"id": "*", "select": "*"},
-          "artifact__has__photos": {},
+          "exc:Excavation": {"id": "*", "select": "*"},
+          "exc__has__artifact": {},
         }),
         materials: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "materials:ArtifactMaterial": {"id": "*", "select": "*"},
           "artifact__has__materials": {},
         }),
-        orgs: JSON.stringify({
+        collections: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "intervals:StorageInterval": {"id": "*", "select": "*"},
-          "org:Organization": {"id": "*", "select": "*"},
+          "colls:Collection": {"id": "*", "select": "*"},
           "artifact__has__intervals": {},
-          "intervals__belongsto__org": {},
+          "colls__has__intervals": {},
         })
       },
 
@@ -113,21 +113,27 @@ App.controllers.artifact = new (Backbone.View.extend({
         })
       },
 
-      researchUsed: {
-        resUsedType: JSON.stringify({
-          "r:Research": {"id": "NEED"},
+      interpretation: {
+        photos: JSON.stringify({
+          "inter:Interpretation": {"id": "NEED"},
+          "photos:Image": {"id": "*", "select": "*"},
+          "inter__has__photos": {},
+        }),
+        culture: JSON.stringify({
+          "inter:Interpretation": {"id": "NEED"},
+          "culture:Culture": {"id": "*", "select": "*"},
+          "inter__has__culture": {},
+        }),
+        researches: JSON.stringify({
+          "inter:Interpretation": {"id": "NEED"},
+          "research:Research": {"id": "*", "select": "*"},
           "resType:ResearchType": {"id": "*", "select": "*"},
-          "r__has__resType": {},
+          "author:Author": {"id": "*", "select": "*"},
+          "research__has__inter": {},
+          "research__has__resType": {},
+          "research__hasauthor__author": {},
         }),
       },
-
-      researchFound: {
-        resFoundType: JSON.stringify({
-          "r:Research": {"id": "NEED"},
-          "resType:ResearchType": {"id": "*", "select": "*"},
-          "r__has__resType": {},
-        }),
-      }
     }
 
     var render = function() {
@@ -162,19 +168,17 @@ App.controllers.artifact = new (Backbone.View.extend({
       _.extend(tmplData, response);
 
       var monumentId = [tmplData.monFound[0].id];
-      var researchId = [tmplData.resFound[0].id]
 
       data.push(model.getData(queries.monument, callRender, true, monumentId));
-      data.push(model.getData(queries.researchFound, callRender, true, researchId));
       callRender();
     })
 
-    $.when(model.sendQuery(queries.complex.usedIn)).then(function(response) {
+    $.when(model.sendQuery(queries.complex.interpretations)).then(function(response) {
       _.extend(tmplData, response);
 
-      var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
+      var interIds = _.map(tmplData.inters, function(res) {return res.id.toString()});
 
-      data.push(model.getData(queries.researchUsed, callRender, true, researchIds));
+      data.push(model.getData(queries.interpretation, callRender, true, interIds));
       callRender();
     })
 

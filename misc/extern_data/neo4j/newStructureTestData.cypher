@@ -60,15 +60,15 @@ create (moscow:City {
 })
 
 create (tatar:Culture {
-  id: 1,
+  id: 1000,
   name: 'Татарская'
 })
 create (fin:Culture {
-  id: 2,
+  id: 2000,
   name: 'Финно-угорская'
 })
 create (mongol:Culture {
-  id: 3,
+  id: 3000,
   name: 'Монгольская'
 })
 
@@ -324,12 +324,14 @@ create (art2:Article {
 })	
 
 create (col1:Collection {
+  id: 10000,
   name: 'Вещи царя',
-  Description: 'Древние украшения, найденные в гробнице'
+  description: 'Древние украшения, найденные в гробнице'
 })
 create (col2:Collection {
+  id: 20000,
   name: 'Питерская коллекция',
-  Description: 'Коллекция древностей в Питере'
+  description: 'Коллекция древностей в Питере'
 })
 
 create (mon1:Monument {

@@ -45,7 +45,7 @@
       <dd><%= maybe(heritage, "Не указано","borderDesc") %></dd>
 
       <dt>Документ о постановке на учет:</dt>
-      <dd><%= App.models.Report.href(heritage.fileid, "Документ") %></dd>
+      <dd><%= App.models.File.href(heritage.fileid, "Документ") %></dd>
 
     </div>
 
@@ -111,7 +111,7 @@
                 <dd><%= maybe(map, "Не указана", "area") %></dd>
 
                 <dt>Карта обследования:</dt>
-                <dd><%= App.models.Report.href(map.fileid, "Документ") %></dd>
+                <dd><%= App.models.File.href(map.fileid, "Документ") %></dd>
               </div>
 
               <div id="use<%=i%>">
@@ -177,7 +177,7 @@
     </div>
     <div id="topoplans"></div>
     <div id="photos">
-      <%= App.views.functions.getImageCard({photo, cd}) %>
+      <%= App.views.functions.getMonImageCard({photo, cd}) %>
     </div>
   </div>
 </div>

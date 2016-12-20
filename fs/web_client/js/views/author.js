@@ -34,5 +34,8 @@ App.views.author = new (Backbone.View.extend({
 
       overlays[item.type].addLayer(marker);
     });
+
+    App.views.functions.setAccordion("#accordion");
+    $('.tabs').tabs();
   }
 }));
