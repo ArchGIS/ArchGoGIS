@@ -151,7 +151,6 @@ App.views.heritage = new (Backbone.View.extend({
       overlays[App.store.mapTypes[item.type]].addLayer(marker);
     });
 
-    map.panTo( L.latLng(50, 50) );
     
     console.log(arg)
     _.each(arg.stateTables, function(table, id) {
