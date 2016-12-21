@@ -1,0 +1,46 @@
+<div class="content">
+  <h2><%= t('collection.singular') %> "<%= collection.name%>"</h2>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#common"><%= t('common.general') %></a></li>
+      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
+      <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
+      <li><a href="#another">*</a></li>
+    </ul>
+
+    <div id="common">
+    	<dl>
+    		<dt><%= t('common.name') %>:</dt>
+        <dd><%= collection.name %></dd>
+
+        <dt><%= t('common.storage') %>:</dt>
+        <dd><%= t('organization.singular') %>: <%= maybe(org, "не указана", "name") %></dd>
+        <dd><%= t('city.singular') %>: <%= maybe(city, "не указан", "name") %></dd>
+
+        <dt><%= t('collection.inventory') %>:</dt>
+        <dd><%= (collection.inventory) ? App.models.File.href(collection.inventory, "Скачать") : "Отсутствует" %></dd>
+      </dl>
+    </div>
+
+    <div id="monuments">
+      <%= _.map(monuments, function(mon, t) {
+        return App.models.Monument.href(mon.id, `${knows[t].monument_name}`);
+      }).join(", <br>") %>
+    </div>
+
+    <div id="artifacts">
+      <%= _.map(artifacts, function(arti, t) {
+        let link = App.models.Artifact.href(arti.id, `${arti.name}`);
+        return `${link} с ${inters[t].yearSince} года`
+      }).join(", <br>") %>
+    </div>
+
+    <div id="another">
+    </div>
+  </div>
+
+  <div class="maps">
+  <%= widget("Map", {}, "map") %>
+  </div>
+</div>

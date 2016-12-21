@@ -116,6 +116,8 @@ function postQuery(objectId) {
     ["Artifact", "StorageInterval", "has"],
     ["Heritage", "File", "has"],
     ["Organization", "City", "has"],
+    ["collOrg", "collCity", "has"],
+    ["Collection", "collOrg", "in"],
     ["Report", "Organization", "in"],
     ["SurveyMap", "OwnType", "has"],
     ["SurveyMap", "DisposalType", "has"],
