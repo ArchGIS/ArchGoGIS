@@ -789,8 +789,12 @@ App.views.artifact = new (Backbone.View.extend({
     });
   },
 
-  "show": function(argument) {
+  'href': function(id, text) {
+    return `<a target="_blank" href="#artifact/show/${id}">${text}</a>`;
+  },
+
+  'show': (placemarks) => {
     $('.tabs').tabs();
     App.views.functions.setAccordion(".accordion");
-  },
+  }
 }));

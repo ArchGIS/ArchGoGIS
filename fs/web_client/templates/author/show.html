@@ -76,7 +76,6 @@
           return App.models.Publication.href(pub.id, pubTitle);
         }).join("<br>") %>
       <% } %>
-
       <% if (copubs.length) { %>
         <dt><%= t("coauthor.singular") %>:</dt>
         <%= _.map(copubs, function(pub, i) {
@@ -90,8 +89,7 @@
     <div id="another">
     </div>
   </div>
-
-  <div class="maps">
-    <%= widget("Map", {"placemarks": placemarks}, "map") %>
-  </div>
 </div>
+
+
+<div id="map" class="maps"></div>

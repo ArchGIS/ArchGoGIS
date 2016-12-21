@@ -3,6 +3,7 @@
 App.controllers.monument = new (Backbone.View.extend({
   'show': function() {
     App.url.setMapping(['id']);
+    App.locale.set('ru');
     var monId = App.url.get('id');
     var tmplData = {};
     var data = [];
@@ -107,6 +108,8 @@ App.controllers.monument = new (Backbone.View.extend({
         _.each(resExc, function(exc, excId) {
           var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
+            type: App.locale.translate('excavation.plural'),
+            id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
               hintContent: exc.name
@@ -121,6 +124,8 @@ App.controllers.monument = new (Backbone.View.extend({
       _.each(tmplData.knowledges, function(know, kid) {
         var type = (tmplData.resTypes[kid][0] && tmplData.resTypes[kid][0].id) ? tmplData.resTypes[kid][0].id : 1;
         tmplData.placemarks.push({
+          type: App.locale.translate('monument.plural'),
+          id: know.id,
           coords: [know.x, know.y],
           pref: {
             hintContent: know.monument_name
@@ -131,7 +136,7 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
       console.log(tmplData);
-      App.page.render("monument/show", tmplData)
+      App.page.render("monument/show", tmplData, tmplData.placemarks)
     };
 
     var queryCounter = _.reduce(queries, (memo, obj) => { return memo + _.size(obj) }, 0);

@@ -17,7 +17,7 @@
     <dd><%= pub.name %></dd>
 
     <dt><%= t('publication.prop.type') %>:</dt>
-    <dd><%= pubtype[0].name %></dd>
+    <dd><%= maybe(pubtype[0], "Не указан", "name") %></dd>
 
     <dt><%= t('publication.prop.publisher') %>:</dt>
     <dd><%= maybe(publisher[0], "Не указан", "name") %></dd>
@@ -74,7 +74,6 @@
     </p>
   <% }%>
 
-<div class="maps">
-  <%= widget("Map", {}, "map") %>
 </div>
-</div>
+
+<div id="map" class="maps"></div>

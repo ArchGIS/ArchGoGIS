@@ -40,5 +40,5 @@ App.models.Report.url = function(id) {
 };
 
 App.models.Report.href = function(id, text) {
-  return '<a target="_blank" href="' + App.models.Report.url(id) + '">' + text + '</a>';
+  return '<a href="' + App.models.Report.url(id) + '">' + text + '</a>';
 };

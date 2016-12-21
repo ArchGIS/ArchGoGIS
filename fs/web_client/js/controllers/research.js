@@ -21,6 +21,7 @@ App.controllers.research = new (Backbone.View.extend({
 
   'show': function() {
     App.url.setMapping(['id']);
+    App.locale.set('ru');
     var resId = App.url.get("id");
     var tmplData = {};
     var data = [];
@@ -125,6 +126,8 @@ App.controllers.research = new (Backbone.View.extend({
       _.each(tmplData.knowledges, function(k, kid) {
 
         tmplData.placemarks.push({
+          type: App.locale.translate('monument.plural'),
+          id: k.id,
           coords: [k.x, k.y],
           pref: {
             hintContent: k.monument_name
@@ -139,6 +142,8 @@ App.controllers.research = new (Backbone.View.extend({
         _.each(resExc, function(exc, excId) {
           var type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
+            type: App.locale.translate('excavation.plural'),
+            id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
               hintContent: exc.name,
@@ -150,7 +155,7 @@ App.controllers.research = new (Backbone.View.extend({
         })
       })
 
-      App.page.render('research/show', tmplData)
+      App.page.render('research/show', tmplData, tmplData.placemarks)
     };
 
     var queryCounter = _.reduce(queries, function(memo, obj) {
