@@ -69,7 +69,8 @@
         <dt><%= t('collection.plural') %>:</dt>
         <% 
           let collectionsInfo = _.map(colls, function(coll, i) {
-            return `"${coll.name}" с ${intervals[i].yearSince} года`
+            let link = App.models.Collection.href(coll.id, coll.name)
+            return `"${link}" с ${intervals[i].yearSince} года`
           }).join("<br>")
         %>
         <dd><%= maybe(collectionsInfo, "Нет данных") %></dd>

@@ -5,7 +5,8 @@
     "year": "Год",
     "download": "Скачать",
     "description": "Описание",
-    "culture": "Культураная принадлежность"
+    "culture": "Культураная принадлежность",
+    "storage": "Место хранения"
   },
 
   "LiteratureRef": {
@@ -226,7 +227,8 @@
 
   "collection": {
     "singular": "Коллекция",
-    "plural": "Коллекции"
+    "plural": "Коллекции",
+    "inventory": "Опись"
   },
 
   "artifact": {
