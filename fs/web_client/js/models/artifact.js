@@ -7,5 +7,5 @@ App.models.Artifact.url = function(id) {
 };
 
 App.models.Artifact.href = function(id, text) {
-  return '<a target="_blank" href="' + App.models.Artifact.url(id) + '">' + text + '</a>';
+  return '<a href="' + App.models.Artifact.url(id) + '">' + text + '</a>';
 };
