@@ -1,4 +1,4 @@
-  'use strict';
+'use strict';
 
 App.views.search = new (Backbone.View.extend({
   'index': function() {

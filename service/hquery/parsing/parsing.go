@@ -27,10 +27,14 @@ func MustDestructureNodeTag(tag string) (string, string) {
 
 func MustDestructureEdgeTag(tag string) (string, string, string) {
 	parts := strings.Split(tag, "__")
-	throw.If(len(parts) != 3, errs.TagBadFormat)
+	throw.If((len(parts) > 3 && len(parts) < 2), errs.TagBadFormat)
 
 	for _, part := range parts {
 		throw.If(!valid.Identifier(part), errs.InvalidIdentifier)
+	}
+
+	if (len(parts) == 2) {
+		return parts[0], "none", parts[1]
 	}
 
 	return parts[0], parts[1], parts[2]

@@ -24,8 +24,4 @@ App.controllers.wizard = new (Backbone.View.extend({
   'future5': function() {
     App.page.render('wizard/future5');
   },
-
-  'future6': function() {
-    App.page.render('wizard/future6');
-  },
 }));

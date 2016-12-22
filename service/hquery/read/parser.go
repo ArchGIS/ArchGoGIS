@@ -14,8 +14,7 @@ import (
 func MustNewParser(input io.ReadCloser) *Parser {
 	this := &Parser{input: parsing.MustFetchJson(input)}
 
-	for tag, query := range this.input {
-		throw.If(len(query) > 2, errs.QueryBadFormat)
+	for tag, _ := range this.input {
 		throw.If(len(tag) > cfg.HqueryMaxTagLen, errs.TagTooLong)
 	}
 

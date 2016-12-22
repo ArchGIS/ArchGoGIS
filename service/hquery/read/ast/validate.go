@@ -7,7 +7,7 @@ import (
 )
 
 func mustValidateSelector(selector string) {
-	if selector != "*" { // Единственный поддерживаемый на данный момент
+	if selector != "*" && selector != "" { // Единственный поддерживаемый на данный момент
 		throw.Error(errs.QueryBadSelector)
 	}
 }

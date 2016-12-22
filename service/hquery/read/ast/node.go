@@ -7,17 +7,14 @@ import (
 )
 
 func MustNewNode(tag string, query map[string]string) *Node {
-	switch len(query) {
-	case 1:
+	if (query["id"]) {
 		mustValidateMatcher(query["id"])
-
-	case 2:
-		mustValidateMatcher(query["id"])
-		mustValidateSelector(query["select"])
-
-	default:
-		throw.Error(errs.QueryBadFormat)
 	}
+
+	if (query["select"]) {
+		mustValidateSelector(query["select"])
+	}
+
 
 	name, labels := parsing.MustDestructureNodeTag(tag)
 

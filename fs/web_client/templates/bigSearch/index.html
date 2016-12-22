@@ -1,0 +1,40 @@
+<div class="content">
+  <h2><%= t('search.bigSearch') %></h2>
+
+  <label>
+    <%= t('search.subject') %>
+    <select class="form-control" id="search-object">
+      <option value="author"><%= t('author.singular') %></option>
+      <option value="research"><%= t('research.singular') %></option>
+      <option value="monument"><%= t('monument.singular') %></option>
+    </select>
+  </label>
+
+  <h4><%= t("search.criterion") %> №1:</h4>
+  <select class="form-control criterion" id="search-criterion-0">
+    <option value="research-year-less"><%= t('research.yearLess') %></option>
+    <option value="research-year-more"><%= t('research.yearMore') %></option>
+    <option value="author-name"><%= t('author.name') %></option>
+    <option value="artifact-name"><%= t('artifact.name') %></option>
+    <option value="monument-name"><%= t('monument.name') %></option>
+  </select>
+
+  <h4><%= t("common.value") %>:</h4>
+  <input id="search-value-0" class="form-control input criterion-value">
+
+  <button class="btn btn-primary" id="add-criterion-button">
+    <i class="fa fa-search"></i>
+    <%= t("search.addCriterion") %>
+  </button>
+
+  <button class="btn btn-primary" id="show-results-button">
+    <i class="fa fa-search"></i>
+    <%= t("search.showResults") %>
+  </button>
+
+  <br>
+  <div class="search-results" id="search-results"></div>
+
+
+  <div id="map" class="maps">
+</div>

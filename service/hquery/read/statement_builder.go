@@ -77,10 +77,56 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 			selection = append(selection, edge.Tag)
 		}
 
-		my.buf.WriteStringf(
-			"MATCH (%s)-[%s:%s]->(%s)",
-			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
-		)
+		if (edge.Type == "none") {
+			my.buf.WriteStringf(
+				"MATCH (%s)--(%s)",
+				edge.Lhs, edge.Rhs,
+			)
+		} else {
+			my.buf.WriteStringf(
+				"MATCH (%s)-[%s:%s]->(%s)",
+				edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
+			)
+		}
+	}
+
+	needWhere := true
+	for _, node := range my.nodes {
+		if (node.Props["filter"] != "") {
+			if (needWhere == false) {
+				my.buf.WriteStringf("AND ")
+			}
+
+			if (needWhere) {
+				my.buf.WriteStringf(
+					"WHERE ",
+				)
+				needWhere = false
+			}
+
+			parts := strings.Split(node.Props["filter"], "=")
+			entityName := strings.Split(node.Tag, ":")[0]
+
+			switch parts[2] {
+			case "text":
+				my.buf.WriteStringf(
+					"%s.%s =~ '(?ui)^.*%s.*$' ",
+					entityName, parts[0], parts[1],
+				)
+			case "less":
+				my.buf.WriteStringf(
+					"%s.%s <= %s ",
+					entityName, parts[0], parts[1],
+				)
+			case "more":
+				my.buf.WriteStringf(
+					"%s.%s >= %s ",
+					entityName, parts[0], parts[1],
+				)
+			default:
+				my.buf.WriteString("")
+			}
+		}
 	}
 
 	optionalSelection := my.scanNodes(true, my.optionalNodes)

@@ -1,0 +1,13 @@
+<h4><%= t("search.criterion") %> №<%=criterionId+1%>:</h4>
+<select class="form-control criterion" id="search-criterion-<%=criterionId%>">
+  <option value="research-year-less"><%= t('research.yearLess') %></option>
+  <option value="research-year-more"><%= t('research.yearMore') %></option>
+  <option value="author-name"><%= t('author.name') %></option>
+  <option value="artifact-name"><%= t('artifact.name') %></option>
+  <option value="monument-name"><%= t('monument.name') %></option>
+</select>
+
+<h4><%= t("common.value") %>:</h4>
+<input id="search-value-<%=criterionId%>" class="form-control input criterion-value">
+
+</div>
