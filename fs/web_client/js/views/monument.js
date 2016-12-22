@@ -6,6 +6,8 @@ App.views.monument = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     let addName = App.fn.addNameToId;
     
+    App.views.map();
+
     var repSelName = '',
         heritageSelName = '',
         orgName = '';

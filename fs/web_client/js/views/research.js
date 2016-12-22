@@ -44,6 +44,8 @@ App.views.research = new (Backbone.View.extend({
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
 
+    App.views.map();
+
     var counter = 1;
     var reportName,
         orgName = '';

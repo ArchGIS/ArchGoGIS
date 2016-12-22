@@ -6,6 +6,7 @@ App.views.artifact = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
+    App.views.map();
 
     let resSelName = '',
         monSelName = '',
@@ -329,6 +330,8 @@ App.views.artifact = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
+
+    App.views.map();
 
     var repSelName = '',
         monSelName = '',

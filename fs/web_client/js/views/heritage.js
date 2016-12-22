@@ -5,6 +5,8 @@ App.views.heritage = new (Backbone.View.extend({
     $("#container").tabs();
     var coordpicker = App.blocks.coordpicker;
 
+    App.views.map();
+
     coordpicker($('#coord-picker'), {
       inputs: ['#heritage-x', '#heritage-y'],
       map: 'map'
