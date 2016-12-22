@@ -124,7 +124,7 @@ App.views.heritage = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(arg.placemarks, function(item) {
-      const pathToIcon = `/web_client/img/${item.type.indexOf('Памятник') !== -1 ? 'monTypes' : 'heritage'}`;
+      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'monTypes' : 'heritage'}`;
       const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]
@@ -148,8 +148,9 @@ App.views.heritage = new (Backbone.View.extend({
         location.hash = `${item.type}/show/${item.id}`
       });
 
-      overlays[item.type].addLayer(marker);
+      overlays[App.store.mapTypes[item.type]].addLayer(marker);
     });
+
     
     console.log(arg)
     _.each(arg.stateTables, function(table, id) {

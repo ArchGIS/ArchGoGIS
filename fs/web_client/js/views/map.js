@@ -10,54 +10,79 @@ App.views.map = (types) => {
 
   let layerdefs = {
     mapnik: {
-      name: "OSM", js: [],
-      init: function() {return new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');}
+      name: "OSM",
+      js: [],
+      init: () => L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
     },
     ysat: {
-      name: "Yandex", js: ["/vendor/leaflet-plugins/layer/tile/Yandex.js", "http://api-maps.yandex.ru/2.1/?&lang=ru-RU"],
-      init: function() {return new L.Yandex("satellite"); }
+      name: "Yandex",
+      js: ["/vendor/leaflet-plugins/layer/tile/yandex.mutant.js", "http://api-maps.yandex.ru/2.1/?&lang=ru-RU"],
+      init: () => L.gridLayer.yandexMutant({type: "satellite"})
     },
     nyak: {
       name: "НЯК",
-      js: ["/vendor/leaflet-plugins/layer/tile/Yandex.js", "http://api-maps.yandex.ru/2.1/?lang=ru-RU"],
-      init: function() {return new L.Yandex("publicMap"); }
+      js: ["/vendor/leaflet-plugins/layer/tile/yandex.mutant.js", "http://api-maps.yandex.ru/2.1/?lang=ru-RU"],
+      init: () => L.gridLayer.yandexMutant({type: "publicMap"})
     },
     bing: {
-      name: "Bing", js: ["/vendor/leaflet-plugins/layer/tile/Bing.js"],
-      init: () => { return new L.BingLayer("ArsyCBuz45S76eWTT5PxxWxS4Ud_XdFDXtoidgxHWYbRBY9BIR_bIcrhWzonDyGJ", {type: "Road"}) }
+      name: "Bing",
+      js: ["/vendor/leaflet-plugins/layer/tile/Bing.js"],
+      init: () => L.bingLayer("ArsyCBuz45S76eWTT5PxxWxS4Ud_XdFDXtoidgxHWYbRBY9BIR_bIcrhWzonDyGJ", {type: "Road"})
+    },
+    bingSputnik: {
+      name: "Bing sp",
+      js: ["/vendor/leaflet-plugins/layer/tile/Bing.js"],
+      init: () => L.bingLayer("ArsyCBuz45S76eWTT5PxxWxS4Ud_XdFDXtoidgxHWYbRBY9BIR_bIcrhWzonDyGJ", {type: "AerialWithLabels"})
     },
     google: {
       name: "Google",
       js: ["/vendor/leaflet-plugins/layer/tile/Leaflet.GoogleMutant.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyARNP1tCHTxfeDKXTFbAsgsDKZeOMwPBxE"],
-      init: () => { return new L.gridLayer.googleMutant({type: "roadmap"}) }
+      init: () => L.gridLayer.googleMutant({type: "roadmap"})
+    },
+    googleSputnik: {
+      name: "Google спутник",
+      js: ["/vendor/leaflet-plugins/layer/tile/Leaflet.GoogleMutant.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyARNP1tCHTxfeDKXTFbAsgsDKZeOMwPBxE"],
+      init: () => L.gridLayer.googleMutant({type: "satellite"})
     }
   };
 
   const yndx = new L.DeferredLayer(layerdefs.nyak);
+  const yndxSputnik = new L.DeferredLayer(layerdefs.ysat);
   const google = new L.DeferredLayer(layerdefs.google);
+  const googleSputnik = new L.DeferredLayer(layerdefs.googleSputnik);
   const osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
   const bing = new L.DeferredLayer(layerdefs.bing);
+  const bingSputnik = new L.DeferredLayer(layerdefs.bingSputnik);
 
   let overlayLayers = null;
 
   if (types) {
     overlayLayers = _.reduce(types, (memo, type) => {
-      memo[type] = L.featureGroup();
+      memo[App.store.mapTypes[type]] = L.featureGroup();
       return memo;
     }, {});
 
-    overlayLayers[ _.keys(overlayLayers)[0] ].addTo(map);
+    _.each(overlayLayers, (layer) => {
+      layer.addTo(map);
+    });
   }
 
   const controls = L.control.layers(
     {
       'OSM': osm,
       'Google': google,
+      'Google спутник': googleSputnik,
       "Yandex": yndx,
-      "Bing": bing
+      "Yandex спутник": yndxSputnik,
+      "Bing": bing,
+      "Bing спутник": bingSputnik
     },
     overlayLayers
   ).addTo(map);
+
+  const myC = new L.Control.Bookmarks()
+    .setPosition('bottomleft')
+    .addTo(map);
 
   return {
     map,
