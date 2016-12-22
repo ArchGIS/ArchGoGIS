@@ -105,7 +105,7 @@ App.controllers.monument = new (Backbone.View.extend({
       tmplData.placemarks = [];
       _.each(tmplData.excavations, function(resExc, resId) {
         _.each(resExc, function(exc, excId) {
-          var type = (exc.area <= 20) ? 1 : 2;
+          let type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
             id: exc.id,
@@ -121,7 +121,8 @@ App.controllers.monument = new (Backbone.View.extend({
       })
 
       _.each(tmplData.knowledges, function(know, kid) {
-        var type = (tmplData.resTypes[kid][0] && tmplData.resTypes[kid][0].id) ? tmplData.resTypes[kid][0].id : 1;
+        let type = tmplData.monType[0].id || 10;
+        let epoch = tmplData.epoch[0].id || 1;
         tmplData.placemarks.push({
           type: 'monument',
           id: know.id,
@@ -130,7 +131,7 @@ App.controllers.monument = new (Backbone.View.extend({
             hintContent: know.monument_name
           },
           opts: {
-            preset: `resType${type}`
+            preset: `monType${type}_${epoch}`
           }
         })
       })
