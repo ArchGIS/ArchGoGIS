@@ -146,6 +146,8 @@ App.controllers.artifact = new (Backbone.View.extend({
       var type = (tmplData.monType[0][0]) ? tmplData.monType[0][0].id : 10;
       var epoch = (tmplData.epoch[0][0]) ? tmplData.epoch[0][0].id : 10;
       tmplData.placemarks.push({
+        type: 'monument',
+        id: tmplData.knowFound[0].id,
         coords: [tmplData.knowFound[0].x, tmplData.knowFound[0].y],
         pref: {
           hintContent: tmplData.knowFound[0].monument_name

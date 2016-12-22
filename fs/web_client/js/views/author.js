@@ -8,7 +8,7 @@ App.views.author = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
-      const pathToIcon = `/web_client/img/${item.type.indexOf('Памятник') !== -1  ? 'monTypes' : 'excTypes'}`;
+      const pathToIcon = `/web_client/img/monTypes`;
       const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]
@@ -32,7 +32,7 @@ App.views.author = new (Backbone.View.extend({
         location.hash = `monument/show/${item.id}`
       });
 
-      overlays[item.type].addLayer(marker);
+      overlays[App.store.mapTypes[item.type]].addLayer(marker);
     });
 
     App.views.functions.setAccordion("#accordion");
