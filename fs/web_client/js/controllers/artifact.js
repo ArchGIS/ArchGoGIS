@@ -157,7 +157,7 @@ App.controllers.artifact = new (Backbone.View.extend({
         }
       })
 
-      App.page.render("artifact/show", tmplData);
+      App.page.render("artifact/show", tmplData, tmplData.placemarks);
     }
 
     var queryCounter = _.reduce(queries, function(memo, obj) {

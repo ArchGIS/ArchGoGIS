@@ -794,7 +794,7 @@ App.views.artifact = new (Backbone.View.extend({
   },
 
   'show': (placemarks) => {
-    const types       = _.uniq( _.pluck(arg.placemarks, 'type') ),
+    const types       = _.uniq( _.pluck(placemarks, 'type') ),
           mapInstance = App.views.map(types),
           map         = mapInstance.map,
           overlays    = mapInstance.overlayLayers;
