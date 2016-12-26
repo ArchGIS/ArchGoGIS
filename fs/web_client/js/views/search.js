@@ -69,6 +69,18 @@ App.views.search = new (Backbone.View.extend({
         'inputs': {
           'okn': $('#heritage-input')
         }
+      },
+      'excavation-params': {
+        'handler': searchExcavation,
+        'columnsMaker': function(reports) {
+          return _.map(reports, function(r) {
+            return [App.models.Excavation.href(r[0], `${r[1]} (${r[3]} - ${r[2]})`)];
+          });
+        },
+        'inputs': {
+          'author': $('#exc-author-input'),
+          'year': $('#exc-year-input')
+        }
       }
     };
 
@@ -401,6 +413,49 @@ App.views.search = new (Backbone.View.extend({
           }, function(error) {
             console.log(error);
           });
+      }
+    }
+
+    function searchExcavation(my) {
+      var input = my.inputs;
+
+      var author = input.author.val(),
+          year   = input.year.val();
+
+
+      if (author || year) {
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_excavations', {
+              'author': author,
+              'year': year
+            });
+
+            $.get(url)
+              .success((response) => {
+                console.log(response)
+                resolve($.parseJSON(response));
+              })
+              .error(reject);
+          });
+        }
+
+        find()
+          .then(function(response) {
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(`<p>${item}</p>`);
+              });
+            } else {
+              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+            }
+          }, function(error) {
+            console.log(error);
+          });
+      } else {
+        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
       }
     }
   }
