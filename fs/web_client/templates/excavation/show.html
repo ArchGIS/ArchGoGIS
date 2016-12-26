@@ -1,0 +1,74 @@
+<div class="content">  
+  <h2><%= t("excavation.info") %> "<%= maybe(exc.name, "Без названия") %>"</h2>
+  
+  <div class="tabs">
+    <ul>
+      <li><a href="#general"><%= t('common.general') %></a></li>
+      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
+      <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
+      <li><a href="#report"><%= t('report.singular') %></a></li>
+      <li><a href="#another">*</a></li>
+    </ul>
+
+    <div id="general">
+      <dt>Исследование:</dt>
+      <dd><%= App.models.Research.href(res[0].id, res[0].name) %></dd>
+
+      <dt>Год проведения исследования:</dt>
+      <dd><%= res[0].year %></dd>
+
+      <dt>Автор исследования:</dt>
+      <dd><%= App.models.Author.href(author[0].id, author[0].name) %></dd>
+
+      <dt>Руководитель работ:</dt>
+      <dd><%= maybe(exc.boss, "Неизвестно") %></dd>
+
+      <dt>Площадь вскрытия:</dt>
+      <dd><%= maybe(exc.area, "Неизвестно") %></dd>
+
+      <dt>Количество артефактов:</dt>
+      <dd><%= _.size(arti) %></dd>
+    </div>
+
+    <div id="monuments">
+      <div class="accordion">
+        <% _.each(mons, function(mon, i) { %>
+          <h4 class="accordion-header">
+            <%= t("monument.singular") %> №<%= i+1 %>
+          </h4>
+
+          <div class="accordion-content">
+            <dl>
+              <dd><%= App.models.Monument.href(mon.id, "Перейти к памятнику") %></dd>
+
+              <dt>Названия:</dt>
+              <dd><%= _.pluck(knowledge[i], "monument_name").join(", ") %></dd>
+
+              <dt>Эпоха:</dt>
+              <dd><%= maybe(epoch[i], "Нет данных", "name") %></dd>
+
+              <dt>Тип памятника:</dt>
+              <dd><%= maybe(monType[i], "Нет данных", "name") %></dd>
+            </dl>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="artifacts">
+      <%= _.map(arti, function(art, t) {
+        let title = `${art.name}`;
+        return App.models.Artifact.href(art.id, title);
+      }).join(", <br>")%>
+    </div>
+
+    <div id="report">
+    </div>
+
+    <div id="another">
+    </div>
+  </div>
+
+</div> 
+
+<div id="map" class="maps"></div>
