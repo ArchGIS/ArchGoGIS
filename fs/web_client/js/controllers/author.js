@@ -105,7 +105,7 @@ App.controllers.author = new (Backbone.View.extend({
               hintContent: know.monument_name
             },
             opts: {
-              preset: `monType${type}_${epoch}.png`
+              preset: `monType${type}_${epoch}`
             }
           })
         })
@@ -122,7 +122,7 @@ App.controllers.author = new (Backbone.View.extend({
             hintContent: res.name
           },
           opts: {
-            preset: `resType${type}.jpg`
+            preset: `resType${type}`
           }
         })
       })
