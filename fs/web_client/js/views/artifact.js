@@ -803,7 +803,7 @@ App.views.artifact = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
-      const pathToIcon = `/web_client/img/${item.type === 'monument' ? 'monTypes' : 'heritage'}`;
+      const pathToIcon = `/web_client/img/${App.store.pathToIcons[item.type]}`;
       const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]

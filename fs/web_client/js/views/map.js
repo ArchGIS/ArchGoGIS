@@ -3,11 +3,6 @@
 App.views.map = (types) => {
   let map = L.map('map').setView([55.78, 49.13], 6);
 
-  const entities = {
-    monument: 'Памятники',
-    excavation: 'Раскопы'
-  }
-
   let layerdefs = {
     mapnik: {
       name: "OSM",

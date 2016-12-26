@@ -114,7 +114,7 @@ App.controllers.monument = new (Backbone.View.extend({
               hintContent: exc.name
             },
             opts: {
-              preset: `excType${type}`
+              preset: `excType${type}.png`
             }
           })
         })
@@ -131,10 +131,27 @@ App.controllers.monument = new (Backbone.View.extend({
             hintContent: know.monument_name
           },
           opts: {
-            preset: `monType${type}_${epoch}`
+            preset: `monType${type}_${epoch}.png`
           }
         })
       })
+
+      _.each(tmplData.researches, function(res, rid) {
+        let type = tmplData.resTypes[0][rid].id || 1;
+
+        tmplData.placemarks.push({
+          type: 'research',
+          id: res.id,
+          coords: [tmplData.knowledges[rid].x, tmplData.knowledges[rid].y],
+          pref: {
+            hintContent: res.name
+          },
+          opts: {
+            preset: `resType${type}.jpg`
+          }
+        })
+      })
+
       console.log(tmplData);
       App.page.render("monument/show", tmplData, tmplData.placemarks)
     };
