@@ -143,7 +143,7 @@ App.controllers.artifact = new (Backbone.View.extend({
       console.log(tmplData);
 
       tmplData.placemarks = [];
-      var type = (tmplData.monType[0][0]) ? tmplData.monType[0][0].id : 10;
+      let type = (tmplData.monType[0][0]) ? tmplData.monType[0][0].id : 10;
       var epoch = (tmplData.epoch[0][0]) ? tmplData.epoch[0][0].id : 10;
       tmplData.placemarks.push({
         type: 'monument',
@@ -154,6 +154,19 @@ App.controllers.artifact = new (Backbone.View.extend({
         },
         opts: {
           preset: `monType${type}_${epoch}`
+        }
+      })
+
+      type = (tmplData.exc[0].area <= 20) ? 1 : 2;
+      tmplData.placemarks.push({
+        type: 'excavation',
+        id: tmplData.exc[0].id,
+        coords: [tmplData.exc[0].x, tmplData.exc[0].y],
+        pref: {
+          hintContent: tmplData.exc[0].name
+        },
+        opts: {
+          preset: `excType${type}`
         }
       })
 

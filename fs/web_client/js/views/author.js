@@ -8,9 +8,9 @@ App.views.author = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
-      const pathToIcon = `/web_client/img/monTypes`;
+      const pathToIcon = `/web_client/img/${App.store.pathToIcons[item.type]}`;
       const icon = L.icon({
-        iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
+        iconUrl: `${pathToIcon}/${item.opts.preset}`,
         iconSize: [16, 16]
       });
 

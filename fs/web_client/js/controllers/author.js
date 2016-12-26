@@ -105,9 +105,25 @@ App.controllers.author = new (Backbone.View.extend({
               hintContent: know.monument_name
             },
             opts: {
-              preset: `monType${type}_${epoch}`
+              preset: `monType${type}_${epoch}.png`
             }
           })
+        })
+      })
+
+      _.each(tmplData.researches, function(res, rid) {
+        let type = tmplData.resTypes[rid][0].id || 1;
+
+        tmplData.placemarks.push({
+          type: 'research',
+          id: res.id,
+          coords: [tmplData.monuments[rid].knowledges[0].x, tmplData.monuments[rid].knowledges[0].y],
+          pref: {
+            hintContent: res.name
+          },
+          opts: {
+            preset: `resType${type}.jpg`
+          }
         })
       })
       

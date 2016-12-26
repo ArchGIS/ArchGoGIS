@@ -123,6 +123,8 @@ App.controllers.research = new (Backbone.View.extend({
       var type = (tmplData.resType[0] && tmplData.resType[0].id) ? tmplData.resType[0].id : 1;
       tmplData.placemarks = [];
       _.each(tmplData.knowledges, function(k, kid) {
+        const type = tmplData.monTypes[0][kid].id;
+        const epoch = tmplData.epochs[0][kid].id;
 
         tmplData.placemarks.push({
           type: 'monument',
@@ -132,7 +134,7 @@ App.controllers.research = new (Backbone.View.extend({
             hintContent: k.monument_name
           },
           opts: {
-            preset: `resType${type}`
+            preset: `monType${type}_${epoch}`
           }
         })
       })
@@ -149,6 +151,38 @@ App.controllers.research = new (Backbone.View.extend({
             },
             opts: {
               preset: `excType${type}`
+            }
+          })
+        })
+      })
+
+      _.each(tmplData.artifacts, function(artif, artifId) {
+        _.each(artif, function(art, artId) {
+          tmplData.placemarks.push({
+            type: 'artifact',
+            id: art.id,
+            coords: [art.x, art.y],
+            pref: {
+              hintContent: art.name,
+            },
+            opts: {
+              preset: `artifact`
+            }
+          })
+        })
+      })
+
+      _.each(tmplData.heritages, function(herit, heritId) {
+        _.each(herit, function(her, hId) {
+          tmplData.placemarks.push({
+            type: 'heritage',
+            id: her.id,
+            coords: [her.x, her.y],
+            pref: {
+              hintContent: her.name,
+            },
+            opts: {
+              preset: `heritage1`
             }
           })
         })
