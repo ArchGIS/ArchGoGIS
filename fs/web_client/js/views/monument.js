@@ -377,7 +377,7 @@ App.views.monument = new (Backbone.View.extend({
     _.each(placemarks, function(item) {
       const pathToIcon = `/web_client/img/${App.store.pathToIcons[item.type]}`;
       const icon = L.icon({
-        iconUrl: `${pathToIcon}/${item.opts.preset}`,
+        iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
         iconSize: [16, 16]
       });
 

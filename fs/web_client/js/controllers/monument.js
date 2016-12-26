@@ -114,7 +114,7 @@ App.controllers.monument = new (Backbone.View.extend({
               hintContent: exc.name
             },
             opts: {
-              preset: `excType${type}.png`
+              preset: `excType${type}`
             }
           })
         })
@@ -131,7 +131,7 @@ App.controllers.monument = new (Backbone.View.extend({
             hintContent: know.monument_name
           },
           opts: {
-            preset: `monType${type}_${epoch}.png`
+            preset: `monType${type}_${epoch}`
           }
         })
       })
@@ -147,7 +147,7 @@ App.controllers.monument = new (Backbone.View.extend({
             hintContent: res.name
           },
           opts: {
-            preset: `resType${type}.jpg`
+            preset: `resType${type}`
           }
         })
       })
@@ -162,7 +162,7 @@ App.controllers.monument = new (Backbone.View.extend({
               hintContent: art.name,
             },
             opts: {
-              preset: `artifact.png`
+              preset: `artifact`
             }
           })
         })
