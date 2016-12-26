@@ -110,7 +110,7 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 			switch parts[2] {
 			case "text":
 				my.buf.WriteStringf(
-					"%s.%s =~ '(?ui)^.*%s.*$' ",
+					"%s.%s =~ '(?ui)^.*(%s).*$' ",
 					entityName, parts[0], parts[1],
 				)
 			case "less":
@@ -121,6 +121,16 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 			case "more":
 				my.buf.WriteStringf(
 					"%s.%s >= %s ",
+					entityName, parts[0], parts[1],
+				)
+			case "number":
+				my.buf.WriteStringf(
+					"%s.%s = %s ",
+					entityName, parts[0], parts[1],
+				)
+			case "textStart":
+				my.buf.WriteStringf(
+					"%s.%s =~ '(?ui)^(%s).*$' ",
 					entityName, parts[0], parts[1],
 				)
 			default:

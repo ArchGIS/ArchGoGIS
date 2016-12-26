@@ -1,13 +1,49 @@
 <h4><%= t("search.criterion") %> №<%=criterionId+1%>:</h4>
-<select class="form-control criterion" id="search-criterion-<%=criterionId%>">
-  <option value="research-year-less"><%= t('research.yearLess') %></option>
-  <option value="research-year-more"><%= t('research.yearMore') %></option>
-  <option value="author-name"><%= t('author.name') %></option>
-  <option value="artifact-name"><%= t('artifact.name') %></option>
-  <option value="monument-name"><%= t('monument.name') %></option>
+<select class="form-control criterion-type" id="search-criterion-<%=criterionId%>">
+  <option value="author-name"><%= t('criteria.author.name') %></option>
+  <option value="author-job"><%= t('criteria.author.job') %></option>
+
+  <option value="artifact-category"><%= t('criteria.artifact.category') %></option>
+  <option value="artifact-culture"><%= t('criteria.artifact.culture') %></option>
+  <option value="artifact-material"><%= t('criteria.artifact.material') %></option>
+  <option value="artifact-name"><%= t('criteria.artifact.name') %></option>
+  <option value="artifact-photo-before" datePicker="true"><%= t('criteria.artifact.photoBefore') %></option>
+  <option value="artifact-photo-after" datePicker="true"><%= t('criteria.artifact.photoAfter') %></option>
+  <option value="artifact-found-before"><%= t('criteria.artifact.foundBefore') %></option>
+  <option value="artifact-found-after"><%= t('criteria.artifact.foundAfter') %></option>
+
+  <option value="excavation-area-more"><%= t('criteria.excavation.areaMore') %></option>
+  <option value="excavation-area-less"><%= t('criteria.excavation.areaLess') %></option>
+  <option value="excavation-obj-name"><%= t('criteria.excavation.objName') %></option>
+  <option value="excavation-boss-name"><%= t('criteria.excavation.bossName') %></option>
+
+  <option value="research-after"><%= t('criteria.research.after') %></option>
+  <option value="research-before"><%= t('criteria.research.before') %></option>
+  <option value="research-type" listType="ResearchType"><%= t('criteria.research.type') %></option>
+
+  <option value="collection-storage"><%= t('criteria.collection.storage') %></option>
+  <option value="collection-name"><%= t('criteria.collection.name') %></option>
+
+  <option value="heritage-security" listType="SecurityType"><%= t('criteria.heritage.security') %></option>
+  <option value="heritage-region"><%= t('criteria.heritage.region') %></option>
+  <option value="heritage-after" datePicker="true"><%= t('criteria.heritage.after') %></option>
+  <option value="heritage-before" datePicker="true"><%= t('criteria.heritage.before') %></option>
+
+  <option value="monument-culture"><%= t('criteria.monument.culture') %></option>
+  <option value="monument-name"><%= t('criteria.monument.name') %></option>
+  <option value="monument-type" listType="MonumentType"><%= t('criteria.monument.type') %></option>
+  <option value="monument-topo-after" datePicker="true"><%= t('criteria.monument.topoAfter') %></option>
+  <option value="monument-topo-before" datePicker="true"><%= t('criteria.monument.topoBefore') %></option>
+  <option value="monument-photo-after" datePicker="true"><%= t('criteria.monument.photoAfter') %></option>
+  <option value="monument-photo-before" datePicker="true"><%= t('criteria.monument.photoBefore') %></option>
+  <option value="monument-epoch" listType="Epoch"><%= t('criteria.monument.epoch') %></option>
+
+  <option value="publication-place"><%= t('criteria.publication.place') %></option>
+  <option value="publication-pub-name"><%= t('criteria.publication.pubName') %></option>
+  <option value="publication-title"><%= t('criteria.publication.title') %></option>
 </select>
 
-<h4><%= t("common.value") %>:</h4>
+<h4 id="criterion-value-header-<%=criterionId%>"><%= t("common.value") %>:</h4>
 <input id="search-value-<%=criterionId%>" class="form-control input criterion-value">
 
 </div>
