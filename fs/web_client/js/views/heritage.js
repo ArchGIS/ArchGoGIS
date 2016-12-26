@@ -5,11 +5,11 @@ App.views.heritage = new (Backbone.View.extend({
     $("#container").tabs();
     var coordpicker = App.blocks.coordpicker;
 
-    App.views.map();
+    const map = App.views.map().map;
 
     coordpicker($('#coord-picker'), {
       inputs: ['#heritage-x', '#heritage-y'],
-      map: 'map'
+      map: map
     });
 
     $(".date-picker").datepicker({

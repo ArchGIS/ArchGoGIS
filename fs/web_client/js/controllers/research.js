@@ -120,11 +120,10 @@ App.controllers.research = new (Backbone.View.extend({
       })
       console.log(tmplData);
 
-      var type = (tmplData.resType[0] && tmplData.resType[0].id) ? tmplData.resType[0].id : 1;
       tmplData.placemarks = [];
       _.each(tmplData.knowledges, function(k, kid) {
-        const type = tmplData.monTypes[0][kid].id;
-        const epoch = tmplData.epochs[0][kid].id;
+        const type = tmplData.monTypes[kid][0].id;
+        const epoch = tmplData.epochs[kid][0].id;
 
         tmplData.placemarks.push({
           type: 'monument',

@@ -63,8 +63,56 @@ App.controllers.excavation = new (Backbone.View.extend({
         _.extend(tmplData, val);
       })
 
+      tmplData.placemarks = [];
+
+      let type = (tmplData.exc.area <= 20) ? 1 : 2;
+      tmplData.placemarks.push({
+        type: 'excavation',
+        id: tmplData.exc.id,
+        coords: [tmplData.exc.x, tmplData.exc.y],
+        pref: {
+          hintContent: tmplData.exc.name
+        },
+        opts: {
+          preset: `excType${type}`
+        }
+      })
+
+      _.each(tmplData.knowledge, function(knowl, knowId) {
+        _.each(knowl, (k, kid) => {
+          const type = tmplData.monType[0].id;
+          const epoch = tmplData.epoch[0].id;
+
+          tmplData.placemarks.push({
+            type: 'monument',
+            id: k.id,
+            coords: [k.x, k.y],
+            pref: {
+              hintContent: k.monument_name
+            },
+            opts: {
+              preset: `monType${type}_${epoch}`
+            }
+          })
+        })
+      })
+
+      _.each(tmplData.arti, function(arti, artiId) {
+        tmplData.placemarks.push({
+          type: 'artifact',
+          id: arti.id,
+          coords: [arti.x, arti.y],
+          pref: {
+            hintContent: arti.name,
+          },
+          opts: {
+            preset: `artifact`
+          }
+        })
+      })
+
       console.log(tmplData)
-    	App.page.render("excavation/show", tmplData)
+    	App.page.render("excavation/show", tmplData, tmplData.placemarks)
   	}
 
   	var queryCounter = _.reduce(queries, (memo, obj) => { return memo + _.size(obj) }, 0);

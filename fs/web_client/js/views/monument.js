@@ -6,7 +6,7 @@ App.views.monument = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     let addName = App.fn.addNameToId;
     
-    App.views.map();
+    const map = App.views.map().map;
 
     var repSelName = '',
         heritageSelName = '',
@@ -358,7 +358,7 @@ App.views.monument = new (Backbone.View.extend({
 
     coordpicker($('#coord-picker'), {
       inputs: ['#monument-x', '#monument-y'],
-      map: 'map'
+      map: map
     });
     
     $("#container").tabs();

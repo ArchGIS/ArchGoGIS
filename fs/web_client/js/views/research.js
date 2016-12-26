@@ -44,7 +44,7 @@ App.views.research = new (Backbone.View.extend({
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
 
-    App.views.map();
+    const map = App.views.map().map;
 
     var counter = 1;
     var reportName,
@@ -300,7 +300,7 @@ App.views.research = new (Backbone.View.extend({
       var coordpicker = App.blocks.coordpicker;
       coordpicker($(`#coord-picker-${monId}-${counter}`), {
         inputs: [`#x-${monId}-${counter}`, `#y-${monId}-${counter}`],
-        map: 'map'
+        map: map
       }, `${monId}-${counter}`);
     }
 
@@ -390,7 +390,7 @@ App.views.research = new (Backbone.View.extend({
       var coordpicker = App.blocks.coordpicker;
       coordpicker($('#coord-picker-'+monId), {
         inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
-        map: 'map'
+        map: map
       }, monId);
 
       $(`#monument-header-${monId}`).next().append(`

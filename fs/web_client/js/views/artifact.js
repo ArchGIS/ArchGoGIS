@@ -6,7 +6,7 @@ App.views.artifact = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
-    App.views.map();
+    const map = App.views.map().map;
 
     let resSelName = '',
         monSelName = '',
@@ -321,7 +321,7 @@ App.views.artifact = new (Backbone.View.extend({
 
     coordpicker($('#coord-picker'), {
       inputs: ['#monument-x', '#monument-y'],
-      map: 'map'
+      map: map
     });
   },
 
@@ -331,7 +331,7 @@ App.views.artifact = new (Backbone.View.extend({
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
 
-    App.views.map();
+    const map = App.views.map().map;
 
     var repSelName = '',
         monSelName = '',
@@ -756,12 +756,12 @@ App.views.artifact = new (Backbone.View.extend({
 
     coordpicker($('#monument-coord-picker'), {
       inputs: ['#monument-x', '#monument-y'],
-      map: 'map'
+      map: map
     });
 
     coordpicker($('#exc-coord-picker'), {
       inputs: ['#exc-x', '#exc-y'],
-      map: 'map'
+      map: map
     });
 
     var photoId = 1;
