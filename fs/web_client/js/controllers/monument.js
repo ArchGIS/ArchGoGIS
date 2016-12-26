@@ -137,7 +137,7 @@ App.controllers.monument = new (Backbone.View.extend({
       })
 
       _.each(tmplData.researches, function(res, rid) {
-        let type = tmplData.resTypes[0][rid].id || 1;
+        let type = tmplData.resTypes[rid][0].id || 1;
 
         tmplData.placemarks.push({
           type: 'research',
