@@ -568,6 +568,201 @@ App.views.bigSearch = new (Backbone.View.extend({
           "pub_IDPLACE__author_IDPLACE": {},
           "research__author_IDPLACE": {},
         },
+      },
+
+      monument: {
+        "main": {
+          "monument:Monument": {"id": "*", "select": "*"},
+          "knowledge:Knowledge": {"id": "*", "select": "*"},
+          "monument__knowledge": {},
+        },
+        "author-name": {
+          "author_IDPLACE:Author": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "research_IDPLACE:Research": {"id": "*"},
+          "research_IDPLACE__author_IDPLACE": {},
+          "research_IDPLACE__knowledge": {},
+        },
+        "author-job": {
+          "author_IDPLACE:Author": {"id": "*"},
+          "research_IDPLACE:Research": {"id": "*"},
+          "job_IDPLACE:AuthorJob": {"id": "*"},
+          "org_IDPLACE:Organization": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "job_IDPLACE__author_IDPLACE": {},
+          "job_IDPLACE__org_IDPLACE": {},
+          "research_IDPLACE__author_IDPLACE": {},
+          "research_IDPLACE__knowledge": {},
+        },
+
+        "artifact-category": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "cat_IDPLACE:ArtifactCategory": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "knowledge__artifact_IDPLACE": {},
+          "cat_IDPLACE__artifact_IDPLACE": {},
+        },
+        "artifact-culture": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "knowledge__artifact_IDPLACE": {},
+          "cult_IDPLACE__artifact_IDPLACE": {},
+        },
+        "artifact-material": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "mat_IDPLACE:ArtifactMaterial": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "knowledge__artifact_IDPLACE": {},
+          "mat_IDPLACE__artifact_IDPLACE": {},
+        },
+        "artifact-name": {
+          "artifact_IDPLACE:Artifact": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "knowledge__artifact_IDPLACE": {},
+        },
+        "artifact-photo-before": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "photo_IDPLACE:Image": {"id": "*", "filter": "creationDate=VALUEPLACE=dataLess"},
+          "knowledge__artifact_IDPLACE": {},
+          "photo_IDPLACE__artifact_IDPLACE": {},
+        },
+        "artifact-photo-after": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "photo_IDPLACE:Image": {"id": "*", "filter": "creationDate=VALUEPLACE=dataMore"},
+          "knowledge__artifact_IDPLACE": {},
+          "photo_IDPLACE__artifact_IDPLACE": {},
+        },
+        "artifact-found-after": {
+          "artifact_IDPLACE:Artifact": {"id": "*", "filter": "year=VALUEPLACE=more"},
+          "knowledge__artifact_IDPLACE": {},
+        },
+        "artifact-found-before": {
+          "artifact_IDPLACE:Artifact": {"id": "*", "filter": "year=VALUEPLACE=less"},
+          "knowledge__artifact_IDPLACE": {},
+        },
+
+        "excavation-area-more": {
+          "exc_IDPLACE:Excavation": {"id": "*", "filter": "area=VALUEPLACE=more"},
+          "monument__exc_IDPLACE": {},
+        },
+        "excavation-area-less": {
+          "exc_IDPLACE:Excavation": {"id": "*", "filter": "area=VALUEPLACE=less"},
+          "monument__exc_IDPLACE": {},
+        },
+        "excavation-obj-name": {
+          "exc_IDPLACE:Excavation": {"id": "*"},
+          "obj_IDPLACE:Complex": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "monument__exc_IDPLACE": {},
+          "obj_IDPLACE__exc_IDPLACE": {},
+        },
+        "excavation-boss-name": {
+          "exc_IDPLACE:Excavation": {"id": "*", "filter": "boss=VALUEPLACE=text"},
+          "monument__exc_IDPLACE": {},
+        },
+
+        "research-after": {
+          "research_IDPLACE:Research": {"id": "*", "select": "*", "filter": "year=VALUEPLACE=more"},
+          "research_IDPLACE__knowledge": {},
+        },
+        "research-before": {
+          "research_IDPLACE:Research": {"id": "*", "select": "*", "filter": "year=VALUEPLACE=less"},
+          "research_IDPLACE__knowledge": {},
+        },
+        "research-type": {
+          "type_IDPLACE:ResearchType": {"id": "*", "filter": "id=VALUEPLACE=number"},
+          "research_IDPLACE__type_IDPLACE": {},
+          "research_IDPLACE__knowledge": {},
+        },
+
+        "collection-storage": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "int_IDPLACE:StorageInterval": {"id": "*"},
+          "coll_IDPLACE:Collection": {"id": "*"},
+          "org_IDPLACE:Organization": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "knowledge__artifact_IDPLACE": {},
+          "int_IDPLACE__artifact_IDPLACE": {},
+          "int_IDPLACE__coll_IDPLACE": {},
+          "org_IDPLACE__coll_IDPLACE": {},
+        },
+        "collection-name": {
+          "artifact_IDPLACE:Artifact": {"id": "*"},
+          "int_IDPLACE:StorageInterval": {"id": "*"},
+          "coll_IDPLACE:Collection": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "knowledge__artifact_IDPLACE": {},
+          "int_IDPLACE__artifact_IDPLACE": {},
+          "int_IDPLACE__coll_IDPLACE": {},
+        },
+
+        "heritage-security": {
+          "her_IDPLACE:Heritage": {"id": "*"},
+          "type_IDPLACE:SecurityType": {"id": "*", "filter": "id=VALUEPLACE=number"},
+          "monument__her_IDPLACE": {},
+          "type_IDPLACE__her_IDPLACE": {},
+        },
+        "heritage-region": {
+          "her_IDPLACE:Heritage": {"id": "*", "filter": "code=VALUEPLACE=textStart"},
+          "monument__her_IDPLACE": {},
+        },
+        "heritage-after": {
+          "her_IDPLACE:Heritage": {"id": "*", "filter": "docDate=VALUEPLACE=dataMore"},
+          "monument__her_IDPLACE": {},
+        },
+        "heritage-before": {
+          "her_IDPLACE:Heritage": {"id": "*", "filter": "docDate=VALUEPLACE=dataLess"},
+          "monument__her_IDPLACE": {},
+        },
+
+        "monument-name": {
+          "knowledge:Knowledge": {"id": "*", "select": "*", "filter": "monument_name=VALUEPLACE=text"},
+        },
+        "monument-culture": {
+          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "cult_IDPLACE__knowledge": {},
+        },
+        "monument-type": {
+          "type_IDPLACE:MonumentType": {"id": "*", "filter": "id=VALUEPLACE=number"},
+          "monument__type_IDPLACE": {},
+        },
+        "monument-epoch": {
+          "epoch_IDPLACE:Epoch": {"id": "*", "filter": "id=VALUEPLACE=number"},
+          "monument__epoch_IDPLACE": {},
+        },
+        "monument-topo-after": {
+          "topo_IDPLACE:Image": {"id": "*", "filter": "creationDate=VALUEPLACE=dateMore"},
+          "knowledge__hastopo__topo_IDPLACE": {},
+        },
+        "monument-topo-before": {
+          "topo_IDPLACE:Image": {"id": "*", "filter": "creationDate=VALUEPLACE=dateLess"},
+          "knowledge__hastopo__topo_IDPLACE": {},
+        },
+        "monument-photo-after": {
+          "photo_IDPLACE:Image": {"id": "*", "filter": "creationDate=VALUEPLACE=dateMore"},
+          "knowledge__has__photo_IDPLACE": {},
+        },
+        "monument-photo-before": {
+          "photo_IDPLACE:Image": {"id": "*", "filter": "creationDate=VALUEPLACE=dateLess"},
+          "knowledge__has__photo_IDPLACE": {},
+        },
+
+        "publication-place": {
+          "author_IDPLACE:Author": {"id": "*"},
+          "research_IDPLACE:Research": {"id": "*"},
+          "pub_IDPLACE:Publication": {"id": "*", "filter": "publicated_in=VALUEPLACE=text"},
+          "pub_IDPLACE__author_IDPLACE": {},
+          "research_IDPLACE__author_IDPLACE": {},
+          "research_IDPLACE__knowledge": {},
+        },
+        "publication-pub-name": {
+          "author_IDPLACE:Author": {"id": "*"},
+          "research_IDPLACE:Research": {"id": "*"},
+          "pub_IDPLACE:Publication": {"id": "*", "filter": "publication_name=VALUEPLACE=text"},
+          "pub_IDPLACE__author_IDPLACE": {},
+          "research__author_IDPLACE": {},
+          "research_IDPLACE__knowledge": {},
+        },
+        "publication-title": {
+          "author_IDPLACE:Author": {"id": "*"},
+          "research_IDPLACE:Research": {"id": "*"},
+          "pub_IDPLACE:Publication": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "pub_IDPLACE__author_IDPLACE": {},
+          "research__author_IDPLACE": {},
+          "research_IDPLACE__knowledge": {},
+        },
       }
     };
 
@@ -636,7 +831,7 @@ App.views.bigSearch = new (Backbone.View.extend({
         response = JSON.parse(response);
 
         if (entity == "monument") {
-          _.each(response.knowledges, function(know, i) {
+          _.each(response.knowledge, function(know, i) {
             response.monument[i]["name"] = know.monument_name; 
           })
         }
