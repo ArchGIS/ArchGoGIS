@@ -33,8 +33,11 @@ App.controllers.excavation = new (Backbone.View.extend({
         research: JSON.stringify({
           "exc:Excavation": {"id": excId},
           "res:Research": {"id": "*", "select": "*"},
+          "rep:Report": {"id": "*", "select": "*"},
           "author:Author": {"id": "*", "select": "*"},
           "res__has__exc": {},
+          "res__has__rep": {},
+          "rep__hasauthor__author": {},
           "res__hasauthor__author": {}
         }),
       },

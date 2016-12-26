@@ -63,6 +63,8 @@
     </div>
 
     <div id="report">
+      <% let repTitle = `${rep[0].name} (${author[0].name}, ${res[0].year})` %>
+      <%= App.models.Report.href(rep[0].id, repTitle) %>
     </div>
 
     <div id="another">
