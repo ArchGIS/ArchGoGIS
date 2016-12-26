@@ -170,6 +170,18 @@ App.controllers.artifact = new (Backbone.View.extend({
         }
       })
 
+      tmplData.placemarks.push({
+        type: 'artifact',
+        id: tmplData.artifact.id,
+        coords: [tmplData.artifact.x, tmplData.artifact.y],
+        pref: {
+          hintContent: tmplData.artifact.name
+        },
+        opts: {
+          preset: `artifact`
+        }
+      })
+
       App.page.render("artifact/show", tmplData, tmplData.placemarks);
     }
 
