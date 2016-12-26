@@ -152,6 +152,22 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
+      _.each(tmplData.artifacts, function(artif, artifId) {
+        _.each(artif, function(art, artId) {
+          tmplData.placemarks.push({
+            type: 'artifact',
+            id: art.id,
+            coords: [art.x, art.y],
+            pref: {
+              hintContent: art.name,
+            },
+            opts: {
+              preset: `artifact`
+            }
+          })
+        })
+      })
+
       console.log(tmplData);
       App.page.render("monument/show", tmplData, tmplData.placemarks)
     };
