@@ -61,6 +61,13 @@ a:hover {
   padding-left: 1em;
 }
 
+.content-full{
+  width: 100%;
+  margin-top: 60px;
+  padding-left: 1em;
+}
+}
+
 .content.wide-content {
   width: 70%;
 }
@@ -506,4 +513,12 @@ ul.system-statistic {
 .left-p {
   padding-top: 40px;
   padding-left: 100px;
+}
+
+.form-group.short {
+  width: 300px;
+}
+
+.entity-delete {
+  cursor: pointer;
 }
