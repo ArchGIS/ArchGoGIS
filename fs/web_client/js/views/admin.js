@@ -353,6 +353,10 @@ App.views.admin = new (Backbone.View.extend({
 
       $.when(model.sendQuery(query)).then(function(response) {
         _.extend(data, response);
+
+        data[entity] = _.filter(data[entity], function(val) {
+          return (val.id > 0);
+        });
         data[entity] = _.uniq(data[entity], function(val) {
           return val.id;
         });
