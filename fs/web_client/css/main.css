@@ -522,3 +522,7 @@ ul.system-statistic {
 .entity-delete {
   cursor: pointer;
 }
+
+#table-admin {
+  width: 90%;
+}
