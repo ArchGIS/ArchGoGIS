@@ -427,8 +427,8 @@ App.views.monument = new (Backbone.View.extend({
 
       App.models.Publication.findByAuthorId(ui.item.id).then(function(pubs) {
         $('#pub-input').autocomplete({
-          source: _.map(pubs.r, function(r, key) {
-            return {'label': `${r.name} (${r.year}, ${pubs.rt[key].name})`, 'id': r.id, 'resId': pubs.res[key].id}
+          source: _.map(pubs.pub, function(pub, key) {
+            return {'label': `${pub.name} (${pub.published_at})`, 'id': pub.id, 'resId': pubs.res[key].id}
           })
         });
       });
