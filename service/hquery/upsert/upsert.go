@@ -16,12 +16,10 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/parsing"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/upsert/builder"
 	"github.com/ArchGIS/ArchGoGIS/throw"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
-	// "github.com/ArchGIS/ArchGoGIS/service/hquery/shared"
 )
 
-func Handler(w web.ResponseWriter, r *http.Request) {
+var Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	defer throw.Catch(func(err error) {
 		if _, ok := err.(*errs.HqueryError); ok {
 			w.Write([]byte(err.Error()))
@@ -82,7 +80,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("%#v\n", input)
 	w.Write(processRequest(input))
-}
+})
 
 func mustPassValidation(data *Data) {
 	for _, node := range data.nodeInserts {

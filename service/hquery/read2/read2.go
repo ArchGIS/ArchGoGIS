@@ -8,12 +8,10 @@ import (
 	"net/http"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/read2/parser"
 	"github.com/ArchGIS/ArchGoGIS/throw"
-	"github.com/ArchGIS/ArchGoGIS/web"
-
 )
 
 // #FIXME
-func Handler(w web.ResponseWriter, r *http.Request) {
+var Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	defer throw.Catch(func(err error) {
 		if _, ok := err.(*errs.HqueryError); ok {
 			w.Write([]byte(err.Error()))
@@ -38,4 +36,4 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(mustFmtJson(response, &parser.MergeData))
-}
+})

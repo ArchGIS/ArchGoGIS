@@ -9,7 +9,6 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -17,7 +16,7 @@ const (
 	filterAuthorCypher = "MATCH (a:Author)"
 )
 
-func filterAuthorHandler(w web.ResponseWriter, r *http.Request) {
+var filterAuthorHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterAuthor(
 		r.URL.Query().Get("author"))
 
@@ -26,7 +25,7 @@ func filterAuthorHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForFilterAuthor(author string) ([]byte, error) {
 	params := neo.Params{}

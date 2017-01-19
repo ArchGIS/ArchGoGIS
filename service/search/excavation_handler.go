@@ -9,7 +9,6 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -19,7 +18,7 @@ const (
 )
 
 
-func filterExcavationHandler(w web.ResponseWriter, r *http.Request) {
+var filterExcavationHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterExcavation(
 		r.URL.Query().Get("author"),
 		r.URL.Query().Get("year"))
@@ -30,7 +29,7 @@ func filterExcavationHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForFilterExcavation(author, year string) ([]byte, error) {
 	params := neo.Params{}

@@ -13,7 +13,6 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -25,7 +24,7 @@ const (
 	returnQuery = "x{index}"
 )
 
-func countHandler(w web.ResponseWriter, r *http.Request) {
+var countHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	input := make(map[string][]string)
 	input = mustFetchJSON(r.Body)
 
@@ -36,7 +35,7 @@ func countHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func mustFetchJSON(reader io.ReadCloser) counts {
 	var input counts

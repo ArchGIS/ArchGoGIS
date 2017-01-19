@@ -8,9 +8,16 @@ App.models.fn = {
   },
 
   "sendQueryWithDeferred": function(query, deferred) {
-    $.post("/hquery/read", query).success(function(response) {
-      response = JSON.parse(response);
-      deferred.resolve(response)
+    $.post({
+      url: "/hquery/read",
+      data: query,
+      success: function(response) {
+        response = JSON.parse(response);
+        deferred.resolve(response)
+      },
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      }
     });
 
     return deferred.promise();
@@ -23,17 +30,24 @@ App.models.fn = {
 
     _.each(params, function(val, id) {
       var completedQuery = query.replace(/NEED/g, val);
-      $.post("/hquery/read", completedQuery).success(function(response) {
-        response = JSON.parse(response);
+      $.post({
+        url: "/hquery/read",
+        data: completedQuery,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+        },
+        success: function(response) {
+          response = JSON.parse(response);
 
-        if (_.keys(response).length > 1) {
-          fullResponse[id] = response;
-        } else {
-          fullResponse[id] = _.values(response)[0];
-        }
+          if (_.keys(response).length > 1) {
+            fullResponse[id] = response;
+          } else {
+            fullResponse[id] = _.values(response)[0];
+          }
 
-        if (++counter == params.length) {
-          deferred.resolve(fullResponse);
+          if (++counter == params.length) {
+            deferred.resolve(fullResponse);
+          }
         }
       });
     })

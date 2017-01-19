@@ -13,9 +13,14 @@
     return new Promise(function(resolve, reject) {
       var url = App.url.make('/search/collections', {'needle': name, 'limit': 10});
 
-      $.get(url)
-        .success(response => resolve($.parseJSON(response)))
-        .error(reject);
+      $.get({
+        url,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+        },
+        success: response => resolve($.parseJSON(response)),
+        error: reject
+      });
     });
   };
 

@@ -13,9 +13,15 @@ App.models.Org.findByCityId = function(id) {
       'o__has__c': {}
     });
 
-    $.post('/hquery/read', query)
-      .success(response => resolve($.parseJSON(response).o))
-      .error(reject);
+    $.post({
+      url: '/hquery/read',
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => resolve($.parseJSON(response).o),
+      error: reject
+    });
   });
 };
 

@@ -8,7 +8,6 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -18,7 +17,7 @@ const (
 		"RETURN c"
 )
 
-func citiesHandler(w web.ResponseWriter, r *http.Request) {
+var citiesHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForCities(r.URL.Query().Get("needle"))
 
 	if err == nil {
@@ -26,7 +25,7 @@ func citiesHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForCities(needle string) ([]byte, error) {
 	if needle == "" {

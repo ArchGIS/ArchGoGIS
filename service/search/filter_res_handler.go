@@ -9,7 +9,6 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -19,7 +18,7 @@ const (
 		"MATCH (k:Knowledge)<-[:has]-(r)"
 )
 
-func filterResHandler(w web.ResponseWriter, r *http.Request) {
+var filterResHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterRes(
 		r.URL.Query().Get("year"),
 		r.URL.Query().Get("author"))
@@ -29,7 +28,7 @@ func filterResHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForFilterRes(year, author string) ([]byte, error) {
 	params := neo.Params{}

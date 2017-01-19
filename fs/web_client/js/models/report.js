@@ -15,9 +15,15 @@ App.models.Report.findByAuthorIdFullInfo = function(authorId) {
       'res__hasauthor__a': {}
     });
     
-    $.post('/hquery/read', query)
-      .success(response => resolve($.parseJSON(response)))
-      .error(reject);
+    $.post({
+      url: '/hquery/read',
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => resolve($.parseJSON(response)),
+      error: reject
+    });
   });
 };
 
@@ -29,9 +35,15 @@ App.models.Report.findByAuthorId = function(authorId) {
       'r__hasauthor__a': {},
     });
     
-    $.post('/hquery/read', query)
-      .success(response => resolve($.parseJSON(response).r))
-      .error(reject);
+    $.post({
+      url: '/hquery/read',
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => resolve($.parseJSON(response).r),
+      error: reject
+    });
   });
 };
 

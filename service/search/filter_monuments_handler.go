@@ -4,15 +4,12 @@ import (
 	"bytes"
 	"net/http"
 	"unsafe"
-	// "unicode/utf8"
 
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
-	// "github.com/ArchGIS/ArchGoGIS/cfg"
 )
 
 const (
@@ -22,7 +19,7 @@ const (
 		"MATCH (a:Author)<-[:hasauthor]-(r)"
 )
 
-func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
+var filterMonumentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterMonuments(
 		r.URL.Query().Get("name"),
 		r.URL.Query().Get("epoch"))
@@ -32,7 +29,7 @@ func filterMonumentsHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 	params := neo.Params{}

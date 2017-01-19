@@ -6,7 +6,6 @@ import (
 
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -17,7 +16,7 @@ const (
 	FileInputName = "key"
 )
 
-func saveHandler(w web.ResponseWriter, r *http.Request) {
+var saveHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(MaxMemory)
 
 	file, _, err := r.FormFile(FileInputName)
@@ -45,4 +44,4 @@ func saveHandler(w web.ResponseWriter, r *http.Request) {
 	echo.Info.Print("writing bytes:", len(fileContents))
 
 	w.Write([]byte(`{"key":"` + key + `"}`))
-}
+})

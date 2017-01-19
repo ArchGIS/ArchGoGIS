@@ -1,9 +1,10 @@
 package local
 
 import (
-	"github.com/ArchGIS/ArchGoGIS/db/pg/seq"
 	"io/ioutil"
-	"github.com/ArchGIS/ArchGoGIS/web/server"
+
+	"github.com/ArchGIS/ArchGoGIS/db/pg/seq"
+	"github.com/ArchGIS/ArchGoGIS/cfg"
 )
 
 func NewFileStorage(dstDir string) LocalStorage {
@@ -24,5 +25,5 @@ func (my LocalStorage) Load(key string) ([]byte, error) {
 }
 
 func (my LocalStorage) Url(key string) (string, error) {
-	return "http://" + server.GetHost() + "/local_storage/" + key, nil
+	return "http://" + cfg.DevServer().Host + "/local_storage/" + key, nil
 }

@@ -11,9 +11,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
-	// "github.com/ArchGIS/ArchGoGIS/norm"
 )
 
 const (
@@ -29,7 +27,7 @@ const (
 		"autName: a.name}"
 )
 
-func monumentsHandler(w web.ResponseWriter, r *http.Request) {
+var monumentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForMonuments(r.URL.Query().Get("needle"))
 
 	if err == nil {
@@ -37,7 +35,7 @@ func monumentsHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForMonuments(needle string) ([]byte, error) {
 	if needle == "" {

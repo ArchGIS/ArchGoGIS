@@ -1,62 +1,67 @@
 package server
 
-import (
-	"github.com/ArchGIS/ArchGoGIS/assert"
-	"github.com/ArchGIS/ArchGoGIS/echo"
-	"github.com/ArchGIS/ArchGoGIS/ext/xfile"
-	"net/http"
-	"github.com/ArchGIS/ArchGoGIS/service"
-	"github.com/ArchGIS/ArchGoGIS/web"
-)
+// import (
+	// "github.com/ArchGIS/ArchGoGIS/assert"
+	// "github.com/ArchGIS/ArchGoGIS/echo"
+	// "github.com/ArchGIS/ArchGoGIS/ext/xfile"
+	// "net/http"
+	// "github.com/ArchGIS/ArchGoGIS/service"
+	// "github.com/ArchGIS/ArchGoGIS/web"
+	// "github.com/ArchGIS/ArchGoGIS/cfg"
+// )
 
-var config *Config
+// var config *Config
 
-func Serve(serverConfig Config, serviceConfigs ...service.Config) error {
-	config = &serverConfig
+// func init()  {
+// 	config = cfg.DevServer()
+// }
 
-	for _, serviceConfig := range serviceConfigs {
-		registerService(serviceConfig)
-	}
+// func Serve(serverConfig Config, serviceConfigs ...service.Config) error {
+// 	config = &serverConfig
 
-	echo.Info.Printf("starting server at :%s port", serverConfig.Port)
+// 	for _, serviceConfig := range serviceConfigs {
+// 		registerService(serviceConfig)
+// 	}
 
-	return http.ListenAndServe(":"+serverConfig.Port, nil)
-}
+// 	echo.Info.Printf("starting server at :%s port", serverConfig.Port)
 
-func GetHost() string {
-	return config.Host
-}
+// 	return http.ListenAndServe(":"+serverConfig.Port, nil)
+// }
 
-func registerService(config service.Config) {
-	echo.Info.Printf("register %s service", config.ServiceName)
+// func GetHost() string {
+// 	return cfg.DevServer().Host
+// }
 
-	for _, route := range config.Routes {
-		pattern := "/" + config.ServiceName + route.Pattern
+// func registerService(config service.Config) {
+// 	echo.Info.Printf("register %s service", config.ServiceName)
 
-		echo.Info.Print("register handler on " + pattern)
-		handleFunc(pattern, route.Handler)
-	}
+// 	for _, route := range config.Routes {
+// 		pattern := "/" + config.ServiceName + route.Pattern
 
-	if config.StaticPath != "" { // Обслуживаем статические файлы.
-		staticUrl := "/" + config.StaticPath + "/"
-		path := "fs/" + config.StaticPath
+// 		echo.Info.Print("register handler on " + pattern)
+// 		handleFunc(pattern, route.Handler)
+// 	}
 
-		assert.True(xfile.Exists(path))
+// 	if config.StaticPath != "" { // Обслуживаем статические файлы.
+// 		staticUrl := "/" + config.StaticPath + "/"
+// 		path := "fs/" + config.StaticPath
 
-		fs := http.FileServer(http.Dir(path))
+// 		assert.True(xfile.Exists(path))
 
-		echo.Info.Printf("serve static content in " + path)
-		http.Handle(staticUrl, http.StripPrefix(staticUrl, fs))
-	}
-}
+// 		fs := http.FileServer(http.Dir(path))
 
-func handleFunc(pattern string, handler web.HandlerFunc) {
-	http.HandleFunc(pattern, promote(handler))
-}
+// 		echo.Info.Printf("serve static content in " + path)
+// 		http.Handle(staticUrl, http.StripPrefix(staticUrl, fs))
+// 	}
+// }
 
-func promote(handler web.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		echo.Info.Printf("%s requests %s", r.RemoteAddr, r.RequestURI)
-		handler(web.ResponseWriter{w}, r)
-	}
-}
+// func handleFunc(pattern string, handler web.HandlerFunc) {
+// 	http.HandleFunc(pattern, promote(handler))
+// }
+
+// func promote(handler web.HandlerFunc) http.HandlerFunc {
+// 	return func(w http.ResponseWriter, r *http.Request) {
+// 		echo.Info.Printf("%s requests %s", r.RemoteAddr, r.RequestURI)
+// 		handler(web.ResponseWriter{w}, r)
+// 	}
+// }

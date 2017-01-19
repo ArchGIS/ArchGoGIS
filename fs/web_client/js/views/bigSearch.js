@@ -827,24 +827,31 @@ App.views.bigSearch = new (Backbone.View.extend({
 
       query = JSON.stringify(query);
 
-      $.post("/hquery/read", query).success(function(response) {
-        response = JSON.parse(response);
+      $.post({
+        url: "/hquery/read",
+        data: query,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+        },
+        success: function(response) {
+          response = JSON.parse(response);
 
-        if (entity == "monument") {
-          _.each(response.knowledge, function(know, i) {
-            response.monument[i]["name"] = know.monument_name; 
+          if (entity == "monument") {
+            _.each(response.knowledge, function(know, i) {
+              response.monument[i]["name"] = know.monument_name; 
+            })
+          }
+
+          let data = _.toArray(response[entity])
+          data = _.uniq(data, function(item, key, id) {return item.id});
+
+          $("#search-results").html("");
+          _.each(data, function(obj, key) {
+            $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${obj.name}</a></p>`);
           })
+          console.log(response)
+          console.log(data)
         }
-
-        let data = _.toArray(response[entity])
-        data = _.uniq(data, function(item, key, id) {return item.id});
-
-        $("#search-results").html("");
-        _.each(data, function(obj, key) {
-          $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${obj.name}</a></p>`);
-        })
-        console.log(response)
-        console.log(data)
       });
     });
   }

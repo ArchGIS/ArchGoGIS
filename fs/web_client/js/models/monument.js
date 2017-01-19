@@ -12,9 +12,14 @@ App.models.Monument.findByNamePrefix = function(name) {
       'epoch': ''
     });
 
-    $.get(url)
-      .success(response => resolve($.parseJSON(response)))
-      .error(reject);
+    $.get({
+      url,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => resolve($.parseJSON(response)),
+      error: reject
+    });
   });
 };
 
@@ -28,8 +33,13 @@ App.models.Monument.getData = function(name) {
       "knowledges__belongsto__monument": {},
     });
 
-    $.post("/hquery/read", query)
-      .success(response => {
+    $.post({
+      url: "/hquery/read",
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => {
         let rows = $.parseJSON(response);
         let dataRet = {};
 
@@ -42,8 +52,9 @@ App.models.Monument.getData = function(name) {
         })
         console.log(dataRet)
         resolve(dataRet)
-      })
-      .error(reject);
+      },
+      error: reject
+    });
   });
 };
 

@@ -14,8 +14,14 @@ App.models.baseModel.getData = function(entity, name) {
     }
     query = JSON.stringify(query);
 
-    $.post("/hquery/read", query)
-      .success(response => resolve($.parseJSON(response).rows))
-      .error(reject);
-  })
+    $.post({
+      url: "/hquery/read",
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => resolve($.parseJSON(response).rows),
+      error: reject
+    });
+  });
 };

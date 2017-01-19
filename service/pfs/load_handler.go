@@ -5,11 +5,10 @@ import (
 
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
-func loadHandler(w web.ResponseWriter, r *http.Request) {
+var loadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	fileContents, err := agent.Load(r.FormValue("key"))
 
 	if err != nil {
@@ -18,4 +17,4 @@ func loadHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(fileContents)
 	}
-}
+})

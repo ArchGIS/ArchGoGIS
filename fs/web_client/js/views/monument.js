@@ -120,18 +120,24 @@ App.views.monument = new (Backbone.View.extend({
             "res__has__exc": {}
           });
         
-          $.post('/hquery/read', query)
-          .success(function(excs) {
-            excs = JSON.parse(excs);
-        
-            $('#exc-input').autocomplete({
-              source: _.map(excs.exc, function(r, key) {
-                return {'label': `${r.name} (Руководитель - ${r.boss})`, 'id': r.id}
-              }),
-              minLength: 0
-            }).focus(function() {
-              $(this).autocomplete("search");
-            });
+          $.post({
+            url: '/hquery/read',
+            data: query,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+            },
+            success: function(excs) {
+              excs = JSON.parse(excs);
+          
+              $('#exc-input').autocomplete({
+                source: _.map(excs.exc, function(r, key) {
+                  return {'label': `${r.name} (Руководитель - ${r.boss})`, 'id': r.id}
+                }),
+                minLength: 0
+              }).focus(function() {
+                $(this).autocomplete("search");
+              });
+            }
           });
         }
       });
@@ -261,9 +267,16 @@ App.views.monument = new (Backbone.View.extend({
       query['rows:Culture'] = {"id": "*", "select": "*"};
       query = JSON.stringify(query);
 
-      $.post("/hquery/read", query).success((response) => {
-        App.store.selectData.Culture = JSON.parse(response);
-        d_culture.resolve();
+      $.post({
+        url: "/hquery/read",
+        data: query,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+        },
+        success: (response) => {
+          App.store.selectData.Culture = JSON.parse(response);
+          d_culture.resolve();
+        }
       });
     }());
 

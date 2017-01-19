@@ -170,6 +170,9 @@ function postQuery(objectId) {
     $.ajax({
       url: "/hquery/upsert",
       data: formdata,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
       type: "POST",
       processData: false,
       contentType: false,
@@ -321,10 +324,17 @@ function getDataForSelector(selector, dataType, notLike) {
     query[`rows:${dataType}`] = {"id": "*", "select": "*"};
     query = JSON.stringify(query);
 
-    $.post("/hquery/read", query).success((response) => {
-      const data = JSON.parse(response);
-      App.store.selectData[dataType] = data;
-      fillSelector(selector, data, notLike);
+    $.post({
+      url: "/hquery/read",
+      data: query,
+      success: (response) => {
+        const data = JSON.parse(response);
+        App.store.selectData[dataType] = data;
+        fillSelector(selector, data, notLike);
+      },
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      }
     });
   }
 }
@@ -347,6 +357,9 @@ function uploadFile (file) {
       dataType: 'json',
       processData: false,
       contentType: false,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
       success: (response) => {
         resolve(response.key);
       },

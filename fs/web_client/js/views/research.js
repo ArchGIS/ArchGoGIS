@@ -466,9 +466,16 @@ App.views.research = new (Backbone.View.extend({
           query['rows:Culture'] = {"id": "*", "select": "*"};
           query = JSON.stringify(query);
 
-          $.post("/hquery/read", query).success((response) => {
-            App.store.selectData.Culture = JSON.parse(response);
-            d_culture.resolve();
+          $.post({
+            url: "/hquery/read",
+            data: query,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+            },
+            success: (response) => {
+              App.store.selectData.Culture = JSON.parse(response);
+              d_culture.resolve();
+            }
           });
         }());
 

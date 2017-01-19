@@ -125,11 +125,16 @@ App.views.search = new (Backbone.View.extend({
               'epoch': epoch.val() != 0 ? epoch.val() : ''
             });
 
-            $.get(url)
-              .success((response) => {
+            $.get({
+              url: url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
                 resolve($.parseJSON(response));
-              })
-              .error(reject);
+              },
+              error: reject
+            });
           });
         }
 
@@ -200,11 +205,16 @@ App.views.search = new (Backbone.View.extend({
               'author': author
             });
 
-            $.get(url)
-              .success((response) => {
+            $.get({
+              url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
                 resolve($.parseJSON(response));
-              })
-              .error(reject);
+              },
+              error: reject
+            });
           });
         }
 
@@ -243,11 +253,16 @@ App.views.search = new (Backbone.View.extend({
               'author': author
             });
 
-            $.get(url)
-              .success((response) => {
+            $.get({
+              url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
                 resolve($.parseJSON(response));
-              })
-              .error(reject);
+              },
+              error: reject
+            });
           });
         }
 
@@ -320,11 +335,16 @@ App.views.search = new (Backbone.View.extend({
               'year': year
             });
 
-            $.get(url)
-              .success((response) => {
+            $.get({
+              url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
                 resolve($.parseJSON(response));
-              })
-              .error(reject);
+              },
+              error: reject
+            });
           });
         }
 
@@ -360,11 +380,16 @@ App.views.search = new (Backbone.View.extend({
               'needle': okn || "[а-я]"
             });
 
-            $.get(url)
-              .success((response) => {
+            $.get({
+              url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
                 resolve($.parseJSON(response));
-              })
-              .error(reject);
+              },
+              error: reject
+            });
           });
         }
 
@@ -431,12 +456,17 @@ App.views.search = new (Backbone.View.extend({
               'year': year
             });
 
-            $.get(url)
-              .success((response) => {
+            $.get({
+              url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
                 console.log(response)
                 resolve($.parseJSON(response));
-              })
-              .error(reject);
+              },
+              error: reject
+            });
           });
         }
 

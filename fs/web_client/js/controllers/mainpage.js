@@ -16,9 +16,15 @@ App.controllers.main = new (Backbone.View.extend({
       ]
     });
 
-    $.post('/search/count', query)
-      .success(function(counts) {
+    $.post({
+      url: '/search/count',
+      data: query,
+      success: function(counts) {
         App.page.render('mainpage', {'count': JSON.parse(counts)});
-      });
+      },
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      }
+    })
   }
 }));

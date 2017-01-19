@@ -8,7 +8,7 @@ type HandlerFunc func(ResponseWriter, *http.Request)
 
 type Route struct {
 	Pattern string
-	Handler HandlerFunc
+	Handler http.HandlerFunc
 }
 
 type ResponseWriter struct {

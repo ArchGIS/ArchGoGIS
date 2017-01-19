@@ -5,11 +5,10 @@ import (
 
 	"github.com/ArchGIS/ArchGoGIS/echo"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
-func urlHandler(w web.ResponseWriter, r *http.Request) {
+var urlHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	key := r.URL.Query().Get("key")
 
 	if "" == key {
@@ -24,5 +23,4 @@ func urlHandler(w web.ResponseWriter, r *http.Request) {
 			w.Write([]byte(`{"url":"` + url + `"}`))
 		}
 	}
-
-}
+})

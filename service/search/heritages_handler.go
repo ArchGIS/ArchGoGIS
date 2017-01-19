@@ -8,9 +8,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
-	// "github.com/ArchGIS/ArchGoGIS/norm"
 )
 
 const (
@@ -19,7 +17,7 @@ const (
 		"RETURN o"
 )
 
-func oknsHandler(w web.ResponseWriter, r *http.Request) {
+var oknsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForOkns(r.URL.Query().Get("needle"))
 
 	if err == nil {
@@ -27,7 +25,7 @@ func oknsHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForOkns(needle string) ([]byte, error) {
 	if needle == "" {

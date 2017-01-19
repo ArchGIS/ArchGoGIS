@@ -8,7 +8,6 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service/search/errs"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
@@ -20,7 +19,7 @@ var (
 	matcher = regexp.MustCompile(`([^\d\(\)]*)(\(?(\d+)\)?)?`)
 )
 
-func archMapHandler(w web.ResponseWriter, r *http.Request) {
+var archMapHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForArchMap(r.URL.Query().Get("term"))
 
 	if err == nil {
@@ -28,7 +27,7 @@ func archMapHandler(w web.ResponseWriter, r *http.Request) {
 	} else {
 		w.Write(api.Error(err))
 	}
-}
+})
 
 func searchForArchMap(term string) ([]byte, error) {
 	matches := matcher.FindStringSubmatch(term)

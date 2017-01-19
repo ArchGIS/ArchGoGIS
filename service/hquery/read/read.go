@@ -11,11 +11,10 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/format"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/shared"
 	"github.com/ArchGIS/ArchGoGIS/throw"
-	"github.com/ArchGIS/ArchGoGIS/web"
 	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
-func Handler(w web.ResponseWriter, r *http.Request) {
+var Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	limit := r.URL.Query().Get("limit")
 	if xstr.NumericalGt(limit, cfg.HqueryReadMaxLimit) {
 		w.Write(api.Error(errs.LimitParamOverflow))
@@ -28,7 +27,7 @@ func Handler(w web.ResponseWriter, r *http.Request) {
 			return mustProcessRequest(input, limit)
 		})
 	}
-}
+})
 
 func mustProcessRequest(input io.ReadCloser, limit string) []byte {
 	data := mustParse(input)
