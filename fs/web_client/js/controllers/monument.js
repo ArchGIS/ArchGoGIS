@@ -219,9 +219,26 @@ App.controllers.monument = new (Backbone.View.extend({
     });
   },
 
+  "new_by_pub": function() {
+    App.page.render('monument/new_by_pub', {
+      'authorsInputOptions': {
+        'source': App.models.Author.findByNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        }
+      },
+      'citiesInputOptions': {
+        'source': App.models.City.findByNamePrefix,
+        'etl': function(cities) {
+          return _.map(cities, city => ({'id': city.id, 'label': city.name}));
+        }
+      },
+    });
+  }, 
+
   "new_by_xlsx": function() {
     App.page.render("monument_from_xlsx");
-  },
+  }, 
 
   "new_by_arch_map": function() {
     var m = App.models;

@@ -303,15 +303,28 @@ create (publ1:PublicationType {
 })
 create (publ2:PublicationType {
   id: 2,
+  name: "Статья"
+})
+
+create (edi1:EditionType {
+  id: 1,
   name: "Журнал"
 })
-create (publ3:PublicationType {
-  id: 3,
-  name: "Сборник"
+create (edi2:EditionType {
+  id: 2,
+  name: "Сборник научных трудов"
 })
-create (publ4:PublicationType {
+create (edi3:EditionType {
+  id: 3,
+  name: "Коллективная монография"
+})
+create (edi4:EditionType {
   id: 4,
-  name: "Археологическая карта"
+  name: "Материалы конференции"
+})
+create (edi5:EditionType {
+  id: 5,
+  name: "Тезисы докладов конференции"
 })
 
 create (art1:Article {
@@ -874,10 +887,10 @@ create (pub1)-[:has]->(mono1)
 create (pub1)-[:has]->(mono2)
 create (pub2)-[:has]->(map)
 
-create (map)-[:has]->(publ4)
+create (map)-[:has]->(publ1)
 create (mono1)-[:has]->(publ1)
 create (mono2)-[:has]->(publ1)
-create (dig)-[:has]->(publ3)
+create (dig)-[:has]->(publ2)
 create (jour)-[:has]->(publ2)
 
 create (dig)-[:has]->(art2)

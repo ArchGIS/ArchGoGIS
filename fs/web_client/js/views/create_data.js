@@ -16,7 +16,8 @@ App.views.wizard = new (Backbone.View.extend({
 
     var options = {
       "monument": {
-        "#monument/new": t("report.singular")
+        "#monument/new": t("report.singular"),
+        "#monument/new_by_pub": t("publication.singular")
       },
       "artifact": {
         "#artifact/new_by_research": t("research.singular"),
