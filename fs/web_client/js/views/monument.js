@@ -420,6 +420,194 @@ App.views.monument = new (Backbone.View.extend({
     App.views.functions.setAccordion(".accordion");
   },
 
+  "new_by_pub": function() {
+    var coordpicker = App.blocks.coordpicker;
+    var fmt = App.fn.fmt;
+    let addName = App.fn.addNameToId;
+    
+    const map = App.views.map().map;
+
+    getDataForSelector($("#epoch-selector"), "Epoch");
+    getDataForSelector($("#mon-type-selector"), "MonumentType");
+
+    coordpicker($('#coord-picker'), {
+      inputs: ['#monument-x', '#monument-y'],
+      map: map
+    });
+
+    var authorSelectHandler = function(event, ui) {
+      $('#author-input-id').val(ui.item.id);
+
+      App.models.Publication.findByAuthorId(ui.item.id).then(function(pubs) {
+        $('#pub-input').autocomplete({
+          source: _.map(pubs.pub, function(pub, key) {
+            return {'label': `${pub.name} (${pub.published_at})`, 'id': pub.id, 'resId': pubs.res[key].id}
+          })
+        });
+      });
+
+      $("#pub-input").autocomplete({
+        source: [],
+        minLength: 0
+      }).focus(function() {
+        $(this).autocomplete("search");
+      });
+    };
+
+    var lastSelectedAuthorId = 0;
+    var lastSelectedAuthorName = '';
+    $('#author-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $('#author-input').on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-author').html() );
+        $('.find-author').replaceWith( tmpl() );
+        tmpl = _.template( $('script.add-pub').html() );
+        $('.find-pub').replaceWith( tmpl() );
+        $('#author-birth-date-input').on('keyup mouseup', App.fn.checkYear);
+
+        $('#' + addName(id)).val(inputValue);
+        setSelectsEvents();
+        getDataForSelector($("#pub-type-selector"), "PublicationType");
+        getDataForSelector($("#edi-type-selector"), "EditionType");
+        $(".date-picker").datepicker({
+          dateFormat: "dd.mm.yy"
+        });
+      } else if (lastSelectedAuthorId != ui.item.id) {
+        lastSelectedAuthorId = ui.item.id;
+        lastSelectedAuthorName = ui.item.name;
+        authorSelectHandler(event, ui);
+      }
+    });
+
+    $('#pub-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $('#pub-input').on('autocompleteresponse', function(event, ui) {
+      if (ui.content.length === 0) {
+        ui.content.push({
+          'label': 'Ничего не найдено. Добавить?',
+          'value': 'Ничего не найдено. Добавить?'
+        });
+      }
+    });
+
+    $('#pub-input').on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-pub').html() );
+
+        $input.parent().replaceWith( tmpl() );
+
+        $('#' + addName(id)).val(inputValue);
+        setSelectsEvents();
+        getDataForSelector($("#pub-type-selector"), "PublicationType");
+        getDataForSelector($("#edi-type-selector"), "EditionType");
+        $(".date-picker").datepicker({
+          dateFormat: "dd.mm.yy"
+        });
+      } else {
+        $("#research-input-id").val(ui.item.resId);
+        $("#pub-input-id").val(ui.item.id);
+        repSelName = ui.item.name;
+      }
+    });
+
+    let d_culture = $.Deferred();
+    (function() {
+      let query = {};
+      query['rows:Culture'] = {"id": "*", "select": "*"};
+      query = JSON.stringify(query);
+
+      $.post("/hquery/read", query).success((response) => {
+        App.store.selectData.Culture = JSON.parse(response);
+        d_culture.resolve();
+      });
+    }());
+
+    $.when( d_culture ).done(() => {
+      let items = _.map(App.store.selectData.Culture.rows, culture => ({'id': culture.id, 'label': culture.name}));
+      let grepObject = App.fn.grepObject;
+
+      $('#culture-input').autocomplete({
+        source: function(req, res) {
+          let term = req.term.toLowerCase();
+          
+          res(grepObject(term, items, 'label'));
+        },
+        minLength: 0
+      }).focus(function() {
+        $(this).autocomplete("search");
+      });
+    });
+
+    $('#culture-input').on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $('#culture-input').on('autocompleteresponse', function(event, ui) {
+      if (ui.content.length === 0) {
+        ui.content.push({
+          'value': 'Ничего не найдено. Добавить?',
+          'label': 'Ничего не найдено. Добавить?'
+        });
+      }
+    });
+    
+    $('#culture-input').on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Ничего не найдено. Добавить?') {
+        let $input = $(this);
+        let id = $input.attr('id');
+        let inputValue = $input.val();
+
+        let tmpl = _.template( $('script.add-culture').html() );
+
+        $input.parent().replaceWith( tmpl() );
+
+        $('#' + addName(id)).val(inputValue);
+      } else {
+        $('#culture-input-id').val(ui.item.id);
+      }
+    });
+
+    $("#container").tabs();
+
+    $('.btn-next').on('click', function(e) {
+      $("#container").tabs({active: $(this).attr("active")});
+    })
+
+    function fillResearchInputs() {
+      let year = $("#pub-year-input").val();
+      let name = $("#pub-name-input").val() + " - " + year;
+      $("#research-input-name").val(name);
+      $("#research-input-year").val(year);
+    };
+
+    $('#send-button').on('click', function() {
+      fillResearchInputs();
+
+      if ( isValidForm() ) {
+        postQuery('m');
+      } else {
+        alert('Недостаточно данных. Заполните все обязательные поля!');
+      }
+    });
+  },
+
+  "red": function() {
+    
+  },
+
   "new_by_xlsx": function() {
     
   },

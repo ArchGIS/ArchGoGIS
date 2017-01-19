@@ -97,12 +97,16 @@ function postQuery(objectId) {
     ["Heritage", "SecurityType", "has"],
     ["Heritage", "SurveyMap", "has"],
     ["Heritage", "Image", "has"],
+    ["Research", "Publication", "has"],
     ["Research", "Report", "has"],
     ["Research", "Image", "has"],
     ["Complex", "Artifact", "has"],
     ["Complex", "Excavation", "has"],
     ["Excavation", "Artifact", "has"],
     ["Report", "Author", "hasauthor"],
+    ["Publication", "Author", "hasauthor"],
+    ["Publication", "PublicationType", "has"],
+    ["Publication", "EditionType", "has"],
     ["Author", "AuthorImage", "has"],
     ["Artifact", "ArtifactCategory", "has"],
     ["Artifact", "ArtifactMaterial", "has"],
@@ -183,7 +187,7 @@ function postQuery(objectId) {
         if (response.length == 4) {
           alert('При обработке данных на сервере произошла ошибка');
         } else {
-          $('#toObject').attr('href', location.hash.replace('new', 'show/') + JSON.parse(response)[objectId]);
+          $('#toObject').attr('href', location.hash.replace(/new\w*/g, 'show/') + JSON.parse(response)[objectId]);
           modal.trigger('openModal');
         }
       }
@@ -312,6 +316,7 @@ function fillSelector(selector, data, notLike) {
         .appendTo(selector);
     }
   })
+  selector.trigger("change");
 }
 
 function getDataForSelector(selector, dataType, notLike) {
