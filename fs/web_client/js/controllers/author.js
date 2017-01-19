@@ -94,8 +94,8 @@ App.controllers.author = new (Backbone.View.extend({
       tmplData.placemarks = [];
       _.each(tmplData.monuments, function(resMonuments, resId) {
         _.each(resMonuments.knowledges, function(know, kid) {
-          var type = resMonuments.monType[kid].id || 10;
-          var epoch = resMonuments.epoch[kid].id || 0;
+          let type = resMonuments.monType[kid].id || 10;
+          let epoch = resMonuments.epoch[kid].id || 0;
 
           tmplData.placemarks.push({
             type: 'monument',
@@ -107,25 +107,38 @@ App.controllers.author = new (Backbone.View.extend({
             opts: {
               preset: `monType${type}_${epoch}`
             }
-          })
-        })
-      })
+          });
 
-      _.each(tmplData.researches, function(res, rid) {
-        let type = tmplData.resTypes[rid][0].id || 1;
+          let typeRes = tmplData.resTypes[resId][0].id || 1;
+          tmplData.placemarks.push({
+            type: 'research',
+            id: tmplData.researches[resId].id,
+            coords: [know.x, know.y],
+            pref: {
+              hintContent: tmplData.researches[resId].name
+            },
+            opts: {
+              preset: `resType${typeRes}`
+            }
+          });
+        });
+      });
 
-        tmplData.placemarks.push({
-          type: 'research',
-          id: res.id,
-          coords: [tmplData.monuments[rid].knowledges[0].x, tmplData.monuments[rid].knowledges[0].y],
-          pref: {
-            hintContent: res.name
-          },
-          opts: {
-            preset: `resType${type}`
-          }
-        })
-      })
+      // _.each(tmplData.researches, function(res, rid) {
+      //   let type = tmplData.resTypes[rid][0].id || 1;
+
+      //   tmplData.placemarks.push({
+      //     type: 'research',
+      //     id: res.id,
+      //     coords: [tmplData.monuments[rid].knowledges[0].x, tmplData.monuments[rid].knowledges[0].y],
+      //     pref: {
+      //       hintContent: res.name
+      //     },
+      //     opts: {
+      //       preset: `resType${type}`
+      //     }
+      //   })
+      // })
       
       console.log(tmplData);
       App.page.render("author/show", tmplData, tmplData.placemarks);
