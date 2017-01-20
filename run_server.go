@@ -1,22 +1,27 @@
 package main
 
 import (
-	"time"
-	"net/http"
+	"os"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/joho/godotenv"
+	"github.com/labstack/gommon/log"
 
 	"github.com/ArchGIS/ArchGoGIS/service"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs"
 	"github.com/ArchGIS/ArchGoGIS/service/search"
 	"github.com/ArchGIS/ArchGoGIS/cfg"
-	jwt "github.com/dgrijalva/jwt-go"
 )
 
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+    panic("Error loading .env file")
+  }
+
 	services := []service.Config{
 		hquery.Config,
 		search.Config,
@@ -25,7 +30,10 @@ func main() {
 
 	e := echo.New()
 
+	e.Debug = true
+
 	e.Use(middleware.Logger())
+	e.Logger.SetLevel(log.DEBUG)
 	e.Use(middleware.Recover())
 
 	e.Static("/vendor", "fs/vendor")
@@ -41,7 +49,7 @@ func main() {
 	for _, config := range services {
 		subRouter := e.Group("/" + config.ServiceName)
 
-		subRouter.Use(middleware.JWT([]byte("secret")))
+		subRouter.Use(middleware.JWT([]byte(os.Getenv(authSecret))))
 
 		for _, route := range config.Routes {
 			subRouter.Any(route.Pattern, echo.WrapHandler(route.Handler))
@@ -49,40 +57,4 @@ func main() {
 	}
 
 	e.Logger.Fatal(e.Start(":" + cfg.DevServer().Port))
-}
-
-func loginHandler(c echo.Context) error {
-	username := c.FormValue("username")
-	password := c.FormValue("password")
-
-	if isAuthentificated(username, password) {
-		// Create token
-		token := jwt.New(jwt.SigningMethodHS256)
-
-		// Set claims
-		claims := token.Claims.(jwt.MapClaims)
-		claims["name"] = "Jon Snow"
-		claims["admin"] = true
-		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-
-		// Generate encoded token and send it as response.
-		t, err := token.SignedString([]byte("secret"))
-		if err != nil {
-			return err
-		}
-
-		return c.JSON(http.StatusOK, map[string]string{
-			"token": t,
-		})
-	}
-
-	return echo.ErrUnauthorized
-}
-
-func isAuthentificated(login, password string) bool {
-	if login == "admin" && password == "qwerty" {
-		return true
-	}
-
-	return false
 }
