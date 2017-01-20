@@ -4,9 +4,12 @@ import (
   "time"
   "os"
 	"net/http"
+  "log"
 
   "github.com/labstack/echo"
   jwt "github.com/dgrijalva/jwt-go"
+
+  "github.com/ArchGIS/ArchGoGIS/db/pg"
 )
 
 const (
@@ -42,9 +45,16 @@ func loginHandler(c echo.Context) error {
 }
 
 func isAuthentificated(login, password string) bool {
-	if login == "admin" && password == "qwerty" {
-		return true
-	}
+  query := "SELECT EXISTS(SELECT id FROM users WHERE " +
+           "login = '" + login + "' AND password = '" + password + "')"
 
-	return false
+  var isLogged bool
+
+  err := pg.Agent.QueryRow(query).Scan(&isLogged)
+
+  if err != nil {
+    log.Fatal(err, query)
+  }
+
+	return isLogged
 }
