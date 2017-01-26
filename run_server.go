@@ -3,24 +3,23 @@ package main
 import (
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
 
+	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/service"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs"
 	"github.com/ArchGIS/ArchGoGIS/service/search"
-	"github.com/ArchGIS/ArchGoGIS/cfg"
 )
-
 
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-    panic("Error loading .env file")
-  }
+		panic("Error loading .env file")
+	}
 
 	services := []service.Config{
 		hquery.Config,

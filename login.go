@@ -1,19 +1,19 @@
 package main
 
 import (
-  "time"
-  "os"
+	"log"
 	"net/http"
-  "log"
+	"os"
+	"time"
 
-  "github.com/labstack/echo"
-  jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/labstack/echo"
 
-  "github.com/ArchGIS/ArchGoGIS/db/pg"
+	"github.com/ArchGIS/ArchGoGIS/db/pg"
 )
 
 const (
-  authSecret = "AUTH_SECRET"
+	authSecret = "AUTH_SECRET"
 )
 
 func loginHandler(c echo.Context) error {
@@ -27,11 +27,11 @@ func loginHandler(c echo.Context) error {
 		// Set claims
 		claims := token.Claims.(jwt.MapClaims)
 		claims["name"] = "Admin"
-		claims["admin"] = true
+		claims["admin"] = false
 		claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 
 		// Generate encoded token and send it as response.
-    t, err := token.SignedString([]byte(os.Getenv(authSecret)))
+		t, err := token.SignedString([]byte(os.Getenv(authSecret)))
 		if err != nil {
 			return err
 		}
@@ -45,16 +45,17 @@ func loginHandler(c echo.Context) error {
 }
 
 func isAuthentificated(login, password string) bool {
-  query := "SELECT EXISTS(SELECT id FROM users WHERE " +
-           "login = '" + login + "' AND password = '" + password + "')"
+	query := "SELECT EXISTS(SELECT id FROM users WHERE " +
+		"login = '" + login + "' AND password = '" + password + "')"
 
-  var isLogged bool
+	var isLogged bool
 
-  err := pg.Agent.QueryRow(query).Scan(&isLogged)
+	err := pg.Agent.QueryRow(query).Scan(&isLogged)
 
-  if err != nil {
-    log.Fatal(err, query)
-  }
+	if err != nil {
+		log.Println(err, query)
+		return false
+	}
 
 	return isLogged
 }
