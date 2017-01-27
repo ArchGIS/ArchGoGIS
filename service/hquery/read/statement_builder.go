@@ -94,12 +94,10 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 	for _, node := range my.nodes {
 		if (node.Props["filter"] != "") {
 			if (needWhere) {
-				my.buf.WriteStringf(
-					"WHERE ",
-				)
+				my.buf.WriteString("WHERE ")
 				needWhere = false
 			} else {
-				my.buf.WriteStringf("AND ")
+				my.buf.WriteString("AND ")
 			}
 
 			parts := strings.Split(node.Props["filter"], "=")
