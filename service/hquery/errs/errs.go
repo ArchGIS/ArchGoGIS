@@ -54,4 +54,5 @@ var (
 	BatchUpdateFailed = &HqueryError{"3000"}
 	BatchInsertFailed = &HqueryError{"3001"}
 	BatchReadFailed   = &HqueryError{"3002"}
+	BatchDeleteFailed   = &HqueryError{"3003"}
 )
