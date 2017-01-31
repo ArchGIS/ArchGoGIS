@@ -102,6 +102,119 @@ App.views.heritage = new (Backbone.View.extend({
       })
     })
 
+    function selectDoc() {
+      let type = $("#heritage-doc-type-input").val();
+      let num = $("#heritage-doc-num-input").val();
+      let date = $("#heritage-doc-date-input").val();
+
+      let docs = App.models.File.findDocForHeritage(type, num, date);
+      let docSelector = $("#heritage-doc-selector")
+
+      $.when(docs).then(function(response) {
+        docSelector.html("");
+
+        _.each(response, function(row, key) {
+          row.name = `"${row.docType}" № "${row.docNum}" от "${row.docDate}"`;
+        })
+
+        fillSelector(docSelector, response);
+      })
+    }
+
+    $("#heritage-doc-type-input").on("change", function() {
+      selectDoc();
+    })
+    $("#heritage-doc-num-input").on("change", function() {
+      selectDoc();
+    })
+    $("#heritage-doc-date-input").on("change", function() {
+      selectDoc();
+    })
+    $("#select-doc-checkbox").on("change", function() {
+      let attrValue = "";
+      if ($(this).is(":checked") === false) {
+        attrValue = "file:File";
+      } 
+
+      $("#heritage-doc-type-input").attr("data-for", attrValue);
+      $("#heritage-doc-num-input").attr("data-for", attrValue);
+      $("#heritage-doc-date-input").attr("data-for", attrValue);
+    })
+
+    var monId = 1;
+    var excludeIdent = App.fn.excludeIdentMonuments;
+    $('#add-monument-button').on('click', function(e) {
+      var localMonId = monId;
+      var params = {
+        monId: localMonId
+      }
+
+      App.template.get("heritage/addMonument", function(tmpl) {
+        $('#add-monument-button').before(tmpl(params));
+
+        console.log(`#monument-input-${localMonId}`);
+
+        (function () {
+          $(`#monument-input-${localMonId}`).autocomplete({
+            source: function(request, response) {
+              var monuments = [];
+              
+              App.models.Monument.findByNamePrefix(request.term)
+                .then(function(data) {
+                  if (data && !data.error) {
+                    let results = _.map(excludeIdent(data), function(row) {
+                      return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId}
+                    });
+
+                    if (!results.length) {
+                      results.push('Памятников с таким названием нет');
+                    }
+
+                    response(results);
+                  } else {
+                    response();
+                  }
+                });
+            },
+            minLength: 3
+          }).focus(function(){
+            $(this).autocomplete("search");
+          });
+
+          $(`#monument-input-${localMonId}`).on('autocompletefocus', function(event, ui) {
+            event.preventDefault();
+          });
+
+          let lastSelectedMonId = 0;
+          let monSelName = '';
+          $(`#monument-input-${localMonId}`).on('autocompleteselect', function(event, ui) {
+            if (typeof ui.item.id != 'undefined') {
+              $(`#monument-input-id-${localMonId}`).val(ui.item.id);
+            } else {
+              $(`#monument-input-id-${localMonId}`).val("");
+              event.preventDefault();
+            }
+          });
+        })();
+      })
+
+      monId++;
+    });
+    
+    let nextTopoId = App.fn.counter(1);
+    $('#add-topoplan-button').on('click', function(e) {
+      let localTopoId = nextTopoId();
+      let params = {
+        topoId: localTopoId
+      }
+
+      App.template.get("heritage/addTopoplan", function(tmpl) {
+        $('#add-topoplan-button').before(tmpl(params));
+
+        App.views.functions.setAccordionHeader($(`#topo-header-${localTopoId}`));
+      })
+    });
+
     getDataForSelector($("#heritage-status-selector"), "HeritageStatus");
     getDataForSelector($("#heritage-security-type-selector"), "SecurityType");
     setSelectsEvents();
