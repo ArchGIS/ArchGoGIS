@@ -169,7 +169,7 @@ func NewStatementBuilder(data *Data) *StatementBuilder {
 }
 
 func (my *StatementBuilder) Build() neo.Statement {
-	selection := my.scanNodes(false, my.nodes)
+	selection := my.scanNodes(my.nodes)
 
 	for _, edge := range my.edges {
 		if edge.Props["delete"] != "" {
@@ -178,12 +178,12 @@ func (my *StatementBuilder) Build() neo.Statement {
 
 		if (edge.Type == "none") {
 			my.buf.WriteStringf(
-				"MATCH (%s)--(%s)",
+				"OPTIONAL MATCH (%s)--(%s)",
 				edge.Lhs, edge.Rhs,
 			)
 		} else {
 			my.buf.WriteStringf(
-				"MATCH (%s)-[%s:%s]->(%s)",
+				"OPTIONAL MATCH (%s)-[%s:%s]->(%s)",
 				edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
 			)
 		}
@@ -234,26 +234,26 @@ func (my *StatementBuilder) Build() neo.Statement {
 		}
 	}
 
-	optionalSelection := my.scanNodes(true, my.optionalNodes)
+	// optionalSelection := my.scanNodes(true, my.optionalNodes)
 
-	for _, edge := range my.optionalEdges {
-		if edge.Props["select"] != "" {
-			optionalSelection = append(optionalSelection, edge.Tag)
-		}
+	// for _, edge := range my.optionalEdges {
+	// 	if edge.Props["select"] != "" {
+	// 		optionalSelection = append(optionalSelection, edge.Tag)
+	// 	}
 
-		my.buf.WriteStringf(
-			"OPTIONAL MATCH (%s)-[%s:%s]->(%s)",
-			edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
-		)
-	}
+	// 	my.buf.WriteStringf(
+	// 		"OPTIONAL MATCH (%s)-[%s:%s]->(%s)",
+	// 		edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
+	// 	)
+	// }
 
-	my.buf.WriteStringf(
-		"WITH %s RETURN ",
-		strings.Join(append(selection, optionalSelection...), ","),
-	)
+	// my.buf.WriteStringf(
+	// 	"WITH %s RETURN ",
+	// 	strings.Join(append(selection, optionalSelection...), ","),
+	// )
 
-	my.scanReturn(my.nodes, my.edges)
-	my.scanReturn(my.optionalNodes, my.optionalEdges)
+	my.scanReturn(my.nodes)
+	// my.scanReturn(my.optionalNodes, my.optionalEdges)
 	my.buf.Truncate(my.buf.Len() - 1)
 
 	return neo.Statement{
@@ -270,16 +270,16 @@ func nodeMatchFmt(optional bool) string {
 	return "MATCH (%s) "
 }
 
-func (my *StatementBuilder) scanNodes(optional bool, nodes map[string]*ast.Node) []string {
+func (my *StatementBuilder) scanNodes(nodes map[string]*ast.Node) []string {
 	selection := make([]string, 0, len(nodes))
 
 	for _, node := range nodes {
 		switch matcher := node.Props["id"]; matcher {
 		case "*", "?":
-			my.buf.WriteStringf(nodeMatchFmt(optional), node.Tag)
+			my.buf.WriteStringf("OPTIONAL MATCH (%s) ", node.Tag)
 		default:
 			ph := my.placeholder.Next()
-			my.buf.WriteStringf("MATCH (%s {id:{%s}}) ", node.Tag, ph)
+			my.buf.WriteStringf("OPTIONAL MATCH (%s {id:{%s}}) ", node.Tag, ph)
 			my.params[ph] = matcher
 		}
 
@@ -291,28 +291,47 @@ func (my *StatementBuilder) scanNodes(optional bool, nodes map[string]*ast.Node)
 	return selection
 }
 
-func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node, edges []*ast.Edge) {
+func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node) {
+	delNodes := make([]string, 0, len(nodes))
+	remProps := make([]string, 0, len(nodes))
+	
 	for _, node := range nodes {
-		if _, selected := node.Props["select"]; selected {
-			switch node.Props["id"] {
-			case "?":
-				my.buf.WriteString("(CASE WHEN LENGTH(COLLECT(" + node.Name + "))=1 ")
-				my.buf.WriteString("THEN HEAD(COLLECT(" + node.Name + ")) ELSE NULL END) ")
-				my.buf.WriteString("AS " + node.Name + ",")
+		if val, deleted := node.Props["delete"]; deleted {
+			switch val {
 			case "*":
-				my.buf.WriteString("COLLECT(" + node.Name + ") AS " + node.Name + ",")
+				delNodes = append(delNodes, node.Name)
 			default:
-				my.buf.WriteString(node.Name + ",")
+				t := strings.Split(val, ",")
+				for i, v := range t {
+					t[i] = node.Name + "." + v
+				}
+				res := strings.Join(t, ",")
+				remProps = append(remProps, res)
 			}
 		}
 	}
-	for _, edge := range edges {
-		if _, selected := edge.Props["select"]; selected {
-			if edge.Props["collect"] != "" { // Временный хак
-				my.buf.WriteStringf("COLLECT(%s) AS %s,", edge.Tag, edge.Tag)
-			} else {
-				my.buf.WriteString(edge.Tag + ",")
-			}
-		}
+
+	if len(delNodes) != 0 {
+		my.buf.WriteStringf(
+			"DETACH DELETE %s ",
+			strings.Join(delNodes, ","),
+		)
 	}
+	
+	if len(remProps) != 0 {
+		my.buf.WriteStringf(
+			"REMOVE %s ",
+			strings.Join(remProps, ","),
+		)
+	}
+
+	// for _, edge := range edges {
+	// 	if _, selected := edge.Props["delete"]; selected {
+	// 		if edge.Props["collect"] != "" { // Временный хак
+	// 			my.buf.WriteStringf("COLLECT(%s) AS %s,", edge.Tag, edge.Tag)
+	// 		} else {
+	// 			my.buf.WriteString(edge.Tag + ",")
+	// 		}
+	// 	}
+	// }
 }
