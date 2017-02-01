@@ -97,7 +97,7 @@ function postQuery(objectId) {
     ["Heritage", "SecurityType", "has"],
     ["Heritage", "SurveyMap", "has"],
     ["Heritage", "Image", "has"],
-    ["Heritage", "heritageTopo", "has"],
+    ["Heritage", "heritageTopo", "hastopo"],
     ["Research", "Publication", "has"],
     ["Research", "Report", "has"],
     ["Research", "Image", "has"],

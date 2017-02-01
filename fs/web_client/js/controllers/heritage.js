@@ -69,7 +69,7 @@ App.controllers.heritage = new (Backbone.View.extend({
         topoplan: JSON.stringify({
           "h:Heritage": {"id": hId},
           "topo:Image": {"id": "*", "select": "*"},
-          "h__has__topo": {},
+          "h__hastopo__topo": {},
         })
       },
 
