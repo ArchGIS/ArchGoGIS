@@ -1,30 +1,6 @@
 'use strict';
 
 App.controllers.artifact = new (Backbone.View.extend({
-  'new_by_research': function() {
-    App.page.render('artifact/new_by_research', {
-      'param': 'test data',
-      'authorsInputOptions': {
-        'source': App.models.Author.findByNamePrefix,
-        'etl': function(authors) {
-          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
-        }
-      },
-      'coauthorsInputOptions': {
-        'source': App.models.Author.findByLastNamePrefix,
-        'etl': function(authors) {
-          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
-        }
-      },
-      'citiesInputOptions': {
-        'source': App.models.City.findByNamePrefix,
-        'etl': function(cities) {
-          return _.map(cities, city => ({'id': city.id, 'label': city.name}));
-        }
-      }
-    });
-  },
-
   'new_by_report': function() {
     App.page.render('artifact/new_by_report', {
       'param': 'test data',
