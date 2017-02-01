@@ -335,7 +335,7 @@ function getDataForSelector(selector, dataType, notLike) {
       data: query,
       success: (response) => {
         const data = JSON.parse(response);
-        App.store.selectData[dataType] = data;
+        App.store.selectData[dataType] = data.rows;
         fillSelector(selector, data.rows, notLike);
       },
       beforeSend: function(xhr) {
