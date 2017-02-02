@@ -40,6 +40,12 @@ App.controllers.heritage = new (Backbone.View.extend({
           "h__has__secType": {},
         }),
 
+        file: JSON.stringify({
+          "h:Heritage": {"id": hId},
+          "file:File": {"id": "*", "select": "*"},
+          "h__has__file": {},
+        }),
+
         monMaterial: JSON.stringify({
           "monMaterial:MonumentMaterial": {"id": "*", "select": "*"},
         }),
@@ -58,6 +64,12 @@ App.controllers.heritage = new (Backbone.View.extend({
           "cd:CardinalDirection": {"id": "*", "select": "*"},
           "h__has__photo": {},
           "photo__has__cd": {}
+        }),
+
+        topoplan: JSON.stringify({
+          "h:Heritage": {"id": hId},
+          "topo:Image": {"id": "*", "select": "*"},
+          "h__hastopo__topo": {},
         })
       },
 
@@ -119,7 +131,7 @@ App.controllers.heritage = new (Backbone.View.extend({
       })
 
       let stateTables = [];
-
+      tmplData.file = tmplData.file[0] || [];
       function getNames(obj) {
         let newObj = _.reduce(obj, function(memo, mem) {
           memo[mem.id] = mem.name;

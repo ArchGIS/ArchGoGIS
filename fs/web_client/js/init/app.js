@@ -97,6 +97,7 @@ function postQuery(objectId) {
     ["Heritage", "SecurityType", "has"],
     ["Heritage", "SurveyMap", "has"],
     ["Heritage", "Image", "has"],
+    ["Heritage", "heritageTopo", "hastopo"],
     ["Research", "Publication", "has"],
     ["Research", "Report", "has"],
     ["Research", "Image", "has"],
@@ -308,7 +309,7 @@ function generateJson(relations) {
 
 
 function fillSelector(selector, data, notLike) {
-  $.each(data.rows, (id, row) => {
+  $.each(data, (id, row) => {
     if (row.name != notLike) {
       $("<option></option>")
         .text(row.name)
@@ -334,8 +335,8 @@ function getDataForSelector(selector, dataType, notLike) {
       data: query,
       success: (response) => {
         const data = JSON.parse(response);
-        App.store.selectData[dataType] = data;
-        fillSelector(selector, data, notLike);
+        App.store.selectData[dataType] = data.rows;
+        fillSelector(selector, data.rows, notLike);
       },
       beforeSend: function(xhr) {
         xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));

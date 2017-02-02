@@ -31,14 +31,25 @@
         <dt>Категория охраны:</dt>
         <dd><%= maybe(secType[0], "Не указана","name") %></dd>
 
-        <dt>Вид документа о постановке на государственную охрану:</dt>
-        <dd><%= maybe(heritage, "Не указан","docType") %></dd>
+        <% if ( _.size(file) ) { %>
+          <dt>Вид документа о постановке на государственную охрану:</dt>
+          <dd><%= maybe(file, "Не указан","docType") %></dd>
 
-        <dt>Номер документа о постановке на государственную охрану:</dt>
-        <dd><%= maybe(heritage, "Не указан","docNum") %></dd>
+          <dt>Номер документа о постановке на государственную охрану:</dt>
+          <dd><%= maybe(file, "Не указан","docNum") %></dd>
 
-        <dt>Дата документа о постановке на государственную охрану:</dt>
-        <dd><%= maybe(heritage, "Не указана","docDate") %></dd>
+          <dt>Дата документа о постановке на государственную охрану:</dt>
+          <dd><%= maybe(file, "Не указана","docDate") %></dd>
+        <% } else { %>
+          <dt>Вид документа о постановке на государственную охрану:</dt>
+          <dd><%= maybe(heritage, "Не указан","docType") %></dd>
+
+          <dt>Номер документа о постановке на государственную охрану:</dt>
+          <dd><%= maybe(heritage, "Не указан","docNum") %></dd>
+
+          <dt>Дата документа о постановке на государственную охрану:</dt>
+          <dd><%= maybe(heritage, "Не указана","docDate") %></dd>
+        <% } %>
       <% } %>
 
       <dt>Описание границ:</dt>
@@ -175,7 +186,9 @@
         <% }) %> 
       </div>
     </div>
-    <div id="topoplans"></div>
+    <div id="topoplans">
+      <%= App.views.functions.getTopoCard(topo) %>
+    </div>
     <div id="photos">
       <%= App.views.functions.getMonImageCard({photo, cd}) %>
     </div>

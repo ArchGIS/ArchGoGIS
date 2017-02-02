@@ -90,47 +90,56 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 		}
 	}
 
-	needWhere := true
+	firstFilter := true
+
 	for _, node := range my.nodes {
 		if (node.Props["filter"] != "") {
-			if (needWhere) {
-				my.buf.WriteString("WHERE ")
-				needWhere = false
-			} else {
-				my.buf.WriteString("AND ")
-			}
-
-			parts := strings.Split(node.Props["filter"], "=")
+			filters := strings.Split(node.Props["filter"], ";")
 			entityName := strings.Split(node.Tag, ":")[0]
 
-			switch parts[2] {
-			case "text":
-				my.buf.WriteStringf(
-					"%s.%s =~ '(?ui)^.*(%s).*$' ",
-					entityName, parts[0], parts[1],
-				)
-			case "less":
-				my.buf.WriteStringf(
-					"%s.%s <= %s ",
-					entityName, parts[0], parts[1],
-				)
-			case "more":
-				my.buf.WriteStringf(
-					"%s.%s >= %s ",
-					entityName, parts[0], parts[1],
-				)
-			case "number":
-				my.buf.WriteStringf(
-					"%s.%s = %s ",
-					entityName, parts[0], parts[1],
-				)
-			case "textStart":
-				my.buf.WriteStringf(
-					"%s.%s =~ '(?ui)^(%s).*$' ",
-					entityName, parts[0], parts[1],
-				)
-			default:
-				my.buf.WriteString("")
+			for _, filter := range filters {
+				parts := strings.Split(filter, "=")
+
+				if (firstFilter) {
+					my.buf.WriteStringf(
+						"WHERE ",
+					)
+					firstFilter = false
+				} else {
+					my.buf.WriteStringf(
+						"AND ",
+					)
+				}
+
+				switch parts[2] {
+				case "text":
+					my.buf.WriteStringf(
+						"%s.%s =~ '(?ui)^.*(%s).*$' ",
+						entityName, parts[0], parts[1],
+					)
+				case "less":
+					my.buf.WriteStringf(
+						"%s.%s <= %s ",
+						entityName, parts[0], parts[1],
+					)
+				case "more":
+					my.buf.WriteStringf(
+						"%s.%s >= %s ",
+						entityName, parts[0], parts[1],
+					)
+				case "number":
+					my.buf.WriteStringf(
+						"%s.%s = %s ",
+						entityName, parts[0], parts[1],
+					)
+				case "textStart":
+					my.buf.WriteStringf(
+						"%s.%s =~ '(?ui)^(%s).*$' ",
+						entityName, parts[0], parts[1],
+					)
+				default:
+					my.buf.WriteString("")
+				}
 			}
 		}
 	}

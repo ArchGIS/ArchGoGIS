@@ -4,12 +4,14 @@
   
   <div id="container">
     <ul>
-      <li><a href="#home"><%= t('heritage.singular') %></a></li>
-      <li><a href="#menu1"><%= t('doc.surveyMap.plural') %></a></li>
-      <li><a href="#menu2"><%= t('photo.plural') %></a></li>
+      <li><a href="#main"><%= t('heritage.singular') %></a></li>
+      <li><a href="#maps"><%= t('doc.surveyMap.plural') %></a></li>
+      <li><a href="#monument"><%= t('monument.plural') %></a></li>
+      <li><a href="#photo"><%= t('photo.plural') %></a></li>
+      <li><a href="#topoplan"><%= t('topoplan.plural') %></a></li>
     </ul>
 
-    <div id="home">
+    <div id="main">
       <div class="form-group">
         <label for="heritage-code-input">Код ОКН</label>
         <input class="form-control" id="heritage-code-input" data-for="heritage:Heritage" type="text" name="code" data-has-display></input>
@@ -57,17 +59,17 @@
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-doc-type-input">Вид документа о постановке на государственную охрану</label>
-        <input class="form-control" id="heritage-doc-type-input" data-for="heritage:Heritage" type="text" name="docType" data-has-display></input>
+        <input class="form-control" id="heritage-doc-type-input" data-for="file:File" type="text" name="docType" data-has-display></input>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-doc-num-input">Номер документа о постановке на государственную охрану</label>
-        <input class="form-control" id="heritage-doc-num-input" data-for="heritage:Heritage" type="text" name="docNum" data-has-display></input>
+        <input class="form-control" id="heritage-doc-num-input" data-for="file:File" type="text" name="docNum" data-has-display></input>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
         <label for="heritage-doc-date-input">Дата документа о постановке на государственную охрану</label>
-        <input class="form-control date-picker" id="heritage-doc-date-input" data-for="heritage:Heritage" type="text" name="docDate" data-has-display></input>
+        <input class="form-control date-picker" id="heritage-doc-date-input" data-for="file:File" type="text" name="docDate" data-has-display></input>
       </div>
 
       <div class="form-group">
@@ -75,9 +77,28 @@
         <input class="form-control" id="heritage-border-desc-input" data-for="heritage:Heritage" type="text" name="borderDesc" data-has-display></input>
       </div>
 
-      <div class="form-group">
-        <label for="heritage-file-input">Документ о постановке на учет</label>
-        <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="heritage:Heritage" type="file" name="fileid"></input>
+      <div class="checkbox" toggle-by="heritage-status-selector" need-option="2">
+        <label for="select-doc-checkbox">
+          <input id="select-doc-checkbox" type="checkbox" dynamic="true">
+          Выбрать существующий документ
+        </label>
+      </div>
+
+      <div class="form-group" toggle-by="select-doc-checkbox" need-option="true">
+        <select class="form-control" id="heritage-doc-selector" data-for="file:File" type="id" name="id" dynamic="true" data-has-display></select>
+      </div>
+
+      <div class="form-group" toggle-by="select-doc-checkbox" need-option="false">
+        <label for="heritage-file-input">Добавить новый документ о постановке на учет</label>
+        <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="file:File" type="file" name="fileid"></input>
+        <div class="alert alert-dismissible alert-info">
+          Максимальный размер документа 50 МБ.
+        </div>
+      </div>
+
+      <div class="form-group" toggle-by="heritage-status-selector" need-option="1">
+        <label for="heritage-file-input">Добавить новый документ о постановке на учет</label>
+        <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="file:File" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
           Максимальный размер документа 50 МБ.
         </div>
@@ -89,17 +110,31 @@
       </button>
     </div>
 
-    <div id="menu1">
+    <div id="maps">
       <button id="add-map-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
         Добавить карту обследования
       </button>
     </div>
 
-    <div id="menu2">
+    <div id="monument">
+      <button id="add-monument-button" class="btn btn-primary">
+        <i class="fa fa-cogs"></i>
+        Добавить памятник
+      </button>
+    </div>
+
+    <div id="photo">
       <button id="add-photo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
         Добавить фото
+      </button>
+    </div>
+
+    <div id="topoplan">
+      <button id="add-topoplan-button" class="btn btn-primary">
+        <i class="fa fa-cogs"></i>
+        Добавить топоплан
       </button>
     </div>
 
