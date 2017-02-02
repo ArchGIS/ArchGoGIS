@@ -388,6 +388,8 @@ App.views.monument = new (Backbone.View.extend({
           overlays    = mapInstance.overlayLayers;
 
     _.each(placemarks, function(item) {
+      if (!item.coords[0] && !item.coords[1]) { return; }
+      
       const pathToIcon = `/web_client/img/${App.store.pathToIcons[item.type]}`;
       const icon = L.icon({
         iconUrl: `${pathToIcon}/${item.opts.preset}.png`,
