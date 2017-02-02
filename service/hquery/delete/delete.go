@@ -62,8 +62,8 @@ x.id IN [id...] лучше, чем x.id = 1 or x.id = 2 ...
 type Data struct {
 	nodes         map[string]*ast.Node
 	edges         []*ast.Edge
-	optionalNodes map[string]*ast.Node
-	optionalEdges []*ast.Edge
+	// optionalNodes map[string]*ast.Node
+	// optionalEdges []*ast.Edge
 }
 
 type Parser struct {
@@ -83,9 +83,9 @@ func mustNewParser(input io.ReadCloser) *Parser {
 	this := &Parser{input: parsing.MustFetchJson(input)}
 
 	this.nodes = make(map[string]*ast.Node, len(this.input))
-	this.optionalNodes = make(map[string]*ast.Node, len(this.input))
+	// this.optionalNodes = make(map[string]*ast.Node, len(this.input))
 	this.edges = make([]*ast.Edge, 0, len(this.input))
-	this.optionalEdges = make([]*ast.Edge, 0, len(this.input))
+	// this.optionalEdges = make([]*ast.Edge, 0, len(this.input))
 
 	return this
 }
@@ -102,7 +102,6 @@ var Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	parser := mustNewParser(r.Body)
 
 	parser.mustParse()
-	fmt.Printf("%#v\n", parser)
 
 	data := &parser.Data
 	sb := NewStatementBuilder(data)
@@ -149,7 +148,7 @@ func (my *Parser) mustParseNode(tag string, query map[string]string) {
 
 func (my *Parser) mustParseOptionalNode(tag string, query map[string]string) {
 	node := ast.MustNewNode(tag, query)
-	my.optionalNodes[node.Name] = node
+	my.nodes[node.Name] = node
 }
 
 func (my *Parser) mustParseEdge(tag string, query map[string]string) {
@@ -157,7 +156,7 @@ func (my *Parser) mustParseEdge(tag string, query map[string]string) {
 }
 
 func (my *Parser) mustParseOptionalEdge(tag string, query map[string]string) {
-	my.optionalEdges = append(my.optionalEdges, ast.MustNewEdge(tag, query))
+	my.edges = append(my.edges, ast.MustNewEdge(tag, query))
 }
 
 
@@ -178,12 +177,12 @@ func (my *StatementBuilder) Build() neo.Statement {
 
 		if (edge.Type == "none") {
 			my.buf.WriteStringf(
-				"OPTIONAL MATCH (%s)--(%s)",
+				"MATCH (%s)--(%s)",
 				edge.Lhs, edge.Rhs,
 			)
 		} else {
 			my.buf.WriteStringf(
-				"OPTIONAL MATCH (%s)-[%s:%s]->(%s)",
+				"MATCH (%s)-[%s:%s]->(%s)",
 				edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
 			)
 		}
@@ -205,7 +204,7 @@ func (my *StatementBuilder) Build() neo.Statement {
 			switch parts[2] {
 			case "text":
 				my.buf.WriteStringf(
-					"%s.%s =~ '(?ui)^.*(%s).*$' ",
+					"%s.%s =~ '(?ui)^.*%s.*$' ",
 					entityName, parts[0], parts[1],
 				)
 			case "less":
@@ -225,7 +224,7 @@ func (my *StatementBuilder) Build() neo.Statement {
 				)
 			case "textStart":
 				my.buf.WriteStringf(
-					"%s.%s =~ '(?ui)^(%s).*$' ",
+					"%s.%s =~ '(?ui)^%s.*$' ",
 					entityName, parts[0], parts[1],
 				)
 			default:
@@ -234,26 +233,9 @@ func (my *StatementBuilder) Build() neo.Statement {
 		}
 	}
 
-	// optionalSelection := my.scanNodes(true, my.optionalNodes)
 
-	// for _, edge := range my.optionalEdges {
-	// 	if edge.Props["select"] != "" {
-	// 		optionalSelection = append(optionalSelection, edge.Tag)
-	// 	}
-
-	// 	my.buf.WriteStringf(
-	// 		"OPTIONAL MATCH (%s)-[%s:%s]->(%s)",
-	// 		edge.Lhs, edge.Tag, edge.Type, edge.Rhs,
-	// 	)
-	// }
-
-	// my.buf.WriteStringf(
-	// 	"WITH %s RETURN ",
-	// 	strings.Join(append(selection, optionalSelection...), ","),
-	// )
-
-	my.scanReturn(my.nodes)
-	// my.scanReturn(my.optionalNodes, my.optionalEdges)
+	my.scanNodesToDelete(my.nodes)
+	my.scanDeletingEdges(my.edges)
 	my.buf.Truncate(my.buf.Len() - 1)
 
 	return neo.Statement{
@@ -276,10 +258,10 @@ func (my *StatementBuilder) scanNodes(nodes map[string]*ast.Node) []string {
 	for _, node := range nodes {
 		switch matcher := node.Props["id"]; matcher {
 		case "*", "?":
-			my.buf.WriteStringf("OPTIONAL MATCH (%s) ", node.Tag)
+			my.buf.WriteStringf("MATCH (%s) ", node.Tag)
 		default:
 			ph := my.placeholder.Next()
-			my.buf.WriteStringf("OPTIONAL MATCH (%s {id:{%s}}) ", node.Tag, ph)
+			my.buf.WriteStringf("MATCH (%s {id:{%s}}) ", node.Tag, ph)
 			my.params[ph] = matcher
 		}
 
@@ -291,7 +273,7 @@ func (my *StatementBuilder) scanNodes(nodes map[string]*ast.Node) []string {
 	return selection
 }
 
-func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node) {
+func (my *StatementBuilder) scanNodesToDelete(nodes map[string]*ast.Node) {
 	delNodes := make([]string, 0, len(nodes))
 	remProps := make([]string, 0, len(nodes))
 	
@@ -324,14 +306,19 @@ func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node) {
 			strings.Join(remProps, ","),
 		)
 	}
+}
 
-	// for _, edge := range edges {
-	// 	if _, selected := edge.Props["delete"]; selected {
-	// 		if edge.Props["collect"] != "" { // Временный хак
-	// 			my.buf.WriteStringf("COLLECT(%s) AS %s,", edge.Tag, edge.Tag)
-	// 		} else {
-	// 			my.buf.WriteString(edge.Tag + ",")
-	// 		}
-	// 	}
-	// }
+func (my *StatementBuilder) scanDeletingEdges(edges []*ast.Edge) {
+	delEdges := make([]string, 0, len(edges))
+
+	for _, edge := range edges {
+		if _, deleted := edge.Props["delete"]; deleted {
+			delEdges = append(delEdges, edge.Tag)
+		}
+	}
+
+	my.buf.WriteStringf(
+		"DELETE %s ",
+		strings.Join(delEdges, ","),
+	)
 }
