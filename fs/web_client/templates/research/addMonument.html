@@ -1,0 +1,64 @@
+<h4 class="accordion-header" id="monument-header-<%= monId %>">
+  <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+  Памятник №<%= monId %>
+</h4>
+
+<div class="accordion-content">
+  <div class="form-group find-monument-<%= monId %>">
+    <label>Выбрать существующий памятник <span class="required">*</span></label>
+    <input class="form-control" id="monument-input-<%= monId %>"></input>
+    <input id="monument-input-id-<%= monId %>" data-for="m_<%= monId %>:Monument" hidden type="id" name="id" data-req="up"></input>
+    <br>
+    <div class="form-group find-culture-<%= monId %>">
+      <label for="culture-input-<%= monId %>">Выберите культурную принадлежность</label>
+      <input id="culture-input-<%= monId %>" class="form-control" data-for="c_<%= monId %>:Culture" type="id" name="id">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="monument-name-input-<%= monId %>">Название памятника <span class="required">*</span></label>
+    <input class="form-control" id="monument-name-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="monument_name" data-req></input>
+  </div>
+  <div class="form-group">
+    <label for="monument-desc-input-<%= monId %>">Описание памятника</label>
+    <textarea class="form-control" id="monument-desc-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="description"></textarea>
+  </div>
+
+  <div class="form-group" id="place-for-layers-<%= monId %>"></div>
+</div>
+
+<!-- Форма для нового памятника -->
+<script type="text/template" class="add-monument-<%= monId %>">
+  <h4>Добавление нового памятника</h4>
+  <div class="form-group">
+    <input id="monument-tmp-input-<%= monId %>" value="Костыль" hidden data-for="m_<%= monId %>:Monument" type="text" name="tmp"></input>
+  </div>
+
+  <div class="form-group">
+    <label for="mon-type-selector-<%= monId %>">Тип</label>
+    <select class="form-control" id="mon-type-selector-<%= monId %>" data-for="mt_<%= monId %>:MonumentType" type="id" name="id" data-common-for="1"></select>
+  </div>
+
+  <div id="coord-picker-<%= monId %>" class="coords">
+    <div class="form-group">
+      <label for="monument-x-<%= monId %>">
+        Координата x
+      </label>
+      <input class="form-control" id="monument-x-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="number" name="x"></input>
+    </div>
+    <div class="form-group">
+      <label for="monument-y-<%= monId %>">
+        Координата y
+      </label>
+      <input class="form-control" id="monument-y-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="number" name="y"></input>
+    </div>
+  </div>
+</script>
+
+<!-- Кнопка для добавления культурных слоев -->
+<script type="text/template" id="add-layer-<%= monId %>">
+  <button id="add-layer-button-<%= monId %>" class="btn btn-primary" monId="<%= monId %>">
+    <i class="fa fa-cogs"></i>
+    Добавить культурный слой
+  </button>
+</script>

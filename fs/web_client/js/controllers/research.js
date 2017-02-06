@@ -2,8 +2,8 @@
 
 
 App.controllers.research = new (Backbone.View.extend({
-  'new': function() {
-    App.page.render('research', {
+  'new_by_report': function() {
+    App.page.render('research/new_by_report', {
       'authorsInputOptions': {
         'source': App.models.Author.findByNamePrefix,
         'etl': function(authors) {

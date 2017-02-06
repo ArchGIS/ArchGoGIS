@@ -39,7 +39,7 @@ func (my *Parser) mustParse() {
 }
 
 func (my *Parser) mustParseOne(tag string, query map[string]string) {
-	if strings.Contains(tag, "_") {
+	if strings.Contains(tag, "__") {
 		if tag[0] == '?' {
 			my.mustParseOptionalEdge(tag[1:], query)
 		} else {
