@@ -85,5 +85,62 @@ App.views.functions = {
     }
 
     return imagesHtml;
+  },
+
+  "setCultureAutocomplete": function(field, monId) {
+    let d_cultures = App.models.Culture.getAll();
+    let grepObject = App.fn.grepObject;
+
+    $.when(d_cultures).done((cultures) => {
+      let items = _.map(cultures, culture => ({'id': culture.id, 'label': culture.name}));
+
+      $(field).autocomplete({
+        source: function(req, res) {
+          let term = req.term.toLowerCase();
+          
+          res(grepObject(term, items, 'label'));
+        },
+        minLength: 0
+      }).focus(function() {
+        $(this).autocomplete("search");
+      });
+    });
+
+    $(field).on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $(field).on('autocompleteresponse', function(event, ui) {
+      if (ui.content.length === 0) {
+        ui.content.push({
+          'value': 0,
+          'label': 'Ничего не найдено. Добавить?'
+        });
+      }
+    });
+    
+    $(field).on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 0) {
+        let id = field.attr('id');
+        let inputValue = field.val();
+
+        App.template.get("culture/create", function(tmpl) {
+          $(field).parent().replaceWith(tmpl({'monId': monId}));
+        });
+      } else {
+        $(field).attr("data-value", ui.item.id);
+      }
+    });
+  },
+
+  "addLayer": function(button, monId, layerId) {
+    let setAccordionHeader = this.setAccordionHeader;
+
+    App.template.get("monument/layer", function(tmpl) {
+      button.before(tmpl({'monId': monId, 'layerId': layerId}));
+
+      console.log($(`#layer-header-${monId}.${layerId}`))
+      setAccordionHeader($(`#layer-header-${monId}.${layerId}`));
+    })
   }
 }

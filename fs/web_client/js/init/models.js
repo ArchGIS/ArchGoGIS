@@ -80,5 +80,23 @@ App.models.fn = {
     })
 
     return data;
+  },
+
+  "deleteNode": function(entity, id) {
+    let query = {};
+    query["a:"+entity] = {"id": id, "delete": "*"}
+    query = JSON.stringify(query);
+
+    console.log(query)
+    $.post({
+      url: "/hquery/delete",
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: function(response) {
+        console.log(response)
+      }
+    });
   }
 }

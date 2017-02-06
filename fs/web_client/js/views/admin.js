@@ -333,7 +333,7 @@ App.views.admin = new (Backbone.View.extend({
             if (val == "red") {
               html += `<td><a href="#${entity.toLowerCase()}/show/${row.id}">Редактировать</a></td>`
             } else if (val == "del") {
-              html += `<td><a class="entity-delete">Удалить</a></td>`
+              html += `<td><a class="entity-delete" data-entity="${entity}" data-id="${row.id}">Удалить</a></td>`
             } else {
               row[val] = row[val] || "";
               html += `<td>${row[val]}</td>`
@@ -341,6 +341,14 @@ App.views.admin = new (Backbone.View.extend({
           })
           $results.append(`<tr>${html}</tr>`)
         })
+
+        $(".entity-delete").on("click", function(e) {
+          let entity = $(this).attr("data-entity");
+          let id = $(this).attr("data-id");
+
+          App.models.fn.deleteNode(entity, id);
+          $($(this).parents("tr")[0]).detach();
+        });
 
         console.log(data)
       }
