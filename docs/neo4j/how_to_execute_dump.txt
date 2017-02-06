@@ -1,0 +1,11 @@
+In command line:
+```
+  export JAVA_OPTS="-Xss4m -Xmx4000M -Xms4000M -Xmn1000M" 
+  neo4j-shell -path ~/path/to/graph.db -config ~/path/to/neo4j.conf -file cypher.cql
+```
+
+And maybe need to:
+  - stop the server
+  - edit conf/neo4j-wrapper.conf, set min and maxmemory to 4000
+  - edit conf/neo4j.properties set dbms.pagecache.memory=3G
+  - start the server, run bin/neo4j-shell
