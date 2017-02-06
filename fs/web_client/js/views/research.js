@@ -39,7 +39,7 @@ App.views.research = new (Backbone.View.extend({
     $('#container').tabs();
   },
 
-  "new": function(argument) {
+  "new_by_report": function(argument) {
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
@@ -306,106 +306,12 @@ App.views.research = new (Backbone.View.extend({
 
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
-      var newMonument = $(`
-      <h4 class="accordion-header" id="monument-header-${monId}">
-        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-        Памятник №${monId}
-      </h4>
-      <div class="accordion-content">
+      let localMonId = monId++;
 
-        <div class="form-group find-monument-${monId}">
-          <label>Выбрать существующий памятник <span class="required">*</span></label>
-          <input class="form-control" id="monument-input-${monId}"></input>
-          <input id="monument-input-id-${monId}" data-for="m_${monId}:Monument" hidden type="id" name="id" data-req="up"></input>
-        </div>
+      App.template.get("research/addMonument", function(tmpl) {
+        $('#add-monument-button').before(tmpl({'monId': localMonId}));
 
-
-        <div class="form-group">
-          <label for="monument-name-input-${monId}">Название памятника <span class="required">*</span></label>
-          <input class="form-control" id="monument-name-input-${monId}" data-for="k_${monId}:Knowledge" type="text" name="monument_name" data-req></input>
-        </div>
-        <div class="form-group">
-          <label for="monument-desc-input-${monId}">Описание памятника</label>
-          <textarea class="form-control" id="monument-desc-input-${monId}" data-for="k_${monId}:Knowledge" type="text" name="description"></textarea>
-        </div>
-        
-
-        <div class="form-group find-culture-${monId}">
-          <label for="culture-input-${monId}">Выберите культурную принадлежность</label>
-          <input id="culture-input-${monId}" class="form-control">
-          <input id="culture-input-id-${monId}" hidden data-for="c_${monId}:Culture" type="id" name="id">
-        </div>
-
-        <div id="coord-picker-${monId}" class="coords">
-          <div class="form-group">
-            <label for="monument-x-${monId}">
-              Координата x
-            </label>
-            <input class="form-control" id="monument-x-${monId}" data-for="k_${monId}:Knowledge" type="number" name="x"></input>
-          </div>
-          <div class="form-group">
-            <label for="monument-y-${monId}">
-              Координата y
-            </label>
-            <input class="form-control" id="monument-y-${monId}" data-for="k_${monId}:Knowledge" type="number" name="y"></input>
-          </div>
-        </div>
-        <br>
-        <div class="form-group">
-          <h4 for="report-input">Археологические вскрытия:</h4>
-        </div>
-      </div>
-
-      <!-- Форма для нового памятника -->
-      <script type="text/template" class="add-monument-${monId}">
-        <h4>Добавление нового памятника</h4>
-        <div class="form-group">
-          <input id="monument-tmp-input-${monId}" value="Костыль" hidden data-for="m_${monId}:Monument" type="text" name="tmp"></input>
-        </div>
-
-        <div class="form-group">
-          <label for="epoch-selector-${monId}">Эпоха</label>
-          <select class="form-control" id="epoch-selector-${monId}" data-for="e_${monId}:Epoch" type="id" name="id"></select>
-        </div>
-        <div class="form-group">
-          <label for="mon-type-selector-${monId}">Тип</label>
-          <select class="form-control" id="mon-type-selector-${monId}" data-for="mt_${monId}:MonumentType" type="id" name="id"></select>
-        </div>
-      </script>
-
-      <!-- Форма для новой культуры -->
-      <script type="text/template" class="add-culture-${monId}">
-        <div class="form-group">
-          <label for="culture-name-input-${monId}">Новая культурная принадлежность</label>
-          <input id="culture-name-input-${monId}" class="form-control" data-for="c_${monId}:Culture" type="text" name="name">
-        </div>
-      </script>
-      `);
-
-      $(this).before(newMonument);
-      getDataForSelector($(`#epoch-selector-${monId}`), "Epoch");
-      getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
-      setSelectsEvents();
-
-      var coordpicker = App.blocks.coordpicker;
-      coordpicker($('#coord-picker-'+monId), {
-        inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
-        map: map
-      }, monId);
-
-      $(`#monument-header-${monId}`).next().append(`
-        <button id="add-exc-button-${monId}" class="btn btn-primary">
-          <i class="fa fa-cogs"></i>
-          Добавить раскоп
-        </button>
-      `);
-
-      (function () {
-        var counter = counter || 1;
-        let localMonId = monId;
-        $(`#add-exc-button-${localMonId}`).on('click', function(e) {
-          addNewCoords($(this), localMonId, counter++)
-        });
+        App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
 
         $(`#monument-input-${localMonId}`).autocomplete({
           source: function(request, response) {
@@ -448,94 +354,42 @@ App.views.research = new (Backbone.View.extend({
             let tmpl = _.template( $(`script.add-monument-${localMonId}`).html() );
             $(`.find-monument-${localMonId}`).replaceWith( tmpl({'monId': localMonId}) );
 
+            tmpl = _.template( $(`script#add-layer-${localMonId}`).html() );
+            $(`#place-for-layers-${localMonId}`).replaceWith( tmpl({'monId': localMonId}) );
+
+
             $('#' + addName(id)).val(inputValue);
 
-            fillSelector($(`#epoch-selector-${localMonId}`), App.store.selectData.Epoch);
-            fillSelector($(`#mon-type-selector-${localMonId}`), App.store.selectData.MonumentType);
+            var coordpicker = App.blocks.coordpicker;
+            coordpicker($('#coord-picker-'+localMonId), {
+              inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
+              map: map
+            }, localMonId);
+
+            let layerCounter = App.fn.counter(1);
+
+            let $button = $(`#add-layer-button-${localMonId}`);
+            $button.on("click", () => App.views.functions.addLayer($button, localMonId, layerCounter()))
+
+            getDataForSelector($(`#epoch-selector-${localMonId}`), "Epoch");
+            getDataForSelector($(`#mon-type-selector-${localMonId}`), "MonumentType");
           } else if (lastSelectedAuthorId != ui.item.id) {
             lastSelectedMonId = ui.item.id;
             $(`#monument-input-id-${localMonId}`).val(lastSelectedMonId);
             monSelName = ui.item.name;
           }
         });
-
-
-        let d_culture = $.Deferred();
-        (function() {
-          let query = {};
-          query['rows:Culture'] = {"id": "*", "select": "*"};
-          query = JSON.stringify(query);
-
-          $.post({
-            url: "/hquery/read",
-            data: query,
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
-            },
-            success: (response) => {
-              App.store.selectData.Culture = JSON.parse(response);
-              d_culture.resolve();
-            }
-          });
-        }());
-
-        $.when( d_culture ).done(() => {
-          let items = _.map(App.store.selectData.Culture.rows, culture => ({'id': culture.id, 'label': culture.name}));
-          let grepObject = App.fn.grepObject;
-
-          $(`#culture-input-${localMonId}`).autocomplete({
-            source: function(req, res) {
-              let term = req.term.toLowerCase();
-              
-              res(grepObject(term, items, 'label'));
-            },
-            minLength: 0
-          }).focus(function() {
-            $(this).autocomplete("search");
-          });
-        });
-
-        $(`#culture-input-${localMonId}`).on('autocompletefocus', function(event, ui) {
-          event.preventDefault();
-        });
-
-        $(`#culture-input-${localMonId}`).on('autocompleteresponse', function(event, ui) {
-          if (ui.content.length === 0) {
-            ui.content.push({
-              'value': 'Ничего не найдено. Добавить?',
-              'label': 'Ничего не найдено. Добавить?'
-            });
-          }
-        });
         
-        $(`#culture-input-${localMonId}`).on('autocompleteselect', function(event, ui) {
-          if (ui.item.value === 'Ничего не найдено. Добавить?') {
-            let $input = $(this);
-            let id = $input.attr('id');
-            let inputValue = $input.val();
+        App.views.functions.setCultureAutocomplete($(`#culture-input-${localMonId}`), localMonId);
+      })
 
-            let tmpl = _.template( $(`script.add-culture-${localMonId}`).html() );
-            $(`.find-culture-${localMonId}`).replaceWith( tmpl({'monId': localMonId}) );
-
-            $('#' + addName(id)).val(inputValue);
-          } else {
-            $(`#culture-input-id-${localMonId}`).val(ui.item.id);
-          }
-        });
-      })();
-
-      // validate(`monument-input-${monId}`, monSelName);
-
-      App.views.functions.setAccordionHeader($(`#monument-header-${monId}`));
-      monId++;
+      setSelectsEvents();
     });
 
     var excCounter = 1;
     $("#add-exc-button-0").on('click', function(e) {
       addNewCoords($(this), 0, excCounter++);
     });
-
-    $('#add-exc-button').trigger("click");
 
     $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});

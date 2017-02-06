@@ -1,22 +1,30 @@
 "use strict";
 
-(function() {
-  function Culture(key) {
-    App.models.base.call(this, key, Culture.scheme);
-  }
+App.models.Culture = function Monument() {
+  var props = {};
+  App.models.proto.call(this, App.models.Monument.scheme, props);
+};
 
-  Culture.getEnum = function() {
-    return new Promise(function(resolve, reject) {
-      var query = '{"cultures:Culture.getAll":"*"}';
-      $.post("/hquery/read2/")
-        .success(response => resolve($.parseJSON(response)))
-        .error(reject);
-    });
-  };
+App.models.Culture.getAll = function() {
+  let d = $.Deferred();
+  let query = {};
+  query['rows:Culture'] = {"id": "*", "select": "*"};
+  query = JSON.stringify(query);
 
-  Culture.scheme = {
-    "name": {"type": "text"}
-  };
+  $.post({
+    url: "/hquery/read",
+    data: query,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+    },
+    success: (response) => {
+      d.resolve(JSON.parse(response).rows);
+    }
+  });
 
-  App.models.Culture = Culture;
-}());
+  return d.promise();
+};
+
+App.models.Culture.scheme = {
+  "name": {"type": "text"}
+};
