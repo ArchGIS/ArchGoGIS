@@ -166,7 +166,7 @@
           <dt>Упоминаемые артефакты:</dt>
           <dd>
             <%= _.map(usedArtifacts, function(arti, i) {
-              let title = `${arti.name} (${author[0].name}, ${research.year})`;
+              const title = `${arti.name} (${author[0].name}, ${research.year})`;
               return App.models.Artifact.href(arti.id, title);
             }).join(", <br>") %>
           </dd>
@@ -177,8 +177,7 @@
     <div id="heritages">
       <% _.each(heritages, (el) => { %>
         <% if (el && el.length) { %>
-          <% _.each(el, (herit) = > { %>
-            <a href="#heritage/show/<%= el[0].id %>"><%= el[0].name %></a>
+          <a href="#heritage/show/<%= el[0].id %>"><%= el[0].name %></a>
         <% } else { %>
           Отсутствует или не задано
         <% } %>
@@ -188,9 +187,9 @@
     <div id="excavations"> 
       <%= _.compact(_.map(excavations, function(resExc, i) {
         return _.map(resExc, function(exc, t) {
-          let area = exc.area || 0;
-          let name = exc.name || "без названия";
-          let boss = exc.boss || "не задан";
+          const area = exc.area || 0;
+          const name = exc.name || "без названия";
+          const boss = exc.boss || "не задан";
           return `${name} - ${area}м² (${author[0].name}, ${research.year},
                   руководитель работ: ${boss})<br>`
         }).join("")
