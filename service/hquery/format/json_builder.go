@@ -28,8 +28,8 @@ func NewJsonFormatter(resp *neo.Response) *JsonFormatter {
 	}
 
 	if len(resp.Results[0].Data) != 1 {
-		echo.ServerError.Fatalf(
-			"hquery len(results[0].Data) != 1, dump: %+v",
+		echo.ServerError.Printf(
+			"hquery len(results[0].Data) != 1, dump: %#v\n",
 			resp.Results[0].Data,
 		)
 	}
