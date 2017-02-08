@@ -11,7 +11,8 @@
     <br>
     <div class="form-group find-culture-<%= monId %>">
       <label for="culture-input-<%= monId %>">Выберите культурную принадлежность</label>
-      <input id="culture-input-<%= monId %>" class="form-control" data-for="c_<%= monId %>:Culture" type="id" name="id">
+      <input id="culture-input-<%= monId %>" class="form-control">
+      <input id="culture-input-<%= monId %>-id" hidden data-for="c_<%= monId %>:Culture" type="id" name="id">
     </div>
   </div>
 
