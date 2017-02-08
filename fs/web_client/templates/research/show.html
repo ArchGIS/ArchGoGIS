@@ -175,13 +175,13 @@
     </div>
 
     <div id="heritages">
-      <% _.each(heritages, (el) => { %>
-        <% if (el && el.length) { %>
-          <a href="#heritage/show/<%= el[0].id %>"><%= el[0].name %></a>
-        <% } else { %>
-          Отсутствует или не задано
-        <% } %>
-      <% }) %>
+      <% if (heritages.length) { %>
+        <% _.each(heritages, (el) => { %>
+          <% if (el && el.length) { %>
+            <a href="#heritage/show/<%= el[0].id %>"><%= el[0].name %></a>
+          <% } %>
+        <% }) %>
+      <% } %>
     </div>
 
     <div id="excavations"> 
