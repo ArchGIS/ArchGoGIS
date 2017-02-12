@@ -66,7 +66,6 @@ a:hover {
   margin-top: 60px;
   padding-left: 1em;
 }
-}
 
 .content.wide-content {
   width: 70%;
@@ -447,11 +446,10 @@ dt {
   position: relative;
 }
 
-/*ToDO change url to local image*/
 .main-page-bg {
-  background-image: url('https://pp.vk.me/c836134/v836134695/e188/WFD2MB9S1sE.jpg');
-  height: 100vh;
-  width: 100vw;
+  background-image: url('../img/main_kazan.jpg');
+  height: 120%;
+  width: 100%;
   background-size: cover;
   position: absolute;
   top: -20px;
