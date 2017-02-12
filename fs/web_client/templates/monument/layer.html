@@ -9,6 +9,10 @@
     <label for="epoch-selector-<%= monId %>-<%= layerId %>">Эпоха</label>
     <select class="form-control" id="epoch-selector-<%= monId %>-<%= layerId %>" data-for="e_<%= monId %>_<%= layerId %>:Epoch" type="id" name="id"></select>
   </div>
+  <div class="form-group">
+    <label for="mon-type-selector-<%= monId %>-<%= layerId %>">Тип</label>
+    <select class="form-control" id="type-selector-<%= monId %>-<%= layerId %>" data-for="mt_<%= monId %>_<%= layerId %>:MonumentType" type="id" name="id"></select>
+  </div>
   <div class="form-group find-culture-<%= monId %>-<%= layerId %>">
     <label for="culture-input-<%= monId %>-<%= layerId %>">Культурная принадлежность</label>
     <input id="culture-input-<%= monId %>-<%= layerId %>" class="form-control" data-for="c_<%= monId %>_<%= layerId %>:Culture" type="id" name="id">

@@ -122,14 +122,14 @@ App.views.functions = {
     
     $(field).on('autocompleteselect', function(event, ui) {
       if (ui.item.value === 0) {
-        // let id = field.selector;
-        // let inputValue = field.val();
+        let id = field.attr('id');
+        let inputValue = field.val();
 
         App.template.get("culture/create", function(tmpl) {
           $(field).parent().replaceWith(tmpl({"monId": monId, "layerId": layerId}));
         });
       } else {
-        $(field.selector + '-id').val(ui.item.id);
+        $(field).attr("data-value", ui.item.id);
       }
     });
   },
@@ -141,6 +141,7 @@ App.views.functions = {
       button.before(tmpl({'monId': monId, 'layerId': layerId}));
 
       getDataForSelector($(`#epoch-selector-${monId}-${layerId}`), "Epoch");
+      getDataForSelector($(`#type-selector-${monId}-${layerId}`), "MonumentType");
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}-${layerId}`), monId, layerId);
 
       setAccordionHeader($(`#layer-header-${monId}-${layerId}`));
