@@ -141,44 +141,6 @@ App.views.monument = new (Backbone.View.extend({
           });
         }
       });
-        
-        
-    $('#exc-input').on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
-    
-    $('#exc-input').on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'label': 'Ничего не найдено. Добавить?',
-          'value': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
-    
-    $('#exc-input').on('autocompleteselect', function(event, ui) {
-      if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
-    
-        let tmpl = _.template( $('script.add-exc').html() );
-        $('.find-exc').replaceWith( tmpl() );
-    
-        coordpicker($('#exc-coord-picker'), {
-          inputs: ['#exc-x', '#exc-y'],
-          map: 'map'
-        });
-    
-        $('#' + addName(id)).val(inputValue);
-        // setSelectsEvents();
-        // fillResearchInputs();
-        // fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
-      } else {
-        $("#exc-input-id").val(ui.item.id);
-        // repSelName = ui.item.name;
-      }
-    });
 
     var lastSelectedCityId = 0;
     var lastSelectedCityName = '';
@@ -256,75 +218,123 @@ App.views.monument = new (Backbone.View.extend({
       }
     });
 
-    getDataForSelector($("#epoch-selector"), "Epoch");
-    getDataForSelector($("#mon-type-selector"), "MonumentType");
     getDataForSelector($("#research-type-selector"), "ResearchType");
     setSelectsEvents();
 
-    let d_culture = $.Deferred();
-    (function() {
-      let query = {};
-      query['rows:Culture'] = {"id": "*", "select": "*"};
-      query = JSON.stringify(query);
+    let monId = 1;
+    let excludeIdent = App.fn.excludeIdentMonuments;
 
-      $.post({
-        url: "/hquery/read",
-        data: query,
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
-        },
-        success: (response) => {
-          App.store.selectData.Culture = JSON.parse(response);
-          d_culture.resolve();
-        }
-      });
-    }());
+    App.template.get("research/addMonument", function(tmpl) {
+      $('#send-button').before(tmpl({'monId': monId, 'needHeader': false}));
 
-    $.when( d_culture ).done(() => {
-      let items = _.map(App.store.selectData.Culture.rows, culture => ({'id': culture.id, 'label': culture.name}));
-      let grepObject = App.fn.grepObject;
+      $(`#monument-name-input-${monId}`).on("change", function() {
+        let monName = $(this).val();
+        $(`.exc-mon-name-${monId}`).text(`${monName}: `)
+      })
 
-      $('#culture-input').autocomplete({
-        source: function(req, res) {
-          let term = req.term.toLowerCase();
+      $(`#monument-input-${monId}`).autocomplete({
+        source: function(request, response) {
+          var monuments = [];
           
-          res(grepObject(term, items, 'label'));
+          App.models.Monument.findByNamePrefix(request.term)
+            .then(function(data) {
+              if (data && !data.error) {
+                let results = _.map(excludeIdent(data), function(row) {
+                  return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId}
+                });
+
+                if (!results.length) {
+                  results.push('Ничего не найдено. Добавить?');
+                }
+
+                response(results);
+              } else {
+                response();
+              }
+            });
         },
-        minLength: 0
-      }).focus(function() {
+        minLength: 3
+      }).focus(function(){
         $(this).autocomplete("search");
       });
-    });
 
-    $('#culture-input').on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
+      $(`#monument-input-${monId}`).on('autocompletefocus', function(event, ui) {
+        event.preventDefault();
+      });
 
-    $('#culture-input').on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'value': 'Ничего не найдено. Добавить?',
-          'label': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
-    
-    $('#culture-input').on('autocompleteselect', function(event, ui) {
-      if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
+      let lastSelectedMonId = 0;
+      let monSelName = '';
+      $(`#monument-input-${monId}`).on('autocompleteselect', function(event, ui) {
+        if (ui.item.value === 'Ничего не найдено. Добавить?') {
+          let $input = $(this);
+          let id = $input.attr('id');
+          let inputValue = $input.val();
 
-        let tmpl = _.template( $('script.add-culture').html() );
+          let tmpl = _.template( $(`script.add-monument-${monId}`).html() );
+          $(`.find-monument-${monId}`).replaceWith( tmpl({'monId': monId}) );
 
-        $input.parent().replaceWith( tmpl() );
+          tmpl = _.template( $(`script#add-layer-${monId}`).html() );
+          $(`#place-for-layers-${monId}`).replaceWith( tmpl({'monId': monId}) );
 
-        $('#' + addName(id)).val(inputValue);
-      } else {
-        $('#culture-input-id').val(ui.item.id);
-      }
-    });
+          $('#' + addName(id)).val(inputValue);
 
+          var coordpicker = App.blocks.coordpicker;
+          coordpicker($('#coord-picker-'+monId), {
+            inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
+            map: map
+          }, monId);
+
+          let layerCounter = App.fn.counter(1);
+          let layerCounter2 = App.fn.counter(1);
+
+          let monLayers = $(`.exc-mon-${monId}`);
+          monLayers.find("input").remove();
+          $(`#monument-name-input-${monId}`).trigger("change");
+
+          let $button = $(`#add-layer-button-${monId}`);
+          $button.on("click", () => App.views.functions.addLayer($button, monId, layerCounter()));
+          $button.on("click", () => {
+            let layerId = layerCounter2();
+            _.each(monLayers, function(layers, excId) {
+              let checkbox = App.views.functions.addLayerCheckbox(excId+1, monId, layerId);
+              $(layers).append(checkbox);
+            })
+          });
+          $button.trigger("click");
+
+          getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
+        } else if (lastSelectedAuthorId != ui.item.id) {
+          lastSelectedMonId = ui.item.id;
+          $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
+          monSelName = ui.item.name;
+        }
+      });
+      
+      App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
+
+      let excCounter = App.fn.counter(1);
+      $("#add-exc-button").on('click', function(e) {
+        let excId = excCounter();
+
+        $.when(App.views.functions.addExcavation($(this), excId, map)).then(function(response) {
+          let monName = $(".monument-name").val() || "Памятник";
+          let layers = $(".mon-layer");
+          let monLayers = App.views.functions.addExcMon(monId, monName);
+
+          if (layers.length > 0) {
+            _.each(layers, function(layer, layerId) {
+              let checkbox = App.views.functions.addLayerCheckbox(excId, monId, layerId+1)
+              monLayers.append(checkbox);
+            })
+          } else {
+            let checkbox = App.views.functions.addMonExcCheckbox(excId, monId)
+            monLayers.append(checkbox);
+          }
+
+          $(`#exc-belongs-${excId}`).append(monLayers)
+        })   
+      });
+    })
 
     // let excId = 1;
     // $('#add-exc-button').on('click', function(e) {
