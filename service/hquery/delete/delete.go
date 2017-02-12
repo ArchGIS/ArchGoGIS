@@ -325,8 +325,10 @@ func (my *StatementBuilder) scanDeletingEdges(edges []*ast.Edge) {
 		}
 	}
 
-	my.buf.WriteStringf(
-		"DELETE %s ",
-		strings.Join(delEdges, ","),
-	)
+	if len(delEdges) != 0 {
+		my.buf.WriteStringf(
+			"DELETE %s ",
+			strings.Join(delEdges, ","),
+		)
+	}
 }
