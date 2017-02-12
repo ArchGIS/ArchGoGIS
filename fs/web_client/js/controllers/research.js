@@ -127,7 +127,7 @@ App.controllers.research = new (Backbone.View.extend({
 
         tmplData.placemarks.push({
           type: 'monument',
-          id: k.id,
+          id: tmplData.monuments[kid].id,
           coords: [k.x, k.y],
           pref: {
             hintContent: k.monument_name
