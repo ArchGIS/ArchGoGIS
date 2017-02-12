@@ -31,7 +31,7 @@ App.views.author = new (Backbone.View.extend({
         this.closeTooltip();
       });
       marker.on('click', function(e) {
-        location.hash = `monument/show/${item.id}`
+        location.hash = `${item.type}/show/${item.id}`
       });
 
       overlays[App.store.mapTypes[item.type]].addLayer(marker);
