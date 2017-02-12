@@ -1,0 +1,38 @@
+<h4 class="accordion-header" id="exc-header-<%= excId %>">
+  <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+  Вскрытие №<%= excId %>
+</h4>
+
+<div class="accordion-content" data-few-relations="exc_<%= excId %>:Monument">
+  <div class="form-group">
+    <label for="excavation-name-input-<%= excId %>">Название</label>
+    <input class="form-control" id="excavation-name-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="text" name="name"></select>
+  </div>
+  <div class="form-group">
+    <label for="excavation-boss-input-<%= excId %>">Руководитель работ</label>
+    <input class="form-control" id="excavation-boss-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="text" name="boss"></select>
+  </div>
+  <div class="form-group">
+    <label for="excavation-area-input-<%= excId %>">Вскрытая площадь (м²)</label>
+    <input class="form-control" id="excavation-area-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="area"></select>
+  </div>
+
+  <div id="coord-picker-exc-<%= excId %>" class="coords">
+    <div class="form-group">
+      <label for="exc-x-<%= excId %>">
+        Координата x
+      </label>
+      <input class="form-control" id="exc-x-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="x"></input>
+    </div>
+    <div class="form-group">
+      <label for="exc-y-<%= excId %>">
+        Координата y
+      </label>
+      <input class="form-control" id="exc-y-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="y"></input>
+    </div>
+  </div>
+
+  <div class="form-group exc-belongs" id="exc-belongs-<%= excId %>" data-exc-id="<%= excId %>">
+    Принадлежит памятникам:
+  </div>
+</div>

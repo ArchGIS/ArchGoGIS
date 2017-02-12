@@ -228,16 +228,18 @@ function loading(load) {
 function generateJson(relations) {
   let type, json = {};
   const inputs = $("[data-for][used!=false]");
-  let $input, dataFor, dataType, name, value, inputName, counter,
-      inputClass, inputSubclass, inputObjName, objs = {};
+  let $input, dataFor, dataType, name, value, inputName, counter, inputTag, 
+      inputClass, inputSubclass, inputObjName, dataForLayer, group, objs = {};
 
   $.each(inputs, (key, input) => {
     $input = $(input);
     dataFor = $input.attr("data-for");
+    group = $input.attr("data-group");
     dataType = $input.attr("data-type") || $input.attr("type");
     type = (dataType != "id" && dataType != "table") ? ("/" + dataType) : "";
     name = ($input.attr("data-name") || $input.attr("name")) + type;
-    value = $input.val().replace(/\n/g, "\\n");
+    value = $input.attr("data-value") || $input.val().replace(/\n/g, "\\n");
+    inputTag = dataFor.split(":")[0];
     inputClass = dataFor.split(":")[1];
     inputSubclass = $input.attr("data-subclass") || inputClass;
 
@@ -273,14 +275,27 @@ function generateJson(relations) {
         
         value = JSON.stringify(data).replace(/\"/g, "\'");
       }
-      
-      inputObjName = dataFor.split(":")[0];
-      objs[inputSubclass].push(inputObjName);
-      json[dataFor] = json[dataFor] || {};
-      if (type != "/file") {
-        json[dataFor][name] = value;
-      }
+
+      let layers = (group) ? $(`div[data-group-layer = ${group}]`).length : 0;
+
+      do {
+        inputObjName = (layers) ? `${inputTag}_${layers}` : inputTag;
+        dataForLayer = (layers) ? `${inputObjName}:${inputClass}` : dataFor;
+        json[dataForLayer] = json[dataForLayer] || {};
+        
+        if (type != "/file") {
+          json[dataForLayer][name] = value;
+        }
+
+        objs[inputSubclass].push(inputObjName);
+      } while (--layers > 0)
     }
+  })
+  
+  let fewRelations = {};
+  _.each($("[data-few-relations]"), function(obj, i) {
+    let parts = $(obj).attr("data-few-relations").split(":");
+    fewRelations[parts[0]] = parts[1];
   })
 
   _.each(relations, (relation) => {
@@ -295,8 +310,23 @@ function generateJson(relations) {
         _.each(allNames, (name, id) => {
           let objId1 = objName.split("_")[1];
           let objId2 = name.split("_")[1];
+          let layer1 = objName.split("_")[2] || "";
+          let layer2 = name.split("_")[2] || "";
 
-          if (!(objId1 && objId2) || (objId1 === objId2)) {
+          if ((fewRelations[objName] == relation[1]) || (fewRelations[name] == relation[0])) {
+            let needRelation = false;
+
+            if (typeof fewRelations[name] != 'undefined') {
+              needRelation = $(`input[data-relation-for = "${name}"][data-relation-with = "${objName}"]`).is(":checked");
+            } else {
+              needRelation = $(`input[data-relation-for = "${objName}"][data-relation-with = "${name}"]`).is(":checked");
+            }
+
+            if (needRelation) {
+              json[`${objName}__${relation[2]}__${name}`] = {};
+            }
+
+          } else if ((!(objId1 && objId2) || (objId1 === objId2)) && (!(layer1 && layer2) || (layer1 === layer2))) {
             json[`${objName}__${relation[2]}__${name}`] = {};
           }
         })
