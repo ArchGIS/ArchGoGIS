@@ -526,3 +526,7 @@ ul.system-statistic {
 #table-admin {
   width: 90%;
 }
+
+.layer-checkbox {
+  margin-left: 10px;
+}

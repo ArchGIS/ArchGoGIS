@@ -87,7 +87,8 @@ App.views.functions = {
     return imagesHtml;
   },
 
-  "setCultureAutocomplete": function(field, monId) {
+  "setCultureAutocomplete": function(field, monId, layerId) {
+    layerId = layerId || 0;
     let d_cultures = App.models.Culture.getAll();
     let grepObject = App.fn.grepObject;
 
@@ -125,7 +126,7 @@ App.views.functions = {
         let inputValue = field.val();
 
         App.template.get("culture/create", function(tmpl) {
-          $(field).parent().replaceWith(tmpl({'monId': monId}));
+          $(field).parent().replaceWith(tmpl({"monId": monId, "layerId": layerId}));
         });
       } else {
         $(field).attr("data-value", ui.item.id);
@@ -139,8 +140,72 @@ App.views.functions = {
     App.template.get("monument/layer", function(tmpl) {
       button.before(tmpl({'monId': monId, 'layerId': layerId}));
 
-      console.log($(`#layer-header-${monId}.${layerId}`))
-      setAccordionHeader($(`#layer-header-${monId}.${layerId}`));
+      getDataForSelector($(`#epoch-selector-${monId}-${layerId}`), "Epoch");
+      App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}-${layerId}`), monId, layerId);
+
+      setAccordionHeader($(`#layer-header-${monId}-${layerId}`));
     })
+  },
+
+  "addExcavation": function(button, excId, map) {
+    let d = $.Deferred();
+    let setAccordionHeader = this.setAccordionHeader;
+    let coordpicker = App.blocks.coordpicker;
+
+    App.template.get("excavation/addExc", function(tmpl) {
+      button.before(tmpl({'excId': excId}));
+
+      coordpicker($(`#coord-picker-exc-${excId}`), {
+        inputs: [`#exc-x-${excId}`, `#exc-y-${excId}`],
+        map: map
+      }, `${excId}`);
+      setAccordionHeader($(`#exc-header-${excId}`));
+
+      d.resolve();
+    })
+
+    return d.promise();
+  },
+
+  "addLayerCheckbox": function(excId, monId, layerId) {
+    let layerSpan = $("<span>").attr("class", "layer-checkbox");
+    let label = $("<label>")
+      .attr("style", "margin-right: 3px")
+      .attr("for", `mon-layer-${monId}-${layerId}`)
+      .text(`слой №${layerId}`);
+
+    let checkbox = $("<input>")
+      .attr({
+        id: `mon-layer-${monId}-${layerId}`,
+        type: "checkbox",
+        "data-relation-for": `exc_${excId}`,
+        "data-relation-with": `m_${monId}_${layerId}`
+      })
+
+    layerSpan.append(label);
+    layerSpan.append(checkbox);
+
+    return layerSpan;
+  },
+
+  "addMonExcCheckbox": function(excId, monId) {
+    let checkbox = $("<input>")
+      .attr({
+        id: `mon-layer-${monId}`,
+        type: "checkbox",
+        "data-relation-for": `exc_${excId}`,
+        "data-relation-with": `m_${monId}`,
+      })
+
+    return checkbox;
+  },
+
+  "addExcMon":  function(monId, monName) {
+    let monLayers = $("<div>").attr({
+        class: `exc-mon-${monId}`,
+      })
+      .append(`<span class='exc-mon-name-${monId}'>${monName}: </span>`);
+
+    return monLayers;
   }
 }

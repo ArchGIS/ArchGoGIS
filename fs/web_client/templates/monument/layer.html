@@ -1,15 +1,15 @@
-<h4 class="accordion-header" id="layer-header-<%= monId %>.<%= layerId %>">
+<h4 class="accordion-header" id="layer-header-<%= monId %>-<%= layerId %>">
   <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
   Культурный слой №<%= layerId %>
 </h4>
 
-<div class="accordion-content">
-	<div class="form-group">
-	  <label for="epoch-selector-<%= monId %>.<%= layerId %>">Эпоха</label>
-	  <select class="form-control" id="epoch-selector-<%= monId %>.<%= layerId %>" data-for="e_<%= monId %>.<%= layerId %>:Epoch" type="id" name="id"></select>
-	</div>
-	<div class="form-group find-culture-<%= monId %>.<%= layerId %>">
-	  <label for="culture-input-<%= monId %>.<%= layerId %>">Культурная принадлежность</label>
-	  <input id="culture-input-<%= monId %>.<%= layerId %>" class="form-control" data-for="c_<%= monId %>.<%= layerId %>:Culture" type="id" name="id">
-	</div>
+<div class="accordion-content mon-layer" data-group-layer="<%= monId %>">
+  <div class="form-group">
+    <label for="epoch-selector-<%= monId %>-<%= layerId %>">Эпоха</label>
+    <select class="form-control" id="epoch-selector-<%= monId %>-<%= layerId %>" data-for="e_<%= monId %>_<%= layerId %>:Epoch" type="id" name="id"></select>
+  </div>
+  <div class="form-group find-culture-<%= monId %>-<%= layerId %>">
+    <label for="culture-input-<%= monId %>-<%= layerId %>">Культурная принадлежность</label>
+    <input id="culture-input-<%= monId %>-<%= layerId %>" class="form-control" data-for="c_<%= monId %>_<%= layerId %>:Culture" type="id" name="id">
+  </div>
 </div>

@@ -3,7 +3,7 @@
   Памятник №<%= monId %>
 </h4>
 
-<div class="accordion-content">
+<div class="accordion-content monument-content">
   <div class="form-group find-monument-<%= monId %>">
     <label>Выбрать существующий памятник <span class="required">*</span></label>
     <input class="form-control" id="monument-input-<%= monId %>"></input>
@@ -17,11 +17,11 @@
 
   <div class="form-group">
     <label for="monument-name-input-<%= monId %>">Название памятника <span class="required">*</span></label>
-    <input class="form-control" id="monument-name-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="monument_name" data-req></input>
+    <input class="form-control monument-name" id="monument-name-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="monument_name" data-group="<%= monId %>" data-req></input>
   </div>
   <div class="form-group">
     <label for="monument-desc-input-<%= monId %>">Описание памятника</label>
-    <textarea class="form-control" id="monument-desc-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="description"></textarea>
+    <textarea class="form-control" id="monument-desc-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="description" data-group="<%= monId %>"></textarea>
   </div>
 
   <div class="form-group" id="place-for-layers-<%= monId %>"></div>
@@ -31,12 +31,12 @@
 <script type="text/template" class="add-monument-<%= monId %>">
   <h4>Добавление нового памятника</h4>
   <div class="form-group">
-    <input id="monument-tmp-input-<%= monId %>" value="Костыль" hidden data-for="m_<%= monId %>:Monument" type="text" name="tmp"></input>
+    <input id="monument-tmp-input-<%= monId %>" value="Костыль" hidden data-for="m_<%= monId %>:Monument" type="text" name="tmp" data-group="<%= monId %>"></input>
   </div>
 
   <div class="form-group">
     <label for="mon-type-selector-<%= monId %>">Тип</label>
-    <select class="form-control" id="mon-type-selector-<%= monId %>" data-for="mt_<%= monId %>:MonumentType" type="id" name="id" data-common-for="1"></select>
+    <select class="form-control" id="mon-type-selector-<%= monId %>" data-for="mt_<%= monId %>:MonumentType" type="id" name="id" data-group="<%= monId %>"></select>
   </div>
 
   <div id="coord-picker-<%= monId %>" class="coords">
@@ -44,13 +44,13 @@
       <label for="monument-x-<%= monId %>">
         Координата x
       </label>
-      <input class="form-control" id="monument-x-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="number" name="x"></input>
+      <input class="form-control" id="monument-x-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="number" name="x" data-group="<%= monId %>"></input>
     </div>
     <div class="form-group">
       <label for="monument-y-<%= monId %>">
         Координата y
       </label>
-      <input class="form-control" id="monument-y-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="number" name="y"></input>
+      <input class="form-control" id="monument-y-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="number" name="y" data-group="<%= monId %>"></input>
     </div>
   </div>
 </script>

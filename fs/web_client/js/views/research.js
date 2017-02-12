@@ -218,94 +218,6 @@ App.views.research = new (Backbone.View.extend({
     // validate('report-city-input', lastSelectedCityName);
     // validate('report-organization-input', orgName);
 
-
-    function addCoord (name, monId, id) {
-      return $("<div>")
-        .addClass("form-group")
-        .append($("<label>")
-          .attr("for", name+id)
-          .text(`Координата ${name}`))
-        .append($("<input>")
-          .addClass("form-control")
-          .attr({
-            "id": `${name}-${monId}-${id}`,
-            "data-for": `exc_${monId}_${id}:Excavation`,
-            "type": "number",
-            "name": name
-          })
-        );
-    }
-
-    function addExcName(monId, id) {
-      return $("<div>")
-        .addClass("form-group")
-        .append($("<label>")
-          .attr("for", `excavation-name-input-${id}`)
-          .text(`Название ${id}`))
-        .append($("<input>")
-          .addClass("form-control")
-          .attr({
-            "id": `excavation-name-input-${id}`,
-            "data-for": `exc_${monId}_${id}:Excavation`,
-            "type": "text",
-            "name": "name"
-          })
-        );
-    }
-
-    function addExcBoss(monId, id) {
-      return $("<div>")
-        .addClass("form-group")
-        .append($("<label>")
-          .attr("for", `excavation-boss-input-${id}`)
-          .text(`Руководитель работ`))
-        .append($("<input>")
-          .addClass("form-control")
-          .attr({
-            "id": `excavation-boss-input-${id}`,
-            "data-for": `exc_${monId}_${id}:Excavation`,
-            "type": "text",
-            "name": "boss"
-          })
-        );
-    }
-
-    function addExcArea(monId, id) {
-      return $("<div>")
-        .addClass("form-group")
-        .append($("<label>")
-          .attr("for", `excavation-area-input-${id}`)
-          .text(`Вскрытая площадь (м²)`))
-        .append($("<input>")
-          .addClass("form-control")
-          .attr({
-            "id": `excavation-area-input-${id}`,
-            "data-for": `exc_${monId}_${id}:Excavation`,
-            "type": "number",
-            "name": "area"
-          })
-        );
-    }
-
-    function addNewCoords(btn, monId, counter) {
-      var coords = $("<div>")
-        .addClass("coords")
-        .attr("id", `coord-picker-${monId}-${counter}`)
-        .append(addCoord("x", monId, counter))
-        .append(addCoord("y", monId, counter));
-
-      btn.before(addExcName(monId, counter));
-      btn.before(addExcBoss(monId, counter));
-      btn.before(addExcArea(monId, counter));
-      btn.before(coords);
-
-      var coordpicker = App.blocks.coordpicker;
-      coordpicker($(`#coord-picker-${monId}-${counter}`), {
-        inputs: [`#x-${monId}-${counter}`, `#y-${monId}-${counter}`],
-        map: map
-      }, `${monId}-${counter}`);
-    }
-
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;
@@ -314,6 +226,22 @@ App.views.research = new (Backbone.View.extend({
         $('#add-monument-button').before(tmpl({'monId': localMonId}));
 
         App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
+
+        $(`#monument-name-input-${localMonId}`).on("change", function() {
+          let monName = $(this).val();
+          $(`.exc-mon-name-${localMonId}`).text(`${monName}: `)
+        })
+
+        _.each($(".exc-belongs"), function(obj, key) {
+          let monName = "Без названия";
+          let excId = $(obj).attr("data-exc-id");
+          console.log(excId)
+          console.log($(obj))
+          let monLayers = App.views.functions.addExcMon(localMonId, monName);
+          let checkbox = App.views.functions.addMonExcCheckbox(excId, localMonId);
+          monLayers.append(checkbox);
+          $(obj).append(monLayers);
+        })
 
         $(`#monument-input-${localMonId}`).autocomplete({
           source: function(request, response) {
@@ -368,12 +296,25 @@ App.views.research = new (Backbone.View.extend({
               map: map
             }, localMonId);
 
+
             let layerCounter = App.fn.counter(1);
+            let layerCounter2 = App.fn.counter(1);
+
+            let monLayers = $(`.exc-mon-${localMonId}`);
+            monLayers.find("input").remove();
+            $(`#monument-name-input-${localMonId}`).trigger("change");
 
             let $button = $(`#add-layer-button-${localMonId}`);
-            $button.on("click", () => App.views.functions.addLayer($button, localMonId, layerCounter()))
+            $button.on("click", () => App.views.functions.addLayer($button, localMonId, layerCounter()));
+            $button.on("click", () => {
+              let layerId = layerCounter2();
+              _.each(monLayers, function(layers, excId) {
+                let checkbox = App.views.functions.addLayerCheckbox(excId+1, localMonId, layerId);
+                $(layers).append(checkbox);
+              })
+            });
+            $button.trigger("click");
 
-            getDataForSelector($(`#epoch-selector-${localMonId}`), "Epoch");
             getDataForSelector($(`#mon-type-selector-${localMonId}`), "MonumentType");
           } else if (lastSelectedAuthorId != ui.item.id) {
             lastSelectedMonId = ui.item.id;
@@ -388,9 +329,29 @@ App.views.research = new (Backbone.View.extend({
       setSelectsEvents();
     });
 
-    var excCounter = 1;
-    $("#add-exc-button-0").on('click', function(e) {
-      addNewCoords($(this), 0, excCounter++);
+    var excCounter = App.fn.counter(1);
+    $("#add-exc-button").on('click', function(e) {
+      let excId = excCounter();
+
+      $.when(App.views.functions.addExcavation($(this), excId, map)).then(function(response) {
+        _.each($(".monument-content"), function(obj, monId) {
+          let monName = $(obj).find(".monument-name").val() || "Без названия";
+          let layers = $(obj).find(".mon-layer");
+          let monLayers = App.views.functions.addExcMon(monId+1, monName);
+
+          if (layers.length > 0) {
+            _.each(layers, function(layer, layerId) {
+              let checkbox = App.views.functions.addLayerCheckbox(excId, monId+1, layerId+1)
+              monLayers.append(checkbox);
+            })
+          } else {
+            let checkbox = App.views.functions.addMonExcCheckbox(excId, monId+1)
+            monLayers.append(checkbox);
+          }
+
+          $(`#exc-belongs-${excId}`).append(monLayers)
+        })   
+      });
     });
 
     $('.btn-next').on('click', function(e) {
