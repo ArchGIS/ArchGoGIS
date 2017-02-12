@@ -223,7 +223,7 @@ App.views.research = new (Backbone.View.extend({
       let localMonId = monId++;
 
       App.template.get("research/addMonument", function(tmpl) {
-        $('#add-monument-button').before(tmpl({'monId': localMonId}));
+        $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
 
         App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
 
@@ -329,7 +329,7 @@ App.views.research = new (Backbone.View.extend({
       setSelectsEvents();
     });
 
-    var excCounter = App.fn.counter(1);
+    let excCounter = App.fn.counter(1);
     $("#add-exc-button").on('click', function(e) {
       let excId = excCounter();
 
