@@ -166,7 +166,7 @@ App.controllers.heritage = new (Backbone.View.extend({
           hintContent: tmplData.heritage.name
         },
         opts: {
-          preset: `heritage1`
+          preset: `heritage`
         }
       });
 

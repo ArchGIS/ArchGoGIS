@@ -181,7 +181,7 @@ App.controllers.research = new (Backbone.View.extend({
               hintContent: her.name,
             },
             opts: {
-              preset: `heritage1`
+              preset: `heritage`
             }
           })
         })
