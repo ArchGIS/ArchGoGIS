@@ -79,6 +79,10 @@ App.views.map = (types) => {
     .setPosition('bottomleft')
     .addTo(map);
 
+  L.Control.geocoder({
+    position: 'topleft'
+  }).addTo(map);
+
   return {
     map,
     overlayLayers
