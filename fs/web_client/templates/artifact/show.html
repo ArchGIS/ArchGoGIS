@@ -121,7 +121,7 @@
               let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
               resTitle = App.models.Research.href(researches[i].research[0].id, resTitle);
 
-              let date = `${dateScale[i].name}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
+              let date = `${dates[i].name}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
               dates.push(date)
             }
           });
@@ -149,7 +149,7 @@
               <dd><%= maybe(culture[i], "Нет данных", "name") %></dd>
 
               <dt><%= t("date.singular") %>:</dt>
-              <% let date = `${dateScale[i].name}: ${inters[i].dateBottom} — ${inters[i].dateTop}` %>
+              <% let date = `${dates[i].name}: ${inters[i].dateBottom} — ${inters[i].dateTop}` %>
               <dd><%= maybe(date, "Нет данных") %></dd>
 
               <dt><%= t("photo.plural") %>:</dt>

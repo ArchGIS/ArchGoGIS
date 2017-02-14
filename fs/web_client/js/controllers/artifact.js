@@ -42,9 +42,7 @@ App.controllers.artifact = new (Backbone.View.extend({
         interpretations: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "inters:Interpretation": {"id": "*", "select": "*"},
-          "dateScale:DateScale": {"id": "*", "select": "*"},
           "artifact__has__inters": {},
-          "inters__has__dateScale": {},
         }),
       },
 
@@ -104,6 +102,11 @@ App.controllers.artifact = new (Backbone.View.extend({
           "inter:Interpretation": {"id": "NEED"},
           "culture:Culture": {"id": "*", "select": "*"},
           "inter__has__culture": {},
+        }),
+        dates: JSON.stringify({
+          "inter:Interpretation": {"id": "NEED"},
+          "dates:DateScale": {"id": "*", "select": "*"},
+          "inter__has__dates": {},
         }),
         researches: JSON.stringify({
           "inter:Interpretation": {"id": "NEED"},
