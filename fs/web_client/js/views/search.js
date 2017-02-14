@@ -21,7 +21,8 @@ App.views.search = new (Backbone.View.extend({
         },
         'inputs': {
           'monument': $('#monument-input'),
-          'epoch': $('#monument-epoch')
+          'epoch': $('#monument-epoch'),
+          'type': $('#monument-type')
         }
       },
       'research-params': {
@@ -92,12 +93,14 @@ App.views.search = new (Backbone.View.extend({
       object.handler(object);
     }
 
-    // Заполнение селекта эпох
-    // Выключение выбора эпохи и культуры по умолчанию
-    var $epoch = $('#monument-epoch');
-    var $culture = $('#monument-culture');
+    // Заполнение селекторов
+    let $epoch = $('#monument-epoch');
+    let $culture = $('#monument-culture');
+    let $monType = $('#monument-type');
     getDataForSelector($epoch, 'Epoch');
     $epoch.prepend('<option value="0" selected>Ничего не выбрано</option>');
+    getDataForSelector($monType, 'MonumentType');
+    $monType.prepend('<option value="0" selected>Ничего не выбрано</option>');
     getDataForSelector($culture, 'Culture');
     $culture.prepend('<option value="0" selected>Ничего не выбрано</option>');
 
@@ -114,7 +117,8 @@ App.views.search = new (Backbone.View.extend({
       var input = my.inputs;
 
       var mnt   = input.monument.val(),
-          epoch = input.epoch;
+          epoch = input.epoch,
+          type  = input.type;
 
 
       if (mnt || epoch) {
@@ -122,7 +126,8 @@ App.views.search = new (Backbone.View.extend({
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_monuments', {
               'name': mnt,
-              'epoch': epoch.val() != 0 ? epoch.val() : ''
+              'epoch': epoch.val() != 0 ? epoch.val() : '',
+              'type': type.val() != 0 ? type.val() : ''
             });
 
             $.get({
