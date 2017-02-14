@@ -229,16 +229,14 @@ App.views.research = new (Backbone.View.extend({
 
         $(`#monument-name-input-${localMonId}`).on("change", function() {
           let monName = $(this).val();
-          $(`.exc-mon-name-${localMonId}`).text(`${monName}: `)
+          $(`.mon-name-${localMonId}`).text(`${monName}: `)
         })
 
         _.each($(".exc-belongs"), function(obj, key) {
           let monName = "Без названия";
           let excId = $(obj).attr("data-exc-id");
-          console.log(excId)
-          console.log($(obj))
-          let monLayers = App.views.functions.addExcMon(localMonId, monName);
-          let checkbox = App.views.functions.addMonExcCheckbox(excId, localMonId);
+          let monLayers = App.views.functions.addMonRelation("exc", localMonId, monName);
+          let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, localMonId);
           monLayers.append(checkbox);
           $(obj).append(monLayers);
         })
@@ -299,7 +297,7 @@ App.views.research = new (Backbone.View.extend({
             let layerCounter = App.fn.counter(1);
             let layerCounter2 = App.fn.counter(1);
 
-            let monLayers = $(`.exc-mon-${localMonId}`);
+            let monLayers = $(`.mon-checkboxes-${localMonId}`);
             monLayers.find("input").remove();
             $(`#monument-name-input-${localMonId}`).trigger("change");
 
@@ -308,7 +306,7 @@ App.views.research = new (Backbone.View.extend({
             $button.on("click", () => {
               let layerId = layerCounter2();
               _.each(monLayers, function(layers, excId) {
-                let checkbox = App.views.functions.addLayerCheckbox(excId+1, localMonId, layerId);
+                let checkbox = App.views.functions.addLayerCheckbox("exc", "m", excId+1, localMonId, layerId);
                 $(layers).append(checkbox);
               })
             });
@@ -336,15 +334,15 @@ App.views.research = new (Backbone.View.extend({
         _.each($(".monument-content"), function(obj, monId) {
           let monName = $(obj).find(".monument-name").val() || "Без названия";
           let layers = $(obj).find(".mon-layer");
-          let monLayers = App.views.functions.addExcMon(monId+1, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", monId+1, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {
-              let checkbox = App.views.functions.addLayerCheckbox(excId, monId+1, layerId+1)
+              let checkbox = App.views.functions.addLayerCheckbox("exc", "m", excId, monId+1, layerId+1)
               monLayers.append(checkbox);
             })
           } else {
-            let checkbox = App.views.functions.addMonExcCheckbox(excId, monId+1)
+            let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId+1)
             monLayers.append(checkbox);
           }
 

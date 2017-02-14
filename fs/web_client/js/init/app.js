@@ -293,8 +293,8 @@ function generateJson(relations) {
   })
   
   let fewRelations = {};
-  _.each($("[data-few-relations]"), function(obj, i) {
-    let parts = $(obj).attr("data-few-relations").split(":");
+  _.each($("[data-custom-relations]"), function(obj, i) {
+    let parts = $(obj).attr("data-custom-relations").split(":");
     fewRelations[parts[0]] = parts[1];
   })
 

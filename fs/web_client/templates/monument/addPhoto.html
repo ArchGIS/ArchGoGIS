@@ -3,7 +3,7 @@
   <%= t('photo.singular') %> №<%= photoId %>
 </h4>
   
-<div class="accordion-content">
+<div class="accordion-content" data-custom-relations="photo_<%= photoId %>:Knowledge">
   <div class="form-group">
     <label for="photo-file-input-<%= photoId %>">Фотография</label>
     <input id="photo-file-input-<%= photoId %>" data-for="photo_<%= photoId %>:Image" data-subclass="monumentImage" type="file" name="fileid"></input>
@@ -20,5 +20,9 @@
       <label for="photo-view-selector-<%= photoId %>">Ракурс</label>
       <select class="form-control" id="photo-view-selector-<%= photoId %>" data-for="cd_<%= photoId %>:CardinalDirection" type="id" name="id"></select>
     </div>
+  </div>
+
+  <div class="form-group photo-belongs" id="photo-belongs-<%= photoId %>">
+    Принадлежит памятникам:
   </div>
 </div>

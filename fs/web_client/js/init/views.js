@@ -168,19 +168,20 @@ App.views.functions = {
     return d.promise();
   },
 
-  "addLayerCheckbox": function(excId, monId, layerId) {
+  "addLayerCheckbox": function(objFor, objWith, forId, withId, layerId, type) {
+    type = type || "checkbox";
     let layerSpan = $("<span>").attr("class", "layer-checkbox");
     let label = $("<label>")
       .attr("style", "margin-right: 3px")
-      .attr("for", `mon-layer-${monId}-${layerId}`)
+      .attr("for", `${objFor}-layer-${withId}-${layerId}`)
       .text(`слой №${layerId}`);
 
     let checkbox = $("<input>")
       .attr({
-        id: `mon-layer-${monId}-${layerId}`,
+        id: `${objFor}-layer-${withId}-${layerId}`,
         type: "checkbox",
-        "data-relation-for": `exc_${excId}`,
-        "data-relation-with": `m_${monId}_${layerId}`
+        "data-relation-for": `${objFor}_${forId}`,
+        "data-relation-with": `${objWith}_${withId}_${layerId}`
       })
 
     layerSpan.append(label);
@@ -189,23 +190,25 @@ App.views.functions = {
     return layerSpan;
   },
 
-  "addMonExcCheckbox": function(excId, monId) {
+  "addRelationCheckbox": function(objFor, objWith, forId, withId, type) {
+    type = type || "checkbox";
     let checkbox = $("<input>")
       .attr({
-        id: `mon-layer-${monId}`,
+        id: `${objFor}-layer-${withId}`,
         type: "checkbox",
-        "data-relation-for": `exc_${excId}`,
-        "data-relation-with": `m_${monId}`,
+        "data-relation-for": `${objFor}_${forId}`,
+        "data-relation-with": `${objWith}_${withId}`,
       })
 
     return checkbox;
   },
 
-  "addExcMon":  function(monId, monName) {
+  "addMonRelation":  function(entity, monId, monName) {
     let monLayers = $("<div>").attr({
-        class: `exc-mon-${monId}`,
+        class: `mon-checkboxes-${monId}`,
+        "data-entity": entity
       })
-      .append(`<span class='exc-mon-name-${monId}'>${monName}: </span>`);
+      .append(`<span class='mon-name-${monId}'>${monName}: </span>`);
 
     return monLayers;
   }

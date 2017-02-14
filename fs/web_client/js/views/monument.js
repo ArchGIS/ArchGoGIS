@@ -230,7 +230,7 @@ App.views.monument = new (Backbone.View.extend({
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
-        $(`.exc-mon-name-${monId}`).text(`${monName}: `)
+        $(`.mon-name-${monId}`).text(`${monName}: `);
       })
 
       $(`#monument-input-${monId}`).autocomplete({
@@ -289,7 +289,7 @@ App.views.monument = new (Backbone.View.extend({
           let layerCounter2 = App.fn.counter(1);
           objectId = "m_1_1";
 
-          let monLayers = $(`.exc-mon-${monId}`);
+          let monLayers = $(`.mon-checkboxes-${monId}`);
           monLayers.find("input").remove();
           $(`#monument-name-input-${monId}`).trigger("change");
 
@@ -297,8 +297,12 @@ App.views.monument = new (Backbone.View.extend({
           $button.on("click", () => App.views.functions.addLayer($button, monId, layerCounter()));
           $button.on("click", () => {
             let layerId = layerCounter2();
-            _.each(monLayers, function(layers, excId) {
-              let checkbox = App.views.functions.addLayerCheckbox(excId+1, monId, layerId);
+            _.each($(`.mon-checkboxes-${monId}[data-entity="exc"]`), function(layers, excId) {
+              let checkbox = App.views.functions.addLayerCheckbox("exc", "m", excId+1, monId, layerId);
+              $(layers).append(checkbox);
+            })
+            _.each($(`.mon-checkboxes-${monId}[data-entity="photo"]`), function(layers, photoId) {
+              let checkbox = App.views.functions.addLayerCheckbox("photo", "k", photoId+1, monId, layerId);
               $(layers).append(checkbox);
             })
           });
@@ -321,15 +325,15 @@ App.views.monument = new (Backbone.View.extend({
         $.when(App.views.functions.addExcavation($(this), excId, map)).then(function(response) {
           let monName = $(".monument-name").val() || "Памятник";
           let layers = $(".mon-layer");
-          let monLayers = App.views.functions.addExcMon(monId, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", monId, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {
-              let checkbox = App.views.functions.addLayerCheckbox(excId, monId, layerId+1)
+              let checkbox = App.views.functions.addLayerCheckbox("exc", "m", excId, monId, layerId+1)
               monLayers.append(checkbox);
             })
           } else {
-            let checkbox = App.views.functions.addMonExcCheckbox(excId, monId)
+            let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId)
             monLayers.append(checkbox);
           }
 
@@ -353,16 +357,32 @@ App.views.monument = new (Backbone.View.extend({
 
     let nextPhotoId = App.fn.counter(1);
     $('#add-photo-button').on('click', function(e) {
-      let localPhotoId = nextPhotoId();
+      let photoId = nextPhotoId();
       let params = {
-        photoId: localPhotoId
+        photoId: photoId
       }
 
       App.template.get("monument/addPhoto", function(tmpl) {
         $('#add-photo-button').before(tmpl(params));
 
-        getDataForSelector($(`#photo-view-selector-${localPhotoId}`), "CardinalDirection");
-        App.views.functions.setAccordionHeader($(`#photo-header-${localPhotoId}`));
+        let monName = $(".monument-name").val() || "Памятник";
+        let layers = $(".mon-layer");
+        let monLayers = App.views.functions.addMonRelation("photo", monId, monName);
+
+        if (layers.length > 0) {
+          _.each(layers, function(layer, layerId) {
+            let checkbox = App.views.functions.addLayerCheckbox("photo", "k", photoId, monId, layerId+1)
+            monLayers.append(checkbox);
+          })
+        } else {
+          let checkbox = App.views.functions.addRelationCheckbox("photo", "k", photoId, monId)
+          monLayers.append(checkbox);
+        }
+
+        $(`#photo-belongs-${photoId}`).append(monLayers)
+
+        getDataForSelector($(`#photo-view-selector-${photoId}`), "CardinalDirection");
+        App.views.functions.setAccordionHeader($(`#photo-header-${photoId}`));
       })
     });
 
@@ -546,7 +566,7 @@ App.views.monument = new (Backbone.View.extend({
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
-        $(`.exc-mon-name-${monId}`).text(`${monName}: `)
+        $(`.mon-name-${monId}`).text(`${monName}: `)
       })
 
       $(`#monument-input-${monId}`).autocomplete({
@@ -605,7 +625,7 @@ App.views.monument = new (Backbone.View.extend({
           let layerCounter2 = App.fn.counter(1);
           objectId = "m_1_1";
 
-          let monLayers = $(`.exc-mon-${monId}`);
+          let monLayers = $(`.mon-checkboxes-${monId}`);
           monLayers.find("input").remove();
           $(`#monument-name-input-${monId}`).trigger("change");
 
@@ -614,7 +634,7 @@ App.views.monument = new (Backbone.View.extend({
           $button.on("click", () => {
             let layerId = layerCounter2();
             _.each(monLayers, function(layers, excId) {
-              let checkbox = App.views.functions.addLayerCheckbox(excId+1, monId, layerId);
+              let checkbox = App.views.functions.addLayerCheckbox("exc", "m", excId+1, monId, layerId);
               $(layers).append(checkbox);
             })
           });
@@ -637,15 +657,15 @@ App.views.monument = new (Backbone.View.extend({
         $.when(App.views.functions.addExcavation($(this), excId, map)).then(function(response) {
           let monName = $(".monument-name").val() || "Памятник";
           let layers = $(".mon-layer");
-          let monLayers = App.views.functions.addExcMon(monId, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", monId, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {
-              let checkbox = App.views.functions.addLayerCheckbox(excId, monId, layerId+1)
+              let checkbox = App.views.functions.addLayerCheckbox("exc", "m", excId, monId, layerId+1)
               monLayers.append(checkbox);
             })
           } else {
-            let checkbox = App.views.functions.addMonExcCheckbox(excId, monId)
+            let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId)
             monLayers.append(checkbox);
           }
 
