@@ -109,7 +109,7 @@ App.controllers.excavation = new (Backbone.View.extend({
             hintContent: arti.name,
           },
           opts: {
-            preset: `artifact`
+            preset: `artifact1`
           }
         })
       })

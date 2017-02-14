@@ -165,7 +165,7 @@ App.controllers.research = new (Backbone.View.extend({
               hintContent: art.name,
             },
             opts: {
-              preset: `artifact`
+              preset: `artifact1`
             }
           })
         })

@@ -176,20 +176,14 @@ App.views.research = new (Backbone.View.extend({
         $input.parent().replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
+        
         setSelectsEvents();
+        $('#report-city-input').on('autocompleteselect', function(event, ui) {
+          citySelectHandler(event, ui);
+        });
       }
     });
 
-
-    var lastSelectedCityId = 0;
-    var lastSelectedCityName = '';
-    $('#report-city-input').on('autocompleteselect', function(event, ui) {
-      if (lastSelectedCityId != ui.item.id) {
-        lastSelectedCityId = ui.item.id;
-        lastSelectedCityName = ui.item.name;
-        citySelectHandler(event, ui);
-      }
-    });
 
 
     // События для прослушивания размера файлов
