@@ -113,6 +113,7 @@
         let dates = [];
         if (inters.length) {
           _.each(inters, function(inter, i) {
+            dateScale[0][i] = dateScale[0][i] || {};
             if (inter.dateBottom) {
               let resName = researches[i].research[0].name;
               let authorName = researches[i].author[0].name || "Неизвестный автор";
