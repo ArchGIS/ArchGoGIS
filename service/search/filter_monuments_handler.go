@@ -22,7 +22,8 @@ const (
 var filterMonumentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	result, err := searchForFilterMonuments(
 		r.URL.Query().Get("name"),
-		r.URL.Query().Get("epoch"))
+		r.URL.Query().Get("epoch"),
+		r.URL.Query().Get("type"))
 
 	if err == nil {
 		w.Write(result)
@@ -31,7 +32,7 @@ var filterMonumentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *htt
 	}
 })
 
-func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
+func searchForFilterMonuments(mnt, epoch, mType string) ([]byte, error) {
 	params := neo.Params{}
 	query := filterMonumentsCypher
 
@@ -46,9 +47,20 @@ func searchForFilterMonuments(mnt, epoch string) ([]byte, error) {
 		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)" +
 		"WITH m, k, r, a, monType, e, c "
 
+	flag := false
 	if epoch != "" {
 		query = query + "WHERE e.id = {epoch} "
 		params["epoch"] = epoch
+		flag = true
+	}
+	if mType != "" {
+		if flag {
+			query = query + "AND monType.id = {mType} "
+		} else {
+			query = query + "WHERE monType.id = {mType} "
+		}
+
+		params["mType"] = mType
 	}
 
 	query = query + "RETURN {" +
