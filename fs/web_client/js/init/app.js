@@ -186,7 +186,7 @@ function postQuery(objectId) {
         loading(iconButton);
 
         if (response.length == 4) {
-          alert('При обработке данных на сервере произошла ошибка');
+          alert('При обработке данных на сервере произошла ошибка' + response);
         } else {
           $('#toObject').attr('href', location.hash.replace(/new\w*/g, 'show/') + JSON.parse(response)[objectId]);
           modal.trigger('openModal');
