@@ -57,6 +57,11 @@ App.controllers.artifact = new (Backbone.View.extend({
           "categories:ArtifactCategory": {"id": "*", "select": "*"},
           "artifact__has__categories": {},
         }),
+        photosa: JSON.stringify({
+          "a:Artifact": {"id": aid},
+          "photosa:Image": {"id": "*", "select": "*"},
+          "a__has__photosa": {},
+        }),
         excavation: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "exc:Excavation": {"id": "*", "select": "*"},
@@ -133,6 +138,7 @@ App.controllers.artifact = new (Backbone.View.extend({
         }
       })
 
+      tmplData.exc[0] = tmplData.exc[0] || [];
       type = (tmplData.exc[0].area <= 20) ? 1 : 2;
       tmplData.placemarks.push({
         type: 'excavation',
