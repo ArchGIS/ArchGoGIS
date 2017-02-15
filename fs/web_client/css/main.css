@@ -1,5 +1,6 @@
 html {
   height: 100%;
+  width: 100%;
 }
 
 .field-input {
@@ -19,6 +20,8 @@ html {
 }
 
 body {
+  width: 100%;
+  height: 100%;
   height: calc(100% - 2em);
   min-width: 875px;
 }
@@ -52,6 +55,8 @@ a:hover {
 
 #body {
   margin-top: 60px;
+  height: 100%;
+  width: 100%;
   min-height: calc(100vh - 5em);
 }
 
@@ -444,13 +449,13 @@ dt {
 /*main page*/
 .main-page {
   position: relative;
+  background-image: url('../img/main_kazan.jpg');
+  height: 100%;
+  width: 100%;
+  background-size: cover;
 }
 
 .main-page-bg {
-  background-image: url('../img/main_kazan.jpg');
-  height: 140%;
-  width: 100%;
-  background-size: cover;
   position: absolute;
   top: -20px;
   filter: blur(1px);
