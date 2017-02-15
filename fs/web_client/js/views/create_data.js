@@ -23,7 +23,8 @@ App.views.wizard = new (Backbone.View.extend({
         "#artifact/new_by_report": t("report.singular")
       },
       "research": {
-        "#research/new_by_report": t("report.singular")
+        "#research/new_by_report": t("report.singular"),
+        "#research/new_by_pub": t("publication.singular")
       },
       "heritage": {
         "#heritage/new": t("doc.registration.singular")+"/"+t("doc.surveyMap.singular")
