@@ -411,7 +411,7 @@ App.views.search = new (Backbone.View.extend({
 
               _.each(response, function(item) {
                 let icon = L.icon({
-                  iconUrl: `/web_client/img/heritage/heritage1.png`,
+                  iconUrl: `/web_client/img/heritage/heritage.png`,
                   iconSize: [16, 16]
                 });
 
