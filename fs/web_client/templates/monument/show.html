@@ -79,8 +79,12 @@
                 <dd><%= cultures[i].name %></dd>
               <% } %>
               <% if (research.description) { %>
-                <dt>Описание:</dt>
+                <dt>Описание исследования:</dt>
                 <dd><%= research.description %></dd>
+              <% } %>
+              <% if (knowledges[i].description) { %>
+                <dt>Описание памятника:</dt>
+                <dd><%= knowledges[i].description %></dd>
               <% } %>
 
               <% if (reports[i] && reports[i].length > 0) { %>

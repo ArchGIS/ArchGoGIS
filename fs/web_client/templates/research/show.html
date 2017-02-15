@@ -105,6 +105,10 @@
               <dd><%= maybe(monTypes[i][0], "Нет данных", "name") %></dd>
               <dt>Культурная принадлежность, определенная исследователем:</dt>
               <dd><%= maybe(cultures[i][0], "Нет данных", "name") %></dd>
+              <% if (knowledges[i].description) { %>
+                <dt>Описание памятника:</dt>
+                <dd><%= knowledges[i].description %></dd>
+              <% } %>
               <dt>Найденные артефакты:</dt>
               <dd>
                 <% if (artifacts[i] && artifacts[i].length > 0) { %>
