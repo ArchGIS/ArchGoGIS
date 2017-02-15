@@ -591,6 +591,20 @@ App.views.research = new (Backbone.View.extend({
       });
     });
 
+    let nextTopoId = App.fn.counter(1);
+    $('#add-topo-button').on('click', function(e) {
+      let localTopoId = nextTopoId();
+      let params = {
+        topoId: localTopoId
+      }
+
+      App.template.get("monument/addTopoplan", function(tmpl) {
+        $('#add-topo-button').before(tmpl(params));
+
+        App.views.functions.setAccordionHeader($(`#topo-header-${localTopoId}`));
+      })
+    });
+    
     $("#container").tabs();
 
     $('.btn-next').on('click', function(e) {
