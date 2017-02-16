@@ -106,9 +106,9 @@ App.views.addToMap = (placemarks) => {
         overlays    = mapInstance.overlayLayers;
 
   const icon16 = [16, 16],
-        icon24 = [24, 24];
+        icon20 = [20, 20];
   const iconSizes = {
-    research: icon24,
+    research: icon20,
     monument: icon16,
     artifact: icon16,
     heritage: icon16,
