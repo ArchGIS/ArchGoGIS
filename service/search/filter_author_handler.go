@@ -37,7 +37,10 @@ func searchForFilterAuthor(author string) ([]byte, error) {
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
 
-	query = query + "RETURN a.id, a.name, a.birthdate"
+	query = query + "RETURN {" +
+		"id: a.id, " +
+		"name: a.name, " +
+		"birth: a.birthdate}"
 
 	resp, err := neo.Run(query, params)
 
@@ -55,12 +58,9 @@ func searchForFilterAuthor(author string) ([]byte, error) {
 
 	buf.WriteByte('[')
 	for _, row := range resp.Results[0].Data {
-		// #FIXME: перепиши меня, когда будет время!
-		buf.WriteByte('[')
 		buf.Write(
 			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
 		)
-		buf.WriteByte(']')
 		buf.WriteByte(',')
 	}
 	buf.DropLastByte()

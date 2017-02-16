@@ -92,12 +92,9 @@ func searchForFilterMonuments(mnt, epoch, mType string) ([]byte, error) {
 
 	buf.WriteByte('[')
 	for _, row := range resp.Results[0].Data {
-		// #FIXME: перепиши меня, когда будет время!
-		buf.WriteByte('[')
 		buf.Write(
 			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
 		)
-		buf.WriteByte(']')
 		buf.WriteByte(',')
 	}
 	buf.DropLastByte()
