@@ -11,7 +11,7 @@ const (
 	HqueryReadMaxLimit      = "500"
 	HqueryMaxEntries        = 32
 	HqueryMaxPropsPerEntry  = 24
-	HqueryMaxPropsTotal     = 120
+	HqueryMaxPropsTotal     = 1200
 	HqueryMaxTagLen         = 48
 	HqueryMaxTextLen        = 20048
 )
