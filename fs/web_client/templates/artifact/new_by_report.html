@@ -3,10 +3,10 @@
   <div id="container">
     <ul>
       <li><a href="#home"><%= t('research.singular') %></a></li>
-      <li><a href="#menu1"><%= t('monument.singular') %></a></li>
-      <li><a href="#menu2"><%= t('excavation.singular') %></a></li>
-      <li><a href="#menu3"><%= t('collection.singular') %></a></li>
-      <li><a href="#menu4"><%= t('artifact.singular') %></a></li>
+      <li><a href="#monument"><%= t('monument.singular') %></a></li>
+      <li><a href="#excavation"><%= t('excavation.singular') %></a></li>
+      <li><a href="#collection"><%= t('collection.singular') %></a></li>
+      <li><a href="#artifact"><%= t('artifact.singular') %></a></li>
     </ul>
 
     <div id="home">
@@ -38,81 +38,42 @@
       </button>
     </div>
 
-    <div id="menu1">
+    <div id="monument">
       <legend>Сведения о памятнике</legend>
 
-      <div class="form-group find-monument">
-        <label for="monument-input">Выбрать существующий памятник <span class="required">*</span></label>
-        <input class="form-control" id="monument-input"></input>
-        <input id="monument-input-id" data-for="m:Monument" hidden type="id" name="id" data-req="up"></input>
-      </div>
-
-      <div class="form-group">
-        <label for="monument-name-input">Название памятника <span class="required">*</span></label>
-        <input class="form-control" id="monument-name-input" data-for="k:Knowledge" type="text" name="monument_name" data-req></input>
-      </div>
-
-      <div class="form-group">
-        <label for="monument-desc-input">Описание памятника</label>
-        <textarea class="form-control" id="monument-desc-input" data-for="k:Knowledge" type="text" name="description"></textarea>
-      </div>
-
-
-      <div class="form-group find-culture">
-        <label for="culture-input">Культурная принадлежность</label>
-        <input id="culture-input" class="form-control">
-        <input id="culture-input-id" hidden data-for="c:Culture" type="id" name="id">
-      </div>
-
-
-      <div id="monument-coord-picker" class="coords">
-        <div class="form-group">
-          <label for="monument-x">
-            Координата X
-          </label>
-          <input class="form-control" id="monument-x" data-for="k:Knowledge" type="number" name="x"></input>
-        </div>
-        <div class="form-group">
-          <label for="monument-y">
-            Координата Y
-          </label>
-          <input class="form-control" id="monument-y" data-for="k:Knowledge" type="number" name="y"></input>
-        </div>
-      </div>
-      <div class="alert alert-dismissible alert-info">
-        Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
-      </div>
-
-      <button class="btn btn-primary btn-next" active="2">
+      <button class="btn btn-primary btn-next" active="2" id="monument-next-button">
         <i class="fa fa-cogs"></i>
         Далее
       </button>
     </div>
 
-    <div id="menu2">
+  <div id="excavation" data-custom-relations="exc_1:Monument">
       <div class="form-group">
         <label for="exc-name-input">Название вскрытия</label>
-        <input class="form-control" id="exc-name-input" data-for="exc:Excavation" type="text" name="name"></input>
+        <input class="form-control" id="exc-name-input" data-for="exc_1:Excavation" type="text" name="name"></input>
       </div>
       <div class="form-group">
         <label for="exc-boss-input">Руководитель работ</label>
-        <input class="form-control" id="exc-boss-input" data-for="exc:Excavation" type="text" name="boss"></input>
+        <input class="form-control" id="exc-boss-input" data-for="exc_1:Excavation" type="text" name="boss"></input>
       </div>
       <div class="form-group">
         <label for="exc-area-input">Площадь (м²)</label>
-        <input class="form-control" id="exc-area-input" data-for="exc:Excavation" type="number" name="area"></input>
+        <input class="form-control" id="exc-area-input" data-for="exc_1:Excavation" type="number" name="area"></input>
       </div>
       <div class="form-group">
         <label for="exc-region-input">Участок(квадрат)</label>
-        <input class="form-control" id="exc-region-input" data-for="arti:Artifact" type="text" name="excRegion"></input>
+        <input class="form-control" id="exc-region-input" data-for="arti_1:Artifact" type="text" name="excRegion"></input>
       </div>
       <div class="form-group">
         <label for="exc-depth-input">Глубина (см)</label>
-        <input class="form-control" id="exc-depth-input" data-for="arti:Artifact" type="number" name="depth"></input>
+        <input class="form-control" id="exc-depth-input" data-for="arti_1:Artifact" type="number" name="depth"></input>
       </div>
-      <div class="form-group">
+      <div class="form-group" data-custom-relations="complex_1:Monument">
         <label for="monument-object-input">Название объекта</label>
-        <input class="form-control" id="monument-object-input" data-for="complex:Complex" type="text" name="name"></input>
+        <input class="form-control" id="monument-object-input" data-for="complex_1:Complex" type="text" name="name"></input>
+      </div>
+      <div class="form-group complex-belongs" id="complex-belongs" data-checkbox-type="radio" hidden>
+        Принадлежит памятнику:
       </div>
 
       <div id="exc-coord-picker" class="coords">
@@ -120,17 +81,21 @@
           <label for="exc-x">
             Координата X
           </label>
-          <input class="form-control" id="exc-x" data-for="exc:Excavation" type="number" name="x"></input>
+          <input class="form-control" id="exc-x" data-for="exc_1:Excavation" type="number" name="x"></input>
         </div>
         <div class="form-group">
           <label for="exc-y">
             Координата Y
           </label>
-          <input class="form-control" id="exc-y" data-for="exc:Excavation" type="number" name="y"></input>
+          <input class="form-control" id="exc-y" data-for="exc_1:Excavation" type="number" name="y"></input>
         </div>
       </div>
       <div class="alert alert-dismissible alert-info">
         Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
+      </div>
+
+      <div class="form-group exc-belongs" id="exc-belongs" data-checkbox-type="checkbox">
+        Принадлежит памятнику:
       </div>
 
       <button class="btn btn-primary btn-next" active="2">
@@ -139,7 +104,7 @@
       </button>
     </div>
 
-    <div id="menu3">
+    <div id="collection">
       <div class="form-group" id="find-collection">
         <label for="collection-input">Название коллекции</label>
         <input id="collection-input" class="form-control">
@@ -172,15 +137,15 @@
       </div>
     </div>
 
-    <div id="menu4">
+    <div id="artifact" data-custom-relations="arti_1:Knowledge">
       <div class="form-group">
         <label for="arti-name-input">Название<span class="required">*</span></label>
-        <input class="form-control" id="arti-name-input" data-for="arti:Artifact" type="text" name="name" data-req></input>
+        <input class="form-control" id="arti-name-input" data-for="arti_1:Artifact" type="text" name="name" data-req></input>
       </div>
 
       <div class="form-group">
         <label for="arti-year-found-input">Год находки</label>
-        <textarea class="form-control" id="arti-year-found-input" data-for="arti:Artifact" type="number" name="year"></textarea>
+        <textarea class="form-control" id="arti-year-found-input" data-for="arti_1:Artifact" type="number" name="year"></textarea>
       </div>
 
       <div class="form-group">
@@ -213,6 +178,10 @@
       <div class="form-group">
         <label for="arti-desc-input">Описание</label>
         <textarea class="form-control" id="arti-desc-input" data-for="inter:Interpretation" type="text" name="description"></textarea>
+      </div>
+
+      <div class="form-group arti-belongs" id="arti-belongs" data-checkbox-type="radio">
+        Принадлежит памятнику:
       </div>
 
       <button id="add-photo-button" class="btn btn-primary">
@@ -314,33 +283,6 @@
 
   <div hidden>
     <input class="form-control" id="research-input-name" data-for="rs:Research" type="text" name="name">
-  </div>
-</script>
-
-
-<!-- Форма для нового памятника -->
-<script type="text/template" class="add-monument">
-  <h4>Добавление нового памятника</h4>
-  <div class="form-group">
-    <input id="monument-tmp-input" value="Костыль" hidden data-for="m:Monument" type="text" name="tmp"></input>
-  </div>
-
-  <div class="form-group">
-    <label for="epoch-selector">Эпоха</label>
-    <select class="form-control" id="epoch-selector" data-for="e:Epoch" type="id" name="id"></select>
-  </div>
-  <div class="form-group">
-    <label for="mon-type-selector">Тип</label>
-    <select class="form-control" id="mon-type-selector" data-for="mt:MonumentType" type="id" name="id"></select>
-  </div>
-</script>
-
-
-<!-- Форма для добавления культуры -->
-<script type="text/template" class="add-culture">
-  <div class="form-group">
-    <label for="culture-name-input">Новая культурная принадлежность</label>
-    <input id="culture-name-input" class="form-control" data-for="c:Culture" type="text" name="name">
   </div>
 </script>
 

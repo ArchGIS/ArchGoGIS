@@ -62,168 +62,132 @@ App.views.artifact = new (Backbone.View.extend({
       });
     };
 
-    $("#monument-input").autocomplete({
-      source: function(request, response) {
-        var monuments = [];
+    let monId = 1;
+    let excId = 1;
+    let artiId = 1;
+    App.template.get("research/addMonument", function(tmpl) {
+      $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
 
-        App.models.Monument.findByNamePrefix(request.term)
-          .then(function(data) {
-            if (data && !data.error) {
-              response(_.map(excludeIdent(data), function(row) {
-                return {'label': `${row.monName}`, 'id': row.monId};
-              }))
-            } else {
-              response();
-            }
-          });
-      },
-      minLength: 3
-    }).focus(function(){
-      $(this).autocomplete("search");
-    });
+      $(`#monument-name-input-${monId}`).on("change", function() {
+        let monName = $(this).val();
+        $(`.mon-name-${monId}`).text(`${monName}: `)
+      })
 
-    $(`#monument-input`).on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
+      $(`#monument-input-${monId}`).autocomplete({
+        source: function(request, response) {
+          var monuments = [];
+          
+          App.models.Monument.findByNamePrefix(request.term)
+            .then(function(data) {
+              if (data && !data.error) {
+                let results = _.map(excludeIdent(data), function(row) {
+                  return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId}
+                });
 
-    $('#monument-input').on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'label': 'Ничего не найдено. Добавить?',
-          'value': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
+                if (!results.length) {
+                  results.push('Ничего не найдено. Добавить?');
+                }
 
-    let lastSelectedMonId = 0;
-    $(`#monument-input`).on('autocompleteselect', function(event, ui) {
-      if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
-
-        let tmpl = _.template( $(`script.add-monument`).html() );
-        $(`.find-monument`).replaceWith( tmpl() );
-
-        $('#' + addName(id)).val(inputValue);
-
-        fillSelector($(`#epoch-selector`), App.store.selectData.Epoch);
-        fillSelector($(`#mon-type-selector`), App.store.selectData.MonumentType);
-      } else if (lastSelectedAuthorId != ui.item.id) {
-        lastSelectedMonId = ui.item.id;
-        $(`#monument-input-id`).val(lastSelectedMonId);
-        monSelName = ui.item.name;
-      }
-    });
-
-
-    let d_culture = $.Deferred();
-    (function() {
-      let query = {};
-      query['rows:Culture'] = {"id": "*", "select": "*"};
-      query = JSON.stringify(query);
-
-      $.post({
-        url: "/hquery/read",
-        data: query,
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+                response(results);
+              } else {
+                response();
+              }
+            });
         },
-        success: (response) => {
-          App.store.selectData.Culture = JSON.parse(response);
-          d_culture.resolve();
+        minLength: 3
+      }).focus(function(){
+        $(this).autocomplete("search");
+      });
+
+      $(`#monument-input-${monId}`).on('autocompletefocus', function(event, ui) {
+        event.preventDefault();
+      });
+
+      let lastSelectedMonId = 0;
+      let monSelName = '';
+      $(`#monument-input-${monId}`).on('autocompleteselect', function(event, ui) {
+        if (ui.item.value === 'Ничего не найдено. Добавить?') {
+          let $input = $(this);
+          let id = $input.attr('id');
+          let inputValue = $input.val();
+
+          let tmpl = _.template( $(`script.add-monument-${monId}`).html() );
+          $(`.find-monument-${monId}`).replaceWith( tmpl({'monId': monId}) );
+
+          tmpl = _.template( $(`script#add-layer-${monId}`).html() );
+          $(`#place-for-layers-${monId}`).replaceWith( tmpl({'monId': monId}) );
+
+          $('#' + addName(id)).val(inputValue);
+
+          var coordpicker = App.blocks.coordpicker;
+          coordpicker($('#coord-picker-'+monId), {
+            inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
+            map: map
+          }, monId);
+
+          let layerCounter = App.fn.counter(1);
+          let layerCounter2 = App.fn.counter(1);
+
+          let monLayers = $(`.mon-checkboxes-${monId}`);
+          monLayers.find("input").remove();
+          $(`#monument-name-input-${monId}`).trigger("change");
+
+          let $button = $(`#add-layer-button-${monId}`);
+          $button.on("click", () => App.views.functions.addLayer($button, monId, layerCounter()));
+          $button.on("click", () => {
+            let layerId = layerCounter2();
+            _.each(monLayers, function(layers) {
+              let inputType = $(layers).attr("data-input-type");
+              let entity = $(layers).attr("data-entity");
+              let entityWith = $(layers).attr("data-entity-with");
+              let checkbox = App.views.functions.addLayerCheckbox(entity, entityWith, excId, monId, layerId, inputType);
+              $(layers).append(checkbox);
+            })
+
+            $(`#exc-layer-1-${layerId}`).on("click", function() {
+              let value = $(this).is(":checked");
+              $(`#arti-layer-1-${layerId}`).prop("disabled", !value);
+              $(`#arti-layer-1-${layerId}`)[0].checked = false;
+              $(`#complex-layer-1-${layerId}`).prop("disabled", !value);
+              $(`#complex-layer-1-${layerId}`)[0].checked = false;
+            })
+            $(`#exc-layer-1-${layerId}`).trigger("click");
+
+            $(`#arti-layer-1-${layerId}`).on("click", function() {
+              $(`#complex-layer-1-${layerId}`).trigger("click");
+            })
+          });
+          $button.trigger("click");
+
+          getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
+        } else if (lastSelectedAuthorId != ui.item.id) {
+          lastSelectedMonId = ui.item.id;
+          $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
+          monSelName = ui.item.name;
         }
       });
-    }());
+      
+      let monLayers = App.views.functions.addMonRelation("exc", "m", monId, "Памятник");
+      let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId);
+      monLayers.append(checkbox);
+      $(`#exc-belongs`).append(monLayers);
+      $(`#exc-layer-1`)[0].checked = true;
+      $(`#exc-layer-1`).prop("disabled", true);
 
-    $.when( d_culture ).done(() => {
-      let items = _.map(App.store.selectData.Culture.rows, culture => ({'id': culture.id, 'label': culture.name}));
-      let grepObject = App.fn.grepObject;
+      monLayers = App.views.functions.addMonRelation("arti", "k", monId, "Памятник", "radio");
+      checkbox = App.views.functions.addRelationCheckbox("arti", "k", artiId, monId, "radio");
+      monLayers.append(checkbox);
+      $(`#arti-belongs`).append(monLayers);
+      $(`#arti-layer-1`)[0].checked = true;
 
-      $(`#culture-input`).autocomplete({
-        source: function(req, res) {
-          let term = req.term.toLowerCase();
-          
-          res(grepObject(term, items, 'label'));
-        },
-        minLength: 0
-      }).focus(function() {
-        $(this).autocomplete("search");
-      });
-    });
+      monLayers = App.views.functions.addMonRelation("complex", "m", monId, "Памятник", "radio");
+      checkbox = App.views.functions.addRelationCheckbox("complex", "m", artiId, monId, "radio");
+      monLayers.append(checkbox);
+      $(`#complex-belongs`).append(monLayers);
+      $(`#complex-layer-1`)[0].checked = true;
 
-    $(`#culture-input`).on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
-
-    $(`#culture-input`).on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'value': 'Ничего не найдено. Добавить?',
-          'label': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
-    
-    $(`#culture-input`).on('autocompleteselect', function(event, ui) {
-      if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
-
-        let tmpl = _.template( $(`script.add-culture`).html() );
-        $(`.find-culture`).replaceWith( tmpl() );
-
-        $('#' + addName(id)).val(inputValue);
-      } else {
-        $(`#culture-input-id`).val(ui.item.id);
-      }
-    });
-
-
-    $.when( d_culture ).done(() => {
-      let items = _.map(App.store.selectData.Culture.rows, culture => ({'id': culture.id, 'label': culture.name}));
-      let grepObject = App.fn.grepObject;
-
-      $(`#culture-input-art`).autocomplete({
-        source: function(req, res) {
-          let term = req.term.toLowerCase();
-          
-          res(grepObject(term, items, 'label'));
-        },
-        minLength: 0
-      }).focus(function() {
-        $(this).autocomplete("search");
-      });
-    });
-
-    $(`#culture-input-art`).on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
-
-    $(`#culture-input-art`).on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'value': 'Ничего не найдено. Добавить?',
-          'label': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
-    
-    $(`#culture-input-art`).on('autocompleteselect', function(event, ui) {
-      if (ui.item.value === 'Ничего не найдено. Добавить?') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
-
-        let tmpl = _.template( $(`script.add-culture-art`).html() );
-        $(`.find-culture-art`).replaceWith( tmpl() );
-
-        $('#' + addName(id)).val(inputValue);
-      } else {
-        $(`#culture-input-art-id`).val(ui.item.id);
-      }
-    });
+      App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
+    })
 
     $("#collection-input").autocomplete({
       source: function(request, response) {
@@ -337,7 +301,6 @@ App.views.artifact = new (Backbone.View.extend({
         fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
       }
     });
-
 
     var lastSelectedCityId = 0;
     var lastSelectedCityName = '';

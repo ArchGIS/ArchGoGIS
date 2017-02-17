@@ -197,7 +197,7 @@ App.views.research = new (Backbone.View.extend({
         _.each($(".exc-belongs"), function(obj, key) {
           let monName = "Без названия";
           let excId = $(obj).attr("data-exc-id");
-          let monLayers = App.views.functions.addMonRelation("exc", localMonId, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", "m", localMonId, monName);
           let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, localMonId);
           monLayers.append(checkbox);
           $(obj).append(monLayers);
@@ -296,7 +296,7 @@ App.views.research = new (Backbone.View.extend({
         _.each($(".monument-content"), function(obj, monId) {
           let monName = $(obj).find(".monument-name").val() || "Без названия";
           let layers = $(obj).find(".mon-layer");
-          let monLayers = App.views.functions.addMonRelation("exc", monId+1, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", "m", monId+1, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {
@@ -443,7 +443,7 @@ App.views.research = new (Backbone.View.extend({
         _.each($(".exc-belongs"), function(obj, key) {
           let monName = "Без названия";
           let excId = $(obj).attr("data-exc-id");
-          let monLayers = App.views.functions.addMonRelation("exc", localMonId, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", "m", localMonId, monName);
           let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, localMonId);
           monLayers.append(checkbox);
           $(obj).append(monLayers);
@@ -542,7 +542,7 @@ App.views.research = new (Backbone.View.extend({
         _.each($(".monument-content"), function(obj, monId) {
           let monName = $(obj).find(".monument-name").val() || "Без названия";
           let layers = $(obj).find(".mon-layer");
-          let monLayers = App.views.functions.addMonRelation("exc", monId+1, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", "m", monId+1, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {
