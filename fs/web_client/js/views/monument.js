@@ -325,7 +325,7 @@ App.views.monument = new (Backbone.View.extend({
         $.when(App.views.functions.addExcavation($(this), excId, map)).then(function(response) {
           let monName = $(".monument-name").val() || "Памятник";
           let layers = $(".mon-layer");
-          let monLayers = App.views.functions.addMonRelation("exc", monId, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", "m", monId, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {
@@ -367,7 +367,7 @@ App.views.monument = new (Backbone.View.extend({
 
         let monName = $(".monument-name").val() || "Памятник";
         let layers = $(".mon-layer");
-        let monLayers = App.views.functions.addMonRelation("photo", monId, monName);
+        let monLayers = App.views.functions.addMonRelation("photo", "k", monId, monName);
 
         if (layers.length > 0) {
           _.each(layers, function(layer, layerId) {
@@ -656,7 +656,7 @@ App.views.monument = new (Backbone.View.extend({
         $.when(App.views.functions.addExcavation($(this), excId, map)).then(function(response) {
           let monName = $(".monument-name").val() || "Памятник";
           let layers = $(".mon-layer");
-          let monLayers = App.views.functions.addMonRelation("exc", monId, monName);
+          let monLayers = App.views.functions.addMonRelation("exc", "m", monId, monName);
 
           if (layers.length > 0) {
             _.each(layers, function(layer, layerId) {

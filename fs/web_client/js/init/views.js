@@ -170,6 +170,7 @@ App.views.functions = {
 
   "addLayerCheckbox": function(objFor, objWith, forId, withId, layerId, type) {
     type = type || "checkbox";
+
     let layerSpan = $("<span>").attr("class", "layer-checkbox");
     let label = $("<label>")
       .attr("style", "margin-right: 3px")
@@ -179,7 +180,8 @@ App.views.functions = {
     let checkbox = $("<input>")
       .attr({
         id: `${objFor}-layer-${withId}-${layerId}`,
-        type: "checkbox",
+        type: type,
+        name: `${objFor}-layer-${withId}`,
         "data-relation-for": `${objFor}_${forId}`,
         "data-relation-with": `${objWith}_${withId}_${layerId}`
       })
@@ -192,10 +194,11 @@ App.views.functions = {
 
   "addRelationCheckbox": function(objFor, objWith, forId, withId, type) {
     type = type || "checkbox";
+
     let checkbox = $("<input>")
       .attr({
         id: `${objFor}-layer-${withId}`,
-        type: "checkbox",
+        type: type,
         "data-relation-for": `${objFor}_${forId}`,
         "data-relation-with": `${objWith}_${withId}`,
       })
@@ -203,10 +206,14 @@ App.views.functions = {
     return checkbox;
   },
 
-  "addMonRelation":  function(entity, monId, monName) {
+  "addMonRelation":  function(entity, relWith, monId, monName, type) {
+    type = type || "checkbox";
+
     let monLayers = $("<div>").attr({
         class: `mon-checkboxes-${monId}`,
-        "data-entity": entity
+        "data-entity": entity,
+        "data-input-type": type,
+        "data-entity-with": relWith
       })
       .append(`<span class='mon-name-${monId}'>${monName}: </span>`);
 
