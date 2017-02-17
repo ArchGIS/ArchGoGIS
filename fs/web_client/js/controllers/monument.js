@@ -125,7 +125,7 @@ App.controllers.monument = new (Backbone.View.extend({
         let epoch = tmplData.epoch[0].id || 1;
         tmplData.placemarks.push({
           type: 'monument',
-          id: know.id,
+          id: tmplData.reports[kid][0].id,
           coords: [know.x, know.y],
           pref: {
             hintContent: know.monument_name
