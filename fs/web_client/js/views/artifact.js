@@ -619,54 +619,6 @@ App.views.artifact = new (Backbone.View.extend({
       App.views.functions.setCultureAutocomplete($(`#culture-input-art`), 1, 0, "artiCulture");
     })
 
-    $("#collection-input").autocomplete({
-      source: function(request, response) {
-        var monuments = [];
-
-        App.models.Collection.findByNamePrefix(request.term)
-          .then(function(data) {
-            if (data && !data.error) {
-              response(_.map(data, function(row) {
-                return {'label': row.name, 'id': row.id};
-              }))
-            } else {
-              response();
-            }
-          });
-      },
-      minLength: 3
-    }).focus(function(){
-      $(this).autocomplete("search");
-    });
-
-    $(`#collection-input`).on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
-
-    $(`#collection-input`).on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
-        ui.content.push({
-          'value': 'empty',
-          'label': 'Ничего не найдено. Добавить?'
-        });
-      }
-    });
-
-    $(`#collection-input`).on('autocompleteselect', function(event, ui) {
-      if (ui.item.value  == 'empty') {
-        let $input = $(this);
-        let id = $input.attr('id');
-        let inputValue = $input.val();
-
-        let tmpl = _.template( $(`script.add-collection`).html() );
-        $(`#find-collection`).replaceWith( tmpl() );
-
-        $('#' + addName(id)).val(inputValue);
-      } else {
-        $(`#collection-input-id`).val(ui.item.id);
-      }
-    });
-
     let fillResearchInputs = function() {
       let year = $("#report-year-input").val();
       let name = $("#report-name-input").val() + " - " + year;

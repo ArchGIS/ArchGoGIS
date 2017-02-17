@@ -5,7 +5,6 @@
       <li><a href="#home"><%= t('research.singular') %></a></li>
       <li><a href="#monument"><%= t('monument.singular') %></a></li>
       <li><a href="#excavation"><%= t('excavation.singular') %></a></li>
-      <li><a href="#collection"><%= t('collection.singular') %></a></li>
       <li><a href="#artifact"><%= t('artifact.singular') %></a></li>
     </ul>
 
@@ -100,39 +99,6 @@
         <i class="fa fa-cogs"></i>
         Далее
       </button>
-    </div>
-
-    <div id="collection">
-      <div class="form-group" id="find-collection">
-        <label for="collection-input">Название коллекции</label>
-        <input id="collection-input" class="form-control">
-        <input id="collection-input-id" hidden data-for="col:Collection" type="id" name="id">
-      </div>
-
-      <div class="form-group">
-        <label for="storage-book-number-input">№ по книге поступлений</label>
-        <input class="form-control" id="storage-book-number-input" data-for="storInt:StorageInterval" type="text" name="bookNumber"></input>
-      </div>
-      <div class="form-group">
-        <label for="storage-inventory-number-input">Инвентарный №</label>
-        <input class="form-control" id="storage-inventory-number-input" data-for="storInt:StorageInterval" type="text" name="inventoryNumber"></input>
-      </div>
-      <div class="form-group">
-        <label for="storage-spec-number-input">№ специального учета</label>
-        <input class="form-control" id="storage-spec-number-input" data-for="storInt:StorageInterval" type="text" name="specialNumber"></input>
-      </div>
-      <div class="form-group">
-        <label for="storage-field-number-input">№ по полевой описи</label>
-        <input class="form-control" id="storage-field-number-input" data-for="storInt:StorageInterval" type="text" name="fieldNumber"></input>
-      </div>
-      <div class="form-group">
-        <label for="storage-field-cipher-input">Полевой шифр</label>
-        <input class="form-control" id="storage-field-cipher-input" data-for="storInt:StorageInterval" type="text" name="fieldCipher"></input>
-      </div>
-      <div class="form-group">
-        <label for="storage-year-input">Год добавления в коллекцию</label>
-        <input class="form-control" id="storage-year-input" data-for="storInt:StorageInterval" type="number" name="yearSince"></input>
-      </div>
     </div>
 
     <div id="artifact" data-custom-relations="arti_1:Knowledge">
