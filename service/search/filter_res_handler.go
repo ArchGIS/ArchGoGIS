@@ -53,15 +53,14 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 
 	query = query + "OPTIONAL MATCH (r)-[:has]->(resType:ResearchType) "
 
-	query = query + "WITH {" +
+	query = query + "RETURN {" +
 		"resId: r.id, " +
 		"resName: r.name, " +
 		"resYear: r.year, " +
 		"resTypeId: resType.id, " +
 		"autName: a.name, " +
 		"x: COLLECT(k.x), " +
-		"y: COLLECT(k.y)} AS resp " +
-		"RETURN resp"
+		"y: COLLECT(k.y)}"
 
 	resp, err := neo.Run(query, params)
 
@@ -79,12 +78,9 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 
 	buf.WriteByte('[')
 	for _, row := range resp.Results[0].Data {
-		// #FIXME: перепиши меня, когда будет время!
-		buf.WriteByte('[')
 		buf.Write(
 			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
 		)
-		buf.WriteByte(']')
 		buf.WriteByte(',')
 	}
 	buf.DropLastByte()

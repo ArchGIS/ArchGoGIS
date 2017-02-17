@@ -52,7 +52,11 @@ func searchForFilterReport(author, year string) ([]byte, error) {
 		params["year"] = year
 	}
 	
-	query = query + "RETURN r.id, r.name, r.year, a.name"
+	query = query + "RETURN {" +
+		"id: r.id, " +
+		"name: r.name, " +
+		"year: r.year, " +
+		"author: a.name}"
 
 	resp, err := neo.Run(query, params)
 
@@ -70,12 +74,9 @@ func searchForFilterReport(author, year string) ([]byte, error) {
 
 	buf.WriteByte('[')
 	for _, row := range resp.Results[0].Data {
-		// #FIXME: перепиши меня, когда будет время!
-		buf.WriteByte('[')
 		buf.Write(
 			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
 		)
-		buf.WriteByte(']')
 		buf.WriteByte(',')
 	}
 	buf.DropLastByte()

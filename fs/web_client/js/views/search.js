@@ -16,7 +16,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchMonument,
         'columnsMaker': function(monuments) {
           return _.map(excludeIdent(monuments), function(mk) {
-            return [App.models.Monument.href(mk.monId, `${mk.monName} (${mk.epName}, ${mk.monType})`)];
+            return App.models.Monument.href(mk.monId, `${mk.monName} (${mk.epName}, ${mk.monType})`);
           });
         },
         'inputs': {
@@ -29,7 +29,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchResearch,
         'columnsMaker': function(researches) {
           return _.map(researches, function(r) {
-            return [App.models.Research.href(r[0].resId, `${r[0].resName ? r[0].resName : ''}`)];
+            return App.models.Research.href(r.resId, `${r.resName ? r.resName : ''}`);
           });
         },
         'inputs': {
@@ -41,7 +41,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchAuthor,
         'columnsMaker': function(authors) {
           return _.map(authors, function(a) {
-            return [App.models.Author.href(a[0], `${a[1]} ${a[2] ? a[2] : ''}`)];
+            return App.models.Author.href(a.id, `${a.name} ${a.birth ? a.birth : ''}`);
           });
         },
         'inputs': {
@@ -52,7 +52,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchReport,
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return [App.models.Report.href(r[0], `${r[1] ? r[1] : ''} (${r[3]} - ${r[2]})`)];
+            return [App.models.Report.href(r.id, `${r.name ? r.name : ''} (${r.author} - ${r.year})`)];
           });
         },
         'inputs': {
@@ -75,7 +75,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchExcavation,
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return [App.models.Excavation.href(r[0], `${r[1]} (${r[3]} - ${r[2]})`)];
+            return [App.models.Excavation.href(r.id, `${r.name} (${r.author} - ${r.resYear})`)];
           });
         },
         'inputs': {
@@ -120,8 +120,7 @@ App.views.search = new (Backbone.View.extend({
           epoch = input.epoch,
           type  = input.type;
 
-
-      if (mnt || epoch) {
+      if (mnt || epoch || type) {
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_monuments', {
@@ -141,7 +140,7 @@ App.views.search = new (Backbone.View.extend({
               error: reject
             });
           });
-        }
+        };
 
         find()
           .then(function(response) {
@@ -156,19 +155,19 @@ App.views.search = new (Backbone.View.extend({
               markersLayer.clearLayers();
 
               _.each(response, function(item) {
-                let type = item[0].monTypeId || 10;
-                let epoch = item[0].ep || 0;
+                let type = item.monTypeId || 10;
+                let epoch = item.ep || 0;
 
                 let icon = L.icon({
                   iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
                   iconSize: [16, 16]
                 });
 
-                let marker = L.marker(new L.LatLng(item[0].x, item[0].y), {
+                let marker = L.marker(new L.LatLng(item.x, item.y), {
                   icon: icon
                 });
 
-                marker.bindTooltip(item[0].monName, {
+                marker.bindTooltip(item.monName, {
                   direction: 'top'
                 });
 
@@ -179,7 +178,7 @@ App.views.search = new (Backbone.View.extend({
                   this.closeTooltip();
                 });
                 marker.on('click', function(e) {
-                  location.hash = `monument/show/${item[0].monId}`
+                  location.hash = `monument/show/${item.monId}`
                 });
 
                 markersLayer.addLayer(marker);
@@ -225,6 +224,7 @@ App.views.search = new (Backbone.View.extend({
 
         find()
           .then(function(response) {
+            console.log(response);
             if (response.length) {
               var list = my.columnsMaker(response);
 
@@ -273,6 +273,7 @@ App.views.search = new (Backbone.View.extend({
 
         find()
           .then(function(response) {
+            console.log(response);
             if (response.length) {
               var list = my.columnsMaker(response);
 
@@ -283,19 +284,19 @@ App.views.search = new (Backbone.View.extend({
               markersLayer.clearLayers();
 
               _.each(response, function(item) {
-                let type = item[0].resTypeId || 1;
+                let type = item.resTypeId || 1;
 
-                for (var i=0; i < item[0].x.length; i++) {
+                for (var i=0; i < item.x.length; i++) {
                   let icon = L.icon({
                     iconUrl: `/web_client/img/resTypes/resType${type}.png`,
-                    iconSize: [16, 16]
+                    iconSize: [20, 20]
                   });
 
-                  let marker = L.marker(new L.LatLng(item[0].x[i], item[0].y[i]), {
+                  let marker = L.marker(new L.LatLng(item.x[i], item.y[i]), {
                     icon: icon
                   });
 
-                  marker.bindTooltip(item[0].resName, {
+                  marker.bindTooltip(item.resName, {
                     direction: 'top'
                   });
 
@@ -306,7 +307,7 @@ App.views.search = new (Backbone.View.extend({
                     this.closeTooltip();
                   });
                   marker.on('click', function(e) {
-                    location.hash = `research/show/${item[0].resId}`
+                    location.hash = `research/show/${item.resId}`
                   });
 
                   markersLayer.addLayer(marker);

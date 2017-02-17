@@ -126,9 +126,9 @@ App.fn.validInput = function(input, name) {
 App.fn.excludeIdentMonuments = (monuments) => {
   let results = _.reduce(monuments, (memo, obj, key) => {
     if (!_.find(memo, (memoobj) => {
-        return (memoobj.monId == obj[0].monId && memoobj.monName == obj[0].monName)
+        return (memoobj.monId == obj.monId && memoobj.monName == obj.monName)
       })) {
-      memo[key] = obj[0];
+      memo[key] = obj;
     }
     return memo;
   }, {});
