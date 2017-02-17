@@ -172,27 +172,27 @@ function postQuery(objectId) {
       formdata.append(key, JSON.stringify(val));
     });
 
-    // $.ajax({
-    //   url: "/hquery/upsert",
-    //   data: formdata,
-    //   beforeSend: function(xhr) {
-    //     xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
-    //   },
-    //   type: "POST",
-    //   processData: false,
-    //   contentType: false,
-    //   success: (response) => {
-    //     console.log('upsert: ' + response);
-    //     loading(iconButton);
+    $.ajax({
+      url: "/hquery/upsert",
+      data: formdata,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: (response) => {
+        console.log('upsert: ' + response);
+        loading(iconButton);
 
-    //     if (response.length == 4) {
-    //       alert('При обработке данных на сервере произошла ошибка' + response);
-    //     } else {
-    //       $('#toObject').attr('href', location.hash.replace(/new\w*/g, 'show/') + JSON.parse(response)[objectId]);
-    //       modal.trigger('openModal');
-    //     }
-    //   }
-    // });
+        if (response.length == 4) {
+          alert('При обработке данных на сервере произошла ошибка' + response);
+        } else {
+          $('#toObject').attr('href', location.hash.replace(/new\w*/g, 'show/') + JSON.parse(response)[objectId]);
+          modal.trigger('openModal');
+        }
+      }
+    });
   });
 }
 
@@ -341,6 +341,7 @@ function generateJson(relations) {
 function fillSelector(selector, data, notLike) {
   $.each(data, (id, row) => {
     if (row.name != notLike) {
+      console.log(row.name, notLike)
       $("<option></option>")
         .text(row.name)
         .val(row.id)

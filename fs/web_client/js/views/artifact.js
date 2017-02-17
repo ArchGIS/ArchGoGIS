@@ -238,17 +238,15 @@ App.views.artifact = new (Backbone.View.extend({
       }
     });
 
-    var fillResearchInputs = function() {
-      if ($("#new-report-checkbox").is(":checked") == true) {
-        var year = $("#report-year-input").val();
-        var name = $("#report-name-input").val() + " - " + year;
-        $("#research-input-name").val(name);
-        $("#research-input-year").val(year);
-      }
+    let fillResearchInputs = function() {
+      let year = $("#report-year-input").val();
+      let name = $("#report-name-input").val() + " - " + year;
+      $("#research-input-name").val(name);
+      $("#research-input-year").val(year);
     };
 
-    var lastSelectedAuthorId = 0;
-    var lastSelectedAuthorName = '';
+    let lastSelectedAuthorId = 0;
+    let lastSelectedAuthorName = '';
     $('#author-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
     });
@@ -266,7 +264,7 @@ App.views.artifact = new (Backbone.View.extend({
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
-        fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
+        getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
       } else if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         lastSelectedAuthorName = ui.item.name;
@@ -299,7 +297,7 @@ App.views.artifact = new (Backbone.View.extend({
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
-        fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
+        getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
       }
     });
 
@@ -396,7 +394,7 @@ App.views.artifact = new (Backbone.View.extend({
     getDataForSelector($("#arti-culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
     getDataForSelector($("#arti-date-scale-selector"), "DateScale");
-    getDataForSelector($("#research-type-selector"), "ResearchType");
+    getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
 
     $("#container").tabs();
     setSelectsEvents();
@@ -432,7 +430,7 @@ App.views.artifact = new (Backbone.View.extend({
       fillResearchInputs();
 
       if ( isValidForm() ) {
-        postQuery('arti');
+        postQuery('arti_1');
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');
       }
@@ -669,17 +667,15 @@ App.views.artifact = new (Backbone.View.extend({
       }
     });
 
-    var fillResearchInputs = function() {
-      if ($("#new-report-checkbox").is(":checked") == true) {
-        var year = $("#report-year-input").val();
-        var name = $("#report-name-input").val() + " - " + year;
-        $("#research-input-name").val(name);
-        $("#research-input-year").val(year);
-      }
+    let fillResearchInputs = function() {
+      let year = $("#report-year-input").val();
+      let name = $("#report-name-input").val() + " - " + year;
+      $("#research-input-name").val(name);
+      $("#research-input-year").val(year);
     };
 
-    var lastSelectedAuthorId = 0;
-    var lastSelectedAuthorName = '';
+    let lastSelectedAuthorId = 0;
+    let lastSelectedAuthorName = '';
     $('#author-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
     });
@@ -840,7 +836,6 @@ App.views.artifact = new (Backbone.View.extend({
     getDataForSelector($("#arti-culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
     getDataForSelector($("#arti-date-scale-selector"), "DateScale");
-    getDataForSelector($("#research-type-selector"), "ResearchType");
 
     $("#container").tabs();
     setSelectsEvents();
@@ -876,7 +871,7 @@ App.views.artifact = new (Backbone.View.extend({
       fillResearchInputs();
 
       if ( isValidForm() ) {
-        postQuery('arti');
+        postQuery('arti_1');
       } else {
         alert('Недостаточно данных. Заполните все обязательные поля!');
       }
