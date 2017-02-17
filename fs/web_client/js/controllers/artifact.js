@@ -19,6 +19,24 @@ App.controllers.artifact = new (Backbone.View.extend({
     })
   },
 
+  'new_by_pub': function() {
+    App.page.render('artifact/new_by_pub', {
+      'param': 'test data',
+      'authorsInputOptions': {
+        'source': App.models.Author.findByNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        }
+      },
+      'citiesInputOptions': {
+        'source': App.models.City.findByNamePrefix,
+        'etl': function(cities) {
+          return _.map(cities, city => ({'id': city.id, 'label': city.name}));
+        }
+      }
+    })
+  },
+
   'show': function() {
     App.url.setMapping(['id']);
     var aid = App.url.get('id');
