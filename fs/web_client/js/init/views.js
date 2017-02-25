@@ -87,8 +87,10 @@ App.views.functions = {
     return imagesHtml;
   },
 
-  "setCultureAutocomplete": function(field, monId, layerId) {
+  "setCultureAutocomplete": function(field, monId, layerId, subclass) {
     layerId = layerId || 0;
+    subclass = subclass || "Culture";
+
     let d_cultures = App.models.Culture.getAll();
     let grepObject = App.fn.grepObject;
 
@@ -126,7 +128,11 @@ App.views.functions = {
         let inputValue = field.val();
 
         App.template.get("culture/create", function(tmpl) {
-          $(field).parent().replaceWith(tmpl({"monId": monId, "layerId": layerId}));
+          $(field).parent().replaceWith(tmpl({
+            monId: monId,
+            layerId: layerId,
+            subclass: subclass
+          }));
         });
       } else {
         $(field).attr("data-value", ui.item.id);

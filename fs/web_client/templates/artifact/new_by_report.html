@@ -145,7 +145,7 @@
 
       <div class="form-group">
         <label for="arti-year-found-input">Год находки</label>
-        <textarea class="form-control" id="arti-year-found-input" data-for="arti_1:Artifact" type="number" name="year"></textarea>
+        <input class="form-control" id="arti-year-found-input" data-for="arti_1:Artifact" type="number" name="year"></input>
       </div>
 
       <div class="form-group">
@@ -171,8 +171,7 @@
       
       <div class="form-group find-culture-art">
         <label for="culture-input-art">Культурная принадлежность</label>
-        <input id="culture-input-art" class="form-control">
-        <input id="culture-input-art-id" hidden data-for="c_arti:Culture" data-subclass="artiCulture" type="id" name="id">
+        <input id="culture-input-art" class="form-control" data-for="c_arti:Culture" data-subclass="artiCulture" type="id" name="id">
       </div>
 
       <div class="form-group">
@@ -279,9 +278,6 @@
 
   <div hidden>
     <input class="form-control" id="research-input-year" data-for="rs:Research" type="number" name="year">
-  </div>
-
-  <div hidden>
     <input class="form-control" id="research-input-name" data-for="rs:Research" type="text" name="name">
   </div>
 </script>

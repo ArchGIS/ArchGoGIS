@@ -75,7 +75,7 @@ App.views.monument = new (Backbone.View.extend({
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
-        fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
+        getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
       } else if (lastSelectedAuthorId != ui.item.id) {
         lastSelectedAuthorId = ui.item.id;
         lastSelectedAuthorName = ui.item.name;
@@ -109,7 +109,7 @@ App.views.monument = new (Backbone.View.extend({
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
         fillResearchInputs();
-        fillSelector($('#research-type-selector'), App.store.selectData.ResearchType);
+        getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
       } else {
         $("#research-input-id").val(ui.item.resId);
         $("#report-input-id").val(ui.item.id);
@@ -219,7 +219,7 @@ App.views.monument = new (Backbone.View.extend({
       }
     });
 
-    getDataForSelector($("#research-type-selector"), "ResearchType");
+    getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
     setSelectsEvents();
 
     let monId = 1;

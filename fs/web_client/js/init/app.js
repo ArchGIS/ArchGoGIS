@@ -341,6 +341,7 @@ function generateJson(relations) {
 function fillSelector(selector, data, notLike) {
   $.each(data, (id, row) => {
     if (row.name != notLike) {
+      console.log(row.name, notLike)
       $("<option></option>")
         .text(row.name)
         .val(row.id)
