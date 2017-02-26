@@ -59,6 +59,27 @@ create (moscow:City {
   id: 4
 })
 
+create (spa1:SpatialReferenceType {
+  name: 'Точная, субметровая',
+  id: 1
+})
+create (spa2:SpatialReferenceType {
+  name: 'Точная, метровая',
+  id: 2
+})
+create (spa3:SpatialReferenceType {
+  name: 'По крупномасштабной карте или снимку',
+  id: 3
+})
+create (spa4:SpatialReferenceType {
+  name: 'По мелкомасштабной карте или абрису',
+  id: 4
+})
+create (spa5:SpatialReferenceType {
+  name: 'По словесному описанию',
+  id: 5
+})
+
 create (tatar:Culture {
   id: 1000,
   name: 'Татарская'

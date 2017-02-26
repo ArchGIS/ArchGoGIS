@@ -43,6 +43,13 @@ App.controllers.monument = new (Backbone.View.extend({
           "monument:Monument": {"id": monId},
           "heritage:Heritage": {"id": "*", "select": "*"},
           "heritage__has__monument": {}
+        }),
+        spatref: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__spatref": {},
+          "spatref__has__spatrefType": {}
         })
       },
 
@@ -168,6 +175,21 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
+      let spatref = _.groupBy(tmplData.spatref, function(obj, i) {
+        return tmplData.spatrefType[i].id;
+      })
+      console.log(tmplData.spatrefType);
+      tmplData.spatrefType = _.groupBy(tmplData.spatrefType, function(obj, i) {
+        return obj.id;
+      })
+      _.each(spatref, function(list, i) {
+        list = _.sortBy(list, function(obj, t) {
+          obj.time;
+        })
+      })
+      tmplData.spatref = spatref;
+
+      console.log(spatref);
       console.log(tmplData);
       App.page.render("monument/show", tmplData, tmplData.placemarks)
     };

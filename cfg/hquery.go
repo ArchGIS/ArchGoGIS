@@ -55,6 +55,7 @@ var (
 		{"StorageInterval", "n_storage_interval_id_seq"},
 		{"Collection", "n_collection_id_seq"},
 		{"Publication", "n_publication_id_seq"},
+		{"SpatialReference", "n_spatial_reference_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

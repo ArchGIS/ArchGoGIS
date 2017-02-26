@@ -119,11 +119,8 @@ App.views.artifact = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
-          var coordpicker = App.blocks.coordpicker;
-          coordpicker($('#coord-picker-'+monId), {
-            inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
-            map: map
-          }, monId);
+          $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+          $(`#monument-new-coords-button-${monId}`).remove();
 
           let layerCounter = App.fn.counter(1);
           let layerCounter2 = App.fn.counter(1);
@@ -164,9 +161,29 @@ App.views.artifact = new (Backbone.View.extend({
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
+
+          $($("#clarify-button-"+monId)[0]).show();
+
+          let coords = App.models.Monument.getActualSpatref(ui.item.id);
+          $.when(coords).then(function(coord) {
+            $(`#spatref-y-${monId}`).text(coord.y);
+            $(`#spatref-x-${monId}`).text(coord.x);
+            $(`#spatref-type-${monId}`).text(coord.typeName);
+          })
         }
       });
       
+      coordpicker($('#coord-picker-'+monId), {
+        inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
+        map: map
+      }, monId);
+      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
+
+      $("#clarify-button-"+monId).on("click", function() {
+        $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+        $(`#monument-new-coords-button-${monId}`).remove();
+      })
+
       let monLayers = App.views.functions.addMonRelation("exc", "m", monId, "Памятник");
       let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId);
       monLayers.append(checkbox);
@@ -390,6 +407,8 @@ App.views.artifact = new (Backbone.View.extend({
     })
 
     getDataForSelector($("#epoch-selector"), "Epoch");
+    getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType");
+    getDataForSelector($("#arti-spatref-selector"), "SpatialReferenceType");
     getDataForSelector($("#culture-selector"), "Culture");
     getDataForSelector($("#arti-culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
@@ -399,8 +418,8 @@ App.views.artifact = new (Backbone.View.extend({
     $("#container").tabs();
     setSelectsEvents();
 
-    coordpicker($('#monument-coord-picker'), {
-      inputs: ['#monument-x', '#monument-y'],
+    coordpicker($('#arti-coord-picker'), {
+      inputs: ['#arti-x', '#arti-y'],
       map: map
     });
 
@@ -427,6 +446,7 @@ App.views.artifact = new (Backbone.View.extend({
     })
     
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
       fillResearchInputs();
 
       if ( isValidForm() ) {
@@ -442,6 +462,7 @@ App.views.artifact = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
+    let markersLayer = new L.FeatureGroup();
 
     const map = App.views.map().map;
 
@@ -494,6 +515,7 @@ App.views.artifact = new (Backbone.View.extend({
     let monId = 1;
     let excId = 1;
     let artiId = 1;
+
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
 
@@ -548,11 +570,8 @@ App.views.artifact = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
-          var coordpicker = App.blocks.coordpicker;
-          coordpicker($('#coord-picker-'+monId), {
-            inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
-            map: map
-          }, monId);
+          $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+          $(`#monument-new-coords-button-${monId}`).remove();
 
           let layerCounter = App.fn.counter(1);
           let layerCounter2 = App.fn.counter(1);
@@ -593,8 +612,28 @@ App.views.artifact = new (Backbone.View.extend({
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
+
+          $($("#clarify-button-"+monId)[0]).show();
+
+          let coords = App.models.Monument.getActualSpatref(ui.item.id);
+          $.when(coords).then(function(coord) {
+            $(`#spatref-y-${monId}`).text(coord.y);
+            $(`#spatref-x-${monId}`).text(coord.x);
+            $(`#spatref-type-${monId}`).text(coord.typeName);
+          })
         }
       });
+
+      coordpicker($('#coord-picker-'+monId), {
+        inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
+        map: map
+      }, monId);
+      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
+
+      $("#clarify-button-"+monId).on("click", function() {
+        $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+        $(`#monument-new-coords-button-${monId}`).remove();
+      })
       
       let monLayers = App.views.functions.addMonRelation("exc", "m", monId, "Памятник");
       let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId);
@@ -784,6 +823,8 @@ App.views.artifact = new (Backbone.View.extend({
     })
 
     getDataForSelector($("#epoch-selector"), "Epoch");
+    getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType");
+    getDataForSelector($("#arti-spatref-selector"), "SpatialReferenceType");
     getDataForSelector($("#culture-selector"), "Culture");
     getDataForSelector($("#arti-culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
@@ -820,6 +861,7 @@ App.views.artifact = new (Backbone.View.extend({
     })
     
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
       fillResearchInputs();
 
       if ( isValidForm() ) {

@@ -279,11 +279,8 @@ App.views.monument = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
-          var coordpicker = App.blocks.coordpicker;
-          coordpicker($('#coord-picker-'+monId), {
-            inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
-            map: map
-          }, monId);
+          $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+          $(`#monument-new-coords-button-${monId}`).remove();
 
           let layerCounter = App.fn.counter(1);
           let layerCounter2 = App.fn.counter(1);
@@ -313,8 +310,28 @@ App.views.monument = new (Backbone.View.extend({
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
+        
+          $($("#clarify-button-"+monId)[0]).show();
+
+          let coords = App.models.Monument.getActualSpatref(ui.item.id);
+          $.when(coords).then(function(coord) {
+            $(`#spatref-y-${monId}`).text(coord.y);
+            $(`#spatref-x-${monId}`).text(coord.x);
+            $(`#spatref-type-${monId}`).text(coord.typeName);
+          })
         }
       });
+      
+      coordpicker($('#coord-picker-'+monId), {
+        inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
+        map: map
+      }, monId);
+      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
+
+      $("#clarify-button-"+monId).on("click", function() {
+        $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+        $(`#monument-new-coords-button-${monId}`).remove();
+      })
       
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
 
@@ -580,11 +597,8 @@ App.views.monument = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
-          var coordpicker = App.blocks.coordpicker;
-          coordpicker($('#coord-picker-'+monId), {
-            inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
-            map: map
-          }, monId);
+          $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+          $(`#monument-new-coords-button-${monId}`).remove();
 
           let layerCounter = App.fn.counter(1);
           let layerCounter2 = App.fn.counter(1);
@@ -610,8 +624,28 @@ App.views.monument = new (Backbone.View.extend({
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
+         
+          $($("#clarify-button-"+monId)[0]).show();
+
+          let coords = App.models.Monument.getActualSpatref(ui.item.id);
+          $.when(coords).then(function(coord) {
+            $(`#spatref-y-${monId}`).text(coord.y);
+            $(`#spatref-x-${monId}`).text(coord.x);
+            $(`#spatref-type-${monId}`).text(coord.typeName);
+          })
         }
       });
+      
+      coordpicker($('#coord-picker-'+monId), {
+        inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
+        map: map
+      }, monId);
+      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
+
+      $("#clarify-button-"+monId).on("click", function() {
+        $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+        $(`#monument-new-coords-button-${monId}`).remove();
+      })
       
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
 
@@ -667,6 +701,7 @@ App.views.monument = new (Backbone.View.extend({
     };
 
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
       fillResearchInputs();
 
       if ( isValidForm() ) {

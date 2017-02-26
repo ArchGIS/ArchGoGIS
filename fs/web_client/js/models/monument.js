@@ -23,6 +23,49 @@ App.models.Monument.findByNamePrefix = function(name) {
   });
 };
 
+App.models.Monument.getActualSpatref = function(monId) {
+  var d = $.Deferred();
+
+  let query = JSON.stringify({
+    "m:Monument": {"id": `${monId}`},
+    "sr:SpatialReference": {"id": "*", "select": "*"},
+    "srt:SpatialReferenceType": {"id": "*", "select": "*"},
+    "m__has__sr": {},
+    "sr__has__srt": {},
+  });
+
+  $.post({
+    url: "/hquery/read",
+    data: query,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+    },
+    success: response => {
+      let rows = $.parseJSON(response);
+      let dataRet = {
+        type: 6,
+        date: 0, 
+        x: "нет данных", 
+        y: "нет данных",
+        typeName: "нет данных"
+      };
+
+      _.each(rows.sr, function(coord, i) {
+        if ((rows.srt[i].id < dataRet.type) || ((rows.srt[i].id == dataRet.type) && (coord.date > dataRet.date))) {
+          dataRet.type = rows.srt[i].id;
+          dataRet.typeName = rows.srt[i].name;
+          dataRet.x = coord.x;
+          dataRet.y = coord.y;
+          dataRet.date = coord.date;
+        }
+      })
+      d.resolve(dataRet);
+    },
+  });
+
+  return d.promise();
+};
+
 App.models.Monument.getData = function(name) {
   return new Promise(function(resolve, reject) {
     name = name || ""; 

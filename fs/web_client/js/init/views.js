@@ -162,12 +162,13 @@ App.views.functions = {
     App.template.get("excavation/addExc", function(tmpl) {
       button.before(tmpl({'excId': excId}));
 
-      coordpicker($(`#coord-picker-exc-${excId}`), {
+      coordpicker($(`#exc-coord-picker-${excId}`), {
         inputs: [`#exc-x-${excId}`, `#exc-y-${excId}`],
         map: map
       }, `${excId}`);
       setAccordionHeader($(`#exc-header-${excId}`));
-
+      getDataForSelector($(`#exc-spatref-selector-${excId}`), "SpatialReferenceType");
+      console.log($(`#exc-coord-picker-${excId}`))
       d.resolve();
     })
 
@@ -224,5 +225,11 @@ App.views.functions = {
       .append(`<span class='mon-name-${monId}'>${monName}: </span>`);
 
     return monLayers;
+  },
+
+  "setPresentDate":  function() {
+    _.each($("[data-need-date]"), function(field) {
+      $(field).val(new Date().getTime());
+    });
   }
 }
