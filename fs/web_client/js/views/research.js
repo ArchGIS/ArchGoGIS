@@ -100,7 +100,7 @@ App.views.research = new (Backbone.View.extend({
       event.preventDefault();
     });
 
-    $('#author-input').on('autocompleteselect', function(event, ui) {
+    $('.find-author').on('autocompleteselect', '#author-input', function(event, ui) {
       if (ui.item.value === 'Ничего не найдено. Добавить?') {
         let $input = $(this);
         let id = $input.attr('id');
@@ -161,25 +161,26 @@ App.views.research = new (Backbone.View.extend({
       }
     });
 
-    $('#report-input').on('autocompleteselect', function(event, ui) {
+    $('.find-report').on('autocompleteselect', '#report-input', function(event, ui) {
       if (ui.item.value === 'Ничего не найдено. Добавить?') {
         let $input = $(this);
         let id = $input.attr('id');
         let inputValue = $input.val();
 
-        let tmpl = _.template( $('script.add-report').html() );
+        let tmpl = _.template( $('.add-report').html() );
 
-        $input.parent().replaceWith( tmpl() );
+        $input.parent().html( tmpl() );
+        
 
         $('#' + addName(id)).val(inputValue);
         
         setSelectsEvents();
-        $('#report-city-input').on('autocompleteselect', function(event, ui) {
-          citySelectHandler(event, ui);
-        });
       }
     });
 
+    $('.find-report').on('autocompleteselect', '#report-city-input', function(event, ui) {
+      citySelectHandler(event, ui);
+    });
 
 
     // События для прослушивания размера файлов

@@ -116,6 +116,7 @@ function postQuery(objectId) {
     ["Publication", "Coauthor", "hascoauthor"],
     ["Publication", "PublicationType", "has"],
     ["Publication", "EditionType", "has"],
+    ["Publication", "City", "in"],
     ["Author", "AuthorImage", "has"],
     ["Artifact", "ArtifactCategory", "has"],
     ["Artifact", "ArtifactMaterial", "has"],
