@@ -146,42 +146,51 @@ App.views.search = new (Backbone.View.extend({
           .then(function(response) {
             if (response.length) {
               console.log(response);
-              var list = my.columnsMaker(response);
+              let list = my.columnsMaker(response);
+              let coords = [];
 
-              _.each(list, function(item) {
+              _.each(response, function(item, i) {
+                coords[i] = App.models.Monument.getActualSpatref(item.monId);
+              });
+
+              _.each(list, function(item, i) {
                 $results.append(`<p>${item}</p>`);
               });
 
               markersLayer.clearLayers();
 
-              _.each(response, function(item) {
-                let type = item.monTypeId || 10;
-                let epoch = item.ep || 0;
+              _.each(response, function(item, i) {
+                $.when(coords[i]).then(function(coord) {
+                  if (coord.x != "нет данных" && coord.y != "нет данных") {
+                    let type = item.monTypeId || 10;
+                    let epoch = item.ep || 0;
 
-                let icon = L.icon({
-                  iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
-                  iconSize: [16, 16]
-                });
+                    let icon = L.icon({
+                      iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
+                      iconSize: [16, 16]
+                    });
+                    console.log(coord, coord.x, coord.y)
+                    let marker = L.marker(new L.LatLng(coord.x, coord.y), {
+                      icon: icon
+                    });
 
-                let marker = L.marker(new L.LatLng(item.x, item.y), {
-                  icon: icon
-                });
+                    marker.bindTooltip(item.monName, {
+                      direction: 'top'
+                    });
 
-                marker.bindTooltip(item.monName, {
-                  direction: 'top'
-                });
+                    marker.on('mouseover', function(e) {
+                      this.openTooltip();
+                    });
+                    marker.on('mouseout', function(e) {
+                      this.closeTooltip();
+                    });
+                    marker.on('click', function(e) {
+                      location.hash = `monument/show/${item.monId}`
+                    });
 
-                marker.on('mouseover', function(e) {
-                  this.openTooltip();
+                    markersLayer.addLayer(marker);
+                  }
                 });
-                marker.on('mouseout', function(e) {
-                  this.closeTooltip();
-                });
-                marker.on('click', function(e) {
-                  location.hash = `monument/show/${item.monId}`
-                });
-
-                markersLayer.addLayer(marker);
               });
 
               map.addLayer(markersLayer);

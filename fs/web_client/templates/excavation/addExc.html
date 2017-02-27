@@ -17,18 +17,25 @@
     <input class="form-control" id="excavation-area-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="area"></select>
   </div>
 
-  <div id="coord-picker-exc-<%= excId %>" class="coords">
+  <input class="form-control" id="exc-spatref-date" data-for="esr_<%= excId %>:SpatialReference" data-subclass="ExcSpatRef" type="number" name="date" data-need-date hidden></input>
+
+  <div class="form-group">
+    <label for="exc-spatref-selector">Точность пространственной привязки</label>
+    <select class="form-control" id="exc-spatref-selector-<%= excId %>" data-for="esrt_<%= excId %>:SpatialReferenceType" data-subclass="ExcSpatRefType" type="id" name="id"></select>
+  </div>
+
+  <div id="exc-coord-picker-<%= excId %>" class="coords">
     <div class="form-group">
-      <label for="exc-x-<%= excId %>">
-        Координата x
+      <label for="exc-x">
+        Координата X
       </label>
-      <input class="form-control" id="exc-x-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="x"></input>
+      <input class="form-control" id="exc-x-<%= excId %>" data-for="esr_<%= excId %>:SpatialReference" data-subclass="ExcSpatRef" type="number" name="x"></input>
     </div>
     <div class="form-group">
-      <label for="exc-y-<%= excId %>">
-        Координата y
+      <label for="exc-y">
+        Координата Y
       </label>
-      <input class="form-control" id="exc-y-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="y"></input>
+      <input class="form-control" id="exc-y-<%= excId %>" data-for="esr_<%= excId %>:SpatialReference" data-subclass="ExcSpatRef" type="number" name="y"></input>
     </div>
   </div>
 

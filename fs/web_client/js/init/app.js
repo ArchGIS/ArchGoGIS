@@ -90,6 +90,8 @@ function postQuery(objectId) {
     ["Monument", "Complex", "has"],
     ["Monument", "Epoch", "has"],
     ["Monument", "MonumentType", "has"],
+    ["Monument", "SpatialReference", "has"],
+    ["SpatialReference", "SpatialReferenceType", "has"],
     ["Knowledge", "monumentImage", "has"],
     ["Knowledge", "monumentTopo", "hastopo"],
     ["Heritage", "Monument", "has"],
@@ -98,14 +100,20 @@ function postQuery(objectId) {
     ["Heritage", "SurveyMap", "has"],
     ["Heritage", "Image", "has"],
     ["Heritage", "heritageTopo", "hastopo"],
+    ["Heritage", "HerSpatRef", "has"],
+    ["HerSpatRef", "HerSpatRefType", "has"],
     ["Research", "Publication", "has"],
     ["Research", "Report", "has"],
     ["Research", "Image", "has"],
     ["Complex", "Artifact", "has"],
     ["Complex", "Excavation", "has"],
     ["Excavation", "Artifact", "has"],
+    ["Excavation", "ExcSpatRef", "has"],
+    ["ExcSpatRef", "ExcSpatRefType", "has"],
     ["Report", "Author", "hasauthor"],
+    ["Report", "Coauthor", "hascoauthor"],
     ["Publication", "Author", "hasauthor"],
+    ["Publication", "Coauthor", "hascoauthor"],
     ["Publication", "PublicationType", "has"],
     ["Publication", "EditionType", "has"],
     ["Publication", "City", "in"],
@@ -113,6 +121,8 @@ function postQuery(objectId) {
     ["Artifact", "ArtifactCategory", "has"],
     ["Artifact", "ArtifactMaterial", "has"],
     ["Artifact", "Interpretation", "has"],
+    ["Artifact", "ArtiSpatRef", "has"],
+    ["ArtiSpatRef", "ArtiSpatRefType", "has"],
     ["Research", "Interpretation", "has"],
     ["Interpretation", "DateScale", "has"],
     ["Interpretation", "ArtifactImage", "has"],
@@ -342,7 +352,6 @@ function generateJson(relations) {
 function fillSelector(selector, data, notLike) {
   $.each(data, (id, row) => {
     if (row.name != notLike) {
-      console.log(row.name, notLike)
       $("<option></option>")
         .text(row.name)
         .val(row.id)

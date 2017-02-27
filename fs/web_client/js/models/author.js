@@ -42,6 +42,7 @@ App.models.Author.href = function(id, text) {
   return '<a href="' + App.models.Author.url(id) + '">' + text + '</a>';
 };
 App.models.Author.findByLastNamePrefix = function(name) {
+  console.log(name)
   var lastName = name.split(/,\s*/).pop();
   return App.models.Author.findByNamePrefix(lastName);
 };

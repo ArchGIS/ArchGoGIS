@@ -12,6 +12,7 @@ App.views.research = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
+    var coordpicker = App.blocks.coordpicker;
 
     const map = App.views.map().map;
 
@@ -36,6 +37,7 @@ App.views.research = new (Backbone.View.extend({
     };
 
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
       fillResearchInputs();
 
       if ( isValidForm() ) {
@@ -118,6 +120,33 @@ App.views.research = new (Backbone.View.extend({
       }
     });
 
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    $('#coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    $('#coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
 
     $('#report-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
@@ -247,15 +276,11 @@ App.views.research = new (Backbone.View.extend({
             tmpl = _.template( $(`script#add-layer-${localMonId}`).html() );
             $(`#place-for-layers-${localMonId}`).replaceWith( tmpl({'monId': localMonId}) );
 
-
             $('#' + addName(id)).val(inputValue);
 
-            var coordpicker = App.blocks.coordpicker;
-            coordpicker($('#coord-picker-'+localMonId), {
-              inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
-              map: map
-            }, localMonId);
-
+            $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input").attr("used", true);
+            $(`#monument-new-coords-button-${localMonId}`).remove();
+            
             let layerCounter = App.fn.counter(1);
             let layerCounter2 = App.fn.counter(1);
 
@@ -279,8 +304,28 @@ App.views.research = new (Backbone.View.extend({
             lastSelectedMonId = ui.item.id;
             $(`#monument-input-id-${localMonId}`).val(lastSelectedMonId);
             monSelName = ui.item.name;
+            
+            $($("#clarify-button-"+localMonId)[0]).show();
+
+            let coords = App.models.Monument.getActualSpatref(ui.item.id);
+            $.when(coords).then(function(coord) {
+              $(`#spatref-y-${localMonId}`).text(coord.y);
+              $(`#spatref-x-${localMonId}`).text(coord.x);
+              $(`#spatref-type-${localMonId}`).text(coord.typeName);
+            })
           }
         });
+        
+        coordpicker($('#coord-picker-'+localMonId), {
+          inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
+          map: map
+        }, localMonId);
+        getDataForSelector($("#spatref-selector-"+localMonId), "SpatialReferenceType");
+
+        $("#clarify-button-"+localMonId).on("click", function() {
+          $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input").attr("used", true);
+          $(`#monument-new-coords-button-${localMonId}`).remove();
+        })
         
         App.views.functions.setCultureAutocomplete($(`#culture-input-${localMonId}`), localMonId);
       })
@@ -389,6 +434,34 @@ App.views.research = new (Backbone.View.extend({
       }
     });
 
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    $('#coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    $('#coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
+    
     $('#pub-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
     });
@@ -493,14 +566,10 @@ App.views.research = new (Backbone.View.extend({
             tmpl = _.template( $(`script#add-layer-${localMonId}`).html() );
             $(`#place-for-layers-${localMonId}`).replaceWith( tmpl({'monId': localMonId}) );
 
-
             $('#' + addName(id)).val(inputValue);
 
-            var coordpicker = App.blocks.coordpicker;
-            coordpicker($('#coord-picker-'+localMonId), {
-              inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
-              map: map
-            }, localMonId);
+            $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input").attr("used", true);
+            $(`#monument-new-coords-button-${localMonId}`).remove();
 
             let layerCounter = App.fn.counter(1);
             let layerCounter2 = App.fn.counter(1);
@@ -525,8 +594,28 @@ App.views.research = new (Backbone.View.extend({
             lastSelectedMonId = ui.item.id;
             $(`#monument-input-id-${localMonId}`).val(lastSelectedMonId);
             monSelName = ui.item.name;
+          
+            $($("#clarify-button-"+localMonId)[0]).show();
+
+            let coords = App.models.Monument.getActualSpatref(ui.item.id);
+            $.when(coords).then(function(coord) {
+              $(`#spatref-y-${localMonId}`).text(coord.y);
+              $(`#spatref-x-${localMonId}`).text(coord.x);
+              $(`#spatref-type-${localMonId}`).text(coord.typeName);
+            })
           }
         });
+
+        coordpicker($('#coord-picker-'+localMonId), {
+          inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
+          map: map
+        }, localMonId);
+        getDataForSelector($("#spatref-selector-"+localMonId), "SpatialReferenceType");
+
+        $("#clarify-button-"+localMonId).on("click", function() {
+          $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input").attr("used", true);
+          $(`#monument-new-coords-button-${localMonId}`).remove();
+        })
         
         App.views.functions.setCultureAutocomplete($(`#culture-input-${localMonId}`), localMonId);
       })
@@ -587,6 +676,7 @@ App.views.research = new (Backbone.View.extend({
     };
 
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
       fillResearchInputs();
 
       if ( isValidForm() ) {

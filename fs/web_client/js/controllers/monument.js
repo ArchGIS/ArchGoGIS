@@ -43,6 +43,13 @@ App.controllers.monument = new (Backbone.View.extend({
           "monument:Monument": {"id": monId},
           "heritage:Heritage": {"id": "*", "select": "*"},
           "heritage__has__monument": {}
+        }),
+        spatref: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__spatref": {},
+          "spatref__has__spatrefType": {}
         })
       },
 
@@ -104,6 +111,7 @@ App.controllers.monument = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
       _.each(tmplData.excavations, function(resExc, resId) {
+        let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
         _.each(resExc, function(exc, excId) {
           let type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
@@ -111,7 +119,7 @@ App.controllers.monument = new (Backbone.View.extend({
             id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: exc.name
+              hintContent: exc.name + resYear,
             },
             opts: {
               preset: `excType${type}`
@@ -138,13 +146,13 @@ App.controllers.monument = new (Backbone.View.extend({
 
       _.each(tmplData.researches, function(res, rid) {
         let type = tmplData.resTypes[rid][0].id || 1;
-
+        let resHeader = `${tmplData.authors[rid].name}, ${tmplData.resTypes[rid][0].name} (${tmplData.researches[rid].year})`
         tmplData.placemarks.push({
           type: 'research',
           id: res.id,
           coords: [tmplData.knowledges[rid].x, tmplData.knowledges[rid].y],
           pref: {
-            hintContent: res.name
+            hintContent: resHeader
           },
           opts: {
             preset: `resType${type}`
@@ -168,6 +176,21 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
+      let spatref = _.groupBy(tmplData.spatref, function(obj, i) {
+        return tmplData.spatrefType[i].id;
+      })
+      console.log(tmplData.spatrefType);
+      tmplData.spatrefType = _.groupBy(tmplData.spatrefType, function(obj, i) {
+        return obj.id;
+      })
+      _.each(spatref, function(list, i) {
+        list = _.sortBy(list, function(obj, t) {
+          obj.time;
+        })
+      })
+      tmplData.spatref = spatref;
+
+      console.log(spatref);
       console.log(tmplData);
       App.page.render("monument/show", tmplData, tmplData.placemarks)
     };
@@ -210,6 +233,13 @@ App.controllers.monument = new (Backbone.View.extend({
           return _.map(cities, city => ({'id': city.id, 'label': city.name}));
         }
       },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
+      },
       'heritageInputOptions': {
         'source': App.models.Heritage.findByNamePrefix,
         'etl': function(herits) {
@@ -226,6 +256,13 @@ App.controllers.monument = new (Backbone.View.extend({
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
+      },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
       },
       'citiesInputOptions': {
         'source': App.models.City.findByNamePrefix,

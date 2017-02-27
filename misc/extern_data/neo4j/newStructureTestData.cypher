@@ -1,34 +1,34 @@
 // Заполнить БД
 create (mesolit:Epoch {
-  id: 1,
+  id: 100000,
   name: 'Мезолит'
 })
 create (paleolit:Epoch {
-  id: 2,
+  id: 200000,
   name: 'Палеолит'
 })
 create (neolit:Epoch {
-  id: 3,
+  id: 300000,
   name: 'Неолит'
 })
 create (bronze_age:Epoch {
-  id: 4,
+  id: 400000,
   name: 'Бронзовый век'
 })
 create (iron_age:Epoch {
-  id: 5,
+  id: 500000,
   name: 'Ранний железный век'
 })
 create (migration_age:Epoch {
-  id: 6,
+  id: 600000,
   name: 'Эпоха великого переселения'
 })
 create (middle_age:Epoch {
-  id: 7,
+  id: 700000,
   name: 'Средневековье'
 })
 create (new_age:Epoch {
-  id: 8,
+  id: 800000,
   name: 'Новое время'
 })
 
@@ -44,40 +44,61 @@ create (funny:Tag {
 
 create (kazan:City {
   name: 'Казань',
-  id: 1
+  id: 100000
 })
 create (piter:City {
   name: 'Санкт-Петербург',
-  id: 2
+  id: 200000
 })
 create (bolgar:City {
   name: 'Болгар',
-  id: 3
+  id: 300000
 })
 create (moscow:City {
   name: 'Москва',
-  id: 4
+  id: 400000
+})
+
+create (spa1:SpatialReferenceType {
+  name: 'Точная, субметровая',
+  id: 100000
+})
+create (spa2:SpatialReferenceType {
+  name: 'Точная, метровая',
+  id: 200000
+})
+create (spa3:SpatialReferenceType {
+  name: 'По крупномасштабной карте или снимку',
+  id: 300000
+})
+create (spa4:SpatialReferenceType {
+  name: 'По мелкомасштабной карте или абрису',
+  id: 400000
+})
+create (spa5:SpatialReferenceType {
+  name: 'По словесному описанию',
+  id: 500000
 })
 
 create (tatar:Culture {
-  id: 1000,
+  id: 100000000,
   name: 'Татарская'
 })
 create (fin:Culture {
-  id: 2000,
+  id: 200000000,
   name: 'Финно-угорская'
 })
 create (mongol:Culture {
-  id: 3000,
+  id: 300000000,
   name: 'Монгольская'
 })
 
 create (mound:MonumentType {
-  id: 1,
+  id: 100000,
   name: 'Курган'
 })
 create (tomb:MonumentType {
-  id: 2,
+  id: 200000,
   name: 'Гробница'
 })
 
@@ -100,60 +121,60 @@ create (cir2:CircleArea {
 })
 
 create (weapon:ArtifactCategory {
-  id: 1,
+  id: 100000,
   name: 'Оружие'
 })
 create (armor:ArtifactCategory {
-  id: 2,
+  id: 200000,
   name: 'Доспехи'
 })
 create (jewelry:ArtifactCategory {
-  id: 3,
+  id: 300000,
   name: 'Украшения'
 })
 
 create (ds1:DateScale {
-  id: 1,
+  id: 100000,
   name: 'Года'
 })
 create (ds2:DateScale {
-  id: 2,
+  id: 200000,
   name: 'Века'
 })
 create (ds3:DateScale {
-  id: 3,
+  id: 300000,
   name: 'Тысячелетия'
 })
 
 create (metal:ArtifactMaterial {
-  id: 1,
+  id: 100000,
   name: 'Металл'
 })
 create (wood:ArtifactMaterial {
-  id: 2,
+  id: 200000,
   name: 'Дерево'
 })
 create (fabric:ArtifactMaterial {
-  id: 3,
+  id: 300000,
   name: 'Ткань'
 })
 create (gems:ArtifactMaterial {
-  id: 4,
+  id: 400000,
   name: 'Драгоценные камни'
 })
 
 create (au1:Author {
-  id: 9997,
+  id: 900000997,
   name: 'Николай',
   birthdate: 1965
 })
 create (au2:Author {
-  id: 9998,
+  id: 900000998,
   name: 'Булат',
   birthdate: 1980
 })
 create (au3:Author {
-  id: 9999,
+  id: 900000999,
   name: 'Джек',
   birthdate: 1985
 })
@@ -176,78 +197,78 @@ create (job4:AuthorJob {
 })
 
 create (r1:Research {
-  id: 1,
+  id: 100000,
   year: 2011,
   name: 'Болгар-2011',
   description: 'Анализируем Болгар'
 })
 create (r2:Research {
-  id: 2,
+  id: 200000,
   year: 2010,
   name: 'Болгар-2010',
   description: 'Поиск оружия'
 })
 create (r3:Research {
-  id: 3,
+  id: 300000,
   year: 2005,
   name: 'Болгар-2005',
   description: 'Разведка'
 })
 create (r4:Research {
-  id: 4,
+  id: 400000,
   year: 2005,
   name: 'Болгар-2005',
   description: 'Аналитика'
 })
 
 create (rep1:Report {
-  id: 1,
+  id: 100000,
   year: 2012,
   name: "Отчет об анализе",
   fileid: '10'
 })
 create (rep2:Report {
-  id: 2,
+  id: 200000,
   year: 2011,
   name: "Отчет о раскопках",
   fileid: '11'
 })
 create (rep3:Report {
-  id: 3,
+  id: 300000,
   year: 2006,
   name: "Отчет о разведке. Здесь должно быть очень длинное название, которое совсем не помещается в одну строку.",
   fileid: '12'
 })
 
 create (rt1:ResearchType {
-  id: 2,
+  id: 200000,
   name: 'Аналитическое'
 })
 create (rt2:ResearchType {
-  id: 3,
+  id: 300000,
   name: 'Раскопки'
 })
 create (rt3:ResearchType {
-  id: 4,
+  id: 400000,
   name: 'Разведка'
 })
 
 create (exc:Knowledge {
-  id: 1,
+  id: 100000,
   monument_name: 'Болгарский курган',
   x: 55,
   y: 49,
   description: 'Копаем оружие в Болгаре'
 })
 create (surv:Knowledge {
-  id: 2,
+  id: 200000,
   monument_name: 'Гробница в Болгаре',
   y: 48.8,
   x: 54.8,
   description: 'Расхищаем гробницу'
 })
 create (an:Knowledge {
-  id: 3,
+  id: 300000,
   y: 48.6,
   x: 54.6,
   monument_name: 'Курган в Болгаре',
@@ -255,7 +276,7 @@ create (an:Knowledge {
 })
 
 create (map:Publication {
-  id: 1,
+  id: 100000,
   name: 'Карта кургана',
   published_at: 2007,
   volume: '1',
@@ -263,7 +284,7 @@ create (map:Publication {
   link: "https://www.google.ru"
 })
 create (mono1:Publication {
-  id: 2,
+  id: 200000,
   name: 'Как я копал Курган',
   published_at: 2010,
   isbn: '1241523-9137',
@@ -271,7 +292,7 @@ create (mono1:Publication {
   link: "https://www.google.ru"
 })
 create (mono2:Publication {
-  id: 3,
+  id: 300000,
   name: 'Анализ раскопок кургана',
   published_at: 2012,
   isbn: '1241523-9137',
@@ -279,7 +300,7 @@ create (mono2:Publication {
   link: "https://www.google.ru"
 })
 create (dig:Publication {
-  id: 4,
+  id: 400000,
   name: 'Сборник легенд о гробнице царя',
   published_at: 2000,
   isbn: '1241523-4137',
@@ -287,7 +308,7 @@ create (dig:Publication {
   link: "https://www.google.ru"
 })
 create (jour:Publication {
-  id: 5,
+  id: 500000,
   name: 'Вестник Болгара',
   published_at: 2011,
   volume: 1,
@@ -298,32 +319,32 @@ create (jour:Publication {
 })	
 
 create (publ1:PublicationType {
-  id: 1,
+  id: 100000,
   name: "Монография"
 })
 create (publ2:PublicationType {
-  id: 2,
+  id: 200000,
   name: "Статья"
 })
 
 create (edi1:EditionType {
-  id: 1,
+  id: 100000,
   name: "Журнал"
 })
 create (edi2:EditionType {
-  id: 2,
+  id: 200000,
   name: "Сборник научных трудов"
 })
 create (edi3:EditionType {
-  id: 3,
+  id: 300000,
   name: "Коллективная монография"
 })
 create (edi4:EditionType {
-  id: 4,
+  id: 400000,
   name: "Материалы конференции"
 })
 create (edi5:EditionType {
-  id: 5,
+  id: 500000,
   name: "Тезисы докладов конференции"
 })
 
@@ -337,265 +358,265 @@ create (art2:Article {
 })	
 
 create (col1:Collection {
-  id: 10000,
+  id: 1000000000,
   name: 'Вещи царя',
   description: 'Древние украшения, найденные в гробнице'
 })
 create (col2:Collection {
-  id: 20000,
+  id: 2000000000,
   name: 'Питерская коллекция',
   description: 'Коллекция древностей в Питере'
 })
 
 create (mon1:Monument {
-  id: 1
+  id: 100000
 })
 create (mon2:Monument {
-  id: 2
+  id: 200000
 })
 
 create (status1:HeritageStatus {
-  id: 1,
+  id: 100000,
   name: 'Выявленный'
 })
 create (status2:HeritageStatus {
-  id: 2,
+  id: 200000,
   name: 'Находится на государственной охране'
 })
 
 create (sec1:SecurityType {
-  id: 1,
+  id: 100000,
   name: 'Федеральная'
 })
 create (sec2:SecurityType {
-  id: 2,
+  id: 200000,
   name: 'Региональная'
 })
 
 create (cd1:CardinalDirection {
-  id: 1,
+  id: 100000,
   name: 'Север'
 })
 create (cd2:CardinalDirection {
-  id: 2,
+  id: 200000,
   name: 'Северо-восток'
 })
 create (cd3:CardinalDirection {
-  id: 3,
+  id: 300000,
   name: 'Восток'
 })
 create (cd4:CardinalDirection {
-  id: 4,
+  id: 400000,
   name: 'Юго-восток'
 })
 create (cd5:CardinalDirection {
-  id: 5,
+  id: 500000,
   name: 'Юг'
 })
 create (cd6:CardinalDirection {
-  id: 6,
+  id: 600000,
   name: 'Юго-запад'
 })
 create (cd7:CardinalDirection {
-  id: 7,
+  id: 700000,
   name: 'Запад'
 })
 create (cd8:CardinalDirection {
-  id: 8,
+  id: 800000,
   name: 'Северо-запад'
 })
 
 create (ot1:OwnType {
-  id: 11,
+  id: 1000001,
   name: 'Собственность физического лица'
 })
 create (ot2:OwnType {
-  id: 12,
+  id: 1000002,
   name: 'Собственность юридического лица'
 })
 create (ot3:OwnType {
-  id: 13,
+  id: 1000003,
   name: 'Федеральная собственность'
 })
 create (ot4:OwnType {
-  id: 14,
+  id: 1000004,
   name: 'Собственность субъекта Российской Федерации'
 })
 create (ot5:OwnType {
-  id: 15,
+  id: 1000005,
   name: 'Муниципальная собственность'
 })
 
 create (dt1:DisposalType {
-  id: 21,
+  id: 2000001,
   name: 'Оперативное управление'
 })
 create (dt2:DisposalType {
-  id: 22,
+  id: 2000002,
   name: 'Хозяйственное ведение'
 })
 
 create (fp1:FunctionalPurpose {
-  id: 20,
+  id: 2000000,
   name: 'Культурно-просветительное'
 })
 create (fp2:FunctionalPurpose {
-  id: 21,
+  id: 2000001,
   name: 'Музей'
 })
 create (fp3:FunctionalPurpose {
-  id: 22,
+  id: 2000002,
   name: 'Библиотека'
 })
 create (fp4:FunctionalPurpose {
-  id: 23,
+  id: 2000003,
   name: 'Клуб'
 })
 create (fp5:FunctionalPurpose {
-  id: 24,
+  id: 2000004,
   name: 'Парк'
 })
 create (fp6:FunctionalPurpose {
-  id: 25,
+  id: 2000005,
   name: 'Театр, цирк, концертная организация'
 })
 create (fp7:FunctionalPurpose {
-  id: 26,
+  id: 2000006,
   name: 'Кинотеатр'
 })
 create (fp8:FunctionalPurpose {
-  id: 27,
+  id: 2000007,
   name: 'Фондохранилище'
 })
 create (fp9:FunctionalPurpose {
-  id: 28,
+  id: 2000008,
   name: 'Выставка (экспозиция)'
 })
 create (fp10:FunctionalPurpose {
-  id: 29,
+  id: 2000009,
   name: 'Прочие КПУ и ТЗП'
 })
 create (fp11:FunctionalPurpose {
-  id: 30,
+  id: 3000000,
   name: 'Туристско-экскурсионное'
 })
 create (fp12:FunctionalPurpose {
-  id: 40,
+  id: 4000000,
   name: 'Лечебно-оздоровительное'
 })
 create (fp13:FunctionalPurpose {
-  id: 41,
+  id: 4000001,
   name: 'Больница'
 })
 create (fp14:FunctionalPurpose {
-  id: 42,
+  id: 4000002,
   name: 'Санаторий'
 })
 create (fp15:FunctionalPurpose {
-  id: 43,
+  id: 4000003,
   name: 'Дом отдыха'
 })
 create (fp16:FunctionalPurpose {
-  id: 44,
+  id: 4000004,
   name: 'Спортивные сооружения'
 })
 create (fp17:FunctionalPurpose {
-  id: 49,
+  id: 4000009,
   name: 'Прочие виды лечебно-оздоровительного использования'
 })
 create (fp18:FunctionalPurpose {
-  id: 50,
+  id: 5000000,
   name: 'Жилые помещения'
 })
 create (fp19:FunctionalPurpose {
-  id: 60,
+  id: 6000000,
   name: 'Хозяйственное'
 })
 create (fp20:FunctionalPurpose {
-  id: 61,
+  id: 6000001,
   name: 'Учреждение'
 })
 create (fp21:FunctionalPurpose {
-  id: 62,
+  id: 6000002,
   name: 'Торговое'
 })
 create (fp22:FunctionalPurpose {
-  id: 63,
+  id: 6000003,
   name: 'Промышленное'
 })
 create (fp23:FunctionalPurpose {
-  id: 64,
+  id: 6000004,
   name: 'Склад'
 })
 create (fp24:FunctionalPurpose {
-  id: 69,
+  id: 6000009,
   name: 'Прочие виды хозяйственного использования'
 })
 create (fp25:FunctionalPurpose {
-  id: 70,
+  id: 7000000,
   name: 'Не используется'
 })
 create (fp26:FunctionalPurpose {
-  id: 71,
+  id: 7000001,
   name: 'Не может использоваться в утилитарных целях'
 })
 create (fp27:FunctionalPurpose {
-  id: 80,
+  id: 8000000,
   name: 'Учебное заведение'
 })
 create (fp28:FunctionalPurpose {
-  id: 81,
+  id: 8000001,
   name: 'Учебное заведение системы МК РФ'
 })
 create (fp29:FunctionalPurpose {
-  id: 82,
+  id: 8000002,
   name: 'Учебное заведение других ведомств'
 })
 
 create (avail1:Availability {
-  id: 0,
+  id: 000000,
   name: 'Нет доступа'
 })
 create (avail2:Availability {
-  id: 1,
+  id: 100000,
   name: 'Внешний осмотр'
 })
 create (avail3:Availability {
-  id: 2,
+  id: 200000,
   name: 'Ограниченный доступ'
 })
 create (avail4:Availability {
-  id: 3,
+  id: 300000,
   name: 'Свободный доступ'
 })
 create (avail5:Availability {
-  id: 4,
+  id: 400000,
   name: 'Музеефицирован'
 })
 
 create (ut1:UsageType {
-  id: 31,
+  id: 3000001,
   name: 'Аренда'
 })
 create (ut2:UsageType {
-  id: 32,
+  id: 3000002,
   name: 'Субаренда'
 })
 create (ut3:UsageType {
-  id: 33,
+  id: 3000003,
   name: 'Безвозмездное пользование бессрочное'
 })
 create (ut4:UsageType {
-  id: 34,
+  id: 3000004,
   name: 'Безвозмездное пользование без указания срока'
 })
 create (ut5:UsageType {
-  id: 35,
+  id: 3000005,
   name: 'Безвозмездное пользование временное'
 })
 
 create (im1:Image {
-  id: 1,
+  id: 100000,
   fileid: '1',
   description: 'Оружие из кургана',
   date: '14.07.2010',
@@ -603,7 +624,7 @@ create (im1:Image {
   y: 10
 })
 create (im2:Image {
-  id: 2,
+  id: 200000,
   fileid: '2',
   description: 'Украшения царя',
   date: '14.07.2005',
@@ -611,7 +632,7 @@ create (im2:Image {
   y: 10
 })	
 create (im3:Image {
-  id: 3,
+  id: 300000,
   fileid: '3',
   description: 'Внутри гробницы',
   date: '14.07.2005',
@@ -619,7 +640,7 @@ create (im3:Image {
   y: 10
 })	
 create (im4:Image {
-  id: 4,
+  id: 400000,
   fileid: '4',
   description: 'Вход в курган',
   date: '14.07.2010',
@@ -627,7 +648,7 @@ create (im4:Image {
   y: 10
 })	
 create (im5:Image {
-  id: 5,
+  id: 500000,
   fileid: '5',
   description: 'Раскопки гробницы',
   date: '14.07.2005',
@@ -635,7 +656,7 @@ create (im5:Image {
   y: 10
 })	
 create (im6:Image {
-  id: 6,
+  id: 600000,
   fileid: '6',
   description: 'Раскопки кургана',
   date: '14.07.2010',
@@ -646,38 +667,38 @@ create (im6:Image {
 
 // Фото авторов
 create (im7:Image {
-  id: 7,
+  id: 700000,
   fileid: '7'
 })
 create (im8:Image {
-  id: 8,
+  id: 800000,
   fileid: '8'
 })
 create (im9:Image {
-  id: 9,
+  id: 900000,
   fileid: '9'
 })
 
 
 create (pub1:Publisher {
-  id:1,
+  id: 100000,
   name: 'Болгар-арт'
 })
 create (pub2:Publisher {
-  id:2,
+  id: 200000,
   name: 'Рускарт'
 })
 
 create (org1:Organization {
-  id:1,
+  id: 100000,
   name: 'Сообщество копателей'
 })
 create (org2:Organization {
-  id:2,
+  id: 200000,
   name: 'Ассоциация археологов Татарстана'
 })
 create (org3:Organization {
-  id:3,
+  id: 300000,
   name: 'Питерский музей'
 })
 
@@ -723,37 +744,37 @@ create (ref3:ShortBibliographicRef {
 })
 
 create (arti1:Artifact {
-  id: 1,
+  id: 100000,
   name: 'Железный меч',
   description: 'Железный меч',
   year: '2000'
 })
 create (arti2:Artifact {
-  id: 2,
+  id: 200000,
   name: 'Часть деревянного щита',
   description: 'Часть деревянного щита',
   year: '2000'
 })
 create (arti3:Artifact {
-  id: 3,
+  id: 300000,
   description: 'Плащ',
   name: 'Плащ',
   year: '2000'
 })
 create (arti4:Artifact {
-  id: 4,
+  id: 400000,
   description: 'Золотое кольцо',
   name: 'Золотое кольцо',
   year: '2000'
 })
 create (arti5:Artifact {
-  id: 5,
+  id: 500000,
   name: 'Картина с котятами',
   description: 'Картина с котятами',
   year: '2000'
 })
 create (arti6:Artifact {
-  id: 6,
+  id: 600000,
   name: 'Сапфировое ожерелье',
   description: 'Сапфировое ожерелье',
   year: '2000'
@@ -926,149 +947,149 @@ create (arti6)-[:has]->(big)
 
 
 create (mm1:MonumentMaterial {
-  id: 0,
+  id: 000000,
   name: '-'
 })
 create (mm2:MonumentMaterial {
-  id: 100,
+  id: 10000000,
   name: 'Дерево'
 })
 create (mm3:MonumentMaterial {
-  id: 200,
+  id: 20000000,
   name: 'Кирпич'
 })
 create (mm4:MonumentMaterial {
-  id: 300,
+  id: 30000000,
   name: 'Бетон'
 })
 create (mm5:MonumentMaterial {
-  id: 400,
+  id: 40000000,
   name: 'Земля'
 })
 create (mm6:MonumentMaterial {
-  id: 500,
+  id: 50000000,
   name: 'Гипс'
 })
 create (mm7:MonumentMaterial {
-  id: 600,
+  id: 60000000,
   name: 'Камень'
 })
 create (mm8:MonumentMaterial {
-  id: 670,
+  id: 60000070,
   name: 'Гранит'
 })
 create (mm9:MonumentMaterial {
-  id: 680,
+  id: 60000080,
   name: 'Известняк'
 })
 
 create (ms1:MonumentState {
-  id: 0,
+  id: 000000,
   name: '-'
 })
 create (ms2:MonumentState {
-  id: 1,
+  id: 100000,
   name: 'Удовлетворительное'
 })
 create (ms3:MonumentState {
-  id: 2,
+  id: 200000,
   name: 'Неудовлетворительное'
 })
 create (ms4:MonumentState {
-  id: 3,
+  id: 300000,
   name: 'Аварийное'
 })
 create (ms5:MonumentState {
-  id: 4,
+  id: 400000,
   name: 'Разрушен'
 })
 
 create (mf1:MonumentDefect {
-  id: 0,
+  id: 000000,
   name: '-'
 })
 create (mf2:MonumentDefect {
-  id: 10,
+  id: 1000000,
   name: 'Разрушено'
 })
 create (mf3:MonumentDefect {
-  id: 20,
+  id: 2000000,
   name: 'Отсутсвует'
 })
 create (mf4:MonumentDefect {
-  id: 30,
+  id: 3000000,
   name: 'Обрушение'
 })
 create (mf5:MonumentDefect {
-  id: 110,
+  id: 10000010,
   name: 'Вертикальные трещины'
 })
 create (mf6:MonumentDefect {
-  id: 130,
+  id: 10000030,
   name: 'Горизонтальные трещины'
 })
 create (mf7:MonumentDefect {
-  id: 150,
+  id: 10000050,
   name: 'Косые(наклонные)трещины'
 })
 create (mf8:MonumentDefect {
-  id: 170,
+  id: 10000070,
   name: 'Смешанные трещины'
 })
 create (mf9:MonumentDefect {
-  id: 200,
+  id: 20000000,
   name: 'Осыпание красочного слоя'
 })
 create (mf10:MonumentDefect {
-  id: 220,
+  id: 20000020,
   name: 'Отслоение штукатурки'
 })
 create (mf11:MonumentDefect {
-  id: 240,
+  id: 20000040,
   name: 'Выкрашиване кладки'
 })
 create (mf12:MonumentDefect {
-  id: 260,
+  id: 20000060,
   name: 'Высолы'
 })
 create (mf13:MonumentDefect {
-  id: 300,
+  id: 30000000,
   name: 'Коррозия металла'
 })
 create (mf14:MonumentDefect {
-  id: 400,
+  id: 40000000,
   name: 'Деформация вертикальная'
 })
 create (mf15:MonumentDefect {
-  id: 420,
+  id: 40000020,
   name: 'Деформация горизонтальная'
 })
 create (mf16:MonumentDefect {
-  id: 440,
+  id: 40000040,
   name: 'Деформация изгибная'
 })
 create (mf17:MonumentDefect {
-  id: 460,
+  id: 40000060,
   name: 'Деформация смешанная'
 })
 create (mf18:MonumentDefect {
-  id: 500,
+  id: 50000000,
   name: 'Поражение гнилью'
 })
 create (mf19:MonumentDefect {
-  id: 600,
+  id: 60000000,
   name: 'Поражение грибком'
 })
 create (mf20:MonumentDefect {
-  id: 700,
+  id: 70000000,
   name: 'Нарушение целостности культурного слоя природное'
 })
 create (mf21:MonumentDefect {
-  id: 730,
+  id: 70000030,
   name: 'Нарушение целостности культурного слоя антропогенное'
 })
 create (mf22:MonumentDefect {
-  id: 750,
+  id: 70000050,
   name: 'Нарушение целостности техногенное культурного слоя'
 })
 

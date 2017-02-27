@@ -10,6 +10,13 @@ App.controllers.research = new (Backbone.View.extend({
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
       },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
+      },
       'citiesInputOptions': {
         'source': App.models.City.findByNamePrefix,
         'etl': function(cities) {
@@ -26,6 +33,13 @@ App.controllers.research = new (Backbone.View.extend({
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
+      },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
       },
       'citiesInputOptions': {
         'source': App.models.City.findByNamePrefix,
@@ -155,6 +169,7 @@ App.controllers.research = new (Backbone.View.extend({
         })
       })
 
+      let resYear = (tmplData.research.year) ? ` (${tmplData.research.year})` : "";
       _.each(tmplData.excavations, function(resExc, resId) {
         _.each(resExc, function(exc, excId) {
           var type = (exc.area <= 20) ? 1 : 2;
@@ -163,7 +178,7 @@ App.controllers.research = new (Backbone.View.extend({
             id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: exc.name,
+              hintContent: exc.name + resYear,
             },
             opts: {
               preset: `excType${type}`

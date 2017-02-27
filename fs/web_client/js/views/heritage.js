@@ -53,7 +53,7 @@ App.views.heritage = new (Backbone.View.extend({
             $(this).parentsUntil("tbody").last().find(".map-table-row").prop("disabled", value)
           })
         })
-        console.log($(`#map-own-type-selector-${localMapId}`))
+
         getDataForSelector($(`#map-own-type-selector-${localMapId}`), "OwnType");
         getDataForSelector($(`#map-disposal-type-selector-${localMapId}`), "DisposalType");
         getDataForSelector($(`#map-purpose-selector-${localMapId}`), "FunctionalPurpose");
@@ -215,11 +215,14 @@ App.views.heritage = new (Backbone.View.extend({
       })
     });
 
+    getDataForSelector($("#her-spatref-selector"), "SpatialReferenceType");
     getDataForSelector($("#heritage-status-selector"), "HeritageStatus");
     getDataForSelector($("#heritage-security-type-selector"), "SecurityType");
     setSelectsEvents();
 
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
+
       if ( isValidForm() ) {
         postQuery("heritage");
       } else {

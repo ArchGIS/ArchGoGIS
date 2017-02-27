@@ -10,6 +10,7 @@
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
       <li><a href="#photos"><%= t('photo.plural') %></a></li>
       <li><a href="#topos"><%= t('topoplan.plural') %></a></li>
+      <li><a href="#history"><%= t('common.spatialHistory') %></a></li>
     </ul>
 
     <div id="general">
@@ -147,6 +148,22 @@
 
     <div id="topos">
       <%= App.views.functions.getTopoCard(topos[0]) %>
+    </div>
+
+    <div id="spatialHistory">
+      <% 
+      let counter = 1;
+      _.each(spatrefType, function(type, i) { %>
+        <dt><%= type[0].name %></dt>
+        <% _.each(type, function(obj, t) { %>
+          <% let date = new Date(spatref[i][t].date) %>
+          <dd><%= counter++ %>) X: <%= spatref[i][t].x %>, Y: <%= spatref[i][t].y %>
+            <%= (counter == 2) ? " - <b>актуальные координаты</b>" : "" %>
+          </dd>
+          <dd>Дата добавления: <%= date.getDate() %>.<%= date.getMonth() %>.<%= date.getFullYear() %> <%= date.getHours() %>:<%= date.getMinutes() %>:<%= date.getSeconds() %></dd>
+          <br>
+      <%}) 
+      }) %>
     </div>
   </div>
 </div>

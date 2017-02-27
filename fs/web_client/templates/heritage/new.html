@@ -27,18 +27,25 @@
         <input class="form-control" id="heritage-address-input" data-for="heritage:Heritage" type="text" name="address" data-has-display></input>
       </div>
 
+      <input class="form-control" id="her-spatref-date" data-for="hsr:SpatialReference" data-subclass="HerSpatRef" type="number" name="date" data-need-date hidden></input>
+
+      <div class="form-group">
+        <label for="her-spatref-selector">Точность пространственной привязки</label>
+        <select class="form-control" id="her-spatref-selector" data-for="hsrt:SpatialReferenceType" data-subclass="HerSpatRefType" type="id" name="id"></select>
+      </div>
+
       <div id="coord-picker" class="coords">
         <div class="form-group">
           <label for="heritage-x">
-            Координата X<span class="required">*</span>
+            Координата X
           </label>
-          <input class="form-control" id="heritage-x" data-for="heritage:Heritage" type="number" name="x" data-req data-has-display></input>
+          <input class="form-control" id="heritage-x" data-for="hsr:SpatialReference" data-subclass="HerSpatRef" type="number" name="x"></input>
         </div>
         <div class="form-group">
           <label for="heritage-y">
-            Координата Y<span class="required">*</span>
+            Координата Y
           </label>
-          <input class="form-control" id="heritage-y" data-for="heritage:Heritage" type="number" name="y" data-req data-has-display></input>
+          <input class="form-control" id="heritage-y" data-for="hsr:SpatialReference" data-subclass="HerSpatRef" type="number" name="y"></input>
         </div>
       </div>
 

@@ -18,6 +18,12 @@
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up">
       </div>
 
+      <div class="form-group">
+        <label for="coauthor-input">Соавторы</label>
+        <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
+        <input id="coauthor-input-id" data-few="true" data-for="coauthor:Author" data-subclass="Coauthor" hidden type="id" name="id"></input>
+      </div>
+      
       <div class="form-group find-pub">
         <h4>Выберите существующую публикацию</h4>
         <label for="pub-input">Название публикации <span class="required">*</span></label>
