@@ -143,11 +143,15 @@
     </div>
 
     <div id="photos">
-      <%= App.views.functions.getMonImageCard(photos[0]) %>
+      <% _.each(photos, function(photo) { %>
+        <%= App.views.functions.getMonImageCard(photo) %>
+      <% }) %>
     </div>
 
     <div id="topos">
-      <%= App.views.functions.getTopoCard(topos[0]) %>
+      <% _.each(topos, function(topo) { %>
+        <%= App.views.functions.getTopoCard(topo) %>
+      <% }) %>
     </div>
 
     <div id="spatialHistory">

@@ -238,6 +238,7 @@ App.views.monument = new (Backbone.View.extend({
     };
 
     $('#send-button').on('click', function() {
+      App.views.functions.setPresentDate();
       fillResearchInputs();
 
       if ( isValidForm() ) {
