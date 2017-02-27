@@ -119,7 +119,7 @@ App.views.artifact = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
-          $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+          $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
           $(`#monument-new-coords-button-${monId}`).remove();
 
           let layerCounter = App.fn.counter(1);
@@ -180,7 +180,7 @@ App.views.artifact = new (Backbone.View.extend({
       getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
 
       $("#clarify-button-"+monId).on("click", function() {
-        $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+        $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
         $(`#monument-new-coords-button-${monId}`).remove();
       })
 
@@ -598,7 +598,7 @@ App.views.artifact = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
-          $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+          $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
           $(`#monument-new-coords-button-${monId}`).remove();
 
           let layerCounter = App.fn.counter(1);
@@ -659,7 +659,7 @@ App.views.artifact = new (Backbone.View.extend({
       getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
 
       $("#clarify-button-"+monId).on("click", function() {
-        $($(`#monument-new-coords-${monId}`)[0]).show().find("input").attr("used", true);
+        $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
         $(`#monument-new-coords-button-${monId}`).remove();
       })
       
