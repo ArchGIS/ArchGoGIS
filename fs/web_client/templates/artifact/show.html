@@ -35,9 +35,6 @@
         <dt><%= t('artifact.keywords') %>:</dt>
         <dd><%= "Нет данных" %></dd>
 
-        <dt><%= t('common.description') %>:</dt>
-        <dd><%= maybe(artifact.description,  "Нет данных") %></dd>
-
         <dt><%= t('artifact.yearFound') %>:</dt>
         <dd><%= maybe(artifact.year,  "Нет данных") %></dd>
 
@@ -88,7 +85,7 @@
               let resType = resInfo.resType[0].name || "без типа";
               let resYear = resInfo.research[0].year || "год не указан";
               let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
-              html.push(`<h3>${App.models.Research.href(resInfo.research[0].id, resTitle)}</h3>`)
+              html.push(`<b>${App.models.Research.href(resInfo.research[0].id, resTitle)}</b>`)
 
               html.push(_.map(photos[i], function(photo) {
                 return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
@@ -122,7 +119,7 @@
               let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
               resTitle = App.models.Research.href(researches[i].research[0].id, resTitle);
 
-              let date = `${dateScale[i].name}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
+              let date = `${dateScale[0][i].name}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
               dates.push(date)
             }
           });
