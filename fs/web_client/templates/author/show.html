@@ -51,7 +51,7 @@
 
     <div id="monuments">
       <%
-      let mons = [];
+      let mons = {};
       _.compact(_.map(monuments, function(resMon, i) {
         return _.map(resMon.knowledges, function(mon, t) {
           let mid = `${resMon.m[t].id}`;
@@ -59,7 +59,7 @@
           mons[mid] = App.models.Monument.href(mid, monTitle);
         })
       })) %>
-      <%= mons.join("<br>") %>
+      <%= _.map(mons, function(obj, key) {return obj}).join("<br>") %>
     </div>
 
     <div id="reports">
