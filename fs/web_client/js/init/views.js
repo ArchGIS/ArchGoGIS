@@ -51,7 +51,7 @@ App.views.functions = {
     });
 
     if (params.photo.length === 0) {
-      imagesHtml += 'Нет фотографий';
+      imagesHtml += '';
     }
 
     return imagesHtml;
@@ -81,7 +81,7 @@ App.views.functions = {
     });
 
     if (topos.length === 0) {
-      imagesHtml += 'Нет топопланов';
+      imagesHtml += '';
     }
 
     return imagesHtml;
