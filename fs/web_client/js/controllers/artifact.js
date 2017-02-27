@@ -10,6 +10,13 @@ App.controllers.artifact = new (Backbone.View.extend({
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
       },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
+      },
       'citiesInputOptions': {
         'source': App.models.City.findByNamePrefix,
         'etl': function(cities) {
@@ -27,6 +34,13 @@ App.controllers.artifact = new (Backbone.View.extend({
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
+      },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
       },
       'citiesInputOptions': {
         'source': App.models.City.findByNamePrefix,

@@ -232,6 +232,13 @@ App.controllers.monument = new (Backbone.View.extend({
           return _.map(cities, city => ({'id': city.id, 'label': city.name}));
         }
       },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
+      },
       'heritageInputOptions': {
         'source': App.models.Heritage.findByNamePrefix,
         'etl': function(herits) {
@@ -248,6 +255,13 @@ App.controllers.monument = new (Backbone.View.extend({
         'etl': function(authors) {
           return _.map(authors, author => ({'id': author.id, 'label': author.name}));
         }
+      },
+      'coauthorsInputOptions': {
+        'source': App.models.Author.findByLastNamePrefix,
+        'etl': function(authors) {
+          return _.map(authors, author => ({'id': author.id, 'label': author.name}));
+        },
+        'multipleInput': true
       },
       'citiesInputOptions': {
         'source': App.models.City.findByNamePrefix,

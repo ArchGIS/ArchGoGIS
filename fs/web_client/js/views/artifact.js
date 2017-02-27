@@ -406,6 +406,34 @@ App.views.artifact = new (Backbone.View.extend({
       return false;
     })
 
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    $('#coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    $('#coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
+
     getDataForSelector($("#epoch-selector"), "Epoch");
     getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType");
     getDataForSelector($("#arti-spatref-selector"), "SpatialReferenceType");
@@ -744,6 +772,34 @@ App.views.artifact = new (Backbone.View.extend({
       } 
     });
 
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    $('#coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    $('#coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
+    
     var cats = App.models.artiCategory.getAll()
     cats.then(function(response) {
       var categories = _.map(response.rows, cat => ({'id': cat.id, 'label': cat.name}))

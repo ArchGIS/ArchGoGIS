@@ -83,6 +83,34 @@ App.views.monument = new (Backbone.View.extend({
       }
     });
 
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    $('#coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    $('#coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
+
     $('#report-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
     });
@@ -505,6 +533,34 @@ App.views.monument = new (Backbone.View.extend({
       }
     });
 
+    $("#coauthor-input").bind("keyup", function(event) {
+      if (event.keyCode === $.ui.keyCode.BACKSPACE) {
+        var coauthors = _.values(App.store.coauthors);
+        var input = this.value.split(', ');
+
+        if (coauthors.length == input.length) {
+          this.value = coauthors.join(", ") + ", ";
+        } else {
+          var inter = _.intersection(coauthors, input);
+          this.value = (inter.length) ? inter.join(", ") + ", " : "";
+
+          App.store.coauthors = _.pick(App.store.coauthors, value => _.contains(inter, value));
+        }
+        $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      }
+    });
+
+    $('#coauthor-input').on('autocompleteselect', function(event, ui) {
+      App.store.coauthors[ui.item.id] = ui.item.value;
+      this.value = _.values(App.store.coauthors).join(", ")+", ";
+      $("#coauthor-input-id").val(_.keys(App.store.coauthors));
+      return false;
+    });
+
+    $('#coauthor-input').on('autocompletefocus', function(event, ui) {
+      return false;
+    })
+    
     $('#pub-input').on('autocompletefocus', function(event, ui) {
       event.preventDefault();
     });

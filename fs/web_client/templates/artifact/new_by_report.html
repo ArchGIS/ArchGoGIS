@@ -19,6 +19,11 @@
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
       </div>
 
+      <div class="form-group">
+        <label for="coauthor-input">Соавторы</label>
+        <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
+        <input id="coauthor-input-id" data-few="true" data-for="coauthor:Author" data-subclass="Coauthor" hidden type="id" name="id"></input>
+      </div>
 
       <div class="form-group find-report">
         <h4>Выберите существующий отчёт</h4>

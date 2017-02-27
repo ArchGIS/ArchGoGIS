@@ -2,7 +2,7 @@
 
 App.widgets.SearchLine = function(params, id) {
   var grepObject = App.fn.grepObject;
-  
+  console.log(params)
   var $input = null;
   var records = {};
   var tmpl = _.template(`<input id="<%= id %>" class="form-control autoinput"></input>`);
@@ -38,7 +38,7 @@ App.widgets.SearchLine = function(params, id) {
               }
               items = _.uniq(result, 'label');
 
-              if (!items.length) {
+              if (!items.length && params.multipleInput != true) {
                 items.push('Ничего не найдено. Добавить?');
               }
 
