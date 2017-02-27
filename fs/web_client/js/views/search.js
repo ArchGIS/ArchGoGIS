@@ -75,7 +75,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchExcavation,
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return [App.models.Excavation.href(r.id, `${r.name} (${r.resYear})`)];
+            return [App.models.Excavation.href(r.id, `${r.name} (${r.author} - ${r.resYear})`)];
           });
         },
         'inputs': {
@@ -306,7 +306,8 @@ App.views.search = new (Backbone.View.extend({
                     icon: icon
                   });
 
-                  marker.bindTooltip(item.resName, {
+                  let resHeader = `${item.autName}, ${item.resTypeName} (${item.resYear})`
+                  marker.bindTooltip(resHeader, {
                     direction: 'top'
                   });
 
@@ -508,7 +509,8 @@ App.views.search = new (Backbone.View.extend({
                   icon: icon
                 });
 
-                marker.bindTooltip(item.name, {
+                let excHeader = `${item.name} (item.resYear)`
+                marker.bindTooltip(excHeader, {
                   direction: 'top'
                 });
 

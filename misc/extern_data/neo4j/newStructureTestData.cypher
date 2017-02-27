@@ -1,34 +1,34 @@
 // Заполнить БД
 create (mesolit:Epoch {
-  id: 100000,
+  id: 1,
   name: 'Мезолит'
 })
 create (paleolit:Epoch {
-  id: 200000,
+  id: 2,
   name: 'Палеолит'
 })
 create (neolit:Epoch {
-  id: 300000,
+  id: 3,
   name: 'Неолит'
 })
 create (bronze_age:Epoch {
-  id: 400000,
+  id: 4,
   name: 'Бронзовый век'
 })
 create (iron_age:Epoch {
-  id: 500000,
+  id: 5,
   name: 'Ранний железный век'
 })
 create (migration_age:Epoch {
-  id: 600000,
+  id: 6,
   name: 'Эпоха великого переселения'
 })
 create (middle_age:Epoch {
-  id: 700000,
+  id: 7,
   name: 'Средневековье'
 })
 create (new_age:Epoch {
-  id: 800000,
+  id: 8,
   name: 'Новое время'
 })
 
@@ -61,23 +61,23 @@ create (moscow:City {
 
 create (spa1:SpatialReferenceType {
   name: 'Точная, субметровая',
-  id: 100000
+  id: 1
 })
 create (spa2:SpatialReferenceType {
   name: 'Точная, метровая',
-  id: 200000
+  id: 2
 })
 create (spa3:SpatialReferenceType {
   name: 'По крупномасштабной карте или снимку',
-  id: 300000
+  id: 3
 })
 create (spa4:SpatialReferenceType {
   name: 'По мелкомасштабной карте или абрису',
-  id: 400000
+  id: 4
 })
 create (spa5:SpatialReferenceType {
   name: 'По словесному описанию',
-  id: 500000
+  id: 5
 })
 
 create (tatar:Culture {
@@ -94,11 +94,11 @@ create (mongol:Culture {
 })
 
 create (mound:MonumentType {
-  id: 100000,
+  id: 1,
   name: 'Курган'
 })
 create (tomb:MonumentType {
-  id: 200000,
+  id: 2,
   name: 'Гробница'
 })
 
@@ -241,15 +241,15 @@ create (rep3:Report {
 })
 
 create (rt1:ResearchType {
-  id: 200000,
+  id: 2,
   name: 'Аналитическое'
 })
 create (rt2:ResearchType {
-  id: 300000,
+  id: 3,
   name: 'Раскопки'
 })
 create (rt3:ResearchType {
-  id: 400000,
+  id: 4,
   name: 'Разведка'
 })
 
