@@ -68,7 +68,7 @@ App.controllers.excavation = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
 
-      let resYear = (tmplData.res.year) ? ` (${tmplData.res.year})` : "";
+      let resYear = (tmplData.res[0].year) ? ` (${tmplData.res[0].year})` : "";
       let type = (tmplData.exc.area <= 20) ? 1 : 2;
       tmplData.placemarks.push({
         type: 'excavation',
