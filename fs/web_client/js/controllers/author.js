@@ -93,6 +93,7 @@ App.controllers.author = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
       _.each(tmplData.monuments, function(resMonuments, resId) {
+        let resHeader = `${tmplData.author.name}, ${tmplData.resTypes[resId][0].name} (${tmplData.researches[resId].year})`
         _.each(resMonuments.knowledges, function(know, kid) {
           let type = resMonuments.monType[kid].id || 10;
           let epoch = resMonuments.epoch[kid].id || 0;
@@ -115,7 +116,7 @@ App.controllers.author = new (Backbone.View.extend({
             id: tmplData.researches[resId].id,
             coords: [know.x, know.y],
             pref: {
-              hintContent: tmplData.researches[resId].name
+              hintContent: resHeader
             },
             opts: {
               preset: `resType${typeRes}`

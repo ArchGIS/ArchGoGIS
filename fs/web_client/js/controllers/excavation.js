@@ -68,13 +68,14 @@ App.controllers.excavation = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
 
+      let resYear = (tmplData.res.year) ? ` (${tmplData.res.year})` : "";
       let type = (tmplData.exc.area <= 20) ? 1 : 2;
       tmplData.placemarks.push({
         type: 'excavation',
         id: tmplData.exc.id,
         coords: [tmplData.exc.x, tmplData.exc.y],
         pref: {
-          hintContent: tmplData.exc.name
+          hintContent: tmplData.exc.name + resYear,
         },
         opts: {
           preset: `excType${type}`
