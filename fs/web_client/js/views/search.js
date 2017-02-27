@@ -29,7 +29,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchResearch,
         'columnsMaker': function(researches) {
           return _.map(researches, function(r) {
-            return App.models.Research.href(r.resId, `${r.resName ? r.resName : ''}`);
+            return App.models.Research.href(r.resId, `${r.autName}, ${r.resTypeName} (${r.resYear})`);
           });
         },
         'inputs': {
@@ -75,7 +75,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchExcavation,
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return [App.models.Excavation.href(r.id, `${r.name} (${r.author} - ${r.resYear})`)];
+            return [App.models.Excavation.href(r.id, `${r.name} (${r.resYear})`)];
           });
         },
         'inputs': {
@@ -161,6 +161,7 @@ App.views.search = new (Backbone.View.extend({
 
               _.each(response, function(item, i) {
                 $.when(coords[i]).then(function(coord) {
+                  console.log(coords)
                   if (coord.x != "нет данных" && coord.y != "нет данных") {
                     let type = item.monTypeId || 10;
                     let epoch = item.ep || 0;
@@ -477,7 +478,7 @@ App.views.search = new (Backbone.View.extend({
                 xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
               },
               success: (response) => {
-                console.log(response)
+                console.log($.parseJSON(response))
                 resolve($.parseJSON(response));
               },
               error: reject
@@ -492,6 +493,36 @@ App.views.search = new (Backbone.View.extend({
 
               _.each(list, function(item) {
                 $results.append(`<p>${item}</p>`);
+              });
+
+              markersLayer.clearLayers();
+
+              _.each(response, function(item) {
+                let type = (item.area <= 20) ? 1 : 2;
+                let icon = L.icon({
+                  iconUrl: `/web_client/img/excTypes/excType${type}.png`,
+                  iconSize: (type == 1) ? [16, 16] : [21, 21]
+                });
+
+                let marker = L.marker(new L.LatLng(item.x, item.y), {
+                  icon: icon
+                });
+
+                marker.bindTooltip(item.name, {
+                  direction: 'top'
+                });
+
+                marker.on('mouseover', function(e) {
+                  this.openTooltip();
+                });
+                marker.on('mouseout', function(e) {
+                  this.closeTooltip();
+                });
+                marker.on('click', function(e) {
+                  location.hash = `excavation/show/${item.id}`
+                });
+
+                markersLayer.addLayer(marker);
               });
             } else {
               $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')

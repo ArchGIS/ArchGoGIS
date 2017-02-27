@@ -55,6 +55,7 @@ func searchForFilterExcavation(author, year string) ([]byte, error) {
 	query = query + "RETURN {" +
 		"id: r.id, " +
 		"name: r.name, " +
+		"area: r.area, " +
 		"resYear: res.year, " +
 		"author: a.name}"
 

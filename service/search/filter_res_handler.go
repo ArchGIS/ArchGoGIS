@@ -51,13 +51,14 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 		params["author"] = `"(?ui)^.*` + author + `.*$"`
 	}
 
-	query = query + "OPTIONAL MATCH (r)-[:has]->(resType:ResearchType) "
+	query = query + "MATCH (r)-[:has]->(resType:ResearchType) "
 
 	query = query + "RETURN {" +
 		"resId: r.id, " +
 		"resName: r.name, " +
 		"resYear: r.year, " +
 		"resTypeId: resType.id, " +
+		"resTypeName: resType.name, " +
 		"autName: a.name, " +
 		"x: COLLECT(k.x), " +
 		"y: COLLECT(k.y)}"
