@@ -147,7 +147,7 @@
               <dd><%= maybe(culture[i], "Нет данных", "name") %></dd>
 
               <dt><%= t("date.singular") %>:</dt>
-              <% let date = `${dateScale[i].name}: ${inters[i].dateBottom} — ${inters[i].dateTop}` %>
+              <% let date = `${dateScale[0][i].name}: ${inters[i].dateBottom} — ${inters[i].dateTop}` %>
               <dd><%= maybe(date, "Нет данных") %></dd>
 
               <dt><%= t("photo.plural") %>:</dt>
