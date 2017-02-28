@@ -162,9 +162,11 @@ App.views.search = new (Backbone.View.extend({
               _.each(response, function(item, i) {
                 $.when(coords[i]).then(function(coord) {
                   console.log(coords)
-                  if (coord.x != "нет данных" && coord.y != "нет данных") {
+                  if ((coord.x != "нет данных" && coord.y != "нет данных") || (item.x && item.y)) {
                     let type = item.monTypeId || 10;
                     let epoch = item.ep || 0;
+                    coord.x = coord.x || item.x;
+                    coord.y = coord.y || item.y;
 
                     let icon = L.icon({
                       iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,

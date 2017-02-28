@@ -245,23 +245,23 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
-      console.log(tmplData)
       _.each(tmplData.artifactsSpatref, function(artif, artifId) {
         _.each(artif.spatref, function(art, artId) {
           let artiData = tmplData.artifacts[artifId][artId]
-          let coords = tmplData.excavationsSpatref[artifId].spatref[artId]
-          console.log(artifId, artId)
-          tmplData.placemarks.push({
-            type: 'artifact',
-            id: artiData.id,
-            coords: [coords.x, coords.y],
-            pref: {
-              hintContent: artiData.name,
-            },
-            opts: {
-              preset: `artifact1`
-            }
-          })
+          if (tmplData.excavationsSpatref[artifId].spatref[artId]) {
+            let coords = tmplData.excavationsSpatref[artifId].spatref[artId]
+            tmplData.placemarks.push({
+              type: 'artifact',
+              id: artiData.id,
+              coords: [coords.x, coords.y],
+              pref: {
+                hintContent: artiData.name,
+              },
+              opts: {
+                preset: `artifact1`
+              }
+            })
+          }
         })
       })
 
