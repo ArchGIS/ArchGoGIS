@@ -167,10 +167,10 @@ App.controllers.monument = new (Backbone.View.extend({
         y: "нет данных",
       };
 
-      _.each(tmplData.statref, function(coordlist, i) {
+      _.each(tmplData.spatref, function(coordlist, i) {
         _.each(coordlist, function(coord, t) {
-          cosnole.log(coord)
-          if ((tmplData.statrefType[i][t].id < dataRet.type) || ((tmplData.statrefType[i][t].id == dataRet.type) && (coord.date > dataRet.date))) {
+          console.log(coord)
+          if ((tmplData.spatrefType[i][t].id < dataRet.type) || ((tmplData.spatrefType[i][t].id == dataRet.type) && (coord.date > dataRet.date))) {
             dataRet.x = coord.x;
             dataRet.y = coord.y;
             dataRet.date = coord.date;
