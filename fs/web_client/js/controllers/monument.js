@@ -95,7 +95,7 @@ App.controllers.monument = new (Backbone.View.extend({
         }),
         artifactsSpatref: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
-          "artifacts:Artifact": {"id": "*", "select": "*"},
+          "artifacts:Artifact": {"id": "*"},
           "spatref:SpatialReference": {"id": "*", "select": "*"},
           "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
           "knowledge__found__artifacts": {},
@@ -133,14 +133,13 @@ App.controllers.monument = new (Backbone.View.extend({
       _.each(tmplData.excavations, function(resExc, resId) {
         let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
         _.each(resExc, function(exc, excId) {
-          let excData = tmplData.excavations[resId][excId]
-          let type = (excData.area <= 20) ? 1 : 2;
+          let type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
-            id: excData.id,
+            id: exc.id,
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: excData.name + resYear,
+              hintContent: exc.name + resYear,
             },
             opts: {
               preset: `excType${type}`
@@ -152,13 +151,14 @@ App.controllers.monument = new (Backbone.View.extend({
       _.each(tmplData.excavationsSpatref, function(resExc, resId) {
         let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
         _.each(resExc.spatref, function(exc, excId) {
-          let type = (exc.area <= 20) ? 1 : 2;
+          let excData = tmplData.excavations[resId][excId]
+          let type = (excData.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
-            id: exc.id,
+            id: excData.id,
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: exc.name + resYear,
+              hintContent: excData.name + resYear,
             },
             opts: {
               preset: `excType${type}`
@@ -237,6 +237,23 @@ App.controllers.monument = new (Backbone.View.extend({
             coords: [art.x, art.y],
             pref: {
               hintContent: art.name,
+            },
+            opts: {
+              preset: `artifact1`
+            }
+          })
+        })
+      })
+
+      _.each(tmplData.artifactsSpatref, function(artif, artifId) {
+        _.each(artif.spatref, function(art, artId) {
+          let artiData = tmplData.artifacts[artifId][artId]
+          tmplData.placemarks.push({
+            type: 'artifact',
+            id: artiData.id,
+            coords: [art.x, art.y],
+            pref: {
+              hintContent: artiData.name,
             },
             opts: {
               preset: `artifact1`
