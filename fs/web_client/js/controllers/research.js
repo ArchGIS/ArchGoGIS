@@ -123,6 +123,13 @@ App.controllers.research = new (Backbone.View.extend({
           "monument:Monument": {"id": "NEED"},
           "heritage:Heritage": {"id": "*", "select": "*"},
           "heritage__has__monument": {}
+        }),
+        spatref: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__spatref": {},
+          "spatref__has__spatrefType": {}
         })
       },
 
@@ -167,6 +174,39 @@ App.controllers.research = new (Backbone.View.extend({
             preset: `monType${type}_${epoch}`
           }
         })
+      })
+
+      _.each(tmplData.spatref, function(coordlist, i) {
+        let dataRet = {
+          date: 0, 
+          type: 6, 
+          x: "нет данных", 
+          y: "нет данных",
+        };
+
+        _.each(coordlist.spatref, function(coord, t) {
+          if ((coordlist.spatrefType[t].id < dataRet.type) || ((coordlist.spatrefType[t].id == dataRet.type) && (coord.date > dataRet.date))) {
+            dataRet.x = coord.x;
+            dataRet.y = coord.y;
+            dataRet.date = coord.date;
+          }
+        })
+
+        if (dataRet.date > 0) {
+          let type = tmplData.monTypes[i].id || 10;
+          let epoch = tmplData.epochs[i].id || 1;
+          tmplData.placemarks.push({
+            type: 'monument',
+            id: tmplData.monuments[i].id,
+            coords: [dataRet.x, dataRet.y],
+            pref: {
+              hintContent: tmplData.knowledges[i].monument_name
+            },
+            opts: {
+              preset: `monType${type}_${epoch}`
+            }
+          })
+        }
       })
 
       let resYear = (tmplData.research.year) ? ` (${tmplData.research.year})` : "";
