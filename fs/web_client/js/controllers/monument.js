@@ -248,10 +248,11 @@ App.controllers.monument = new (Backbone.View.extend({
       _.each(tmplData.artifactsSpatref, function(artif, artifId) {
         _.each(artif.spatref, function(art, artId) {
           let artiData = tmplData.artifacts[artifId][artId]
+          let coords = tmplData.excavationsSpatref[artifId][artId]
           tmplData.placemarks.push({
             type: 'artifact',
             id: artiData.id,
-            coords: [art.x, art.y],
+            coords: [coords.x, coords.y],
             pref: {
               hintContent: artiData.name,
             },
