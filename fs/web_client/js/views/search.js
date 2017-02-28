@@ -161,7 +161,6 @@ App.views.search = new (Backbone.View.extend({
 
               _.each(response, function(item, i) {
                 $.when(coords[i]).then(function(coord) {
-                  console.log(coords)
                   if ((coord.x != "нет данных" && coord.y != "нет данных") || (item.x && item.y)) {
                     let type = item.monTypeId || 10;
                     let epoch = item.ep || 0;
@@ -172,7 +171,7 @@ App.views.search = new (Backbone.View.extend({
                       iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
                       iconSize: [16, 16]
                     });
-                    console.log(coord, coord.x, coord.y)
+                    
                     let marker = L.marker(new L.LatLng(coord.x, coord.y), {
                       icon: icon
                     });

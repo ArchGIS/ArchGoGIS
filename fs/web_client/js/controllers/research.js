@@ -193,8 +193,8 @@ App.controllers.research = new (Backbone.View.extend({
         })
 
         if (dataRet.date > 0) {
-          let type = tmplData.monTypes[i].id || 10;
-          let epoch = tmplData.epochs[i].id || 1;
+          let type = tmplData.monTypes[i][0].id || 10;
+          let epoch = tmplData.epochs[i][0].id || 1;
           tmplData.placemarks.push({
             type: 'monument',
             id: tmplData.monuments[i].id,
