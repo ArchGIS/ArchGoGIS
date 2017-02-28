@@ -424,7 +424,9 @@ App.views.search = new (Backbone.View.extend({
 
               _.each(response, function(item) {
                 console.log(item)
-                if ((typeof item.x !== "undefined") && (typeof item.y !== "undefined")) {
+                if (((item.x !== null) && (item.y !== null)) || ((item.spatrefX !== null) && (item.spatrefY !== null))) {
+                  item.x = item.x || item.spatrefX;
+                  item.y = item.y || item.spatrefY;
                   let icon = L.icon({
                     iconUrl: `/web_client/img/heritage/heritage.png`,
                     iconSize: [16, 16]
