@@ -422,7 +422,9 @@ App.views.search = new (Backbone.View.extend({
               markersLayer.clearLayers();
 
               _.each(response, function(item) {
-                if (typeof item.x !== "undefined" && typeof item.y !== "undefined") {
+                console.log(item)
+                if ((typeof item.x !== "undefined") && (typeof item.y !== "undefined")) {
+                console.log(item.x, item.y)
                   let icon = L.icon({
                     iconUrl: `/web_client/img/heritage/heritage.png`,
                     iconSize: [16, 16]
