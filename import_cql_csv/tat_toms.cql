@@ -16,3 +16,20 @@ create (k)-[:has]->(cul)
 create (spr)-[:has]->(sprt)
 create (m)-[:has]->(spr)
 return k.monument_name;
+
+
+LOAD CSV WITH HEADERS FROM "file:///okn3.csv" AS line
+WITH line, toFloat(line.x) as x, toFloat(line.y) as y, toInt(line.status) as status, toInt(line.id) as id
+match (hs:HeritageStatus {id: status})
+match (sprt:SpatialReferenceType {id: 5})
+create (h:Heritage {id: id + 44 + 1967 + 201, name: line.name, address: line.addr, date: line.dat})
+create (sp:SpatialReference {id: id + 3542 + 1967 + 201, x: x, y: y, time: timestamp()})
+create (h)-[:has]->(hs)
+create (sp)-[:has]->(sprt)
+create (h)-[:has]->(sp);
+
+LOAD CSV WITH HEADERS FROM "file:///okn3.csv" AS line
+WITH line, toFloat(line.x) as x, toFloat(line.y) as y, toInt(line.status) as status, toInt(line.id) as id
+match (h:Heritage {name: line.name})
+match (f:File {id: 4})
+create (h)-[:has]->(f);
