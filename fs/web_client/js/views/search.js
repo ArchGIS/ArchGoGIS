@@ -422,32 +422,32 @@ App.views.search = new (Backbone.View.extend({
               markersLayer.clearLayers();
 
               _.each(response, function(item) {
-                if (!item.x && !item.y) { return; }
+                if ((typeof item.x !== "undefined") && (typeof item.y !== "undefined")) {
+                  let icon = L.icon({
+                    iconUrl: `/web_client/img/heritage/heritage.png`,
+                    iconSize: [16, 16]
+                  });
 
-                let icon = L.icon({
-                  iconUrl: `/web_client/img/heritage/heritage.png`,
-                  iconSize: [16, 16]
-                });
+                  let marker = L.marker(new L.LatLng(item.x, item.y), {
+                    icon: icon
+                  });
 
-                let marker = L.marker(new L.LatLng(item.x, item.y), {
-                  icon: icon
-                });
+                  marker.bindTooltip(item.name, {
+                    direction: 'top'
+                  });
 
-                marker.bindTooltip(item.name, {
-                  direction: 'top'
-                });
+                  marker.on('mouseover', function(e) {
+                    this.openTooltip();
+                  });
+                  marker.on('mouseout', function(e) {
+                    this.closeTooltip();
+                  });
+                  marker.on('click', function(e) {
+                    location.hash = `heritage/show/${item.id}`
+                  });
 
-                marker.on('mouseover', function(e) {
-                  this.openTooltip();
-                });
-                marker.on('mouseout', function(e) {
-                  this.closeTooltip();
-                });
-                marker.on('click', function(e) {
-                  location.hash = `heritage/show/${item.id}`
-                });
-
-                markersLayer.addLayer(marker);
+                  markersLayer.addLayer(marker);
+                }
               });
 
               map.addLayer(markersLayer);

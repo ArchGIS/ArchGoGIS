@@ -73,6 +73,17 @@ App.controllers.monument = new (Backbone.View.extend({
           "exc:Excavation": {"id": "*", "select": "*"},
           "monument__has__exc": {},
           "r__has__exc": {},
+        }),
+        excavationsSpatref: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "r:Research": {"id": "NEED"},
+          "exc:Excavation": {"id": "*"},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__exc": {},
+          "r__has__exc": {},
+          "exc__has__spatref": {},
+          "spatref__has__spatrefType": {},
         })
       },
 
@@ -81,6 +92,15 @@ App.controllers.monument = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "NEED"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
           "knowledge__found__artifacts": {}
+        }),
+        artifactsSpatref: JSON.stringify({
+          "knowledge:Knowledge": {"id": "NEED"},
+          "artifacts:Artifact": {"id": "*"},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "knowledge__found__artifacts": {},
+          "artifacts__has__spatref": {},
+          "spatref__has__spatrefType": {},
         }),
         photos: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
@@ -120,6 +140,25 @@ App.controllers.monument = new (Backbone.View.extend({
             coords: [exc.x, exc.y],
             pref: {
               hintContent: exc.name + resYear,
+            },
+            opts: {
+              preset: `excType${type}`
+            }
+          })
+        })
+      })
+
+      _.each(tmplData.excavationsSpatref, function(resExc, resId) {
+        let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
+        _.each(resExc.spatref, function(exc, excId) {
+          let excData = tmplData.excavations[resId][excId]
+          let type = (excData.area <= 20) ? 1 : 2;
+          tmplData.placemarks.push({
+            type: 'excavation',
+            id: excData.id,
+            coords: [exc.x, exc.y],
+            pref: {
+              hintContent: excData.name + resYear,
             },
             opts: {
               preset: `excType${type}`
@@ -198,6 +237,26 @@ App.controllers.monument = new (Backbone.View.extend({
             coords: [art.x, art.y],
             pref: {
               hintContent: art.name,
+            },
+            opts: {
+              preset: `artifact1`
+            }
+          })
+        })
+      })
+
+      console.log(tmplData)
+      _.each(tmplData.artifactsSpatref, function(artif, artifId) {
+        _.each(artif.spatref, function(art, artId) {
+          let artiData = tmplData.artifacts[artifId][artId]
+          let coords = tmplData.excavationsSpatref[artifId].spatref[artId]
+          console.log(artifId, artId)
+          tmplData.placemarks.push({
+            type: 'artifact',
+            id: artiData.id,
+            coords: [coords.x, coords.y],
+            pref: {
+              hintContent: artiData.name,
             },
             opts: {
               preset: `artifact1`
