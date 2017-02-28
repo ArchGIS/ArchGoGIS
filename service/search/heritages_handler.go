@@ -13,8 +13,8 @@ import (
 
 const (
 	oknsCypher = "MATCH (o:Heritage)" +
-		"OPTIONAL MATCH (o)-[:has]->(spatref:StatialReference)" +
 		"WHERE o.name =~ {needle}" +
+		"OPTIONAL MATCH (o)-[:has]->(spatref:StatialReference)" +
 		"RETURN {
 			id: o.id,
 			x: o.x,
