@@ -73,6 +73,17 @@ App.controllers.monument = new (Backbone.View.extend({
           "exc:Excavation": {"id": "*", "select": "*"},
           "monument__has__exc": {},
           "r__has__exc": {},
+        }),
+        excavationsSpatref: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "r:Research": {"id": "NEED"},
+          "exc:Excavation": {"id": "*"},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__exc": {},
+          "r__has__exc": {},
+          "exc__has__spatref": {},
+          "spatref__has__spatrefType": {},
         })
       },
 
@@ -111,6 +122,24 @@ App.controllers.monument = new (Backbone.View.extend({
 
       tmplData.placemarks = [];
       _.each(tmplData.excavations, function(resExc, resId) {
+        let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
+        _.each(resExc, function(exc, excId) {
+          let type = (exc.area <= 20) ? 1 : 2;
+          tmplData.placemarks.push({
+            type: 'excavation',
+            id: exc.id,
+            coords: [exc.x, exc.y],
+            pref: {
+              hintContent: exc.name + resYear,
+            },
+            opts: {
+              preset: `excType${type}`
+            }
+          })
+        })
+      })
+
+      _.each(tmplData.excavationsSpatref.spatref, function(resExc, resId) {
         let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
         _.each(resExc, function(exc, excId) {
           let type = (exc.area <= 20) ? 1 : 2;
