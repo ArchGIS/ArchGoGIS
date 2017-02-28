@@ -93,6 +93,15 @@ App.controllers.monument = new (Backbone.View.extend({
           "artifacts:Artifact": {"id": "*", "select": "*"},
           "knowledge__found__artifacts": {}
         }),
+        artifactsSpatref: JSON.stringify({
+          "knowledge:Knowledge": {"id": "NEED"},
+          "artifacts:Artifact": {"id": "*", "select": "*"},
+          "spatref:SpatialReference": {"id": "*", "select": "*"},
+          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
+          "knowledge__found__artifacts": {},
+          "artifacts__has__spatref": {},
+          "spatref__has__spatrefType": {},
+        }),
         photos: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
           "photo:Image": {"id": "*", "select": "*"},
