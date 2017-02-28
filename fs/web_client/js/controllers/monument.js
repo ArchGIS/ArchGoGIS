@@ -160,6 +160,35 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
+      let dataRet = {
+        date: 0, 
+        x: "нет данных", 
+        y: "нет данных",
+      };
+
+      _.each(tmplData.statref, function(coord, i) {
+        if ((tmplData.statrefType[i].id < dataRet.type) || ((tmplData.statrefType[i].id == dataRet.type) && (coord.date > dataRet.date))) {
+          dataRet.x = coord.x;
+          dataRet.y = coord.y;
+          dataRet.date = coord.date;
+        }
+      })
+
+      if (dataRet.date > 0) {
+        let type = tmplData.monType[0].id || 10;
+        let epoch = tmplData.epoch[0].id || 1;
+        tmplData.placemarks.push({
+          type: 'monument',
+          id: tmplData.monument.id,
+          coords: [dataRet.x, dataRet.y],
+          pref: {
+            hintContent: know.monument_name
+          },
+          opts: {
+            preset: `monType${type}_${epoch}`
+          }
+        })
+      }
       _.each(tmplData.artifacts, function(artif, artifId) {
         _.each(artif, function(art, artId) {
           tmplData.placemarks.push({
