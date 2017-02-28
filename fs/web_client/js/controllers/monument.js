@@ -162,16 +162,20 @@ App.controllers.monument = new (Backbone.View.extend({
 
       let dataRet = {
         date: 0, 
+        type: 6, 
         x: "нет данных", 
         y: "нет данных",
       };
 
-      _.each(tmplData.statref, function(coord, i) {
-        if ((tmplData.statrefType[i].id < dataRet.type) || ((tmplData.statrefType[i].id == dataRet.type) && (coord.date > dataRet.date))) {
-          dataRet.x = coord.x;
-          dataRet.y = coord.y;
-          dataRet.date = coord.date;
-        }
+      _.each(tmplData.statref, function(coordlist, i) {
+        _.each(coordlist, function(coord, t) {
+          cosnole.log(coord)
+          if ((tmplData.statrefType[i][t].id < dataRet.type) || ((tmplData.statrefType[i][t].id == dataRet.type) && (coord.date > dataRet.date))) {
+            dataRet.x = coord.x;
+            dataRet.y = coord.y;
+            dataRet.date = coord.date;
+          }
+        })
       })
 
       if (dataRet.date > 0) {
