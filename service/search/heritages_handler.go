@@ -13,8 +13,16 @@ import (
 
 const (
 	oknsCypher = "MATCH (o:Heritage)" +
+		"OPTIONAL MATCH (o)-[:has]->(spatref:StatialReference)" +
 		"WHERE o.name =~ {needle}" +
-		"RETURN o"
+		"RETURN {
+			id: o.id,
+			x: o.x,
+			y: o.y,
+			name: o.name,
+			spatrefX: spatref.x,
+			spatrefY: spatref.y
+			}"
 )
 
 var oknsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

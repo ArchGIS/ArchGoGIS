@@ -171,7 +171,7 @@ App.views.search = new (Backbone.View.extend({
                       iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
                       iconSize: [16, 16]
                     });
-                    
+
                     let marker = L.marker(new L.LatLng(coord.x, coord.y), {
                       icon: icon
                     });
@@ -423,6 +423,7 @@ App.views.search = new (Backbone.View.extend({
               markersLayer.clearLayers();
 
               _.each(response, function(item) {
+                console.log(item)
                 if ((typeof item.x !== "undefined") && (typeof item.y !== "undefined")) {
                   let icon = L.icon({
                     iconUrl: `/web_client/img/heritage/heritage.png`,
