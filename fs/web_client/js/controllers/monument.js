@@ -167,15 +167,12 @@ App.controllers.monument = new (Backbone.View.extend({
         y: "нет данных",
       };
 
-      _.each(tmplData.spatref, function(coordlist, i) {
-        _.each(coordlist, function(coord, t) {
-          console.log(coord)
-          if ((tmplData.spatrefType[i][t].id < dataRet.type) || ((tmplData.spatrefType[i][t].id == dataRet.type) && (coord.date > dataRet.date))) {
-            dataRet.x = coord.x;
-            dataRet.y = coord.y;
-            dataRet.date = coord.date;
-          }
-        })
+      _.each(tmplData.spatref, function(coord, i) {
+        if ((tmplData.spatrefType[i].id < dataRet.type) || ((tmplData.spatrefType[i].id == dataRet.type) && (coord.date > dataRet.date))) {
+          dataRet.x = coord.x;
+          dataRet.y = coord.y;
+          dataRet.date = coord.date;
+        }
       })
 
       if (dataRet.date > 0) {
@@ -186,7 +183,7 @@ App.controllers.monument = new (Backbone.View.extend({
           id: tmplData.monument.id,
           coords: [dataRet.x, dataRet.y],
           pref: {
-            hintContent: know.monument_name
+            hintContent: tmplData.mainName
           },
           opts: {
             preset: `monType${type}_${epoch}`
