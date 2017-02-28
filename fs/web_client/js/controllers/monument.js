@@ -124,13 +124,14 @@ App.controllers.monument = new (Backbone.View.extend({
       _.each(tmplData.excavations, function(resExc, resId) {
         let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
         _.each(resExc, function(exc, excId) {
-          let type = (exc.area <= 20) ? 1 : 2;
+          let excData = tmplData.excavations[resId][excId]
+          let type = (excData.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
-            id: exc.id,
+            id: excData.id,
             coords: [exc.x, exc.y],
             pref: {
-              hintContent: exc.name + resYear,
+              hintContent: excData.name + resYear,
             },
             opts: {
               preset: `excType${type}`
@@ -139,9 +140,9 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
-      _.each(tmplData.excavationsSpatref.spatref, function(resExc, resId) {
+      _.each(tmplData.excavationsSpatref, function(resExc, resId) {
         let resYear = (tmplData.researches[resId].year) ? ` (${tmplData.researches[resId].year})` : "";
-        _.each(resExc, function(exc, excId) {
+        _.each(resExc.spatref, function(exc, excId) {
           let type = (exc.area <= 20) ? 1 : 2;
           tmplData.placemarks.push({
             type: 'excavation',
