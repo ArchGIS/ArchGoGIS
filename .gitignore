@@ -1,5 +1,7 @@
 bin
 pkg
 tmp
+cfg/db/
 fs/local_storage/*
 .env
+*.jpg

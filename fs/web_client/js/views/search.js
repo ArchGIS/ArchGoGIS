@@ -164,8 +164,8 @@ App.views.search = new (Backbone.View.extend({
                   if ((coord.x != "нет данных" && coord.y != "нет данных") || (item.x && item.y)) {
                     let type = item.monTypeId || 10;
                     let epoch = item.ep || 0;
-                    coord.x = coord.x || item.x;
-                    coord.y = coord.y || item.y;
+                    coord.x = item.x || coord.x;
+                    coord.y = item.y || coord.y;
 
                     let icon = L.icon({
                       iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
