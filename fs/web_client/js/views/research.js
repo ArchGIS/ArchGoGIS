@@ -36,7 +36,7 @@ App.views.research = new (Backbone.View.extend({
       $("#research-name-input").val(name);
     };
 
-    $('#send-button').on('click', function() {
+    $('.send-button').on('click', function() {
       App.views.functions.setPresentDate();
       fillResearchInputs();
 
@@ -675,7 +675,7 @@ App.views.research = new (Backbone.View.extend({
       $("#research-input-year").val(year);
     };
 
-    $('#send-button').on('click', function() {
+    $('.send-button').on('click', function() {
       App.views.functions.setPresentDate();
       fillResearchInputs();
 

@@ -237,7 +237,7 @@ App.views.monument = new (Backbone.View.extend({
       $("#research-input-name").val(name);
     };
 
-    $('#send-button').on('click', function() {
+    $('.send-button').on('click', function() {
       App.views.functions.setPresentDate();
       fillResearchInputs();
 
@@ -255,7 +255,7 @@ App.views.monument = new (Backbone.View.extend({
     let excludeIdent = App.fn.excludeIdentMonuments;
 
     App.template.get("research/addMonument", function(tmpl) {
-      $('#send-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
@@ -601,7 +601,7 @@ App.views.monument = new (Backbone.View.extend({
 
     let monId = 1;
     App.template.get("research/addMonument", function(tmpl) {
-      $('#send-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
@@ -757,7 +757,7 @@ App.views.monument = new (Backbone.View.extend({
       $("#research-input-year").val(year);
     };
 
-    $('#send-button').on('click', function() {
+    $('.send-button').on('click', function() {
       App.views.functions.setPresentDate();
       fillResearchInputs();
 

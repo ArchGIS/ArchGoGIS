@@ -473,7 +473,7 @@ App.views.artifact = new (Backbone.View.extend({
       $("#container").tabs({active: $(this).attr("active")});
     })
     
-    $('#send-button').on('click', function() {
+    $('.send-button').on('click', function() {
       App.views.functions.setPresentDate();
       fillResearchInputs();
 

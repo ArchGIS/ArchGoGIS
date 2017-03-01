@@ -78,6 +78,7 @@ a:hover {
 
 #container {
   width: 100%;
+  margin-top: 7px;
 }
 
 #top-menu {
@@ -321,14 +322,14 @@ dt {
 }
 
 .btn {
-  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .btn:hover {
-  margin-top: 15px !important;
+  margin-top: 2px !important;
   position: relative;
-  top: 1px;
-  margin-bottom: 1px;
+  top: 0px;
+  margin-bottom: 0px;
 }
 
 .alert-info {
