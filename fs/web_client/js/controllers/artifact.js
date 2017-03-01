@@ -195,7 +195,7 @@ App.controllers.artifact = new (Backbone.View.extend({
           hintContent: tmplData.artifact.name
         },
         opts: {
-          preset: `artifact1`
+          preset: `artifact`
         }
       })
 

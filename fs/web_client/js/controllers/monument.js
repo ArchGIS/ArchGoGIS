@@ -239,7 +239,7 @@ App.controllers.monument = new (Backbone.View.extend({
               hintContent: art.name,
             },
             opts: {
-              preset: `artifact1`
+              preset: `artifact`
             }
           })
         })
@@ -258,7 +258,7 @@ App.controllers.monument = new (Backbone.View.extend({
                 hintContent: artiData.name,
               },
               opts: {
-                preset: `artifact1`
+                preset: `artifact`
               }
             })
           }
