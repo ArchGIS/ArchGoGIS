@@ -6,6 +6,7 @@ App.views.artifact = new (Backbone.View.extend({
     var fmt = App.fn.fmt;
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
+    let monX, monY;
 
     const map = App.views.map().map;
 
@@ -166,6 +167,15 @@ App.views.artifact = new (Backbone.View.extend({
 
           let coords = App.models.Monument.getActualSpatref(ui.item.id);
           $.when(coords).then(function(coord) {
+            monX = coord.x;
+            monY = coord.y;
+            $.when(App.models.Monument.findMonsByCoords(monX, monY)).then(monIds => {
+              let mainMonId = [];
+              mainMonId.push($(`#monument-input-id-${monId}`).val());
+              monIds = _.extend(mainMonId, monIds).join(",");
+              $(`#monument-clarify-input-id-${monId}`).val(monIds);
+            })
+
             $(`#spatref-y-${monId}`).text(coord.y);
             $(`#spatref-x-${monId}`).text(coord.x);
             $(`#spatref-type-${monId}`).text(coord.typeName);
@@ -491,6 +501,7 @@ App.views.artifact = new (Backbone.View.extend({
     var excludeIdent = App.fn.excludeIdentMonuments;
     let addName = App.fn.addNameToId;
     let markersLayer = new L.FeatureGroup();
+    let monX, monY;
 
     const map = App.views.map().map;
 
@@ -645,6 +656,15 @@ App.views.artifact = new (Backbone.View.extend({
 
           let coords = App.models.Monument.getActualSpatref(ui.item.id);
           $.when(coords).then(function(coord) {
+            monX = coord.x;
+            monY = coord.y;
+            $.when(App.models.Monument.findMonsByCoords(monX, monY)).then(monIds => {
+              let mainMonId = [];
+              mainMonId.push($(`#monument-input-id-${monId}`).val());
+              monIds = _.extend(mainMonId, monIds).join(",");
+              $(`#monument-clarify-input-id-${monId}`).val(monIds);
+            })
+
             $(`#spatref-y-${monId}`).text(coord.y);
             $(`#spatref-x-${monId}`).text(coord.x);
             $(`#spatref-type-${monId}`).text(coord.typeName);

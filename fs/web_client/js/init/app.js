@@ -91,6 +91,7 @@ function postQuery(objectId) {
     ["Monument", "Epoch", "has"],
     ["Monument", "MonumentType", "has"],
     ["Monument", "SpatialReference", "has"],
+    ["ClarifyMon", "SpatialReference", "has"],
     ["SpatialReference", "SpatialReferenceType", "has"],
     ["Knowledge", "monumentImage", "has"],
     ["Knowledge", "monumentTopo", "hastopo"],
@@ -265,7 +266,7 @@ function generateJson(relations) {
       counter = 0;
 
       _.each(value, function(val) {
-        inputObjName = dataFor.split(":")[0]+counter;
+        inputObjName = dataFor.split(":")[0]+"_"+counter;
         objs[inputSubclass].push(inputObjName);
         json[inputObjName+":"+inputClass] = {};
         json[inputObjName+":"+inputClass]["id"] = val;
