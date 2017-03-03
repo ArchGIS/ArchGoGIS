@@ -189,6 +189,7 @@ App.controllers.research = new (Backbone.View.extend({
             dataRet.x = coord.x;
             dataRet.y = coord.y;
             dataRet.date = coord.date;
+            dataRet.type = coordlist.spatrefType[t].id;
           }
         })
 

@@ -211,6 +211,7 @@ App.controllers.monument = new (Backbone.View.extend({
           dataRet.x = coord.x;
           dataRet.y = coord.y;
           dataRet.date = coord.date;
+          dataRet.type = tmplData.spatrefType[i].id;
         }
       })
 
