@@ -255,6 +255,8 @@ App.views.monument = new (Backbone.View.extend({
     let excludeIdent = App.fn.excludeIdentMonuments;
 
     App.template.get("research/addMonument", function(tmpl) {
+      let monX, monY;
+
       $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));
 
       $(`#monument-name-input-${monId}`).on("change", function() {
@@ -339,13 +341,22 @@ App.views.monument = new (Backbone.View.extend({
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
-        
+          
           $($("#clarify-button-"+monId)[0]).show();
 
           let coords = App.models.Monument.getActualSpatref(ui.item.id);
           $.when(coords).then(function(coord) {
-            $(`#spatref-y-${monId}`).text(coord.y);
-            $(`#spatref-x-${monId}`).text(coord.x);
+            monX = coord.x;
+            monY = coord.y;
+            $.when(App.models.Monument.findMonsByCoords(monX, monY)).then(monIds => {
+              let mainMonId = [];
+              mainMonId.push($(`#monument-input-id-${monId}`).val());
+              monIds = _.extend(mainMonId, monIds).join(",");
+              $(`#monument-clarify-input-id-${monId}`).val(monIds);
+            })
+
+            $(`#spatref-y-${monId}`).text(monY);
+            $(`#spatref-x-${monId}`).text(monX);
             $(`#spatref-type-${monId}`).text(coord.typeName);
           })
         }
@@ -472,7 +483,8 @@ App.views.monument = new (Backbone.View.extend({
     let addName = App.fn.addNameToId;
     let repSelName = '';
     let objectId = "m_1";
-    
+    let monX, monY;
+
     const map = App.views.map().map;
 
     getDataForSelector($("#epoch-selector"), "Epoch");
@@ -686,6 +698,15 @@ App.views.monument = new (Backbone.View.extend({
 
           let coords = App.models.Monument.getActualSpatref(ui.item.id);
           $.when(coords).then(function(coord) {
+            monX = coord.x;
+            monY = coord.y;
+            $.when(App.models.Monument.findMonsByCoords(monX, monY)).then(monIds => {
+              let mainMonId = [];
+              mainMonId.push($(`#monument-input-id-${monId}`).val());
+              monIds = _.extend(mainMonId, monIds).join(",");
+              $(`#monument-clarify-input-id-${monId}`).val(monIds);
+            })
+
             $(`#spatref-y-${monId}`).text(coord.y);
             $(`#spatref-x-${monId}`).text(coord.x);
             $(`#spatref-type-${monId}`).text(coord.typeName);

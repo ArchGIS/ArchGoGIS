@@ -66,6 +66,45 @@ App.models.Monument.getActualSpatref = function(monId) {
   return d.promise();
 };
 
+App.models.Monument.findMonsByCoords = function(x, y) {
+  var d = $.Deferred();
+  name = name || ""; 
+  let ids = [];
+  let done = 0;
+
+  let queries = [
+    JSON.stringify({
+      "m:Monument": {"id": "*", "select": "*"},
+      "knowledges:Knowledge": {"id": "*", "filter": `x=${x}=number;y=${y}=number`},
+      "knowledges__belongsto__m": {},
+    }),
+
+    JSON.stringify({
+      "m:Monument": {"id": "*", "select": "*"},
+      "sr:SpatialReference": {"id": "*", "filter": `x=${x}=number;y=${y}=number`},
+      "m__has__sr": {},
+    })
+  ];
+
+  _.each(queries, function(query) {
+    $.post({
+      url: "/hquery/read",
+      data: query,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+      },
+      success: response => {
+        let rows = $.parseJSON(response);
+        _.each(rows.m, (mon) => ids.push(mon.id));
+        done++;
+        (done === 2) ? d.resolve(ids) : "";
+      }
+    });
+  })
+
+  return d.promise();
+};
+
 App.models.Monument.getData = function(name) {
   return new Promise(function(resolve, reject) {
     name = name || ""; 

@@ -212,7 +212,7 @@ App.views.research = new (Backbone.View.extend({
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;
-
+      let localMonX, localMonY;
       App.template.get("research/addMonument", function(tmpl) {
         $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
 
@@ -309,6 +309,15 @@ App.views.research = new (Backbone.View.extend({
 
             let coords = App.models.Monument.getActualSpatref(ui.item.id);
             $.when(coords).then(function(coord) {
+              localMonX = coord.x;
+              localMonY = coord.y;
+              $.when(App.models.Monument.findMonsByCoords(localMonX, localMonY)).then(monIds => {
+                let mainMonId = [];
+                mainMonId.push($(`#monument-input-id-${localMonId}`).val());
+                monIds = _.extend(mainMonId, monIds).join(",");
+                $(`#monument-clarify-input-id-${localMonId}`).val(monIds);
+              })
+
               $(`#spatref-y-${localMonId}`).text(coord.y);
               $(`#spatref-x-${localMonId}`).text(coord.x);
               $(`#spatref-type-${localMonId}`).text(coord.typeName);
@@ -502,7 +511,7 @@ App.views.research = new (Backbone.View.extend({
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;
-
+      let localMonY, localMonX;
       App.template.get("research/addMonument", function(tmpl) {
         $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
 
@@ -599,6 +608,15 @@ App.views.research = new (Backbone.View.extend({
 
             let coords = App.models.Monument.getActualSpatref(ui.item.id);
             $.when(coords).then(function(coord) {
+              localMonX = coord.x;
+              localMonY = coord.y;
+              $.when(App.models.Monument.findMonsByCoords(localMonX, localMonY)).then(monIds => {
+                let mainMonId = [];
+                mainMonId.push($(`#monument-input-id-${localMonId}`).val());
+                monIds = _.extend(mainMonId, monIds).join(",");
+                $(`#monument-clarify-input-id-${localMonId}`).val(monIds);
+              })
+
               $(`#spatref-y-${localMonId}`).text(coord.y);
               $(`#spatref-x-${localMonId}`).text(coord.x);
               $(`#spatref-type-${localMonId}`).text(coord.typeName);
