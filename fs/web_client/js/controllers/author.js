@@ -70,13 +70,13 @@ App.controllers.author = new (Backbone.View.extend({
         monuments: JSON.stringify({
           "researches:Research": {"id": "NEED"},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
-          "m:Monument": {"id": "*", "select": "*"},
+          "monuments:Monument": {"id": "*", "select": "*"},
           "monType:MonumentType": {"id": "*", "select": "*"},
           "epoch:Epoch": {"id": "*", "select": "*"},
           "researches__has__knowledges": {},
           "knowledges__belongsto__m": {},
-          "m__has__monType": {},
-          "m__has__epoch": {}
+          "monuments__has__monType": {},
+          "monuments__has__epoch": {}
         }),
         resTypes: JSON.stringify({
           "researches:Research": {"id":"NEED"},

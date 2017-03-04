@@ -124,12 +124,12 @@ App.controllers.research = new (Backbone.View.extend({
           "heritage:Heritage": {"id": "*", "select": "*"},
           "heritage__has__monument": {}
         }),
-        spatref: JSON.stringify({
+        monSpatref: JSON.stringify({
           "monument:Monument": {"id": "NEED"},
-          "spatref:SpatialReference": {"id": "*", "select": "*"},
-          "spatrefType:SpatialReferenceType": {"id": "*", "select": "*"},
-          "monument__has__spatref": {},
-          "spatref__has__spatrefType": {}
+          "monSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__monSpatref": {},
+          "monSpatref__has__monSpatrefT": {}
         })
       },
 
@@ -159,56 +159,10 @@ App.controllers.research = new (Backbone.View.extend({
       console.log(tmplData);
 
       tmplData.placemarks = [];
-      _.each(tmplData.knowledges, function(k, kid) {
-        const type = tmplData.monTypes[kid][0].id;
-        const epoch = tmplData.epochs[kid][0].id;
 
-        tmplData.placemarks.push({
-          type: 'monument',
-          id: tmplData.monuments[kid].id,
-          coords: [k.x, k.y],
-          pref: {
-            hintContent: k.monument_name
-          },
-          opts: {
-            preset: `monType${type}_${epoch}`
-          }
-        })
-      })
+      let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
 
-      _.each(tmplData.spatref, function(coordlist, i) {
-        let dataRet = {
-          date: 0, 
-          type: 6, 
-          x: "нет данных", 
-          y: "нет данных",
-        };
-
-        _.each(coordlist.spatref, function(coord, t) {
-          if ((coordlist.spatrefType[t].id < dataRet.type) || ((coordlist.spatrefType[t].id == dataRet.type) && (coord.date > dataRet.date))) {
-            dataRet.x = coord.x;
-            dataRet.y = coord.y;
-            dataRet.date = coord.date;
-            dataRet.type = coordlist.spatrefType[t].id;
-          }
-        })
-
-        if (dataRet.date > 0) {
-          let type = tmplData.monTypes[i][0].id || 10;
-          let epoch = tmplData.epochs[i][0].id || 1;
-          tmplData.placemarks.push({
-            type: 'monument',
-            id: tmplData.monuments[i].id,
-            coords: [dataRet.x, dataRet.y],
-            pref: {
-              hintContent: tmplData.knowledges[i].monument_name
-            },
-            opts: {
-              preset: `monType${type}_${epoch}`
-            }
-          })
-        }
-      })
+      tmplData.placemarks = _.extend(tmplData.placemarks, monPlacemarks);
 
       let resYear = (tmplData.research.year) ? ` (${tmplData.research.year})` : "";
       _.each(tmplData.excavations, function(resExc, resId) {

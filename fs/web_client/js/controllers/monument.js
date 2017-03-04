@@ -167,22 +167,6 @@ App.controllers.monument = new (Backbone.View.extend({
         })
       })
 
-      _.each(tmplData.knowledges, function(know, kid) {
-        let type = tmplData.monType[0].id || 10;
-        let epoch = tmplData.epoch[0].id || 1;
-        tmplData.placemarks.push({
-          type: 'monument',
-          id: tmplData.monument.id,
-          coords: [know.x, know.y],
-          pref: {
-            hintContent: know.monument_name
-          },
-          opts: {
-            preset: `monType${type}_${epoch}`
-          }
-        })
-      })
-
       _.each(tmplData.researches, function(res, rid) {
         let type = tmplData.resTypes[rid][0].id || 1;
         let resHeader = `${tmplData.authors[rid].name}, ${tmplData.resTypes[rid][0].name} (${tmplData.researches[rid].year})`
@@ -216,8 +200,8 @@ App.controllers.monument = new (Backbone.View.extend({
       })
 
       if (dataRet.date > 0) {
-        let type = tmplData.monType[0].id || 10;
-        let epoch = tmplData.epoch[0].id || 1;
+        let type = tmplData.monType[0].id || 11;
+        let epoch = tmplData.epoch[0].id || 8;
         tmplData.placemarks.push({
           type: 'monument',
           id: tmplData.monument.id,
@@ -230,6 +214,7 @@ App.controllers.monument = new (Backbone.View.extend({
           }
         })
       }
+
       _.each(tmplData.artifacts, function(artif, artifId) {
         _.each(artif, function(art, artId) {
           tmplData.placemarks.push({

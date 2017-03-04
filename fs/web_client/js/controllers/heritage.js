@@ -107,6 +107,14 @@ App.controllers.heritage = new (Backbone.View.extend({
           "monTypes:MonumentType": {"id": "*", "select": "*"},
           "m__has__monTypes": {}
         }),
+
+        monSpatref: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "monSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__monSpatref": {},
+          "spatref__has__monSpatrefT": {}
+        }),
       },
 
       // research: {
@@ -170,6 +178,9 @@ App.controllers.heritage = new (Backbone.View.extend({
         }
       });
 
+      let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
+      tmplData.placemarks = _.extend(tmplData.placemarks, monPlacemarks);
+      
       _.each(tmplData.knowledges, function(know, kid) {
         const unknownType = 10;
         const type = (tmplData.monTypes[kid][0] && tmplData.monTypes[kid][0].id) ? tmplData.monTypes[kid][0].id : unknownType;
