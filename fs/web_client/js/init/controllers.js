@@ -152,12 +152,14 @@ App.controllers.fn = {
       resYear = data.researches[0].year;
       excHeader = `${data.excavation.name} (${resYear})`;
 
-      placemarks.push(
-        App.controllers.fn.createStandartPlacemark(
-          'excavation', data.excavation.id, data.excSpatref[0].x, 
-          data.excSpatref[0].y, excHeader, preset
-        )
-      );
+      if (data.excSpatref[0]) {
+        placemarks.push(
+          App.controllers.fn.createStandartPlacemark(
+            'excavation', data.excavation.id, data.excSpatref[0].x, 
+            data.excSpatref[0].y, excHeader, preset
+          )
+        );
+      }
     } else {
       _.each(data.excavations, function(excs, i) {
         _.each(excs, function(exc, t) {

@@ -21,6 +21,7 @@ App.controllers.author = new (Backbone.View.extend({
           "k:Knowledge": {"id": "*"},
           "monuments:Monument": {"id": "*", "select": "*", "options":"uniq"},
           "researches__has__k": {},
+          "researches__hasauthor__author": {},
           "k__belongsto__monuments": {},
         }),
         publications: JSON.stringify({
