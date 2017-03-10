@@ -137,6 +137,7 @@ App.controllers.author = new (Backbone.View.extend({
       _.each(data, function(val, id) {
         _.extend(tmplData, val);
       })
+      console.log(tmplData);
 
       tmplData.placemarks = [];
 
@@ -146,7 +147,6 @@ App.controllers.author = new (Backbone.View.extend({
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, resPlacemarks);
 
-      console.log(tmplData);
       App.page.render("author/show", tmplData, tmplData.placemarks);
     }
 

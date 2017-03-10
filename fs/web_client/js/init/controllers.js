@@ -81,10 +81,12 @@ App.controllers.fn = {
           _.each(data.resMonuments[i], function(mon, t) {
             monKey = _.findIndex(data.monuments, (m) => {return m.id == mon.id});
             found = true;
-            spatref = App.fn.findActualSpatref(
-              data.monSpatref[monKey].monSpatref, 
-              data.monSpatref[monKey].monSpatrefT
-            );
+            if (data.monSpatref[monKey]) {
+              spatref = App.fn.findActualSpatref(
+                data.monSpatref[monKey].monSpatref, 
+                data.monSpatref[monKey].monSpatrefT
+              );
+            }
           })
         } else {
           found = true;
