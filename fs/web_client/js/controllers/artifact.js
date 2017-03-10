@@ -60,27 +60,30 @@ App.controllers.artifact = new (Backbone.View.extend({
 
     var queries = {
       complex: {
-        foundIn: JSON.stringify({
+        monuments: JSON.stringify({
           "artifact:Artifact": {"id": aid},
-          "knowFound:Knowledge": {"id": "*", "select": "*"},
-          "monFound:Monument": {"id": "*", "select": "*"},
-          "resFound:Research": {"id": "*", "select": "*"},
-          "authorFound:Author": {"id": "*", "select": "*"},
-          "knowFound__found__artifact": {},
-          "knowFound__belongsto__monFound": {},
-          "resFound__has__knowFound": {},
-          "resFound__hasauthor__authorFound": {},
+          "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "monuments:Monument": {"id": "*", "select": "*"},
+          "knowledges__found__artifact": {},
+          "knowledges__belongsto__monuments": {},
         }),
         interpretations: JSON.stringify({
           "artifact:Artifact": {"id": aid},
-          "inters:Interpretation": {"id": "*", "select": "*"},
-          "artifact__has__inters": {},
+          "interpretations:Interpretation": {"id": "*", "select": "*"},
+          "artifact__has__interpretations": {},
         }),
       },
 
       single: {
         artifact: JSON.stringify({
           "artifact:Artifact": {"id": aid, "select": "*"}
+        }),
+        artiSpatref: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "artifact__has__artiSpatref": {},
+          "artiSpatref__has__artiSpatrefT": {},
         }),
         category: JSON.stringify({
           "artifact:Artifact": {"id": aid},
@@ -94,8 +97,12 @@ App.controllers.artifact = new (Backbone.View.extend({
         }),
         excavation: JSON.stringify({
           "artifact:Artifact": {"id": aid},
-          "exc:Excavation": {"id": "*", "select": "*"},
-          "exc__has__artifact": {},
+          "excavation:Excavation": {"id": "*", "select": "*"},
+          "excSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "excavation__has__excSpatref": {},
+          "excSpatref__has__excSpatrefT": {},
+          "excavation__has__artifact": {},
         }),
         materials: JSON.stringify({
           "artifact:Artifact": {"id": aid},
@@ -111,20 +118,27 @@ App.controllers.artifact = new (Backbone.View.extend({
         })
       },
 
-      monument: {
-        monType: JSON.stringify({
+      monuments: {
+        monTypes: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "monType:MonumentType": {"id": "*", "select": "*"},
           "m__has__monType": {},
         }),
-        epoch: JSON.stringify({
+        epochs: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "e:Epoch": {"id": "*", "select": "*"},
           "m__has__e": {},
+        }),
+        monSpatref: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "monSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__monSpatref": {},
+          "monSpatref__has__monSpatrefT": {}
         })
       },
 
-      interpretation: {
+      interpretations: {
         photos: JSON.stringify({
           "inter:Interpretation": {"id": "NEED"},
           "photos:Image": {"id": "*", "select": "*"},
@@ -159,45 +173,14 @@ App.controllers.artifact = new (Backbone.View.extend({
       console.log(tmplData);
 
       tmplData.placemarks = [];
-      let type = (tmplData.monType[0][0]) ? tmplData.monType[0][0].id : 10;
-      var epoch = (tmplData.epoch[0][0]) ? tmplData.epoch[0][0].id : 10;
-      tmplData.placemarks.push({
-        type: 'monument',
-        id: tmplData.monFound[0].id,
-        coords: [tmplData.knowFound[0].x, tmplData.knowFound[0].y],
-        pref: {
-          hintContent: tmplData.knowFound[0].monument_name
-        },
-        opts: {
-          preset: `monType${type}_${epoch}`
-        }
-      })
 
-      tmplData.exc[0] = tmplData.exc[0] || [];
-      type = (tmplData.exc[0].area <= 20) ? 1 : 2;
-      tmplData.placemarks.push({
-        type: 'excavation',
-        id: tmplData.exc[0].id,
-        coords: [tmplData.exc[0].x, tmplData.exc[0].y],
-        pref: {
-          hintContent: tmplData.exc[0].name
-        },
-        opts: {
-          preset: `excType${type}`
-        }
-      })
+      let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
+      let excPlacemarks = App.controllers.fn.getExcPlacemarks(tmplData, true);
+      let artPlacemarks = App.controllers.fn.getArtPlacemarks(tmplData, true);
 
-      tmplData.placemarks.push({
-        type: 'artifact',
-        id: tmplData.artifact.id,
-        coords: [tmplData.artifact.x, tmplData.artifact.y],
-        pref: {
-          hintContent: tmplData.artifact.name
-        },
-        opts: {
-          preset: `artifact`
-        }
-      })
+      tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, excPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, artPlacemarks);
 
       App.page.render("artifact/show", tmplData, tmplData.placemarks);
     }
@@ -208,22 +191,15 @@ App.controllers.artifact = new (Backbone.View.extend({
 
     var callRender = _.after(queryCounter, render);
 
-    $.when(model.sendQuery(queries.complex.foundIn)).then(function(response) {
-      _.extend(tmplData, response);
+    _.each(queries.complex, function(query, key) {
+      $.when(model.sendQuery(query)).then(function(response) {
+        _.extend(tmplData, response);
 
-      var monumentId = [tmplData.monFound[0].id];
+        var ids = _.map(tmplData[key], function(obj) {return obj.id.toString()});
 
-      data.push(model.getData(queries.monument, callRender, true, monumentId));
-      callRender();
-    })
-
-    $.when(model.sendQuery(queries.complex.interpretations)).then(function(response) {
-      _.extend(tmplData, response);
-
-      var interIds = _.map(tmplData.inters, function(res) {return res.id.toString()});
-
-      data.push(model.getData(queries.interpretation, callRender, true, interIds));
-      callRender();
+        data.push(model.getData(queries[key], callRender, true, ids));
+        callRender();
+      })
     })
 
     data.push(model.getData(queries.single, callRender));

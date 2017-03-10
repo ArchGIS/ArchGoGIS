@@ -52,12 +52,15 @@
     <div id="monuments">
       <%
       let mons = {};
-      _.compact(_.map(monuments, function(resMon, i) {
-        return _.map(resMon.knowledges, function(mon, t) {
-          let mid = `${resMon.m[t].id}`;
-          let monTitle = `${mon.monument_name} (${resMon.monType[t].name}, ${resMon.epoch[t].name})`;
-          mons[mid] = App.models.Monument.href(mid, monTitle);
-        })
+      _.compact(_.map(knowledges, function(monKnows, t) {
+        let mid = `${monuments[t].id}`;
+
+        let monName = App.utils.monumentFn.chooseMonumentName(
+          _.map(monKnows, (obj) => {return obj.monument_name})
+        );
+
+        let monTitle = `${monName} (${monTypes[t][0].name}, ${epochs[t][0].name})`;
+        mons[mid] = App.models.Monument.href(mid, monTitle);
       })) %>
       <%= _.map(mons, function(obj, key) {return obj}).join("<br>") %>
     </div>

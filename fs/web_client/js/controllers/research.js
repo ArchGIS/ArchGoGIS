@@ -61,8 +61,28 @@ App.controllers.research = new (Backbone.View.extend({
       complex: {
         monuments: JSON.stringify({
           "research:Research": {"id": resId},
-          "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "knowledges:Knowledge": {"id": "*"},
           "monuments:Monument": {"id": "*", "select": "*"},
+          "research__has__knowledges": {},
+          "knowledges__belongsto__monuments": {},
+        }),
+
+        artifacts: JSON.stringify({
+          "research:Research": {"id": resId},
+          "interpretations:Interpretation": {"id": "*", "select": "*"},
+          "artifacts:Artifact": {"id": "*", "select": "*"},
+          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "artifacts__has__artiSpatref": {},
+          "artiSpatref__has__artiSpatrefT": {},
+          "artifacts__has__interpretations": {},
+          "research__has__interpretations": {},
+        }),
+
+        knowledges: JSON.stringify({
+          "research:Research": {"id": resId},
+          "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "monuments:Monument": {"id": "*"},
           "research__has__knowledges": {},
           "knowledges__belongsto__monuments": {},
         })
@@ -93,15 +113,10 @@ App.controllers.research = new (Backbone.View.extend({
           "reports:Report": {"id": "*", "select": "*"},
           "reports__hasauthor__author": {},
           "research__has__reports": {}
-        }),
-        usedArtifacts: JSON.stringify({
-          "research:Research": {"id": resId},
-          "usedArtifacts:Artifact": {"id": "*", "select": "*"},
-          "research__used__usedArtifacts": {}
         })
       },
 
-      monument: {
+      monuments: {
         epochs: JSON.stringify({
           "monuments:Monument": {"id": "NEED"},
           "epoch:Epoch": {"id": "*", "select": "*"},
@@ -115,14 +130,22 @@ App.controllers.research = new (Backbone.View.extend({
         excavations: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "r:Research": {"id": resId},
-          "exc:Excavation": {"id": "*", "select": "*"},
-          "m__has__exc": {},
-          "r__has__exc": {}
+          "excavations:Excavation": {"id": "*", "select": "*"},
+          "excSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "excavations__has__excSpatref": {},
+          "excSpatref__has__excSpatrefT": {},
+          "m__has__excavations": {},
+          "r__has__excavations": {}
         }),
         heritages: JSON.stringify({
           "monument:Monument": {"id": "NEED"},
           "heritage:Heritage": {"id": "*", "select": "*"},
-          "heritage__has__monument": {}
+          "herSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "herSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "heritage__has__monument": {},
+          "heritage__has__herSpatref": {},
+          "herSpatref__has__herSpatrefT": {}
         }),
         monSpatref: JSON.stringify({
           "monument:Monument": {"id": "NEED"},
@@ -133,16 +156,11 @@ App.controllers.research = new (Backbone.View.extend({
         })
       },
 
-      knowledge: {
+      knowledges: {
         cultures: JSON.stringify({
           "knowledges:Knowledge": {"id": "NEED"},
           "cultures:Culture": {"id": "*", "select": "*"},
           "knowledges__has__cultures": {},
-        }),
-        artifacts: JSON.stringify({
-          "knowledge:Knowledge": {"id": "NEED"},
-          "artifacts:Artifact": {"id": "*", "select": "*"},
-          "knowledge__found__artifacts": {}
         }),
         topos: JSON.stringify({
           "knowledge:Knowledge": {"id": "NEED"},
@@ -161,58 +179,14 @@ App.controllers.research = new (Backbone.View.extend({
       tmplData.placemarks = [];
 
       let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
+      let herPlacemarks = App.controllers.fn.getHerPlacemarks(tmplData);
+      let excPlacemarks = App.controllers.fn.getExcPlacemarks(tmplData);
+      let artPlacemarks = App.controllers.fn.getArtPlacemarks(tmplData);
 
-      tmplData.placemarks = _.extend(tmplData.placemarks, monPlacemarks);
-
-      let resYear = (tmplData.research.year) ? ` (${tmplData.research.year})` : "";
-      _.each(tmplData.excavations, function(resExc, resId) {
-        _.each(resExc, function(exc, excId) {
-          var type = (exc.area <= 20) ? 1 : 2;
-          tmplData.placemarks.push({
-            type: 'excavation',
-            id: exc.id,
-            coords: [exc.x, exc.y],
-            pref: {
-              hintContent: exc.name + resYear,
-            },
-            opts: {
-              preset: `excType${type}`
-            }
-          })
-        })
-      })
-
-      _.each(tmplData.artifacts, function(artif, artifId) {
-        _.each(artif, function(art, artId) {
-          tmplData.placemarks.push({
-            type: 'artifact',
-            id: art.id,
-            coords: [art.x, art.y],
-            pref: {
-              hintContent: art.name,
-            },
-            opts: {
-              preset: `artifact`
-            }
-          })
-        })
-      })
-
-      _.each(tmplData.heritages, function(herit, heritId) {
-        _.each(herit, function(her, hId) {
-          tmplData.placemarks.push({
-            type: 'heritage',
-            id: her.id,
-            coords: [her.x, her.y],
-            pref: {
-              hintContent: her.name,
-            },
-            opts: {
-              preset: `heritage`
-            }
-          })
-        })
-      })
+      tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, herPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, excPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, artPlacemarks);
 
       App.page.render('research/show', tmplData, tmplData.placemarks)
     };
@@ -223,15 +197,15 @@ App.controllers.research = new (Backbone.View.extend({
 
     var callRender = _.after(queryCounter, render);
 
-    $.when(model.sendQuery(queries.complex.monuments)).then(function(response) {
-      _.extend(tmplData, response);
+    _.each(queries.complex, function(query, key) {
+      $.when(model.sendQuery(query)).then(function(response) {
+        _.extend(tmplData, response);
 
-      var monumentIds = _.map(tmplData.monuments, function(mon) {return mon.id.toString()});
-      var knowledgeIds = _.map(tmplData.knowledges, function(know) {return know.id.toString()});
+        var ids = _.map(tmplData[key], function(obj) {return obj.id.toString()});
 
-      data.push(model.getData(queries.monument, callRender, true, monumentIds));
-      data.push(model.getData(queries.knowledge, callRender, true, knowledgeIds));
-      callRender();
+        data.push(model.getData(queries[key], callRender, true, ids));
+        callRender();
+      })
     })
 
     data.push(model.getData(queries.single, callRender));

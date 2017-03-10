@@ -12,7 +12,7 @@ App.utils.monumentFn = {
         bestName = name;
       }
     })
-
+    
     return bestName;
   }
 };

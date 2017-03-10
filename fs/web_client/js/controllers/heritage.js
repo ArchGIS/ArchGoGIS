@@ -14,6 +14,18 @@ App.controllers.heritage = new (Backbone.View.extend({
 
     var queries = {
       complex: {
+        researches: JSON.stringify({
+          "heritage:Heritage": {"id": hId},
+          "monument:Monument": {"id": "*"},
+          "knowledges:Knowledge": {"id": "*"},
+          "researches:Research": {"id": "*", "select": "*"},
+          "authors:Author": {"id": "*", "select": "*"},
+          "researches__hasauthor__authors": {},
+          "researches__has__knowledges": {},
+          "knowledges__belongsto__monument": {},
+          "heritage__has__monument": {},
+        }),
+
         surveyMaps: JSON.stringify({
           "h:Heritage": {"id": hId},
           "surveyMaps:SurveyMap": {"id": "*", "select": "*"},
@@ -32,6 +44,14 @@ App.controllers.heritage = new (Backbone.View.extend({
           "heritage:Heritage": {"id": hId, "select": "*"},
           "herStatus:HeritageStatus": {"id": "*", "select": "*"},
           "heritage__has__herStatus": {}
+        }),
+
+        herSpatref: JSON.stringify({
+          "heritage:Heritage": {"id": hId},
+          "herSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "herSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "heritage__has__herSpatref": {},
+          "herSpatref__has__herSpatrefT": {}
         }),
 
         secType: JSON.stringify({
@@ -73,7 +93,7 @@ App.controllers.heritage = new (Backbone.View.extend({
         })
       },
 
-      surveyMap: {
+      surveyMaps: {
         lists: JSON.stringify({
           "map:SurveyMap": {"id": "NEED"},
           "ut:UsageType": {"id": "*", "select": "*"},
@@ -89,7 +109,7 @@ App.controllers.heritage = new (Backbone.View.extend({
         }),
       },
 
-      monument: {
+      monuments: {
         knowledges: JSON.stringify({
           "m:Monument": {"id": "NEED"},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
@@ -113,30 +133,43 @@ App.controllers.heritage = new (Backbone.View.extend({
           "monSpatref:SpatialReference": {"id": "*", "select": "*"},
           "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "monument__has__monSpatref": {},
-          "spatref__has__monSpatrefT": {}
+          "monSpatref__has__monSpatrefT": {}
         }),
       },
 
-      // research: {
-      //   researches: JSON.stringify({
-      //     "k:Knowledge": {"id": "NEED"},
-      //     "research:Research": {"id": "*", "select": "*"},
-      //     "resType:ResearchType": {"id": "*", "select": "*"},
-      //     "report:Report": {"id": "*", "select": "*"},
-      //     "author:Author": {"id": "*", "select": "*"},
-      //     "research__has__k": {},
-      //     "research__has__resType": {},
-      //     "research__has__report": {},
-      //     "research__hasauhthor__author": {},
-      //     "report__hasauhthor__author": {},
-      //   })
-      // }
+      researches: {
+        resTypes: JSON.stringify({
+          "researches:Research": {"id": "NEED"},
+          "resType:ResearchType": {"id": "*", "select": "*"},
+          "researches__has__resType": {},
+        }),
+        excavations: JSON.stringify({
+          "researches:Research": {"id":"NEED"},
+          "excavations:Excavation": {"id": "*", "select": "*"},
+          "excSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "researches__has__excavations": {},
+          "excavations__has__excSpatref": {},
+          "excSpatref__has__excSpatrefT": {},
+        }),
+        resMonuments: JSON.stringify({
+          "researches:Research": {"id":"NEED"},
+          "knowledges:Knowledge": {"id": "*"},
+          "resMonuments:Monument": {"id": "*", "select": "*"},
+          "heritage:Heritage": {"id": "*"},
+          "heritage__has__resMonuments": {},
+          "knowledges__belongsto__resMonuments": {},
+          "researches__has__knowledges": {},
+        })
+      }
     }
 
     var render = function() {
       _.each(data, function(val, id) {
         _.extend(tmplData, val);
       })
+
+      console.log(tmplData)
 
       let stateTables = [];
       tmplData.file = tmplData.file[0] || [];
@@ -165,40 +198,14 @@ App.controllers.heritage = new (Backbone.View.extend({
         })
       })
 
-      tmplData.placemarks = [];
-      tmplData.placemarks.push({
-        type: 'heritage',
-        id: tmplData.heritage.id,
-        coords: [tmplData.heritage.x, tmplData.heritage.y],
-        pref: {
-          hintContent: tmplData.heritage.name
-        },
-        opts: {
-          preset: `heritage`
-        }
-      });
-
       let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
-      tmplData.placemarks = _.extend(tmplData.placemarks, monPlacemarks);
-      
-      _.each(tmplData.knowledges, function(know, kid) {
-        const unknownType = 10;
-        const type = (tmplData.monTypes[kid][0] && tmplData.monTypes[kid][0].id) ? tmplData.monTypes[kid][0].id : unknownType;
-        const epoch = tmplData.epochs[kid][0].id;
-        tmplData.placemarks.push({
-          type: 'monument',
-          id: tmplData.monuments[kid].id,
-          coords: [know[0].x, know[0].y],
-          pref: {
-            hintContent: know[0].monument_name
-          },
-          opts: {
-            preset: `monType${type}_${epoch}`
-          }
-        })
-      })
+      let resPlacemarks = App.controllers.fn.getResPlacemarks(tmplData);
+      let herPlacemarks = App.controllers.fn.getHerPlacemarks(tmplData, true);
 
-      console.log(tmplData);
+      tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, resPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, herPlacemarks);
+
       App.page.render("heritage/show", tmplData, {
         "stateTables": stateTables,
         placemarks: tmplData.placemarks
@@ -211,26 +218,15 @@ App.controllers.heritage = new (Backbone.View.extend({
 
     var callRender = _.after(queryCounter, render);
 
-    $.when(model.sendQuery(queries.complex.surveyMaps)).then(function(response) {
-      _.extend(tmplData, response);
+    _.each(queries.complex, function(query, key) {
+      $.when(model.sendQuery(query)).then(function(response) {
+        _.extend(tmplData, response);
 
-      var mapIds = _.map(tmplData.surveyMaps, function(map) {return map.id.toString()});
-      data.push(model.getData(queries.surveyMap, callRender, true, mapIds));
-     
-      callRender();
-    })
+        var ids = _.map(tmplData[key], function(obj) {return obj.id.toString()});
 
-    $.when(model.sendQuery(queries.complex.monuments)).then(function(response) {
-      _.extend(tmplData, response);
-
-      var monIds = _.map(tmplData.monuments, function(mon) {return mon.id.toString()});
-      var mons = model.getData(queries.monument, callRender, true, monIds);
-      data.push(mons);
-      // var knowIds = _.map(mons.surveyMaps, function(know) {return know.id.toString()});
-      // console.log(mons)
-      // data.push(model.getData(queries.surveyMap, callRender, true, mapIds));
-
-      callRender();
+        data.push(model.getData(queries[key], callRender, true, ids));
+        callRender();
+      })
     })
 
     data.push(model.getData(queries.single, callRender));
