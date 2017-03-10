@@ -15,6 +15,14 @@ App.controllers.author = new (Backbone.View.extend({
           "researches:Research": {"id": "*", "select": "*"},
           "researches__hasauthor__author": {},
         }),
+        monuments: JSON.stringify({
+          "author:Author": {"id": aid},
+          "researches:Research": {"id": "*"},
+          "k:Knowledge": {"id": "*"},
+          "monuments:Monument": {"id": "*", "select": "*", "options":"uniq"},
+          "researches__has__k": {},
+          "k__belongsto__monuments": {},
+        }),
         publications: JSON.stringify({
           "author:Author": {"id": aid},
           "pubs:Publication": {"id": "*", "select": "*"},
@@ -50,7 +58,7 @@ App.controllers.author = new (Backbone.View.extend({
         })
       },
 
-      publication: {
+      publications: {
         publicationTypes: JSON.stringify({
           "pub:Publication": {"id": "NEED"},
           "pubtype:PublicationType": {"id": "*", "select": "*"},
@@ -58,7 +66,7 @@ App.controllers.author = new (Backbone.View.extend({
         }),
       },
 
-      copublication: {
+      copublications: {
         copublicationTypes: JSON.stringify({
           "copub:Publication": {"id": "NEED"},
           "copubtype:PublicationType": {"id": "*", "select": "*"},
@@ -66,23 +74,62 @@ App.controllers.author = new (Backbone.View.extend({
         })
       },
 
-      research: {
-        monuments: JSON.stringify({
-          "researches:Research": {"id": "NEED"},
-          "knowledges:Knowledge": {"id": "*", "select": "*"},
-          "m:Monument": {"id": "*", "select": "*"},
-          "monType:MonumentType": {"id": "*", "select": "*"},
-          "epoch:Epoch": {"id": "*", "select": "*"},
-          "researches__has__knowledges": {},
-          "knowledges__belongsto__m": {},
-          "m__has__monType": {},
-          "m__has__epoch": {}
-        }),
+      researches: {         
         resTypes: JSON.stringify({
           "researches:Research": {"id":"NEED"},
           "resType:ResearchType": {"id": "*", "select": "*"},
           "researches__has__resType": {},
+        }),
+
+        excavations: JSON.stringify({
+          "researches:Research": {"id":"NEED"},
+          "excavations:Excavation": {"id": "*", "select": "*"},
+          "excSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "researches__has__excavations": {},
+          "excavations__has__excSpatref": {},
+          "excSpatref__has__excSpatrefT": {},
+        }),
+
+        resMonuments: JSON.stringify({
+          "researches:Research": {"id":"NEED"},
+          "knowledges:Knowledge": {"id": "*"},
+          "resMonuments:Monument": {"id": "*", "select": "*"},
+          "knowledges__belongsto__resMonuments": {},
+          "researches__has__knowledges": {},
         })
+      },
+
+      monuments: {
+        knowledges: JSON.stringify({
+          "a:Author": {"id": "*"},
+          "r:Research": {"id": "*"},
+          "m:Monument": {"id": "NEED"},
+          "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "knowledges__belongsto__m": {},
+          "r__has__knowledges": {},
+          "r__hasauthor__a": {}
+        }),
+
+        epochs: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "epochs:Epoch": {"id": "*", "select": "*"},
+          "m__has__epochs": {}
+        }),
+
+        monTypes: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "monTypes:MonumentType": {"id": "*", "select": "*"},
+          "m__has__monTypes": {}
+        }),
+
+        monSpatref: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "monSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__monSpatref": {},
+          "monSpatref__has__monSpatrefT": {}
+        }),
       }
     }
 
@@ -92,55 +139,13 @@ App.controllers.author = new (Backbone.View.extend({
       })
 
       tmplData.placemarks = [];
-      _.each(tmplData.monuments, function(resMonuments, resId) {
-        let resHeader = `${tmplData.author.name}, ${tmplData.resTypes[resId][0].name} (${tmplData.researches[resId].year})`
-        _.each(resMonuments.knowledges, function(know, kid) {
-          let type = resMonuments.monType[kid].id || 10;
-          let epoch = resMonuments.epoch[kid].id || 0;
 
-          tmplData.placemarks.push({
-            type: 'monument',
-            id: know.id,
-            coords: [know.x, know.y],
-            pref: {
-              hintContent: know.monument_name
-            },
-            opts: {
-              preset: `monType${type}_${epoch}`
-            }
-          });
+      let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
+      let resPlacemarks = App.controllers.fn.getResPlacemarks(tmplData);
 
-          let typeRes = tmplData.resTypes[resId][0].id || 1;
-          tmplData.placemarks.push({
-            type: 'research',
-            id: tmplData.researches[resId].id,
-            coords: [know.x, know.y],
-            pref: {
-              hintContent: resHeader
-            },
-            opts: {
-              preset: `resType${typeRes}`
-            }
-          });
-        });
-      });
+      tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, resPlacemarks);
 
-      // _.each(tmplData.researches, function(res, rid) {
-      //   let type = tmplData.resTypes[rid][0].id || 1;
-
-      //   tmplData.placemarks.push({
-      //     type: 'research',
-      //     id: res.id,
-      //     coords: [tmplData.monuments[rid].knowledges[0].x, tmplData.monuments[rid].knowledges[0].y],
-      //     pref: {
-      //       hintContent: res.name
-      //     },
-      //     opts: {
-      //       preset: `resType${type}`
-      //     }
-      //   })
-      // })
-      
       console.log(tmplData);
       App.page.render("author/show", tmplData, tmplData.placemarks);
     }
@@ -151,31 +156,15 @@ App.controllers.author = new (Backbone.View.extend({
 
     var callRender = _.after(queryCounter, render);
 
-    $.when(model.sendQuery(queries.complex.researches)).then(function(response) {
-      _.extend(tmplData, response);
+    _.each(queries.complex, function(query, key) {
+      $.when(model.sendQuery(query)).then(function(response) {
+        _.extend(tmplData, response);
 
-      var researchIds = _.map(tmplData.researches, function(res) {return res.id.toString()});
+        var ids = _.map(tmplData[key], function(obj) {return obj.id.toString()});
 
-      data.push(model.getData(queries.research, callRender, true, researchIds));
-      callRender();
-    })
-
-    $.when(model.sendQuery(queries.complex.publications)).then(function(response) {
-      _.extend(tmplData, response);
-
-      var pubsIds = _.map(tmplData.pubs, function(pub) {return pub.id.toString()});
-
-      data.push(model.getData(queries.publication, callRender, true, pubsIds));
-      callRender();
-    })
-
-    $.when(model.sendQuery(queries.complex.copublications)).then(function(response) {
-      _.extend(tmplData, response);
-
-      var copubsIds = _.map(tmplData.copubs, function(copub) {return copub.id.toString()});
-
-      data.push(model.getData(queries.copublication, callRender, true, copubsIds));
-      callRender();
+        data.push(model.getData(queries[key], callRender, true, ids));
+        callRender();
+      })
     })
 
     data.push(model.getData(queries.single, callRender));

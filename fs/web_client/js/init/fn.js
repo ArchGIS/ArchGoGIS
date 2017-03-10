@@ -143,3 +143,23 @@ App.fn.addNameToId = (id) => {
 
   return mass.join('-');
 };
+
+App.fn.findActualSpatref = (spatref, spatrefT) => {
+  let ret = {
+    date: 0, 
+    type: 6, 
+  };
+
+  _.each(spatref, function(coord, t) {
+    if ((spatrefT[t].id < ret.type) || 
+      ((spatrefT[t].id == ret.type) && (coord.date > ret.date))) {
+
+      ret.x = coord.x;
+      ret.y = coord.y;
+      ret.date = coord.date;
+      ret.type = spatrefT[t].id;
+    }
+  })
+
+  return ret;
+};

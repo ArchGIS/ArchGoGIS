@@ -7,6 +7,15 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/service/hquery/read/ast"
 )
 
+func stringInSlice(a string, list []string) bool {
+    for _, b := range list {
+        if b == a {
+            return true
+        }
+    }
+    return false
+}
+
 func NewStatementBuilder(data *Data) *StatementBuilder {
 	return &StatementBuilder{
 		params: make(map[string]string),
@@ -46,13 +55,23 @@ func (my *StatementBuilder) scanNodes(optional bool, nodes map[string]*ast.Node)
 func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node, edges []*ast.Edge) {
 	for _, node := range nodes {
 		if _, selected := node.Props["select"]; selected {
+			distinct := ""
+
+			if node.Props["options"] != "" {
+				options := strings.Split(node.Props["options"], ";")
+
+				if (stringInSlice("uniq", options)) {
+					distinct = "distinct "	
+				}
+			}
+
 			switch node.Props["id"] {
 			case "?":
 				my.buf.WriteString("(CASE WHEN LENGTH(COLLECT(" + node.Name + "))=1 ")
 				my.buf.WriteString("THEN HEAD(COLLECT(" + node.Name + ")) ELSE NULL END) ")
 				my.buf.WriteString("AS " + node.Name + ",")
 			case "*":
-				my.buf.WriteString("COLLECT(" + node.Name + ") AS " + node.Name + ",")
+				my.buf.WriteString("COLLECT(" + distinct + node.Name + ") AS " + node.Name + ",")
 			default:
 				my.buf.WriteString(node.Name + ",")
 			}
@@ -73,10 +92,6 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 	selection := my.scanNodes(false, my.nodes)
 
 	for _, edge := range my.edges {
-		if edge.Props["select"] != "" {
-			selection = append(selection, edge.Tag)
-		}
-
 		if (edge.Type == "none") {
 			my.buf.WriteStringf(
 				"MATCH (%s)--(%s)",
