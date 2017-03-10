@@ -127,6 +127,13 @@ App.controllers.research = new (Backbone.View.extend({
           "m:Monument": {"id": "NEED"},
           "r:Research": {"id": resId},
           "excavations:Excavation": {"id": "*", "select": "*"},
+          "m__has__excavations": {},
+          "r__has__excavations": {}
+        }),
+        excSpatref: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "r:Research": {"id": resId},
+          "excavations:Excavation": {"id": "*"},
           "excSpatref:SpatialReference": {"id": "*", "select": "*"},
           "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "excavations__has__excSpatref": {},

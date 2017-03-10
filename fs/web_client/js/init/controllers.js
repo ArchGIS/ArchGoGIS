@@ -157,19 +157,23 @@ App.controllers.fn = {
       );
     } else {
       _.each(data.excavations, function(excs, i) {
-        _.each(excs.excavations, function(exc, t) {
+        _.each(excs, function(exc, t) {
           area = exc.area || 0;
           resYear = (data.research) ? data.research.year : data.researches[i].year;
           excHeader = `${exc.name} (${resYear})`;
           excType = (area <= 20) ? 1 : 2;
           preset = `excType${excType}`;
 
-          spatref.x = excs.excSpatref[t].x;
-          spatref.y = excs.excSpatref[t].y;
+          _.each(data.excSpatref[i].excSpatref, function(excSpatref, p) {
+            spatref.x = excSpatref.x, 
+            spatref.y = excSpatref.y
 
-          placemarks.push(
-            App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
-          );
+            placemarks.push(
+              App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
+            );
+          })
+          console.log(spatref)
+          
         })
       });
     }

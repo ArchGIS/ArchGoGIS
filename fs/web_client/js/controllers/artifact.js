@@ -95,9 +95,14 @@ App.controllers.artifact = new (Backbone.View.extend({
           "photosa:Image": {"id": "*", "select": "*"},
           "a__has__photosa": {},
         }),
-        excavation: JSON.stringify({
+        excavations: JSON.stringify({
           "artifact:Artifact": {"id": aid},
           "excavation:Excavation": {"id": "*", "select": "*"},
+          "excavation__has__artifact": {},
+        }),
+        excSpatref: JSON.stringify({
+          "artifact:Artifact": {"id": aid},
+          "excavation:Excavation": {"id": "*"},
           "excSpatref:SpatialReference": {"id": "*", "select": "*"},
           "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "excavation__has__excSpatref": {},
