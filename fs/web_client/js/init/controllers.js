@@ -186,10 +186,25 @@ App.controllers.fn = {
       artHeader = `${data.artifact.name}`;
       preset = `artifact`;
 
+      if (data.artiSpatref.length) {
+        spatref.x = data.artiSpatref[0].x;
+        spatref.y = data.artiSpatref[0].y;
+      } else if (data.excSpatref.length) {
+        spatref = App.fn.findActualSpatref(
+          data.excSpatref,
+          data.excSpatrefT
+        );
+      } else {
+        spatref = App.fn.findActualSpatref(
+          data.monSpatref[0].monSpatref, 
+          data.monSpatref[0].monSpatrefT
+        );
+      }
+
       placemarks.push(
         App.controllers.fn.createStandartPlacemark(
-          'artifact', data.artifact.id, data.artiSpatref[0].x, 
-          data.artiSpatref[0].y, artHeader, preset
+          'artifact', data.artifact.id, spatref.x, 
+          spatref.y, artHeader, preset
         )
       );
     } else {
@@ -204,8 +219,15 @@ App.controllers.fn = {
 
         if (spatref.date === 0) {
           spatref = App.fn.findActualSpatref(
-            data.artiExcSpatred[i].artiSpatref, 
-            data.artiExcSpatred[i].artiSpatrefT
+            data.artiExcSpatref[i].artiExcSpatref, 
+            data.artiExcSpatref[i].artiExcSpatrefT
+          );
+        }
+
+        if (spatref.date === 0) {
+          spatref = App.fn.findActualSpatref(
+            data.artiMonSpatref[i].artiMonSpatref, 
+            data.artiMonSpatref[i].artiMonSpatrefT
           );
         }
 

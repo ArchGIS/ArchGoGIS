@@ -116,6 +116,18 @@ App.controllers.monument = new (Backbone.View.extend({
           "excavations__has__artiExcSpatref": {},
           "artiExcSpatref__has__artiExcSpatrefT": {},
         }),
+
+        artiMonSpatref: JSON.stringify({
+          "artifacts:Artifact": {"id": "NEED"},
+          "knowledges:Knowledge":  {"id": "*"},
+          "monument:Monument":  {"id": "*"},
+          "artiMonSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "artiMonSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "knowledges__found__artifacts": {},
+          "knowledges__belongsto__monument": {},
+          "monument__has__artiMonSpatref": {},
+          "artiMonSpatref__has__artiMonSpatrefT": {},
+        }),
       },
 
       knowledges: {
