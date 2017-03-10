@@ -111,12 +111,14 @@ App.controllers.fn = {
     single = single || false;
 
     if (single) {
-      placemarks.push(
-        App.controllers.fn.createStandartPlacemark(
-          'heritage', data.heritage.id, data.herSpatref[0].x, 
-          data.herSpatref[0].y, data.heritage.name, 'heritage'
-        )
-      );
+      if (data.herSpatref.length) {
+        placemarks.push(
+          App.controllers.fn.createStandartPlacemark(
+            'heritage', data.heritage.id, data.herSpatref[0].x, 
+            data.herSpatref[0].y, data.heritage.name, 'heritage'
+          )
+        );
+      }
     } else {
       _.each(data.heritages, function(h, hId) {
         heritage = h.heritage[0];
