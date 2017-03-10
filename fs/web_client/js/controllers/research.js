@@ -71,10 +71,6 @@ App.controllers.research = new (Backbone.View.extend({
           "research:Research": {"id": resId},
           "interpretations:Interpretation": {"id": "*", "select": "*"},
           "artifacts:Artifact": {"id": "*", "select": "*"},
-          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
-          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
-          "artifacts__has__artiSpatref": {},
-          "artiSpatref__has__artiSpatrefT": {},
           "artifacts__has__interpretations": {},
           "research__has__interpretations": {},
         }),
@@ -154,6 +150,26 @@ App.controllers.research = new (Backbone.View.extend({
           "monument__has__monSpatref": {},
           "monSpatref__has__monSpatrefT": {}
         })
+      },
+
+      artifacts: {
+        artiSpatref: JSON.stringify({
+          "artifacts:Artifact": {"id": "NEED"},
+          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "artifacts__has__artiSpatref": {},
+          "artiSpatref__has__artiSpatrefT": {},
+        }),
+
+        artiExcSpatref: JSON.stringify({
+          "artifacts:Artifact": {"id": "NEED"},
+          "excavations:Excavation":  {"id": "*"},
+          "artiExcSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "artiExcSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "excavations__has__artifacts": {},
+          "excavations__has__artiExcSpatref": {},
+          "artiExcSpatref__has__artiExcSpatrefT": {},
+        }),
       },
 
       knowledges: {

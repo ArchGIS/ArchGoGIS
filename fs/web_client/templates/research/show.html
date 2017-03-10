@@ -59,7 +59,7 @@
 
         <% if (resType[0].name === 'Раскопки' || resType[0].name === 'Разведка') { %>
           <dt><%= t("excavation.genitivePl") %>:</dt>
-          <dd><%= _.reduce(excavations, function(size, list) {
+          <dd><%= _.reduce(excavations.excavations, function(size, list) {
             return size + _.size(list)
           }, 0) %>;
           Общая площадь
@@ -73,7 +73,7 @@
 
         <dt><%= t("artifact.genitivePl") %>:</dt>
         <dd>
-          <% let artiCount = _.reduce(artifacts, (count, resArti) => {return count + _.size(resArti)}, 0) %>
+          <% let artiCount = artifacts.length %>
           <%= artiCount %>
         </dd>
       </dl>

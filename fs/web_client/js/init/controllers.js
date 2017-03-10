@@ -142,7 +142,7 @@ App.controllers.fn = {
         excType, preset, resYear, area;
     single = single || false;
 
-    if (single) {
+    if (single && data.excavation && data.researches[0]) {
       area = data.excavation.area || 0;
       excType = (area <= 20) ? 1 : 2;
       preset = `excType${excType}`;
@@ -193,12 +193,21 @@ App.controllers.fn = {
         )
       );
     } else {
-      _.each(data.artifacts, function(art, i) {
-        artHeader = `${art.name}`;
+      _.each(data.artiSpatref, function(art, i) {
+        artHeader = `${data.artifacts[i].name}`;
         preset = `artifact`;
 
-        spatref.x = data.artiSpatref[i].x;
-        spatref.y = data.artiSpatref[i].y;
+        spatref = App.fn.findActualSpatref(
+          art.artiSpatref, 
+          art.artiSpatrefT
+        );
+
+        if (spatref.date === 0) {
+          spatref = App.fn.findActualSpatref(
+            data.artiExcSpatred[i].artiSpatref, 
+            data.artiExcSpatred[i].artiSpatrefT
+          );
+        }
 
         placemarks.push(
           App.controllers.fn.createStandartPlacemark('artifact', art.id, spatref.x, spatref.y, artHeader, preset)

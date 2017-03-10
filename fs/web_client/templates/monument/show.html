@@ -27,7 +27,7 @@
       <dd><%= _.size(researches) %></dd>
 
       <dt><%= t("excavation.genitivePl") %>:</dt>
-      <dd><%= _.reduce(excavations, function(size, list) {
+      <dd><%= _.reduce(excavations.excavations, function(size, list) {
         return size + _.size(list)
       }, 0) %>;
       Общая площадь

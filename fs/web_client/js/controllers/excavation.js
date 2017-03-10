@@ -18,10 +18,6 @@ App.controllers.excavation = new (Backbone.View.extend({
         artifacts: JSON.stringify({
           "exc:Excavation": {"id": excId},
           "artifacts:Artifact": {"id": "*", "select": "*"},
-          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
-          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
-          "artifacts__has__artiSpatref": {},
-          "artiSpatref__has__artiSpatrefT": {},
           "exc__has__artifacts": {}
         }),
       },
@@ -50,6 +46,13 @@ App.controllers.excavation = new (Backbone.View.extend({
       },
 
       artifacts: {
+        artiSpatref: JSON.stringify({
+          "artifacts:Artifact": {"id": "NEED"},
+          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "artifacts__has__artiSpatref": {},
+          "artiSpatref__has__artiSpatrefT": {},
+        }),
         photo: JSON.stringify({
           "arti:Artifact": {"id": "NEED"},
           "inter:Interpretation": {"id": "*"},
