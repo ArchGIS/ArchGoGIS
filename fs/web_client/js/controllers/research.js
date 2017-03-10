@@ -144,6 +144,11 @@ App.controllers.research = new (Backbone.View.extend({
         heritages: JSON.stringify({
           "monument:Monument": {"id": "NEED"},
           "heritage:Heritage": {"id": "*", "select": "*"},
+          "heritage__has__monument": {},
+        }),
+        herSpatref: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "heritage:Heritage": {"id": "*"},
           "herSpatref:SpatialReference": {"id": "*", "select": "*"},
           "herSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "heritage__has__monument": {},
