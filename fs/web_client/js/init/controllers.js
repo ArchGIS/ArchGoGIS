@@ -121,15 +121,14 @@ App.controllers.fn = {
       }
     } else {
       _.each(data.heritages, function(h, hId) {
-        heritage = h.heritage[0];
         spatref = App.fn.findActualSpatref(
-          h.herSpatref, 
-          h.herSpatrefT
+          data.herSpatref[hId].herSpatref, 
+          data.herSpatref[hId].herSpatrefT
         );
 
         if (spatref.date > 0) {
           placemarks.push(
-            App.controllers.fn.createStandartPlacemark('heritage', heritage.id, spatref.x, spatref.y, heritage.name, 'heritage')
+            App.controllers.fn.createStandartPlacemark('heritage', h.id, spatref.x, spatref.y, h.name, 'heritage')
           );
         }
       })
@@ -174,7 +173,6 @@ App.controllers.fn = {
               App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
             );
           })
-          console.log(spatref)
           
         })
       });

@@ -169,8 +169,8 @@
       let hs = [];
       if (heritages.length) {
         _.each(heritages, (her) => {
-          if (her && her.heritage && her.heritage[0]) {
-            hs.push(App.models.Heritage.href(her.heritage[0].id, her.heritage[0].name))
+          if (her && her[0]) {
+            hs.push(App.models.Heritage.href(her[0].id, her[0].name))
           }
         })
       } %>
