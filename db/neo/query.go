@@ -1,5 +1,9 @@
 package neo
 
+import (
+	"github.com/ArchGIS/ArchGoGIS/echo"
+)
+
 func NewQuery(stmt ...Statement) Query {
 	this := Query{}
 
@@ -23,6 +27,6 @@ func (my *Query) AddString(body string) {
 }
 
 func (my *Query) Run() (*Response, error) {
-	println(string(my.batch.Bytes()))
+	echo.Info.Print(string(my.batch.Bytes()))
 	return tryNewResponse(agent.Post(endpoint, my.batch.Bytes()))
 }
