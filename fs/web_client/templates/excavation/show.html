@@ -1,5 +1,5 @@
 <div class="content">  
-  <h2><%= t("excavation.info") %> "<%= maybe(exc.name, "Без названия") %>"</h2>
+  <h2><%= t("excavation.info") %> "<%= maybe(excavation.name, "Без названия") %>"</h2>
   
   <div class="tabs">
     <ul>
@@ -12,27 +12,27 @@
 
     <div id="general">
       <dt>Исследование:</dt>
-      <dd><%= App.models.Research.href(res[0].id, res[0].name) %></dd>
+      <dd><%= App.models.Research.href(researches[0].id, researches[0].name) %></dd>
 
       <dt>Год проведения исследования:</dt>
-      <dd><%= res[0].year %></dd>
+      <dd><%= researches[0].year %></dd>
 
       <dt>Автор исследования:</dt>
       <dd><%= App.models.Author.href(author[0].id, author[0].name) %></dd>
 
       <dt>Руководитель работ:</dt>
-      <dd><%= maybe(exc.boss, "Неизвестно") %></dd>
+      <dd><%= maybe(excavation.boss, "Неизвестно") %></dd>
 
       <dt>Площадь вскрытия:</dt>
-      <dd><%= maybe(exc.area, "Неизвестно") %></dd>
+      <dd><%= maybe(excavation.area, "Неизвестно") %></dd>
 
       <dt>Количество артефактов:</dt>
-      <dd><%= _.size(arti) %></dd>
+      <dd><%= _.size(artifacts) %></dd>
     </div>
 
     <div id="monuments">
       <div class="accordion">
-        <% _.each(mons, function(mon, i) { %>
+        <% _.each(monuments, function(mon, i) { %>
           <h4 class="accordion-header">
             <%= t("monument.singular") %> №<%= i+1 %>
           </h4>
@@ -42,13 +42,13 @@
               <dd><%= App.models.Monument.href(mon.id, "Перейти к памятнику") %></dd>
 
               <dt>Названия:</dt>
-              <dd><%= _.pluck(knowledge[i], "monument_name").join(", ") %></dd>
+              <dd><%= _.pluck(knowledges[i], "monument_name").join(", ") %></dd>
 
               <dt>Эпоха:</dt>
-              <dd><%= maybe(epoch[i], "Нет данных", "name") %></dd>
+              <dd><%= maybe(epochs[i], "Нет данных", "name") %></dd>
 
               <dt>Тип памятника:</dt>
-              <dd><%= maybe(monType[i], "Нет данных", "name") %></dd>
+              <dd><%= maybe(monTypes[i], "Нет данных", "name") %></dd>
             </dl>
           </div>
         <% }) %>
@@ -56,14 +56,14 @@
     </div>
 
     <div id="artifacts">
-      <%= _.map(arti, function(art, t) {
+      <%= _.map(artifacts, function(art, t) {
         let title = `${art.name}`;
         return App.models.Artifact.href(art.id, title);
       }).join(", <br>")%>
     </div>
 
     <div id="report">
-      <% let repTitle = `${rep[0].name} (${author[0].name}, ${res[0].year})` %>
+      <% let repTitle = `${rep[0].name} (${author[0].name}, ${researches[0].year})` %>
       <%= App.models.Report.href(rep[0].id, repTitle) %>
     </div>
 

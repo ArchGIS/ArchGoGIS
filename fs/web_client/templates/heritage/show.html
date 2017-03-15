@@ -89,7 +89,12 @@
         <% }) %>
       </div>
     </div>
-    <div id="researches"></div>
+    <div id="researches">
+      <%= _.uniq(_.map(researches, function(res, i) {
+        let resTitle = `${res.name} (${resTypes[i][0].name}, ${res.year})`;
+        return App.models.Research.href(res.id, resTitle);
+      })).join("<br>") %>
+    </div>
     <div id="surveyMaps">
       <div class="accordion">
         <% _.each(surveyMaps, function(map, i) { %>

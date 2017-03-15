@@ -7,6 +7,7 @@ window.App = {
   'controllers': {},
   'models': {},
   'views': {},
+  'utils': {},
   'fn': {}
 };
 

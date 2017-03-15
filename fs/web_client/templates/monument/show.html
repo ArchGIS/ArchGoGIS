@@ -18,16 +18,16 @@
       <dd><%= allNames %></dd>
 
       <dt><%= t("monument.prop.epoch") %>:</dt>
-      <dd><%= maybe(epoch[0], "Не указана","name") %></dd>
+      <dd><%= maybe(epochs[0], "Не указана","name") %></dd>
 
       <dt><%= t("monument.prop.type") %>:</dt>
-      <dd><%= maybe(monType[0], "Не указан","name") %></dd>
+      <dd><%= maybe(monTypes[0], "Не указан","name") %></dd>
 
       <dt><%= t("research.genitivePl") %>:</dt>
       <dd><%= _.size(researches) %></dd>
 
       <dt><%= t("excavation.genitivePl") %>:</dt>
-      <dd><%= _.reduce(excavations, function(size, list) {
+      <dd><%= _.reduce(excavations.excavations, function(size, list) {
         return size + _.size(list)
       }, 0) %>;
       Общая площадь
@@ -122,23 +122,28 @@
     </div>
 
     <div id="excavations"> 
-      <%= _.compact(_.map(excavations, function(resExc, i) {
-        return _.map(resExc, function(exc, t) {
+      <% 
+      let excs = [];
+      _.each(excavations, function(resExc, i) {
+        _.each(resExc, function(exc, t) {
           let area = exc.area || 0;
           let name = exc.name || "без названия";
-          let boss = exc.boss || "не задан";
-          return `${name} - ${area}м² (${authors[i].name}, ${researches[i].year}),
-                  руководитель работ: ${boss}`
-        }).join(", <br>")
-      })).join(", <br>") %>
+          let boss = exc.boss || "неизвестен";
+          excs.push(
+            App.models.Excavation.href(exc.id, `
+              ${name} - ${area}м² (${authors[i].name}, ${researches[i].year}), руководитель работ: ${boss}
+            `)
+          );
+        })
+      })
+      %>
+      <%= _.uniq(excs).join("<br>") %>
     </div>
 
     <div id="artifacts">
-      <%= _.compact(_.map(artifacts, function(resArti, i) {
-        return _.map(resArti, function(arti, t) {
-          let artiTitle = `${arti.name} (${authors[i].name}, ${researches[i].year})`;
-          return App.models.Artifact.href(arti.id, artiTitle);
-        }).join(", <br>")
+      <%= _.compact(_.map(artifacts, function(arti, i) {
+        let title = `${arti.name} (${artiAuthors[i].name}, ${artiResearches[i].year})`;
+        return App.models.Artifact.href(arti.id, title);
       })).join(", <br>") %>
     </div>
 
@@ -157,11 +162,11 @@
     <div id="spatialHistory">
       <% 
       let counter = 1;
-      _.each(spatrefType, function(type, i) { %>
+      _.each(monSpatrefT, function(type, i) { %>
         <dt><%= type[0].name %></dt>
         <% _.each(type, function(obj, t) { %>
-          <% let date = new Date(spatref[i][t].date) %>
-          <dd><%= counter++ %>) X: <%= spatref[i][t].x %>, Y: <%= spatref[i][t].y %>
+          <% let date = new Date(monSpatref[i][t].date) %>
+          <dd><%= counter++ %>) X: <%= monSpatref[i][t].x %>, Y: <%= monSpatref[i][t].y %>
             <%= (counter == 2) ? " - <b>актуальные координаты</b>" : "" %>
           </dd>
           <dd>Дата добавления: <%= date.getDate() %>.<%= date.getMonth() %>.<%= date.getFullYear() %> <%= date.getHours() %>:<%= date.getMinutes() %>:<%= date.getSeconds() %></dd>
