@@ -31,3 +31,5 @@ foreach (v in el |
   CREATE (e)-[:has]->(sprt)
   CREATE (sprt)-[:has]->(spt)
 );
+
+match (a:Artifact) where a.x is not null match (spt:SpatialReferenceType {id: 5}) with collect(a) as al, a, range(7192, 7232) as ids foreach (v IN al | MERGE (ident:CounterArt) ON CREATE SET ident.count = 0 ON MATCH SET ident.count = ident.count + 1 MERGE (sprt:SpatialReference {id: ids[ident.count], date: timestamp()}) ON CREATE SET sprt.x = a.x, sprt.y = a.y CREATE (a)-[:has]->(sprt) CREATE (sprt)-[:has]->(spt))
