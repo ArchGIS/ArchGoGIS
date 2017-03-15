@@ -257,7 +257,7 @@ App.views.monument = new (Backbone.View.extend({
     App.template.get("research/addMonument", function(tmpl) {
       let monX, monY;
 
-      $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));
+      $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));      
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
@@ -466,7 +466,7 @@ App.views.monument = new (Backbone.View.extend({
 
     $('.btn-next').on('click', function(e) {
       $("#container").tabs({active: $(this).attr("active")});
-    })
+    });
   },
 
   "show": function(placemarks) {
