@@ -1,6 +1,8 @@
 {{#bs-navbar as |navbar|}}
   <div class="navbar-header">
-    <h1 class="navbar-brand">Logo</h1>
+    {{#link-to 'index'}}
+      <h1 class="navbar-brand">Logo</h1>
+    {{/link-to}}
   </div>
   {{#navbar.content}}
     {{#navbar.nav as |nav|}}
