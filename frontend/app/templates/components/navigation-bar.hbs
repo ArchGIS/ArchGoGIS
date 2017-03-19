@@ -1,0 +1,54 @@
+{{#bs-navbar as |navbar|}}
+  <div class="navbar-header">
+    <h1 class="navbar-brand">Logo</h1>
+  </div>
+  {{#navbar.content}}
+    {{#navbar.nav as |nav|}}
+      {{#nav.item}}
+        {{#nav.link-to 'graph-builder'}}
+          Создание данных
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'map-builder'}}
+          Создание карты
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'table-loader'}}
+          Создание выборки
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'vector-uploader'}}
+          Загрузка данных
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'big-search'}}
+          Расширенный поиск
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'big-search'}}
+          Расширенный поиск
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'data-builder'}}
+          Внесение данных
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'fast-search'}}
+          Быстрый поиск
+        {{/nav.link-to}}
+      {{/nav.item}}
+      {{#nav.item}}
+        {{#nav.link-to 'admin-panel'}}
+          Административная панель
+        {{/nav.link-to}}
+      {{/nav.item}}
+    {{/navbar.nav}}
+  {{/navbar.content}}
+{{/bs-navbar}}
