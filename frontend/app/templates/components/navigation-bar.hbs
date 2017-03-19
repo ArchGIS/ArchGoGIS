@@ -1,7 +1,10 @@
 {{#bs-navbar as |navbar|}}
-  <div class='navbar-header'>
-    <h1 class='navbar-brand'>Logo</h1>
-  </div>
+
+  {{#link-to "index" class="navbar-brand"}}
+    <i class="fa fa-globe fa-lg"></i>
+    Arch Gis
+  {{/link-to}}
+
   {{#navbar.content}}
     {{#navbar.nav as |nav|}}
       {{#nav.item}}
