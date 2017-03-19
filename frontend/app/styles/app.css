@@ -5,6 +5,20 @@ html, body, #body {
   font-size: 14px;
 }
 
+body > .ember-view {
+  height: calc(100% - 50px);
+}
+
+.container {
+  background: #fcfcfc;
+  margin-top: 40px;
+  padding-bottom: 30px;
+  border-radius: 5px;
+  shape-margin: 10px black;
+  box-shadow: inset 0 2px 0 rgba(0,0,0,0.05);
+  border: 1px #ccc solid;
+}
+
 .main-image {
   background-image: url('images/main_page_bg.jpg');
   background-size: cover;
@@ -14,6 +28,7 @@ html, body, #body {
 }
 
 .navbar {
+  height: 50px;
   border-bottom: 4px solid #ddd;
 }
 
@@ -27,4 +42,22 @@ html, body, #body {
 
 .navbar-brand {
   font-size: 18px;
+}
+
+.row-create-page-top {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.row-create-page {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.btn-default-size {
+  width: 120px;
 }
