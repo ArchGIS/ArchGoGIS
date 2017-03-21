@@ -209,8 +209,8 @@ App.views.bigSearch = new (Backbone.View.extend({
         "monument-name": {
           "research_IDPLACE:Research": {"id": "*"},
           "knowledge_IDPLACE:Knowledge": {"id": "*"},
+          "monument_IDPLACE:Monument": {"id": "*"},
           "knowledges_IDPLACE:Knowledge": {"id": "*", "filter": "monument_name=VALUEPLACE=text"},
-          "monument_IDPLACE:Monument": {},
           "research_IDPLACE__author": {},
           "research_IDPLACE__knowledge_IDPLACE": {},
           "monument_IDPLACE__knowledge_IDPLACE": {},
@@ -220,8 +220,8 @@ App.views.bigSearch = new (Backbone.View.extend({
           "research_IDPLACE:Research": {"id": "*"},
           "knowledge_IDPLACE:Knowledge": {"id": "*"},
           "knowledges_IDPLACE:Knowledge": {"id": "*"},
+          "monument_IDPLACE:Monument": {"id": "*"},
           "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=text"},
-          "monument_IDPLACE:Monument": {},
           "research_IDPLACE__author": {},
           "research_IDPLACE__knowledge_IDPLACE": {},
           "monument_IDPLACE__knowledge_IDPLACE": {},
@@ -824,7 +824,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
         _.extend(query, addQuery);
       })
-
+      console.log(query)
       query = JSON.stringify(query);
 
       $.post({
