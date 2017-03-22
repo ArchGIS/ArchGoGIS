@@ -280,7 +280,8 @@ App.views.research = new (Backbone.View.extend({
 
             $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input, select").attr("used", true);
             $(`#monument-new-coords-button-${localMonId}`).remove();
-            
+            monumentResShowNew(localMonId);
+
             let layerCounter = App.fn.counter(1);
             let layerCounter2 = App.fn.counter(1);
 
@@ -301,6 +302,14 @@ App.views.research = new (Backbone.View.extend({
 
             getDataForSelector($(`#mon-type-selector-${localMonId}`), "MonumentType");
           } else if (lastSelectedAuthorId != ui.item.id) {
+            if (ui.item.inThisRes) {
+              monumentResHide(localMonId);
+              $(`#knowledge-id-${monId}`).val(ui.item.kId);
+            } else {
+              monumentResShow(localMonId);
+              $(`#knowledge-id-${monId}`).val("");
+            }
+
             lastSelectedMonId = ui.item.id;
             $(`#monument-input-id-${localMonId}`).val(lastSelectedMonId);
             monSelName = ui.item.name;
@@ -579,6 +588,7 @@ App.views.research = new (Backbone.View.extend({
 
             $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input, select").attr("used", true);
             $(`#monument-new-coords-button-${localMonId}`).remove();
+            monumentResShowNew(localMonId);
 
             let layerCounter = App.fn.counter(1);
             let layerCounter2 = App.fn.counter(1);
@@ -600,6 +610,14 @@ App.views.research = new (Backbone.View.extend({
 
             getDataForSelector($(`#mon-type-selector-${localMonId}`), "MonumentType");
           } else if (lastSelectedAuthorId != ui.item.id) {
+            if (ui.item.inThisRes) {
+              monumentResHide(localMonId);
+              $(`#knowledge-id-${monId}`).val(ui.item.kId);
+            } else {
+              monumentResShow(localMonId);
+              $(`#knowledge-id-${monId}`).val("");
+            }
+
             lastSelectedMonId = ui.item.id;
             $(`#monument-input-id-${localMonId}`).val(lastSelectedMonId);
             monSelName = ui.item.name;
