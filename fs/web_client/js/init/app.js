@@ -446,3 +446,31 @@ function isValidForm () {
   inputs.blur();
   return isValid;
 }
+
+function monumentResHide(id) {
+  $(`#monument-${id}`).find(".monument-res-hide").hide();
+  _.each($(`#monument-${id}`).find(".monument-res-hide").find("input, textarea"), function(input, id) {
+    let $input = $(input);
+    $input.val("")
+  });
+}
+
+function monumentResShow(id) {
+  $(`#monument-${id}`).find(".monument-res-hide").show();
+  _.each($(`#monument-${id}`).find(".monument-res-hide").find("input, textarea"), function(input, id) {
+    let $input = $(input);
+    $input.val("")
+  });
+}
+
+function monumentResShowNew(id) {
+  $(`#monument-${id}`).find(".monument-for-new").show();
+}
+
+function monumentResHideAll() {
+  $(`.monument-block`).find(".monument-res-hide").hide();
+  _.each($(`.monument-block`).find("input, textarea"), function(input, id) {
+    let $input = $(input);
+    $input.val("")
+  });
+}

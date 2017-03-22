@@ -534,3 +534,7 @@ ul.system-statistic {
 .layer-checkbox {
   margin-left: 10px;
 }
+
+.monument-res-hide {
+  display: none;
+}
