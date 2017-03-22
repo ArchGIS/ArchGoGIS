@@ -680,7 +680,7 @@ App.views.monument = new (Backbone.View.extend({
                     inThisResText = '';
                   }
 
-                  label = `${row.monName} (${row.epName}, ${row.monType}) ${inThisResText}`;
+                  label = `${row.monName} (${row.epName}, ${row.monType}) <b>${inThisResText}</b>`;
                   value = `${row.monName} (${row.epName}, ${row.monType})`;
                   return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
