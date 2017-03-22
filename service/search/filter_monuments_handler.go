@@ -23,7 +23,8 @@ var filterMonumentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *htt
 	result, err := searchForFilterMonuments(
 		r.URL.Query().Get("name"),
 		r.URL.Query().Get("epoch"),
-		r.URL.Query().Get("type"))
+		r.URL.Query().Get("type"),
+		r.URL.Query().Get("resId"))
 
 	if err == nil {
 		w.Write(result)
@@ -32,20 +33,30 @@ var filterMonumentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *htt
 	}
 })
 
-func searchForFilterMonuments(mnt, epoch, mType string) ([]byte, error) {
+func searchForFilterMonuments(mnt, epoch, mType, resId string) ([]byte, error) {
 	params := neo.Params{}
 	query := filterMonumentsCypher
+	ifResId := ""
+	haveThisRes := ""
 
 	if mnt != "" {
 		query = query + "WHERE k.monument_name =~ {mnt} "
 		params["mnt"] = `"(?ui)^.*` + mnt + `.*$"`
 	}
 
+	if resId != "" {
+		query = query + "OPTIONAL MATCH (r2:Research {id: {resId}})-[rel]-(k2:Knowledge)--(m)"
+		ifResId = ", rel "
+		haveThisRes = "haveThisRes: rel, "
+		params["resId"] = resId
+	}
+
 	query = query +
 		"OPTIONAL MATCH (m)-[:has]->(monType:MonumentType)" +
 		"OPTIONAL MATCH (e:Epoch)<-[:has]-(m)" +
 		"OPTIONAL MATCH (c:Culture)<-[:has]-(k)" +
-		"WITH m, k, r, a, monType, e, c "
+		"WITH m, k, r, a, monType, e, c " +
+		ifResId
 
 	flag := false
 	if epoch != "" {
@@ -73,6 +84,8 @@ func searchForFilterMonuments(mnt, epoch, mType string) ([]byte, error) {
 		"cult: c.name, " +
 		"x: k.x, " +
 		"y: k.y, " +
+		"kId: k.id, " +
+		haveThisRes +
 		"monType: monType.name, " +
 		"monTypeId: monType.id}"
 

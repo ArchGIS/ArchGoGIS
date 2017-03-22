@@ -5,11 +5,13 @@ App.models.Monument = function Monument() {
   App.models.proto.call(this, App.models.Monument.scheme, props);
 };
 
-App.models.Monument.findByNamePrefix = function(name) {
+App.models.Monument.findByNamePrefix = function(name, resId) {
   return new Promise(function(resolve, reject) {
+    resId = resId || '';
     var url = App.url.make('/search/filter_monuments', {
       'name': name,
-      'epoch': ''
+      'epoch': '',
+      'resId': resId
     });
 
     $.get({

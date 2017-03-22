@@ -11,7 +11,8 @@ App.views.monument = new (Backbone.View.extend({
 
     var repSelName = '',
         heritageSelName = '',
-        orgName = '';
+        orgName = '',
+        resId = '';
 
     var authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
@@ -132,6 +133,9 @@ App.views.monument = new (Backbone.View.extend({
 
         let tmpl = _.template( $('script.add-report').html() );
 
+        resId = '';
+        monumentResHideAll();
+
         $input.parent().replaceWith( tmpl() );
 
         $('#' + addName(id)).val(inputValue);
@@ -139,6 +143,9 @@ App.views.monument = new (Backbone.View.extend({
         fillResearchInputs();
         getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
       } else {
+        resId = ui.item.resId;
+        monumentResHideAll();
+        
         $("#research-input-id").val(ui.item.resId);
         $("#report-input-id").val(ui.item.id);
         repSelName = ui.item.name;
@@ -268,11 +275,26 @@ App.views.monument = new (Backbone.View.extend({
         source: function(request, response) {
           var monuments = [];
           
-          App.models.Monument.findByNamePrefix(request.term)
+          App.models.Monument.findByNamePrefix(request.term, resId)
             .then(function(data) {
               if (data && !data.error) {
+                let inThisRes = false,
+                    inThisResText = '',
+                    label = '',
+                    value = '';
+
                 let results = _.map(excludeIdent(data), function(row) {
-                  return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId}
+                  if (row.haveThisRes) {
+                    inThisRes = true;
+                    inThisResText = ' - Уже связан с этим исследованием';
+                  } else {
+                    inThisRes = false;
+                    inThisResText = '';
+                  }
+
+                  label = `${row.monName} (${row.epName}, ${row.monType}) ${inThisResText}`;
+                  value = `${row.monName} (${row.epName}, ${row.monType})`;
+                  return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
 
                 if (!results.length) {
@@ -312,6 +334,7 @@ App.views.monument = new (Backbone.View.extend({
 
           $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
           $(`#monument-new-coords-button-${monId}`).remove();
+          monumentResShowNew(monId);
 
           let layerCounter = App.fn.counter(1);
           let layerCounter2 = App.fn.counter(1);
@@ -338,6 +361,14 @@ App.views.monument = new (Backbone.View.extend({
 
           getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
         } else if (lastSelectedAuthorId != ui.item.id) {
+          if (ui.item.inThisRes) {
+            monumentResHide(monId);
+            $(`#knowledge-id-${monId}`).val(ui.item.kId);
+          } else {
+            monumentResShow(monId);
+            $(`#knowledge-id-${monId}`).val("");
+          }
+
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
@@ -484,6 +515,7 @@ App.views.monument = new (Backbone.View.extend({
     let repSelName = '';
     let objectId = "m_1";
     let monX, monY;
+    let resId = '';
 
     const map = App.views.map().map;
 
@@ -597,6 +629,9 @@ App.views.monument = new (Backbone.View.extend({
 
         $input.parent().replaceWith( tmpl() );
 
+        resId = '';
+        monumentResHideAll();
+
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
         getDataForSelector($("#pub-type-selector"), "PublicationType");
@@ -605,7 +640,10 @@ App.views.monument = new (Backbone.View.extend({
           dateFormat: "dd.mm.yy"
         });
       } else {
-        $("#research-input-id").val(ui.item.resId);
+        resId = ui.item.resId;
+        monumentResHideAll();
+        
+        $("#research-input-id").val(resId);
         $("#pub-input-id").val(ui.item.id);
         repSelName = ui.item.name;
       }
@@ -624,11 +662,26 @@ App.views.monument = new (Backbone.View.extend({
         source: function(request, response) {
           var monuments = [];
           
-          App.models.Monument.findByNamePrefix(request.term)
+          App.models.Monument.findByNamePrefix(request.term, resId)
             .then(function(data) {
               if (data && !data.error) {
+                let inThisRes = false,
+                    inThisResText = '',
+                    label = '',
+                    value = '';
+
                 let results = _.map(excludeIdent(data), function(row) {
-                  return {'label': `${row.monName} (${row.epName}, ${row.monType})`, 'id': row.monId}
+                  if (row.haveThisRes) {
+                    inThisRes = true;
+                    inThisResText = ' - Уже связан с этим исследованием';
+                  } else {
+                    inThisRes = false;
+                    inThisResText = '';
+                  }
+
+                  label = `${row.monName} (${row.epName}, ${row.monType}) ${inThisResText}`;
+                  value = `${row.monName} (${row.epName}, ${row.monType})`;
+                  return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
 
                 if (!results.length) {
@@ -668,6 +721,7 @@ App.views.monument = new (Backbone.View.extend({
 
           $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
           $(`#monument-new-coords-button-${monId}`).remove();
+          monumentResShowNew(monId);
 
           let layerCounter = App.fn.counter(1);
           let layerCounter2 = App.fn.counter(1);
@@ -690,6 +744,14 @@ App.views.monument = new (Backbone.View.extend({
 
           getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
         } else if (lastSelectedAuthorId != ui.item.id) {
+          if (ui.item.inThisRes) {
+            monumentResHide(monId);
+            $(`#knowledge-id-${monId}`).val(ui.item.kId);
+          } else {
+            monumentResShow(monId);
+            $(`#knowledge-id-${monId}`).val("");
+          }
+          
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
