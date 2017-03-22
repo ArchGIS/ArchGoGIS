@@ -77,6 +77,7 @@ App.views.artifact = new (Backbone.View.extend({
       })
 
       $(`#monument-input-${monId}`).autocomplete({
+        html: true,
         source: function(request, response) {
           var monuments = [];
           
@@ -597,6 +598,7 @@ App.views.artifact = new (Backbone.View.extend({
       })
 
       $(`#monument-input-${monId}`).autocomplete({
+        html: true,
         source: function(request, response) {
           var monuments = [];
           
