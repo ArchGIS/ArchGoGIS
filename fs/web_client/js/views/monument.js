@@ -272,6 +272,7 @@ App.views.monument = new (Backbone.View.extend({
       })
 
       $(`#monument-input-${monId}`).autocomplete({
+        html: true,
         source: function(request, response) {
           var monuments = [];
           
@@ -292,7 +293,7 @@ App.views.monument = new (Backbone.View.extend({
                     inThisResText = '';
                   }
 
-                  label = `${row.monName} (${row.epName}, ${row.monType}) ${inThisResText}`;
+                  label = `${row.monName} (${row.epName}, ${row.monType}) <b>${inThisResText}</b>`;
                   value = `${row.monName} (${row.epName}, ${row.monType})`;
                   return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
@@ -751,7 +752,7 @@ App.views.monument = new (Backbone.View.extend({
             monumentResShow(monId);
             $(`#knowledge-id-${monId}`).val("");
           }
-          
+
           lastSelectedMonId = ui.item.id;
           $(`#monument-input-id-${monId}`).val(lastSelectedMonId);
           monSelName = ui.item.name;
