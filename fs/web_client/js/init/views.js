@@ -140,6 +140,41 @@ App.views.functions = {
     });
   },
 
+  "setAuthorAutocomplete": function(field, monId, layerId, subclass) {
+    layerId = layerId || 0;
+    subclass = subclass || "Culture";
+
+    let d_cultures = App.models.Culture.getAll();
+    let grepObject = App.fn.grepObject;
+
+    $.when(d_cultures).done((cultures) => {
+      let items = _.map(cultures, culture => ({'id': culture.id, 'label': culture.name}));
+
+      $(field).autocomplete({
+        source: function(req, res) {
+          let term = req.term.toLowerCase();
+          
+          res(grepObject(term, items, 'label'));
+        },
+        minLength: 0
+      }).focus(function() {
+        $(this).autocomplete("search");
+      });
+    });
+
+    $(field).on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $(field).on('autocompleteresponse', function(event, ui) {
+
+    });
+    
+    $(field).on('autocompleteselect', function(event, ui) {
+
+    });
+  },
+
   "addLayer": function(button, monId, layerId) {
     let setAccordionHeader = this.setAccordionHeader;
 
