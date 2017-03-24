@@ -4,50 +4,6 @@ App.views.download = new (Backbone.View.extend({
   'index': function() {
 
     let queries = {
-      Author: {
-        main: JSON.stringify({
-          "Author:Author": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-
-        additional: {
-          res: JSON.stringify({
-            "author:Author": {"id": "NEED"},
-            "researches:Research": {"id": "*", "select": "*"},
-            "researches__hasauthor__author": {},
-          }),
-          org: JSON.stringify({
-            "author:Author": {"id": "NEED"},
-            "jobs:AuthorJob": {"id": "*"},
-            "orgs:Organization": {"id": "*", "select": "*"},
-            "author__has__jobs": {},
-            "jobs__belongsto__orgs": {},
-          })
-        }
-      },
-
-      Research: {
-        main: JSON.stringify({
-          "Research:Research": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-
-        additional: {
-          type: JSON.stringify({
-            "research:Research": {"id": "NEED"},
-            "resType:ResearchType": {"id": "*", "select": "*"},
-            "research__has__resType": {},
-          }),
-          report: JSON.stringify({
-            "research:Research": {"id": "NEED"},
-            "report:Report": {"id": "*", "select": "*"},
-            "research__has__report": {},
-          }),
-          author: JSON.stringify({
-            "research:Research": {"id": "NEED"},
-            "author:Author": {"id": "*", "select": "*"},
-            "research__hasauthor__author": {},
-          })
-        }
-      },
 
       Monument: {
         main: JSON.stringify({
@@ -62,6 +18,20 @@ App.views.download = new (Backbone.View.extend({
             "know:Knowledge": {"id": "*", "select": "*"},
             "know__belongsto__mon": {},
           }),
+          cul: JSON.stringify({
+            "mon:Monument": {"id": "NEED"},
+            "know:Knowledge": {"id": "*"},
+            "cul:Culture": {"id": "*", "select": "*"},
+            "know__belongsto__mon": {},
+            "know__has__cul": {},
+          }),
+          coords: JSON.stringify({
+            "mon:Monument": {"id": "NEED"},
+            "sp:SpatialReference": {"id": "*", "select": "*"},
+            "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+            "mon__has__sp": {},
+            "sp__has__spt": {},
+          }),
           type: JSON.stringify({
             "mon:Monument": {"id": "NEED"},
             "type:MonumentType": {"id": "*", "select": "*"},
@@ -72,13 +42,6 @@ App.views.download = new (Backbone.View.extend({
             "epoch:Epoch": {"id": "*", "select": "*"},
             "mon__has__epoch": {},
           }),
-          res: JSON.stringify({
-            "mon:Monument": {"id": "NEED"},
-            "know:Knowledge": {"id": "*"},
-            "res:Research": {"id": "*", "select": "*"},
-            "know__belongsto__mon": {},
-            "res__has__know": {},
-          })
         }
       },
 
@@ -99,63 +62,23 @@ App.views.download = new (Backbone.View.extend({
             "coll:Collection": {"id": "*", "select": "*"},
             "arti__has__inter": {},
             "coll__has__inter": {},
-          })
-        }
-      },
-
-      Excavation: {
-        main: JSON.stringify({
-          "Excavation:Excavation": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-
-        additional: {
-          res: JSON.stringify({
-            "exc:Excavation": {"id": "NEED"},
-            "res:Research": {"id": "*", "select": "*"},
-            "res__has__exc": {},
           }),
           know: JSON.stringify({
-            "exc:Excavation": {"id": "NEED"},
-            "mon:Monument": {"id": "*"},
-            "res:Research": {"id": "*"},
+            "arti:Artifact": {"id": "NEED"},
             "know:Knowledge": {"id": "*", "select": "*"},
-            "know__belongsto__mon": {},
-            "res__has__know": {},
-            "mon__has__exc": {},
-            "res__has__exc": {},
-          })
-        }
-      },
-
-      Report: {
-        main: JSON.stringify({
-          "Report:Report": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-
-        additional: {
-          res: JSON.stringify({
-            "rep:Report": {"id": "NEED"},
-            "res:Research": {"id": "*", "select": "*"},
-            "res__has__rep": {},
+            "know__found__arti": {},
           }),
-          author: JSON.stringify({
-            "rep:Report": {"id": "NEED"},
-            "author:Author": {"id": "*", "select": "*"},
-            "rep__hasauthor__author": {},
-          })
-        }
-      },
-
-      Publication: {
-        main: JSON.stringify({
-          "Publication:Publication": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-
-        additional: {
-          author: JSON.stringify({
-            "pub:Publication": {"id": "NEED"},
-            "author:Author": {"id": "*", "select": "*"},
-            "pub__hasauthor__author": {},
+          coords: JSON.stringify({
+            "arti:Artifact": {"id": "NEED"},
+            "sp:SpatialReference": {"id": "*", "select": "*"},
+            "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+            "arti__has__sp": {},
+            "sp__has__spt": {},
+          }),
+          exc: JSON.stringify({
+            "arti:Artifact": {"id": "NEED"},
+            "exc:Excavation": {"id": "*", "select": "*"},
+            "exc__has__arti": {},
           })
         }
       },
@@ -164,106 +87,46 @@ App.views.download = new (Backbone.View.extend({
         main: JSON.stringify({
           "Heritage:Heritage": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
         }),
-      },
 
-      Epoch: {
-        main: JSON.stringify({
-          "Epoch:Epoch": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
+        additional: {
+          coords: JSON.stringify({
+            "h:Heritage": {"id": "NEED"},
+            "sp:SpatialReference": {"id": "*", "select": "*"},
+            "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+            "h__has__sp": {},
+            "sp__has__spt": {},
+          }),
+        }
       },
-
-      Culture: {
-        main: JSON.stringify({
-          "Culture:Culture": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-      },
-
-      Organization: {
-        main: JSON.stringify({
-          "Organization:Organization": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-      },
-
-      City: {
-        main: JSON.stringify({
-          "City:City": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
-        }),
-      }
     }
 
     let fields = {
-      Author: {
-        "id": "id",
-        "Имя": "name",
-        "Организации": "org",
-        "Исследования": "res",
-      },
-      Research: {
-        "id": "id",
-        "Название": "name",
-        "Тип": "type",
-        "Автор": "author",
-        "Год": "year",
-        "Отчет": "report",
-      },
+
       Monument: {
         "id": "id",
         "Название": "know",
         "Тип": "type",
         "Эпоха": "epoch",
-        "Исследования": "res",
+        "Культура": "cul",
+        "Координаты": "coords",
       },
       Artifact: {
         "id": "id",
         "Название": "name",
         "Категория": "categ",
         "Год находки": "year",
-        "Коллекции": "coll",
-      },
-      Excavation: {
-        "id": "id",
-        "Название": "name",
-        "Исследование": "res",
-        "Руководитель раскопа": "boss",
-        "Площадь": "area",
         "Памятник": "know",
+        "Раскоп": "exc",
+        "Координаты": "coords",
       },
+
       Heritage: {
         "id": "id",
         "Название": "name",
-        "Код": "code",
         "Адрес": "address",
         "Датировка": "date",
+        "Координаты": "coords",
       },
-      Culture: {
-        "id": "id",
-        "Название": "name",
-      },
-      Epoch: {
-        "id": "id",
-        "Название": "name",
-      },
-      City: {
-        "id": "id",
-        "Название": "name",
-      },
-      Organization: {
-        "id": "id",
-        "Название": "name",
-      },
-      Report: {
-        "id": "id",
-        "Название": "name",
-        "Автор": "author",
-        "Год": "year",
-        "Исследование": "res",
-      },
-      Publication: {
-        "id": "id",
-        "Название": "name",
-        "Автор": "author",
-        "Год": "year",
-      }
     }
 
     $("#show-button").on("click", function() {
@@ -279,7 +142,13 @@ App.views.download = new (Backbone.View.extend({
         _.each(tmp[0], function(collection, name) {
           _.each(collection, function(obj, t) {
             if (name == "know") {
+              console.log(obj)
               data[entity][t][name] = _.pluck(obj, "monument_name").join(", ");
+            } else if (name == "coords") {
+              let coords = App.fn.findActualSpatref(obj.sp, obj.spt);
+              if (coords.x) {
+                data[entity][t][name] = `N: ${coords.x}, E: ${coords.y}`;
+              }
             } else {
               data[entity][t][name] = _.pluck(obj, "name").join(", ");
             }
