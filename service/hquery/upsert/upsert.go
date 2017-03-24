@@ -78,7 +78,10 @@ var Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		input = parsing.MustFetchJson(r.Body)
 	}
 
-	fmt.Printf("%#v\n", input)
+	jsonFromClient, _ := json.Marshal(input)
+	fmt.Printf("---INPUT---\n%v\n----END----\n", string(jsonFromClient))
+
+	// fmt.Printf("%#v\n", input)
 	w.Write(processRequest(input))
 })
 
@@ -102,10 +105,11 @@ func processRequest(input map[string]map[string]string) []byte {
 
 	if data.updateSize() > 0 {
 		tx.SetBatch(makeUpdateBatch(data))
-		fmt.Printf("Upsert query: %#v", tx.Query)
+		// fmt.Printf("Upsert query: %#v", tx.Query)
 
 		resp, err := tx.Run()
-		fmt.Printf("Response from neo4j: %#v\n", resp)
+		response, _ := json.Marshal(resp.Results)
+		fmt.Printf("Response from updates neo4j: %v\n", string(response))
 		if err != nil {
 			tx.Rollback()
 			echo.ServerError.Print(err)
@@ -145,6 +149,7 @@ func processRequest(input map[string]map[string]string) []byte {
 
 	tx.Commit()
 	jsonString, err := json.Marshal(ids)
+	fmt.Printf("Response from inserts neo4j: %v\n", string(jsonString))
 	assert.Nil(err) // Если encode map[string]string провалился, то совсем беда
 
 	return jsonString
