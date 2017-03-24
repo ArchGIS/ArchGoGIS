@@ -39,9 +39,10 @@
       м²</dd>
 
       <dt><%= t("artifact.genitivePl") %>:</dt>
-      <dd><%= _.reduce(artifacts, function(size, list) {
-        return size + _.size(list)
-      }, 0) %></dd>
+      <dd>
+        <% let artiCount = artifacts.length %>
+        <%= artiCount %>
+      </dd>
 
       <dt><%= t("heritage.singular") %></dt>
       <dd><% if (heritage[0]) { %>

@@ -766,8 +766,8 @@ App.views.artifact = new (Backbone.View.extend({
     })
 
     let fillResearchInputs = function() {
-      let year = $("#report-year-input").val();
-      let name = $("#report-name-input").val() + " - " + year;
+      let year = $("#pub-year-input").val();
+      let name = $("#pub-name-input").val() + " - " + year;
       $("#research-input-name").val(name);
       $("#research-input-year").val(year);
     };
