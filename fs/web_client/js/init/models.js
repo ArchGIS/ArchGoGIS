@@ -1,15 +1,17 @@
 'use strict';
 
 App.models.fn = {
-  "sendQuery": function(query) {
+  "sendQuery": function(query, limit) {
+    limit = limit || 500;
     var d = $.Deferred();
-    this.sendQueryWithDeferred(query, d);
+    this.sendQueryWithDeferred(query, d, limit);
     return d.promise();
   },
 
-  "sendQueryWithDeferred": function(query, deferred) {
+  "sendQueryWithDeferred": function(query, deferred, limit) {
+    limit = limit || 500;
     $.post({
-      url: "/hquery/read",
+      url: `/hquery/read?limit=${limit}`,
       data: query,
       success: function(response) {
         response = JSON.parse(response);
