@@ -12,6 +12,14 @@ App.views.download = new (Backbone.View.extend({
           "know__belongsto__Monument": {},
         }),
 
+        needCulture: JSON.stringify({
+          "Monument:Monument": {"id": "*", "select": "*"},
+          "know:Knowledge": {"id": "*", "filter": "monument_name=FILTER=text"},
+          "cul:Culture": {"id": "?", "filter": "name=CFIL=text"},
+          "know__belongsto__Monument": {},
+          "know__has__cul": {},
+        }),
+
         additional: {
           know: JSON.stringify({
             "mon:Monument": {"id": "NEED"},
@@ -50,6 +58,12 @@ App.views.download = new (Backbone.View.extend({
           "Artifact:Artifact": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
         }),
 
+        needCulture: JSON.stringify({
+          "Artifact:Artifact": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+          "cul:Culture": {"id": "*", "filter": "name=CFIL=text"},
+          "Artifact__has__cul": {},
+        }),
+
         additional: {
           categ: JSON.stringify({
             "arti:Artifact": {"id": "NEED"},
@@ -85,6 +99,10 @@ App.views.download = new (Backbone.View.extend({
 
       Heritage: {
         main: JSON.stringify({
+          "Heritage:Heritage": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+        }),
+
+        needCulture: JSON.stringify({
           "Heritage:Heritage": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
         }),
 
@@ -132,6 +150,7 @@ App.views.download = new (Backbone.View.extend({
     $("#show-button").on("click", function() {
       let entity = $("#entity-selector").val();
       let name = $("#entity-name-input").val();
+      let cfil = $("#entity-culture-input").val();
       let query;
 
       let data = {};
@@ -201,7 +220,13 @@ App.views.download = new (Backbone.View.extend({
       let queryCounter = _.size(queries[entity].additional) + 1;
       let callRender = _.after(queryCounter, render);
 
-      query = queries[entity].main;
+      if (cfil) {
+        query = queries[entity].needCulture;
+        query = query.replace(/CFIL/g, cfil);
+      } else {
+        query = queries[entity].main;
+      }
+
       query = query.replace(/FILTER/g, name);
 
       $.when(model.sendQuery(query)).then(function(response) {
