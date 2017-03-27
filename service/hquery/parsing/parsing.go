@@ -33,7 +33,7 @@ func MustDestructureEdgeTag(tag string) (string, string, string) {
 		throw.If(!valid.Identifier(part), errs.InvalidIdentifier)
 	}
 
-	if (len(parts) == 2) {
+	if len(parts) == 2 {
 		return parts[0], "none", parts[1]
 	}
 
@@ -42,7 +42,9 @@ func MustDestructureEdgeTag(tag string) (string, string, string) {
 
 func MustFetchJson(reader io.ReadCloser) Tree {
 	var input Tree
-	throw.Guard(json.NewDecoder(reader).Decode(&input), func(err error) {
+	cypher := json.NewDecoder(reader).Decode(&input)
+
+	throw.Guard(cypher, func(err error) {
 		echo.ClientError.Print(err)
 		throw.Error(errs.BadJsonGiven)
 	})

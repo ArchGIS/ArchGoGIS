@@ -1,4 +1,4 @@
 #!/bin/bash
 go install
-DATE=`date +%d-%m-%Y`
+DATE=`date +%d-%m-%Y_%H:%M`
 ArchGoGIS > ~/log_$DATE &
