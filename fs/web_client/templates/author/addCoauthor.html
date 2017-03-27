@@ -5,14 +5,24 @@
 
 <div class="accordion-content coauthor-content">
 
-  <div class="form-group">
-    <label for="author-input">Имя автора <span class="required">*</span></label>
-    <%= widget("SearchLine", authorsInputOptions, "author-input") %>
-    <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
-    
-    <label for="coauthor-input">Соавторы</label>
-    <%= widget("SearchLine", coauthorsInputOptions, "coauthor-input") %>
-    <input id="coauthor-input-id" data-few="true" data-for="coauthor:Author" data-subclass="Coauthor" hidden type="id" name="id"></input>
+  <div class="form-group" id="find-coauthor-<%= aId %>">
+    <label for="coauthor-input">Имя соавтора</label>
+    <input class="form-control" id="coauthor-input-<%= aId %>"></input>
+    <input id="coauthor-input-id-<%= aId %>" data-for="coauthor_<%= aId %>:Author" data-subclass="Coauthor" hidden type="id" name="id"></input>
   </div>
 
 </div>
+
+<!-- Создание нового автора -->
+<script type="text/template" id="add-coauthor-<%= aId %>">
+  <div class="form-group">
+    <h4>Добавление нового соавтора</h4>
+    <label for="coauthor-name-input-<%= aId %>">Имя соавтора <span class="required">*</span></label>
+    <input class="form-control" id="coauthor-name-input-<%= aId %>" data-for="coauthor_<%= aId %>:Author" type="text" name="name" data-subclass="Coauthor" data-req></input>
+  </div>
+
+  <div class="form-group">
+    <label for="coauthor-birthdate-input-<%= aId %>">Год рождения</label>
+    <input class="form-control" id="author-birthdate-input-<%= aId %>" data-for="coauthor_<%= aId %>:Author" type="number" name="birthdate" data-subclass="Coauthor"></input>
+  </div>
+</script>

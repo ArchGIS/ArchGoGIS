@@ -258,6 +258,14 @@ App.views.monument = new (Backbone.View.extend({
     getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
     setSelectsEvents();
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     let monId = 1;
     let excludeIdent = App.fn.excludeIdentMonuments;
 
@@ -650,6 +658,14 @@ App.views.monument = new (Backbone.View.extend({
       }
     });
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+    
     let monId = 1;
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));

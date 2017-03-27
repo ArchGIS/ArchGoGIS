@@ -209,6 +209,14 @@ App.views.research = new (Backbone.View.extend({
     // validate('report-city-input', lastSelectedCityName);
     // validate('report-organization-input', orgName);
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;
@@ -517,6 +525,14 @@ App.views.research = new (Backbone.View.extend({
       }
     });
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+    
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;

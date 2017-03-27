@@ -65,6 +65,14 @@ App.views.artifact = new (Backbone.View.extend({
       });
     };
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     let monId = 1;
     let excId = 1;
     let artiId = 1;
@@ -563,21 +571,21 @@ App.views.artifact = new (Backbone.View.extend({
     };
 
     var citySelectHandler = function(event, ui) {
-      $('#report-city-input-id').val(ui.item.id);
+      $('#pub-city-input-id').val(ui.item.id);
 
       App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
-        $('#report-organization-input').autocomplete({
+        $('#pub-organization-input').autocomplete({
           source: _.map(orgs, function(org) {
             return {'label': org.name, 'id': org.id}
           })
         });
       });
 
-      $("#report-organization-input").autocomplete({
+      $("#pub-organization-input").autocomplete({
         source: [],
         minLength: 0,
         select: function(event, ui) {
-          $("#report-organization-input-id").val(ui.item.id);
+          $("#pub-organization-input-id").val(ui.item.id);
           orgName = ui.item.name;
         }
       }).focus(function() {
@@ -585,6 +593,14 @@ App.views.artifact = new (Backbone.View.extend({
       });
     };
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+    
     let monId = 1;
     let excId = 1;
     let artiId = 1;
@@ -849,7 +865,7 @@ App.views.artifact = new (Backbone.View.extend({
 
     var lastSelectedCityId = 0;
     var lastSelectedCityName = '';
-    $('#report-city-input').on('autocompleteselect', function(event, ui) {
+    $('#pub-city-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedCityId != ui.item.id) {
         lastSelectedCityId = ui.item.id;
         lastSelectedCityName = ui.item.name;
