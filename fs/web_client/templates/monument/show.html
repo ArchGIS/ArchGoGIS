@@ -103,7 +103,7 @@
               <% } %>
 
               <dt>Найдено артефактов:</dt>
-              <dd><%= _.size(artifacts[i]) %></dd>
+              <dd><%= _.size(_.filter(artiResearches, (res) => res.id == researches[i].id)) %></dd>
 
               <dt>Археологических вскрытий:</dt>
               <dd><%= _.size(excavations[i]) %></dd>
