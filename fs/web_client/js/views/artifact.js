@@ -78,6 +78,7 @@ App.views.artifact = new (Backbone.View.extend({
     let artiId = 1;
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
@@ -146,6 +147,7 @@ App.views.artifact = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
+
           $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
           $(`#monument-new-coords-button-${monId}`).remove();
           monumentResShowNew(monId);
@@ -165,6 +167,7 @@ App.views.artifact = new (Backbone.View.extend({
           $button.on("click", () => App.views.functions.addLayer($button, monId, layerCounter()));
           $button.on("click", () => {
             let layerId = layerCounter2();
+            
             _.each(monLayers, function(layers) {
               let inputType = $(layers).attr("data-input-type");
               let entity = $(layers).attr("data-entity");
@@ -607,6 +610,7 @@ App.views.artifact = new (Backbone.View.extend({
 
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();

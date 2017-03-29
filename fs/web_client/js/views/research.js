@@ -224,6 +224,8 @@ App.views.research = new (Backbone.View.extend({
       App.template.get("research/addMonument", function(tmpl) {
         $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
 
+        getDataForSelector($(`#mon-date-scale-selector-${localMonId}`), "DateScale");
+
         App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
 
         $(`#monument-name-input-${localMonId}`).on("change", function() {
@@ -539,6 +541,8 @@ App.views.research = new (Backbone.View.extend({
       let localMonY, localMonX;
       App.template.get("research/addMonument", function(tmpl) {
         $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
+
+        getDataForSelector($(`#mon-date-scale-selector-${localMonId}`), "DateScale");
 
         App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
 

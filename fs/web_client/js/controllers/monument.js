@@ -149,6 +149,11 @@ App.controllers.monument = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "NEED"},
           "topo:Image": {"id": "*", "select": "*"},
           "knowledge__hastopo__topo": {}
+        }),
+        monDateScale: JSON.stringify({
+          "knowledge:Knowledge": {"id": "NEED"},
+          "mds:DateScale": {"id": "*", "select": "*"},
+          "knowledge__has__mds": {}
         }) 
       }
     }

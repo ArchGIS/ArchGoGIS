@@ -201,6 +201,8 @@ App.views.functions = {
 
       getDataForSelector($(`#epoch-selector-${monId}-${layerId}`), "Epoch");
       getDataForSelector($(`#type-selector-${monId}-${layerId}`), "MonumentType");
+      getDataForSelector($(`#mon-date-scale-selector-${monId}-${layerId}`), "DateScale");
+      
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}-${layerId}`), monId, layerId);
 
       setAccordionHeader($(`#layer-header-${monId}-${layerId}`));

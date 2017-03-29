@@ -5,6 +5,7 @@
     <ul>
       <li><a href="#general"><%= t('common.general') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#dates"><%= t('date.plural') %></a></li>
       <li><a href="#reports"><%= t('report.plural') %></a></li>
       <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
@@ -110,6 +111,29 @@
           </div>
         <% }); %>
       </div>
+    </div>
+
+    <div id="dates">
+      <% 
+        let dates = [];
+        if (knowledges.length) {
+          _.each(knowledges, function(know, i) {
+            let mds = monDateScale[i][0] || {};
+            if (know.dateBottom) {
+              let resName = researches[i].name;
+              let authorName = authors[i].name || "Неизвестный автор";
+              let resType = resTypes[i][0].name || "без типа";
+              let resYear = researches[i].year || "год не указан";
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              resTitle = App.models.Research.href(researches[i].id, resTitle);
+
+              let date = `${mds.name}: ${know.dateBottom} — ${know.dateTop} - ${resTitle}`
+              dates.push(date)
+            }
+          });
+        } 
+      %>
+      <%= dates.join("<br>") %>
     </div>
 
     <div id="reports">
