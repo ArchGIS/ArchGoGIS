@@ -65,11 +65,20 @@ App.views.artifact = new (Backbone.View.extend({
       });
     };
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     let monId = 1;
     let excId = 1;
     let artiId = 1;
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
@@ -138,6 +147,7 @@ App.views.artifact = new (Backbone.View.extend({
 
           $('#' + addName(id)).val(inputValue);
 
+
           $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
           $(`#monument-new-coords-button-${monId}`).remove();
           monumentResShowNew(monId);
@@ -157,6 +167,7 @@ App.views.artifact = new (Backbone.View.extend({
           $button.on("click", () => App.views.functions.addLayer($button, monId, layerCounter()));
           $button.on("click", () => {
             let layerId = layerCounter2();
+            
             _.each(monLayers, function(layers) {
               let inputType = $(layers).attr("data-input-type");
               let entity = $(layers).attr("data-entity");
@@ -563,21 +574,21 @@ App.views.artifact = new (Backbone.View.extend({
     };
 
     var citySelectHandler = function(event, ui) {
-      $('#report-city-input-id').val(ui.item.id);
+      $('#pub-city-input-id').val(ui.item.id);
 
       App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
-        $('#report-organization-input').autocomplete({
+        $('#pub-organization-input').autocomplete({
           source: _.map(orgs, function(org) {
             return {'label': org.name, 'id': org.id}
           })
         });
       });
 
-      $("#report-organization-input").autocomplete({
+      $("#pub-organization-input").autocomplete({
         source: [],
         minLength: 0,
         select: function(event, ui) {
-          $("#report-organization-input-id").val(ui.item.id);
+          $("#pub-organization-input-id").val(ui.item.id);
           orgName = ui.item.name;
         }
       }).focus(function() {
@@ -585,12 +596,21 @@ App.views.artifact = new (Backbone.View.extend({
       });
     };
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+    
     let monId = 1;
     let excId = 1;
     let artiId = 1;
 
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();
@@ -849,7 +869,7 @@ App.views.artifact = new (Backbone.View.extend({
 
     var lastSelectedCityId = 0;
     var lastSelectedCityName = '';
-    $('#report-city-input').on('autocompleteselect', function(event, ui) {
+    $('#pub-city-input').on('autocompleteselect', function(event, ui) {
       if (lastSelectedCityId != ui.item.id) {
         lastSelectedCityId = ui.item.id;
         lastSelectedCityName = ui.item.name;

@@ -140,39 +140,57 @@ App.views.functions = {
     });
   },
 
-  "setAuthorAutocomplete": function(field, monId, layerId, subclass) {
-    layerId = layerId || 0;
-    subclass = subclass || "Culture";
+  "setAuthorAutocomplete": function($button, aId) {
+    App.template.get("author/addCoauthor", function(tmpl) {
+      $button.before(tmpl({'aId': aId}));
 
-    let d_cultures = App.models.Culture.getAll();
-    let grepObject = App.fn.grepObject;
+      App.views.functions.setAccordionHeader($(`#coauthor-header-${aId}`));
 
-    $.when(d_cultures).done((cultures) => {
-      let items = _.map(cultures, culture => ({'id': culture.id, 'label': culture.name}));
+      $(`#coauthor-input-${aId}`).autocomplete({
+      source: function(request, response) {
+        var authors = [];
+        
+        App.models.Author.findByNamePrefix(request.term)
+          .then(function(data) {
+            if (data && !data.error) {
+              let results = _.map(data, function(row) {
+                return {'label': row.name, 'value': row.name, 'id': row.id}
+              });
 
-      $(field).autocomplete({
-        source: function(req, res) {
-          let term = req.term.toLowerCase();
-          
-          res(grepObject(term, items, 'label'));
-        },
-        minLength: 0
-      }).focus(function() {
+              if (!results.length) {
+                results.push('Ничего не найдено. Добавить?');
+              }
+
+              response(results);
+            } else {
+              response();
+            }
+          });
+      },
+        minLength: 3
+      }).focus(function(){
         $(this).autocomplete("search");
       });
-    });
 
-    $(field).on('autocompletefocus', function(event, ui) {
-      event.preventDefault();
-    });
+      $(`#coauthor-input-${aId}`).on('autocompletefocus', function(event, ui) {
+        event.preventDefault();
+      });
 
-    $(field).on('autocompleteresponse', function(event, ui) {
+      $(`#coauthor-input-${aId}`).on('autocompleteselect', function(event, ui) {
+        if (ui.item.value === 'Ничего не найдено. Добавить?') {
+          let $input = $(this);
+          let id = $input.attr('id');
+          let inputValue = $input.val();
 
-    });
-    
-    $(field).on('autocompleteselect', function(event, ui) {
+          let tmpl = _.template( $(`script#add-coauthor-${aId}`).html() );
+          $(`#find-coauthor-${aId}`).replaceWith( tmpl({'aId': aId}) );
 
-    });
+          $(`#coauthor-name-input-${aId}`).val(inputValue);
+        } else {
+          $(`#coauthor-input-id-${aId}`).val(ui.item.id);
+        }
+      })
+    })
   },
 
   "addLayer": function(button, monId, layerId) {
@@ -183,6 +201,8 @@ App.views.functions = {
 
       getDataForSelector($(`#epoch-selector-${monId}-${layerId}`), "Epoch");
       getDataForSelector($(`#type-selector-${monId}-${layerId}`), "MonumentType");
+      getDataForSelector($(`#mon-date-scale-selector-${monId}-${layerId}`), "DateScale");
+      
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}-${layerId}`), monId, layerId);
 
       setAccordionHeader($(`#layer-header-${monId}-${layerId}`));

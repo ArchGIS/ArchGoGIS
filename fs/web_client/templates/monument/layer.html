@@ -17,4 +17,15 @@
     <label for="culture-input-<%= monId %>-<%= layerId %>">Культурная принадлежность</label>
     <input id="culture-input-<%= monId %>-<%= layerId %>" class="form-control" data-for="c_<%= monId %>_<%= layerId %>:Culture" type="id" name="id">
   </div>
+
+  <div class="form-group">
+    Датировка
+    <select class="form-control" id="mon-date-scale-selector-<%= monId %>-<%= layerId %>"  data-for="ds_<%= monId %>_<%= layerId %>:DateScale" type="id" name="id" data-subclass="MonDateScale"></select>
+  </div>
+  <div class="form-inline">
+    <label for="mon-date-bottom-<%= monId %>-<%= layerId %>">От</label>
+    <input id="mon-date-bottom-<%= monId %>-<%= layerId %>" data-for="k_<%= monId %>_<%= layerId %>:Knowledge" class="form-control mini" type="text" name="dateBottom"></input>
+    <label for="mon-date-top-<%= monId %>-<%= layerId %>">До</label>
+    <input id="mon-date-top-<%= monId %>-<%= layerId %>" data-for="k_<%= monId %>_<%= layerId %>:Knowledge" class="form-control input" type="text" name="dateTop"></input>
+  </div>
 </div>

@@ -209,12 +209,22 @@ App.views.research = new (Backbone.View.extend({
     // validate('report-city-input', lastSelectedCityName);
     // validate('report-organization-input', orgName);
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;
       let localMonX, localMonY;
       App.template.get("research/addMonument", function(tmpl) {
         $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
+
+        getDataForSelector($(`#mon-date-scale-selector-${localMonId}`), "DateScale");
 
         App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
 
@@ -517,12 +527,22 @@ App.views.research = new (Backbone.View.extend({
       }
     });
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+    
     var monId = 1;
     $('#add-monument-button').on('click', function(e) {
       let localMonId = monId++;
       let localMonY, localMonX;
       App.template.get("research/addMonument", function(tmpl) {
         $('#add-monument-button').before(tmpl({'monId': localMonId, 'needHeader': true}));
+
+        getDataForSelector($(`#mon-date-scale-selector-${localMonId}`), "DateScale");
 
         App.views.functions.setAccordionHeader($(`#monument-header-${localMonId}`));
 

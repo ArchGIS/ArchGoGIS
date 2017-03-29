@@ -258,11 +258,21 @@ App.views.monument = new (Backbone.View.extend({
     getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
     setSelectsEvents();
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     let monId = 1;
     let excludeIdent = App.fn.excludeIdentMonuments;
 
     App.template.get("research/addMonument", function(tmpl) {
       let monX, monY;
+
+      getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));      
 
@@ -650,9 +660,19 @@ App.views.monument = new (Backbone.View.extend({
       }
     });
 
+    let aId = 1;
+
+    $('.btn-new-coauthor').on('click', function(e) {
+      let localAuthorId = aId++;
+
+      App.views.functions.setAuthorAutocomplete($(this), localAuthorId);
+    })
+
     let monId = 1;
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument').find("legend").after(tmpl({'monId': monId, 'needHeader': false}));
+
+      getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $(`#monument-name-input-${monId}`).on("change", function() {
         let monName = $(this).val();

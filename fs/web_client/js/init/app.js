@@ -86,6 +86,7 @@ function postQuery(objectId) {
     ["Knowledge", "Monument", "belongsto"],
     ["Knowledge", "Artifact", "found"],
     ["Knowledge", "Culture", "has"],
+    ["Knowledge", "MonDateScale", "has"],
     ["Research", "Excavation", "has"],
     ["Monument", "Excavation", "has"],
     ["Monument", "Complex", "has"],
