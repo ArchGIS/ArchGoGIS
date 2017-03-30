@@ -1,0 +1,4 @@
+Query:
+```
+MATCH (n:{entity}) WITH n.id as nid, collect(n) as nlist WHERE size(nlist) > 1 FOREACH (i IN tail(nlist) | DETACH DELETE i);
+```

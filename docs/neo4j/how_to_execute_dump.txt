@@ -1,3 +1,11 @@
+neo4j-shell-tools usage
+```
+sudo neo4j stop
+sudo neo4j-shell -v -path /var/lib/neo4j/data/databases/graph.db -config /etc/neo4j/neo4j.conf -c "export-cypher -r -b 10000 -o backups/backup_29-03-17:15:22.cypher match (n) optional match (n)-[r]-() return n,r"
+```
+
+
+
 In command line:
 ```
   export JAVA_OPTS="-Xss4m -Xmx4000M -Xms4000M -Xmn1000M" 
