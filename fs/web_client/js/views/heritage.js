@@ -215,7 +215,7 @@ App.views.heritage = new (Backbone.View.extend({
       })
     });
 
-    getDataForSelector($("#her-spatref-selector"), "SpatialReferenceType");
+    getDataForSelector($("#her-spatref-selector"), "SpatialReferenceType", "", true);
     getDataForSelector($("#heritage-status-selector"), "HeritageStatus");
     getDataForSelector($("#heritage-security-type-selector"), "SecurityType");
     setSelectsEvents();

@@ -348,7 +348,7 @@ App.views.research = new (Backbone.View.extend({
           inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
           map: map
         }, localMonId);
-        getDataForSelector($("#spatref-selector-"+localMonId), "SpatialReferenceType");
+        getDataForSelector($("#spatref-selector-"+localMonId), "SpatialReferenceType", "", true);
 
         $("#clarify-button-"+localMonId).on("click", function() {
           $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input, select").attr("used", true);
@@ -666,7 +666,7 @@ App.views.research = new (Backbone.View.extend({
           inputs: ['#monument-x-'+localMonId, '#monument-y-'+localMonId],
           map: map
         }, localMonId);
-        getDataForSelector($("#spatref-selector-"+localMonId), "SpatialReferenceType");
+        getDataForSelector($("#spatref-selector-"+localMonId), "SpatialReferenceType", "", true);
 
         $("#clarify-button-"+localMonId).on("click", function() {
           $($(`#monument-new-coords-${localMonId}`)[0]).show().find("input, select").attr("used", true);

@@ -222,7 +222,7 @@ App.views.functions = {
         map: map
       }, `${excId}`);
       setAccordionHeader($(`#exc-header-${excId}`));
-      getDataForSelector($(`#exc-spatref-selector-${excId}`), "SpatialReferenceType");
+      getDataForSelector($(`#exc-spatref-selector-${excId}`), "SpatialReferenceType", "", true);
       console.log($(`#exc-coord-picker-${excId}`))
       d.resolve();
     })
