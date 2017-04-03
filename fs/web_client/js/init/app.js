@@ -354,7 +354,7 @@ function generateJson(relations) {
 
 function fillSelector(selector, data, notLike, reverse) {
   if (reverse) {
-    data = data.reverse()
+    data = _.sortBy(data, (obj) => obj.id).reverse()
   }
 
   $.each(data, (id, row) => {
