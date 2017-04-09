@@ -16,7 +16,7 @@
       <dl>
         <dt><%= t('author.singular') %>:</dt>
         <dd><a href="#author/show/<%= author[0].id %>">
-          <%= author[0].name %>
+          <%= ctl(author[0].name) %>
         </a></dd>
 
         <% if (coauthors.length) { %>

@@ -1,8 +1,8 @@
 'use strict';
 
 App.template = new function() {
-  var t = App.locale.translate;
-  var memo = {};  
+  const locale = App.locale;
+  let memo = {};
 
   /*
   function input(opts) {
@@ -19,7 +19,7 @@ App.template = new function() {
       // Создание input'а на основе модели
       var labelText = t(opts.name + ".prop." + name);
     }
-  }
+  };
 
   function maybe(object, defaultText, key) {
     key = key || "";
@@ -29,11 +29,16 @@ App.template = new function() {
     }
 
     return (object && typeof(object) != "object") ? object : defaultText;
-  }
+  };
+
+  const identity = function (str) {
+    return str;
+  };
 
   // То, что передаётся в каждый шаблон в любом случае.
   var defaultContext = {
-    't': App.locale.translate,
+    't': locale.translate,
+    'ctl': locale.getLang() === 'en' ? locale.cyrToLatin : identity,
     'form': App.form,
     'widget': App.widgetMaker.createWidget,
     'block': App.blockMaker.createBlock,
@@ -45,13 +50,13 @@ App.template = new function() {
   // Добавить в контекст шаблона параметры по умолчанию.
   function withDefaultContext(tmplParams) {
     return tmplParams ? $.extend(defaultContext, tmplParams) : defaultContext;
-  }
+  };
 
   // Оборачиваем запускающую шаблон функцию в функцию, которая
   // пропустит явные шаблонные аргументы через наш defaultContext.
   function wrapTemplateInContext(tmpl) {
     return tmplParams => tmpl(withDefaultContext(tmplParams));
-  }
+  };
   
   this.get = function(templateName, onLoad) {
     if (!_.has(memo, templateName)) { // Не загружено и не в очереди?
@@ -66,5 +71,5 @@ App.template = new function() {
     } else if (memo[templateName] != 'loading') { // Уже загружено?
       onLoad(memo[templateName]);
     }
-  }
+  };
 };

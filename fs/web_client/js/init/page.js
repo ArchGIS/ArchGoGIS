@@ -22,7 +22,7 @@ App.page = new function() {
     var controller = App.router.current.controller();
     
     App.template.get(templateName, function(tmpl) {
-      App.locale.set(App.url.get('lang'));
+      App.locale.set(App.locale.getLang());
       $body.html(tmpl(templateParams));
       _.invoke(hooks.afterRender, 'call');
       App.widgetMaker.runDefers();

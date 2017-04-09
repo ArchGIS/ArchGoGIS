@@ -2,16 +2,17 @@
 
 App.views.search = new (Backbone.View.extend({
   'index': function() {
-    var t = App.locale.translate;
-    var excludeIdent = App.fn.excludeIdentMonuments;
-    let map = App.views.map().map;
-    let markersLayer = new L.FeatureGroup();
+    const t = App.locale.translate;
+    const ctl = App.locale.cyrToLatin;
+    const excludeIdent = App.fn.excludeIdentMonuments;
+    const map = App.views.map().map;
+    const markersLayer = new L.FeatureGroup();
 
-    var $results = $('#search-results');
+    const $results = $('#search-results');
 
-    var $objectToggler = App.page.get('objectToggler');
-    var object = null;
-    var objects = {
+    const $objectToggler = App.page.get('objectToggler');
+    let object = null;
+    let objects = {
       'monument-params': {
         'handler': searchMonument,
         'columnsMaker': function(monuments) {
@@ -52,7 +53,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchReport,
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return [App.models.Report.href(r.id, `${r.name ? r.name : ''} (${r.author} - ${r.year})`)];
+            return App.models.Report.href(r.id, `${r.name ? r.name : ''} (${r.author} - ${r.year})`);
           });
         },
         'inputs': {
@@ -75,7 +76,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchExcavation,
         'columnsMaker': function(reports) {
           return _.map(reports, function(r) {
-            return [App.models.Excavation.href(r.id, `${r.name} (${r.author} - ${r.resYear})`)];
+            return App.models.Excavation.href(r.id, `${r.name} (${r.author} - ${r.resYear})`);
           });
         },
         'inputs': {
@@ -154,7 +155,7 @@ App.views.search = new (Backbone.View.extend({
               });
 
               _.each(list, function(item, i) {
-                $results.append(`<p>${item}</p>`);
+                $results.append(`<p>${ ctl(item) }</p>`);
               });
 
               markersLayer.clearLayers();
@@ -197,13 +198,13 @@ App.views.search = new (Backbone.View.extend({
 
               map.addLayer(markersLayer);
             } else {
-              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+              $results.append(`<p>${ t('search.noResults') }</p>`);
             }
           }, function(error) {
             console.log(error);
           });
       } else {
-        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+        $results.append(`<p class="danger">${ t('search.fill') }</p>`);
       }
     }
 
@@ -213,7 +214,7 @@ App.views.search = new (Backbone.View.extend({
 
       var author = input.author.val();
 
-      if (author || year) {
+      if (author) {
         function find() {
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_authors', {
@@ -240,16 +241,16 @@ App.views.search = new (Backbone.View.extend({
               var list = my.columnsMaker(response);
 
               _.each(list, function(item) {
-                $results.append(`<p>${item}</p>`);
+                $results.append(`<p>${ ctl(item) }</p>`);
               });
             } else {
-              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+              $results.append(`<p>${ t('search.noResults') }</p>`);
             }
           }, function(error) {
             console.log(error);
           });
       } else {
-        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+        $results.append(`<p class="danger">${ t('search.fill') }</p>`);
       }
     }
 
@@ -289,7 +290,7 @@ App.views.search = new (Backbone.View.extend({
               var list = my.columnsMaker(response);
 
               _.each(list, function(item) {
-                $results.append(`<p>${item}</p>`);
+                $results.append(`<p>${ ctl(item) }</p>`);
               });
 
               markersLayer.clearLayers();
@@ -328,13 +329,13 @@ App.views.search = new (Backbone.View.extend({
 
               map.addLayer(markersLayer);
             } else {
-              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+              $results.append(`<p>${ t('search.noResults') }</p>`);
             }
           }, function(error) {
             console.log(error);
           });
       } else {
-        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+        $results.append(`<p class="danger">${ t('search.fill') }</p>`);
       }
     }
 
@@ -372,16 +373,16 @@ App.views.search = new (Backbone.View.extend({
               var list = my.columnsMaker(response);
 
               _.each(list, function(item) {
-                $results.append(`<p>${item}</p>`);
+                $results.append(`<p>${ ctl(item) }</p>`);
               });
             } else {
-              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+              $results.append(`<p>${ t('search.noResults') }</p>`);
             }
           }, function(error) {
             console.log(error);
           });
       } else {
-        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+        $results.append(`<p class="danger">${ t('search.fill') }</p>`);
       }
     }
 
@@ -417,7 +418,7 @@ App.views.search = new (Backbone.View.extend({
               var list = my.columnsMaker(response);
               
               _.each(list, function(item) {
-                $results.append(`<p>${item}</p>`);
+                $results.append(`<p>${ ctl(item) }</p>`);
               });
 
               markersLayer.clearLayers();
@@ -456,7 +457,7 @@ App.views.search = new (Backbone.View.extend({
 
               map.addLayer(markersLayer);
             } else {
-              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+              $results.append(`<p>${ t('search.noResults') }</p>`);
             }
           }, function(error) {
             console.log(error);
@@ -499,7 +500,7 @@ App.views.search = new (Backbone.View.extend({
               var list = my.columnsMaker(response);
 
               _.each(list, function(item) {
-                $results.append(`<p>${item}</p>`);
+                $results.append(`<p>${ ctl(item) }</p>`);
               });
 
               markersLayer.clearLayers();
@@ -533,13 +534,13 @@ App.views.search = new (Backbone.View.extend({
                 markersLayer.addLayer(marker);
               });
             } else {
-              $results.append('<p>Ничего не найдено. Попробуйте другие варианты.</p>')
+              $results.append(`<p>${ t('search.noResults') }</p>`);
             }
           }, function(error) {
             console.log(error);
           });
       } else {
-        $results.append('<p class="danger">Заполните одно поле или несколько</p>')
+        $results.append(`<p class="danger">${ t('search.fill') }</p>`);
       }
     }
   }

@@ -295,6 +295,9 @@ App.views.admin = new (Backbone.View.extend({
       let name = $("#entity-name-input").val();
       let query;
 
+      const tr = App.locale.translate;
+      const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
+
       let data = {};
       let tmp = [];
       let model = App.models.fn;
@@ -331,12 +334,13 @@ App.views.admin = new (Backbone.View.extend({
           let html = "";
           _.each(fields[entity], function(val, key) {
             if (val == "red") {
-              html += `<td><a href="#${entity.toLowerCase()}/show/${row.id}">Редактировать</a></td>`
+              html += `<td><a href="#${ entity.toLowerCase() }/show/${row.id}">${ tr("admin.edit") }</a></td>`
             } else if (val == "del") {
-              html += `<td><a class="entity-delete" data-entity="${entity}" data-id="${row.id}">Удалить</a></td>`
+              html += `<td><a class="entity-delete" data-entity="${entity}" data-id="${row.id}">${ tr("admin.delete") }</a></td>`
             } else {
               row[val] = row[val] || "";
-              html += `<td>${row[val]}</td>`
+              const line = typeof row[val] === "number" ? row[val] : ctl(row[val]);
+              html += `<td>${ line }</td>`;
             }
           })
           $results.append(`<tr>${html}</tr>`)
