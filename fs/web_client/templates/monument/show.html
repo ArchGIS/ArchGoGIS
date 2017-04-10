@@ -197,9 +197,9 @@
       let counter = 1;
       _.each(monSpatrefT, function(type, i) { %>
         <dt><%= type[0].name %></dt>
-        <% _.each(type, function(obj, t) { %>
-          <% let date = new Date(monSpatref[i][t].date) %>
-          <dd><%= counter++ %>) X: <%= monSpatref[i][t].x %>, Y: <%= monSpatref[i][t].y %>
+        <% _.each(type, function(obj, y) { %>
+          <% let date = new Date(monSpatref[i][y].date) %>
+          <dd><%= counter++ %>) X: <%= monSpatref[i][y].x %>, Y: <%= monSpatref[i][y].y %>
             <% if (counter == 2) { %>
              - <b><%= t('common.actualCoords') %></b>
             <% } %>
