@@ -22,14 +22,14 @@
       <dd><%= maybe(heritage, t('common.notDefined'),"address") %></dd>
 
       <dt><%= t('date.singular') %>:</dt>
-      <dd><%= maybe(heritage, "Не указана","date") %></dd>
+      <dd><%= maybe(heritage, t('common.notSpecif'),"date") %></dd>
 
       <dt>Статус:</dt>
       <dd><%= maybe(herStatus[0], t('common.notDefined'), "name") %></dd>
 
       <% if ( _.size(secType[0]) ) { %>
         <dt>Категория охраны:</dt>
-        <dd><%= maybe(secType[0], "Не указана","name") %></dd>
+        <dd><%= maybe(secType[0], t('common.notSpecif'),"name") %></dd>
 
         <% if ( _.size(file) ) { %>
           <dt>Вид документа о постановке на государственную охрану:</dt>
@@ -39,7 +39,7 @@
           <dd><%= maybe(file, t('common.notDefined'),"docNum") %></dd>
 
           <dt>Дата документа о постановке на государственную охрану:</dt>
-          <dd><%= maybe(file, "Не указана","docDate") %></dd>
+          <dd><%= maybe(file, t('common.notSpecif'),"docDate") %></dd>
         <% } else { %>
           <dt>Вид документа о постановке на государственную охрану:</dt>
           <dd><%= maybe(heritage, t('common.notDefined'),"docType") %></dd>
@@ -48,7 +48,7 @@
           <dd><%= maybe(heritage, t('common.notDefined'),"docNum") %></dd>
 
           <dt>Дата документа о постановке на государственную охрану:</dt>
-          <dd><%= maybe(heritage, "Не указана","docDate") %></dd>
+          <dd><%= maybe(heritage, t('common.notSpecif'),"docDate") %></dd>
         <% } %>
       <% } %>
 
@@ -112,7 +112,7 @@
 
               <div id="general<%=i%>">
                 <dt>Дата составления карты:</dt>
-                <dd><%= maybe(map, "Не указана", "creationDate") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "creationDate") %></dd>
 
                 <dt>Учетный номер БТИ:</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "rodNum") %></dd>
@@ -121,10 +121,10 @@
                 <dd><%= maybe(map, t('common.notDefined'), "rodPassport") %></dd>
 
                 <dt>Дата выдачи паспорта БТИ:</dt>
-                <dd><%= maybe(map, "Не указана", "rodDate") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "rodDate") %></dd>
 
                 <dt>Общая площадь (<%= t('common.metresInSq') %>):</dt>
-                <dd><%= maybe(map, "Не указана", "area") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "area") %></dd>
 
                 <dt>Карта обследования:</dt>
                 <dd><%= App.models.File.href(map.fileid, "Документ") %></dd>
@@ -150,22 +150,22 @@
                 <dd><%= maybe(map, t('common.notDefined'), "docType") %></dd>
 
                 <dt>Дата документа о передаче собственнику (распорядителю):</dt>
-                <dd><%= maybe(map, "Не указана", "docDate") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "docDate") %></dd>
 
                 <dt>Номер документа о передаче собственнику (распорядителю):</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docNum") %></dd> 
 
                 <dt>Дата начала владения (распоряжения) по документу об охране:</dt>
-                <dd><%= maybe(map, "Не указана", "startDate") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "startDate") %></dd>
 
                 <dt>Дата окончания владения (распоряжения) по документу об охране:</dt>
-                <dd><%= maybe(map, "Не указана", "endDate") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "endDate") %></dd>
 
                 <dt>Вид охранного документа:</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docSecurityType") %></dd>
 
                 <dt>Дата охранного документа:</dt>
-                <dd><%= maybe(map, "Не указана", "docSecurityDate") %></dd>
+                <dd><%= maybe(map, t('common.notSpecif'), "docSecurityDate") %></dd>
 
                 <dt>Номер охранного документа:</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docSecurityNum") %></dd>
@@ -179,7 +179,7 @@
                 <dd><%= maybe(lists[i].fp[0], t('common.notSpecif'), "name") %></dd>
 
                 <dt>Доступность памятника:</dt>
-                <dd><%= maybe(lists[i].avail[0], "Не указана", "name") %></dd>
+                <dd><%= maybe(lists[i].avail[0], t('common.notSpecif'), "name") %></dd>
 
                 <dt>Вид пользования:</dt>
                 <dd><%= maybe(lists[i].ut[0], t('common.notDefined'), "name") %></dd>
