@@ -2,6 +2,8 @@
 
 App.views.bigSearch = new (Backbone.View.extend({
   'index': function() {
+    // let instMap = App.views.map();
+
     let queries = {
       author: {
         "main": {
@@ -312,6 +314,19 @@ App.views.bigSearch = new (Backbone.View.extend({
       research: {
         "main": {
           "research:Research": {"id": "*", "select": "*"},
+        },
+        "spatref": {
+          "research:Research": {"id": "NEED"},
+          "k:Knowledge": {"id": "*"},
+          "m:Monument": {"id": "*"},
+          "rt:ResearchType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "research__rt": {},
+          "research__k": {},
+          "m__k": {},
+          "m__sp": {},
+          "sp__spt": {},
         },
         "author-name": {
           "author_IDPLACE:Author": {"id": "*", "filter": "name=VALUEPLACE=text"},
@@ -851,16 +866,26 @@ App.views.bigSearch = new (Backbone.View.extend({
           function render() {
             let sp, preset, epoch, type;
             _.each(spatref[0], function(obj, i) {
-              console.log(obj)
               if (obj.sp.length) {
-                epoch = obj.epoch[0].id;
-                type = obj.mt[0].id;
-                sp = App.fn.findActualSpatref(obj.sp, obj.spt);
-                preset = `monType${type}_${epoch}`;
+                if (entity == "monument") {
+                  epoch = obj.epoch[0].id;
+                  type = obj.mt[0].id;
+                  sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                  preset = `monType${type}_${epoch}`;
 
-                placemarks.push(
-                  App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
-                );
+                  placemarks.push(
+                    App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
+                  );
+                }
+                if (entity == "research") {
+                  type = obj.rt[0].id;
+                  sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                  preset = `resType${type}`;
+
+                  placemarks.push(
+                    App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
+                  );
+                }
               }
             })
             App.views.addToMap(placemarks);
@@ -879,7 +904,7 @@ App.views.bigSearch = new (Backbone.View.extend({
             let ids = _.map(data, function(obj) {return obj.id.toString()});
             spatref = (App.models.fn.getData([JSON.stringify(queries[entity].spatref)], render, true, ids));
           }
-          
+
           $("#search-results").html("");
           _.each(data, function(obj, key) {
             $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
