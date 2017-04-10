@@ -130,7 +130,10 @@
         <label for="carbon-s-input">±1s </label>
         <input class="form-control" id="carbon-1s-input" data-for="carbon_1:Radiocarbon" type="number" name="s"></input>
       </div>
-
+      <div class="form-group">
+        <label for="carbon-ss-input">±2s </label>
+        <input class="form-control" id="carbon-1s-input" data-for="carbon_1:Radiocarbon" type="number" name="ss"></input>
+      </div>
       <div class="form-inline">
         <label for="carbon-bcad-first-bottom">BC/AD 68.2% from</label>
         <input id="carbon-bcad-first-bottom" data-for="carbon_1:Radiocarbon" class="form-control mini" type="number" name="bcadFirstBot"></input>
@@ -177,12 +180,12 @@
       </div>
 
       <div class="form-group">
-        <label for="carbon-layer-char-input">Стратиграфическая характеристика вмещающего слоя</label>
+        <label for="carbon-layer-char-input">Stratigraphic characteristic of the host layer </label>
         <textarea class="form-control" id="carbon-layer-char-input" data-for="carbon_1:Radiocarbon" type="text" name="layerChar"></textarea>
       </div>
 
       <div class="form-group">
-        <label for="carbon-genesis-selector">Генезис вмещающих осадков</label>
+        <label for="carbon-genesis-selector">Genesis of the enclosing sediments</label>
         <select class="form-control" id="carbon-genesis-selector" data-for="sg:SludgeGenesis" type="id" name="id"></select>
       </div>
 
@@ -192,7 +195,7 @@
       </div>
 
       <div class="form-group">
-        <label for="carbon-material-selector">Датированный материал</label>
+        <label for="carbon-material-selector">Sample material</label>
         <select class="form-control" id="carbon-material-selector" data-for="fac:CarbonMaterial" type="id" name="id"></select>
       </div>
 
