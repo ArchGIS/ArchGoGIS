@@ -222,14 +222,14 @@ App.views.radiocarbon = new (Backbone.View.extend({
         $(`#monument-new-coords-button-${monId}`).remove();
       })
       
-      let monLayers = App.views.functions.addMonRelation("exc", "m", monId, "Памятник");
+      let monLayers = App.views.functions.addMonRelation("exc", "m", monId, "Archaeological site");
       let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId);
       monLayers.append(checkbox);
       $(`#exc-belongs`).append(monLayers);
       $(`#exc-layer-1`)[0].checked = true;
       $(`#exc-layer-1`).prop("disabled", true);
 
-      monLayers = App.views.functions.addMonRelation("carbon", "k", monId, "Памятник", "radio");
+      monLayers = App.views.functions.addMonRelation("carbon", "k", monId, "Archaeological site", "radio");
       checkbox = App.views.functions.addRelationCheckbox("carbon", "k", carbonId, monId, "radio");
       monLayers.append(checkbox);
       $(`#carbon-belongs`).append(monLayers);
