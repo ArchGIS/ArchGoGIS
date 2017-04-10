@@ -452,9 +452,9 @@
       "create-data": "Create data",
       "create-map": "Creating a map",
       "createSample": "Sample сreation",
-      "download": "Downloading data",
-      "importData": "Data entry",
-      "getData": "Unloading",
+      "download": "Upload data",
+      "importData": "Data input",
+      "getData": "Download data",
       "more": "More"
     },
     "search": {
@@ -485,5 +485,20 @@
     "prop": {
       "name": "Name"
     }
+  },
+
+  "mainpage": {
+    "name": "Archaeological Research Information System \"ArchGIS\"",
+    "welcome": "Welcome to the ArchGIS Information System!",
+    "counts": "At the moment in the system are taken into account",
+    "heritage": "Objects of cultural heritage",
+    "site": "Archaeological sites",
+    "research": "Archaeological researches",
+    "artifact": "Atifacts",
+    "report": "Reports on archaeological research",
+    "monography": "Monographies",
+    "article": "Articles",
+    "archiveDoc": "Archive documents",
+    "author": "Researchers"
   }
 }
