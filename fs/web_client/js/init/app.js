@@ -151,7 +151,9 @@ function postQuery(objectId) {
     ["Radiocarbon", "RadiocarbonDateType", "has"],
     ["Radiocarbon", "SludgeGenesis", "has"],
     ["Radiocarbon", "CarbonMaterial", "has"],
-    ["SludgeGenesis", "Facies", "has"]
+    ["SludgeGenesis", "Facies", "has"],
+    ["Radiocarbon", "CarbonSpatRef", "has"],
+    ["CarbonSpatRef", "CarbonSpatRefType", "has"]
   ]);
 
   let formdata = new FormData();
