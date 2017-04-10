@@ -448,7 +448,13 @@
   
   "titles": {
     "wizard": {
-      "create-data": "Создание данных"
+      "create-data": "Создание данных",
+      "create-map": "Создание карты",
+      "createSample": "Создание выборки",
+      "download": "Загрузка данных",
+      "importData": "Внесение данных",
+      "getData": "Выгрузка",
+      "more": "Еще"
     },
     "search": {
       "index": "Поиск"

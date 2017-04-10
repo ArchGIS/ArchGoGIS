@@ -449,7 +449,13 @@
   
   "titles": {
     "wizard": {
-      "create-data": "Create data"
+      "create-data": "Create data",
+      "create-map": "Creating a map",
+      "createSample": "Sample сreation",
+      "download": "Downloading data",
+      "importData": "Data entry",
+      "getData": "Unloading",
+      "more": "More"
     },
     "search": {
       "index": "Search"

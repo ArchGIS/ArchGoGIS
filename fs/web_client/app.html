@@ -25,70 +25,7 @@
   </head>
 
   <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container" id="top-menu">
-        <input type="checkbox" id="more" aria-hidden="true" class="toggle" tabindex="-1">
-        <div class="navbar-header">
-          <a href="/index" class="navbar-brand">
-            <i class="fa fa-globe fa-lg"></i>
-            Arch Gis
-          </a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="#wizard/future1">Создание данных</a>
-            </li>
-            <li>
-              <a href="#wizard/future2">Создание карты</a>
-            </li>
-            <li>
-              <a href="#wizard/future3">Создание выборки</a>
-            </li>
-            <li>
-              <a href="#wizard/future5">Загрузка данных</a>
-            </li>
-            <li>
-              <a href="#bigSearch/index">Расширенный поиск</a>
-            </li>
-            <li>
-              <a href="#wizard/create_data">Внесение данных</a>
-            </li>
-            <li>
-              <a href="#search/index">Быстрый поиск</a>
-            </li>
-            <li>
-              <a href="#admin/main">Административная панель</a>
-            </li>
-            <li>
-              <a href="#download/index">Выгрузка</a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-user"></i>
-                Профиль<!-- <%= t('nav.profile') %> -->
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-sign-out"></i>
-                Выйти<!-- <%= t('nav.signout') %> -->
-              </a>
-            </li>
-          </ul>
-          <div class="navigation__toggle">
-            <label for="more" aria-hidden="true" class="navigation__link">Еще </label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+    <div id="navigation"></div>
     <div id="body"></div>
     
     <footer>
@@ -136,6 +73,7 @@
     <script src="/web_client/js/init/url.js"></script>
     <script src="/web_client/js/init/form.js"></script>
     <script src="/web_client/js/init/template.js"></script>
+    <script src="/web_client/js/init/navbar.js"></script>
     <script src="/web_client/js/init/views.js"></script>
     <script src="/web_client/js/init/controllers.js"></script>
     <script src="/web_client/js/init/models.js"></script>
