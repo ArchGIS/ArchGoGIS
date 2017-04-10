@@ -200,7 +200,7 @@
         <% _.each(type, function(obj, t) { %>
           <% let date = new Date(monSpatref[i][t].date) %>
           <dd><%= counter++ %>) X: <%= monSpatref[i][t].x %>, Y: <%= monSpatref[i][t].y %>
-            <%= (counter == 2) ? ` - <b>${ t('common.actualCoords') }</b>` : "" %>
+            <%= (counter == 2) ? ' - <b>' + t('common.actualCoords') + '</b>' : "" %>
           </dd>
           <dd><%= t('common.createdDate') %>: <%= date.getDate() %>.<%= date.getMonth() + 1 %>.<%= date.getFullYear() %> <%= date.getHours() %>:<%= date.getMinutes() %>:<%= date.getSeconds() %></dd>
           <br>
