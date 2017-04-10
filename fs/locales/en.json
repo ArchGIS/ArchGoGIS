@@ -452,9 +452,9 @@
       "create-data": "Create data",
       "create-map": "Creating a map",
       "createSample": "Sample сreation",
-      "download": "Downloading data",
-      "importData": "Data entry",
-      "getData": "Unloading",
+      "download": "Upload data",
+      "importData": "Data input",
+      "getData": "Download data",
       "more": "More"
     },
     "search": {
