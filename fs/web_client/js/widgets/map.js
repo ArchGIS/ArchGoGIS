@@ -82,6 +82,13 @@ App.widgets.Map = function(params, id) {
       iconImageSize: [12, 12],
       iconImageOffset: [-6, -6],
     })
+
+    ymaps.option.presetStorage.add(`radiocarbon1`, {
+      iconLayout: 'default#image',
+      iconImageHref: `/web_client/img/radiocarbon/c14.png`,
+      iconImageSize: [12, 12],
+      iconImageOffset: [-6, -6],
+    })
   });
 
   this.center = function(coord, opts) {

@@ -17,6 +17,7 @@
     "next": "Further",
     "belongsToSite": "Belongs to the archaeological site",
     "accuracy": "Spatial anchor accuracy",
+    "accurancy": "Spatial anchor accuracy",
     "collectionName": "Collection name",
     "numberInBook": "№ on the book of receipts",
     "inventNumber": "Inventory number",
@@ -284,6 +285,17 @@
     ]
   },
   
+  "radiocarbon": {
+    "singular": "Radiocarbon dating",
+    "plural": "Radiocarbon datings",
+    "index": "Index",
+    "date": "Date",
+    "facies": "Facies",
+    "dateType": "Date type",
+    "create": "Input radiocarbon data",
+    "depth": "Depth"
+  },
+
   "report": {
     "singular": "Report",
     "plural": "Reports",

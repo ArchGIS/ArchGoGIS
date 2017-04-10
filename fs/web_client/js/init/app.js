@@ -144,7 +144,16 @@ function postQuery(objectId) {
     ["SurveyMap", "Availability", "has"],
     ["SurveyMap", "UsageType", "has"],
     ["Image", "CardinalDirection", "has"],
-    ["monumentImage", "CardinalDirection", "has"]
+    ["monumentImage", "CardinalDirection", "has"],
+    ["Knowledge", "Radiocarbon", "has"],
+    ["Excavation", "Radiocarbon", "has"],
+    ["Research", "Radiocarbon", "has"],
+    ["Radiocarbon", "RadiocarbonDateType", "has"],
+    ["Radiocarbon", "SludgeGenesis", "has"],
+    ["Radiocarbon", "CarbonMaterial", "has"],
+    ["SludgeGenesis", "Facies", "has"],
+    ["Radiocarbon", "CarbonSpatRef", "has"],
+    ["CarbonSpatRef", "CarbonSpatRefType", "has"]
   ]);
 
   let formdata = new FormData();
@@ -362,6 +371,7 @@ function fillSelector(selector, data, notLike, reverse) {
       $("<option></option>")
         .text(row.name)
         .val(row.id)
+        .attr("info", row.info || "")
         .appendTo(selector);
     }
   })
