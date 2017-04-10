@@ -1,20 +1,20 @@
 <div class="main-page">
   <div class="main-page-bg"></div>
   <div class="main-page-content">
-    <h1>Информационная система учета данных археологических исследований "ArchGIS"</h1>
+    <h1><%= t('mainpage.name') %></h1>
 
-    <h2 class="greeting-text">Добро пожаловать в информационную систему ArchGIS!</h2>
+    <h2 class="greeting-text"><%= t('mainpage.welcome') %></h2>
     <ul class="system-statistic">
-      <li class="list-header">На текущий момент в системе учтены:</li>
-      <li>Объектов культурного наследия - <span><%= count[0] %></span></li>
-      <li>Памятников археологии - <span><%= count[1] %></span></li>
-      <li>Археологических исследований - <span><%= count[2] %></span></li>
-      <li>Артефактов - <span><%= count[3] %></span></li>
-      <li>Отчетов об археологических исследованиях - <span><%= count[4] %></span></li>
-      <li>Монографий - <span><%= count[5] %></span></li>
-      <li>Статей - <span><%= count[6] %></span></li>
-      <li>Архивных документов - <span><%= count[7] %></span></li>
-      <li>Исследователей-археологов - <span><%= count[8] %></span></li>
+      <li class="list-header"><%= t('mainpage.counts') %>:</li>
+      <li><%= t('mainpage.heritage') %> - <span><%= count[0] %></span></li>
+      <li><%= t('mainpage.site') %> - <span><%= count[1] %></span></li>
+      <li><%= t('mainpage.research') %> - <span><%= count[2] %></span></li>
+      <li><%= t('mainpage.artifact') %> - <span><%= count[3] %></span></li>
+      <li><%= t('mainpage.report') %> - <span><%= count[4] %></span></li>
+      <li><%= t('mainpage.monography') %> - <span><%= count[5] %></span></li>
+      <li><%= t('mainpage.article') %> - <span><%= count[6] %></span></li>
+      <li><%= t('mainpage.archiveDoc') %> - <span><%= count[7] %></span></li>
+      <li><%= t('mainpage.author') %> - <span><%= count[8] %></span></li>
     </ul>
   </div>
 </div>
