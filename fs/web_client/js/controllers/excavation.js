@@ -36,13 +36,19 @@ App.controllers.excavation = new (Backbone.View.extend({
         researches: JSON.stringify({
           "exc:Excavation": {"id": excId},
           "researches:Research": {"id": "*", "select": "*"},
-          "rep:Report": {"id": "*", "select": "*"},
           "author:Author": {"id": "*", "select": "*"},
           "researches__has__exc": {},
-          "researches__has__rep": {},
-          "rep__hasauthor__author": {},
           "researches__hasauthor__author": {}
         }),
+        radiocarbon: JSON.stringify({
+          "exc:Excavation": {"id": excId},
+          "carbon:Radiocarbon": {"id": "*", "select": "*"},
+          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "exc__has__carbon": {},
+          "carbon__has__carSpatref": {},
+          "carSpatref__has__carSpatrefT": {}
+        })
       },
 
       artifacts: {
@@ -98,10 +104,12 @@ App.controllers.excavation = new (Backbone.View.extend({
       let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
       let excPlacemarks = App.controllers.fn.getExcPlacemarks(tmplData, true);
       let artPlacemarks = App.controllers.fn.getArtPlacemarks(tmplData);
+      let carPlacemarks = App.controllers.fn.getCarPlacemarks(tmplData);
 
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, excPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, artPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, carPlacemarks);
 
       console.log(tmplData)
     	App.page.render("excavation/show", tmplData, tmplData.placemarks)
