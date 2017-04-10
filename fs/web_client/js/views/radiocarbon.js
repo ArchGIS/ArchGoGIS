@@ -370,7 +370,7 @@ App.views.radiocarbon = new (Backbone.View.extend({
 
     $("#carbon-genesis-selector").on('click', function() {
       let genId = $(this).val();
-      if (genId != 1) {
+      if (genId != 1 && genId != 10) {
         $("#carbon-facies-selector").attr('used', true);
         $("#div-carbon-facies-selector").show();
 
