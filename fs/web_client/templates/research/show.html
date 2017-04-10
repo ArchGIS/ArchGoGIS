@@ -1,5 +1,5 @@
 <div class="content">
-  <h2><%= t('research.singular') %> "<%= maybe(research, "Нет названия", "name") %>"</h2>
+  <h2><%= t('research.singular') %> "<%= maybe(research, t('common.noName'), "name") %>"</h2>
 
   <div id="container">
     <ul>
@@ -22,25 +22,25 @@
         <% if (coauthors.length) { %>
           <dt><%= t('coauthor.plural') %>:</dt>
           <% _.each(coauthors, function(a, i) { %>
-            <dd><a href="#author/show/<%= a.id %>"><%= a.name %></a></dd>
+            <dd><a href="#author/show/<%= a.id %>"><%= ctl(a.name) %></a></dd>
           <% }); %>
         <% } %>
 
         <dt><%= t('research.year') %>:</dt>
-        <dd><%= maybe(research, "Не указан", "year") %></dd>
+        <dd><%= maybe(research, t('common.notDefined'), "year") %></dd>
 
         <dt><%= t('research.type') %>:</dt>
-        <dd><%= maybe(resType[0], "Не указано", "name") %></dd>
+        <dd><%= maybe(resType[0], t('common.notSpecif'), "name") %></dd>
 
         <dt><%= t('research.prop.description') %>:</dt>
-        <dd><%= maybe(research, "Отсутствует", "description" ) %></dd>
+        <dd><%= maybe(research, t('common.missing'), "description" ) %></dd>
         
         <dt><%= t('report.singular') %>:</dt>
         <dd>
           <% if (reports.length) { %>
             <div>
             <% _.each(reports, function(report, i) { %>
-              <% var reportTitle = `${maybe(reports[i], "Нет названия", "name")} (${maybe(author[i], "автор неизвестен", "name")}, ${maybe(reports[i], "год не указан", "year")})` %>
+              <% var reportTitle = `${maybe(reports[i], t('common.noName'), "name")} (${maybe(author[i], t('common.noneAuthor'), "name")}, ${maybe(reports[i], t('common.yearNotDefined'), "year")})` %>
               <% if (reports[i].fileid) { %>
                 <%= App.models.Report.href(reports[i].id, reportTitle) %>
               <% } else {%>
@@ -50,7 +50,7 @@
             <% }); %>
             </div>
           <% } else { %>
-              Нет отчёта
+              <%= t('report.not') %>
           <% } %>
         </dd>
 
@@ -62,13 +62,13 @@
           <dd><%= _.reduce(excavations.excavations, function(size, list) {
             return size + _.size(list)
           }, 0) %>;
-          Общая площадь
+          <%= t('common.area') %>
           <%= _.reduce(excavations, function(area, list) {
             return area + _.reduce(list, function(area, exc) {
               return area + (exc.area || 0);
             }, 0);
           }, 0) %>
-          м²</dd>
+          <%= t('common.metresInSq') %></dd>
         <% } %>
 
         <dt><%= t("artifact.genitivePl") %>:</dt>
@@ -86,7 +86,7 @@
           
           <h4 class="accordion-header">
             <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-            <%= t('monument.singular') %> №<%= counter++ %>: <b><%= knowledges[i].monument_name %></b>
+            <%= t('monument.singular') %> №<%= counter++ %>: <b><%= ctl(knowledges[i].monument_name) %></b>
           </h4>
           
           <div class="accordion-content">
@@ -94,53 +94,53 @@
               <dt></dt>
               <dd>
                 <a href="#monument/show/<%= monument.id %>">
-                Перейти к памятнику
+                <%= t('monument.goto') %>
               </a>
               </dd>
-              <dt>Название, данное исследователем:</dt>
-              <dd><%= knowledges[i].monument_name %></dd>
-              <dt>Эпоха:</dt>
-              <dd><%= maybe(epochs[i][0], "Нет данных", "name") %></dd>
-              <dt>Тип:</dt>
-              <dd><%= maybe(monTypes[i][0], "Нет данных", "name") %></dd>
-              <dt>Культурная принадлежность, определенная исследователем:</dt>
-              <dd><%= maybe(cultures[i][0], "Нет данных", "name") %></dd>
+              <dt><%= t('common.nameByAuthor') %>:</dt>
+              <dd><%= ctl(knowledges[i].monument_name) %></dd>
+              <dt><%= t('monument.prop.epoch') %>:</dt>
+              <dd><%= maybe(epochs[i][0], t('common.noData'), "name") %></dd>
+              <dt><%= t('monument.prop.type') %>:</dt>
+              <dd><%= maybe(monTypes[i][0], t('common.noData'), "name") %></dd>
+              <dt><%= t('knowledge.prop.culture') %>:</dt>
+              <dd><%= maybe(cultures[i][0], t('common.noData'), "name") %></dd>
               <% if (knowledges[i].description) { %>
-                <dt>Описание памятника:</dt>
-                <dd><%= knowledges[i].description %></dd>
+                <dt><%= t('monument.description') %>:</dt>
+                <dd><%= ctl(knowledges[i].description) %></dd>
               <% } %>
-              <dt>Найденные артефакты:</dt>
+              <dt><%= t('artifact.found') %>:</dt>
               <dd>
                 <% if (artifacts[i] && artifacts[i].length > 0) { %>
                   <% var length = artifacts[i].length %>
                   <% _.each(artifacts[i], function(artifact, i) { %>
                     <a href="#artifact/show/<%= artifact.id %>">
-                      <%= artifact.name%>
+                      <%= ctl(artifact.name) %>
                     </a>
                     <% if (i < length-1) { %>
                     ,
                   <% } %>
                 <% }); %>
                 <% } else { %>
-                  нет
+                  <%= t('common.noData') %>
                 <% } %>
               </dd>
 
-              <dt>Археологические вскрытия:</dt>
+              <dt><%= t('common.archExc') %>:</dt>
               <dd>
                 <% if (excavations[i] && excavations[i].length > 0) { %>
                   <% var length = excavations[i].length %>
                   <% _.each(excavations[i], function(excavation, i) { %>
-                    <%= maybe(excavation, `без названия ${i}`, "name")%>
+                    <%= maybe(excavation, `${ t('common.withoutName') } ${i}`, "name")%>
                     <% if (excavation.area) { %>
-                      (<%= excavation.area%> м²)
+                      (<%= excavation.area %> <%= t('common.metresInSq') %>)
                     <% } %>
                     <% if (i < length-1) { %>
                     ,
                     <% } %>
                   <% }); %>
                 <% } else { %>
-                  нет
+                  <%= t('common.noData') %>
                 <% } %>
               </dd>
             </dl>
@@ -153,11 +153,11 @@
     <div id="artifacts">
       <% if (artiCount) { %>
         <dl>
-          <dt>Найденные артефакты:</dt>
+          <dt><%= t('artifact.found') %>:</dt>
           <dd>
             <%= _.compact(_.map(artifacts, function(arti, i) {
               let title = `${arti.name} (${author[0].name}, ${research.year})`;
-              return App.models.Artifact.href(arti.id, title);
+              return App.models.Artifact.href(arti.id, ctl(title));
             })).join(", <br>") %>
           </dd>
         </dl>
@@ -170,7 +170,7 @@
       if (heritages.length) {
         _.each(heritages, (her) => {
           if (her && her[0]) {
-            hs.push(App.models.Heritage.href(her[0].id, her[0].name))
+            hs.push(App.models.Heritage.href(her[0].id, ctl(her[0].name)))
           }
         })
       } %>
@@ -183,12 +183,12 @@
       _.each(excavations, function(resExc, i) {
         _.each(resExc, function(exc, t) {
           let area = exc.area || 0;
-          let name = exc.name || "без названия";
-          let boss = exc.boss || "неизвестен";
+          let name = exc.name || t('common.withoutName');
+          let boss = exc.boss || t('common.unknown');
           excs.push(
-            App.models.Excavation.href(exc.id, `
-              ${name} - ${area}м² (${author[0].name}, ${research.year}), руководитель работ: ${boss}
-            `)
+            App.models.Excavation.href(exc.id, ctl(`
+              ${name} - ${area}${ t('common.metresInSq') } (${author[0].name}, ${research.year}), t('excavation.boss').toLowerCase() : ${boss}
+            `))
           );
         })
       })
@@ -201,7 +201,7 @@
     </div>
 
     <div id="another">
-      Заглушка для будущих вкладок
+      <%= t('common.futureTab') %>
     </div>
   </div>
 </div>

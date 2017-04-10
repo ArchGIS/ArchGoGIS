@@ -14,7 +14,7 @@
 
     <div id="home">
       <div class="form-group find-author">
-        <label for="author-input">Автор исследования <span class="required">*</span></label>
+        <label for="author-input"><%= t('research.author') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
       </div>
@@ -28,7 +28,7 @@
       <br>
       
       <div class="form-group">
-        <label for="research-year-input">Год проведения исследования<span class="required">*</span></label>
+        <label for="research-year-input"><%= t('research.year') %><span class="required">*</span></label>
         <input class="form-control" id="research-year-input" data-for="r:Research" type="number" name="year" data-req></input>
       </div>
 
@@ -111,53 +111,53 @@
     <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
   </div>
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-    <label for="author-photo-input">Фотография</label>
+    <label for="author-photo-input"><%= t('photo.singular') %></label>
     <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
     <br>
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер фотографии 10 МБ.
+      <%= t('examples.maxSizePhoto') %>.
     </div>
   </div>
 </script>
 
 <!-- Создание нового отчёта и исследования -->
 <script type="text/template" class="add-report">
-  <h4>Добавление нового отчёта</h4>
+  <h4><%= t('common.addReport') %></h4>
 
   <div class="form-group">
-    <label for="report-name-input">Название <span class="required">*</span></label>
+    <label for="report-name-input"><%= t('common.name') %> <span class="required">*</span></label>
     <input class="form-control" id="report-name-input" data-for="rep:Report" type="text" name="name" data-req></input>
   </div>
   <div class="form-group">
-    <label for="report-year-input">Год написания отчёта<span class="required">*</span></label>
+    <label for="report-year-input"><%= t('report.year') %><span class="required">*</span></label>
     <input class="form-control" id="report-year-input" data-for="rep:Report" type="number" name="year" data-req></input>
   </div>
   <div class="form-group">
-    <label for="report-file-input">Файл отчёта</label>
+    <label for="report-file-input"><%= t('report.file') %></label>
     <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="rep:Report" name="fileid"></input>
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер документа 50 МБ.
+      <%= t('examples.maxSizeDoc') %>.
     </div>
   </div>
 
   <div class="checkbox">
     <label for="more-report-checkbox">
       <input id="more-report-checkbox" type="checkbox" dynamic="true"></input>
-      Дополнительная информация об отчёте
+      <%= t('report.moreInfo') %>
     </label>
   </div>
   <div class="form-group" toggle-by="more-report-checkbox" need-option="true">
-    <label for="report-city-input">Город</label>
+    <label for="report-city-input"><%= t('city.singular') %></label>
     <%= widget("SearchLine", citiesInputOptions, "report-city-input") %>
     <input id="report-city-input-id" data-for="city:City" hidden type="id" name="id"></input>
   </div>
   <div class="form-group" toggle-by="more-report-checkbox" need-option="true">
-    <label for="report-organization-input">Учреждение - место хранения отчёта</label>
+    <label for="report-organization-input"><%= t('report.orgStorage') %></label>
     <input class="form-control" id="report-organization-input"></input>
     <input id="report-organization-input-id" data-for="org:Organization" type="id" hidden name="id"></input>
   </div>
   <div class="form-group" toggle-by="more-report-checkbox" need-option="true">
-    <label for="report-code-input">Номер</label>
+    <label for="report-code-input"><%= t('report.prop.number') %></label>
     <input class="form-control" id="report-code-input" data-for="rep:Report" type="text" name="code"></input>
   </div>
 

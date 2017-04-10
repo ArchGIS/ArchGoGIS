@@ -1,14 +1,14 @@
 <% if (needHeader == true) { %>
   <h4 class="accordion-header" id="monument-header-<%= monId %>">
     <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-    Памятник №<%= monId %>
+    <%= t('monument.monByNum') %><%= monId %>
   </h4>
 
 <div class="accordion-content monument-content">
 <% } %>
   <div id="monument-<%= monId %>" class="monument-block">
     <div class="form-group find-monument-<%= monId %>">
-      <label>Выбрать существующий памятник <span class="required">*</span></label>
+      <label><%= t('monument.choose') %> <span class="required">*</span></label>
       <input class="form-control" id="monument-input-<%= monId %>"></input>
       <input id="monument-input-id-<%= monId %>" data-for="m_<%= monId %>:Monument" hidden type="id" name="id" data-req="up"></input>
       <input id="knowledge-id-<%= monId %>" data-for="k_<%= monId %>:Knowledge" hidden type="id" name="id"></input>
@@ -17,33 +17,33 @@
       
       <div class="monument-res-hide">
         <div class="form-group find-culture-<%= monId %>">
-          <label for="culture-input-<%= monId %>">Выберите культурную принадлежность</label>
+          <label for="culture-input-<%= monId %>"><%= t('common.chooseCulture') %></label>
           <input id="culture-input-<%= monId %>" class="form-control">
           <input id="culture-input-<%= monId %>-id" hidden data-for="c_<%= monId %>:Culture" type="id" name="id">
         </div>
 
         <div class="form-group">
-          Датировка
+          <%= t('date.singular') %>
           <select class="form-control" id="mon-date-scale-selector-<%= monId %>"  data-for="ds_<%= monId %>:DateScale" type="id" name="id" data-subclass="MonDateScale"></select>
         </div>
         <div class="form-inline">
-          <label for="mon-date-bottom-<%= monId %>">От</label>
+          <label for="mon-date-bottom-<%= monId %>"><%= t('date.from') %></label>
           <input id="mon-date-bottom-<%= monId %>" data-for="k_<%= monId %>:Knowledge" class="form-control mini" type="text" name="dateBottom"></input>
-          <label for="mon-date-top-<%= monId %>">До</label>
+          <label for="mon-date-top-<%= monId %>"><%= t('date.to') %></label>
           <input id="mon-date-top-<%= monId %>" data-for="k_<%= monId %>:Knowledge" class="form-control input" type="text" name="dateTop"></input>
         </div>
         
         <div class="form-group">
-          <label>Координаты выбранного памятника</label>
-          <p>X: <span id="spatref-x-<%= monId %>">памятник не выбран</span></p>
-          <p>Y: <span id="spatref-y-<%= monId %>">памятник не выбран</span></p>
-          <p>Точность: <span id="spatref-type-<%= monId %>">памятник не выбран</span></p>
+          <label><%= t('monument.coords') %></label>
+          <p><%= t('monument.prop.x') %>: <span id="spatref-x-<%= monId %>"><%= t('monument.notChoosed') %></span></p>
+          <p><%= t('monument.prop.y') %>: <span id="spatref-y-<%= monId %>"><%= t('monument.notChoosed') %></span></p>
+          <p><%= t('common.accur') %>: <span id="spatref-type-<%= monId %>"><%= t('monument.notChoosed') %></span></p>
         </div>
 
         <div class="form-group" id="monument-new-coords-button-<%= monId %>">
           <button id="clarify-button-<%= monId %>" class="btn btn-primary" style="display:none">
             <i class="fa fa-cogs"></i>
-            Уточнить координаты
+            <%= t('common.clarifyCoords') %>
           </button>
         </div>
       </div>
@@ -69,7 +69,7 @@
         <input class="form-control" id="spatref-date-<%= monId %>" data-for="spatref_<%= monId %>:SpatialReference" type="number" name="date" data-need-date hidden used="false"></input>
 
         <div class="form-group">
-          <label for="spatref-selector-<%= monId %>">Точность пространственной привязки</label>
+          <label for="spatref-selector-<%= monId %>"><%= t('common.accuracy') %></label>
           <select class="form-control" id="spatref-selector-<%= monId %>" data-for="srt_<%= monId %>:SpatialReferenceType" type="id" name="id" used="false"></select>
         </div>
       </div>
@@ -78,11 +78,11 @@
     <div class="monument-res-hide monument-for-new">
 
       <div class="form-group">
-        <label for="monument-name-input-<%= monId %>">Название памятника <span class="required">*</span></label>
+        <label for="monument-name-input-<%= monId %>"><%= t('monument.name') %> <span class="required">*</span></label>
         <input class="form-control monument-name" id="monument-name-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="monument_name" data-group="<%= monId %>"></input>
       </div>
       <div class="form-group">
-        <label for="monument-desc-input-<%= monId %>">Описание памятника</label>
+        <label for="monument-desc-input-<%= monId %>"><%= t('monument.description') %></label>
         <textarea class="form-control" id="monument-desc-input-<%= monId %>" data-for="k_<%= monId %>:Knowledge" type="text" name="description" data-group="<%= monId %>"></textarea>
       </div>
     </div>
@@ -97,7 +97,7 @@
 
 <!-- Форма для нового памятника -->
 <script type="text/template" class="add-monument-<%= monId %>">
-  <h4>Добавление нового памятника</h4>
+  <h4><%= t('monument.add') %></h4>
   <div class="form-group">
     <input id="monument-tmp-input-<%= monId %>" value="Костыль" hidden data-for="m_<%= monId %>:Monument" type="text" name="tmp" data-group="<%= monId %>"></input>
   </div>
@@ -107,6 +107,6 @@
 <script type="text/template" id="add-layer-<%= monId %>">
   <button id="add-layer-button-<%= monId %>" class="btn btn-primary" monId="<%= monId %>">
     <i class="fa fa-cogs"></i>
-    Добавить культурный слой
+    <%= t('common.addCulture') %>
   </button>
 </script>

@@ -1,33 +1,33 @@
 <div class="content">
-  <h2><%= t("report.singular") %> "<%= report.name %>"</h2>
+  <h2><%= t("report.singular") %> "<%= ctl(report.name) %>"</h2>
   <br>
 
   <dt><%= t("author.singular") %>:</dt>
-  <dd><%= App.models.Author.href(author[0].id, author[0].name) %></dd>
+  <dd><%= App.models.Author.href(author[0].id, ctl(author[0].name)) %></dd>
 
   <dt><%= t("research.plural") %>:</dt>
   <dd>
     <%= _.map(researches, function(res, i) {
-      let year = res.year || "год не указан";
+      let year = res.year || t('common.yearNotDefined');
       let resTitle = `${res.name} (${resTypes[i].name}, ${year})`;
-      return App.models.Research.href(res.id, resTitle);
+      return App.models.Research.href(res.id, ctl(resTitle));
     }).join("<br>") %>
   </dd>
 
   <dt><%= t("common.name") %>:</dt>
-  <dd><%= report.name %></dd>
+  <dd><%= ctl(report.name) %></dd>
 
   <dt><%= t("common.year") %>:</dt>
   <dd><%= report.year %></dd>
 
   <dt><%= t("city.singular") %>:</dt>
-  <dd><%= maybe(city, "Нет информации", "name") %></dd>
+  <dd><%= maybe(city, t('common.noInfo'), "name") %></dd>
 
   <dt><%= t("report.storage") %>:</dt>
-  <dd><%= maybe(org, "Нет информации", "name") %></dd>
+  <dd><%= maybe(org, t('common.noInfo'), "name") %></dd>
 
   <dt><%= t("report.prop.number") %>:</dt>
-  <dd><%= maybe(report, "Нет информации", "number") %></dd>
+  <dd><%= maybe(report, t('common.noInfo'), "number") %></dd>
 
   <h4><%= App.models.File.href(report.fileid, t("common.download")) %></h4>
 

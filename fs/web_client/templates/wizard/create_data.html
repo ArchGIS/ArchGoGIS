@@ -1,18 +1,18 @@
 <div class="well bs-component block">
-    <h3>Создание данных</h3>
+    <h3><%= t("titles.wizard.create-data") %></h3>
     <br/>
     <div class="form-horizontal">
         <div class="form-group">
 
             <label class="col-sm-5 control-label" for="what-create">
-                Что создаётся?
+                <%= t("wizard.whatIs") %>
             </label>
             <div class="col-sm-4">
                 <select class="form-control" id="what-create">
-                    <option value="artifact">Артефакт</option>
-                    <option value="monument">Памятник</option>
-                    <option value="research">Исследование</option>
-                    <option value="heritage">ОКН</option>
+                    <option value="artifact"><%= t("artifact.singular") %></option>
+                    <option value="monument"><%= t("monument.singular") %></option>
+                    <option value="research"><%= t("research.singular") %></option>
+                    <option value="heritage"><%= t("heritage.singular") %></option>
                 </select>
             </div>
 
@@ -22,11 +22,11 @@
 
         <div class="form-group">
             <label class="col-sm-5 control-label" for="from-what-create">
-                На основе чего?
+                <%= t("wizard.createBy") %>
             </label>
             <div class="col-sm-4">
                 <select class="form-control" id="from-what-create">
-                    <option value="#monument/new">Исследование</option>
+                    <option value="#monument/new"><%= t("research.singular") %></option>
                 </select>
             </div>
 
@@ -35,6 +35,6 @@
     <br/>
 
     <button id="goto-create" class="btn btn-primary">
-        Приступить к заполнению
+        <%= t("wizard.start") %>
     </button>
 </div>

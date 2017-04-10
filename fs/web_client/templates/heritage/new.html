@@ -30,7 +30,7 @@
       <input class="form-control" id="her-spatref-date" data-for="hsr:SpatialReference" data-subclass="HerSpatRef" type="number" name="date" data-need-date hidden></input>
 
       <div class="form-group">
-        <label for="her-spatref-selector">Точность пространственной привязки</label>
+        <label for="her-spatref-selector"><%= t('common.accuracy') %></label>
         <select class="form-control" id="her-spatref-selector" data-for="hsrt:SpatialReferenceType" data-subclass="HerSpatRefType" type="id" name="id"></select>
       </div>
 
@@ -50,7 +50,7 @@
       </div>
 
       <div class="form-group">
-        <label for="heritage-date-input">Датировка</label>
+        <label for="heritage-date-input"><%= t('date.singular') %></label>
         <input class="form-control" id="heritage-date-input" data-for="heritage:Heritage" type="text" name="date" data-has-display></input>
       </div>
 
@@ -99,7 +99,7 @@
         <label for="heritage-file-input">Добавить новый документ о постановке на учет</label>
         <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="file:File" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
-          Максимальный размер документа 50 МБ.
+          <%= t('examples.maxSizeDoc') %>.
         </div>
       </div>
 
@@ -107,7 +107,7 @@
         <label for="heritage-file-input">Добавить новый документ о постановке на учет</label>
         <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="file:File" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
-          Максимальный размер документа 50 МБ.
+          <%= t('examples.maxSizeDoc') %>.
         </div>
       </div>
 

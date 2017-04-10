@@ -1,5 +1,5 @@
 <div class="content">  
-  <h2><%= t("excavation.info") %> "<%= maybe(excavation.name, "Без названия") %>"</h2>
+  <h2><%= t("excavation.info") %> "<%= maybe(excavation.name, t('common.withoutName')) %>"</h2>
   
   <div class="tabs">
     <ul>
@@ -11,22 +11,22 @@
     </ul>
 
     <div id="general">
-      <dt>Исследование:</dt>
-      <dd><%= App.models.Research.href(researches[0].id, researches[0].name) %></dd>
+      <dt><%= t('research.singular') %>:</dt>
+      <dd><%= App.models.Research.href(researches[0].id, ctl(researches[0].name)) %></dd>
 
-      <dt>Год проведения исследования:</dt>
+      <dt><%= t('research.year') %>:</dt>
       <dd><%= researches[0].year %></dd>
 
-      <dt>Автор исследования:</dt>
-      <dd><%= App.models.Author.href(author[0].id, author[0].name) %></dd>
+      <dt><%= t('research.author') %>:</dt>
+      <dd><%= App.models.Author.href(author[0].id, ctl(author[0].name)) %></dd>
 
-      <dt>Руководитель работ:</dt>
-      <dd><%= maybe(excavation.boss, "Неизвестно") %></dd>
+      <dt><%= t('excavation.boss') %>:</dt>
+      <dd><%= maybe(excavation.boss, t('common.unknown1')) %></dd>
 
-      <dt>Площадь вскрытия:</dt>
-      <dd><%= maybe(excavation.area, "Неизвестно") %></dd>
+      <dt><%= t('excavation.area1') %>:</dt>
+      <dd><%= maybe(excavation.area, t('common.unknown1')) %></dd>
 
-      <dt>Количество артефактов:</dt>
+      <dt><%= t('artifact.number') %>:</dt>
       <dd><%= _.size(artifacts) %></dd>
     </div>
 
@@ -39,16 +39,16 @@
 
           <div class="accordion-content">
             <dl>
-              <dd><%= App.models.Monument.href(mon.id, "Перейти к памятнику") %></dd>
+              <dd><%= App.models.Monument.href(mon.id, t('goto.monument')) %></dd>
 
-              <dt>Названия:</dt>
-              <dd><%= _.pluck(knowledges[i], "monument_name").join(", ") %></dd>
+              <dt><%= t('monument.names') %>:</dt>
+              <dd><%= ctl(_.pluck(knowledges[i], "monument_name").join(", ")) %></dd>
 
-              <dt>Эпоха:</dt>
-              <dd><%= maybe(epochs[i], "Нет данных", "name") %></dd>
+              <dt><%= t('monument.prop.epoch') %>:</dt>
+              <dd><%= maybe(epochs[i], t('common.noData'), "name") %></dd>
 
-              <dt>Тип памятника:</dt>
-              <dd><%= maybe(monTypes[i], "Нет данных", "name") %></dd>
+              <dt><%= t('monument.type') %>:</dt>
+              <dd><%= maybe(monTypes[i], t('common.noData'), "name") %></dd>
             </dl>
           </div>
         <% }) %>
@@ -58,13 +58,13 @@
     <div id="artifacts">
       <%= _.map(artifacts, function(art, t) {
         let title = `${art.name}`;
-        return App.models.Artifact.href(art.id, title);
+        return App.models.Artifact.href(art.id, ctl(title));
       }).join(", <br>")%>
     </div>
 
     <div id="report">
       <% let repTitle = `${rep[0].name} (${author[0].name}, ${researches[0].year})` %>
-      <%= App.models.Report.href(rep[0].id, repTitle) %>
+      <%= App.models.Report.href(rep[0].id, ctl(repTitle)) %>
     </div>
 
     <div id="another">

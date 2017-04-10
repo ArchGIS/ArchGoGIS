@@ -2,7 +2,7 @@
   <h2><%= t('artifact.create') %></h2>
   <button class="send-button btn btn-primary">
     <i class="fa fa-cogs"></i>
-    Создать
+    <%= t('common.create') %>
   </button>
   
   <div id="container">
@@ -15,26 +15,26 @@
     </ul>
 
     <div id="home">
-    	<legend>Сведения об исследовании</legend>
+    	<legend><%= t('research.info') %></legend>
 
       <div class="form-group find-author">
-        <h4>Введите существующего автора исследования</h4>
-        <label for="author-input">Имя автора <span class="required">*</span></label>
+        <h4><%= t('common.formAuthor') %></h4>
+        <label for="author-input"><%= t('author.name') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up"></input>
       </div>
 
       <button class="btn btn-primary btn-new-coauthor">
         <i class="fa fa-cogs"></i>
-        Добавить соавтора
+        <%= t('author.addCoauthor') %>
       </button>
 
       <br>
       <br>
       
       <div class="form-group find-report">
-        <h4>Выберите существующий отчёт</h4>
-        <label for="report-input">Название отчёта <span class="required">*</span></label>
+        <h4><%= t('common.formReport') %></h4>
+        <label for="report-input"><%= t('common.reportName') %> <span class="required">*</span></label>
         <input class="form-control" id="report-input"></input>
         <input id="report-input-id" data-for="r:Report" type="id" hidden name="id" data-req="up"></input>
         <input class="form-control" id="research-input-id" hidden data-for="rs:Research" type="id" name="id"></input>
@@ -42,52 +42,52 @@
 
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="monument">
-      <legend>Сведения о памятнике</legend>
+      <legend><%= t('monument.info') %></legend>
 
       <button class="btn btn-primary btn-next" active="2" id="monument-next-button">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
   <div id="excavation" data-custom-relations="exc_1:Monument">
       <div class="form-group">
-        <label for="exc-name-input">Название вскрытия</label>
+        <label for="exc-name-input"><%= t('excavation.name') %></label>
         <input class="form-control" id="exc-name-input" data-for="exc_1:Excavation" type="text" name="name"></input>
       </div>
       <div class="form-group">
-        <label for="exc-boss-input">Руководитель работ</label>
+        <label for="exc-boss-input"><%= t('excavation.boss') %></label>
         <input class="form-control" id="exc-boss-input" data-for="exc_1:Excavation" type="text" name="boss"></input>
       </div>
       <div class="form-group">
-        <label for="exc-area-input">Площадь (м²)</label>
+        <label for="exc-area-input"><%= t('excavation.area') %></label>
         <input class="form-control" id="exc-area-input" data-for="exc_1:Excavation" type="number" name="area"></input>
       </div>
       <div class="form-group">
-        <label for="exc-region-input">Участок(квадрат)</label>
+        <label for="exc-region-input"><%= t('excavation.section') %></label>
         <input class="form-control" id="exc-region-input" data-for="arti_1:Artifact" type="text" name="excRegion"></input>
       </div>
       <div class="form-group">
-        <label for="exc-depth-input">Глубина (см)</label>
+        <label for="exc-depth-input"><%= t('excavation.depth') %></label>
         <input class="form-control" id="exc-depth-input" data-for="arti_1:Artifact" type="number" name="depth"></input>
       </div>
       <div class="form-group" data-custom-relations="complex_1:Monument">
-        <label for="monument-object-input">Название объекта</label>
+        <label for="monument-object-input"><%= t('excavation.objectName') %></label>
         <input class="form-control" id="monument-object-input" data-for="complex_1:Complex" type="text" name="name"></input>
       </div>
       <div class="form-group complex-belongs" id="complex-belongs" data-checkbox-type="radio" hidden>
-        Принадлежит памятнику:
+        <%= t('common.belongsToSite') %>:
       </div>
 
       <input class="form-control" id="exc-spatref-date" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="date" data-need-date hidden></input>
 
       <div class="form-group">
-        <label for="exc-spatref-selector">Точность пространственной привязки</label>
+        <label for="exc-spatref-selector"><%= t('common.accurancy') %></label>
         <select class="form-control" id="exc-spatref-selector" data-for="esrt:SpatialReferenceType" data-subclass="ExcSpatRefType" type="id" name="id"></select>
       </div>
 
@@ -106,93 +106,93 @@
         </div>
       </div>
       <div class="alert alert-dismissible alert-info">
-        Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
+        <%= t('examples.chooseCoords') %>
       </div>
 
       <div class="form-group exc-belongs" id="exc-belongs" data-checkbox-type="checkbox">
-        Принадлежит памятнику:
+        <%= t('common.belongsToSite') %>:
       </div>
 
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="collection">
       <div class="form-group" id="find-collection">
-        <label for="collection-input">Название коллекции</label>
+        <label for="collection-input"><%= t('common.collectionName') %></label>
         <input id="collection-input" class="form-control">
         <input id="collection-input-id" hidden data-for="col:Collection" type="id" name="id">
       </div>
 
       <div class="form-group">
-        <label for="storage-book-number-input">№ по книге поступлений</label>
+        <label for="storage-book-number-input"><%= t('common.numberInBook') %></label>
         <input class="form-control" id="storage-book-number-input" data-for="storInt:StorageInterval" type="text" name="bookNumber"></input>
       </div>
       <div class="form-group">
-        <label for="storage-inventory-number-input">Инвентарный №</label>
+        <label for="storage-inventory-number-input"><%= t('common.inventNumber') %></label>
         <input class="form-control" id="storage-inventory-number-input" data-for="storInt:StorageInterval" type="text" name="inventoryNumber"></input>
       </div>
       <div class="form-group">
-        <label for="storage-spec-number-input">№ специального учета</label>
+        <label for="storage-spec-number-input"><%= t('common.specialNumber') %></label>
         <input class="form-control" id="storage-spec-number-input" data-for="storInt:StorageInterval" type="text" name="specialNumber"></input>
       </div>
       <div class="form-group">
-        <label for="storage-field-number-input">№ по полевой описи</label>
+        <label for="storage-field-number-input"><%= t('common.listingNumber') %></label>
         <input class="form-control" id="storage-field-number-input" data-for="storInt:StorageInterval" type="text" name="fieldNumber"></input>
       </div>
       <div class="form-group">
-        <label for="storage-field-cipher-input">Полевой шифр</label>
+        <label for="storage-field-cipher-input"><%= t('common.cipher') %></label>
         <input class="form-control" id="storage-field-cipher-input" data-for="storInt:StorageInterval" type="text" name="fieldCipher"></input>
       </div>
       <div class="form-group">
-        <label for="storage-year-input">Год добавления в коллекцию</label>
+        <label for="storage-year-input"><%= t('common.yearOfAddToColl') %></label>
         <input class="form-control" id="storage-year-input" data-for="storInt:StorageInterval" type="number" name="yearSince"></input>
       </div>
     </div>
 
     <div id="artifact" data-custom-relations="arti_1:Knowledge">
       <div class="form-group">
-        <label for="arti-name-input">Название<span class="required">*</span></label>
+        <label for="arti-name-input"><%= t('common.name') %><span class="required">*</span></label>
         <input class="form-control" id="arti-name-input" data-for="arti_1:Artifact" type="text" name="name" data-req></input>
       </div>
 
       <div class="form-group">
-        <label for="arti-year-found-input">Год находки</label>
+        <label for="arti-year-found-input"><%= t('artifact.yearFound') %></label>
         <input class="form-control" id="arti-year-found-input" data-for="arti_1:Artifact" type="number" name="year"></input>
       </div>
 
       <div class="form-group">
-        <label for="arti-category-input">Категория</label>
+        <label for="arti-category-input"><%= t('artifact.category') %></label>
         <input id="arti-category-input" class="form-control autoinput"></input>
         <input id="arti-category-input-id" data-few="true" data-for="ac_1:ArtifactCategory" hidden type="id" name="id"></input>
       </div>
       <div class="form-group">
-        <label for="arti-material-input">Материал</label>
+        <label for="arti-material-input"><%= t('artifact.material') %></label>
         <input id="arti-material-input" class="form-control autoinput"></input>
         <input id="arti-material-input-id" data-few="true" data-for="am_1:ArtifactMaterial" hidden type="id" name="id"></input>
       </div>
       <div class="form-group">
-        Датировка
+        <%= t('date.singular') %>
         <select class="form-control" id="arti-date-scale-selector"  data-for="ds:DateScale" type="id" name="id"></select>
       </div>
       <div class="form-inline">
-        <label for="arti-date-bottom">От</label>
+        <label for="arti-date-bottom"><%= t('date.from') %></label>
         <input id="arti-date-bottom" data-for="inter:Interpretation" class="form-control mini" type="text" name="dateBottom"></input>
-        <label for="arti-date-top">До</label>
+        <label for="arti-date-top"><%= t('date.to') %></label>
         <input id="arti-date-top" data-for="inter:Interpretation" class="form-control input" type="text" name="dateTop"></input>
       </div>
       
       <div class="form-group find-culture-art">
-        <label for="culture-input-art">Культурная принадлежность</label>
+        <label for="culture-input-art"><%= t('common.culture') %></label>
         <input id="culture-input-art" class="form-control" data-for="c_arti:Culture" data-subclass="artiCulture" type="id" name="id">
       </div>
 
       <input class="form-control" id="arti-spatref-date" data-for="asr:SpatialReference" data-subclass="ArtiSpatRef" type="number" name="date" data-need-date hidden></input>
 
       <div class="form-group">
-        <label for="arti-spatref-selector">Точность пространственной привязки</label>
+        <label for="arti-spatref-selector"><%= t('common.accurancy') %></label>
         <select class="form-control" id="arti-spatref-selector" data-for="asrt:SpatialReferenceType" data-subclass="ArtiSpatRefType" type="id" name="id"></select>
       </div>
 
@@ -212,22 +212,22 @@
       </div>
 
       <div class="form-group">
-        <label for="arti-desc-input">Описание</label>
+        <label for="arti-desc-input"><%= t('common.description') %></label>
         <textarea class="form-control" id="arti-desc-input" data-for="inter:Interpretation" type="text" name="description"></textarea>
         <input class="form-control" id="arti-tmp-input" value="Костыль" data-for="inter:Interpretation" type="text" name="tmp" hidden=""></textarea>
       </div>
 
       <div class="form-group arti-belongs" id="arti-belongs" data-checkbox-type="radio">
-        Принадлежит памятнику:
+        <%= t('common.belongsToSite') %>:
       </div>
 
       <button id="add-photo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить фото
+        <%= t('common.addPhoto') %>
       </button>
       <button class="send-button btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Создать
+        <%= t('common.create') %>
       </button>
     </div>
   </div>
@@ -239,28 +239,28 @@
 <!-- Создание нового автора -->
 <script type="text/template" class="add-author">
   <div class="form-group">
-    <h4>Добавление нового автора</h4>
-    <label for="author-name-input">Имя автора <span class="required">*</span></label>
+    <h4><%= t('common.addAuthor') %></h4>
+    <label for="author-name-input"><%= t('author.name') %> <span class="required">*</span></label>
     <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req></input>
   </div>
 
   <div class="checkbox">
     <label>
       <input id="more-author-checkbox" type="checkbox" dynamic="true"></input>
-      Дополнительная информация об авторе
+      <%= t('author.moreInfo') %>
     </label>
   </div>
 
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-    <label for="author-birth-date-input">Год рождения</label>
+    <label for="author-birth-date-input"><%= t('author.prop.year') %></label>
     <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate"></input>
   </div>
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-    <label for="author-photo-input">Фотография</label>
+    <label for="author-photo-input"><%= t('photo.singular') %></label>
     <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage"></input>
     <br>
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер фотографии 10 МБ.
+      <%= t('examples.maxSizePhoto') %>.
     </div>
   </div>
 </script>
@@ -268,48 +268,48 @@
 
 <!-- Создание нового отчёта и исследования -->
 <script type="text/template" class="add-report">
-  <h4>Добавление нового отчёта</h4>
+  <h4><%= t('common.addReport') %></h4>
 
   <div class="form-group">
-    <label for="report-name-input">Название <span class="required">*</span></label>
+    <label for="report-name-input"><%= t('common.name') %> <span class="required">*</span></label>
     <input class="form-control" id="report-name-input" data-for="rep:Report" type="text" name="name" data-req>
   </div>
   <div class="form-group">
-    <label for="report-year-input">Год написания отчёта<span class="required">*</span></label>
+    <label for="report-year-input"><%= t('report.year') %><span class="required">*</span></label>
     <input class="form-control" id="report-year-input" data-for="rep:Report" type="number" name="year" data-req>
   </div>
 
   <div class="form-group">
-    <label for="research-type-selector">Тип исследования</label>
+    <label for="research-type-selector"><%= t('research.type') %></label>
     <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id" dynamic="true"></select>
   </div>
 
   <div class="form-group">
-    <label for="report-file-input">Файл отчёта</label>
+    <label for="report-file-input"><%= t('report.file') %></label>
     <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="rep:Report" name="fileid">
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер документа 50 МБ.
+      <%= t('examples.maxSizeDoc') %>.
     </div>
   </div>
 
   <div class="checkbox">
     <label for="more-report-checkbox">
       <input id="more-report-checkbox" type="checkbox" dynamic="true">
-      Дополнительная информация об отчёте
+      <%= t('report.moreInfo') %>
     </label>
   </div>
   <div class="form-group" toggle-by="more-report-checkbox" need-option="true">
-    <label for="report-city-input">Город</label>
+    <label for="report-city-input"><%= t('city.singular') %></label>
     <%= widget("SearchLine", citiesInputOptions, "report-city-input") %>
     <input id="report-city-input-id" data-for="city:City" hidden type="id" name="id">
   </div>
   <div class="form-group" toggle-by="more-report-checkbox" need-option="true">
-    <label for="report-organization-input">Учреждение - место хранения отчёта</label>
+    <label for="report-organization-input"><%= t('report.orgStorage') %></label>
     <input class="form-control" id="report-organization-input">
     <input id="report-organization-input-id" data-for="org:Organization" type="id" hidden name="id">
   </div>
   <div class="form-group" toggle-by="more-report-checkbox" need-option="true">
-    <label for="report-code-input">Номер</label>
+    <label for="report-code-input"><%= t('report.prop.number') %></label>
     <input class="form-control" id="report-code-input" data-for="rep:Report" type="text" name="code">
   </div>
 
@@ -322,18 +322,18 @@
 <!-- Форма для добавления коллекции -->
 <script type="text/template" class="add-collection">
   <div class="form-group">
-    <label for="collection-name-input">Новая коллекция</label>
+    <label for="collection-name-input"><%= t('report.newCollection') %></label>
     <input id="collection-name-input" class="form-control" data-for="col:Collection" type="text" name="name">
   </div>
 
   <div class="form-group">
-    <label for="collection-city-input">Город</label>
+    <label for="collection-city-input"><%= t('city.singular') %></label>
     <%= widget("SearchLine", citiesInputOptions, "collection-city-input") %>
     <input id="collection-city-input-id" data-for="city:City" data-subclass="collCity" hidden type="id" name="id">
   </div>
 
   <div class="form-group">
-    <label for="collection-organization-input">Учреждение - место хранения коллекции</label>
+    <label for="collection-organization-input"><%= t('common.collectionStorage') %></label>
     <input class="form-control" id="collection-organization-input">
     <input id="collection-organization-input-id" data-for="org:Organization" data-subclass="collOrg" type="id" hidden name="id">
   </div>
@@ -342,7 +342,7 @@
 <!-- Форма для добавления культуры артефакта -->
 <script type="text/template" class="add-culture-art">
   <div class="form-group">
-    <label for="culture-name-input-art">Новая культурная принадлежность</label>
+    <label for="culture-name-input-art"><%= t('common.newCulture') %></label>
     <input id="culture-name-input-art" class="form-control" data-for="c_arti:Culture" data-subclass="artiCulture" type="text" name="name">
   </div>
 </script>

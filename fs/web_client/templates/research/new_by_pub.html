@@ -99,11 +99,11 @@
     <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate">
   </div>
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-    <label for="author-photo-input">Фотография</label>
+    <label for="author-photo-input"><%= t('photo.singular') %></label>
     <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage">
     <br>
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер фотографии 10 МБ.
+      <%= t('examples.maxSizePhoto') %>.
     </div>
   </div>
 </script>
@@ -135,7 +135,7 @@
     <label for="pub-file-input">Файл публикации</label>
     <input id="pub-file-input" accept=".pdf,.doc,.docx" type="file" data-for="pub:Publication" name="fileid">
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер документа 50 МБ.
+      <%= t('examples.maxSizeDoc') %>.
     </div>
   </div>
   
@@ -269,16 +269,16 @@
       <div class="form-group">
         Страницы
         <div class="form-inline">
-          <label for="pub-page-from">От</label>
+          <label for="pub-page-from"><%= t('date.from') %></label>
           <input id="pub-page-from" data-for="pub:Publication" class="form-control mini" type="text" name="pageFrom"></input>
-          <label for="pub-page-to">До</label>
+          <label for="pub-page-to"><%= t('date.to') %></label>
           <input id="pub-page-to" data-for="pub:Publication" class="form-control input" type="text" name="pageTo"></input>
         </div>
       </div>
     </div>
 
     <div class="form-group" toggle-by="more-pub-checkbox" need-option="true">
-      <label for="pub-city-input">Город</label>
+      <label for="pub-city-input"><%= t('city.singular') %></label>
       <%= widget("SearchLine", citiesInputOptions, "pub-city-input") %>
       <input id="pub-city-input-id" data-for="city:City" hidden type="id" name="id">
     </div>
@@ -294,7 +294,7 @@
 <!-- Форма для добавления культуры -->
 <script type="text/template" class="add-culture">
   <div class="form-group">
-    <label for="culture-name-input">Новая культурная принадлежность</label>
+    <label for="culture-name-input"><%= t('common.newCulture') %></label>
     <input id="culture-name-input" class="form-control" data-for="c:Culture" type="text" name="name">
   </div>
 </script>

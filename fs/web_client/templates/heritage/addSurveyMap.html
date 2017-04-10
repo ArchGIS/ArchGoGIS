@@ -39,7 +39,7 @@
       </div>
 
       <div class="form-group">
-        Датировка:</label>
+        <%= t('date.singular') %>:</label>
         <span data-from="heritage-date-input"></span>
       </div>
 
@@ -89,7 +89,7 @@
       </div>
 
       <div class="form-group">
-        <label for="map-area-input">Общая площадь (м²)</label>
+        <label for="map-area-input">Общая площадь (<%= t('common.metresInSq') %>)</label>
         <input class="form-control" id="map-area-input" data-for="map_<%=mapId%>:SurveyMap" type="number" name="area"></input>
       </div>
 
@@ -97,7 +97,7 @@
         <label for="map-file-input-<%=mapId%>">Карта обследования</label>
         <input id="map-file-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
-          Максимальный размер документа 50 МБ.
+          <%= t('examples.maxSizeDoc') %>.
         </div>
       </div>
     </div>

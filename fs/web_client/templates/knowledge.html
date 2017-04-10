@@ -1,7 +1,7 @@
 <div class="content">  
   <h2><%= t("knowledge.singular") %></h2>
 
-  <p><%= t("knowledge.prop.name") %>: <%= k.name %></p>
+  <p><%= t("knowledge.prop.name") %>: <%= ctl(k.name) %></p>
   <p><%= t("monument.prop.type") %>: <%= t("monument.types")[ty[0].id] %></p>
   <p><%= t("monument.prop.epoch") %>: <%= t("epoch")[e[0].id - 1] %></p>
   <p><%= t("knowledge.prop.culture") %>: <%= c[0].name %></p>
@@ -15,22 +15,22 @@
   <br>
 
   <% if (tp) { %>
-    <h4>Топоплан</h4>
+    <h4><%= t('topoplan.singular') %></h4>
     <img src="<%= tp[0].url %>">
   <% } else { %>
-    <span style="color: gray">Нет топоплана.</span>
+    <span style="color: gray"><%= t('topoplan.no') %>.</span>
     <br>
     <br>
   <% } %>
 
   <% if (photos.length) { %>
-    <h4>Фотографии</h4>
+    <h4><%= t('photo.plural') %></h4>
     <% _.each(photos, function(photo) { %>
-      <p><%= photo.name %></p>
+      <p><%= ctl(photo.name) %></p>
       <img src="<%= photo.url %>">
     <% }); %>
   <% } else { %>
-    <span style="color: gray">Нет фотографий.</span>
+    <span style="color: gray"><%= t('photo.no') %>.</span>
   <% } %>  
   
 </div>

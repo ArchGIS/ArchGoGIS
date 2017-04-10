@@ -9,12 +9,65 @@
     "storage": "Storage Institution",
     "value": "Value",
     "spatialHistory": "Coordinates",
-    "entity": "Entity"
+    "entity": "Entity",
+    "create": "Create",
+    "formAuthor": "Enter an existing research author",
+    "formReport": "Select an existing report",
+    "reportName": "Report title",
+    "next": "Further",
+    "belongsToSite": "Belongs to the archaeological site",
+    "accuracy": "Spatial anchor accuracy",
+    "collectionName": "Collection name",
+    "numberInBook": "№ on the book of receipts",
+    "inventNumber": "Inventory number",
+    "specialNumber": "№ of special accounting",
+    "listingNumber": "Field listing number",
+    "cipher": "Field Cipher",
+    "yearOfAddToColl": "Year of adding to the collection",
+    "addPhoto": "Add photo",
+    "addAuthor": "Adding a new author",
+    "addReport": "Adding a new report",
+    "collectionStorage": "Institution - storage location of the collection",
+    "newCulture": "New cultural interpretation",
+    "chooseCulture": "Choose culture interpretation",
+    "accur": "Accuracy",
+    "clarifyCoords": "Clarify the coordinates",
+    "addCulture": "Add culture layer",
+    "noName": "No name",
+    "notDefined": "Not specified",
+    "notSpecif": "Not indicated",
+    "missing": "Missing",
+    "noneAuthor": "author unknown",
+    "yearNotDefined": "year is not specified",
+    "area": "Total area",
+    "metresInSq": "m²",
+    "nameByAuthor": "The name given by the researcher",
+    "noData": "No data",
+    "archExc": "Archaeological excavations",
+    "withoutName": "untitled",
+    "unknown": "unknown",
+    "futureTab": "Blank for future tabs",
+    "noInfo": "No information",
+    "section": "Site",
+    "withoutType": "without type",
+    "noDescription": "No description",
+    "unknown1": "Unknown",
+    "belongsToSites": "Belongs to archaeological site",
+    "date": "Date of creation",
+    "notFilled": "Not filled"
+  },
+
+  "examples": {
+    "chooseCoords": "Press the button to select the coordinates. The format for manual filling: 55.5555, 49.5656.",
+    "maxSizePhoto": "The maximum photo size is 10 MB",
+    "maxSizeDoc": "The maximum document size is 50 MB"
   },
 
   "admin": {
     "panel": "Administrative panel",
+    "download": "Administrative panel",
     "filter": "Filter by name",
+    "filterByCulture": "Filter by culture",
     "find": "Find",
     "culture": "Culture",
     "edit": "Edit",
@@ -54,7 +107,7 @@
   
   "goto": {
     "research": "Go to research",
-    "monument": "Go to archaeological site "
+    "monument": "Go to archaeological site"
   },
 
   "import": {
@@ -91,7 +144,15 @@
     "plural": " Excavations",
     "genitivePl": " Excavations",
     "info": " Excavation info",
-    "withoutMon": "Excavations outside archaeological sites "
+    "withoutMon": "Excavations outside archaeological sites",
+    "name": "Name of excavation",
+    "boss": "The supervisor",
+    "area": "Area (m²)",
+    "section": "Section (square)",
+    "depth": "Depth (cm)",
+    "objectName": "Name of the object",
+    "depth_": "Depth",
+    "area1": "Excavation area"
   },
 
   "research": {
@@ -104,7 +165,7 @@
     "plural": " Researches",
     "genitivePl": " Researches",
     "new": "Input research data",
-    "info": "Сведения об исследовании", 
+    "info": "Research information", 
     "author": "Research author",
     "prop": {
       "description": "Description",
@@ -133,6 +194,9 @@
     "researcher": "Researcher",
     "singular": "Author",
     "plural": "Authors",
+    "addCoauthor": "Add collaborator",
+    "moreInfo": "Additional information about the author",
+    "unknown": "Unknown author",
     "prop": {
       "name": "Name",
       "year": "Year of birth",
@@ -165,22 +229,36 @@
 
   "topoplan": {
     "singular": "Plan of a site",
-    "plural": " Plans of a site "
+    "plural": " Plans of a site ",
+    "author": "Author of topography",
+    "year": "Year of topography",
+    "no": "No topography"
   },
 
   "photo": {
     "singular": "Photo",
-    "plural": "Photo"
+    "plural": "Photo",
+    "sitePart": "Element of the archaeological site",
+    "foreshortening": "Foreshortening",
+    "no": "No photos"
   },
 
   "monument": {
     "singular": " Archaeological site",
     "plural": " Archaeological sites",
     "new": "Input archaeological site data",
-    "info": "Archaeological site info",
+    "info": "Archeological site info",
     "count": "Number of archaeological sites",
     "excavation": "Excavation",
     "name": " Archaeological site name",
+    "names": "Archaeological site names",
+    "monByNum": "Archaeological site №",
+    "choose": "Select an existing archaeological site",
+    "coords": "Coordinates of the selected archaeological site",
+    "notChoosed": "archaeological site not selected",
+    "description": "Description of the archaeological site",
+    "add": "Adding a new archaeological site",
+    "type": "Type of archaeological site",
     "prop": {
       "type": " Archaeological site type",
       "epoch": "Epoch",
@@ -211,6 +289,11 @@
     "plural": "Reports",
     "storage": "Archive",
     "year": "Year of reporting",
+    "file": "Report file",
+    "moreInfo": "Additional information about the report",
+    "orgStorage": "Institution - the storage location of the report",
+    "newCollection": "New collection",
+    "not": "No report",
     "prop": {
       "number": "Number",
       "description": "Description",
@@ -239,7 +322,9 @@
 
   "date": {
     "singular": "Date",
-    "plural": "Date"
+    "plural": "Date",
+    "from": "From",
+    "to": "To"
   },
 
   "collection": {
@@ -265,7 +350,9 @@
     "placeFound": "Finding place",
     "storage": "Storage place",
     "create": "Input artifact data",
-    "name": "Name"
+    "name": "Name",
+    "found": "Found artifacts",
+    "number": "Number of artifacts"
   },
 
   "search": {
@@ -342,7 +429,10 @@
   "wizard": {
     "case": {
       "monumentByArchMap": "Archaeological site from archaeological map"
-    }
+    },
+    "whatIs": "What is being created?",
+    "createBy": "Based on what?",
+    "start": "Start filling in"
   },
   
   "titles": {

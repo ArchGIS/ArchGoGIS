@@ -1,5 +1,5 @@
 <div class="content">
-  <h2><%= t('collection.singular') %> "<%= collection.name%>"</h2>
+  <h2><%= t('collection.singular') %> "<%= ctl(collection.name) %>"</h2>
 
   <div class="tabs">
     <ul>
@@ -12,27 +12,27 @@
     <div id="common">
     	<dl>
     		<dt><%= t('common.name') %>:</dt>
-        <dd><%= collection.name %></dd>
+        <dd><%= ctl(collection.name) %></dd>
 
         <dt><%= t('common.storage') %>:</dt>
-        <dd><%= t('organization.singular') %>: <%= maybe(org, "не указана", "name") %></dd>
-        <dd><%= t('city.singular') %>: <%= maybe(city, "не указан", "name") %></dd>
+        <dd><%= t('organization.singular') %>: <%= maybe(org, t('common.notSpecif'), "name") %></dd>
+        <dd><%= t('city.singular') %>: <%= maybe(city, t('common.notDefined'), "name") %></dd>
 
         <dt><%= t('collection.inventory') %>:</dt>
-        <dd><%= (collection.inventory) ? App.models.File.href(collection.inventory, "Скачать") : "Отсутствует" %></dd>
+        <dd><%= (collection.inventory) ? App.models.File.href(collection.inventory, t('common.download')) : t('common.missing') %></dd>
       </dl>
     </div>
 
     <div id="monuments">
       <%= _.map(monuments, function(mon, t) {
-        return App.models.Monument.href(mon.id, `${knows[t].monument_name}`);
+        return App.models.Monument.href(mon.id, ctl(`${knows[t].monument_name}`));
       }).join(", <br>") %>
     </div>
 
     <div id="artifacts">
       <%= _.map(artifacts, function(arti, t) {
-        let link = App.models.Artifact.href(arti.id, `${arti.name}`);
-        return `${link} с ${inters[t].yearSince} года`
+        let link = App.models.Artifact.href(arti.id, ctl(`${arti.name}`));
+        return `${link} ${ t('since') } ${inters[t].yearSince} ${ t('year.year2') }`
       }).join(", <br>") %>
     </div>
 

@@ -15,14 +15,14 @@
     </ul>
 
     <div id="general">
-      <dt>Все названия памятника:</dt>
+      <dt>Все <%= t('monument.names') %>:</dt>
       <dd><%= allNames %></dd>
 
       <dt><%= t("monument.prop.epoch") %>:</dt>
       <dd><%= maybe(epochs[0], "Не указана","name") %></dd>
 
       <dt><%= t("monument.prop.type") %>:</dt>
-      <dd><%= maybe(monTypes[0], "Не указан","name") %></dd>
+      <dd><%= maybe(monTypes[0], t('common.notDefined'),"name") %></dd>
 
       <dt><%= t("research.genitivePl") %>:</dt>
       <dd><%= _.size(researches) %></dd>
@@ -31,13 +31,13 @@
       <dd><%= _.reduce(excavations.excavations, function(size, list) {
         return size + _.size(list)
       }, 0) %>;
-      Общая площадь
+      <%= t('common.area') %>
       <%= _.reduce(excavations, function(area, list) {
         return area + _.reduce(list, function(area, exc) {
           return area + (exc.area || 0);
         }, 0);
       }, 0) %>
-      м²</dd>
+      <%= t('common.metresInSq') %></dd>
 
       <dt><%= t("artifact.genitivePl") %>:</dt>
       <dd>
@@ -75,10 +75,10 @@
                 Перейти к исследованию
               </a>
               </dd>
-              <dt>Название, данное исследователем:</dt>
+              <dt><%= t('common.nameByAuthor') %>:</dt>
               <dd><%= knowledges[i].monument_name %></dd>
               <% if (_.keys(cultures[i]).length) { %>
-                <dt>Культурная принадлежность, определенная исследователем:</dt>
+                <dt><%= t('knowledge.prop.culture') %>:</dt>
                 <dd><%= cultures[i].name %></dd>
               <% } %>
               <% if (research.description) { %>
@@ -86,14 +86,14 @@
                 <dd><%= research.description %></dd>
               <% } %>
               <% if (knowledges[i].description) { %>
-                <dt>Описание памятника:</dt>
+                <dt><%= t('monument.description') %>:</dt>
                 <dd><%= knowledges[i].description %></dd>
               <% } %>
 
               <% if (reports[i] && reports[i].length > 0) { %>
                 <dt>Отчет:</dt>
                 <dd>
-                  <% var reportTitle = `${maybe(reports[i][0], "Нет названия", "name")} (${maybe(authors[i], "автор неизвестен", "name")}, ${maybe(reports[i][0], "год не указан", "year")})` %>
+                  <% var reportTitle = `${maybe(reports[i][0], t('common.noName'), "name")} (${maybe(authors[i], t('common.noneAuthor'), "name")}, ${maybe(reports[i][0], t('common.yearNotDefined'), "year")})` %>
                   <% if (reports[i][0].fileid) { %>
                     <%= App.models.Report.href(reports[i][0].id, reportTitle) %>
                   <% } else {%>
@@ -121,9 +121,9 @@
             let mds = monDateScale[i][0] || {};
             if (know.dateBottom) {
               let resName = researches[i].name;
-              let authorName = authors[i].name || "Неизвестный автор";
-              let resType = resTypes[i][0].name || "без типа";
-              let resYear = researches[i].year || "год не указан";
+              let authorName = authors[i].name || t('author.unknown');
+              let resType = resTypes[i][0].name || t('common.withoutType');
+              let resYear = researches[i].year || t('common.yearNotDefined');
               let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
               resTitle = App.models.Research.href(researches[i].id, resTitle);
 
@@ -139,7 +139,7 @@
     <div id="reports">
       <%= _.compact(_.map(reports, function(resReps, i) {
         return _.map(resReps, function(rep, t) {
-          let year = rep.year || "год не указан";
+          let year = rep.year || t('common.yearNotDefined');
           let repTitle = `${rep.name} (${authors[i].name}, ${year})`;
           return App.models.Report.href(rep.id, repTitle);
         }).join("<br>")
@@ -152,11 +152,11 @@
       _.each(excavations, function(resExc, i) {
         _.each(resExc, function(exc, t) {
           let area = exc.area || 0;
-          let name = exc.name || "без названия";
-          let boss = exc.boss || "неизвестен";
+          let name = exc.name || t('common.withoutName');
+          let boss = exc.boss || t('common.unknown');
           excs.push(
             App.models.Excavation.href(exc.id, `
-              ${name} - ${area}м² (${authors[i].name}, ${researches[i].year}), руководитель работ: ${boss}
+              ${name} - ${area}${ t('common.metresInSq') } (${authors[i].name}, ${researches[i].year}), t('excavation.boss').toLowerCase() : ${boss}
             `)
           );
         })

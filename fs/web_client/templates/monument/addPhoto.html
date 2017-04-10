@@ -5,24 +5,24 @@
   
 <div class="accordion-content" data-custom-relations="photo_<%= photoId %>:Knowledge">
   <div class="form-group">
-    <label for="photo-file-input-<%= photoId %>">Фотография</label>
+    <label for="photo-file-input-<%= photoId %>"><%= t('photo.singular') %></label>
     <input id="photo-file-input-<%= photoId %>" data-for="photo_<%= photoId %>:Image" data-subclass="monumentImage" type="file" name="fileid"></input>
     <div class="alert alert-dismissible alert-info">
-      Максимальный размер фотографии 10 МБ.
+      <%= t('examples.maxSizePhoto') %>.
     </div>
 
     <div class="form-group">
-      <label for="photo-monument-part-input-<%= photoId %>">Элемент памятника</label>
+      <label for="photo-monument-part-input-<%= photoId %>"><%= t('photo.sitePart') %></label>
       <input class="form-control" id="photo-monument-part-input-<%= photoId %>" data-for="photo_<%= photoId %>:Image" data-subclass="monumentImage" type="text" name="monumentPart"></input>
     </div>
 
     <div class="form-group">
-      <label for="photo-view-selector-<%= photoId %>">Ракурс</label>
+      <label for="photo-view-selector-<%= photoId %>"><%= t('photo.foreshortening') %></label>
       <select class="form-control" id="photo-view-selector-<%= photoId %>" data-for="cd_<%= photoId %>:CardinalDirection" type="id" name="id"></select>
     </div>
   </div>
 
   <div class="form-group photo-belongs" id="photo-belongs-<%= photoId %>">
-    Принадлежит памятникам:
+    <%= t('common.belongsToSites') %>:
   </div>
 </div>

@@ -339,7 +339,7 @@ App.views.admin = new (Backbone.View.extend({
               html += `<td><a class="entity-delete" data-entity="${entity}" data-id="${row.id}">${ tr("admin.delete") }</a></td>`
             } else {
               row[val] = row[val] || "";
-              const line = typeof row[val] === "number" ? row[val] : ctl(row[val]);
+              const line = typeof row[val] === "string" ? ctl(row[val]) : row[val];
               html += `<td>${ line }</td>`;
             }
           })

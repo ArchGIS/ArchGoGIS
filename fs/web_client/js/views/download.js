@@ -153,6 +153,8 @@ App.views.download = new (Backbone.View.extend({
       let cfil = $("#entity-culture-input").val();
       let query;
 
+      const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
+
       let data = {};
       let tmp = [];
       let model = App.models.fn;
@@ -200,7 +202,8 @@ App.views.download = new (Backbone.View.extend({
               html += `<td><a class="entity-delete" data-entity="${entity}" data-id="${row.id}">Удалить</a></td>`
             } else {
               row[val] = row[val] || "";
-              html += `<td>${row[val]}</td>`
+              const line = typeof row[val] === "string" ? ctl(row[val]) : row[val];
+              html += `<td>${ line }</td>`
             }
           })
           $results.append(`<tr>${html}</tr>`)

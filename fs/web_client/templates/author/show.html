@@ -20,32 +20,32 @@
 
       <dl>
         <dt><%= t('author.prop.name') %>:</dt>
-        <dd><%= author.name %></dd>
+        <dd><%= ctl(author.name) %></dd>
         <dt><%= t('author.prop.year') %>:</dt>
-        <dd><%= maybe(author.birthdate, "Не указан") %></dd>
+        <dd><%= maybe(author.birthdate, t('common.notDefined')) %></dd>
       </dl>
 
       <dl>
         <dt><%= t('organization.plural') %>:</dt>
         <% if (jobs.length) { %>
           <% _.each(jobs, function(job, i) { %>
-            <dd><%= orgs[i].name %> (<%= job.period[0] %>-<%= maybe(job.period[1], "...") %>)</dd>
+            <dd><%= ctl(orgs[i].name) %> (<%= job.period[0] %>-<%= maybe(job.period[1], "...") %>)</dd>
           <% }); %>
         <% } else { %>
-          <p>Нет данных</p>
+          <p><%= t('common.noData') %></p>
         <% } %>
       </dl>
 
       <dl>
         <dt><%= t('author.prop.biography') %>:</dt>
-        <dd><%= maybe(author.biography, "Не заполнено") %></dd>
+        <dd><%= maybe(author.biography, t('common.notFilled')) %></dd>
       </dl>
     </div>
 
     <div id="researches">
       <%= _.map(researches, function(res, i) {
         let resTitle = `${res.name} (${resTypes[i][0].name}, ${res.year})`;
-        return App.models.Research.href(res.id, resTitle);
+        return App.models.Research.href(res.id, ctl(resTitle));
       }).join("<br>") %>
     </div>
 
@@ -56,20 +56,20 @@
         let mid = `${monuments[t].id}`;
 
         let monName = App.utils.monumentFn.chooseMonumentName(
-          _.map(monKnows, (obj) => {return obj.monument_name})
+          _.map(monKnows, (obj) => {return ctl(obj.monument_name)})
         );
 
         let monTitle = `${monName} (${monTypes[t][0].name}, ${epochs[t][0].name})`;
-        mons[mid] = App.models.Monument.href(mid, monTitle);
+        mons[mid] = App.models.Monument.href(mid, ctl(monTitle));
       })) %>
       <%= _.map(mons, function(obj, key) {return obj}).join("<br>") %>
     </div>
 
     <div id="reports">
       <%= _.map(reports, function(rep, i) {
-        let year = rep.year || "год не указан";
+        let year = rep.year || t('common.yearNotDefined');
         let repTitle = `${rep.name} (${year})`;
-        return App.models.Report.href(rep.id, repTitle);
+        return App.models.Report.href(rep.id, ctl(repTitle));
       }).join("<br>") %>
     </div>
 
@@ -77,17 +77,17 @@
       <% if (pubs.length) { %>
         <dt><%= t("author.singular") %>:</dt>
         <%= _.map(pubs, function(pub, i) {
-          let year = pub.published_at || "год не указан";
+          let year = pub.published_at || t('common.yearNotDefined');
           let pubTitle = `${pub.name} (${year})`;
-          return App.models.Publication.href(pub.id, pubTitle);
+          return App.models.Publication.href(pub.id, ctl(pubTitle));
         }).join("<br>") %>
       <% } %>
       <% if (copubs.length) { %>
         <dt><%= t("coauthor.singular") %>:</dt>
         <%= _.map(copubs, function(pub, i) {
-          let year = pub.published_at || "год не указан";
+          let year = pub.published_at || t('common.yearNotDefined');
           let pubTitle = `${pub.name} (${year})`;
-          return App.models.Publication.href(pub.id, pubTitle);
+          return App.models.Publication.href(pub.id, ctl(pubTitle));
         }).join("<br>") %>
       <% } %>
     </div>

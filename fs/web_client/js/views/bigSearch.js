@@ -811,6 +811,8 @@ App.views.bigSearch = new (Backbone.View.extend({
       let query = _.clone(queries[entity].main);
       let criteria = $(".criterion-type");
 
+      const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
+
       _.each(criteria, function(krit, i) {
         let $krit = $(krit);
         let criterion = $("#search-criterion-"+i).val();
@@ -847,7 +849,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           $("#search-results").html("");
           _.each(data, function(obj, key) {
-            $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${obj.name}</a></p>`);
+            $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
           })
           console.log(response)
           console.log(data)
