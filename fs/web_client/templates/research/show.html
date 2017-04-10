@@ -9,6 +9,7 @@
       <li><a href="#excavations"><%= t('excavation.plural') %></a></li>
       <li><a href="#topos"><%= t('topoplan.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
+      <li><a href="#radiocarbon"><%= t('radiocarbon.plural') %></a></li>
       <li><a href="#another">*</a></li>
     </ul>
 
@@ -94,7 +95,7 @@
               <dt></dt>
               <dd>
                 <a href="#monument/show/<%= monument.id %>">
-                <%= t('monument.goto') %>
+                <%= t('goto.monument') %>
               </a>
               </dd>
               <dt><%= t('common.nameByAuthor') %>:</dt>
@@ -164,6 +165,13 @@
       <% } %>
     </div>
 
+    <div id="radiocarbon">
+      <%= _.compact(_.map(carbon, function(car, i) {
+        let title = `${car.name} (date: ${car.date})`;
+        return App.models.Radiocarbon.href(car.id, ctl(title));
+      })).join(", <br>") %>
+    </div>
+
     <div id="heritages">
       <% 
       let hs = [];
@@ -181,7 +189,7 @@
       <% 
       let excs = [];
       _.each(excavations, function(resExc, i) {
-        _.each(resExc, function(exc, t) {
+        _.each(resExc, function(exc) {
           let area = exc.area || 0;
           let name = exc.name || t('common.withoutName');
           let boss = exc.boss || t('common.unknown');

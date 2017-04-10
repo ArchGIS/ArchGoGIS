@@ -68,6 +68,17 @@ App.controllers.monument = new (Backbone.View.extend({
           "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "monument__has__monSpatref": {},
           "monSpatref__has__monSpatrefT": {}
+        }),
+        radiocarbon: JSON.stringify({
+          "mon:Monument": {"id": monId},
+          "k:Knowledge": {"id": "*"},
+          "carbon:Radiocarbon": {"id": "*", "select": "*"},
+          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "k__belongsto__mon": {},
+          "k__has__carbon": {},
+          "carbon__has__carSpatref": {},
+          "carSpatref__has__carSpatrefT": {}
         })
       },
 
@@ -177,11 +188,13 @@ App.controllers.monument = new (Backbone.View.extend({
       let resPlacemarks = App.controllers.fn.getResPlacemarks(tmplData);
       let excPlacemarks = App.controllers.fn.getExcPlacemarks(tmplData);
       let artPlacemarks = App.controllers.fn.getArtPlacemarks(tmplData);
+      let carPlacemarks = App.controllers.fn.getCarPlacemarks(tmplData);
 
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, resPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, excPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, artPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, carPlacemarks);
 
       let spatref = _.groupBy(tmplData.monSpatref, function(obj, i) {
         return tmplData.monSpatrefT[i].id;

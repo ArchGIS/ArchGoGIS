@@ -408,7 +408,7 @@ App.views.radiocarbon = new (Backbone.View.extend({
         photoId: localPhotoId
       }
 
-      App.template.get("artifact/addPhoto", function(tmpl) {
+      App.template.get("radiocarbon/addPhoto", function(tmpl) {
         $('#add-photo-button').before(tmpl(params));
       })
       photoId++;

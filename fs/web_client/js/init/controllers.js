@@ -248,4 +248,26 @@ App.controllers.fn = {
     console.log(placemarks)
     return placemarks;
   },
+
+  "getCarPlacemarks": function(data, single) {
+    let placemarks = [], spatref = {}, carHeader, preset;
+    single = single || false;
+
+    _.each(data.carbon, function(carbon, i) {
+      carHeader = `${carbon.name}`;
+      preset = `c14`;
+
+      spatref = {
+        x: data.carSpatref[i].x, 
+        y: data.carSpatref[i].y
+      };
+
+      placemarks.push(
+        App.controllers.fn.createStandartPlacemark('radiocarbon', carbon.id, spatref.x, spatref.y, carHeader, preset)
+      );
+    });
+
+    console.log("carbon", placemarks)
+    return placemarks;
+  },
 }

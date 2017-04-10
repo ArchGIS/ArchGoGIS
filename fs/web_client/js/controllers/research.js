@@ -109,6 +109,15 @@ App.controllers.research = new (Backbone.View.extend({
           "reports:Report": {"id": "*", "select": "*"},
           "reports__hasauthor__author": {},
           "research__has__reports": {}
+        }),
+        radiocarbon: JSON.stringify({
+          "research:Research": {"id": resId},
+          "carbon:Radiocarbon": {"id": "*", "select": "*"},
+          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "research__has__carbon": {},
+          "carbon__has__carSpatref": {},
+          "carSpatref__has__carSpatrefT": {}
         })
       },
 
@@ -222,11 +231,13 @@ App.controllers.research = new (Backbone.View.extend({
       let herPlacemarks = App.controllers.fn.getHerPlacemarks(tmplData);
       let excPlacemarks = App.controllers.fn.getExcPlacemarks(tmplData);
       let artPlacemarks = App.controllers.fn.getArtPlacemarks(tmplData);
+      let carPlacemarks = App.controllers.fn.getCarPlacemarks(tmplData);
 
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, herPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, excPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, artPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, carPlacemarks);
 
       App.page.render('research/show', tmplData, tmplData.placemarks)
     };

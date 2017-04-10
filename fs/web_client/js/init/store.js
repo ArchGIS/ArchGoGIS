@@ -20,6 +20,7 @@ App.store.pathToIcons = {
   monument: 'monTypes',
   excavation: 'excTypes',
   heritage: 'heritage',
+  radiocarbon: 'radiocarbon',
   research: 'resTypes',
   artifact: 'artifacts'
 }

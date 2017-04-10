@@ -6,6 +6,7 @@
       <li><a href="#general"><%= t('common.general') %></a></li>
       <li><a href="#monuments"><%= t('monument.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
+      <li><a href="#radiocarbon"><%= t('radiocarbon.plural') %></a></li>
       <li><a href="#report"><%= t('report.singular') %></a></li>
       <li><a href="#another">*</a></li>
     </ul>
@@ -62,9 +63,14 @@
       }).join(", <br>")%>
     </div>
 
+    <div id="radiocarbon">
+      <%= _.compact(_.map(carbon, function(car, i) {
+        let title = `${car.name} (date: ${car.date})`;
+        return App.models.Radiocarbon.href(car.id, ctl(title));
+      })).join(", <br>") %>
+    </div>
+
     <div id="report">
-      <% let repTitle = `${rep[0].name} (${author[0].name}, ${researches[0].year})` %>
-      <%= App.models.Report.href(rep[0].id, ctl(repTitle)) %>
     </div>
 
     <div id="another">
