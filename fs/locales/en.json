@@ -16,8 +16,8 @@
     "reportName": "Report title",
     "next": "Further",
     "belongsToSite": "Belongs to the archaeological site",
-    "accuracy": "Spatial anchor accuracy",
-    "accurancy": "Spatial anchor accuracy",
+    "accuracy": "Mapping aсcuracy",
+    "accurancy": "Mapping aсcuracy",
     "collectionName": "Collection name",
     "numberInBook": "№ on the book of receipts",
     "inventNumber": "Inventory number",
@@ -55,7 +55,13 @@
     "unknown1": "Unknown",
     "belongsToSites": "Belongs to archaeological site",
     "date": "Date of creation",
-    "notFilled": "Not filled"
+    "notFilled": "Not filled",
+    "actualCoords": "actual coordinates",
+    "createdDate": "Date added",
+    "yes": "Yes",
+    "no": "No",
+    "common": "common",
+    "year1": "annual"
   },
 
   "examples": {
@@ -85,16 +91,28 @@
   "publication": {
     "singular": "Publication",
     "plural": "Publications",
+    "new": "Adding a new publication",
+    "name": "Publication title",
+    "type": "Type of publication",
+    "file": "Publication file",
+    "more": "Additional information about the publication",
+    "editCont": "Continuing edition",
+    "confName": "Conference title",
+    "confDateStart": "Conference start date",
+    "confDateEnd": "End date of the conference",
+    "seriesName": "Series name",
     "prop": {
       "isbn": "ISBN",
       "issn": "ISSN",
       "title": "Title",
       "udc": "UDC",
       "year": "Publication year",
-      "type": "Publication type",
+      "type": "Edition type",
       "pages": "Pages, in total",
       "publisher": "Publisher",
       "jourName": "Journal",
+      "collName": "The title of the collection",
+      "monogrName": "Title of monograph",
       "volume": "Volume",
       "number": "Number",
       "edition": "Issue",
@@ -364,7 +382,8 @@
     "create": "Input artifact data",
     "name": "Name",
     "found": "Found artifacts",
-    "number": "Number of artifacts"
+    "number": "Number of artifacts",
+    "count": "Found artifacts"
   },
 
   "search": {

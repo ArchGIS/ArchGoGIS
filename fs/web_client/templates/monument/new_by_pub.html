@@ -18,7 +18,7 @@
 
       <div class="form-group find-author">
         <h4>Введите существующего автора исследования</h4>
-        <label for="author-input">Имя автора <span class="required">*</span></label>
+        <label for="author-input"><%= t('author.name') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up">
       </div>
@@ -33,7 +33,7 @@
       
       <div class="form-group find-pub">
         <h4>Выберите существующую публикацию</h4>
-        <label for="pub-input">Название публикации <span class="required">*</span></label>
+        <label for="pub-input"><%= t('publication.name') %> <span class="required">*</span></label>
         <input class="form-control" id="pub-input">
         <input id="pub-input-id" data-for="pub:Publication" type="id" hidden name="id" data-req="up">
         <input class="form-control" id="research-input-id" hidden data-for="rs:Research" type="id" name="id">
@@ -77,20 +77,20 @@
 <!-- Создание нового автора -->
 <script type="text/template" class="add-author">
   <div class="form-group">
-    <h4>Добавление нового автора</h4>
-    <label for="author-name-input">Имя автора <span class="required">*</span></label>
+    <h4><%= t('common.addAuthor') %></h4>
+    <label for="author-name-input"><%= t('author.name') %> <span class="required">*</span></label>
     <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req>
   </div>
 
   <div class="checkbox">
     <label>
       <input id="more-author-checkbox" type="checkbox" dynamic="true">
-      Дополнительная информация об авторе
+      <%= t('author.moreInfo') %>
     </label>
   </div>
 
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
-    <label for="author-birth-date-input">Год рождения</label>
+    <label for="author-birth-date-input"><%= t('author.prop.year') %></label>
     <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate">
   </div>
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
@@ -105,29 +105,29 @@
 
 <!-- Создание новой публикации и исследования -->
 <script type="text/template" class="add-pub">
-  <h4>Добавление новой публикации</h4>
+  <h4><%= t('publication.new') %></h4>
 
   <div class="form-group">
-    <label for="pub-name-input">Название публикации<span class="required">*</span></label>
+    <label for="pub-name-input"><%= t('publication.name') %><span class="required">*</span></label>
     <input class="form-control" id="pub-name-input" data-for="pub:Publication" type="text" name="name" data-req>
   </div>
   <div class="form-group">
-    <label for="pub-year-input">Год издания<span class="required">*</span></label>
+    <label for="pub-year-input"><%= t('publication.prop.year') %><span class="required">*</span></label>
     <input class="form-control" id="pub-year-input" data-for="pub:Publication" type="number" name="published_at" data-req>
   </div>
 
   <div class="form-group">
-    <label for="pub-type-selector">Тип публикации</label>
+    <label for="pub-type-selector"><%= t('publication.type') %></label>
     <select class="form-control" id="pub-type-selector" data-for="pt:PublicationType" type="id" name="id" dynamic="true"></select>
   </div>
 
   <div class="form-group">
-    <label for="research-input-desc">Описание исследования </label>
+    <label for="research-input-desc"><%= t('research.description') %> </label>
     <textarea class="form-control" id="research-input-desc" data-for="rs:Research" type="text" name="description"></textarea>
   </div>
   
   <div class="form-group">
-    <label for="pub-file-input">Файл публикации</label>
+    <label for="pub-file-input"><%= t('publication.file') %></label>
     <input id="pub-file-input" accept=".pdf,.doc,.docx" type="file" data-for="pub:Publication" name="fileid">
     <div class="alert alert-dismissible alert-info">
       <%= t('examples.maxSizeDoc') %>.
@@ -137,28 +137,28 @@
   <div class="checkbox">
     <label for="more-pub-checkbox">
       <input id="more-pub-checkbox" type="checkbox" dynamic="true">
-      Дополнительная информация о публикации
+      <%= t('publication.more') %>
     </label>
   </div>
 
   <div class="form-group" toggle-by="more-pub-checkbox" need-option="true">
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
-      <label for="publisher-input">Издательство</label>
+      <label for="publisher-input"><%= t('publication.prop.publisher') %></label>
       <input class="form-control" id="publisher-input" data-for="pub:Publication" type="text" name="publisher">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
-      <label for="isbn-input">ISBN</label>
+      <label for="isbn-input"><%= t('publication.prop.isbn') %></label>
       <input class="form-control" id="isbn-input" data-for="pub:Publication" type="text" name="ISBN">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
-      <label for="pages-input">Количество страниц</label>
+      <label for="pages-input"><%= t('publication.prop.pages') %></label>
       <input class="form-control" id="pages-input" data-for="pub:Publication" type="number" name="pages">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="2">
-      <label for="edi-type-selector">Тип издания</label>
+      <label for="edi-type-selector"><%= t('publication.prop.type') %></label>
       <select class="form-control" id="edi-type-selector" data-for="et:EditionType" type="id" name="id" dynamic="true"></select>
     </div>
 
@@ -166,57 +166,57 @@
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2">
         <div class="form-group">
-          Продолжающееся издание
+          ><%= t('publication.editCont') %>
           <select class="form-control" id="edi-cont" data-for="pub:Publication" type="number" name="editionContinue" dynamic="true">
-            <option value="1">Да</option>
-            <option value="2">Нет</option>
+            <option value="1"><%= t('common.yes') %></option>
+            <option value="2"><%= t('common.no') %></option>
           </select>
         </div>
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
-        <label for="edi-name-input">Название журнала</label>
+        <label for="edi-name-input"><%= t('publication.prop.jourName') %></label>
         <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2.4.5">
-        <label for="edi-name-input">Название сборника</label>
+        <label for="edi-name-input"><%= t('publication.prop.collName') %></label>
         <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="3">
-        <label for="edi-name-input">Название монографии</label>
+        <label for="edi-name-input"><%= t('publication.prop.monogrName') %></label>
         <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
-        <label for="conf-name-input">Название конференции</label>
+        <label for="conf-name-input"><%= t('publication.confName') %></label>
         <input class="form-control" id="conf-name-input" data-for="pub:Publication" type="text" name="conferenceName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
-        <label for="conf-start-date">Дата начала конференции</label>
+        <label for="conf-start-date"><%= t('publication.confDateStart') %></label>
         <input class="form-control date-picker" id="conf-start-date" data-for="pub:Publication" type="text" name="conferenceStartDate"></input>
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
-        <label for="conf-end-date">Дата окончания конференции</label>
+        <label for="conf-end-date"><%= t('publication.confDateEnd') %></label>
         <input class="form-control date-picker" id="conf-end-date" data-for="pub:Publication" type="text" name="conferenceEndDate"></input>
       </div>
 
       <div class="form-group" toggle-by="edi-cont" need-option="1">
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
-          <label for="edi-series-name-input">Название серии</label>
+          <label for="edi-series-name-input"><%= t('publication.seriesName') %></label>
           <input class="form-control" id="edi-series-name-input" data-for="pub:Publication" type="text" name="editionSeriesName">
         </div>
 
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
-          <label for="publisher-input">Издательство</label>
+          <label for="publisher-input"><%= t('publication.prop.publisher') %></label>
           <input class="form-control" id="publisher-input" data-for="pub:Publication" type="text" name="publisher">
         </div>
 
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
-          <label for="edition-input">Выпуск</label>
+          <label for="edition-input"><%= t('publication.prop.edition') %></label>
           <input class="form-control" id="edition-input" data-for="pub:Publication" type="text" name="edition">
         </div>
 
@@ -227,42 +227,42 @@
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
-        <label for="publisher-input">Издательство</label>
+        <label for="publisher-input"><%= t('publication.prop.publisher') %></label>
         <input class="form-control" id="publisher-input" data-for="pub:Publication" type="text" name="publisher">
       </div>
 
       <div class="form-group">
-        <label for="volume-input">Том</label>
+        <label for="volume-input"><%= t('publication.prop.volume') %></label>
         <input class="form-control" id="volume-input" data-for="pub:Publication" type="text" name="volume">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
-        <label for="edition-input">Выпуск</label>
+        <label for="edition-input"><%= t('publication.prop.edition') %></label>
         <input class="form-control" id="edition-input" data-for="pub:Publication" type="text" name="edition">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
-        <label for="num-overall-input">№ (общий)</label>
+        <label for="num-overall-input">№ (<%= t('common.common') %>)</label>
         <input class="form-control" id="num-overall-input-input" data-for="pub:Publication" type="number" name="numOverall">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
-        <label for="num-year-input">№ (годовой)</label>
+        <label for="num-year-input">№ (<%= t('common.year1') %>)</label>
         <input class="form-control" id="num-year-input-input" data-for="pub:Publication" type="number" name="numYear">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
-        <label for="issn-input">ISSN</label>
+        <label for="issn-input"><%= t('publication.prop.issn') %></label>
         <input class="form-control" id="issn-input" data-for="pub:Publication" type="text" name="issn">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2.3.4.5">
-        <label for="isbn-input">ISBN</label>
+        <label for="isbn-input"><%= t('publication.prop.isbn') %></label>
         <input class="form-control" id="isbn-input" data-for="pub:Publication" type="text" name="isbn">
       </div>
 
       <div class="form-group">
-        Страницы
+        <%= t('LiteratureRef.prop.pages') %>
         <div class="form-inline">
           <label for="pub-page-from"><%= t('date.from') %></label>
           <input id="pub-page-from" data-for="pub:Publication" class="form-control mini" type="text" name="pageFrom"></input>

@@ -17,10 +17,10 @@
 
     <div id="general">
       <dt>Все <%= t('monument.names') %>:</dt>
-      <dd><%= allNames %></dd>
+      <dd><%= ctl(allNames) %></dd>
 
       <dt><%= t("monument.prop.epoch") %>:</dt>
-      <dd><%= maybe(epochs[0], "Не указана","name") %></dd>
+      <dd><%= maybe(epochs[0], t('common.notSpecif'),"name") %></dd>
 
       <dt><%= t("monument.prop.type") %>:</dt>
       <dd><%= maybe(monTypes[0], t('common.notDefined'),"name") %></dd>
@@ -49,11 +49,11 @@
       <dt><%= t("heritage.singular") %></dt>
       <dd><% if (heritage[0]) { %>
         <% _.each(heritage, function(her, id) { %>
-          <a href="#heritage/show/<%= her.id %>"><%= her.name %></a>
+          <a href="#heritage/show/<%= her.id %>"><%= ctl(her.name) %></a>
           <br>
         <% }) %>
       <% } else { %>
-        Отсутствует или не задано
+        <%= t('common.missing') %>
       <% } %>
       </dd>
     </div>
@@ -64,7 +64,7 @@
           <h4 class="accordion-header">
             <%= t("research.singular") %> №<%= i+1 %>:
             <b>
-              <%= App.views.research.getFullResearchTitle(authors[i].name, research.year, resTypes[i][0].name) %>
+              <%= ctl(App.views.research.getFullResearchTitle(authors[i].name, research.year, resTypes[i][0].name)) %>
             </b>
           </h4>
 
@@ -73,40 +73,40 @@
               <dt></dt>
               <dd>
                 <a href="#research/show/<%= research.id %>">
-                Перейти к исследованию
+                <%= t('goto.research') %>
               </a>
               </dd>
               <dt><%= t('common.nameByAuthor') %>:</dt>
-              <dd><%= knowledges[i].monument_name %></dd>
+              <dd><%= ctl(knowledges[i].monument_name) %></dd>
               <% if (_.keys(cultures[i]).length) { %>
                 <dt><%= t('knowledge.prop.culture') %>:</dt>
                 <dd><%= cultures[i].name %></dd>
               <% } %>
               <% if (research.description) { %>
-                <dt>Описание исследования:</dt>
-                <dd><%= research.description %></dd>
+                <dt><%= t('research.description') %>:</dt>
+                <dd><%= ctl(research.description) %></dd>
               <% } %>
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
-                <dd><%= knowledges[i].description %></dd>
+                <dd><%= ctl(knowledges[i].description) %></dd>
               <% } %>
 
               <% if (reports[i] && reports[i].length > 0) { %>
-                <dt>Отчет:</dt>
+                <dt><%= t('report.singular') %>:</dt>
                 <dd>
                   <% var reportTitle = `${maybe(reports[i][0], t('common.noName'), "name")} (${maybe(authors[i], t('common.noneAuthor'), "name")}, ${maybe(reports[i][0], t('common.yearNotDefined'), "year")})` %>
                   <% if (reports[i][0].fileid) { %>
-                    <%= App.models.Report.href(reports[i][0].id, reportTitle) %>
+                    <%= App.models.Report.href(reports[i][0].id, ctl(reportTitle)) %>
                   <% } else {%>
-                    <%= reportTitle %>
+                    <%= ctl(reportTitle) %>
                   <% } %>
                 </dd>
               <% } %>
 
-              <dt>Найдено артефактов:</dt>
+              <dt><%= t('artifact.count') %>:</dt>
               <dd><%= _.size(_.filter(artiResearches, (res) => res.id == researches[i].id)) %></dd>
 
-              <dt>Археологических вскрытий:</dt>
+              <dt><%= t('excavation.genitivePl') %>:</dt>
               <dd><%= _.size(excavations[i]) %></dd>
             </dl>
           </div>
@@ -126,7 +126,7 @@
               let resType = resTypes[i][0].name || t('common.withoutType');
               let resYear = researches[i].year || t('common.yearNotDefined');
               let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
-              resTitle = App.models.Research.href(researches[i].id, resTitle);
+              resTitle = App.models.Research.href(researches[i].id, ctl(resTitle));
 
               let date = `${mds.name}: ${know.dateBottom} — ${know.dateTop} - ${resTitle}`
               dates.push(date)
@@ -142,7 +142,7 @@
         return _.map(resReps, function(rep, t) {
           let year = rep.year || t('common.yearNotDefined');
           let repTitle = `${rep.name} (${authors[i].name}, ${year})`;
-          return App.models.Report.href(rep.id, repTitle);
+          return App.models.Report.href(rep.id, ctl(repTitle));
         }).join("<br>")
       })).join("<br>") %>
     </div>
@@ -156,9 +156,9 @@
           let name = exc.name || t('common.withoutName');
           let boss = exc.boss || t('common.unknown');
           excs.push(
-            App.models.Excavation.href(exc.id, `
+            App.models.Excavation.href(exc.id, ctl(`
               ${name} - ${area}${ t('common.metresInSq') } (${authors[i].name}, ${researches[i].year}), t('excavation.boss').toLowerCase() : ${boss}
-            `)
+            `))
           );
         })
       })
@@ -169,7 +169,7 @@
     <div id="artifacts">
       <%= _.compact(_.map(artifacts, function(arti, i) {
         let title = `${arti.name} (${artiAuthors[i].name}, ${artiResearches[i].year})`;
-        return App.models.Artifact.href(arti.id, title);
+        return App.models.Artifact.href(arti.id, ctl(title));
       })).join(", <br>") %>
     </div>
 
@@ -200,9 +200,9 @@
         <% _.each(type, function(obj, t) { %>
           <% let date = new Date(monSpatref[i][t].date) %>
           <dd><%= counter++ %>) X: <%= monSpatref[i][t].x %>, Y: <%= monSpatref[i][t].y %>
-            <%= (counter == 2) ? " - <b>актуальные координаты</b>" : "" %>
+            <%= (counter == 2) ? " - <b><%= t('common.actualCoords') %></b>" : "" %>
           </dd>
-          <dd>Дата добавления: <%= date.getDate() %>.<%= date.getMonth() + 1 %>.<%= date.getFullYear() %> <%= date.getHours() %>:<%= date.getMinutes() %>:<%= date.getSeconds() %></dd>
+          <dd><%= t('common.createdDate') %>: <%= date.getDate() %>.<%= date.getMonth() + 1 %>.<%= date.getFullYear() %> <%= date.getHours() %>:<%= date.getMinutes() %>:<%= date.getSeconds() %></dd>
           <br>
       <%}) 
       }) %>
