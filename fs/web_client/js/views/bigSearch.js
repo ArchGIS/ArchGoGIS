@@ -2,8 +2,6 @@
 
 App.views.bigSearch = new (Backbone.View.extend({
   'index': function() {
-    App.views.map();
-
     let queries = {
       author: {
         "main": {
@@ -576,6 +574,17 @@ App.views.bigSearch = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "*", "select": "*"},
           "monument__knowledge": {},
         },
+        "spatref": {
+          "monument:Monument": {"id": "NEED"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "mt:MonumentType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__epoch": {},
+          "monument__mt": {},
+          "monument__sp": {},
+          "sp__spt": {},
+        },
         "author-name": {
           "author_IDPLACE:Author": {"id": "*", "filter": "name=VALUEPLACE=text"},
           "research_IDPLACE:Research": {"id": "*"},
@@ -837,6 +846,25 @@ App.views.bigSearch = new (Backbone.View.extend({
         },
         success: function(response) {
           response = JSON.parse(response);
+          let placemarks = [], spatref;
+
+          function render() {
+            let sp, preset, epoch, type;
+            _.each(spatref[0], function(obj, i) {
+              console.log(obj)
+              if (obj.sp.length) {
+                epoch = obj.epoch[0].id;
+                type = obj.mt[0].id;
+                sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                preset = `monType${type}_${epoch}`;
+
+                placemarks.push(
+                  App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
+                );
+              }
+            })
+            App.views.addToMap(placemarks);
+          }
 
           if (entity == "monument") {
             _.each(response.knowledge, function(know, i) {
@@ -847,12 +875,15 @@ App.views.bigSearch = new (Backbone.View.extend({
           let data = _.toArray(response[entity])
           data = _.uniq(data, function(item, key, id) {return item.id});
 
+          if (queries[entity].spatref) {
+            let ids = _.map(data, function(obj) {return obj.id.toString()});
+            spatref = (App.models.fn.getData([JSON.stringify(queries[entity].spatref)], render, true, ids));
+          }
+          
           $("#search-results").html("");
           _.each(data, function(obj, key) {
             $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
           })
-          console.log(response)
-          console.log(data)
         }
       });
     });
