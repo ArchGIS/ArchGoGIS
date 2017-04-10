@@ -780,6 +780,223 @@ create (arti6:Artifact {
   year: '2000'
 })
 
+create (rdt1:RadiocarbonDateType {
+  id: 1,
+  name: '14С радиометрическая'
+})
+create (rdt2:RadiocarbonDateType {
+  id: 2,
+  name: '14С масс-спектрометрическая'
+})
+create (rdt3:RadiocarbonDateType {
+  id: 3,
+  name: 'Оптико-люминесцентная'
+})
+create (rdt4:RadiocarbonDateType {
+  id: 4,
+  name: 'Инфракрасная люминесценция'
+})
+create (rdt5:RadiocarbonDateType {
+  id: 5,
+  name: 'Термолюминесценция'
+})
+create (rdt6:RadiocarbonDateType {
+  id: 6,
+  name: 'U/Th'
+})
+create (rdt7:RadiocarbonDateType {
+  id: 7,
+  name: '40K/39Ar'
+})
+create (rdt8:RadiocarbonDateType {
+  id: 8,
+  name: '40Ar/39Ar'
+})
+
+create (sg1:SludgeGenesis {
+  id: 1,
+  name: 'Культурный слой'
+})
+create (sg2:SludgeGenesis {
+  id: 2,
+  name: 'Аллювий'
+})
+create (sg3:SludgeGenesis {
+  id: 3,
+  name: 'Овражный аллювий'
+})
+create (sg4:SludgeGenesis {
+  id: 4,
+  name: 'Биогенные'
+})
+create (sg5:SludgeGenesis {
+  id: 5,
+  name: 'Склоновые'
+})
+create (sg6:SludgeGenesis {
+  id: 6,
+  name: 'Эоловые'
+})
+create (sg7:SludgeGenesis {
+  id: 7,
+  name: 'Элювий'
+})
+create (sg8:SludgeGenesis {
+  id: 8,
+  name: 'Хемогенные'
+})
+create (sg9:SludgeGenesis {
+  id: 9,
+  name: 'Озерные'
+})
+
+create (fac1:Facies {
+  id: 1,
+  name: 'Русловая',
+  info: '2'
+})
+create (fac2:Facies {
+  id: 2,
+  name: 'Пойменная/балочный аллювий',
+  info: '2'
+})
+create (fac3:Facies {
+  id: 3,
+  name: 'Старичная',
+  info: '2'
+})
+create (fac4:Facies {
+  id: 4,
+  name: 'Донный',
+  info: '3'
+})
+create (fac5:Facies {
+  id: 5,
+  name: 'Конус выноса',
+  info: '3'
+})
+create (fac6:Facies {
+  id: 6,
+  name: 'Пойменные торфяники',
+  info: '4'
+})
+create (fac7:Facies {
+  id: 7,
+  name: 'Балочные торфяники',
+  info: '4'
+})
+create (fac8:Facies {
+  id: 8,
+  name: 'Делювий',
+  info: '5'
+})
+create (fac9:Facies {
+  id: 9,
+  name: 'Солифлюксий',
+  info: '5'
+})
+create (fac10:Facies {
+  id: 10,
+  name: 'Деляпсий',
+  info: '5'
+})
+create (fac11:Facies {
+  id: 11,
+  name: 'Покровные пески и алевриты',
+  info: '6'
+})
+create (fac12:Facies {
+  id: 12,
+  name: 'Дюнные пески',
+  info: '6'
+})
+create (fac13:Facies {
+  id: 13,
+  name: 'Лессы',
+  info: '6'
+})
+create (fac14:Facies {
+  id: 14,
+  name: 'Грубообломочный',
+  info: '7'
+})
+create (fac15:Facies {
+  id: 15,
+  name: 'Тонкозернистый',
+  info: '7'
+})
+create (fac16:Facies {
+  id: 16,
+  name: 'Пресноводные карбонаты',
+  info: '8'
+})
+create (fac17:Facies {
+  id: 17,
+  name: 'Подпрудных долиных озер',
+  info: '9'
+})
+
+create (carm1:CarbonMaterial {
+  id: 1,
+  name: 'Древесина',
+  EngName: 'Wood'
+})
+create (carm2:CarbonMaterial {
+  id: 2,
+  name: 'Уголь',
+  EngName: 'Charcoal'
+})
+create (carm3:CarbonMaterial {
+  id: 3,
+  name: 'Торф',
+  EngName: 'Peat'
+})
+create (carm4:CarbonMaterial {
+  id: 4,
+  name: 'Растительные макроостатки сухопутные',
+  EngName: 'Macrofossils terrestrial'
+})
+create (carm5:CarbonMaterial {
+  id: 5,
+  name: 'Гумус/общая органика',
+  EngName: 'Humic acids/bulk'
+})
+create (carm6:CarbonMaterial {
+  id: 6,
+  name: 'Костный материал',
+  EngName: 'Bone'
+})
+create (carm7:CarbonMaterial {
+  id: 7,
+  name: 'Костный уголь',
+  EngName: 'Bone char'
+})
+create (carm8:CarbonMaterial {
+  id: 8,
+  name: 'Раковины',
+  EngName: 'Shell'
+})
+create (carm9:CarbonMaterial {
+  id: 9,
+  name: 'Растительные макроостатки водные ',
+  EngName: 'Macrofossils aquatic'
+})
+create (carm10:CarbonMaterial {
+  id: 10,
+  name: 'Кварц',
+  EngName: 'Quartz'
+})
+create (carm11:CarbonMaterial {
+  id: 11,
+  name: 'Полевой шпат',
+  EngName: 'Feldspar'
+})
+create (carm12:CarbonMaterial {
+  id: 12,
+  name: 'Тефра',
+  EngName: 'Tephra'
+})
+
 create (r1)-[:has]->(rt1)
 create (r2)-[:has]->(rt2)
 create (r3)-[:has]->(rt3)

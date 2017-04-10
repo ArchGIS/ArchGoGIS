@@ -23,6 +23,9 @@ App.views.wizard = new (Backbone.View.extend({
         "#artifact/new_by_report": t("report.singular"),
         "#artifact/new_by_pub": t("publication.singular")
       },
+      "radiocarbon": {
+        "#radiocarbon/new_by_pub": t("publication.singular")
+      },
       "research": {
         "#research/new_by_report": t("report.singular"),
         "#research/new_by_pub": t("publication.singular")
