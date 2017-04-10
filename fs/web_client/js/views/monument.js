@@ -408,7 +408,7 @@ App.views.monument = new (Backbone.View.extend({
         inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
         map: map
       }, monId);
-      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
+      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType", "", true);
 
       $("#clarify-button-"+monId).on("click", function() {
         $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);
@@ -802,7 +802,7 @@ App.views.monument = new (Backbone.View.extend({
         inputs: ['#monument-x-'+monId, '#monument-y-'+monId],
         map: map
       }, monId);
-      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType");
+      getDataForSelector($("#spatref-selector-"+monId), "SpatialReferenceType", "", true);
 
       $("#clarify-button-"+monId).on("click", function() {
         $($(`#monument-new-coords-${monId}`)[0]).show().find("input, select").attr("used", true);

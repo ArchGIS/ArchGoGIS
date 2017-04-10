@@ -352,7 +352,11 @@ function generateJson(relations) {
 }
 
 
-function fillSelector(selector, data, notLike) {
+function fillSelector(selector, data, notLike, reverse) {
+  if (reverse) {
+    data = _.sortBy(data, (obj) => obj.id).reverse()
+  }
+
   $.each(data, (id, row) => {
     if (row.name != notLike) {
       $("<option></option>")
@@ -364,12 +368,13 @@ function fillSelector(selector, data, notLike) {
   selector.trigger("change");
 }
 
-function getDataForSelector(selector, dataType, notLike) {
+function getDataForSelector(selector, dataType, notLike, reverse) {
   let query = {};
   notLike = notLike || "";
+  reverse = reverse || false;
 
   if (App.store.selectData[dataType]) {
-    fillSelector(selector, App.store.selectData[dataType], notLike);
+    fillSelector(selector, App.store.selectData[dataType], notLike, reverse);
   } else {
     query[`rows:${dataType}`] = {"id": "*", "select": "*"};
     query = JSON.stringify(query);
@@ -380,7 +385,7 @@ function getDataForSelector(selector, dataType, notLike) {
       success: (response) => {
         const data = JSON.parse(response);
         App.store.selectData[dataType] = data.rows;
-        fillSelector(selector, data.rows, notLike);
+        fillSelector(selector, data.rows, notLike, reverse);
       },
       beforeSend: function(xhr) {
         xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
