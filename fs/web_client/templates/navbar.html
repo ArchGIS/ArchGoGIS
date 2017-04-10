@@ -1,0 +1,55 @@
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container" id="top-menu">
+    <input type="checkbox" id="more" aria-hidden="true" class="toggle" tabindex="-1">
+    <div class="navbar-header">
+      <a href="/index" class="navbar-brand">
+        <i class="fa fa-globe fa-lg"></i>
+        Arch Gis
+      </a>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="#wizard/future1"><%= t('titles.wizard.create-data') %></a>
+        </li>
+        <li>
+          <a href="#wizard/future2"><%= t('titles.wizard.create-map') %></a>
+        </li>
+        <li>
+          <a href="#wizard/future3"><%= t('titles.wizard.createSample') %></a>
+        </li>
+        <li>
+          <a href="#wizard/future5"><%= t('titles.wizard.download') %></a>
+        </li>
+        <li>
+          <a href="#bigSearch/index"><%= t('search.bigSearch') %></a>
+        </li>
+        <li>
+          <a href="#wizard/create_data"><%= t('titles.wizard.importData') %></a>
+        </li>
+        <li>
+          <a href="#search/index"><%= t('search.head') %></a>
+        </li>
+        <li>
+          <a href="#admin/main"><%= t('admin.panel') %></a>
+        </li>
+        <li>
+          <a href="#download/index"><%= t('titles.wizard.getData') %></a>
+        </li>
+
+        <li>
+          <a href="#" id="set_language" role="button"></a>
+        </li>
+      
+        <li class="navigation__toggle">
+          <label for="more" aria-hidden="true" class="navigation__link"><%= t('titles.wizard.more') %></label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
