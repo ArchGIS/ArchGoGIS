@@ -19,6 +19,15 @@ App.template.get('navbar', function (tmpl) {
 
     App.locale.set(change);
     $('#navigation').replaceWith(tmpl());
+
+    App.store.mapTypes = {
+      monument: App.locale.translate('monument.plural'),
+      excavation: App.locale.translate('excavation.plural'),
+      heritage: App.locale.translate('heritage.singular'),
+      research: App.locale.translate('research.plural'),
+      artifact: App.locale.translate('artifact.plural')
+    };
+
     location.reload();
   });
 });

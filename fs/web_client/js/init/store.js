@@ -1,6 +1,6 @@
 'use strict';
 
-// App.locale.set('ru');
+App.locale.set(App.locale.getLang());
 
 App.store = {};
 App.store.coauthors = {};
