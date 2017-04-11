@@ -168,6 +168,8 @@ App.views.radiocarbon = new (Backbone.View.extend({
               let value = $(this).is(":checked");
               $(`#carbon-layer-1-${layerId}`).prop("disabled", !value);
               $(`#carbon-layer-1-${layerId}`)[0].checked = false;
+              $(`#complex-layer-1-${layerId}`).prop("disabled", !value);
+              $(`#complex-layer-1-${layerId}`)[0].checked = false;
             })
             $(`#exc-layer-1-${layerId}`).trigger("click");
 
@@ -234,6 +236,14 @@ App.views.radiocarbon = new (Backbone.View.extend({
       monLayers.append(checkbox);
       $(`#carbon-belongs`).append(monLayers);
       $(`#carbon-layer-1`)[0].checked = true;
+
+      monLayers = App.views.functions.addMonRelation("complex", "m", monId, "Archaeological site", "radio");
+      checkbox = App.views.functions.addRelationCheckbox("complex", "m", carbonId, monId, "radio");
+      monLayers.append(checkbox);
+      console.log(monLayers)
+      console.log($(`#complex-belongs`))
+      $(`#complex-belongs`).append(monLayers);
+      $(`#complex-layer-1`)[0].checked = true;
 
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
     })

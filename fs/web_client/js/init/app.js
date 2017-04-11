@@ -109,6 +109,7 @@ function postQuery(objectId) {
     ["Research", "Report", "has"],
     ["Research", "Image", "has"],
     ["Complex", "Artifact", "has"],
+    ["Complex", "Radiocarbon", "has"],
     ["Complex", "Excavation", "has"],
     ["Excavation", "Artifact", "has"],
     ["Excavation", "ExcSpatRef", "has"],
