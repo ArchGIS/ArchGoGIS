@@ -105,6 +105,8 @@ App.views.addToMap = (placemarks, existMap) => {
         overlays    = App.views.addOverlays(mapInstance, types),
         map         = mapInstance.map;
 
+  const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
+
   const icon16 = [16, 16],
         icon20 = [20, 20];
   const iconSizes = {
@@ -128,7 +130,7 @@ App.views.addToMap = (placemarks, existMap) => {
       icon: icon
     });
 
-    marker.bindTooltip(item.pref.hintContent, {
+    marker.bindTooltip(ctl(item.pref.hintContent), {
       direction: 'top'
     });
 
