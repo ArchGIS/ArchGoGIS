@@ -103,6 +103,12 @@ App.views.admin = new (Backbone.View.extend({
         }
       },
 
+      Radiocarbon: {
+        main: JSON.stringify({
+          "Radiocarbon:Radiocarbon": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+        }),
+      },
+
       Excavation: {
         main: JSON.stringify({
           "Excavation:Excavation": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
@@ -225,6 +231,13 @@ App.views.admin = new (Backbone.View.extend({
         "Категория": "categ",
         "Год находки": "year",
         "Коллекции": "coll",
+        "red": "red",
+        "del": "del"
+      },
+      Radiocarbon: {
+        "id": "id",
+        "Индекс": "name",
+        "Дата BP": "date",
         "red": "red",
         "del": "del"
       },
