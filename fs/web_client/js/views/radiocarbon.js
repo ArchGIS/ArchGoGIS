@@ -67,8 +67,7 @@ App.views.radiocarbon = new (Backbone.View.extend({
     })
     
     let monId = 1;
-    let excId = 1;
-    let carbonId = 1;
+    let excId = -1;
 
     App.template.get("research/addMonument", function(tmpl) {
       $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
@@ -156,25 +155,23 @@ App.views.radiocarbon = new (Backbone.View.extend({
           $button.on("click", () => App.views.functions.addLayer($button, monId, layerCounter()));
           $button.on("click", () => {
             let layerId = layerCounter2();
-            _.each(monLayers, function(layers) {
+            monLayers = $(`.mon-checkboxes-${monId}`);
+            _.each(monLayers, function(layers, id) {
               let inputType = $(layers).attr("data-input-type");
               let entity = $(layers).attr("data-entity");
+              let entityId = entity.split("-")[1];
               let entityWith = $(layers).attr("data-entity-with");
-              let checkbox = App.views.functions.addLayerCheckbox(entity, entityWith, excId, monId, layerId, inputType);
+              let checkbox = App.views.functions.addLayerCheckbox(`${entity}`, entityWith, excId, monId, layerId, inputType);
               $(layers).append(checkbox);
-            })
 
-            $(`#exc-layer-1-${layerId}`).on("click", function() {
-              let value = $(this).is(":checked");
-              $(`#carbon-layer-1-${layerId}`).prop("disabled", !value);
-              $(`#carbon-layer-1-${layerId}`)[0].checked = false;
-              $(`#complex-layer-1-${layerId}`).prop("disabled", !value);
-              $(`#complex-layer-1-${layerId}`)[0].checked = false;
-            })
-            $(`#exc-layer-1-${layerId}`).trigger("click");
-
-            $(`#carbon-layer-1-${layerId}`).on("click", function() {
-              $(`#complex-layer-1-${layerId}`).trigger("click");
+              setTimeout(() => {
+                if ($(`#carbon-${entityId}-layer-1-${layerId}`).length) {
+                  $(`#carbon-${entityId}-layer-1-${layerId}`).on("click", function() {
+                    $(`#complex-${entityId}-layer-1-${layerId}`).trigger("click");
+                  })
+                  clearTimeout(this);
+                }
+              }, 100)
             })
           });
           $button.trigger("click");
@@ -230,20 +227,6 @@ App.views.radiocarbon = new (Backbone.View.extend({
       $(`#exc-belongs`).append(monLayers);
       $(`#exc-layer-1`)[0].checked = true;
       $(`#exc-layer-1`).prop("disabled", true);
-
-      monLayers = App.views.functions.addMonRelation("carbon", "k", monId, "Archaeological site", "radio");
-      checkbox = App.views.functions.addRelationCheckbox("carbon", "k", carbonId, monId, "radio");
-      monLayers.append(checkbox);
-      $(`#carbon-belongs`).append(monLayers);
-      $(`#carbon-layer-1`)[0].checked = true;
-
-      monLayers = App.views.functions.addMonRelation("complex", "m", monId, "Archaeological site", "radio");
-      checkbox = App.views.functions.addRelationCheckbox("complex", "m", carbonId, monId, "radio");
-      monLayers.append(checkbox);
-      console.log(monLayers)
-      console.log($(`#complex-belongs`))
-      $(`#complex-belongs`).append(monLayers);
-      $(`#complex-layer-1`)[0].checked = true;
 
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
     })
@@ -370,13 +353,8 @@ App.views.radiocarbon = new (Backbone.View.extend({
 
     getDataForSelector($("#epoch-selector"), "Epoch");
     getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
-    getDataForSelector($("#carbon-spatref-selector"), "SpatialReferenceType", "", true);
     getDataForSelector($("#culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
-    getDataForSelector($("#carbon-date-type-selector"), "RadiocarbonDateType");
-    getDataForSelector($("#carbon-genesis-selector"), "SludgeGenesis");
-    getDataForSelector($("#carbon-material-selector"), "CarbonMaterial");
-    getDataForSelector($("#carbon-facies-selector"), "Facies");
 
     $("#carbon-genesis-selector").on('click', function() {
       let genId = $(this).val();
@@ -392,6 +370,74 @@ App.views.radiocarbon = new (Backbone.View.extend({
         $("#div-carbon-facies-selector").hide();
       }
     })
+    
+    let rid = 1;
+    let photoId = 1;
+    $(".btn-add-radiocarbon").on('click', function() {
+      let lrid = rid++;
+      let monLayersCarbon, monLayersComplex, checkbox, monName;
+
+      App.template.get("radiocarbon/addRadiocarbon", function(tmpl) {
+        $('.btn-add-radiocarbon').before(tmpl({'rid': lrid}));
+        App.views.functions.setAccordionHeader($(`#radiocarbon-header-${lrid}`));
+        
+        monName = $(`#monument-name-input-${monId}`).val() || "Archaeological site";
+        let layers = $(".mon-layer");
+
+        monLayersCarbon = App.views.functions.addMonRelation(`carbon-${lrid}`, "k", monId, monName, "radio");
+        monLayersComplex = App.views.functions.addMonRelation(`complex-${lrid}`, "m", monId, monName, "radio");
+        if (layers.length > 0) {
+          _.each(layers, function(layer, layerId) {
+            let checkbox = App.views.functions.addLayerCheckbox(`carbon-${lrid}`, "k", lrid, monId, layerId+1, "radio")
+            monLayersCarbon.append(checkbox);
+            checkbox = App.views.functions.addLayerCheckbox(`complex-${lrid}`, "m", lrid, monId, layerId+1, "radio")
+            monLayersComplex.append(checkbox);
+
+            setTimeout(() => {
+              if ($(`#carbon-${lrid}-layer-1-${layerId+1}`).length) {
+                $(`#carbon-${lrid}-layer-1-${layerId+1}`).on("click", function() {
+                  $(`#complex-${lrid}-layer-1-${layerId+1}`).trigger("click");
+                })
+                clearTimeout(this);
+              }
+            }, 100)
+          })
+        } else {
+          let checkbox = App.views.functions.addRelationCheckbox("carbon", "k", lrid, monId, "radio")
+          monLayersCarbon.append(checkbox);
+          checkbox = App.views.functions.addRelationCheckbox("complex", "m", lrid, monId, "radio")
+          monLayersComplex.append(checkbox) ;
+
+          setTimeout(() => {
+            if ($(`#carbon-layer-${monId}`).length) {
+              $(`#carbon-layer-${monId}`).on("click", function() {
+                $(`#complex-layer-${monId}`).trigger("click");
+              })
+              clearTimeout(this);
+            }
+          }, 100)
+        }
+        $(`#carbon-belongs-${lrid}`).append(monLayersCarbon);
+        $(`#complex-belongs-${lrid}`).append(monLayersComplex);
+
+        getDataForSelector($(`#carbon-spatref-selector-${lrid}`), "SpatialReferenceType", "", true);
+        getDataForSelector($(`#carbon-date-type-selector-${lrid}`), "RadiocarbonDateType");
+        getDataForSelector($(`#carbon-genesis-selector-${lrid}`), "SludgeGenesis");
+        getDataForSelector($(`#carbon-material-selector-${lrid}`), "CarbonMaterial");
+        getDataForSelector($(`#carbon-facies-selector-${lrid}`), "Facies");
+
+        coordpicker($(`#carbon-coord-picker-${lrid}`), {
+          inputs: [`#carbon-x-${lrid}`, `#carbon-y-${lrid}`],
+          map: map
+        });
+
+        $(`#add-photo-button-${lrid}`).on("click", () => {
+          App.template.get("radiocarbon/addPhoto", function(tmpl) {
+            $(`#add-photo-button-${lrid}`).before(tmpl({'rId': lrid, 'photoId': photoId++}));
+          })
+        })
+      });
+    });
 
     $("#container").tabs();
     setSelectsEvents();
@@ -404,24 +450,6 @@ App.views.radiocarbon = new (Backbone.View.extend({
     coordpicker($('#exc-coord-picker'), {
       inputs: ['#exc-x', '#exc-y'],
       map: map
-    });
-
-    coordpicker($('#carbon-coord-picker'), {
-      inputs: ['#carbon-x', '#carbon-y'],
-      map: map
-    });
-
-    var photoId = 1;
-    $('#add-photo-button').on('click', function(e) {
-      var localPhotoId = photoId;
-      var params = {
-        photoId: localPhotoId
-      }
-
-      App.template.get("radiocarbon/addPhoto", function(tmpl) {
-        $('#add-photo-button').before(tmpl(params));
-      })
-      photoId++;
     });
 
     $('.btn-next').on('click', function(e) {
