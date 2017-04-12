@@ -2,7 +2,7 @@
   <h2><%= t('monument.new') %></h2>
   <button class="send-button btn btn-primary">
     <i class="fa fa-cogs"></i>
-    Создать
+    <%= t('common.create') %>
   </button>
 
   <div id="container">
@@ -14,10 +14,10 @@
     </ul>
 
     <div id="home">
-      <legend>Сведения об исследовании</legend>
+      <legend><%= t('research.info') %></legend>
 
       <div class="form-group find-author">
-        <h4>Введите существующего автора исследования</h4>
+        <h4><%= t('common.formAuthor') %></h4>
         <label for="author-input"><%= t('author.name') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up">
@@ -25,14 +25,14 @@
 
       <button class="btn btn-primary btn-new-coauthor">
         <i class="fa fa-cogs"></i>
-        Добавить соавтора
+        <%= t('author.addCoauthor') %>
       </button>
 
       <br>
       <br>
       
       <div class="form-group find-pub">
-        <h4>Выберите существующую публикацию</h4>
+        <h4><%= t('common.choosePub') %></h4>
         <label for="pub-input"><%= t('publication.name') %> <span class="required">*</span></label>
         <input class="form-control" id="pub-input">
         <input id="pub-input-id" data-for="pub:Publication" type="id" hidden name="id" data-req="up">
@@ -41,32 +41,32 @@
 
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="monument">
-      <legend>Сведения о памятнике</legend>
+      <legend><%= t('monument.info') %></legend>
 
       <button class="send-button btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Создать
+        <%= t('common.create') %>
       </button>
     </div>
 
     <div id="exc">
-      <legend>Сведения о вскрытиях</legend>
+      <legend><%= t('excavation.infoPlural') %></legend>
 
       <button id="add-exc-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить раскоп
+        <%= t('excavation.add') %>
       </button>
     </div>
 
     <div id="topo">
       <button id="add-topo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить топоплан
+        <%= t('topoplan.add') %>
       </button>
     </div>
   </div>
@@ -166,7 +166,7 @@
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2">
         <div class="form-group">
-          ><%= t('publication.editCont') %>
+          <%= t('publication.editCont') %>
           <select class="form-control" id="edi-cont" data-for="pub:Publication" type="number" name="editionContinue" dynamic="true">
             <option value="1"><%= t('common.yes') %></option>
             <option value="2"><%= t('common.no') %></option>

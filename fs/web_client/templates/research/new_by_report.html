@@ -2,7 +2,7 @@
   <h2><%= t('research.new') %></h2>
   <button class="send-button btn btn-primary">
     <i class="fa fa-cogs"></i>
-    Создать
+    <%= t('common.create') %>
   </button>
 
   <div id="container">
@@ -21,7 +21,7 @@
 
       <button class="btn btn-primary btn-new-coauthor">
         <i class="fa fa-cogs"></i>
-        Добавить соавтора
+        <%= t('author.addCoauthor') %>
       </button>
 
       <br>
@@ -39,11 +39,11 @@
       </div>
 
       <div class="form-group">
-        <h4 for="report-input">Содержание исследования:</h4>
+        <h4 for="report-input"><%= t('research.content') %>:</h4>
       </div>
 
       <div class="form-group">
-        <label for="research-type-selector">Тип</label>
+        <label for="research-type-selector"><%= t('research.prop.type') %></label>
         <select class="form-control" id="research-type-selector" data-for="rt:ResearchType" type="id" name="id" dynamic="true"></select>
       </div>
 
@@ -54,7 +54,7 @@
       <div class="checkbox">
         <label for="more-research-checkbox">
           <input id="more-research-checkbox" type="checkbox" dynamic="true">
-          Дополнительная информация об исследовании
+          <%= t('research.more') %>
         </label>
       </div>
 
@@ -65,25 +65,25 @@
 
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="monument">
       <button id="add-monument-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить памятник
+        <%= t('monument.add1') %>
       </button>
 
       <button class="send-button btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Создать
+        <%= t('common.create') %>
       </button>
     </div>
     <div id="excavation">
       <button id="add-exc-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить раскоп
+        <%= t('excavation.add') %>
       </button>
     </div>
   </div>

@@ -1,11 +1,11 @@
 <h4 class="accordion-header" id="exc-header-<%= excId %>">
   <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-  Вскрытие №<%= excId %>
+  <%= t('excavation.singular') %> №<%= excId %>
 </h4>
 
 <div class="accordion-content" data-custom-relations="exc_<%= excId %>:Monument">
   <div class="form-group">
-    <label for="excavation-name-input-<%= excId %>">Название</label>
+    <label for="excavation-name-input-<%= excId %>"><%= t('common.name') %></label>
     <input class="form-control" id="excavation-name-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="text" name="name"></select>
   </div>
   <div class="form-group">
@@ -13,7 +13,7 @@
     <input class="form-control" id="excavation-boss-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="text" name="boss"></select>
   </div>
   <div class="form-group">
-    <label for="excavation-area-input-<%= excId %>">Вскрытая площадь (<%= t('common.metresInSq') %>)</label>
+    <label for="excavation-area-input-<%= excId %>"><%= t('excavation.area2') %> (<%= t('common.metresInSq') %>)</label>
     <input class="form-control" id="excavation-area-input-<%= excId %>" data-for="exc_<%= excId %>:Excavation" type="number" name="area"></select>
   </div>
 
@@ -27,13 +27,13 @@
   <div id="exc-coord-picker-<%= excId %>" class="coords">
     <div class="form-group">
       <label for="exc-x">
-        N
+        <%= t('coord.x') %>
       </label>
       <input class="form-control" id="exc-x-<%= excId %>" data-for="esr_<%= excId %>:SpatialReference" data-subclass="ExcSpatRef" type="number" name="x"></input>
     </div>
     <div class="form-group">
       <label for="exc-y">
-        E
+        <%= t('coord.y') %>
       </label>
       <input class="form-control" id="exc-y-<%= excId %>" data-for="esr_<%= excId %>:SpatialReference" data-subclass="ExcSpatRef" type="number" name="y"></input>
     </div>

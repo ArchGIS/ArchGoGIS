@@ -2,7 +2,7 @@
   <h2><%= t('monument.new') %></h2>
   <button class="send-button btn btn-primary">
     <i class="fa fa-cogs"></i>
-    Создать
+    <%= t('common.create') %>
   </button>
 
   <div id="container">
@@ -16,10 +16,10 @@
     </ul>
 
     <div id="home">
-      <legend>Сведения об исследовании</legend>
+      <legend><%= t('research.info') %></legend>
 
       <div class="form-group find-author">
-        <h4>Введите существующего автора исследования</h4>
+        <h4><%= t('common.formAuthor') %></h4>
         <label for="author-input"><%= t('author.name') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up">
@@ -27,15 +27,15 @@
 
       <button class="btn btn-primary btn-new-coauthor">
         <i class="fa fa-cogs"></i>
-        Добавить соавтора
+        <%= t('author.addCoauthor') %>
       </button>
 
       <br>
       <br>
       
       <div class="form-group find-report">
-        <h4>Выберите существующий отчёт</h4>
-        <label for="report-input">Название отчёта <span class="required">*</span></label>
+        <h4><%= t('common.formReport') %></h4>
+        <label for="report-input"><%= t('common.reportName') %> <span class="required">*</span></label>
         <input class="form-control" id="report-input">
         <input id="report-input-id" data-for="r:Report" type="id" hidden name="id" data-req="up">
         <input class="form-control" id="research-input-id" hidden data-for="rs:Research" type="id" name="id">
@@ -43,54 +43,54 @@
 
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="heritage">
-      <legend>Сведения об объекте культурного наследия</legend>
+      <legend><%= t('heritage.content') %></legend>
 
       <div class="form-group find-heritage">
-        <label for="heritage-input">Название</label>
+        <label for="heritage-input"><%= t('common.name') %></label>
         <%= widget("SearchLine", heritageInputOptions, "heritage-input") %>
         <input id="heritage-input-id" data-for="heritage:Heritage" hidden type="id" name="id">
       </div>
 
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="monument">
-      <legend>Сведения о памятнике</legend>
+      <legend><%= t('monument.info') %></legend>
 
       <button class="send-button btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Создать
+        <%= t('common.create') %>
       </button>
     </div>
 
     <div id="exc">
-      <legend>Сведения о вскрытиях</legend>
+      <legend><%= t('excavation.infoPlural') %></legend>
 
       <button id="add-exc-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить раскоп
+        <%= t('excavation.add') %>
       </button>
     </div>
 
     <div id="photo">
       <button id="add-photo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить фото
+        <%= t('common.addPhoto') %>
       </button>
     </div>
 
     <div id="topoplan">
       <button id="add-topo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить топоплан
+        <%= t('topoplan.add') %>
       </button>
     </div>
 </div>
@@ -200,15 +200,15 @@
     <input class="form-control" id="heritage-name-input" data-for="heritage:Heritage" type="text" name="code" data-req>
   </div>
   <div class="form-group">
-    <label for="heritage-border-input">Описание границ</label>
+    <label for="heritage-border-input"><%= t('common.borderDescr') %> </label>
     <textarea class="form-control" id="heritage-border-input" data-for="heritage:Heritage" type="text" name="border"></textarea>
   </div>
   <div class="form-group">
-    <label for="heritage-security-input">Предмет охраны</label>
+    <label for="heritage-security-input"><%= t('common.protSubject') %></label>
     <input class="form-control" id="heritage-security-input" data-for="heritage:Heritage" type="text" name="security">
   </div>
   <div class="form-group">
-    <label for="heritage-files-input">Файл документа</label>
+    <label for="heritage-files-input"><%= t('common.docFile') %></label>
     <input accept=".pdf,.doc,.docx" id="heritage-files-input" data-for="file:File" type="file" name="fileid">
 
     <div class="alert alert-dismissible alert-info">
@@ -220,9 +220,9 @@
 
 <!-- Форма для добавления вскрытий -->
 <script type="text/template" class="add-exc">
-  <h4>Добавление нового вскрытия</h4>
+  <h4><%= t('excavation.new') %></h4>
   <div class="form-group">
-    <label for="exc-name-input">Название вскрытия</label>
+    <label for="exc-name-input"><%= t('excavation.name') %></label>
     <input class="form-control" id="exc-name-input" data-for="exc:Excavation" type="text" name="name"></input>
   </div>
   <div class="form-group">
@@ -230,29 +230,29 @@
     <input class="form-control" id="exc-boss-input" data-for="exc:Excavation" type="text" name="boss"></input>
   </div>
   <div class="form-group">
-    <label for="exc-area-input">Площадь (<%= t('common.metresInSq') %>)</label>
+    <label for="exc-area-input"><%= t('excavation.area') %></label>
     <input class="form-control" id="exc-area-input" data-for="exc:Excavation" type="number" name="area"></input>
   </div>
   <div class="form-group">
-    <label for="exc-depth-input">Глубина (см)</label>
+    <label for="exc-depth-input"><%= t('excavation.depth') %></label>
     <input class="form-control" id="exc-depth-input" data-for="exc:Excavation" type="number" name="depth"></input>
   </div>
 
   <div id="exc-coord-picker" class="coords">
     <div class="form-group">
       <label for="exc-x">
-        N
+        <%= t('coord.x') %>
       </label>
       <input class="form-control" id="exc-x" data-for="exc:Excavation" type="number" name="x"></input>
     </div>
     <div class="form-group">
       <label for="exc-y">
-        E
+        <%= t('coord.y') %>
       </label>
       <input class="form-control" id="exc-y" data-for="exc:Excavation" type="number" name="y"></input>
     </div>
   </div>
   <div class="alert alert-dismissible alert-info">
-    Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
+    <%= t('examples.chooseCoords') %>
   </div>
 </script>

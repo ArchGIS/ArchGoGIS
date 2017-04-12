@@ -1,5 +1,5 @@
 <div class="content">  
-  <h2><%= t("heritage.info") %> "<%= heritage.name %>"</h2>
+  <h2><%= t("heritage.info") %> "<%= ctl(heritage.name) %>"</h2>
   
   <div id="container" class="tabs">
     <ul>
@@ -12,51 +12,51 @@
     </ul>
 
     <div id="general">
-      <dt>Код ОКН:</dt>
+      <dt><%= t('heritage.code') %>:</dt>
       <dd><%= maybe(heritage, t('common.notDefined'),"code") %></dd>
 
-      <dt>Наименование:</dt>
+      <dt><%= t('common.name1') %>:</dt>
       <dd><%= maybe(heritage, t('common.notDefined'),"name") %></dd>
 
-      <dt>Адрес:</dt>
+      <dt><%= t('common.address') %>:</dt>
       <dd><%= maybe(heritage, t('common.notDefined'),"address") %></dd>
 
       <dt><%= t('date.singular') %>:</dt>
       <dd><%= maybe(heritage, t('common.notSpecif'),"date") %></dd>
 
-      <dt>Статус:</dt>
+      <dt><%= t('common.status') %> :</dt>
       <dd><%= maybe(herStatus[0], t('common.notDefined'), "name") %></dd>
 
       <% if ( _.size(secType[0]) ) { %>
-        <dt>Категория охраны:</dt>
+        <dt><%= t('common.protCateg') %> :</dt>
         <dd><%= maybe(secType[0], t('common.notSpecif'),"name") %></dd>
 
         <% if ( _.size(file) ) { %>
-          <dt>Вид документа о постановке на государственную охрану:</dt>
+          <dt><%= t('common.protDoc') %> :</dt>
           <dd><%= maybe(file, t('common.notDefined'),"docType") %></dd>
 
-          <dt>Номер документа о постановке на государственную охрану:</dt>
+          <dt><%= t('common.protDocNumber') %> :</dt>
           <dd><%= maybe(file, t('common.notDefined'),"docNum") %></dd>
 
-          <dt>Дата документа о постановке на государственную охрану:</dt>
+          <dt><%= t('common.protDocDate') %> :</dt>
           <dd><%= maybe(file, t('common.notSpecif'),"docDate") %></dd>
         <% } else { %>
-          <dt>Вид документа о постановке на государственную охрану:</dt>
+          <dt><%= t('common.protDoc') %> :</dt>
           <dd><%= maybe(heritage, t('common.notDefined'),"docType") %></dd>
 
-          <dt>Номер документа о постановке на государственную охрану:</dt>
+          <dt><%= t('common.protDocNumber') %> :</dt>
           <dd><%= maybe(heritage, t('common.notDefined'),"docNum") %></dd>
 
-          <dt>Дата документа о постановке на государственную охрану:</dt>
+          <dt><%= t('common.protDocDate') %> :</dt>
           <dd><%= maybe(heritage, t('common.notSpecif'),"docDate") %></dd>
         <% } %>
       <% } %>
 
-      <dt>Описание границ:</dt>
+      <dt><%= t('common.borderDescr') %> :</dt>
       <dd><%= maybe(heritage, t('common.notSpecif'),"borderDesc") %></dd>
 
-      <dt>Документ о постановке на учет:</dt>
-      <dd><%= App.models.File.href(heritage.fileid, "Документ") %></dd>
+      <dt><%= t('doc.registration') %>:</dt>
+      <dd><%= App.models.File.href(heritage.fileid, t('common.document')) %></dd>
 
     </div>
 
@@ -66,7 +66,7 @@
           
           <h4 class="accordion-header">
             <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
-            <%= t('monument.singular') %> №<%= i+1 %>: <b><%= knowledges[i][0].monument_name %></b>
+            <%= t('monument.singular') %> №<%= i+1 %>: <b><%= ctl(knowledges[i][0].monument_name) %></b>
           </h4>
           
           <div class="accordion-content">
@@ -78,7 +78,7 @@
               </a>
               </dd>
               <dt><%= t('monument.names') %>:</dt>
-              <dd><%= _.uniq(_.map(knowledges[i], function(k, i) {return k.monument_name})).join(", ") %></dd>
+              <dd><%= _.uniq(_.map(knowledges[i], function(k, i) {return ctl(k.monument_name)})).join(", ") %></dd>
               <dt><%= t('monument.prop.epoch') %>:</dt>
               <dd><%= maybe(epochs[i][0], t('common.noData'), "name") %></dd>
               <dt><%= t('monument.prop.type') %>:</dt>
@@ -92,7 +92,7 @@
     <div id="researches">
       <%= _.uniq(_.map(researches, function(res, i) {
         let resTitle = `${res.name} (${resTypes[i][0].name}, ${res.year})`;
-        return App.models.Research.href(res.id, resTitle);
+        return App.models.Research.href(res.id, ctl(resTitle));
       })).join("<br>") %>
     </div>
     <div id="surveyMaps">
@@ -111,77 +111,77 @@
               </ul>
 
               <div id="general<%=i%>">
-                <dt>Дата составления карты:</dt>
+                <dt><%= t('common.mapDate') %>:</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "creationDate") %></dd>
 
-                <dt>Учетный номер БТИ:</dt>
+                <dt><%= t('common.regNumberBTI') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "rodNum") %></dd>
 
-                <dt>Номер паспорта БТИ:</dt>
+                <dt><%= t('common.passNumBTI') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "rodPassport") %></dd>
 
-                <dt>Дата выдачи паспорта БТИ:</dt>
+                <dt><%= t('common.passNumDateBTI') %> :</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "rodDate") %></dd>
 
-                <dt>Общая площадь (<%= t('common.metresInSq') %>):</dt>
+                <dt><%= t('common.area') %>  (<%= t('common.metresInSq') %>):</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "area") %></dd>
 
-                <dt>Карта обследования:</dt>
-                <dd><%= App.models.File.href(map.fileid, "Документ") %></dd>
+                <dt><%= t('doc.surveyMap.singular') %> :</dt>
+                <dd><%= App.models.File.href(map.fileid, t('common.document')) %></dd>
               </div>
 
               <div id="use<%=i%>">
-                <dt>Вид собственности:</dt>
+                <dt><%= t('common.ownType') %> :</dt>
                 <dd><%= maybe(lists[i].ot[0], t('common.notDefined'), "name") %></dd>
 
-                <dt>Вид распоряжения:</dt>
+                <dt><%= t('common.orderType') %> :</dt>
                 <dd><%= maybe(lists[i].dt[0], t('common.notDefined'), "name") %></dd>
 
-                <dt>Код собственника (распорядителя) по ОКАТО:</dt>
+                <dt><%= t('common.okatoOwnerCode') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "disposalCode") %></dd>
 
-                <dt>ИНН собственника (распорядителя):</dt>
+                <dt><%= t('common.ownerINN') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "disposerVat") %></dd>
 
-                <dt>КПП собственника (распорядителя):</dt>
+                <dt><%= t('common.ownerKPP') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "disposerKpp") %></dd>
 
-                <dt>Вид документа о передаче объекта собственнику (распорядителю):</dt>
+                <dt><%= t('common.ownerDocType') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docType") %></dd>
 
-                <dt>Дата документа о передаче собственнику (распорядителю):</dt>
+                <dt><%= t('common.ownerDocDate') %> :</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "docDate") %></dd>
 
-                <dt>Номер документа о передаче собственнику (распорядителю):</dt>
+                <dt><%= t('common.ownerDocNum') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docNum") %></dd> 
 
-                <dt>Дата начала владения (распоряжения) по документу об охране:</dt>
+                <dt><%= t('common.ownStartDate') %> :</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "startDate") %></dd>
 
-                <dt>Дата окончания владения (распоряжения) по документу об охране:</dt>
+                <dt><%= t('common.ownEndDate') %> :</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "endDate") %></dd>
 
-                <dt>Вид охранного документа:</dt>
+                <dt><%= t('common.protDocType') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docSecurityType") %></dd>
 
-                <dt>Дата охранного документа:</dt>
+                <dt><%= t('common.protDocDate1') %> :</dt>
                 <dd><%= maybe(map, t('common.notSpecif'), "docSecurityDate") %></dd>
 
-                <dt>Номер охранного документа:</dt>
+                <dt><%= t('common.protDocNum') %> :</dt>
                 <dd><%= maybe(map, t('common.notDefined'), "docSecurityNum") %></dd>
 
-                <dt>Использование по первоначальному функциональному назначению:</dt>
+                <dt><%= t('common.functionalFirst') %> :</dt>
                 <dd>
-                  <%= (map.useInitial) ? "Да" : "Нет" %>
+                  <%= (map.useInitial) ? t('common.yes') : t('common.no') %>
                 </dd>
 
-                <dt>Функциональное назначение:</dt>
+                <dt><%= t('common.funcPurpose') %>:</dt>
                 <dd><%= maybe(lists[i].fp[0], t('common.notSpecif'), "name") %></dd>
 
-                <dt>Доступность памятника:</dt>
+                <dt><%= t('common.siteAccess') %>:</dt>
                 <dd><%= maybe(lists[i].avail[0], t('common.notSpecif'), "name") %></dd>
 
-                <dt>Вид пользования:</dt>
+                <dt><%= t('common.useType') %>:</dt>
                 <dd><%= maybe(lists[i].ut[0], t('common.notDefined'), "name") %></dd>
               </div>
               <div id="state<%=i%>">

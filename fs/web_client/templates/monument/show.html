@@ -1,5 +1,5 @@
 <div class="content">  
-  <h2><%= t("monument.info") %> "<%= mainName %>"</h2>
+  <h2><%= t("monument.info") %> "<%= ctl(mainName) %>"</h2>
   
   <div id="container">
     <ul>
@@ -84,11 +84,11 @@
               <% } %>
               <% if (research.description) { %>
                 <dt><%= t('research.description') %>:</dt>
-                <dd><%= ctl(research.description) %></dd>
+                <dd><%= research.description %></dd>
               <% } %>
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
-                <dd><%= ctl(knowledges[i].description) %></dd>
+                <dd><%= knowledges[i].description %></dd>
               <% } %>
 
               <% if (reports[i] && reports[i].length > 0) { %>
@@ -199,7 +199,7 @@
         <dt><%= type[0].name %></dt>
         <% _.each(type, function(obj, y) { %>
           <% let date = new Date(monSpatref[i][y].date) %>
-          <dd><%= counter++ %>) X: <%= monSpatref[i][y].x %>, Y: <%= monSpatref[i][y].y %>
+          <dd><%= counter++ %>) <%= t('coord.x') %>: <%= monSpatref[i][y].x %>, <%= t('coord.y') %>: <%= monSpatref[i][y].y %>
             <% if (counter == 2) { %>
              - <b><%= t('common.actualCoords') %></b>
             <% } %>

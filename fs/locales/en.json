@@ -61,7 +61,44 @@
     "yes": "Yes",
     "no": "No",
     "common": "common",
-    "year1": "annual"
+    "year1": "annual",
+    "choosePub": "Select an existing publication",
+    "mapDate": "Map date",
+    "name1": "Name",
+    "address": "Address",
+    "status": "Status",
+    "protCateg": "Protection category",
+    "protDoc": "Type of document on state protection",
+    "protDocNumber": "Number of the document on state protection",
+    "protDocDate": "Date of the document on state protection",
+    "borderDescr": "Borders description",
+    "regNumberBTI": "BTI registration number",
+    "passNumBTI": "Passport number of BTI",
+    "passNumDateBTI": "Date of issue of the passport of BTI",
+    "ownType": "Own type",
+    "orderType": "Type of order",
+    "okatoOwnerCode": "Code of owner (administrator) for OKATO",
+    "ownerINN": "TIN of the owner (manager)",
+    "ownerKPP": "PPC of the owner (manager)",
+    "ownerDocType": "Type of document transferring the object to the owner (manager)",
+    "ownerDocDate": "Date of the document of transfer to the owner (manager)",
+    "ownerDocNum": "Number of the document transferring to the owner (manager)",
+    "ownStartDate": "Date of the beginning of possession (order) of the document on protection",
+    "ownEndDate": "Date of the end of possession (order) under the document on protection",
+    "protDocType": "Type of security document",
+    "protDocDate1": "Date of the protection document",
+    "protDocNum": "Number of the protection document",
+    "functionalFirst": "Use for original functional purpose",
+    "funcPurpose": "Functional purpose",
+    "siteAccess": "Accessibility of the archaeological site",
+    "useType": "Type of use",
+    "document": "Document",
+    "existDoc": "Select an existing document",
+    "addNewRegDoc": "Add a new registration document",
+    "addSurveyMap": "Add survey map",
+    "protSubject": "Subject of protection",
+    "docFile": "Document file",
+    "cultureLayer": "The cultural layer"
   },
 
   "examples": {
@@ -163,6 +200,7 @@
     "plural": " Excavations",
     "genitivePl": " Excavations",
     "info": " Excavation info",
+    "infoPlural": "Information about excavations",
     "withoutMon": "Excavations outside archaeological sites",
     "name": "Name of excavation",
     "boss": "The supervisor",
@@ -171,7 +209,10 @@
     "depth": "Depth (cm)",
     "objectName": "Name of the object",
     "depth_": "Depth",
-    "area1": "Excavation area"
+    "area1": "Excavation area",
+    "add": "Add an excavation",
+    "new": "Adding a new excavation",
+    "area2": "Excavated area"
   },
 
   "research": {
@@ -186,6 +227,8 @@
     "new": "Input research data",
     "info": "Research information", 
     "author": "Research author",
+    "content": "Contents of the research",
+    "more": "Additional information about the research",
     "prop": {
       "description": "Description",
       "year": "Year of research",
@@ -229,7 +272,9 @@
     "name": "Name of heritage site",
     "full": " Cultural heritage site",
     "info": " Cultural heritage site info",
-    "new": "Input heritage site data"
+    "new": "Input heritage site data",
+    "code": "Cultural heritage object code",
+    "content": "Information about the object of cultural heritage"
   },
 
   "doc": {
@@ -251,7 +296,8 @@
     "plural": " Plans of a site ",
     "author": "Author of topography",
     "year": "Year of topography",
-    "no": "No topography"
+    "no": "No topography",
+    "add": "Add topoplan"
   },
 
   "photo": {
@@ -267,6 +313,7 @@
     "plural": " Archaeological sites",
     "new": "Input archaeological site data",
     "info": "Archeological site info",
+    "infoPlural": "Archeological sites info",
     "count": "Number of archaeological sites",
     "excavation": "Excavation",
     "name": " Archaeological site name",
@@ -277,6 +324,7 @@
     "notChoosed": "archaeological site not selected",
     "description": "Description of the archaeological site",
     "add": "Adding a new archaeological site",
+    "add1": "Add archaeological site",
     "type": "Type of archaeological site",
     "prop": {
       "type": " Archaeological site type",

@@ -13,17 +13,17 @@
 
     <div id="main">
       <div class="form-group">
-        <label for="heritage-code-input">Код ОКН</label>
+        <label for="heritage-code-input"><%= t('heritage.code') %></label>
         <input class="form-control" id="heritage-code-input" data-for="heritage:Heritage" type="text" name="code" data-has-display></input>
       </div>
 
       <div class="form-group">
-        <label for="heritage-name-input">Наименование<span class="required">*</span></label>
+        <label for="heritage-name-input"><%= t('common.name1') %><span class="required">*</span></label>
         <input class="form-control" id="heritage-name-input" data-for="heritage:Heritage" type="text" name="name" data-req data-has-display></input>
       </div>
 
       <div class="form-group">
-        <label for="heritage-address-input">Адрес</label>
+        <label for="heritage-address-input"><%= t('common.address') %></label>
         <input class="form-control" id="heritage-address-input" data-for="heritage:Heritage" type="text" name="address" data-has-display></input>
       </div>
 
@@ -37,13 +37,13 @@
       <div id="coord-picker" class="coords">
         <div class="form-group">
           <label for="heritage-x">
-            N
+            <%= t('coord.x') %>
           </label>
           <input class="form-control" id="heritage-x" data-for="hsr:SpatialReference" data-subclass="HerSpatRef" type="number" name="x"></input>
         </div>
         <div class="form-group">
           <label for="heritage-y">
-            E
+            <%= t('coord.y') %>
           </label>
           <input class="form-control" id="heritage-y" data-for="hsr:SpatialReference" data-subclass="HerSpatRef" type="number" name="y"></input>
         </div>
@@ -55,39 +55,39 @@
       </div>
 
       <div class="form-group">
-        <label for="heritage-status-selector">Статус</label>
+        <label for="heritage-status-selector"><%= t('common.status') %> </label>
         <select class="form-control" id="heritage-status-selector" data-for="hs:HeritageStatus" type="id" name="id" dynamic="true" data-has-display></select>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        <label for="heritage-security-type-selector">Категория охраны</label>
+        <label for="heritage-security-type-selector"><%= t('common.protCateg') %> </label>
         <select class="form-control" id="heritage-security-type-selector" data-for="st:SecurityType" type="id" name="id" data-has-display></select>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        <label for="heritage-doc-type-input">Вид документа о постановке на государственную охрану</label>
+        <label for="heritage-doc-type-input"><%= t('common.protDoc') %> </label>
         <input class="form-control" id="heritage-doc-type-input" data-for="file:File" type="text" name="docType" data-has-display></input>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        <label for="heritage-doc-num-input">Номер документа о постановке на государственную охрану</label>
+        <label for="heritage-doc-num-input"><%= t('common.protDocNumber') %> </label>
         <input class="form-control" id="heritage-doc-num-input" data-for="file:File" type="text" name="docNum" data-has-display></input>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        <label for="heritage-doc-date-input">Дата документа о постановке на государственную охрану</label>
+        <label for="heritage-doc-date-input"><%= t('common.protDocDate') %> </label>
         <input class="form-control date-picker" id="heritage-doc-date-input" data-for="file:File" type="text" name="docDate" data-has-display></input>
       </div>
 
       <div class="form-group">
-        <label for="heritage-border-desc-input">Описание границ</label>
+        <label for="heritage-border-desc-input"><%= t('common.borderDescr') %> </label>
         <input class="form-control" id="heritage-border-desc-input" data-for="heritage:Heritage" type="text" name="borderDesc" data-has-display></input>
       </div>
 
       <div class="checkbox" toggle-by="heritage-status-selector" need-option="2">
         <label for="select-doc-checkbox">
           <input id="select-doc-checkbox" type="checkbox" dynamic="true">
-          Выбрать существующий документ
+          <%= t('common.existDoc') %>
         </label>
       </div>
 
@@ -96,7 +96,7 @@
       </div>
 
       <div class="form-group" toggle-by="select-doc-checkbox" need-option="false">
-        <label for="heritage-file-input">Добавить новый документ о постановке на учет</label>
+        <label for="heritage-file-input"><%= t('common.addNewRegDoc') %></label>
         <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="file:File" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
           <%= t('examples.maxSizeDoc') %>.
@@ -104,7 +104,7 @@
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="1">
-        <label for="heritage-file-input">Добавить новый документ о постановке на учет</label>
+        <label for="heritage-file-input"><%= t('common.addNewRegDoc') %></label>
         <input id="heritage-file-input" accept=".pdf,.doc,.docx" data-for="file:File" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
           <%= t('examples.maxSizeDoc') %>.
@@ -113,41 +113,41 @@
 
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="maps">
       <button id="add-map-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить карту обследования
+        <%= t('common.addSurveyMap') %>
       </button>
     </div>
 
     <div id="monument">
       <button id="add-monument-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить памятник
+        <%= t('monument.add1') %>
       </button>
     </div>
 
     <div id="photo">
       <button id="add-photo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить фото
+        <%= t('common.addPhoto') %>
       </button>
     </div>
 
     <div id="topoplan">
       <button id="add-topoplan-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить топоплан
+        <%= t('topoplan.add') %>
       </button>
     </div>
 
     <button id="send-button" class="btn btn-primary">
       <i class="fa fa-cogs"></i>
-      Создать
+      <%= t('common.create') %>
     </button>
   </div>
 </div>

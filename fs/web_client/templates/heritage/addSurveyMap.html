@@ -13,29 +13,29 @@
 
     <div id="general<%=mapId%>">
       <div class="form-group">
-        <label for="map-create-date-input-<%=mapId%>">Дата составления карты</label>
+        <label for="map-create-date-input-<%=mapId%>"><%= t('common.mapDate') %></label>
         <input class="form-control date-picker" id="map-create-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="createDate"></input>
       </div>
 
       <div class="form-group">
-        Код ОКН:
+        <%= t('heritage.code') %>:
         <span data-from="heritage-code-input"></span>
       </div>
 
       <div class="form-group">
-        Наименование:</label>
+        <%= t('common.name1') %>:</label>
         <span data-from="heritage-name-input"></span>
       </div>
 
       <div class="form-group">
-        Адрес:</label>
+        <%= t('common.address') %>:</label>
         <span data-from="heritage-address-input"></span>
       </div>
 
       <div class="form-group">
-        Координаты:</label>
-        X = <span data-from="heritage-x"></span>,
-        Y = <span data-from="heritage-y"></span>
+        <%= t('coord.plural') %>:</label>
+        <%= t('coord.x') %> = <span data-from="heritage-x"></span>,
+        <%= t('coord.y') %> = <span data-from="heritage-y"></span>
       </div>
 
       <div class="form-group">
@@ -44,57 +44,57 @@
       </div>
 
       <div class="form-group">
-        Статус:</label>
+        <%= t('common.status') %> :</label>
         <span data-from="heritage-status-selector"></span>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        Категория охраны:
+        <%= t('common.protCateg') %> :
         <span data-from="heritage-security-type-selector"></span>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        Вид документа о постановке на государственную охрану:
+        <%= t('common.protDoc') %> :
         <span data-from="heritage-doc-type-input"></span>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        Номер документа о постановке на государственную охрану:
+        <%= t('common.protDocNumber') %> :
         <span data-from="heritage-doc-num-input"></span>
       </div>
 
       <div class="form-group" toggle-by="heritage-status-selector" need-option="2">
-        Дата документа о постановке на государственную охрану:
+        <%= t('common.protDocDate') %> :
         <span data-from="heritage-doc-date-input"></span>
       </div>
 
       <div class="form-group">
-        Описание границ:
+        <%= t('common.borderDescr') %> :
         <span data-from="heritage-border-desc-input"></span>
       </div>
 
       <div class="form-group">
-        <label for="map-rod-number-input">Учетный номер БТИ</label>
+        <label for="map-rod-number-input"><%= t('common.regNumberBTI') %> </label>
         <input class="form-control" id="map-rod-number-input" data-for="map_<%=mapId%>:SurveyMap" type="text" name="rodNum"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-rod-passport-input">Номер паспорта БТИ</label>
+        <label for="map-rod-passport-input"><%= t('common.passNumBTI') %> </label>
         <input class="form-control" id="map-rod-passport-input" data-for="map_<%=mapId%>:SurveyMap" type="text" name="rodPassport"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-rod-date-input">Дата выдачи паспорта БТИ</label>
+        <label for="map-rod-date-input"><%= t('common.passNumDateBTI') %> </label>
         <input class="form-control date-picker" id="map-rod-date-input" data-for="map_<%=mapId%>:SurveyMap" type="text" name="rodDate"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-area-input">Общая площадь (<%= t('common.metresInSq') %>)</label>
+        <label for="map-area-input"><%= t('common.area') %>  (<%= t('common.metresInSq') %>)</label>
         <input class="form-control" id="map-area-input" data-for="map_<%=mapId%>:SurveyMap" type="number" name="area"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-file-input-<%=mapId%>">Карта обследования</label>
+        <label for="map-file-input-<%=mapId%>"><%= t('doc.surveyMap.singular') %> </label>
         <input id="map-file-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="file" name="fileid"></input>
         <div class="alert alert-dismissible alert-info">
           <%= t('examples.maxSizeDoc') %>.
@@ -104,90 +104,90 @@
 
     <div id="use<%=mapId%>">
       <div class="form-group">
-        <label for="map-own-type-selector-<%=mapId%>">Вид собственности</label>
+        <label for="map-own-type-selector-<%=mapId%>"><%= t('common.ownType') %> </label>
         <select class="form-control" id="map-own-type-selector-<%=mapId%>" data-for="ownType_<%=mapId%>:OwnType" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
-        <label for="map-disposal-type-selector-<%=mapId%>">Вид распоряжения</label>
+        <label for="map-disposal-type-selector-<%=mapId%>"><%= t('common.orderType') %> </label>
         <select class="form-control" id="map-disposal-type-selector-<%=mapId%>" data-for="dispType_<%=mapId%>:DisposalType" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
-        <label for="map-disposer-code-input-<%=mapId%>">Код собственника (распорядителя) по ОКАТО</label>
+        <label for="map-disposer-code-input-<%=mapId%>"><%= t('common.okatoOwnerCode') %> </label>
         <input class="form-control" id="map-disposer-code-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="disposalCode"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-disposer-vat-input-<%=mapId%>">ИНН собственника (распорядителя)</label>
+        <label for="map-disposer-vat-input-<%=mapId%>"><%= t('common.ownerINN') %> </label>
         <input class="form-control" id="map-disposer-vat-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="disposerVat"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-disposer-kpp-input-<%=mapId%>">КПП собственника (распорядителя)</label>
+        <label for="map-disposer-kpp-input-<%=mapId%>"><%= t('common.ownerKPP') %> </label>
         <input class="form-control" id="map-disposer-kpp-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="disposerKpp"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-doc-type-input-<%=mapId%>">Вид документа о передаче объекта собственнику (распорядителю)</label>
+        <label for="map-doc-type-input-<%=mapId%>"><%= t('common.ownerDocType') %> </label>
         <input class="form-control" id="map-doc-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docType"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-doc-date-input-<%=mapId%>">Дата документа о передаче собственнику (распорядителю)</label>
+        <label for="map-doc-date-input-<%=mapId%>"><%= t('common.ownerDocDate') %> </label>
         <input class="form-control date-picker" id="map-doc-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docDate"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-doc-num-input-<%=mapId%>">Номер документа о передаче собственнику (распорядителю)</label>
+        <label for="map-doc-num-input-<%=mapId%>"><%= t('common.ownerDocNum') %> </label>
         <input class="form-control" id="map-doc-num-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docNum"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-start-date-input-<%=mapId%>">Дата начала владения (распоряжения) по документу об охране</label>
+        <label for="map-start-date-input-<%=mapId%>"><%= t('common.ownStartDate') %> </label>
         <input class="form-control date-picker" id="map-start-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="startDate"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-end-date-input-<%=mapId%>">Дата окончания владения (распоряжения) по документу об охране</label>
+        <label for="map-end-date-input-<%=mapId%>"><%= t('common.ownEndDate') %> </label>
         <input class="form-control date-picker" id="map-end-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="endDate"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-doc-security-type-input-<%=mapId%>">Вид охранного документа</label>
+        <label for="map-doc-security-type-input-<%=mapId%>"><%= t('common.protDocType') %> </label>
         <input class="form-control" id="map-doc-security-type-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docSecurityType"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-doc-security-date-input-<%=mapId%>">Дата охранного документа</label>
+        <label for="map-doc-security-date-input-<%=mapId%>"><%= t('common.protDocDate1') %> </label>
         <input class="form-control date-picker" id="map-doc-security-date-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docSecurityDate"></input>
       </div>
 
       <div class="form-group">
-        <label for="map-doc-security-num-input-<%=mapId%>">Номер охранного документа</label>
+        <label for="map-doc-security-num-input-<%=mapId%>"><%= t('common.protDocNum') %> </label>
         <input class="form-control" id="map-doc-security-num-input-<%=mapId%>" data-for="map_<%=mapId%>:SurveyMap" type="text" name="docSecurityNum"></input>
       </div>
 
       <div class="form-group">
-        Использование по первоначальному функциональному назначению
+        <%= t('common.functionalFirst') %> 
         <p>
-          <input id="map-use-initial-yes-<%=mapId%>" data-name="useInitial" name="useInitial-<%=mapId%>" data-type="number" type="radio" value="1" data-for="map_<%=mapId%>:SurveyMap" checked>Да
-          <input id="map-use-initial-no-<%=mapId%>" data-name="useInitial" name="useInitial-<%=mapId%>" data-type="number" type="radio" value="0" data-for="map_<%=mapId%>:SurveyMap">Нет
+          <input id="map-use-initial-yes-<%=mapId%>" data-name="useInitial" name="useInitial-<%=mapId%>" data-type="number" type="radio" value="1" data-for="map_<%=mapId%>:SurveyMap" checked><%= t('common.yes') %> 
+          <input id="map-use-initial-no-<%=mapId%>" data-name="useInitial" name="useInitial-<%=mapId%>" data-type="number" type="radio" value="0" data-for="map_<%=mapId%>:SurveyMap"><%= t('common.no') %>
         </p>
       </div>
 
       <div class="form-group">
-        <label for="map-purpose-selector">Функциональное назначение</label>
+        <label for="map-purpose-selector"><%= t('common.funcPurpose') %></label>
         <select class="form-control" id="map-purpose-selector-<%=mapId%>" data-for="fp_<%=mapId%>:FunctionalPurpose" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
-        <label for="map-availability-selector">Доступность памятника</label>
+        <label for="map-availability-selector"><%= t('common.siteAccess') %></label>
         <select class="form-control" id="map-availability-selector-<%=mapId%>" data-for="avail_<%=mapId%>:Availability" type="id" name="id"></select>
       </div>
 
       <div class="form-group">
-        <label for="map-usage-type-selector">Вид пользования</label>
+        <label for="map-usage-type-selector"><%= t('common.useType') %></label>
         <select class="form-control" id="map-usage-type-selector-<%=mapId%>" data-for="ut_<%=mapId%>:UsageType" type="id" name="id"></select>
       </div>
 

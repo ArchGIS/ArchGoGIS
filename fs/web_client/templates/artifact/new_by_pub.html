@@ -2,7 +2,7 @@
   <h2><%= t('artifact.create') %></h2>
   <button class="send-button btn btn-primary">
     <i class="fa fa-cogs"></i>
-    Создать
+    <%= t('common.create') %>
   </button>
   
   <div id="container">
@@ -14,10 +14,10 @@
     </ul>
 
     <div id="home">
-    	<legend>Сведения об исследовании</legend>
+    	<legend><%= t('research.info') %></legend>
 
       <div class="form-group find-author">
-        <h4>Введите существующего автора исследования</h4>
+        <h4><%= t('common.formAuthor') %></h4>
         <label for="author-input"><%= t('author.name') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
         <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up">
@@ -25,14 +25,14 @@
 
       <button class="btn btn-primary btn-new-coauthor">
         <i class="fa fa-cogs"></i>
-        Добавить соавтора
+        <%= t('author.addCoauthor') %>
       </button>
 
       <br>
       <br>
       
       <div class="form-group find-pub">
-        <h4>Выберите существующую публикацию</h4>
+        <h4><%= t('common.choosePub') %></h4>
         <label for="pub-input"><%= t('publication.name') %> <span class="required">*</span></label>
         <input class="form-control" id="pub-input">
         <input id="pub-input-id" data-for="pub:Publication" type="id" hidden name="id" data-req="up">
@@ -41,22 +41,22 @@
 
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="monument">
-      <legend>Сведения о памятнике</legend>
+      <legend><%= t('monument.info') %></legend>
 
       <button class="btn btn-primary btn-next" active="2" id="monument-next-button">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
   <div id="excavation" data-custom-relations="exc_1:Monument">
       <div class="form-group">
-        <label for="exc-name-input">Название вскрытия</label>
+        <label for="exc-name-input"><%= t('excavation.name') %></label>
         <input class="form-control" id="exc-name-input" data-for="exc_1:Excavation" type="text" name="name"></input>
       </div>
       <div class="form-group">
@@ -64,23 +64,23 @@
         <input class="form-control" id="exc-boss-input" data-for="exc_1:Excavation" type="text" name="boss"></input>
       </div>
       <div class="form-group">
-        <label for="exc-area-input">Площадь (<%= t('common.metresInSq') %>)</label>
+        <label for="exc-area-input"><%= t('excavation.area') %></label>
         <input class="form-control" id="exc-area-input" data-for="exc_1:Excavation" type="number" name="area"></input>
       </div>
       <div class="form-group">
-        <label for="exc-region-input">Участок(квадрат)</label>
+        <label for="exc-region-input"><%= t('excavation.section') %></label>
         <input class="form-control" id="exc-region-input" data-for="arti_1:Artifact" type="text" name="excRegion"></input>
       </div>
       <div class="form-group">
-        <label for="exc-depth-input">Глубина (см)</label>
+        <label for="exc-depth-input"><%= t('excavation.depth') %></label>
         <input class="form-control" id="exc-depth-input" data-for="arti_1:Artifact" type="number" name="depth"></input>
       </div>
       <div class="form-group" data-custom-relations="complex_1:Monument">
-        <label for="monument-object-input">Название объекта</label>
+        <label for="monument-object-input"><%= t('excavation.objectName') %></label>
         <input class="form-control" id="monument-object-input" data-for="complex_1:Complex" type="text" name="name"></input>
       </div>
       <div class="form-group complex-belongs" id="complex-belongs" data-checkbox-type="radio" hidden>
-        Принадлежит памятнику:
+        <%= t('common.belongsToSite') %>:
       </div>
 
       <input class="form-control" id="exc-spatref-date" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="date" data-need-date hidden></input>
@@ -93,49 +93,49 @@
       <div id="exc-coord-picker" class="coords">
         <div class="form-group">
           <label for="exc-x">
-            N
+            <%= t('coord.x') %>
           </label>
           <input class="form-control" id="exc-x" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="x"></input>
         </div>
         <div class="form-group">
           <label for="exc-y">
-            E
+            <%= t('coord.y') %>
           </label>
           <input class="form-control" id="exc-y" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="y"></input>
         </div>
       </div>
       <div class="alert alert-dismissible alert-info">
-        Нажмите на кнопку для выбора координат. Формат для ручного заполнения: 55.5555, 49.5656.
+        <%= t('examples.chooseCoords') %>
       </div>
 
       <div class="form-group exc-belongs" id="exc-belongs" data-checkbox-type="checkbox">
-        Принадлежит памятнику:
+        <%= t('common.belongsToSite') %>:
       </div>
 
       <button class="btn btn-primary btn-next" active="2">
         <i class="fa fa-cogs"></i>
-        Далее
+        <%= t('common.next') %>
       </button>
     </div>
 
     <div id="artifact" data-custom-relations="arti_1:Knowledge">
       <div class="form-group">
-        <label for="arti-name-input">Название<span class="required">*</span></label>
+        <label for="arti-name-input"><%= t('common.name') %><span class="required">*</span></label>
         <input class="form-control" id="arti-name-input" data-for="arti_1:Artifact" type="text" name="name" data-req></input>
       </div>
 
       <div class="form-group">
-        <label for="arti-year-found-input">Год находки</label>
+        <label for="arti-year-found-input"><%= t('artifact.yearFound') %></label>
         <input class="form-control" id="arti-year-found-input" data-for="arti_1:Artifact" type="number" name="year"></input>
       </div>
 
       <div class="form-group">
-        <label for="arti-category-input">Категория</label>
+        <label for="arti-category-input"><%= t('artifact.category') %></label>
         <input id="arti-category-input" class="form-control autoinput"></input>
         <input id="arti-category-input-id" data-few="true" data-for="ac_1:ArtifactCategory" hidden type="id" name="id"></input>
       </div>
       <div class="form-group">
-        <label for="arti-material-input">Материал</label>
+        <label for="arti-material-input"><%= t('artifact.material') %></label>
         <input id="arti-material-input" class="form-control autoinput"></input>
         <input id="arti-material-input-id" data-few="true" data-for="am_1:ArtifactMaterial" hidden type="id" name="id"></input>
       </div>
@@ -151,7 +151,7 @@
       </div>
       
       <div class="form-group find-culture-art">
-        <label for="culture-input-art">Культурная принадлежность</label>
+        <label for="culture-input-art"><%= t('common.culture') %></label>
         <input id="culture-input-art" class="form-control" data-for="c_arti:Culture" data-subclass="artiCulture" type="id" name="id"> 
       </div>
 
@@ -165,35 +165,35 @@
       <div id="arti-coord-picker" class="coords">
         <div class="form-group">
           <label for="arti-x">
-            N
+            <%= t('coord.x') %>
           </label>
           <input class="form-control" id="arti-x" data-for="asr:SpatialReference" data-subclass="ArtiSpatRef" type="number" name="x"></input>
         </div>
         <div class="form-group">
           <label for="arti-y">
-            E
+            <%= t('coord.y') %>
           </label>
           <input class="form-control" id="arti-y" data-for="asr:SpatialReference" data-subclass="ArtiSpatRef" type="number" name="y"></input>
         </div>
       </div>
       
       <div class="form-group">
-        <label for="arti-desc-input">Описание</label>
+        <label for="arti-desc-input"><%= t('common.description') %></label>
         <textarea class="form-control" id="arti-desc-input" data-for="inter:Interpretation" type="text" name="description"></textarea>
         <input class="form-control" id="arti-tmp-input" value="Костыль" data-for="inter:Interpretation" type="text" name="tmp" hidden=""></textarea>
       </div>
 
       <div class="form-group arti-belongs" id="arti-belongs" data-checkbox-type="radio">
-        Принадлежит памятнику:
+        <%= t('common.belongsToSite') %>:
       </div>
 
       <button id="add-photo-button" class="btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Добавить фото
+        <%= t('common.addPhoto') %>
       </button>
       <button class="send-button btn btn-primary">
         <i class="fa fa-cogs"></i>
-        Создать
+        <%= t('common.create') %>
       </button>
     </div>
   </div>
@@ -294,7 +294,7 @@
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2">
         <div class="form-group">
-          ><%= t('publication.editCont') %>
+          <%= t('publication.editCont') %>
           <select class="form-control" id="edi-cont" data-for="pub:Publication" type="number" name="editionContinue" dynamic="true">
             <option value="1"><%= t('common.yes') %></option>
             <option value="2"><%= t('common.no') %></option>
