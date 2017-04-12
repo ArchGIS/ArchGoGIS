@@ -1,6 +1,6 @@
 'use strict';
 
-App.views.map = (types) => {
+App.views.map = () => {
   let map = L.map('map').setView([55.78, 49.13], 6);
 
   let layerdefs = {
@@ -49,19 +49,6 @@ App.views.map = (types) => {
   const bing = new L.DeferredLayer(layerdefs.bing);
   const bingSputnik = new L.DeferredLayer(layerdefs.bingSputnik);
 
-  let overlayLayers = null;
-
-  if (types) {
-    overlayLayers = _.reduce(types, (memo, type) => {
-      memo[App.store.mapTypes[type]] = L.featureGroup();
-      return memo;
-    }, {});
-
-    _.each(overlayLayers, (layer) => {
-      layer.addTo(map);
-    });
-  }
-
   const controls = L.control.layers(
     {
       'OSM': osm,
@@ -71,8 +58,7 @@ App.views.map = (types) => {
       "Yandex спутник": yndxSputnik,
       "Bing": bing,
       "Bing спутник": bingSputnik
-    },
-    overlayLayers
+    }
   ).addTo(map);
 
   const myC = new L.Control.Bookmarks()
@@ -95,15 +81,29 @@ App.views.map = (types) => {
 
   return {
     map,
-    overlayLayers
+    controls
   }
 };
 
-App.views.addToMap = (placemarks) => {
+App.views.addOverlays = (leaf, types) => {
+  const overlayLayers = _.reduce(types, (memo, type) => {
+    memo[App.store.mapTypes[type]] = L.featureGroup();
+    return memo;
+  }, {});
+
+  _.each(overlayLayers, (layer, key) => {
+    layer.addTo(leaf.map);
+    leaf.controls.addOverlay(layer, key);
+  });
+
+  return overlayLayers;
+};
+
+App.views.addToMap = (placemarks, existMap) => {
   const types       = _.uniq( _.pluck(placemarks, 'type') ),
-        mapInstance = App.views.map(types),
-        map         = mapInstance.map,
-        overlays    = mapInstance.overlayLayers;
+        mapInstance = existMap || App.views.map(),
+        overlays    = App.views.addOverlays(mapInstance, types),
+        map         = mapInstance.map;
 
   const icon16 = [16, 16],
         icon20 = [20, 20];
@@ -117,7 +117,7 @@ App.views.addToMap = (placemarks) => {
 
   _.each(placemarks, function(item) {
     if (!item.coords[0] && !item.coords[1]) { return; }
-    
+
     const pathToIcon = `/web_client/img/${App.store.pathToIcons[item.type]}`;
     const icon = L.icon({
       iconUrl: `${pathToIcon}/${item.opts.preset}.png`,

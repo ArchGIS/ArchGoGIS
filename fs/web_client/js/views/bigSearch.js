@@ -2,8 +2,6 @@
 
 App.views.bigSearch = new (Backbone.View.extend({
   'index': function() {
-    // let instMap = App.views.map();
-
     let queries = {
       author: {
         "main": {
@@ -790,6 +788,8 @@ App.views.bigSearch = new (Backbone.View.extend({
       }
     };
 
+    const instMap = App.views.map();
+
     function changeCriterionType(id) {
       $(`#search-criterion-${id}`).on("change", function() {
         let option = $(`#search-criterion-${id} :selected`);
@@ -888,7 +888,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                 }
               }
             })
-            App.views.addToMap(placemarks);
+            App.views.addToMap(placemarks, instMap);
           }
 
           if (entity == "monument") {
