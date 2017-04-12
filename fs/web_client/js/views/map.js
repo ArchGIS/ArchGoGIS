@@ -146,4 +146,18 @@ App.views.addToMap = (placemarks, existMap) => {
 
     overlays[App.store.mapTypes[item.type]].addLayer(marker);
   });
+
+  return {
+    mapInstance,
+    overlays
+  };
+};
+
+App.views.clearOverlays = (leaf) => {
+  if (leaf) {
+    _.each(leaf.overlays, function (ov) {
+      ov.remove();
+      leaf.mapInstance.controls.removeLayer(ov);
+    });
+  }
 };

@@ -830,12 +830,15 @@ App.views.bigSearch = new (Backbone.View.extend({
     });
     $('#add-criterion-button').trigger("click");
 
+    let overlays = null;
     $("#show-results-button").on("click", function() {
       let entity = $("#search-object").val();
       let query = _.clone(queries[entity].main);
       let criteria = $(".criterion-type");
 
       const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
+
+      App.views.clearOverlays(overlays);
 
       _.each(criteria, function(krit, i) {
         let $krit = $(krit);
@@ -888,7 +891,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                 }
               }
             })
-            App.views.addToMap(placemarks, instMap);
+            overlays = App.views.addToMap(placemarks, instMap);
           }
 
           if (entity == "monument") {
