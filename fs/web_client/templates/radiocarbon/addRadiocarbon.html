@@ -1,0 +1,124 @@
+<h4 class="accordion-header" id="radiocarbon-header-<%= rid %>">
+  <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+  <%= t('radiocarbon.byNum') %><%= rid %>
+</h4>
+
+<div class="accordion-content radiocarbon-content">
+  <div id="radiocarbon-<%= rid %>" class="radiocarbon-block" data-custom-relations="carbon_<%= rid %>:Knowledge">
+    <div class="form-group">
+      <label for="carbon-name-input-<%= rid %>"><%= t("radiocarbon.index") %><span class="required">*</span></label>
+      <input class="form-control" id="carbon-name-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="text" name="name" data-req></input>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-date-input-<%= rid %>"><%= t("radiocarbon.date") %></label>
+      <input class="form-control" id="carbon-date-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="date"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-date-type-selector-<%= rid %>"><%= t("radiocarbon.dateType") %></label>
+      <select class="form-control" id="carbon-date-type-selector-<%= rid %>" data-for="cdt_<%= rid %>:RadiocarbonDateType" type="id" name="id"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-s-input-<%= rid %>">±1s </label>
+      <input class="form-control" id="carbon-s-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="s"></input>
+    </div>
+    <div class="form-group">
+      <label for="carbon-ss-input-<%= rid %>">±2s </label>
+      <input class="form-control" id="carbon-ss-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="ss"></input>
+    </div>
+    <div class="form-inline">
+      <label for="carbon-bcad-first-bottom-<%= rid %>">BC/AD 68.2% from</label>
+      <input id="carbon-bcad-first-bottom-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" class="form-control mini" type="number" name="bcadFirstBot"></input>
+      <label for="carbon-bcad-first-top-<%= rid %>">to</label>
+      <input id="carbon-bcad-first-top-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" class="form-control input" type="number" name="bcadFirstTop"></input>
+    </div>
+    <br>
+    <div class="form-inline">
+      <label for="carbon-bcad-second-bottom-<%= rid %>">BC/AD 95.4% from</label>
+      <input id="carbon-bcad-second-bottom-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" class="form-control mini" type="number" name="bcadSecondBot"></input>
+      <label for="carbon-bcad-second-top-<%= rid %>">to</label>
+      <input id="carbon-bcad-second-top-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" class="form-control input" type="number" name="bcadSecondTop"></input>
+    </div>
+    <br>
+
+    <div class="form-group">
+      <label for="carbon-curve-input-<%= rid %>">Curve IntCal</label>
+      <input class="form-control" id="carbon-curve-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="curve"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-spatref-selector-<%= rid %>"><%= t("common.accuracy") %></label>
+      <select class="form-control" id="carbon-spatref-selector-<%= rid %>" data-for="asrt_<%= rid %>:SpatialReferenceType" data-subclass="CarbonSpatRefType" type="id" name="id"></select>
+    </div>
+
+    <div id="carbon-coord-picker-<%= rid %>" class="coords">
+      <div class="form-group">
+        <label for="carbon-x">
+          N
+        </label>
+        <input class="form-control" id="carbon-x-<%= rid %>" data-for="asr_<%= rid %>:SpatialReference" data-subclass="CarbonSpatRef" type="number" name="x"></input>
+      </div>
+      <div class="form-group">
+        <label for="carbon-y">
+          E
+        </label>
+        <input class="form-control" id="carbon-y-<%= rid %>" data-for="asr_<%= rid %>:SpatialReference" data-subclass="CarbonSpatRef" type="number" name="y"></input>
+      </div>
+    </div>
+
+    <input class="form-control" id="carbon-spatref-date-<%= rid %>" data-for="asr_<%= rid %>:SpatialReference" data-subclass="CarbonSpatRef" type="number" name="date" data-need-date hidden></input>
+
+    <div class="form-group">
+      <label for="carbon-depth-input-<%= rid %>"><%= t("radiocarbon.depth") %></label>
+      <input class="form-control" id="carbon-depth-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="depth"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-relative-depth-input-<%= rid %>"><%= t("radiocarbon.relativeDepth") %></label>
+      <input class="form-control" id="carbon-relative-depth-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="relativeDepth"></input>
+    </div>
+
+    <div class="form-group">
+      <label for="exc-region-input-<%= rid %>"><%= t('excavation.section') %></label>
+      <input class="form-control" id="exc-region-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="text" name="excRegion"></input>
+    </div>
+
+    <div class="form-group" data-custom-relations="complex_<%= rid %>:Monument">
+      <label for="monument-object-input-<%= rid %>"><%= t('excavation.objectName') %></label>
+      <input class="form-control" id="monument-object-input-<%= rid %>" data-for="complex_<%= rid %>:Complex" type="text" name="name"></input>
+    </div>
+    <div class="form-group complex-belongs" id="complex-belongs-<%= rid %>" data-checkbox-type="radio" hidden>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-layer-char-input-<%= rid %>"><%= t("radiocarbon.stratigraphic") %></label>
+      <textarea class="form-control" id="carbon-layer-char-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="text" name="layerChar"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-genesis-selector-<%= rid %>"><%= t("radiocarbon.genesis") %></label>
+      <select class="form-control" id="carbon-genesis-selector-<%= rid %>" data-for="sg_<%= rid %>:SludgeGenesis" type="id" name="id"></select>
+    </div>
+
+    <div class="form-group" id="div-carbon-facies-selector" style="display: none">
+      <label for="carbon-facies-selector-<%= rid %>"><%= t("radiocarbon.facies") %></label>
+      <select class="form-control" id="carbon-facies-selector-<%= rid %>" data-for="fac_<%= rid %>:Facies" type="id" name="id" used="false"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-material-selector-<%= rid %>"><%= t("radiocarbon.material") %></label>
+      <select class="form-control" id="carbon-material-selector-<%= rid %>" data-for="fac_<%= rid %>:CarbonMaterial" type="id" name="id"></select>
+    </div>
+
+    <div class="form-group carbon-belongs" id="carbon-belongs-<%= rid %>" data-checkbox-type="radio">
+      <%= t('common.belongsToSite') %>:
+    </div>
+
+    <button class="btn btn-primary" id="add-photo-button-<%= rid %>" data-rid="<%= rid %>">
+      <i class="fa fa-cogs"></i>
+      <%= t('common.addPhoto') %>
+    </button>
+  </div>
+</div>

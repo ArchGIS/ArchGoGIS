@@ -233,6 +233,9 @@ App.views.functions = {
   "addLayerCheckbox": function(objFor, objWith, forId, withId, layerId, type) {
     type = type || "checkbox";
 
+    let dataRelationFor = objFor.split("-")[0];
+    dataRelationFor += (forId > -1) ? `_${forId}` : '';
+
     let layerSpan = $("<span>").attr("class", "layer-checkbox");
     let label = $("<label>")
       .attr("style", "margin-right: 3px")
@@ -244,7 +247,7 @@ App.views.functions = {
         id: `${objFor}-layer-${withId}-${layerId}`,
         type: type,
         name: `${objFor}-layer-${withId}`,
-        "data-relation-for": `${objFor}_${forId}`,
+        "data-relation-for": dataRelationFor,
         "data-relation-with": `${objWith}_${withId}_${layerId}`
       })
 
@@ -256,12 +259,15 @@ App.views.functions = {
 
   "addRelationCheckbox": function(objFor, objWith, forId, withId, type) {
     type = type || "checkbox";
+    
+    let dataRelationFor = objFor.split("-")[0];
+    dataRelationFor += (forId > -1) ? `_${forId}` : '';
 
     let checkbox = $("<input>")
       .attr({
         id: `${objFor}-layer-${withId}`,
         type: type,
-        "data-relation-for": `${objFor}_${forId}`,
+        "data-relation-for": dataRelationFor,
         "data-relation-with": `${objWith}_${withId}`,
       })
 

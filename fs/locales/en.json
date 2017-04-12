@@ -205,9 +205,9 @@
     "name": "Name of excavation",
     "boss": "The supervisor",
     "area": "Area (m²)",
-    "section": "Section (square)",
+    "section": "Find area (grid reference)",
     "depth": "Depth (cm)",
-    "objectName": "Name of the object",
+    "objectName": "Feature (arhaeological complex)",
     "depth_": "Depth",
     "area1": "Excavation area",
     "add": "Add an excavation",
@@ -318,7 +318,7 @@
     "excavation": "Excavation",
     "name": " Archaeological site name",
     "names": "Archaeological site names",
-    "monByNum": "Archaeological site №",
+    "monByNum": "Archaeological site #",
     "choose": "Select an existing archaeological site",
     "coords": "Coordinates of the selected archaeological site",
     "notChoosed": "archaeological site not selected",
@@ -356,10 +356,16 @@
     "plural": "Radiocarbon datings",
     "index": "Index",
     "date": "Date BP",
+    "stratigraphic": "Stratigraphic characteristic of the host layer",
+    "genesis": "Genesis of the enclosing sediments",
+    "material": "Sample material",
+    "byNum": "Radiocarbon dating #",
+    "add": "Add radiocarbon dating",
     "facies": "Facies",
     "dateType": "Date type",
     "create": "Input radiocarbon data",
-    "depth": "Depth"
+    "depth": "Depth",
+    "relativeDepth": "Relative altitude, cm"
   },
 
   "report": {
