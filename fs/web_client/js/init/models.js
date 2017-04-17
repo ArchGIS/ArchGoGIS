@@ -2,14 +2,14 @@
 
 App.models.fn = {
   "sendQuery": function(query, limit) {
-    limit = limit || 500;
+    limit = limit || 1000;
     var d = $.Deferred();
     this.sendQueryWithDeferred(query, d, limit);
     return d.promise();
   },
 
   "sendQueryWithDeferred": function(query, deferred, limit) {
-    limit = limit || 500;
+    limit = limit || 1000;
     $.post({
       url: `/hquery/read?limit=${limit}`,
       data: query,
