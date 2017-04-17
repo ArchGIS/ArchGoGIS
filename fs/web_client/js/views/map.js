@@ -141,7 +141,7 @@ App.views.addToMap = (placemarks, existMap) => {
       this.closeTooltip();
     });
     marker.on('click', function(e) {
-      location.hash = `${item.type}/show/${item.id}`
+      window.open(`${HOST_URL}/index#${item.type}/show/${item.id}`, '_blank');
     });
 
     overlays[App.store.mapTypes[item.type]].addLayer(marker);

@@ -188,7 +188,7 @@ App.views.search = new (Backbone.View.extend({
                       this.closeTooltip();
                     });
                     marker.on('click', function(e) {
-                      location.hash = `monument/show/${item.monId}`
+                      window.open(`${HOST_URL}/index#monument/show/${item.monId}`, '_blank');
                     });
 
                     markersLayer.addLayer(marker);
@@ -320,7 +320,7 @@ App.views.search = new (Backbone.View.extend({
                     this.closeTooltip();
                   });
                   marker.on('click', function(e) {
-                    location.hash = `research/show/${item.resId}`
+                    window.open(`${HOST_URL}/index#research/show/${item.resId}`, '_blank');
                   });
 
                   markersLayer.addLayer(marker);
@@ -448,7 +448,7 @@ App.views.search = new (Backbone.View.extend({
                     this.closeTooltip();
                   });
                   marker.on('click', function(e) {
-                    location.hash = `heritage/show/${item.id}`
+                    window.open(`${HOST_URL}/index#heritage/show/${item.id}`, '_blank');
                   });
 
                   markersLayer.addLayer(marker);
@@ -528,7 +528,7 @@ App.views.search = new (Backbone.View.extend({
                   this.closeTooltip();
                 });
                 marker.on('click', function(e) {
-                  location.hash = `excavation/show/${item.id}`
+                  window.open(`${HOST_URL}/index#excavation/show/${item.id}`, '_blank');
                 });
 
                 markersLayer.addLayer(marker);
