@@ -319,6 +319,7 @@
     "name": " Archaeological site name",
     "names": "Archaeological site names",
     "monByNum": "Archaeological site #",
+    "layerDesc": "Cultural layer description",
     "choose": "Select an existing archaeological site",
     "coords": "Coordinates of the selected archaeological site",
     "notChoosed": "archaeological site not selected",
