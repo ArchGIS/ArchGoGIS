@@ -128,7 +128,7 @@ function postQuery(objectId) {
     ["Artifact", "ArtiSpatRef", "has"],
     ["ArtiSpatRef", "ArtiSpatRefType", "has"],
     ["Research", "Interpretation", "has"],
-    ["Interpretation", "DateScale", "has"],
+    ["Interpretation", "ArtiDateScale", "has"],
     ["Interpretation", "ArtifactImage", "has"],
     ["Interpretation", "artiImage", "has"],
     ["Interpretation", "artiCulture", "has"],
@@ -253,13 +253,15 @@ function loading(load) {
 function generateJson(relations) {
   let type, json = {};
   const inputs = $("[data-for][used!=false]");
-  let $input, dataFor, dataType, name, value, inputName, counter, inputTag, 
+  let $input, dataFor, dataType, name, value, inputName, counter, inputTag, needCopy, connectLayer,
       inputClass, inputSubclass, inputObjName, dataForLayer, group, objs = {};
 
   $.each(inputs, (key, input) => {
     $input = $(input);
     dataFor = $input.attr("data-for");
     group = $input.attr("data-group");
+    needCopy = $input.attr("data-copy-to");
+    connectLayer = $input.attr("data-layer-connect");
     dataType = $input.attr("data-type") || $input.attr("type");
     type = (dataType != "id" && dataType != "table") ? ("/" + dataType) : "";
     name = ($input.attr("data-name") || $input.attr("name")) + type;
@@ -308,11 +310,23 @@ function generateJson(relations) {
         dataForLayer = (layers) ? `${inputObjName}:${inputClass}` : dataFor;
         json[dataForLayer] = json[dataForLayer] || {};
         
+        objs[inputSubclass].push(inputObjName);
         if (type != "/file") {
           json[dataForLayer][name] = value;
+
+          if (needCopy) {
+            let parts = inputObjName.split("_");
+            parts[1] = needCopy;
+            inputObjName = parts.join("_");
+            dataForLayer = `${inputObjName}:${inputClass}`;
+
+            objs[inputSubclass].push(inputObjName + ((connectLayer) ? `|${connectLayer}` : ""));
+
+            json[dataForLayer] = json[dataForLayer] || {};
+            json[dataForLayer][name] = value;
+          }
         }
 
-        objs[inputSubclass].push(inputObjName);
       } while (--layers > 0)
     }
   })
@@ -330,29 +344,35 @@ function generateJson(relations) {
 
     _.each(objs[relation[0]], (objName, id) => {
       const allNames = _.uniq(objs[relation[1]]);
+      let conLayer1 = objName.split("|")[1] || "";
+      let robjName = objName.split("|")[0];
 
-      if (objs[relation[1]]) {
+        if (objs[relation[1]]) {
         _.each(allNames, (name, id) => {
-          let objId1 = objName.split("_")[1];
-          let objId2 = name.split("_")[1];
-          let layer1 = objName.split("_")[2] || "";
-          let layer2 = name.split("_")[2] || "";
+          let conLayer2 = name.split("|")[1] || "";
+          let rname = name.split("|")[0];
 
-          if ((fewRelations[objName] == relation[1]) || (fewRelations[name] == relation[0])) {
+          let objId1 = robjName.split("_")[1];
+          let objId2 = rname.split("_")[1];
+          let layer1 = robjName.split("_")[2] || "";
+          let layer2 = rname.split("_")[2] || "";
+
+          console.log(conLayer1, relation[1], conLayer2, relation[0])
+          if ((fewRelations[robjName] == relation[1]) || (fewRelations[rname] == relation[0])) {
             let needRelation = false;
 
-            if (typeof fewRelations[name] != 'undefined') {
-              needRelation = $(`input[data-relation-for = "${name}"][data-relation-with = "${objName}"]`).is(":checked");
+            if (typeof fewRelations[rname] != 'undefined') {
+              needRelation = $(`input[data-relation-for = "${rname}"][data-relation-with = "${robjName}"]`).is(":checked");
             } else {
-              needRelation = $(`input[data-relation-for = "${objName}"][data-relation-with = "${name}"]`).is(":checked");
+              needRelation = $(`input[data-relation-for = "${robjName}"][data-relation-with = "${rname}"]`).is(":checked");
             }
 
             if (needRelation) {
-              json[`${objName}__${relation[2]}__${name}`] = {};
+              json[`${robjName}__${relation[2]}__${rname}`] = {};
             }
 
-          } else if ((!(objId1 && objId2) || (objId1 === objId2)) && (!(layer1 && layer2) || (layer1 === layer2))) {
-            json[`${objName}__${relation[2]}__${name}`] = {};
+          } else if ((!(objId1 && objId2) || (objId1 === objId2) || (conLayer1 == relation[1]) || (conLayer2 == relation[0])) && (!(layer1 && layer2) || (layer1 === layer2))) {
+            json[`${robjName}__${relation[2]}__${rname}`] = {};
           }
         })
       }
