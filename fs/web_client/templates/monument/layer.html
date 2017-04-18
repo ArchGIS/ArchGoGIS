@@ -18,6 +18,11 @@
     <input id="culture-input-<%= monId %>-<%= layerId %>" class="form-control" data-for="c_<%= monId %>_<%= layerId %>:Culture" type="id" name="id">
   </div>
 
+  <div class="form-group mon-desc-<%= monId %>-<%= layerId %>">
+    <label for="mon-desc-input-<%= monId %>-<%= layerId %>"><%= t('monument.layerDesc') %></label>
+    <input id="mon-desc-input-<%= monId %>-<%= layerId %>" class="form-control" data-for="k_<%= monId %>_<%= layerId %>:Knowledge" type="text" name="layerDesc">
+  </div>
+
   <div class="form-group">
     <%= t('date.singular') %>
     <select class="form-control" id="mon-date-scale-selector-<%= monId %>-<%= layerId %>"  data-for="ds_<%= monId %>_<%= layerId %>:DateScale" type="id" name="id" data-subclass="MonDateScale"></select>

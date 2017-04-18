@@ -89,6 +89,9 @@
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
                 <dd><%= knowledges[i].description %></dd>
+                <% if (knowledges[i].layerDesc) { %>
+                  <dd><%= knowledges[i].layerDesc %></dd>
+                <% } %>
               <% } %>
 
               <% if (reports[i] && reports[i].length > 0) { %>
