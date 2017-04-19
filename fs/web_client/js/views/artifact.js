@@ -552,7 +552,9 @@ App.views.artifact = new (Backbone.View.extend({
     var repSelName = '',
         monSelName = '',
         orgName = '',
-        resId = '';
+        resId = '',
+        excAuthorId = '',
+        excYear = '';
 
     let authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
@@ -609,7 +611,7 @@ App.views.artifact = new (Backbone.View.extend({
     let artiId = 1;
 
     App.template.get("research/addMonument", function(tmpl) {
-      $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false}));
+      $('#monument-next-button').before(tmpl({'monId': monId, 'needHeader': false, 'needCopyTo':2}));
       getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
 
       $(`#monument-name-input-${monId}`).on("change", function() {
@@ -698,21 +700,21 @@ App.views.artifact = new (Backbone.View.extend({
               let inputType = $(layers).attr("data-input-type");
               let entity = $(layers).attr("data-entity");
               let entityWith = $(layers).attr("data-entity-with");
-              let checkbox = App.views.functions.addLayerCheckbox(entity, entityWith, excId, monId, layerId, inputType);
+              let checkbox = App.views.functions.addLayerCheckbox(entity, entityWith, -1, monId, layerId, inputType);
               $(layers).append(checkbox);
             })
 
-            $(`#exc-layer-1-${layerId}`).on("click", function() {
+            $(`#exc-layer-${monId}-${layerId}`).on("click", function() {
               let value = $(this).is(":checked");
-              $(`#arti-layer-1-${layerId}`).prop("disabled", !value);
-              $(`#arti-layer-1-${layerId}`)[0].checked = false;
-              $(`#complex-layer-1-${layerId}`).prop("disabled", !value);
-              $(`#complex-layer-1-${layerId}`)[0].checked = false;
+              $(`#arti-layer-${monId}-${layerId}`).prop("disabled", !value);
+              $(`#arti-layer-${monId}-${layerId}`)[0].checked = false;
+              $(`#complex-layer-${monId}-${layerId}`).prop("disabled", !value);
+              $(`#complex-layer-${monId}-${layerId}`)[0].checked = false;
             })
-            $(`#exc-layer-1-${layerId}`).trigger("click");
+            $(`#exc-layer-${monId}-${layerId}`).trigger("click");
 
-            $(`#arti-layer-1-${layerId}`).on("click", function() {
-              $(`#complex-layer-1-${layerId}`).trigger("click");
+            $(`#arti-layer-${monId}-${layerId}`).on("click", function() {
+              $(`#complex-layer-${monId}-${layerId}`).trigger("click");
             })
           });
           $button.trigger("click");
@@ -763,23 +765,23 @@ App.views.artifact = new (Backbone.View.extend({
       })
       
       let monLayers = App.views.functions.addMonRelation("exc", "m", monId, "Памятник");
-      let checkbox = App.views.functions.addRelationCheckbox("exc", "m", excId, monId);
+      let checkbox = App.views.functions.addRelationCheckbox("exc", "m", -1, monId);
       monLayers.append(checkbox);
       $(`#exc-belongs`).append(monLayers);
-      $(`#exc-layer-1`)[0].checked = true;
-      $(`#exc-layer-1`).prop("disabled", true);
+      $(`#exc-layer-${monId}`)[0].checked = true;
+      $(`#exc-layer-${monId}`).prop("disabled", true);
 
       monLayers = App.views.functions.addMonRelation("arti", "k", monId, "Памятник", "radio");
-      checkbox = App.views.functions.addRelationCheckbox("arti", "k", artiId, monId, "radio");
+      checkbox = App.views.functions.addRelationCheckbox("arti", "k", -1, monId, "radio");
       monLayers.append(checkbox);
       $(`#arti-belongs`).append(monLayers);
-      $(`#arti-layer-1`)[0].checked = true;
+      $(`#arti-layer-${monId}`)[0].checked = true;
 
       monLayers = App.views.functions.addMonRelation("complex", "m", monId, "Памятник", "radio");
-      checkbox = App.views.functions.addRelationCheckbox("complex", "m", artiId, monId, "radio");
+      checkbox = App.views.functions.addRelationCheckbox("complex", "m", -1, monId, "radio");
       monLayers.append(checkbox);
       $(`#complex-belongs`).append(monLayers);
-      $(`#complex-layer-1`)[0].checked = true;
+      $(`#complex-layer-${monId}`)[0].checked = true;
 
       App.views.functions.setCultureAutocomplete($(`#culture-input-${monId}`), monId);
       App.views.functions.setCultureAutocomplete($(`#culture-input-art`), 1, 0, "artiCulture");
@@ -790,6 +792,11 @@ App.views.artifact = new (Backbone.View.extend({
       let name = $("#pub-name-input").val() + " - " + year;
       $("#research-input-name").val(name);
       $("#research-input-year").val(year);
+      
+      let repName = $("#exc-report-name-input").val() ? ($("#exc-report-name-input").val() + ", ") : "";
+      year = $("#exc-year-input").val();
+      name = repName + $("#exc-author-name-input").val() + " - " + year;
+      $("#res2-name-input").val(name);
     };
 
     let lastSelectedAuthorId = 0;
@@ -983,8 +990,128 @@ App.views.artifact = new (Backbone.View.extend({
       return false;
     })
 
+    $(`#exc-author-name-input`).autocomplete({
+      minLength: 3,
+      source: function(request, response) {
+        var authors = [];
+        
+        App.models.Author.findByNamePrefix(request.term)
+          .then(function(data) {
+            if (data && !data.error) {
+              let results = _.map(data, function(row) {
+                return {'label': row.name, 'value': row.name, 'id': row.id}
+              });
+
+              if (!results.length) {
+                results.push('Никого не найдено');
+              }
+
+              response(results);
+            } else {
+              response();
+            }
+          });
+      },
+    }).focus(function(){
+      $(this).autocomplete("search");
+    });
+
+    $(`#exc-author-name-input`).on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    let createNewExc = false;
+    function newExc() {
+      if (createNewExc) return;
+      
+      let tmpl = _.template( $(`script.add-excavation`).html() );
+      $(`#find-excavation`).replaceWith( tmpl() );
+
+      coordpicker($('#exc-coord-picker'), {
+        inputs: ['#exc-x', '#exc-y'],
+        map: map
+      });
+      getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
+      getDataForSelector($("#research-type-selector-2"), "ResearchType", "Аналитическое");
+      createNewExc = true;
+    }
+
+    $(`#exc-author-name-input`).on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Никого не найдено') {
+        let inputValue = $(this).val();
+
+        let tmpl = _.template( $('script.add-author-exc').html() );
+        $('#find-author-exc').replaceWith( tmpl() );
+        $('#author-exc-name-input').val(inputValue);
+
+        newExc();
+      } else {
+        $(`#exc-author-id-input`).val(ui.item.id);
+        excAuthorId = ui.item.id;
+      }
+    })
+
+    $("#exc-year-input").on("change", function(e) {
+      excYear = $(this).val();
+    })
+
+    $(`#exc-name-find-input`).autocomplete({
+      minLength: 0,
+      html: true,
+      source: function(request, response) {
+        App.models.Excavation.findByNamePrefix(request.term, resId, excAuthorId, excYear)
+          .then(function(data) {
+            if (data && !data.error) {
+              let label, value;
+              let results = _.map(data, function(row) {
+                value = row.name + ` (${row.resName})`;
+                label = value + ((row.resId === resId) ? '<b> - Уже связан с выбранным исследованием </b>' : '');
+                return {'label': label, 'value': value, 'id': row.id, 'x': row.x, 'y': row.y, 'spt': row.spType, 'resId': row.resId}
+              });
+              
+              results.push({'label': 'Добавить новый раскоп', 'value': -1, 'id': -1});
+
+              response(results);
+            } else {
+              response();
+            }
+          });
+      },
+    }).focus(function(){
+      $(this).autocomplete("search");
+    });
+
+    $(`#exc-name-find-input`).on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $(`#exc-name-find-input`).on('autocompleteselect', function(event, ui) {
+      if (ui.item.id == -1) {
+        newExc();
+      } else {
+        $("#exc-clarify-coords").show();
+        $(`#exc-id-input`).val(ui.item.id);
+
+        $("#spatref-exc-x").html(ui.item.x);
+        $("#spatref-exc-y").html(ui.item.y);
+        $("#spatref-type-exc").html(ui.item.spt);
+
+        $("#res2-id-input").val(ui.item.resId);
+
+        $("#clarify-exc-button").on('click', function() {
+          let tmpl = _.template( $(`script#clarify-coords-exc`).html() );
+          $(`#exc-new-coords-button`).replaceWith( tmpl() );
+
+          coordpicker($('#exc-coord-picker'), {
+            inputs: ['#exc-x', '#exc-y'],
+            map: map
+          });
+          getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
+        })
+      }
+    })
+
     getDataForSelector($("#epoch-selector"), "Epoch");
-    getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
     getDataForSelector($("#arti-spatref-selector"), "SpatialReferenceType", "", true);
     getDataForSelector($("#culture-selector"), "Culture");
     getDataForSelector($("#arti-culture-selector"), "Culture");
@@ -996,11 +1123,6 @@ App.views.artifact = new (Backbone.View.extend({
 
     coordpicker($('#monument-coord-picker'), {
       inputs: ['#monument-x', '#monument-y'],
-      map: map
-    });
-
-    coordpicker($('#exc-coord-picker'), {
-      inputs: ['#exc-x', '#exc-y'],
       map: map
     });
 
