@@ -368,10 +368,13 @@ function fillSelector(selector, data, notLike, reverse) {
     data = _.sortBy(data, (obj) => obj.id).reverse()
   }
 
+  const lang = App.locale.getLang();
+  const prefix = lang === 'ru' ? '' : `${lang}_`;
+
   $.each(data, (id, row) => {
     if (row.name != notLike) {
       $("<option></option>")
-        .text(row.name)
+        .text(row[`${prefix}name`])
         .val(row.id)
         .attr("info", row.info || "")
         .appendTo(selector);
