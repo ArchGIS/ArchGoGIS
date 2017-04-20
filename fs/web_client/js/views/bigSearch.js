@@ -963,43 +963,44 @@ App.views.bigSearch = new (Backbone.View.extend({
           console.log(response)
 
           function render() {
-            let preset, epoch, type, ids = {};
+            let preset, epoch, type, ids = {}, id, name;
             _.each(spatref.sp, function(sp, i) {
               if (sp) {
                 if (entity == "monument") {
                   epoch = spatref.epoch[i].id;
                   type = spatref.mt[i].id;
                   preset = `monType${type}_${epoch}`;
+                  id = spatref.monument[i].id;
+                  name = spatref.monument[i].name;
 
                   if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
-                    if (ids[spatref.monument[i].id]) {
-                      $(`#record-${i}`).remove();
-                    } else {
+                    if (!ids[spatref.monument[i].id]) {
                       ids[spatref.monument[i].id] = true;
+                      placemarks.push(
+                        App.controllers.fn.createStandartPlacemark('monument', spatref.monument[i].id, sp.x, sp.y, spatref.monument[i].name, preset)
+                      );
+
+                      $("#search-results").append(`<p id="record-${id}"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
                     }
-                    placemarks.push(
-                      App.controllers.fn.createStandartPlacemark('monument', spatref.monument[i].id, sp.x, sp.y, spatref.monument[i].name, preset)
-                    );
-                  } else if (coordsCrit) {
-                    $(`#record-${spatref.monument[i].id}`).remove();
                   }
                 }
                 if (entity == "research") {
                   type = spatref.rt[i].id;
-                  // sp = App.fn.findActualSpatref(obj.sp, obj.spt);
                   preset = `resType${type}`;
+                  id = spatref.research[i].id;
+                  name = spatref.research[i].name;
 
                   if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
-                    if (ids[spatref.research[i].id]) {
-                      $(`#record-${i}`).remove();
-                    } else {
+                    console.log(ids[spatref.research[i].id])
+                    console.log(!ids[spatref.research[i].id])
+                    if (!ids[spatref.research[i].id]) {
+                      placemarks.push(
+                        App.controllers.fn.createStandartPlacemark('research', spatref.research[i].id, sp.x, sp.y, spatref.research[i].name, preset)
+                      );
                       ids[spatref.research[i].id] = true;
+                      
+                      $("#search-results").append(`<p id="record-${id}"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
                     }
-                    placemarks.push(
-                      App.controllers.fn.createStandartPlacemark('research', spatref.research[i].id, sp.x, sp.y, spatref.research[i].name, preset)
-                    );
-                  } else if (coordsCrit) {
-                    $(`#record-${spatref.research[i].id}`).remove();
                   }
                 }
               }
@@ -1013,16 +1014,18 @@ App.views.bigSearch = new (Backbone.View.extend({
             })
           }
 
-          let data = _.toArray(response[entity])
-          data = _.uniq(data, function(item, key, id) {return item.id});
-          console.log("data", data)
+          $("#search-results").html("");
+
           spatref = response;
           render();
 
-          $("#search-results").html("");
-          _.each(data, function(obj, key) {
-            $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
-          })
+          if (entity == "author") {
+            let data = _.toArray(response[entity])
+            data = _.uniq(data, function(item, key, id) {return item.id});
+            _.each(data, function(obj, key) {
+              $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}}'>${ ctl(obj.name) }</a></p>`);
+            })
+          }
         }
       });
     });
