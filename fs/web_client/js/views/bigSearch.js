@@ -794,6 +794,7 @@ App.views.bigSearch = new (Backbone.View.extend({
       $(`#search-criterion-${id}`).on("change", function() {
         let option = $(`#search-criterion-${id} :selected`);
         let listType = $(option).attr("listType");
+        let coords = $(option).attr("data-coords");
         let datePicker = $(option).attr("datePicker");
         let valueHeader = $(`#criterion-value-header-${id}`);
 
@@ -802,6 +803,22 @@ App.views.bigSearch = new (Backbone.View.extend({
         if (listType) {
           valueHeader.after(`<select id="search-value-${id}" class="form-control criterion-value"></select>`)
           getDataForSelector($(`#search-value-${id}`), listType);
+        } else if (coords) {
+          var coordpicker = App.blocks.coordpicker;
+
+          App.template.get("bigSearch/coords", function(tmpl) {
+            valueHeader.after(tmpl({'id': id}))
+
+            coordpicker($('#coord-picker-1'), {
+              inputs: ['#coords-top', '#coords-left'],
+              map: instMap.map
+            });
+
+            coordpicker($('#coord-picker-2'), {
+              inputs: ['#coords-bottom', '#coords-right'],
+              map: instMap.map
+            });
+          })
         } else {
           valueHeader.after(`<input id="search-value-${id}" class="form-control input criterion-value">`)
         }
@@ -832,6 +849,17 @@ App.views.bigSearch = new (Backbone.View.extend({
 
     let overlays = null;
     $("#show-results-button").on("click", function() {
+      let left = $("#coords-left").val();
+      let top = $("#coords-top").val();
+      let right = $("#coords-right").val();
+      let bot = $("#coords-bottom").val();
+      let coordsCrit = false;
+
+      if (left && top && right && bot) {
+        console.log("coordsCrit");
+        coordsCrit = true;
+      }
+
       let entity = $("#search-object").val();
       let query = _.clone(queries[entity].main);
       let criteria = $(".criterion-type");
@@ -843,9 +871,13 @@ App.views.bigSearch = new (Backbone.View.extend({
       _.each(criteria, function(krit, i) {
         let $krit = $(krit);
         let criterion = $("#search-criterion-"+i).val();
+
+        if (criterion == "monument-coords") {
+          return 1;
+        }
+
         let valueParts = $("#search-value-"+i).val().split(/[;]\s*/g);
         let value = "(" + valueParts.join(")|(") + ")";
-        console.log(value)
 
         let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i)
         addQuery = addQuery.replace(/VALUEPLACE/g, value)
@@ -855,6 +887,15 @@ App.views.bigSearch = new (Backbone.View.extend({
       })
       console.log(query)
       query = JSON.stringify(query);
+
+      function checkCoords(sp, left, top, right, bot) {
+        console.log(sp, left, top, right, bot)
+        if (sp.y >= left && sp.y <= right && sp.x >= bot && sp.x <= top) {
+          console.log("yes")
+          return true;
+        }
+        console.log("no")
+      }
 
       $.post({
         url: "/hquery/read",
@@ -868,6 +909,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           function render() {
             let sp, preset, epoch, type;
+            let length = spatref[0].length;
             _.each(spatref[0], function(obj, i) {
               if (obj.sp.length) {
                 if (entity == "monument") {
@@ -876,19 +918,32 @@ App.views.bigSearch = new (Backbone.View.extend({
                   sp = App.fn.findActualSpatref(obj.sp, obj.spt);
                   preset = `monType${type}_${epoch}`;
 
-                  placemarks.push(
-                    App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
-                  );
+                  if (coordsCrit && checkCoords(sp, left, top, right, bot)) {
+                    placemarks.push(
+                      App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
+                    );
+                  } else if (coordsCrit) {
+                    console.log($(`#record-${length-i-1}`));
+                    $(`#record-${length-i-1}`).remove();
+                  }
                 }
                 if (entity == "research") {
                   type = obj.rt[0].id;
                   sp = App.fn.findActualSpatref(obj.sp, obj.spt);
                   preset = `resType${type}`;
 
-                  placemarks.push(
-                    App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
-                  );
+                  if (coordsCrit && checkCoords(sp, left, top, right, bot)) {
+                    placemarks.push(
+                      App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
+                    );
+                  } else if (coordsCrit) {
+                    console.log($(`#record-${length-i-1}`));
+                    $(`#record-${length-i-1}`).remove();
+                  }
                 }
+              } else if (coordsCrit) {
+                console.log($(`#record-${length-i-1}`));
+                $(`#record-${length-i-1}`).remove();
               }
             })
             overlays = App.views.addToMap(placemarks, instMap);
@@ -910,7 +965,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           $("#search-results").html("");
           _.each(data, function(obj, key) {
-            $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
+            $("#search-results").append(`<p id="record-${key}"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
           })
         }
       });
