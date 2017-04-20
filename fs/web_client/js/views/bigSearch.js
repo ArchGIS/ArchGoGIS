@@ -981,7 +981,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                       App.controllers.fn.createStandartPlacemark('monument', spatref.monument[i].id, sp.x, sp.y, spatref.monument[i].name, preset)
                     );
                   } else if (coordsCrit) {
-                    $(`#record-${i}`).remove();
+                    $(`#record-${spatref.monument[i].id}`).remove();
                   }
                 }
                 if (entity == "research") {
@@ -999,11 +999,9 @@ App.views.bigSearch = new (Backbone.View.extend({
                       App.controllers.fn.createStandartPlacemark('research', spatref.research[i].id, sp.x, sp.y, spatref.research[i].name, preset)
                     );
                   } else if (coordsCrit) {
-                    $(`#record-${i}`).remove();
+                    $(`#record-${spatref.research[i].id}`).remove();
                   }
                 }
-              } else if (coordsCrit) {
-                $(`#record-${i}`).remove();
               }
             })
             overlays = App.views.addToMap(placemarks, instMap);
@@ -1023,7 +1021,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           $("#search-results").html("");
           _.each(data, function(obj, key) {
-            $("#search-results").append(`<p id="record-${key}"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
+            $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
           })
         }
       });
