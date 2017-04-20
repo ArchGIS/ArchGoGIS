@@ -148,7 +148,7 @@ function postQuery(objectId) {
     ["monumentImage", "CardinalDirection", "has"],
     ["Knowledge", "Radiocarbon", "has"],
     ["Excavation", "Radiocarbon", "has"],
-    ["Research", "Radiocarbon", "has"],
+    ["Research", "Radiocarbon", "has", "always"],
     ["Radiocarbon", "RadiocarbonDateType", "has"],
     ["Radiocarbon", "SludgeGenesis", "has"],
     ["Radiocarbon", "CarbonMaterial", "has"],
@@ -348,6 +348,7 @@ function generateJson(relations) {
       let robjName = objName.split("|")[0];
 
         if (objs[relation[1]]) {
+        let always = (relation[3] == "always") ? true : false;
         _.each(allNames, (name, id) => {
           let conLayer2 = name.split("|")[1] || "";
           let rname = name.split("|")[0];
@@ -370,7 +371,7 @@ function generateJson(relations) {
               json[`${robjName}__${relation[2]}__${rname}`] = {};
             }
 
-          } else if ((!(objId1 && objId2) || (objId1 === objId2) || (conLayer1 == relation[1]) || (conLayer2 == relation[0])) && (!(layer1 && layer2) || (layer1 === layer2))) {
+          } else if (always || ((!(objId1 && objId2) || (objId1 === objId2)) && (!(layer1 && layer2) || (layer1 === layer2)))) {
             json[`${robjName}__${relation[2]}__${rname}`] = {};
           }
         })
