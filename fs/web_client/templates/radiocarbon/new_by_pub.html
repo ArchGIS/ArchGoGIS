@@ -20,7 +20,7 @@
         <h4><%= t('common.formAuthor') %></h4>
         <label for="author-input"><%= t('author.name') %> <span class="required">*</span></label>
         <%= widget("SearchLine", authorsInputOptions, "author-input") %>
-        <input id="author-input-id" data-for="author:Author" hidden type="id" name="id" data-req="up">
+        <input id="author-input-id" data-for="author_1:Author" hidden type="id" name="id" data-req="up">
       </div>
 
       <button class="btn btn-primary btn-new-coauthor">
@@ -35,8 +35,8 @@
         <h4><%= t('common.formReport') %></h4>
         <label for="pub-input"><%= t('common.reportName') %> <span class="required">*</span></label>
         <input class="form-control" id="pub-input">
-        <input id="pub-input-id" data-for="pub:Publication" type="id" hidden name="id" data-req="up">
-        <input class="form-control" id="research-input-id" hidden data-for="rs:Research" type="id" name="id">
+        <input id="pub-input-id" data-for="pub_1:Publication" type="id" hidden name="id" data-req="up">
+        <input class="form-control" id="research-input-id" hidden data-for="rs_1:Research" type="id" name="id">
       </div>
 
       <button class="btn btn-primary btn-next" active="1">
@@ -54,43 +54,38 @@
       </button>
     </div>
 
-  <div id="excavation" data-custom-relations="exc:Monument">
-      <div class="form-group">
-        <label for="exc-name-input"><%= t('excavation.name') %></label>
-        <input class="form-control" id="exc-name-input" data-for="exc:Excavation" type="text" name="name"></input>
+    <div id="excavation" data-custom-relations="exc:Monument">
+      <div class="form-group" id="find-author-exc">
+        <label for="exc-author-name-input"><%= t('excavation.author') %></label>
+        <input class="form-control" id="exc-author-name-input"></input>
+        <input class="form-control" id="exc-author-id-input" hidden data-for="author_2:Author" type="id" name="id"></input>
       </div>
       <div class="form-group">
-        <label for="exc-boss-input"><%= t('excavation.boss') %></label>
-        <input class="form-control" id="exc-boss-input" data-for="exc:Excavation" type="text" name="boss"></input>
+        <label for="exc-year-input"><%= t('excavation.year') %></label>
+        <input class="form-control" id="exc-year-input" data-for="rs_2:Research" type="number" name="year"></input>
+        <input class="form-control" id="res2-id-input" data-for="rs_2:Research" type="id" name="id" hidden></input>
       </div>
-      <div class="form-group">
-        <label for="exc-area-input"><%= t('excavation.area') %></label>
-        <input class="form-control" id="exc-area-input" data-for="exc:Excavation" type="number" name="area"></input>
-      </div>
+      <div class="form-group" id="find-excavation">
+        <label for="exc-name-find-input"><%= t('excavation.name') %></label>
+        <input class="form-control" id="exc-name-find-input"></input>
+        <input class="form-control" id="exc-id-input" data-for="exc:Excavation" type="id" name="id" hidden></input>
 
-      <input class="form-control" id="exc-spatref-date" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="date" data-need-date hidden></input>
+        <br>
+        <div style="display: none" id="exc-clarify-coords">
+          <div class="form-group">
+            <label><%= t('excavation.coords') %></label>
+            <p>N: <span id="spatref-exc-x"><%= t('excavation.notChoosed') %></span></p>
+            <p>E: <span id="spatref-exc-y"><%= t('excavation.notChoosed') %></span></p>
+            <p><%= t('common.accur') %>: <span id="spatref-type-exc"><%= t('excavation.notChoosed') %></span></p>
+          </div>
 
-      <div class="form-group">
-        <label for="exc-spatref-selector"><%= t("common.accuracy") %></label>
-        <select class="form-control" id="exc-spatref-selector" data-for="esrt:SpatialReferenceType" data-subclass="ExcSpatRefType" type="id" name="id"></select>
-      </div>
-
-      <div id="exc-coord-picker" class="coords">
-        <div class="form-group">
-          <label for="exc-x">
-            N
-          </label>
-          <input class="form-control" id="exc-x" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="x"></input>
+          <div class="form-group" id="exc-new-coords-button">
+            <button id="clarify-exc-button" class="btn btn-primary">
+              <i class="fa fa-cogs"></i>
+              <%= t('common.clarifyCoords') %>
+            </button>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="exc-y">
-            E
-          </label>
-          <input class="form-control" id="exc-y" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="y"></input>
-        </div>
-      </div>
-      <div class="alert alert-dismissible alert-info">
-        <%= t('examples.chooseCoords') %>
       </div>
 
       <div class="form-group exc-belongs" id="exc-belongs" data-checkbox-type="checkbox">
@@ -124,7 +119,7 @@
   <div class="form-group">
     <h4><%= t('common.addAuthor') %></h4>
     <label for="author-name-input"><%= t('author.name') %> <span class="required">*</span></label>
-    <input class="form-control" id="author-name-input" data-for="author:Author" type="text" name="name" data-req>
+    <input class="form-control" id="author-name-input" data-for="author_1:Author" type="text" name="name" data-req>
   </div>
 
   <div class="checkbox">
@@ -136,11 +131,11 @@
 
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
     <label for="author-birth-date-input"><%= t('author.prop.year') %></label>
-    <input class="form-control" id="author-birth-date-input" data-for="author:Author" type="number" name="birthdate">
+    <input class="form-control" id="author-birth-date-input" data-for="author_1:Author" type="number" name="birthdate">
   </div>
   <div class="form-group" toggle-by="more-author-checkbox" need-option="true">
     <label for="author-photo-input"><%= t('photo.singular') %></label>
-    <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg:Image" type="file" name="fileid" data-subclass="AuthorImage">
+    <input id="author-photo-input" accept="image/jpeg,image/x-png" data-for="aimg_1:Image" type="file" name="fileid" data-subclass="AuthorImage">
     <br>
     <div class="alert alert-dismissible alert-info">
       <%= t('examples.maxSizePhoto') %>.
@@ -154,26 +149,26 @@
 
   <div class="form-group">
     <label for="pub-name-input"><%= t('publication.name') %><span class="required">*</span></label>
-    <input class="form-control" id="pub-name-input" data-for="pub:Publication" type="text" name="name" data-req>
+    <input class="form-control" id="pub-name-input" data-for="pub_1:Publication" type="text" name="name" data-req>
   </div>
   <div class="form-group">
     <label for="pub-year-input"><%= t('publication.prop.year') %><span class="required">*</span></label>
-    <input class="form-control" id="pub-year-input" data-for="pub:Publication" type="number" name="published_at" data-req>
+    <input class="form-control" id="pub-year-input" data-for="pub_1:Publication" type="number" name="published_at" data-req>
   </div>
 
   <div class="form-group">
     <label for="pub-type-selector"><%= t('publication.type') %></label>
-    <select class="form-control" id="pub-type-selector" data-for="pt:PublicationType" type="id" name="id" dynamic="true"></select>
+    <select class="form-control" id="pub-type-selector" data-for="pt_1:PublicationType" type="id" name="id" dynamic="true"></select>
   </div>
 
   <div class="form-group">
     <label for="research-input-desc"><%= t('research.description') %> </label>
-    <textarea class="form-control" id="research-input-desc" data-for="rs:Research" type="text" name="description"></textarea>
+    <textarea class="form-control" id="research-input-desc" data-for="rs_1:Research" type="text" name="description"></textarea>
   </div>
 
   <div class="form-group">
     <label for="pub-file-input"><%= t('publication.file') %></label>
-    <input id="pub-file-input" accept=".pdf,.doc,.docx" type="file" data-for="pub:Publication" name="fileid">
+    <input id="pub-file-input" accept=".pdf,.doc,.docx" type="file" data-for="pub_1:Publication" name="fileid">
     <div class="alert alert-dismissible alert-info">
       <%= t('examples.maxSizeDoc') %>.
     </div>
@@ -189,22 +184,22 @@
   <div class="form-group" toggle-by="more-pub-checkbox" need-option="true">
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
       <label for="publisher-input"><%= t('publication.prop.publisher') %></label>
-      <input class="form-control" id="publisher-input" data-for="pub:Publication" type="text" name="publisher">
+      <input class="form-control" id="publisher-input" data-for="pub_1:Publication" type="text" name="publisher">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
       <label for="isbn-input"><%= t('publication.prop.isbn') %></label>
-      <input class="form-control" id="isbn-input" data-for="pub:Publication" type="text" name="ISBN">
+      <input class="form-control" id="isbn-input" data-for="pub_1:Publication" type="text" name="ISBN">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
       <label for="pages-input"><%= t('publication.prop.pages') %></label>
-      <input class="form-control" id="pages-input" data-for="pub:Publication" type="number" name="pages">
+      <input class="form-control" id="pages-input" data-for="pub_1:Publication" type="number" name="pages">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="2">
       <label for="edi-type-selector"><%= t('publication.prop.type') %></label>
-      <select class="form-control" id="edi-type-selector" data-for="et:EditionType" type="id" name="id" dynamic="true"></select>
+      <select class="form-control" id="edi-type-selector" data-for="et_1:EditionType" type="id" name="id" dynamic="true"></select>
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="2">
@@ -212,7 +207,7 @@
       <div class="form-group" toggle-by="edi-type-selector" need-option="2">
         <div class="form-group">
           ><%= t('publication.editCont') %>
-          <select class="form-control" id="edi-cont" data-for="pub:Publication" type="number" name="editionContinue" dynamic="true">
+          <select class="form-control" id="edi-cont" data-for="pub_1:Publication" type="number" name="editionContinue" dynamic="true">
             <option value="1"><%= t('common.yes') %></option>
             <option value="2"><%= t('common.no') %></option>
           </select>
@@ -221,98 +216,98 @@
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="edi-name-input"><%= t('publication.prop.jourName') %></label>
-        <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
+        <input class="form-control" id="edi-name-input" data-for="pub_1:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2.4.5">
         <label for="edi-name-input"><%= t('publication.prop.collName') %></label>
-        <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
+        <input class="form-control" id="edi-name-input" data-for="pub_1:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="3">
         <label for="edi-name-input"><%= t('publication.prop.monogrName') %></label>
-        <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
+        <input class="form-control" id="edi-name-input" data-for="pub_1:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
         <label for="conf-name-input"><%= t('publication.confName') %></label>
-        <input class="form-control" id="conf-name-input" data-for="pub:Publication" type="text" name="conferenceName">
+        <input class="form-control" id="conf-name-input" data-for="pub_1:Publication" type="text" name="conferenceName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
         <label for="conf-start-date"><%= t('publication.confDateStart') %></label>
-        <input class="form-control date-picker" id="conf-start-date" data-for="pub:Publication" type="text" name="conferenceStartDate"></input>
+        <input class="form-control date-picker" id="conf-start-date" data-for="pub_1:Publication" type="text" name="conferenceStartDate"></input>
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
         <label for="conf-end-date"><%= t('publication.confDateEnd') %></label>
-        <input class="form-control date-picker" id="conf-end-date" data-for="pub:Publication" type="text" name="conferenceEndDate"></input>
+        <input class="form-control date-picker" id="conf-end-date" data-for="pub_1:Publication" type="text" name="conferenceEndDate"></input>
       </div>
 
       <div class="form-group" toggle-by="edi-cont" need-option="1">
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
           <label for="edi-series-name-input"><%= t('publication.seriesName') %></label>
-          <input class="form-control" id="edi-series-name-input" data-for="pub:Publication" type="text" name="editionSeriesName">
+          <input class="form-control" id="edi-series-name-input" data-for="pub_1:Publication" type="text" name="editionSeriesName">
         </div>
 
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
           <label for="publisher-input"><%= t('publication.prop.publisher') %></label>
-          <input class="form-control" id="publisher-input" data-for="pub:Publication" type="text" name="publisher">
+          <input class="form-control" id="publisher-input" data-for="pub_1:Publication" type="text" name="publisher">
         </div>
 
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
           <label for="edition-input"><%= t('publication.prop.edition') %></label>
-          <input class="form-control" id="edition-input" data-for="pub:Publication" type="text" name="edition">
+          <input class="form-control" id="edition-input" data-for="pub_1:Publication" type="text" name="edition">
         </div>
 
         <div class="form-group" toggle-by="edi-type-selector" need-option="2">
           <label for="num-overall-input">№</label>
-          <input class="form-control" id="num-overall-input-input" data-for="pub:Publication" type="number" name="numOverall">
+          <input class="form-control" id="num-overall-input-input" data-for="pub_1:Publication" type="number" name="numOverall">
         </div>
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="publisher-input"><%= t('publication.prop.publisher') %></label>
-        <input class="form-control" id="publisher-input" data-for="pub:Publication" type="text" name="publisher">
+        <input class="form-control" id="publisher-input" data-for="pub_1:Publication" type="text" name="publisher">
       </div>
 
       <div class="form-group">
         <label for="volume-input"><%= t('publication.prop.volume') %></label>
-        <input class="form-control" id="volume-input" data-for="pub:Publication" type="text" name="volume">
+        <input class="form-control" id="volume-input" data-for="pub_1:Publication" type="text" name="volume">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="edition-input"><%= t('publication.prop.edition') %></label>
-        <input class="form-control" id="edition-input" data-for="pub:Publication" type="text" name="edition">
+        <input class="form-control" id="edition-input" data-for="pub_1:Publication" type="text" name="edition">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="num-overall-input">№ (<%= t('common.common') %>)</label>
-        <input class="form-control" id="num-overall-input-input" data-for="pub:Publication" type="number" name="numOverall">
+        <input class="form-control" id="num-overall-input-input" data-for="pub_1:Publication" type="number" name="numOverall">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="num-year-input">№ (<%= t('common.year1') %>)</label>
-        <input class="form-control" id="num-year-input-input" data-for="pub:Publication" type="number" name="numYear">
+        <input class="form-control" id="num-year-input-input" data-for="pub_1:Publication" type="number" name="numYear">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="issn-input"><%= t('publication.prop.issn') %></label>
-        <input class="form-control" id="issn-input" data-for="pub:Publication" type="text" name="issn">
+        <input class="form-control" id="issn-input" data-for="pub_1:Publication" type="text" name="issn">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2.3.4.5">
         <label for="isbn-input"><%= t('publication.prop.isbn') %></label>
-        <input class="form-control" id="isbn-input" data-for="pub:Publication" type="text" name="isbn">
+        <input class="form-control" id="isbn-input" data-for="pub_1:Publication" type="text" name="isbn">
       </div>
 
       <div class="form-group">
         <%= t('LiteratureRef.prop.pages') %>
         <div class="form-inline">
           <label for="pub-page-from"><%= t('date.from') %></label>
-          <input id="pub-page-from" data-for="pub:Publication" class="form-control mini" type="text" name="pageFrom"></input>
+          <input id="pub-page-from" data-for="pub_1:Publication" class="form-control mini" type="text" name="pageFrom"></input>
           <label for="pub-page-to"><%= t('date.to') %></label>
-          <input id="pub-page-to" data-for="pub:Publication" class="form-control input" type="text" name="pageTo"></input>
+          <input id="pub-page-to" data-for="pub_1:Publication" class="form-control input" type="text" name="pageTo"></input>
         </div>
       </div>
     </div>
@@ -320,13 +315,106 @@
     <div class="form-group" toggle-by="more-pub-checkbox" need-option="true">
       <label for="pub-city-input"><%= t('city.singular') %></label>
       <%= widget("SearchLine", citiesInputOptions, "pub-city-input") %>
-      <input id="pub-city-input-id" data-for="city:City" hidden type="id" name="id">
+      <input id="pub-city-input-id" data-for="city_1:City" hidden type="id" name="id">
     </div>
   </div>
 
   <div hidden>
-    <input class="form-control" id="research-input-name" data-for="rs:Research" type="text" name="name">
-    <input class="form-control" id="research-input-year" data-for="rs:Research" type="number" name="year">
-    <input class="form-control" id="research-type" value="3" data-for="rt:ResearchType" type="id" name="id">
+    <input class="form-control" id="research-input-name" data-for="rs_1:Research" type="text" name="name">
+    <input class="form-control" id="research-input-year" data-for="rs_1:Research" type="number" name="year">
+    <input class="form-control" id="research-type" value="3" data-for="rt_1:ResearchType" type="id" name="id">
+  </div>
+</script>
+
+<!-- Форма для добавления вскрытия-->
+<script type="text/template" class="add-excavation">
+  <div id="new-excavation">
+    <div class="form-group">
+      <label for="research-type-selector"><%= t('research.type') %></label>
+      <select class="form-control" id="research-type-selector-2" data-for="rt_2:ResearchType" type="id" name="id" dynamic="true"></select>
+    </div>
+    <div class="form-group">
+      <label for="exc-report-name-input"><%= t('common.reportName') %></label>
+      <input class="form-control" id="exc-report-name-input" data-for="rep_2:Report" type="text" name="name"></input>
+    </div>
+    <div class="form-group">
+      <label for="exc-report-year-input"><%= t('report.year') %></label>
+      <input class="form-control" id="exc-report-year-input" data-for="rep_2:Report" type="number" name="year"></input>
+    </div>
+    <div class="form-group">
+      <input class="form-control" id="res2-name-input" data-for="rs_2:Research" type="text" name="name" hidden></input>
+    </div>
+    <div class="form-group">
+      <label for="exc-name-input"><%= t('excavation.name') %></label>
+      <input class="form-control" id="exc-name-input" data-for="exc:Excavation" type="text" name="name"></input>
+    </div>
+    <div class="form-group">
+      <label for="exc-boss-input"><%= t('excavation.boss') %></label>
+      <input class="form-control" id="exc-boss-input" data-for="exc:Excavation" type="text" name="boss"></input>
+    </div>
+    <div class="form-group">
+      <label for="exc-area-input"><%= t('excavation.area') %></label>
+      <input class="form-control" id="exc-area-input" data-for="exc:Excavation" type="number" name="area"></input>
+    </div>
+
+    <input class="form-control" id="exc-spatref-date" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="date" data-need-date hidden></input>
+
+    <div class="form-group">
+      <label for="exc-spatref-selector"><%= t('common.accuracy') %></label>
+      <select class="form-control" id="exc-spatref-selector" data-for="esrt:SpatialReferenceType" data-subclass="ExcSpatRefType" type="id" name="id"></select>
+    </div>
+
+    <div id="exc-coord-picker" class="coords">
+      <div class="form-group">
+        <label for="exc-x">
+          N
+        </label>
+        <input class="form-control" id="exc-x" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="x"></input>
+      </div>
+      <div class="form-group">
+        <label for="exc-y">
+          E
+        </label>
+        <input class="form-control" id="exc-y" data-for="esr:SpatialReference" data-subclass="ExcSpatRef" type="number" name="y"></input>
+      </div>
+    </div>
+    <div class="alert alert-dismissible alert-info">
+      <%= t('examples.chooseCoords') %>
+    </div>
+  </div>
+</script>
+
+<!-- Создание нового автора для вскрытия -->
+<script type="text/template" class="add-author-exc">
+  <div class="form-group">
+    <label for="author-exc-name-input"><%= t('author.name') %> <span class="required">*</span></label>
+    <input class="form-control" id="author-exc-name-input" data-for="author_2:Author" type="text" name="name" data-req>
+  </div>
+</script>
+
+<!-- Уточнение координат для раскопа -->
+<script type="text/template" id="clarify-coords-exc">
+  <div id="exc-new-coords">
+    <div class="form-group">
+      <label for="spatref-selector"><%= t('common.accuracy') %></label>
+      <select class="form-control" id="exc-spatref-selector" data-subclass="ExcSpatRefType" data-for="srt:SpatialReferenceType" type="id" name="id"></select>
+    </div>
+
+    <div id="exc-coord-picker" class="coords">
+      <div class="form-group">
+        <label for="exc-x">
+          N
+        </label>
+        <input class="form-control" id="exc-x" data-subclass="ExcSpatRef" data-for="esr:SpatialReference" type="number" name="x"></input>
+      </div>
+      <div class="form-group">
+        <label for="exc-y">
+          E
+        </label>
+        <input class="form-control" id="exc-y" data-subclass="ExcSpatRef" data-for="esr:SpatialReference" type="number" name="y"></input>
+      </div>
+    </div>
+
+    <input class="form-control" id="spatref-date" data-subclass="ExcSpatRef" data-for="esr:SpatialReference" type="number" name="date" data-need-date hidden></input>
   </div>
 </script>

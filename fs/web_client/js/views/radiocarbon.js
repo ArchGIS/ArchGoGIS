@@ -14,7 +14,9 @@ App.views.radiocarbon = new (Backbone.View.extend({
     var repSelName = '',
         monSelName = '',
         orgName = '',
-        resId = '';
+        resId = '',
+        excAuthorId = '',
+        excYear = '';
 
     let authorSelectHandler = function(event, ui) {
       $('#author-input-id').val(ui.item.id);
@@ -236,6 +238,11 @@ App.views.radiocarbon = new (Backbone.View.extend({
       let name = $("#pub-name-input").val() + " - " + year;
       $("#research-input-name").val(name);
       $("#research-input-year").val(year);
+
+      let repName = $("#exc-report-name-input").val() ? ($("#exc-report-name-input").val() + ", ") : "";
+      year = $("#exc-year-input").val();
+      name = repName + $("#exc-author-name-input").val() + " - " + year;
+      $("#res2-name-input").val(name);
     };
 
     let lastSelectedAuthorId = 0;
@@ -438,6 +445,127 @@ App.views.radiocarbon = new (Backbone.View.extend({
         })
       });
     });
+
+    $(`#exc-author-name-input`).autocomplete({
+      minLength: 3,
+      source: function(request, response) {
+        var authors = [];
+        
+        App.models.Author.findByNamePrefix(request.term)
+          .then(function(data) {
+            if (data && !data.error) {
+              let results = _.map(data, function(row) {
+                return {'label': row.name, 'value': row.name, 'id': row.id}
+              });
+
+              if (!results.length) {
+                results.push('Никого не найдено');
+              }
+
+              response(results);
+            } else {
+              response();
+            }
+          });
+      },
+    }).focus(function(){
+      $(this).autocomplete("search");
+    });
+
+    $(`#exc-author-name-input`).on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    let createNewExc = false;
+    function newExc() {
+      if (createNewExc) return;
+      
+      let tmpl = _.template( $(`script.add-excavation`).html() );
+      $(`#find-excavation`).replaceWith( tmpl() );
+
+      coordpicker($('#exc-coord-picker'), {
+        inputs: ['#exc-x', '#exc-y'],
+        map: map
+      });
+      getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
+      getDataForSelector($("#research-type-selector-2"), "ResearchType", "Аналитическое");
+      createNewExc = true;
+    }
+
+    $(`#exc-author-name-input`).on('autocompleteselect', function(event, ui) {
+      if (ui.item.value === 'Никого не найдено') {
+        let inputValue = $(this).val();
+
+        let tmpl = _.template( $('script.add-author-exc').html() );
+        $('#find-author-exc').replaceWith( tmpl() );
+        $('#author-exc-name-input').val(inputValue);
+
+        newExc();
+      } else {
+        $(`#exc-author-id-input`).val(ui.item.id);
+        excAuthorId = ui.item.id;
+      }
+    })
+
+    $("#exc-year-input").on("change", function(e) {
+      excYear = $(this).val();
+    })
+
+    $(`#exc-name-find-input`).autocomplete({
+      minLength: 0,
+      html: true,
+      source: function(request, response) {
+        App.models.Excavation.findByNamePrefix(request.term, resId, excAuthorId, excYear)
+          .then(function(data) {
+            if (data && !data.error) {
+              let label, value;
+              let results = _.map(data, function(row) {
+                value = row.name + ` (${row.resName})`;
+                label = value + ((row.resId === resId) ? '<b> - Уже связан с выбранным исследованием </b>' : '');
+                return {'label': label, 'value': value, 'id': row.id, 'x': row.x, 'y': row.y, 'spt': row.spType, 'resId': row.resId}
+              });
+              
+              results.push({'label': 'Добавить новый раскоп', 'value': -1, 'id': -1});
+
+              response(results);
+            } else {
+              response();
+            }
+          });
+      },
+    }).focus(function(){
+      $(this).autocomplete("search");
+    });
+
+    $(`#exc-name-find-input`).on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    });
+
+    $(`#exc-name-find-input`).on('autocompleteselect', function(event, ui) {
+      if (ui.item.id == -1) {
+        newExc();
+      } else {
+        $("#exc-clarify-coords").show();
+        $(`#exc-id-input`).val(ui.item.id);
+
+        $("#spatref-exc-x").html(ui.item.x);
+        $("#spatref-exc-y").html(ui.item.y);
+        $("#spatref-type-exc").html(ui.item.spt);
+
+        $("#res2-id-input").val(ui.item.resId);
+
+        $("#clarify-exc-button").on('click', function() {
+          let tmpl = _.template( $(`script#clarify-coords-exc`).html() );
+          $(`#exc-new-coords-button`).replaceWith( tmpl() );
+
+          coordpicker($('#exc-coord-picker'), {
+            inputs: ['#exc-x', '#exc-y'],
+            map: map
+          });
+          getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
+        })
+      }
+    })
 
     $("#container").tabs();
     setSelectsEvents();
