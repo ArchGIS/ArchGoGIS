@@ -7,6 +7,9 @@ App.views.bigSearch = new (Backbone.View.extend({
         "main": {
           "author:Author": {"id": "*", "select": "*"},
         },
+        "mainSpatref": {
+          "author:Author": {"id": "*", "select": "*"},
+        },
         "author-name": {
           "author:Author": {"id": "*", "select": "*", "filter": "name=VALUEPLACE=text"},
         },
@@ -310,8 +313,34 @@ App.views.bigSearch = new (Backbone.View.extend({
       },
 
       research: {
+        // "main": {
+        //   "research:Research": {"id": "*", "select": "*"},
+        // },
         "main": {
           "research:Research": {"id": "*", "select": "*"},
+          "k:Knowledge": {"id": "*"},
+          "m:Monument": {"id": "*"},
+          "rt:ResearchType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "research__rt": {},
+          "research__k": {},
+          "m__k": {},
+          "m__sp": {},
+          "sp__spt": {},
+        },
+        "mainSpatref": {
+          "research:Research": {"id": "*", "select": "*"},
+          "k:Knowledge": {"id": "*"},
+          "m:Monument": {"id": "*"},
+          "rt:ResearchType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "research__rt": {},
+          "research__k": {},
+          "m__k": {},
+          "m__sp": {},
+          "sp__spt": {},
         },
         "spatref": {
           "research:Research": {"id": "NEED"},
@@ -582,13 +611,39 @@ App.views.bigSearch = new (Backbone.View.extend({
       },
 
       monument: {
+        // "main": {
+        //   "monument:Monument": {"id": "*", "select": "*"},
+        //   "knowledge:Knowledge": {"id": "*", "select": "*"},
+        //   "monument__knowledge": {},
+        // },
         "main": {
           "monument:Monument": {"id": "*", "select": "*"},
           "knowledge:Knowledge": {"id": "*", "select": "*"},
           "monument__knowledge": {},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "mt:MonumentType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__epoch": {},
+          "monument__mt": {},
+          "monument__sp": {},
+          "sp__spt": {},
         },
         "spatref": {
           "monument:Monument": {"id": "NEED"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "mt:MonumentType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__epoch": {},
+          "monument__mt": {},
+          "monument__sp": {},
+          "sp__spt": {},
+        },
+        "mainSpatref": {
+          "monument:Monument": {"id": "*", "select": "*"},
+          "knowledge:Knowledge": {"id": "*", "select": "*"},
+          "monument__knowledge": {},
           "epoch:Epoch": {"id": "*", "select": "*"},
           "mt:MonumentType": {"id": "*", "select": "*"},
           "sp:SpatialReference": {"id": "*", "select": "*"},
@@ -861,8 +916,10 @@ App.views.bigSearch = new (Backbone.View.extend({
       }
 
       let entity = $("#search-object").val();
-      let query = _.clone(queries[entity].main);
+      let query;
       let criteria = $(".criterion-type");
+
+      query = _.clone(queries[entity].main);
 
       const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
 
@@ -889,12 +946,9 @@ App.views.bigSearch = new (Backbone.View.extend({
       query = JSON.stringify(query);
 
       function checkCoords(sp, left, top, right, bot) {
-        console.log(sp, left, top, right, bot)
         if (sp.y >= left && sp.y <= right && sp.x >= bot && sp.x <= top) {
-          console.log("yes")
           return true;
         }
-        console.log("no")
       }
 
       $.post({
@@ -906,34 +960,43 @@ App.views.bigSearch = new (Backbone.View.extend({
         success: function(response) {
           response = JSON.parse(response);
           let placemarks = [], spatref;
+          console.log(response)
 
           function render() {
-            let sp, preset, epoch, type;
-            spatref = spatref || [];
-            _.each(spatref[0], function(obj, i) {
-              if (obj.sp.length) {
+            let preset, epoch, type, ids = {};
+            _.each(spatref.sp, function(sp, i) {
+              if (sp) {
                 if (entity == "monument") {
-                  epoch = obj.epoch[0].id;
-                  type = obj.mt[0].id;
-                  sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                  epoch = spatref.epoch[i].id;
+                  type = spatref.mt[i].id;
                   preset = `monType${type}_${epoch}`;
 
                   if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
+                    if (ids[spatref.monument[i].id]) {
+                      $(`#record-${i}`).remove();
+                    } else {
+                      ids[spatref.monument[i].id] = true;
+                    }
                     placemarks.push(
-                      App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
+                      App.controllers.fn.createStandartPlacemark('monument', spatref.monument[i].id, sp.x, sp.y, spatref.monument[i].name, preset)
                     );
                   } else if (coordsCrit) {
                     $(`#record-${i}`).remove();
                   }
                 }
                 if (entity == "research") {
-                  type = obj.rt[0].id;
-                  sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                  type = spatref.rt[i].id;
+                  // sp = App.fn.findActualSpatref(obj.sp, obj.spt);
                   preset = `resType${type}`;
 
                   if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
+                    if (ids[spatref.research[i].id]) {
+                      $(`#record-${i}`).remove();
+                    } else {
+                      ids[spatref.research[i].id] = true;
+                    }
                     placemarks.push(
-                      App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
+                      App.controllers.fn.createStandartPlacemark('research', spatref.research[i].id, sp.x, sp.y, spatref.research[i].name, preset)
                     );
                   } else if (coordsCrit) {
                     $(`#record-${i}`).remove();
@@ -954,11 +1017,9 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           let data = _.toArray(response[entity])
           data = _.uniq(data, function(item, key, id) {return item.id});
-
-          if (queries[entity].spatref) {
-            let ids = _.map(data, function(obj) {return obj.id.toString()});
-            spatref = (App.models.fn.getData([JSON.stringify(queries[entity].spatref)], render, true, ids));
-          }
+          console.log("data", data)
+          spatref = response;
+          render();
 
           $("#search-results").html("");
           _.each(data, function(obj, key) {
