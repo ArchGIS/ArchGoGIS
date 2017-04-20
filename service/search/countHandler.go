@@ -2,12 +2,12 @@ package search
 
 import (
 	"bytes"
-	"unsafe"
-	"net/http"
 	"encoding/json"
 	"io"
-	"strings"
+	"net/http"
 	"strconv"
+	"strings"
+	"unsafe"
 
 	"github.com/ArchGIS/ArchGoGIS/db/neo"
 	"github.com/ArchGIS/ArchGoGIS/echo"
@@ -18,17 +18,27 @@ import (
 
 type counts map[string][]string
 
+var (
+	pubType = map[string]string{
+		"Article":    "2",
+		"Monography": "1",
+	}
+)
+
 const (
-	matchQuery  = "OPTIONAL MATCH (x{index}:{node}) " +
-							 	"WITH COUNT (x{index}) as x{index}"
+	matchQuery = "OPTIONAL MATCH (x{index}:{node}) " +
+		"WITH COUNT (x{index}) as x{index}"
 	returnQuery = "x{index}"
+
+	pubQuery = "OPTIONAL MATCH (:PublicationType {id: {node}})--(p{index}:Publication) " +
+		"WITH COUNT (p{index}) as x{index}"
 )
 
 var countHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	input := make(map[string][]string)
 	input = mustFetchJSON(r.Body)
 
-  result, err := searchCounts(input["counts"])
+	result, err := searchCounts(input["counts"])
 
 	if err == nil {
 		w.Write(result)
@@ -53,17 +63,22 @@ func searchCounts(needle []string) ([]byte, error) {
 		var query string
 		var returns string
 
-		query = strings.Replace(matchQuery, "{index}", strconv.Itoa(i), -1)
-		query = strings.Replace(query, "{node}", node, -1)
+		if node == "Article" || node == "Monography" {
+			query = strings.Replace(pubQuery, "{index}", strconv.Itoa(i), -1)
+			query = strings.Replace(query, "{node}", pubType[node], -1)
+		} else {
+			query = strings.Replace(matchQuery, "{index}", strconv.Itoa(i), -1)
+			query = strings.Replace(query, "{node}", node, -1)
+		}
 
 		query += withStates
 		withStates += ", x" + strconv.Itoa(i)
-		
+
 		returns = strings.Replace(returnQuery, "{index}", strconv.Itoa(i), -1)
 
 		matchStatement += query + " "
 		returnStatement += " " + returns
-		if i != len(needle) -1 {
+		if i != len(needle)-1 {
 			returnStatement += ","
 		}
 	}
@@ -79,7 +94,7 @@ func searchCounts(needle []string) ([]byte, error) {
 	if len(resp.Results[0].Data) == 0 {
 		return []byte("[]"), nil
 	}
-	
+
 	// Подготавливаем ответ.
 	var buf ext.Xbuf
 
