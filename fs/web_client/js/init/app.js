@@ -357,7 +357,6 @@ function generateJson(relations) {
           let layer1 = robjName.split("_")[2] || "";
           let layer2 = rname.split("_")[2] || "";
 
-          console.log(conLayer1, relation[1], conLayer2, relation[0])
           if ((fewRelations[robjName] == relation[1]) || (fewRelations[rname] == relation[0])) {
             let needRelation = false;
 
