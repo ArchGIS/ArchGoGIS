@@ -909,7 +909,6 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           function render() {
             let sp, preset, epoch, type;
-            let length = spatref[0].length;
             _.each(spatref[0], function(obj, i) {
               if (obj.sp.length) {
                 if (entity == "monument") {
@@ -923,8 +922,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                       App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
                     );
                   } else if (coordsCrit) {
-                    console.log($(`#record-${length-i-1}`));
-                    $(`#record-${length-i-1}`).remove();
+                    $(`#record-${i}`).remove();
                   }
                 }
                 if (entity == "research") {
@@ -937,13 +935,11 @@ App.views.bigSearch = new (Backbone.View.extend({
                       App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
                     );
                   } else if (coordsCrit) {
-                    console.log($(`#record-${length-i-1}`));
-                    $(`#record-${length-i-1}`).remove();
+                    $(`#record-${i}`).remove();
                   }
                 }
               } else if (coordsCrit) {
-                console.log($(`#record-${length-i-1}`));
-                $(`#record-${length-i-1}`).remove();
+                $(`#record-${i}`).remove();
               }
             })
             overlays = App.views.addToMap(placemarks, instMap);
