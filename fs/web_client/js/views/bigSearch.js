@@ -898,7 +898,7 @@ App.views.bigSearch = new (Backbone.View.extend({
       }
 
       $.post({
-        url: "/hquery/read?limit=100000",
+        url: "/hquery/read?limit=15000",
         data: query,
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
