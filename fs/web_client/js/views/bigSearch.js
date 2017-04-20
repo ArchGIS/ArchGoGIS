@@ -918,7 +918,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                   sp = App.fn.findActualSpatref(obj.sp, obj.spt);
                   preset = `monType${type}_${epoch}`;
 
-                  if (coordsCrit && checkCoords(sp, left, top, right, bot)) {
+                  if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
                     placemarks.push(
                       App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
                     );
@@ -931,7 +931,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                   sp = App.fn.findActualSpatref(obj.sp, obj.spt);
                   preset = `resType${type}`;
 
-                  if (coordsCrit && checkCoords(sp, left, top, right, bot)) {
+                  if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
                     placemarks.push(
                       App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
                     );
