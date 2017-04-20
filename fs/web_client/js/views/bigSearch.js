@@ -909,6 +909,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
           function render() {
             let sp, preset, epoch, type;
+            spatref = spatref || [];
             _.each(spatref[0], function(obj, i) {
               if (obj.sp.length) {
                 if (entity == "monument") {
