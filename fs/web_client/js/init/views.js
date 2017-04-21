@@ -87,10 +87,11 @@ App.views.functions = {
     return imagesHtml;
   },
 
-  "setCultureAutocomplete": function(field, monId, layerId, subclass) {
+  "setCultureAutocomplete": function(field, monId, layerId, subclass, canAdd) {
     layerId = layerId || 0;
     subclass = subclass || "Culture";
-
+    canAdd = (typeof canAdd !== 'undefined') ? canAdd : true;
+    
     let d_cultures = App.models.Culture.getAll();
     let grepObject = App.fn.grepObject;
 
@@ -117,7 +118,7 @@ App.views.functions = {
     });
 
     $(field).on('autocompleteresponse', function(event, ui) {
-      if (ui.content.length === 0) {
+      if (ui.content.length === 0 && canAdd) {
         ui.content.push({
           'value': 0,
           'label': 'Ничего не найдено. Добавить?'

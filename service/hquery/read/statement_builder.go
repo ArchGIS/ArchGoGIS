@@ -132,6 +132,11 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 						"%s.%s =~ '(?ui)^.*(%s).*$' ",
 						entityName, parts[0], parts[1],
 					)
+				case "textExact":
+					my.buf.WriteStringf(
+						"%s.%s = '%s' ",
+						entityName, parts[0], parts[1],
+					)	
 				case "less":
 					my.buf.WriteStringf(
 						"%s.%s <= %s ",

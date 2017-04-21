@@ -10,6 +10,10 @@ App.views.download = new (Backbone.View.extend({
           "Monument:Monument": {"id": "*", "select": "*"},
           "know:Knowledge": {"id": "*", "filter": "monument_name=FILTER=text"},
           "know__belongsto__Monument": {},
+          "sp:SpatialReference": {"id": "*", "select": "*", "filter": "x=BOT=more;x=TOP=less;y=LEFT=more;y=RIGHT=less"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "Monument__has__sp": {},
+          "sp__has__spt": {},
         }),
 
         needCulture: JSON.stringify({
@@ -18,6 +22,10 @@ App.views.download = new (Backbone.View.extend({
           "cul:Culture": {"id": "?", "filter": "name=CFIL=text"},
           "know__belongsto__Monument": {},
           "know__has__cul": {},
+          "sp:SpatialReference": {"id": "*", "filter": "x=BOT=more;x=TOP=less;y=LEFT=more;y=RIGHT=less"},
+          "spt:SpatialReferenceType": {"id": "*"},
+          "mon__has__sp": {},
+          "sp__has__spt": {},
         }),
 
         additional: {
@@ -159,6 +167,21 @@ App.views.download = new (Backbone.View.extend({
       let tmp = [];
       let model = App.models.fn;
 
+      let left = $("#coords-left").val() || "";
+      let top = $("#coords-top").val() || "";
+      let right = $("#coords-right").val() || "";
+      let bot = $("#coords-bottom").val() || "";
+      let coordsCrit = false;
+
+      if (left && top && right && bot) {
+        coordsCrit = true;
+      } else {
+        left = 1;
+        right = 1000;
+        top = 1000;
+        bot = -1000;        
+      }
+
       let render = function() {
         _.each(tmp[0], function(collection, name) {
           _.each(collection, function(obj, t) {
@@ -231,7 +254,11 @@ App.views.download = new (Backbone.View.extend({
       }
 
       query = query.replace(/FILTER/g, name);
-
+      query = query.replace(/BOT/g, bot);
+      query = query.replace(/TOP/g, top);
+      query = query.replace(/LEFT/g, left);
+      query = query.replace(/RIGHT/g, right);
+      console.log(query, bot, top)
       $.when(model.sendQuery(query, 1500)).then(function(response) {
         _.extend(data, response);
 
