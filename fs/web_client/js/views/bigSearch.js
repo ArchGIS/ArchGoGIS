@@ -222,7 +222,7 @@ App.views.bigSearch = new (Backbone.View.extend({
           "knowledge_IDPLACE:Knowledge": {"id": "*"},
           "knowledges_IDPLACE:Knowledge": {"id": "*"},
           "monument_IDPLACE:Monument": {"id": "*"},
-          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=textEXACT"},
           "research_IDPLACE__author": {},
           "research_IDPLACE__knowledge_IDPLACE": {},
           "monument_IDPLACE__knowledge_IDPLACE": {},
@@ -526,7 +526,7 @@ App.views.bigSearch = new (Backbone.View.extend({
         "monument-culture": {
           "knowledge_IDPLACE:Knowledge": {"id": "*"},
           "knowledges_IDPLACE:Knowledge": {"id": "*"},
-          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=textEXACT"},
           "monument_IDPLACE:Monument": {},
           "research__knowledge_IDPLACE": {},
           "monument_IDPLACE__knowledge_IDPLACE": {},
@@ -788,7 +788,7 @@ App.views.bigSearch = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "*", "select": "*", "filter": "monument_name=VALUEPLACE=text"},
         },
         "monument-culture": {
-          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=text"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=textEXACT"},
           "cult_IDPLACE__knowledge": {},
         },
         "monument-type": {
@@ -844,6 +844,7 @@ App.views.bigSearch = new (Backbone.View.extend({
     };
 
     const instMap = App.views.map();
+    let exact = "";
 
     function changeCriterionType(id) {
       $(`#search-criterion-${id}`).on("change", function() {
@@ -878,7 +879,11 @@ App.views.bigSearch = new (Backbone.View.extend({
         } else {
           valueHeader.after(`<input id="search-value-${id}" class="form-control input criterion-value">`)
           if (autoInput) {
-            App.views.functions.setCultureAutocomplete($(`#search-value-${id}`), 1);
+            App.views.functions.setCultureAutocomplete($(`#search-value-${id}`), 1, 0, "search", false);
+
+            $(`#search-value-${id}`).on('autocompleteselect', function(event, ui) {
+              exact = "Exact";
+            })
           }
         }
 
@@ -915,7 +920,6 @@ App.views.bigSearch = new (Backbone.View.extend({
       let coordsCrit = false;
 
       if (left && top && right && bot) {
-        console.log("coordsCrit");
         coordsCrit = true;
       }
 
@@ -938,10 +942,11 @@ App.views.bigSearch = new (Backbone.View.extend({
         }
 
         let valueParts = $("#search-value-"+i).val().split(/[;]\s*/g);
-        let value = "(" + valueParts.join(")|(") + ")";
+        let value = valueParts.join(")|(");
 
         let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i)
         addQuery = addQuery.replace(/VALUEPLACE/g, value)
+        addQuery = addQuery.replace(/EXACT/g, exact)
         addQuery = JSON.parse(addQuery);
 
         _.extend(query, addQuery);
