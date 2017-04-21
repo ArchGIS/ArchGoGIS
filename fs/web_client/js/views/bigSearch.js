@@ -852,6 +852,7 @@ App.views.bigSearch = new (Backbone.View.extend({
         let coords = $(option).attr("data-coords");
         let datePicker = $(option).attr("datePicker");
         let valueHeader = $(`#criterion-value-header-${id}`);
+        let autoInput = $(option).attr("auto-input");
 
         valueHeader.next().remove()
 
@@ -876,6 +877,9 @@ App.views.bigSearch = new (Backbone.View.extend({
           })
         } else {
           valueHeader.after(`<input id="search-value-${id}" class="form-control input criterion-value">`)
+          if (autoInput) {
+            App.views.functions.setCultureAutocomplete($(`#search-value-${id}`), 1);
+          }
         }
 
         if (datePicker) {

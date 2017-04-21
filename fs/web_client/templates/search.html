@@ -10,6 +10,7 @@
       [t("report.singular"), "#report-params"],
       [t("heritage.singular"), "#okn-params"],
       [t("excavation.singular"), "#excavation-params"],
+      [t("radiocarbon.singular"), "#radiocarbon-params"],
     ]}, "objectToggler", "class='form-control'")%>
   </label>
   <h4><%= t("search.criteria") %>:</h4>
@@ -98,6 +99,15 @@
         <%= t("research.year") %>
       </label>
       <input class="form-control" type="number" id="exc-year-input">
+    </div>
+  </div>
+
+  <div class="flex-column" id="radiocarbon-params" style="display: none">
+    <div class="form-group">
+      <label for="radiocarbon-index-input" class="flex-row">
+        <%= t("radiocarbon.index") %>
+      </label>
+      <input class="form-control" type="text" id="radiocarbon-index-input"/>
     </div>
   </div>
 
