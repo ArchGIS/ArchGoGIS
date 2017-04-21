@@ -498,6 +498,7 @@
     "monument": {
       "culture": "Archaeological site: culture",
       "name": "Archaeological site: name",
+      "coords": "Archaeological site: coordinates",
       "type": "Archaeological site: type",
       "topoAfter": "Archaeological site: plans of the site made after…",
       "topoBefore": "Archaeological site: plans of the site made before…",

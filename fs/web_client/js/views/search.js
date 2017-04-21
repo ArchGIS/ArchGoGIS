@@ -86,6 +86,17 @@ App.views.search = new (Backbone.View.extend({
           'author': $('#exc-author-input'),
           'year': $('#exc-year-input')
         }
+      },
+      'radiocarbon-params': {
+        'handler': searchRadiocarbon,
+        'columnsMaker': function(radiocarbons) {
+          return _.map(radiocarbons, function(r) {
+            return App.models.Radiocarbon.href(r.carbon.id, `${r.carbon.name}`);
+          });
+        },
+        'inputs': {
+          'name': $('#radiocarbon-index-input'),
+        }
       }
     };
 
@@ -474,7 +485,6 @@ App.views.search = new (Backbone.View.extend({
       var author = input.author.val(),
           year   = input.year.val();
 
-
       if (author || year) {
         function find() {
           return new Promise(function(resolve, reject) {
@@ -536,6 +546,8 @@ App.views.search = new (Backbone.View.extend({
 
                 markersLayer.addLayer(marker);
               });
+
+              map.addLayer(markersLayer);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -545,6 +557,80 @@ App.views.search = new (Backbone.View.extend({
       } else {
         $results.append(`<p class="danger">${ t('search.fill') }</p>`);
       }
+    }
+
+    function searchRadiocarbon(my) {
+      var input = my.inputs;
+
+      var name = input.name.val() || "";
+
+      function find() {
+        return new Promise(function(resolve, reject) {
+          var url = App.url.make('/search/filter_radiocarbons', {
+            'name': name,
+          });
+
+          $.get({
+            url,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+            },
+            success: (response) => {
+              console.log($.parseJSON(response))
+              resolve($.parseJSON(response));
+            },
+            error: reject
+          });
+        });
+      }
+
+      find()
+        .then(function(response) {
+          if (response.length) {
+            var list = my.columnsMaker(response);
+
+            _.each(list, function(item) {
+              $results.append(`<p>${ ctl(item) }</p>`);
+            });
+
+            markersLayer.clearLayers();
+
+            console.log(response)
+            _.each(response, function(item) {
+              let icon = L.icon({
+                iconUrl: `/web_client/img/radiocarbon/c14.png`,
+                iconSize: [16, 16]
+              });
+
+              let marker = L.marker(new L.LatLng(item.spatref.x, item.spatref.y), {
+                icon: icon
+              });
+
+              let excHeader = `${item.carbon.name}`
+              marker.bindTooltip(excHeader, {
+                direction: 'top'
+              });
+
+              marker.on('mouseover', function(e) {
+                this.openTooltip();
+              });
+              marker.on('mouseout', function(e) {
+                this.closeTooltip();
+              });
+              marker.on('click', function(e) {
+                window.open(`${HOST_URL}/index#radiocarbon/show/${item.carbon.id}`, '_blank');
+              });
+
+              markersLayer.addLayer(marker);
+            });
+
+            map.addLayer(markersLayer);
+          } else {
+            $results.append(`<p>${ t('search.noResults') }</p>`);
+          }
+        }, function(error) {
+          console.log(error);
+        });
     }
   }
 }));

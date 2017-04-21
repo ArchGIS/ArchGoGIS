@@ -7,6 +7,9 @@ App.views.bigSearch = new (Backbone.View.extend({
         "main": {
           "author:Author": {"id": "*", "select": "*"},
         },
+        "mainSpatref": {
+          "author:Author": {"id": "*", "select": "*"},
+        },
         "author-name": {
           "author:Author": {"id": "*", "select": "*", "filter": "name=VALUEPLACE=text"},
         },
@@ -310,8 +313,34 @@ App.views.bigSearch = new (Backbone.View.extend({
       },
 
       research: {
+        // "main": {
+        //   "research:Research": {"id": "*", "select": "*"},
+        // },
         "main": {
           "research:Research": {"id": "*", "select": "*"},
+          "k:Knowledge": {"id": "*"},
+          "m:Monument": {"id": "*"},
+          "rt:ResearchType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "research__rt": {},
+          "research__k": {},
+          "m__k": {},
+          "m__sp": {},
+          "sp__spt": {},
+        },
+        "mainSpatref": {
+          "research:Research": {"id": "*", "select": "*"},
+          "k:Knowledge": {"id": "*"},
+          "m:Monument": {"id": "*"},
+          "rt:ResearchType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "research__rt": {},
+          "research__k": {},
+          "m__k": {},
+          "m__sp": {},
+          "sp__spt": {},
         },
         "spatref": {
           "research:Research": {"id": "NEED"},
@@ -582,13 +611,39 @@ App.views.bigSearch = new (Backbone.View.extend({
       },
 
       monument: {
+        // "main": {
+        //   "monument:Monument": {"id": "*", "select": "*"},
+        //   "knowledge:Knowledge": {"id": "*", "select": "*"},
+        //   "monument__knowledge": {},
+        // },
         "main": {
           "monument:Monument": {"id": "*", "select": "*"},
           "knowledge:Knowledge": {"id": "*", "select": "*"},
           "monument__knowledge": {},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "mt:MonumentType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__epoch": {},
+          "monument__mt": {},
+          "monument__sp": {},
+          "sp__spt": {},
         },
         "spatref": {
           "monument:Monument": {"id": "NEED"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "mt:MonumentType": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*", "select": "*"},
+          "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__epoch": {},
+          "monument__mt": {},
+          "monument__sp": {},
+          "sp__spt": {},
+        },
+        "mainSpatref": {
+          "monument:Monument": {"id": "*", "select": "*"},
+          "knowledge:Knowledge": {"id": "*", "select": "*"},
+          "monument__knowledge": {},
           "epoch:Epoch": {"id": "*", "select": "*"},
           "mt:MonumentType": {"id": "*", "select": "*"},
           "sp:SpatialReference": {"id": "*", "select": "*"},
@@ -794,16 +849,37 @@ App.views.bigSearch = new (Backbone.View.extend({
       $(`#search-criterion-${id}`).on("change", function() {
         let option = $(`#search-criterion-${id} :selected`);
         let listType = $(option).attr("listType");
+        let coords = $(option).attr("data-coords");
         let datePicker = $(option).attr("datePicker");
         let valueHeader = $(`#criterion-value-header-${id}`);
+        let autoInput = $(option).attr("auto-input");
 
         valueHeader.next().remove()
 
         if (listType) {
           valueHeader.after(`<select id="search-value-${id}" class="form-control criterion-value"></select>`)
           getDataForSelector($(`#search-value-${id}`), listType);
+        } else if (coords) {
+          var coordpicker = App.blocks.coordpicker;
+
+          App.template.get("bigSearch/coords", function(tmpl) {
+            valueHeader.after(tmpl({'id': id}))
+
+            coordpicker($('#coord-picker-1'), {
+              inputs: ['#coords-top', '#coords-left'],
+              map: instMap.map
+            });
+
+            coordpicker($('#coord-picker-2'), {
+              inputs: ['#coords-bottom', '#coords-right'],
+              map: instMap.map
+            });
+          })
         } else {
           valueHeader.after(`<input id="search-value-${id}" class="form-control input criterion-value">`)
+          if (autoInput) {
+            App.views.functions.setCultureAutocomplete($(`#search-value-${id}`), 1);
+          }
         }
 
         if (datePicker) {
@@ -832,9 +908,22 @@ App.views.bigSearch = new (Backbone.View.extend({
 
     let overlays = null;
     $("#show-results-button").on("click", function() {
+      let left = $("#coords-left").val();
+      let top = $("#coords-top").val();
+      let right = $("#coords-right").val();
+      let bot = $("#coords-bottom").val();
+      let coordsCrit = false;
+
+      if (left && top && right && bot) {
+        console.log("coordsCrit");
+        coordsCrit = true;
+      }
+
       let entity = $("#search-object").val();
-      let query = _.clone(queries[entity].main);
+      let query;
       let criteria = $(".criterion-type");
+
+      query = _.clone(queries[entity].main);
 
       const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
 
@@ -843,9 +932,13 @@ App.views.bigSearch = new (Backbone.View.extend({
       _.each(criteria, function(krit, i) {
         let $krit = $(krit);
         let criterion = $("#search-criterion-"+i).val();
+
+        if (criterion == "monument-coords") {
+          return 1;
+        }
+
         let valueParts = $("#search-value-"+i).val().split(/[;]\s*/g);
         let value = "(" + valueParts.join(")|(") + ")";
-        console.log(value)
 
         let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i)
         addQuery = addQuery.replace(/VALUEPLACE/g, value)
@@ -856,8 +949,14 @@ App.views.bigSearch = new (Backbone.View.extend({
       console.log(query)
       query = JSON.stringify(query);
 
+      function checkCoords(sp, left, top, right, bot) {
+        if (sp.y >= left && sp.y <= right && sp.x >= bot && sp.x <= top) {
+          return true;
+        }
+      }
+
       $.post({
-        url: "/hquery/read",
+        url: "/hquery/read?limit=15000",
         data: query,
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -865,29 +964,48 @@ App.views.bigSearch = new (Backbone.View.extend({
         success: function(response) {
           response = JSON.parse(response);
           let placemarks = [], spatref;
+          console.log(response)
 
           function render() {
-            let sp, preset, epoch, type;
-            _.each(spatref[0], function(obj, i) {
-              if (obj.sp.length) {
+            let preset, epoch, type, ids = {}, id, name;
+            _.each(spatref.sp, function(sp, i) {
+              if (sp) {
                 if (entity == "monument") {
-                  epoch = obj.epoch[0].id;
-                  type = obj.mt[0].id;
-                  sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                  epoch = spatref.epoch[i].id;
+                  type = spatref.mt[i].id;
                   preset = `monType${type}_${epoch}`;
+                  id = spatref.monument[i].id;
+                  name = spatref.monument[i].name;
 
-                  placemarks.push(
-                    App.controllers.fn.createStandartPlacemark('monument', data[i].id, sp.x, sp.y, data[i].name, preset)
-                  );
+                  if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
+                    if (!ids[spatref.monument[i].id]) {
+                      ids[spatref.monument[i].id] = true;
+                      placemarks.push(
+                        App.controllers.fn.createStandartPlacemark('monument', spatref.monument[i].id, sp.x, sp.y, spatref.monument[i].name, preset)
+                      );
+
+                      $("#search-results").append(`<p id="record-${id}"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
+                    }
+                  }
                 }
                 if (entity == "research") {
-                  type = obj.rt[0].id;
-                  sp = App.fn.findActualSpatref(obj.sp, obj.spt);
+                  type = spatref.rt[i].id;
                   preset = `resType${type}`;
+                  id = spatref.research[i].id;
+                  name = spatref.research[i].name;
 
-                  placemarks.push(
-                    App.controllers.fn.createStandartPlacemark('research', data[i].id, sp.x, sp.y, data[i].name, preset)
-                  );
+                  if (!coordsCrit || (coordsCrit && checkCoords(sp, left, top, right, bot))) {
+                    console.log(ids[spatref.research[i].id])
+                    console.log(!ids[spatref.research[i].id])
+                    if (!ids[spatref.research[i].id]) {
+                      placemarks.push(
+                        App.controllers.fn.createStandartPlacemark('research', spatref.research[i].id, sp.x, sp.y, spatref.research[i].name, preset)
+                      );
+                      ids[spatref.research[i].id] = true;
+                      
+                      $("#search-results").append(`<p id="record-${id}"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
+                    }
+                  }
                 }
               }
             })
@@ -900,18 +1018,18 @@ App.views.bigSearch = new (Backbone.View.extend({
             })
           }
 
-          let data = _.toArray(response[entity])
-          data = _.uniq(data, function(item, key, id) {return item.id});
-
-          if (queries[entity].spatref) {
-            let ids = _.map(data, function(obj) {return obj.id.toString()});
-            spatref = (App.models.fn.getData([JSON.stringify(queries[entity].spatref)], render, true, ids));
-          }
-
           $("#search-results").html("");
-          _.each(data, function(obj, key) {
-            $("#search-results").append(`<p><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
-          })
+
+          spatref = response;
+          render();
+
+          if (entity == "author") {
+            let data = _.toArray(response[entity])
+            data = _.uniq(data, function(item, key, id) {return item.id});
+            _.each(data, function(obj, key) {
+              $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}}'>${ ctl(obj.name) }</a></p>`);
+            })
+          }
         }
       });
     });

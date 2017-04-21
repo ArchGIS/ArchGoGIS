@@ -17,6 +17,7 @@ var Config = service.Config{
 		{"/filter_authors", filterAuthorHandler},
 		{"/filter_reports", filterReportHandler},
 		{"/filter_excavations", filterExcavationHandler},
+		{"/filter_radiocarbons", filterRadiocarbonHandler},
 		{"/cities", citiesHandler},
 		{"/collections", collectionsHandler},
 		{"/okns", oknsHandler},
