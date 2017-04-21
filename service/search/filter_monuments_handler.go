@@ -81,12 +81,15 @@ func searchForFilterMonuments(mnt, epoch, mType, resId string) ([]byte, error) {
 		"autName: a.name, " +
 		"ep: e.id, " +
 		"epName: e.name, " +
+		"en_epName: e.en_name, " +
 		"cult: c.name, " +
+		"en_cult: c.en_name, " +
 		"x: k.x, " +
 		"y: k.y, " +
 		"kId: k.id, " +
 		haveThisRes +
 		"monType: monType.name, " +
+		"en_monType: monType.en_name, " +
 		"monTypeId: monType.id}"
 
 	resp, err := neo.Run(query, params)

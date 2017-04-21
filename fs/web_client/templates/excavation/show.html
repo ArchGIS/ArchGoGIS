@@ -46,10 +46,10 @@
               <dd><%= ctl(_.pluck(knowledges[i], "monument_name").join(", ")) %></dd>
 
               <dt><%= t('monument.prop.epoch') %>:</dt>
-              <dd><%= maybe(epochs[i], t('common.noData'), "name") %></dd>
+              <dd><%= maybe(epochs[i], t('common.noData'), `${prefix}name`) %></dd>
 
               <dt><%= t('monument.type') %>:</dt>
-              <dd><%= maybe(monTypes[i], t('common.noData'), "name") %></dd>
+              <dd><%= maybe(monTypes[i], t('common.noData'), `${prefix}name`) %></dd>
             </dl>
           </div>
         <% }) %>

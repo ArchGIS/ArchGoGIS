@@ -98,7 +98,8 @@
     "addSurveyMap": "Добавить карту обследования",
     "protSubject": "Предмет охраны",
     "docFile": "Файл документа",
-    "cultureLayer": "Культурный слой"
+    "cultureLayer": "Культурный слой",
+    "nothingIsSelected": "Ничего не выбрано"
   },
 
   "examples": {

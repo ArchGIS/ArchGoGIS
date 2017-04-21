@@ -39,6 +39,7 @@ App.template = new function() {
   var defaultContext = {
     't': locale.translate,
     'ctl': locale.getLang() === 'en' ? locale.cyrToLatin : identity,
+    'prefix': locale.getLang() === 'ru' ? '' : `${ locale.getLang() }_`,
     'form': App.form,
     'widget': App.widgetMaker.createWidget,
     'block': App.blockMaker.createBlock,

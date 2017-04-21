@@ -59,6 +59,7 @@ func searchForFilterRes(year, author string) ([]byte, error) {
 		"resYear: r.year, " +
 		"resTypeId: resType.id, " +
 		"resTypeName: resType.name, " +
+		"en_resTypeName: resType.en_name, " +
 		"autName: a.name, " +
 		"x: COLLECT(k.x), " +
 		"y: COLLECT(k.y)}"

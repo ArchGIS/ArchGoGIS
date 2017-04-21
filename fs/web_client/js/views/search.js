@@ -2,8 +2,11 @@
 
 App.views.search = new (Backbone.View.extend({
   'index': function() {
-    const t = App.locale.translate;
-    const ctl = App.locale.cyrToLatin;
+    const loc = App.locale;
+    const lang = loc.getLang();
+    const t = loc.translate;
+    const ctl = loc.cyrToLatin;
+    const prefix = lang === 'ru' ? '' : `${lang}_`;
     const excludeIdent = App.fn.excludeIdentMonuments;
     const map = App.views.map().map;
     const markersLayer = new L.FeatureGroup();
@@ -17,7 +20,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchMonument,
         'columnsMaker': function(monuments) {
           return _.map(excludeIdent(monuments), function(mk) {
-            return App.models.Monument.href(mk.monId, `${mk.monName} (${mk.epName}, ${mk.monType})`);
+            return App.models.Monument.href(mk.monId, `${mk.monName} (${mk[prefix + 'epName']}, ${mk[prefix + 'monType']})`);
           });
         },
         'inputs': {
@@ -30,7 +33,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchResearch,
         'columnsMaker': function(researches) {
           return _.map(researches, function(r) {
-            return App.models.Research.href(r.resId, `${r.autName}, ${r.resTypeName} (${r.resYear})`);
+            return App.models.Research.href(r.resId, `${r.autName}, ${r[prefix + 'resTypeName']} (${r.resYear})`);
           });
         },
         'inputs': {
@@ -65,7 +68,7 @@ App.views.search = new (Backbone.View.extend({
         'handler': searchOkn,
         'columnsMaker': function(okns) {
           return _.map(okns, function(r) {
-            return App.models.Heritage.href(r.id, `${r.name ? r.name : 'Нет названия'}`);
+            return App.models.Heritage.href(r.id, `${r.name ? r.name : t('common.noName')}`);
           });
         },
         'inputs': {
@@ -99,11 +102,11 @@ App.views.search = new (Backbone.View.extend({
     let $culture = $('#monument-culture');
     let $monType = $('#monument-type');
     getDataForSelector($epoch, 'Epoch');
-    $epoch.prepend('<option value="0" selected>Ничего не выбрано</option>');
+    $epoch.prepend(`<option value="0" selected>${ t('common.nothingIsSelected') }</option>`);
     getDataForSelector($monType, 'MonumentType');
-    $monType.prepend('<option value="0" selected>Ничего не выбрано</option>');
+    $monType.prepend(`<option value="0" selected>${t ('common.nothingIsSelected') }</option>`);
     getDataForSelector($culture, 'Culture');
-    $culture.prepend('<option value="0" selected>Ничего не выбрано</option>');
+    $culture.prepend(`<option value="0" selected>${ t('common.nothingIsSelected') }</option>`);
 
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {

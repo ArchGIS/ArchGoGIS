@@ -98,7 +98,8 @@
     "addSurveyMap": "Add survey map",
     "protSubject": "Subject of protection",
     "docFile": "Document file",
-    "cultureLayer": "The cultural layer"
+    "cultureLayer": "The cultural layer",
+    "nothingIsSelected": "Nothing was selected"
   },
 
   "examples": {
@@ -224,7 +225,7 @@
     "yearLess": " Year of research before ...",
     "yearMore": " Year of research after ...",
     "description": "Research description",
-    "type": "research type",
+    "type": "Research type",
     "singular": "Research",
     "plural": " Researches",
     "genitivePl": " Researches",
