@@ -20,6 +20,26 @@
     <input class="form-control" id="entity-culture-input">
   </div>
 
+  <label>Левая верхняя граница области поиска</label>
+  <div id="coord-picker-1" class="coords">
+    <div class="form-group">
+      N<input class="form-control" id="coords-top" type="number"></input>
+    </div>
+    <div class="form-group">
+      E<input class="form-control" id="coords-left" type="number"></input>
+    </div>
+  </div>
+
+  <label>Правая нижняя граница области поиска</label>
+  <div id="coord-picker-2" class="coords">
+    <div class="form-group">
+      N<input class="form-control" id="coords-bottom" type="number"></input>
+    </div>
+    <div class="form-group">
+      E<input class="form-control" id="coords-right" type="number"></input>
+    </div>
+  </div>
+
   <button id="show-button" class="btn btn-primary">
     <i class="fa fa-cogs"></i>
     <%= t("admin.find") %>

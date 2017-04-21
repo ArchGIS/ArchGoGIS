@@ -134,7 +134,7 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 					)
 				case "textExact":
 					my.buf.WriteStringf(
-						"%s.%s = '%s'",
+						"%s.%s = '%s' ",
 						entityName, parts[0], parts[1],
 					)	
 				case "less":
