@@ -250,22 +250,36 @@ App.controllers.fn = {
   },
 
   "getCarPlacemarks": function(data, single) {
-    let placemarks = [], spatref = {}, carHeader, preset;
+    let placemarks = [], spatref = {}, carHeader, preset = `c14`;
     single = single || false;
 
-    _.each(data.carbon, function(carbon, i) {
-      carHeader = `${carbon.name}`;
-      preset = `c14`;
-
-      spatref = {
-        x: data.carSpatref[i].x, 
-        y: data.carSpatref[i].y
-      };
+    if (single) {
+      carHeader = `${data.carbon.name}`;
 
       placemarks.push(
-        App.controllers.fn.createStandartPlacemark('radiocarbon', carbon.id, spatref.x, spatref.y, carHeader, preset)
+        App.controllers.fn.createStandartPlacemark(
+          'radiocarbon', 
+          data.carbon.id, 
+          data.carSpatref[0].x, 
+          data.carSpatref[0].y, 
+          carHeader, 
+          preset
+        )
       );
-    });
+    } else {
+      _.each(data.carbon, function(carbon, i) {
+        carHeader = `${carbon.name}`;
+
+        spatref = {
+          x: data.carSpatref[i].x, 
+          y: data.carSpatref[i].y
+        };
+
+        placemarks.push(
+          App.controllers.fn.createStandartPlacemark('radiocarbon', carbon.id, spatref.x, spatref.y, carHeader, preset)
+        );
+      });
+    }
 
     console.log("carbon", placemarks)
     return placemarks;

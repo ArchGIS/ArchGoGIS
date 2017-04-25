@@ -362,21 +362,6 @@ App.views.radiocarbon = new (Backbone.View.extend({
     getDataForSelector($("#exc-spatref-selector"), "SpatialReferenceType", "", true);
     getDataForSelector($("#culture-selector"), "Culture");
     getDataForSelector($("#mon-type-selector"), "MonumentType");
-
-    $("#carbon-genesis-selector").on('click', function() {
-      let genId = $(this).val();
-      if (genId != 1 && genId != 10) {
-        $("#carbon-facies-selector").attr('used', true);
-        $("#div-carbon-facies-selector").show();
-
-        $("#carbon-facies-selector").find(`option`).hide().attr('selected', false);
-        $("#carbon-facies-selector").find(`option[info=${genId}]`).show();
-        $("#carbon-facies-selector").find(`option[info=${genId}]:first`).attr('selected', true);
-      } else {
-        $("#carbon-facies-selector").attr('used', false);
-        $("#div-carbon-facies-selector").hide();
-      }
-    })
     
     let rid = 1;
     let photoId = 1;
@@ -426,6 +411,21 @@ App.views.radiocarbon = new (Backbone.View.extend({
         }
         $(`#carbon-belongs-${lrid}`).append(monLayersCarbon);
         $(`#complex-belongs-${lrid}`).append(monLayersComplex);
+
+        $(`#carbon-genesis-selector-${lrid}`).on('click', function() {
+          let genId = $(this).val();
+          if (genId != 1 && genId != 10) {
+            $(`#carbon-facies-selector-${lrid}`).attr('used', true);
+            $(`#div-carbon-facies-selector-${lrid}`).show();
+
+            $(`#carbon-facies-selector-${lrid}`).find(`option`).hide().attr('selected', false);
+            $(`#carbon-facies-selector-${lrid}`).find(`option[info=${genId}]`).show();
+            $(`#carbon-facies-selector-${lrid}`).find(`option[info=${genId}]:first`).attr('selected', true);
+          } else {
+            $(`#carbon-facies-selector-${lrid}`).attr('used', false);
+            $(`#div-carbon-facies-selector-${lrid}`).hide();
+          }
+        })
 
         getDataForSelector($(`#carbon-spatref-selector-${lrid}`), "SpatialReferenceType", "", true);
         getDataForSelector($(`#carbon-date-type-selector-${lrid}`), "RadiocarbonDateType");
@@ -599,7 +599,7 @@ App.views.radiocarbon = new (Backbone.View.extend({
   "show": function(placemarks) {
     App.views.addToMap(placemarks);
 
-    $("#container").tabs();
+    $(".tabs").tabs();
     App.views.functions.setAccordion(".accordion");
   },
 }));

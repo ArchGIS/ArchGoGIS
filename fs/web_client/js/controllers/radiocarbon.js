@@ -36,66 +36,80 @@ App.controllers.radiocarbon = new (Backbone.View.extend({
     var queries = {
       complex: {
         monuments: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
+          "r:Radiocarbon": {"id": rid},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
           "monuments:Monument": {"id": "*", "select": "*"},
-          "knowledges__found__artifact": {},
+          "knowledges__r": {},
           "knowledges__belongsto__monuments": {},
-        }),
-        interpretations: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
-          "interpretations:Interpretation": {"id": "*", "select": "*"},
-          "artifact__has__interpretations": {},
         }),
       },
 
       single: {
-        artifact: JSON.stringify({
-          "artifact:Artifact": {"id": rid, "select": "*"}
+        radiocarbon: JSON.stringify({
+          "carbon:Radiocarbon": {"id": rid, "select": "*"}
         }),
-        artiSpatref: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
-          "artiSpatref:SpatialReference": {"id": "*", "select": "*"},
-          "artiSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
-          "artifact__has__artiSpatref": {},
-          "artiSpatref__has__artiSpatrefT": {},
+        dateType: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "dateType:RadiocarbonDateType": {"id": "*", "select": "*"},
+          "r__dateType": {},
         }),
-        category: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
-          "categories:ArtifactCategory": {"id": "*", "select": "*"},
-          "artifact__has__categories": {},
+        complex: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "complex:Complex": {"id": "*", "select": "*"},
+          "r__complex": {},
+        }),
+        genesis: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "genesis:SludgeGenesis": {"id": "*", "select": "*"},
+          "r__genesis": {},
+        }),
+        facies: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "genesis:SludgeGenesis": {"id": "*"},
+          "facies:Facies": {"id": "*", "select": "*"},
+          "genesis__facies": {},
+          "r__genesis": {},
+        }),
+        material: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "material:CarbonMaterial": {"id": "*", "select": "*"},
+          "r__material": {},
+        }),
+        carSpatref: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "r__has__carSpatref": {},
+          "carSpatref__has__carSpatrefT": {},
         }),
         photosa: JSON.stringify({
-          "a:Artifact": {"id": rid},
-          "photosa:Image": {"id": "*", "select": "*"},
-          "a__has__photosa": {},
+          "r:Radiocarbon": {"id": rid},
+          "photosr:Image": {"id": "*", "select": "*"},
+          "r__has__photosr": {},
         }),
         excavations: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
+          "r:Radiocarbon": {"id": rid},
           "excavation:Excavation": {"id": "*", "select": "*"},
-          "excavation__has__artifact": {},
+          "excavation__has__r": {},
         }),
         excSpatref: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
+          "r:Radiocarbon": {"id": rid},
           "excavation:Excavation": {"id": "*"},
           "excSpatref:SpatialReference": {"id": "*", "select": "*"},
           "excSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "excavation__has__excSpatref": {},
           "excSpatref__has__excSpatrefT": {},
-          "excavation__has__artifact": {},
+          "excavation__has__r": {},
         }),
-        materials: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
-          "materials:ArtifactMaterial": {"id": "*", "select": "*"},
-          "artifact__has__materials": {},
+        researches: JSON.stringify({
+          "r:Radiocarbon": {"id": rid},
+          "researches:Research": {"id": "*", "select": "*"},
+          "resType:ResearchType": {"id": "*", "select": "*"},
+          "author:Author": {"id": "*", "select": "*"},
+          "researches__has__resType": {},
+          "researches__hasauthor__author": {},
+          "researches__has__r": {},
         }),
-        collections: JSON.stringify({
-          "artifact:Artifact": {"id": rid},
-          "intervals:StorageInterval": {"id": "*", "select": "*"},
-          "colls:Collection": {"id": "*", "select": "*"},
-          "artifact__has__intervals": {},
-          "colls__has__intervals": {},
-        })
       },
 
       monuments: {
@@ -117,33 +131,6 @@ App.controllers.radiocarbon = new (Backbone.View.extend({
           "monSpatref__has__monSpatrefT": {}
         })
       },
-
-      interpretations: {
-        photos: JSON.stringify({
-          "inter:Interpretation": {"id": "NEED"},
-          "photos:Image": {"id": "*", "select": "*"},
-          "inter__has__photos": {},
-        }),
-        culture: JSON.stringify({
-          "inter:Interpretation": {"id": "NEED"},
-          "culture:Culture": {"id": "*", "select": "*"},
-          "inter__has__culture": {},
-        }),
-        dateScale: JSON.stringify({
-          "inter:Interpretation": {"id": "NEED"},
-          "dateScale:DateScale": {"id": "*", "select": "*"},
-          "inter__has__dateScale": {},
-        }),
-        researches: JSON.stringify({
-          "inter:Interpretation": {"id": "NEED"},
-          "research:Research": {"id": "*", "select": "*"},
-          "resType:ResearchType": {"id": "*", "select": "*"},
-          "author:Author": {"id": "*", "select": "*"},
-          "research__has__inter": {},
-          "research__has__resType": {},
-          "research__hasauthor__author": {},
-        }),
-      },
     }
 
     var render = function() {
@@ -156,13 +143,14 @@ App.controllers.radiocarbon = new (Backbone.View.extend({
 
       let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
       let excPlacemarks = App.controllers.fn.getExcPlacemarks(tmplData, true);
-      let artPlacemarks = App.controllers.fn.getArtPlacemarks(tmplData, true);
+      let carPlacemarks = App.controllers.fn.getCarPlacemarks(tmplData, true);
+
 
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, excPlacemarks);
-      tmplData.placemarks = _.union(tmplData.placemarks, artPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, carPlacemarks);
 
-      App.page.render("artifact/show", tmplData, tmplData.placemarks);
+      App.page.render("radiocarbon/show", tmplData, tmplData.placemarks);
     }
 
     var queryCounter = _.reduce(queries, function(memo, obj) {
