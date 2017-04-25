@@ -4,7 +4,6 @@
   <div class="tabs">
     <ul>
       <li><a href="#common"><%= t('common.general') %></a></li>
-      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
       <li><a href="#photos"><%= t('photo.plural') %></a></li>
       <li><a href="#another">*</a></li>
@@ -47,7 +46,7 @@
 
         <% if (complex[0]) { %>
           <dt><%= t('excavation.objectName') %>:</dt>
-          <dd><%= maybe(complex[0].name, t('common.noData')) %></dd>
+          <dd><%= maybe(ctl(complex[0].name), t('common.noData')) %></dd>
         <% } %>
 
         <dt><%= t('radiocarbon.stratigraphic') %>:</dt>
@@ -67,6 +66,16 @@
           <dt><%= t('radiocarbon.material') %>:</dt>
           <dd><%= maybe(material[0].name, t('common.noData')) %></dd>
         <% } %>
+
+        <% if (knowledges[0]) { %>
+          <dt><%= t('monument.singular') %>:</dt>
+          <dd><%= App.models.Monument.href(monuments[0].id, ctl(knowledges[0].monument_name)) %></dd>
+        <% } %>
+
+        <% if (excavation[0]) { %>
+          <dt><%= t('monument.singular') %>:</dt>
+          <dd><%= App.models.Excavation.href(excavation[0].id, ctl(excavation[0].name)) %></dd>
+        <% } %>
       </dl>
     </div>
 
@@ -83,10 +92,6 @@
         }
       %>
       <%= html.join("<br>") %>
-    </div>
-
-    <div id="monuments">
-
     </div>
 
     <div id="researches">
