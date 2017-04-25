@@ -16,20 +16,20 @@
       <dd><%= maybe(heritage, t('common.notDefined'),"code") %></dd>
 
       <dt><%= t('common.name1') %>:</dt>
-      <dd><%= maybe(heritage, t('common.notDefined'),"name") %></dd>
+      <dd><%= ctl( maybe(heritage, t('common.notDefined'),"name") ) %></dd>
 
       <dt><%= t('common.address') %>:</dt>
       <dd><%= maybe(heritage, t('common.notDefined'),"address") %></dd>
 
       <dt><%= t('date.singular') %>:</dt>
-      <dd><%= maybe(heritage, t('common.notSpecif'),"date") %></dd>
+      <dd><%= maybe(heritage, t('common.notSpecif'), "date") %></dd>
 
       <dt><%= t('common.status') %> :</dt>
-      <dd><%= maybe(herStatus[0], t('common.notDefined'), "name") %></dd>
+      <dd><%= maybe(herStatus[0], t('common.notDefined'), `${prefix}name`) %></dd>
 
       <% if ( _.size(secType[0]) ) { %>
         <dt><%= t('common.protCateg') %> :</dt>
-        <dd><%= maybe(secType[0], t('common.notSpecif'),"name") %></dd>
+        <dd><%= maybe(secType[0], t('common.notSpecif'), `${prefix}name`) %></dd>
 
         <% if ( _.size(file) ) { %>
           <dt><%= t('common.protDoc') %> :</dt>
@@ -55,7 +55,7 @@
       <dt><%= t('common.borderDescr') %> :</dt>
       <dd><%= maybe(heritage, t('common.notSpecif'),"borderDesc") %></dd>
 
-      <dt><%= t('doc.registration') %>:</dt>
+      <dt><%= t('doc.registration.singular') %>:</dt>
       <dd><%= App.models.File.href(heritage.fileid, t('common.document')) %></dd>
 
     </div>
@@ -74,15 +74,15 @@
               <dt></dt>
               <dd>
                 <a href="#monument/show/<%= monument.id %>">
-                <%= t('monument.goto') %>
+                <%= t('goto.monument') %>
               </a>
               </dd>
               <dt><%= t('monument.names') %>:</dt>
               <dd><%= _.uniq(_.map(knowledges[i], function(k, i) {return ctl(k.monument_name)})).join(", ") %></dd>
               <dt><%= t('monument.prop.epoch') %>:</dt>
-              <dd><%= maybe(epochs[i][0], t('common.noData'), "name") %></dd>
+              <dd><%= maybe(epochs[i][0], t('common.noData'), `${prefix}name`) %></dd>
               <dt><%= t('monument.prop.type') %>:</dt>
-              <dd><%= maybe(monTypes[i][0], t('common.noData'), "name") %></dd>
+              <dd><%= maybe(monTypes[i][0], t('common.noData'), `${prefix}name`) %></dd>
             </dl>
           </div>
 
@@ -91,7 +91,7 @@
     </div>
     <div id="researches">
       <%= _.uniq(_.map(researches, function(res, i) {
-        let resTitle = `${res.name} (${resTypes[i][0].name}, ${res.year})`;
+        let resTitle = `${res.name} (${resTypes[i][0][`${prefix}name`]}, ${res.year})`;
         return App.models.Research.href(res.id, ctl(resTitle));
       })).join("<br>") %>
     </div>

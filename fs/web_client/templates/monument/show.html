@@ -20,10 +20,10 @@
       <dd><%= ctl(allNames) %></dd>
 
       <dt><%= t("monument.prop.epoch") %>:</dt>
-      <dd><%= maybe(epochs[0], t('common.notSpecif'),"name") %></dd>
+      <dd><%= maybe(epochs[0], t('common.notSpecif'), `${prefix}name`) %></dd>
 
       <dt><%= t("monument.prop.type") %>:</dt>
-      <dd><%= maybe(monTypes[0], t('common.notDefined'),"name") %></dd>
+      <dd><%= maybe(monTypes[0], t('common.notDefined'), `${prefix}name`) %></dd>
 
       <dt><%= t("research.genitivePl") %>:</dt>
       <dd><%= _.size(researches) %></dd>
@@ -64,23 +64,21 @@
           <h4 class="accordion-header">
             <%= t("research.singular") %> №<%= i+1 %>:
             <b>
-              <%= ctl(App.views.research.getFullResearchTitle(authors[i].name, research.year, resTypes[i][0].name)) %>
+              <%= ctl(App.views.research.getFullResearchTitle(authors[i].name, research.year, resTypes[i][0][`${prefix}name`])) %>
             </b>
           </h4>
 
           <div class="accordion-content">
             <dl>
-              <dt></dt>
-              <dd>
-                <a href="#research/show/<%= research.id %>">
+              <a href="#research/show/<%= research.id %>">
                 <%= t('goto.research') %>
               </a>
-              </dd>
+
               <dt><%= t('common.nameByAuthor') %>:</dt>
               <dd><%= ctl(knowledges[i].monument_name) %></dd>
               <% if (_.keys(cultures[i]).length) { %>
                 <dt><%= t('knowledge.prop.culture') %>:</dt>
-                <dd><%= cultures[i].name %></dd>
+                <dd><%= cultures[i][`${prefix}name`] %></dd>
               <% } %>
               <% if (research.description) { %>
                 <dt><%= t('research.description') %>:</dt>

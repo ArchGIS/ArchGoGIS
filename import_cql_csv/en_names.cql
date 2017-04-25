@@ -179,7 +179,7 @@ match (c:Culture {name: "Древнерусская"}) set c.en_name = "Old-Russ
 match (c:Culture {name: "Зарубинецкая"}) set c.en_name = "Zarubintsy culture";
 match (c:Culture {name: "Маклашеевская"}) set c.en_name = "Maklasheevka culture";
 match (c:Culture {name: "Атабаевский этап Маклашеевской культуры"}) set c.en_name = "Atabayevo stage of Maklasheevka culture";
--
+
 match (c:Culture {name: "Гафурийско-убаларская"}) set c.en_name = "Gafuri-Ubalar";
 match (c:Culture {name: "Позднедьяковская"}) set c.en_name = "Late-D’yakovo";
 match (c:Culture {name: "Дьяковская"}) set c.en_name = "D’yakovo";
