@@ -102,14 +102,14 @@
       <select class="form-control" id="carbon-genesis-selector-<%= rid %>" data-for="sg_<%= rid %>:SludgeGenesis" type="id" name="id"></select>
     </div>
 
-    <div class="form-group" id="div-carbon-facies-selector" style="display: none">
+    <div class="form-group" id="div-carbon-facies-selector-<%= rid %>" style="display: none">
       <label for="carbon-facies-selector-<%= rid %>"><%= t("radiocarbon.facies") %></label>
       <select class="form-control" id="carbon-facies-selector-<%= rid %>" data-for="fac_<%= rid %>:Facies" type="id" name="id" used="false"></select>
     </div>
 
     <div class="form-group">
       <label for="carbon-material-selector-<%= rid %>"><%= t("radiocarbon.material") %></label>
-      <select class="form-control" id="carbon-material-selector-<%= rid %>" data-for="fac_<%= rid %>:CarbonMaterial" type="id" name="id"></select>
+      <select class="form-control" id="carbon-material-selector-<%= rid %>" data-for="mat_<%= rid %>:CarbonMaterial" type="id" name="id"></select>
     </div>
 
     <div class="form-group carbon-belongs" id="carbon-belongs-<%= rid %>" data-checkbox-type="radio">

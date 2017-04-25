@@ -1,102 +1,82 @@
 <div class="content">
-  <h2><%= t('artifact.singular') %></h2>
+  <h2><%= t('radiocarbon.singular') %></h2>
   
   <div class="tabs">
     <ul>
       <li><a href="#common"><%= t('common.general') %></a></li>
-      <li><a href="#photos"><%= t('photo.plural') %></a></li>
-      <li><a href="#dates"><%= t('date.plural') %></a></li>
+      <li><a href="#monuments"><%= t('monument.plural') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#photos"><%= t('photo.plural') %></a></li>
       <li><a href="#another">*</a></li>
     </ul>
 
     <div id="common">
       <dl>
-        <% if (artifact.name) { %>
-          <dt><%= t('artifact.name') %>:</dt>
-          <dd><%= ctl(artifact.name) %></dd>
+        <dt><%= t('radiocarbon.index') %>:</dt>
+        <dd><%= ctl(carbon.name) %></dd>
+
+        <dt><%= t('radiocarbon.date') %>:</dt>
+        <dd><%= maybe(carbon.date, t('common.noData')) %></dd>
+
+        <dt><%= t('radiocarbon.dateType') %>:</dt>
+        <dd><%= maybe(dateType[0].name, t('common.noData')) %></dd>
+        
+        <dt>±1s:</dt>
+        <dd><%= maybe(carbon.s, t('common.noData')) %></dd>
+
+        <dt>±2s:</dt>
+        <dd><%= maybe(carbon.ss, t('common.noData')) %></dd>
+        
+        <dt>BC/AD 68.2%:</dt>
+        <dd><%= maybe(carbon.bcadFirstBot, t('common.noData')) %> — <%= maybe(carbon.bcadFirstTop, t('common.noData')) %></dd>
+        
+        <dt>BC/AD 95.4%:</dt>
+        <dd><%= maybe(carbon.bcadSecondBot, t('common.noData')) %> — <%= maybe(carbon.bcadSecondTop, t('common.noData')) %></dd>
+      
+        <dt>Curve IntCal:</dt>
+        <dd><%= maybe(carbon.curve, t('common.noData')) %></dd>
+
+        <dt><%= t('radiocarbon.depth') %>:</dt>
+        <dd><%= maybe(carbon.depth, t('common.noData')) %></dd>
+
+        <dt><%= t('radiocarbon.relativeDepth') %>:</dt>
+        <dd><%= maybe(carbon.relativeDepth, t('common.noData')) %></dd>
+
+        <dt><%= t('excavation.section') %>:</dt>
+        <dd><%= maybe(carbon.excRegion, t('common.noData')) %></dd>
+
+        <% if (complex[0]) { %>
+          <dt><%= t('excavation.objectName') %>:</dt>
+          <dd><%= maybe(complex[0].name, t('common.noData')) %></dd>
         <% } %>
 
-        <dt><%= t('artifact.category') %>:</dt>
-        <dd><%= (categories.length > 0) ? _.pluck(categories, 'name').join(", ") : t('common.noData') %></dd>
+        <dt><%= t('radiocarbon.stratigraphic') %>:</dt>
+        <dd><%= maybe(carbon.layerChar, t('common.noData')) %></dd>
 
-        <dt><%= t('artifact.material') %>:</dt>
-        <dd><%= (materials.length > 0) ? _.pluck(materials, 'name').join(", ") : t('common.noData') %></dd>
+        <% if (genesis[0]) { %>
+          <dt><%= t('radiocarbon.genesis') %>:</dt>
+          <dd><%= maybe(genesis[0].name, t('common.noData')) %></dd>
+        <% } %>
 
-        <dt><%= t('artifact.size') %>:</dt>
-        <dd><%= maybe(artifact.size, t('common.noData')) %></dd>
+        <% if (facies[0]) { %>
+          <dt><%= t('radiocarbon.facies') %>:</dt>
+          <dd><%= maybe(facies[0].name, t('common.noData')) %></dd>
+        <% } %>
 
-        <dt><%= t('artifact.weight') %>:</dt>
-        <dd><%= maybe(artifact.weight, t('common.noData')) %></dd>
-
-        <dt><%= t('artifact.tech') %>:</dt>
-        <dd><%= maybe(artifact.tech,  t('common.noData')) %></dd>
-
-        <dt><%= t('artifact.keywords') %>:</dt>
-        <dd><%= t('common.noData') %></dd>
-
-        <dt><%= t('artifact.yearFound') %>:</dt>
-        <dd><%= maybe(artifact.year,  t('common.noData')) %></dd>
-
-        <dt><%= t('artifact.monumentFound') %>:</dt>
-        <dd><%= App.models.Monument.href(monuments[0].id, ctl(knowledges[0].monument_name)) %></dd>
-
-        <dt><%= t('excavation.singular') %>:</dt>
-        <%  let excTitle = "" 
-            if (excavation[0]) {
-              let excName = maybe(excavation[0].name, t('common.withoutName'));
-              let excArea = (excavation[0].area) ? ` — ${excavation[0].area}${ t('common.metresInSq') }` : "";
-              let excBoss = (excavation[0].boss) ? ` (${excavation[0].boss})` : "";
-              excTitle = `${excName} ${excArea} ${excBoss}`;
-            }
-        %>
-        <dd><%= maybe(excTitle, t('common.noData')) %></dd>
-
-        <dt><%= t('artifact.placeFound') %>:</dt>
-        <%  let place = "" ;
-            let placeInfo = [];
-
-            placeInfo[0] = (artifact.excRegion) ? `${ t('common.section') }: ${artifact.excRegion}` : "";
-            placeInfo[1] = (artifact.depth) ? `${ t('excavation.depth_') }: ${artifact.depth}см` : "";
-
-            place = _.compact(placeInfo).join("<br>");
-        %>
-        <dd><%= maybe(place, t('common.noData')) %></dd>
-
-        <dt><%= t('collection.plural') %>:</dt>
-        <% 
-          let collectionsInfo = _.map(colls, function(coll, i) {
-            let link = App.models.Collection.href(coll.id, ctl(coll.name))
-            return `"${link}" ${ t('since') } ${intervals[i].yearSince} ${ t('year.year2') }`
-          }).join("<br>")
-        %>
-        <dd><%= maybe(collectionsInfo, t('common.noData')) %></dd>
+        <% if (material[0]) { %>
+          <dt><%= t('radiocarbon.material') %>:</dt>
+          <dd><%= maybe(material[0].name, t('common.noData')) %></dd>
+        <% } %>
       </dl>
     </div>
 
     <div id="photos">
       <% 
         let html = [];
-        if (researches.length) {
-          _.each(researches, function(resInfo, i) {
-            if (photos[i].length) {
-              let resName = resInfo.research[0].name;
-              let authorName = resInfo.author[0].name || t('author.unknown');
-              let resType = resInfo.resType[0].name || t('common.withoutType');
-              let resYear = resInfo.research[0].year || t('common.yearNotDefined');
-              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
-              html.push(`<b>${App.models.Research.href(resInfo.research[0].id, ctl(resTitle))}</b>`)
 
-              html.push(_.map(photos[i], function(photo) {
-                return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
-              }))
-            }
-          });
-        }
-
-        if (photosa.length) {
-          _.each(photosa, function(resInfo, i) {
-            html.push(_.map(photosa, function(photo) {
+        if (photosr.length) {
+          _.each(photosr, function(resInfo, i) {
+            html.push(_.map(photosr, function(photo) {
               return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
             }))
           })
@@ -105,60 +85,17 @@
       <%= html.join("<br>") %>
     </div>
 
-    <div id="dates">
-      <% 
-        let dates = [];
-        if (interpretations.length) {
-          _.each(interpretations, function(inter, i) {
-            dateScale[0][i] = dateScale[0][i] || {};
-            if (inter.dateBottom) {
-              let resName = researches[i].research[0].name;
-              let authorName = researches[i].author[0].name || t('author.unknown');
-              let resType = researches[i].resType[0].name || t('common.withoutType');
-              let resYear = researches[i].research[0].year || t('common.yearNotDefined');
-              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
-              resTitle = App.models.Research.href(researches[i].research[0].id, ctl(resTitle));
+    <div id="monuments">
 
-              let date = `${ctl(dateScale[0][i].name)}: ${inter.dateBottom} — ${inter.dateTop} - ${resTitle}`
-              dates.push(date)
-            }
-          });
-        } 
-      %>
-      <%= dates.join("<br>") %>
     </div>
 
     <div id="researches">
       <div class="accordion">
         <% _.each(researches, function(res, i) { %>
-          <h4 class="accordion-header">
             <%= t("research.singular") %> №<%= i+1 %>:
-            <b><%= ctl(App.views.research.getFullResearchTitle(res.author[0].name, res.research[0].year, res.resType[0].name)) %></b>
-          </h4>
-
-          <div class="accordion-content">
-            <dl>
-              <dd><%= App.models.Research.href(res.research[0].id, t('goto.research')) %></dd>
-
-              <dt><%= t("common.description")%>:</dt>
-              <dd><%= maybe(interpretations[i].description, t('common.noDescription')) %></dd>
-
-              <dt><%= t("common.culture") %>:</dt>
-              <dd><%= maybe(culture[i], t('common.noData'), "name") %></dd>
-
-              <dt><%= t("date.singular") %>:</dt>
-              <% let date = ctl(`${dateScale[0][i].name}: ${interpretations[i].dateBottom} — ${interpretations[i].dateTop}`) %>
-              <dd><%= maybe(date, t('common.noData')) %></dd>
-
-              <dt><%= t("photo.plural") %>:</dt>
-              <dd>
-                <%= _.map(photos[i], function(photo) {
-                  return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
-                }).join("") %>
-              </dd>
-
-            </dl>
-          </div>
+            <% let resTitle = ctl(App.views.research.getFullResearchTitle(author[i].name, res.year, resType[i].name)) %></b>
+            <%= App.models.Research.href(res.id, resTitle) %>
+            <br>
         <% }); %>
       </div>
     </div>
