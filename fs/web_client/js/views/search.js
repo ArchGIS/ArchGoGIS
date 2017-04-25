@@ -529,7 +529,7 @@ App.views.search = new (Backbone.View.extend({
                   icon: icon
                 });
 
-                let excHeader = `${item.name} (item.resYear)`
+                let excHeader = `${item.name} (${item.resYear})`
                 marker.bindTooltip(excHeader, {
                   direction: 'top'
                 });

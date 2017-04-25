@@ -2,6 +2,8 @@
 
 App.views.download = new (Backbone.View.extend({
   'index': function() {
+    const t = App.locale.translate;
+    const prefix = App.locale.getLang() === 'ru' ? '' : `${App.locale.getLang()}_`;
 
     let queries = {
 
@@ -126,32 +128,44 @@ App.views.download = new (Backbone.View.extend({
       },
     }
 
+    const name       = t('common.name'),
+          mType      = t('monument.prop.type'),
+          mEpoch     = t('monument.prop.epoch'),
+          mCulture   = t('admin.culture'),
+          coords     = t('coord.plural'),
+          aCategory  = t('artifact.category'),
+          aYearFound = t('artifact.yearFound'),
+          aMon       = t('monument.singular'),
+          aExc       = t('excavation.second'),
+          hAddress   = t('common.address'),
+          hDate      = t('date.singular');
+
     let fields = {
 
       Monument: {
         "id": "id",
-        "Название": "know",
-        "Тип": "type",
-        "Эпоха": "epoch",
-        "Культура": "cul",
-        "Координаты": "coords",
+        [name]: "know",
+        [mType]: "type",
+        [mEpoch]: "epoch",
+        [mCulture]: "cul",
+        [coords]: "coords",
       },
       Artifact: {
         "id": "id",
-        "Название": "name",
-        "Категория": "categ",
-        "Год находки": "year",
-        "Памятник": "know",
-        "Раскоп": "exc",
-        "Координаты": "coords",
+        [name]: "name",
+        [aCategory]: "categ",
+        [aYearFound]: "year",
+        [aMon]: "know",
+        [aExc]: "exc",
+        [coords]: "coords",
       },
 
       Heritage: {
         "id": "id",
-        "Название": "name",
-        "Адрес": "address",
-        "Датировка": "date",
-        "Координаты": "coords",
+        [name]: "name",
+        [hAddress]: "address",
+        [hDate]: "date",
+        [coords]: "coords",
       },
     }
 
@@ -194,7 +208,7 @@ App.views.download = new (Backbone.View.extend({
                 data[entity][t][name] = `N: ${coords.x}, E: ${coords.y}`;
               }
             } else {
-              data[entity][t][name] = _.pluck(obj, "name").join(", ");
+              data[entity][t][name] = _.pluck(obj, `${prefix}name`).join(", ");
             }
           })
         })
