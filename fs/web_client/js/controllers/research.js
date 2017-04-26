@@ -118,7 +118,16 @@ App.controllers.research = new (Backbone.View.extend({
           "research__has__carbon": {},
           "carbon__has__carSpatref": {},
           "carSpatref__has__carSpatrefT": {}
-        })
+        }),
+        cultureKnowledge: JSON.stringify({
+          "research:Research": {"id": resId},
+          "cultKnow:CultureKnowledge": {"id": "*", "select": "*"},
+          "resCult:Culture": {"id": "*", "select": "*"},
+          "cultDate:DateScale": {"id": "*", "select": "*"},
+          "research__cultKnow": {},
+          "cultKnow__resCult": {},
+          "cultKnow__cultDate": {},
+        }),
       },
 
       monuments: {

@@ -10,6 +10,7 @@
       <li><a href="#topos"><%= t('topoplan.plural') %></a></li>
       <li><a href="#artifacts"><%= t('artifact.plural') %></a></li>
       <li><a href="#radiocarbon"><%= t('radiocarbon.plural') %></a></li>
+      <li><a href="#cultures"><%= t('culture.plural') %></a></li>
       <li><a href="#another">*</a></li>
     </ul>
 
@@ -202,6 +203,31 @@
       })
       %>
       <%= _.uniq(excs).join("<br>") %>
+    </div>
+
+    <div id="cultures">
+      <div id="accordion">
+        <% _.each(resCult, function(cult, i) { %>
+          <h4 class="accordion-header">
+            <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+            <%= t('culture.number') %><%= counter++ %>: <b><%= ctl(cult.name) %></b>
+          </h4>
+          
+          <div class="accordion-content">
+            <dl>
+              <% if (cultDate[i] && cultKnow[i]) { %>
+                <dt><%= t('date.singular') %>:</dt>
+                <dd><%= cultDate[i].name %>: <%= cultKnow[i].dateBottom %> — <%= cultKnow[i].dateTop %></dd>
+             <% } %>
+
+              <% if (cultKnow[i]) { %>
+                <dt><%= t('common.description') %>:</dt>
+                <dd><%= cultKnow[i].description %></dd>
+             <% } %>
+            </dl>
+          </div>
+        <% }) %>
+      </div>
     </div>
 
     <div id="topos">
