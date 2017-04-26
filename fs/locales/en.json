@@ -102,6 +102,15 @@
     "nothingIsSelected": "Nothing was selected"
   },
 
+  "culture": {
+    "singular": "Culture",
+    "plural": "Cultures",
+    "add": "Add culture",
+    "number": "Culture #",
+    "cultName": "Culture name",
+    "description": "Culture description"
+  },
+
   "examples": {
     "chooseCoords": "Press the button to select the coordinates. The format for manual filling: 55.5555, 49.5656.",
     "maxSizePhoto": "The maximum photo size is 10 MB",

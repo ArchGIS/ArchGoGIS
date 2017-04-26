@@ -57,6 +57,7 @@ var (
 		{"Publication", "n_publication_id_seq"},
 		{"SpatialReference", "n_spatial_reference_id_seq"},
 		{"Radiocarbon", "n_radiocarbon_id_seq"},
+		{"CultureKnowledge", "n_culture_knowledge_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

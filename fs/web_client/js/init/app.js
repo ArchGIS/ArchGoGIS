@@ -155,7 +155,10 @@ function postQuery(objectId) {
     ["SludgeGenesis", "Facies", "has"],
     ["Radiocarbon", "CarbonSpatRef", "has"],
     ["CarbonSpatRef", "CarbonSpatRefType", "has"],
-    ["Radiocarbon", "radiocarbonImage", "has"]
+    ["Radiocarbon", "radiocarbonImage", "has"],
+    ["Research", "CultureKnowledge", "has"],
+    ["CultureKnowledge", "cultureResearch", "has"],
+    ["CultureKnowledge", "CultDateScale", "has"]
   ]);
 
   let formdata = new FormData();

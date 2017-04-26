@@ -704,17 +704,19 @@ App.views.research = new (Backbone.View.extend({
       });
     });
 
-    let nextTopoId = App.fn.counter(1);
-    $('#add-topo-button').on('click', function(e) {
-      let localTopoId = nextTopoId();
+    let nextCultId = App.fn.counter(1);
+    $('#add-culture-button').on('click', function(e) {
+      let localCultId = nextCultId();
       let params = {
-        topoId: localTopoId
+        cId: localCultId
       }
 
-      App.template.get("monument/addTopoplan", function(tmpl) {
-        $('#add-topo-button').before(tmpl(params));
+      App.template.get("research/addCulture", function(tmpl) {
+        $('#add-culture-button').before(tmpl(params));
 
-        App.views.functions.setAccordionHeader($(`#topo-header-${localTopoId}`));
+        App.views.functions.setCultureAutocomplete($(`#research-culture-name-${localCultId}`), localCultId, 0, "cultureResearch");
+        getDataForSelector($(`#culture-date-scale-selector-${localCultId}`), "DateScale");
+        App.views.functions.setAccordionHeader($(`#culture-header-${localCultId}`));
       })
     });
     
