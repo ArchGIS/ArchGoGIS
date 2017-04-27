@@ -588,6 +588,7 @@ App.views.search = new (Backbone.View.extend({
         .then(function(response) {
           if (response.length) {
             var list = my.columnsMaker(response);
+            var spatref = {};
 
             _.each(list, function(item) {
               $results.append(`<p>${ ctl(item) }</p>`);
@@ -602,7 +603,20 @@ App.views.search = new (Backbone.View.extend({
                 iconSize: [16, 16]
               });
 
-              let marker = L.marker(new L.LatLng(item.spatref.x, item.spatref.y), {
+              if (item.spatref.x && item.spatref.y) {
+                spatref.x = item.spatref.x;
+                spatref.y = item.spatref.y;
+              } else if (item.excX && item.excY) {
+                spatref.x = item.excX;
+                spatref.y = item.excY;
+              } else if (item.monX && item.monY) {
+                spatref.x = item.monX;
+                spatref.y = item.monY;
+              } else {
+                return 1;
+              }
+
+              let marker = L.marker(new L.LatLng(spatref.x, spatref.y), {
                 icon: icon
               });
 

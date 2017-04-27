@@ -38,10 +38,22 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
     params["name"] = `"(?ui)^.*` + name + `.*$"`
   }
 
+  query = query + "OPTIONAL MATCH (r)--(e:Excavation)--(excSp:SpatialReference)--(excSpt:SpatialReferenceType) "
+  query = query + "OPTIONAL MATCH (r)--(k:Knowledge)--(m:Monument)--(monSp:SpatialReference)--(monSpt:SpatialReferenceType) " 
+
   query = query + "WITH {" +
     "carbon: r, " +
+    "excX: excSp.x, " +
+    "excY: excSp.y, " +
+    "excDate: excSp.date, " +
+    "excType: excSpt.id, " +
+    "monX: monSp.x, " +
+    "monY: monSp.y, " +
+    "monDate: monSp.date, " +
+    "monType: monSpt.id, " +
     "spatref: sp} as r " +
-    "RETURN r "
+    "RETURN r " + 
+    "ORDER BY r.excType ASC, r.excDate DESC, r.monType ASC, r.monDate DESC "
 
   resp, err := neo.Run(query, params)
 
