@@ -82,6 +82,26 @@ App.controllers.radiocarbon = new (Backbone.View.extend({
           "r__has__carSpatref": {},
           "carSpatref__has__carSpatrefT": {},
         }),
+        carbonExcSpatref: JSON.stringify({
+          "carbon:Radiocarbon": {"id": rid},
+          "exc:Excavation": {"id": "*"},
+          "carExcSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carExcSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "exc__has__carbon": {},
+          "exc__has__carExcSpatref": {},
+          "carExcSpatref__has__carExcSpatrefT": {}
+        }),
+        carbonMonSpatref: JSON.stringify({
+          "carbon:Radiocarbon": {"id": rid},
+          "know:Knowledge": {"id": "*"},
+          "mon:Monument": {"id": "*"},
+          "carMonSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carMonSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "know__has__carbon": {},
+          "know__belongsto__mon": {},
+          "mon__has__carMonSpatref": {},
+          "carMonSpatref__has__carMonSpatrefT": {}
+        }),
         photosa: JSON.stringify({
           "r:Radiocarbon": {"id": rid},
           "photosr:Image": {"id": "*", "select": "*"},

@@ -256,24 +256,50 @@ App.controllers.fn = {
     if (single) {
       carHeader = `${data.carbon.name}`;
 
+      spatref = App.fn.findActualSpatref(
+        data.carSpatref, 
+        data.carSpatrefT
+      );
+
+      if (spatref.date === 0) {
+        spatref = App.fn.findActualSpatref(
+          data.carExcSpatref, 
+          data.carExcSpatrefT
+        );
+      }
+
+      if (spatref.date === 0) {
+        spatref = App.fn.findActualSpatref(
+          data.carMonSpatref, 
+          data.carMonSpatrefT
+        );
+      }        
+
       placemarks.push(
-        App.controllers.fn.createStandartPlacemark(
-          'radiocarbon', 
-          data.carbon.id, 
-          data.carSpatref[0].x, 
-          data.carSpatref[0].y, 
-          carHeader, 
-          preset
-        )
+        App.controllers.fn.createStandartPlacemark('radiocarbon', data.carbon.name, spatref.x, spatref.y, carHeader, preset)
       );
     } else {
-      _.each(data.carbon, function(carbon, i) {
+      _.each(data.carbonSpatref, function(carbon, i) {
         carHeader = `${carbon.name}`;
 
-        spatref = {
-          x: data.carSpatref[i].x, 
-          y: data.carSpatref[i].y
-        };
+        spatref = App.fn.findActualSpatref(
+          carbon.carSpatref, 
+          carbon.carSpatrefT
+        );
+
+        if (spatref.date === 0) {
+          spatref = App.fn.findActualSpatref(
+            data.carbonExcSpatref[i].carExcSpatref, 
+            data.carbonExcSpatref[i].carExcSpatrefT
+          );
+        }
+
+        if (spatref.date === 0) {
+          spatref = App.fn.findActualSpatref(
+            data.carbonMonSpatref[i].carMonSpatref, 
+            data.carbonMonSpatref[i].carMonSpatrefT
+          );
+        }        
 
         placemarks.push(
           App.controllers.fn.createStandartPlacemark('radiocarbon', carbon.id, spatref.x, spatref.y, carHeader, preset)

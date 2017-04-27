@@ -20,6 +20,15 @@ App.controllers.excavation = new (Backbone.View.extend({
           "artifacts:Artifact": {"id": "*", "select": "*"},
           "exc__has__artifacts": {}
         }),
+        carbon: JSON.stringify({
+          "exc:Excavation": {"id": excId},
+          "carbon:Radiocarbon": {"id": "*", "select": "*"},
+          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "exc__has__carbon": {},
+          "carbon__has__carSpatref": {},
+          "carSpatref__has__carSpatrefT": {}
+        })
       },
 
       single: {
@@ -39,15 +48,6 @@ App.controllers.excavation = new (Backbone.View.extend({
           "author:Author": {"id": "*", "select": "*"},
           "researches__has__exc": {},
           "researches__hasauthor__author": {}
-        }),
-        radiocarbon: JSON.stringify({
-          "exc:Excavation": {"id": excId},
-          "carbon:Radiocarbon": {"id": "*", "select": "*"},
-          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
-          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
-          "exc__has__carbon": {},
-          "carbon__has__carSpatref": {},
-          "carSpatref__has__carSpatrefT": {}
         })
       },
 
@@ -90,6 +90,36 @@ App.controllers.excavation = new (Backbone.View.extend({
           "monument:Monument": {"id": "NEED"},
           "monTypes:MonumentType": {"id": "*", "select": "*"},
           "monument__has__monTypes": {},
+        }),
+      },
+
+      carbon: {
+        carbonSpatref: JSON.stringify({
+          "carbon:Radiocarbon": {"id": "NEED"},
+          "carSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "carbon__has__carSpatref": {},
+          "carSpatref__has__carSpatrefT": {}
+        }),
+        carbonExcSpatref: JSON.stringify({
+          "carbon:Radiocarbon": {"id": "NEED"},
+          "exc:Excavation": {"id": "*"},
+          "carExcSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carExcSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "exc__has__carbon": {},
+          "exc__has__carExcSpatref": {},
+          "carExcSpatref__has__carExcSpatrefT": {}
+        }),
+        carbonMonSpatref: JSON.stringify({
+          "carbon:Radiocarbon": {"id": "NEED"},
+          "know:Knowledge": {"id": "*"},
+          "mon:Monument": {"id": "*"},
+          "carMonSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "carMonSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "know__has__carbon": {},
+          "know__belongsto__mon": {},
+          "mon__has__carMonSpatref": {},
+          "carMonSpatref__has__carMonSpatrefT": {}
         }),
       }
     }
