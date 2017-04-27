@@ -261,14 +261,14 @@ App.controllers.fn = {
         data.carSpatrefT
       );
 
-      if (spatref.date === 0) {
+      if (spatref.date === 0 || _.isUndefined(spatref.x) || _.isUndefined(spatref.y)) {
         spatref = App.fn.findActualSpatref(
           data.carExcSpatref, 
           data.carExcSpatrefT
         );
       }
 
-      if (spatref.date === 0) {
+      if (spatref.date === 0 || _.isUndefined(spatref.x) || _.isUndefined(spatref.y)) {
         spatref = App.fn.findActualSpatref(
           data.carMonSpatref, 
           data.carMonSpatrefT
@@ -287,14 +287,14 @@ App.controllers.fn = {
           carbon.carSpatrefT
         );
 
-        if (spatref.date === 0) {
+        if (spatref.date === 0 || _.isUndefined(spatref.x) || _.isUndefined(spatref.y)) {
           spatref = App.fn.findActualSpatref(
             data.carbonExcSpatref[i].carExcSpatref, 
             data.carbonExcSpatref[i].carExcSpatrefT
           );
         }
 
-        if (spatref.date === 0) {
+        if (spatref.date === 0 || _.isUndefined(spatref.x) || _.isUndefined(spatref.y)) {
           spatref = App.fn.findActualSpatref(
             data.carbonMonSpatref[i].carMonSpatref, 
             data.carbonMonSpatref[i].carMonSpatrefT
