@@ -1032,7 +1032,7 @@ App.views.bigSearch = new (Backbone.View.extend({
             let data = _.toArray(response[entity])
             data = _.uniq(data, function(item, key, id) {return item.id});
             _.each(data, function(obj, key) {
-              $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}}'>${ ctl(obj.name) }</a></p>`);
+              $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
             })
           }
         }
