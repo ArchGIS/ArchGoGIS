@@ -104,6 +104,11 @@
       <select class="form-control" id="carbon-material-selector-<%= rid %>" data-for="mat_<%= rid %>:CarbonMaterial" type="id" name="id"></select>
     </div>
 
+    <div class="form-group">
+      <label for="carbon-sample-description-<%= rid %>"><%= t("radiocarbon.sampleDesc") %></label>
+      <textarea class="form-control" id="carbon-sample-description-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="text" name="sampleDesc"></textarea>
+    </div>
+
     <div class="form-group carbon-belongs" id="carbon-belongs-<%= rid %>" data-checkbox-type="radio">
       <%= t('common.belongsToSite') %>:
     </div>

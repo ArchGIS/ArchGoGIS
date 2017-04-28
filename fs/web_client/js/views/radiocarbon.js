@@ -428,7 +428,7 @@ App.views.radiocarbon = new (Backbone.View.extend({
         })
 
         getDataForSelector($(`#carbon-spatref-selector-${lrid}`), "SpatialReferenceType", "", true);
-        getDataForSelector($(`#carbon-date-type-selector-${lrid}`), "RadiocarbonDateType");
+        getDataForSelector($(`#carbon-date-type-selector-${lrid}`), "RadiocarbonDateType", "", true);
         getDataForSelector($(`#carbon-genesis-selector-${lrid}`), "SludgeGenesis");
         getDataForSelector($(`#carbon-material-selector-${lrid}`), "CarbonMaterial");
         getDataForSelector($(`#carbon-facies-selector-${lrid}`), "Facies");

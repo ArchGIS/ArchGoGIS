@@ -44,6 +44,7 @@
     "metresInSq": "m²",
     "nameByAuthor": "The name given by the researcher",
     "noData": "No data",
+    "noCulture": "No culture",
     "archExc": "Archaeological excavations",
     "withoutName": "untitled",
     "unknown": "unknown",
@@ -380,7 +381,8 @@
     "dateType": "Date type",
     "create": "Input radiocarbon data",
     "depth": "Depth",
-    "relativeDepth": "Relative altitude, cm"
+    "relativeDepth": "Relative altitude, cm",
+    "sampleDesc": "Sample description"
   },
 
   "report": {
