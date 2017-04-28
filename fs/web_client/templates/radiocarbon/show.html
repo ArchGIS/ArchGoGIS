@@ -21,11 +21,12 @@
           <dd><%= App.models.Monument.href(monuments[0].id, monTitle) %></dd>
         <% } %>
 
-        <dt><%= t('radiocarbon.date') %>:</dt>
-        <dd><%= maybe(carbon.date, t('common.noData')) %></dd>
 
         <dt><%= t('radiocarbon.dateType') %>:</dt>
         <dd><%= maybe(dateType[0].name, t('common.noData')) %></dd>
+        
+        <dt><%= t('radiocarbon.date') %>:</dt>
+        <dd><%= maybe(carbon.date, t('common.noData')) %></dd>
         
         <dt>±1s:</dt>
         <dd><%= maybe(carbon.s, t('common.noData')) %></dd>
