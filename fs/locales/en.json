@@ -333,6 +333,7 @@
     "excavation": "Excavation",
     "name": " Archaeological site name",
     "names": "Archaeological site names",
+    "culture": "Archaeological site culture",
     "monByNum": "Archaeological site #",
     "layerDesc": "Cultural layer description",
     "choose": "Select an existing archaeological site",
