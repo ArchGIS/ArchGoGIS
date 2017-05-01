@@ -1,0 +1,15 @@
+match (e:Epoch) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:MonumentType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:ResearchType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:HeritageStatus) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:SecurityType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:CardinalDirection) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:ArtifactCategory) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:DateScale) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:ArtifactMaterial) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:PublicationType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:EditionType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:SpatialReferenceType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:OwnType) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:MonumentMaterial) create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
+match (e:Culture) where exists(e.en_name) with e create (e)-[:translation {lang: "ru"}]->(:Translate {name: e.name}) create (e)-[:translation {lang: "en"}]->(:Translate {name: e.en_name});
