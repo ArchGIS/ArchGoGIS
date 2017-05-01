@@ -14,18 +14,23 @@
         <dt><%= t('radiocarbon.index') %>:</dt>
         <dd><%= ctl(carbon.name) %></dd>
 
-        <dt><%= t('radiocarbon.date') %>:</dt>
-        <dd><%= maybe(carbon.date, t('common.noData')) %></dd>
+        <% if (knowledges[0]) { %>
+          <% let monCult = (culture[0][0]) ? culture[0][0].name : t('common.noCulture') %>
+          <% let monTitle = `${ctl(knowledges[0].monument_name)} (${epochs[0][0].name}, ${monCult})` %>
+          <dt><%= t('monument.singular') %>:</dt>
+          <dd><%= App.models.Monument.href(monuments[0].id, monTitle) %></dd>
+        <% } %>
+
 
         <dt><%= t('radiocarbon.dateType') %>:</dt>
         <dd><%= maybe(dateType[0].name, t('common.noData')) %></dd>
         
+        <dt><%= t('radiocarbon.date') %>:</dt>
+        <dd><%= maybe(carbon.date, t('common.noData')) %></dd>
+        
         <dt>±1s:</dt>
         <dd><%= maybe(carbon.s, t('common.noData')) %></dd>
 
-        <dt>±2s:</dt>
-        <dd><%= maybe(carbon.ss, t('common.noData')) %></dd>
-        
         <dt>BC/AD 68.2%:</dt>
         <dd><%= maybe(carbon.bcadFirstBot, t('common.noData')) %> — <%= maybe(carbon.bcadFirstTop, t('common.noData')) %></dd>
         
@@ -67,15 +72,13 @@
           <dd><%= maybe(material[0].name, t('common.noData')) %></dd>
         <% } %>
 
-        <% if (knowledges[0]) { %>
-          <dt><%= t('monument.singular') %>:</dt>
-          <dd><%= App.models.Monument.href(monuments[0].id, ctl(knowledges[0].monument_name)) %></dd>
-        <% } %>
-
         <% if (excavation[0]) { %>
           <dt><%= t('monument.singular') %>:</dt>
           <dd><%= App.models.Excavation.href(excavation[0].id, ctl(excavation[0].name)) %></dd>
         <% } %>
+
+        <dt><%= t('radiocarbon.sampleDesc') %>:</dt>
+        <dd><%= maybe(carbon.sampleDesc, t('common.noData')) %></dd>
       </dl>
     </div>
 

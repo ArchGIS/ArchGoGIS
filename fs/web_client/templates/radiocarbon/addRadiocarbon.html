@@ -11,13 +11,13 @@
     </div>
 
     <div class="form-group">
-      <label for="carbon-date-input-<%= rid %>"><%= t("radiocarbon.date") %></label>
-      <input class="form-control" id="carbon-date-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="date"></input>
-    </div>
-
-    <div class="form-group">
       <label for="carbon-date-type-selector-<%= rid %>"><%= t("radiocarbon.dateType") %></label>
       <select class="form-control" id="carbon-date-type-selector-<%= rid %>" data-for="cdt_<%= rid %>:RadiocarbonDateType" type="id" name="id"></select>
+    </div>
+    
+    <div class="form-group">
+      <label for="carbon-date-input-<%= rid %>"><%= t("radiocarbon.date") %></label>
+      <input class="form-control" id="carbon-date-input-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="number" name="date"></input>
     </div>
 
     <div class="form-group">
@@ -102,6 +102,11 @@
     <div class="form-group">
       <label for="carbon-material-selector-<%= rid %>"><%= t("radiocarbon.material") %></label>
       <select class="form-control" id="carbon-material-selector-<%= rid %>" data-for="mat_<%= rid %>:CarbonMaterial" type="id" name="id"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="carbon-sample-description-<%= rid %>"><%= t("radiocarbon.sampleDesc") %></label>
+      <textarea class="form-control" id="carbon-sample-description-<%= rid %>" data-for="carbon_<%= rid %>:Radiocarbon" type="text" name="sampleDesc"></textarea>
     </div>
 
     <div class="form-group carbon-belongs" id="carbon-belongs-<%= rid %>" data-checkbox-type="radio">

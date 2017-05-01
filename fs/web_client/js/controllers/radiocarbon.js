@@ -149,6 +149,17 @@ App.controllers.radiocarbon = new (Backbone.View.extend({
           "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "monument__has__monSpatref": {},
           "monSpatref__has__monSpatrefT": {}
+        }),
+        culture: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*"},
+          "res:Research": {"id": "*"},
+          "carbon:Radiocarbon": {"id": rid},
+          "culture:Culture": {"id": "*", "select": "*"},
+          "monument__know": {},
+          "know__culture": {},
+          "know__res": {},
+          "carbon__res": {}
         })
       },
     }

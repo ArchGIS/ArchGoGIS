@@ -126,6 +126,63 @@ App.views.download = new (Backbone.View.extend({
           }),
         }
       },
+
+
+      Radiocarbon: {
+        main: JSON.stringify({
+          "Radiocarbon:Radiocarbon": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+        }),
+
+        needCulture: JSON.stringify({
+          "Radiocarbon:Radiocarbon": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+        }),
+
+        additional: {
+          know: JSON.stringify({
+            "r:Radiocarbon": {"id": "NEED"},
+            "res:Research": {"id": "*"},
+            "know:Knowledge": {"id": "*", "select": "*"},
+            "res__know": {},
+            "r__know": {},
+          }),
+          cult: JSON.stringify({
+            "r:Radiocarbon": {"id": "NEED"},
+            "res:Research": {"id": "*"},
+            "know:Knowledge": {"id": "*"},
+            "cult:Culture": {"id": "*", "select": "*"},
+            "res__know": {},
+            "r__know": {},
+            "know__cult": {},
+          }),
+          spatref: JSON.stringify({
+            "h:Radiocarbon": {"id": "NEED"},
+            "sp:SpatialReference": {"id": "*", "select": "*"},
+            "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+            "h__has__sp": {},
+            "sp__has__spt": {},
+          }),
+          spatref1: JSON.stringify({
+            "carbon:Radiocarbon": {"id": "NEED"},
+            "exc:Excavation": {"id": "*"},
+            "sp:SpatialReference": {"id": "*", "select": "*"},
+            "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+            "exc__has__carbon": {},
+            "exc__has__sp": {},
+            "sp__has__spt": {}
+          }),
+          spatref2: JSON.stringify({
+            "carbon:Radiocarbon": {"id": "NEED"},
+            "know:Knowledge": {"id": "*"},
+            "mon:Monument": {"id": "*"},
+            "sp:SpatialReference": {"id": "*", "select": "*"},
+            "spt:SpatialReferenceType": {"id": "*", "select": "*"},
+            "know__has__carbon": {},
+            "know__belongsto__mon": {},
+            "mon__has__sp": {},
+            "sp__has__spt": {}
+          }),
+        }
+      },
     }
 
     const name       = t('common.name'),
@@ -138,7 +195,11 @@ App.views.download = new (Backbone.View.extend({
           aMon       = t('monument.singular'),
           aExc       = t('excavation.second'),
           hAddress   = t('common.address'),
-          hDate      = t('date.singular');
+          hDate      = t('date.singular'),
+          cIndex     = t('radiocarbon.index'),
+          cMonName   = t('monument.name'),
+          cMonCult   = t('monument.culture'),
+          cDate      = t('radiocarbon.date');
 
     let fields = {
 
@@ -166,6 +227,16 @@ App.views.download = new (Backbone.View.extend({
         [hAddress]: "address",
         [hDate]: "date",
         [coords]: "coords",
+      },
+
+      Radiocarbon: {
+        "id": "id",
+        [cIndex]: "name",
+        [cDate]: "date",
+        "1s": "s",
+        [cMonName]: "know",
+        [cMonCult]: "cult",
+        [coords]: "spatref",
       },
     }
 
@@ -207,12 +278,27 @@ App.views.download = new (Backbone.View.extend({
               if (coords.x) {
                 data[entity][t][name] = `N: ${coords.x}, E: ${coords.y}`;
               }
+            } else if (name == "spatref") {
+              // let coords = App.fn.findActualSpatref(obj.sp, obj.spt);
+              let coords = [];
+              let counter = 1;
+              // console.log(tmp[0])
+
+              while ((_.isUndefined(coords.x) || _.isUndefined(coords.x)) && tmp[0]["spatref"+counter]) {
+                let spatrefs = tmp[0]["spatref"+counter++][t];
+                coords = App.fn.findActualSpatref(spatrefs.sp, spatrefs.spt);
+                console.log(spatrefs)
+              }
+
+              if (!_.isUndefined(coords.x) && !_.isUndefined(coords.x)) {
+                data[entity][t][name] = `N: ${coords.x}, E: ${coords.y}`;
+              }
             } else {
               data[entity][t][name] = _.pluck(obj, `${prefix}name`).join(", ");
             }
           })
         })
-
+        console.log(tmp)
         let $results = $("#results");
         let $headers = $("#headers");
 
