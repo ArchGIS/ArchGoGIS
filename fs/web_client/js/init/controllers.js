@@ -280,7 +280,7 @@ App.controllers.fn = {
       );
     } else {
       _.each(data.carbonSpatref, function(carbon, i) {
-        carHeader = `${carbon.name}`;
+        carHeader = `${data.carbon[i].name}`;
 
         spatref = App.fn.findActualSpatref(
           carbon.carSpatref, 
