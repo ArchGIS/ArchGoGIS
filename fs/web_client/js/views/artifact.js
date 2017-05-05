@@ -107,8 +107,8 @@ App.views.artifact = new (Backbone.View.extend({
                     inThisResText = '';
                   }
 
-                  label = `${row.monName} (${row.epName}, ${row.monType}) <b>${inThisResText}</b>`;
-                  value = `${row.monName} (${row.epName}, ${row.monType})`;
+                  label = `${row.monName} (${row.epName}, ${row.monType}, ${row.cult}) <b>${inThisResText}</b>`;
+                  value = `${row.monName} (${row.epName}, ${row.monType}, ${row.cult})`;
                   return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
 
@@ -641,8 +641,8 @@ App.views.artifact = new (Backbone.View.extend({
                     inThisResText = '';
                   }
 
-                  label = `${row.monName} (${row.epName}, ${row.monType}) <b>${inThisResText}</b>`;
-                  value = `${row.monName} (${row.epName}, ${row.monType})`;
+                  label = `${row.monName} (${row.epName}, ${row.monType}, ${row.cult}) <b>${inThisResText}</b>`;
+                  value = `${row.monName} (${row.epName}, ${row.monType}, ${row.cult})`;
                   return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
 
