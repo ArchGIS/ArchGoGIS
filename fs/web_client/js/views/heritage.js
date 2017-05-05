@@ -163,7 +163,8 @@ App.views.heritage = new (Backbone.View.extend({
                 .then(function(data) {
                   if (data && !data.error) {
                     let results = _.map(excludeIdent(data), function(row) {
-                      return {'label': `${row.monName} (${row.epName}, ${row.monType}, ${row.cult})`, 'id': row.monId}
+                      let cult = row.cult || App.locale.translate('common.noCulture');
+                      return {'label': `${row.monName} (${row.epName}, ${row.monType}, ${cult})`, 'id': row.monId}
                     });
 
                     if (!results.length) {
