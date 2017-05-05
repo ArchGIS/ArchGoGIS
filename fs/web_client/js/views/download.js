@@ -156,7 +156,7 @@ App.views.download = new (Backbone.View.extend({
           }),
           material: JSON.stringify({
             "r:Radiocarbon": {"id": "NEED"},
-            "material:CarbonMaterial": {"id": "*"},
+            "material:CarbonMaterial": {"id": "*", "select": "*"},
             "r__material": {},
           }),
           spatref: JSON.stringify({
