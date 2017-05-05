@@ -154,6 +154,11 @@ App.views.download = new (Backbone.View.extend({
             "r__know": {},
             "know__cult": {},
           }),
+          material: JSON.stringify({
+            "r:Radiocarbon": {"id": "NEED"},
+            "material:CarbonMaterial": {"id": "*", "select": "*"},
+            "r__material": {},
+          }),
           spatref: JSON.stringify({
             "h:Radiocarbon": {"id": "NEED"},
             "sp:SpatialReference": {"id": "*", "select": "*"},
@@ -199,7 +204,8 @@ App.views.download = new (Backbone.View.extend({
           cIndex     = t('radiocarbon.index'),
           cMonName   = t('monument.name'),
           cMonCult   = t('monument.culture'),
-          cDate      = t('radiocarbon.date');
+          cDate      = t('radiocarbon.date'),
+          cMaterial  = t('radiocarbon.material');
 
     let fields = {
 
@@ -237,6 +243,7 @@ App.views.download = new (Backbone.View.extend({
         [cMonName]: "know",
         [cMonCult]: "cult",
         [coords]: "spatref",
+        [cMaterial]: "material",
       },
     }
 

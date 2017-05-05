@@ -303,8 +303,10 @@ App.views.monument = new (Backbone.View.extend({
                     inThisResText = '';
                   }
 
-                  label = `${row.monName} (${row.epName}, ${row.monType}) <b>${inThisResText}</b>`;
-                  value = `${row.monName} (${row.epName}, ${row.monType})`;
+                  let cult = row.cult || App.locale.translate('common.noCulture');
+                    
+                  label = `${row.monName} (${row.epName}, ${row.monType}, ${cult}) <b>${inThisResText}</b>`;
+                  value = `${row.monName} (${row.epName}, ${row.monType}, ${cult})`;
                   return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
 
@@ -701,8 +703,10 @@ App.views.monument = new (Backbone.View.extend({
                     inThisResText = '';
                   }
 
-                  label = `${row.monName} (${row.epName}, ${row.monType}) <b>${inThisResText}</b>`;
-                  value = `${row.monName} (${row.epName}, ${row.monType})`;
+                  let cult = row.cult || App.locale.translate('common.noCulture');
+                    
+                  label = `${row.monName} (${row.epName}, ${row.monType}, ${cult}) <b>${inThisResText}</b>`;
+                  value = `${row.monName} (${row.epName}, ${row.monType}, ${cult})`;
                   return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
                 });
 
