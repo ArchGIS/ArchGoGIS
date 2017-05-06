@@ -9,7 +9,8 @@ App.views.search = new (Backbone.View.extend({
     const prefix = lang === 'ru' ? '' : `${lang}_`;
     const excludeIdent = App.fn.excludeIdentMonuments;
     const map = App.views.map().map;
-    const markersLayer = new L.FeatureGroup();
+    // const markersLayer = new L.FeatureGroup();
+    const clusterLayer = L.markerClusterGroup();
 
     const $results = $('#search-results');
 
@@ -122,7 +123,7 @@ App.views.search = new (Backbone.View.extend({
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       $results.empty();
-      markersLayer.clearLayers();
+      clusterLayer.clearLayers();
       object = objects[$object.prop('id')];
     });
     object = objects['monument-params'];
@@ -172,7 +173,7 @@ App.views.search = new (Backbone.View.extend({
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              markersLayer.clearLayers();
+              clusterLayer.clearLayers();
 
               _.each(response, function(item, i) {
                 $.when(coords[i]).then(function(coord) {
@@ -205,12 +206,12 @@ App.views.search = new (Backbone.View.extend({
                       window.open(`${HOST_URL}/index#monument/show/${item.monId}`, '_blank');
                     });
 
-                    markersLayer.addLayer(marker);
+                    clusterLayer.addLayer(marker);
                   }
                 });
               });
 
-              map.addLayer(markersLayer);
+              map.addLayer(clusterLayer);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -307,7 +308,7 @@ App.views.search = new (Backbone.View.extend({
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              markersLayer.clearLayers();
+              clusterLayer.clearLayers();
 
               _.each(response, function(item) {
                 let type = item.resTypeId || 1;
@@ -337,11 +338,11 @@ App.views.search = new (Backbone.View.extend({
                     window.open(`${HOST_URL}/index#research/show/${item.resId}`, '_blank');
                   });
 
-                  markersLayer.addLayer(marker);
+                  clusterLayer.addLayer(marker);
                 }
               });
 
-              map.addLayer(markersLayer);
+              map.addLayer(clusterLayer);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -435,7 +436,7 @@ App.views.search = new (Backbone.View.extend({
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              markersLayer.clearLayers();
+              clusterLayer.clearLayers();
 
               _.each(response, function(item) {
                 console.log(item)
@@ -465,11 +466,11 @@ App.views.search = new (Backbone.View.extend({
                     window.open(`${HOST_URL}/index#heritage/show/${item.id}`, '_blank');
                   });
 
-                  markersLayer.addLayer(marker);
+                  clusterLayer.addLayer(marker);
                 }
               });
 
-              map.addLayer(markersLayer);
+              map.addLayer(clusterLayer);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -516,7 +517,7 @@ App.views.search = new (Backbone.View.extend({
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              markersLayer.clearLayers();
+              clusterLayer.clearLayers();
 
               _.each(response, function(item) {
                 let type = (item.area <= 20) ? 1 : 2;
@@ -544,10 +545,10 @@ App.views.search = new (Backbone.View.extend({
                   window.open(`${HOST_URL}/index#excavation/show/${item.id}`, '_blank');
                 });
 
-                markersLayer.addLayer(marker);
+                clusterLayer.addLayer(marker);
               });
 
-              map.addLayer(markersLayer);
+              map.addLayer(clusterLayer);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -594,7 +595,7 @@ App.views.search = new (Backbone.View.extend({
               $results.append(`<p>${ ctl(item) }</p>`);
             });
 
-            markersLayer.clearLayers();
+            clusterLayer.clearLayers();
 
             console.log(response)
             _.each(response, function(item) {
@@ -635,10 +636,10 @@ App.views.search = new (Backbone.View.extend({
                 window.open(`${HOST_URL}/index#radiocarbon/show/${item.carbon.id}`, '_blank');
               });
 
-              markersLayer.addLayer(marker);
+              clusterLayer.addLayer(marker);
             });
 
-            map.addLayer(markersLayer);
+            map.addLayer(clusterLayer);
           } else {
             $results.append(`<p>${ t('search.noResults') }</p>`);
           }

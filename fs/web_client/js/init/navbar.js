@@ -25,7 +25,8 @@ App.template.get('navbar', function (tmpl) {
       excavation: App.locale.translate('excavation.plural'),
       heritage: App.locale.translate('heritage.singular'),
       research: App.locale.translate('research.plural'),
-      artifact: App.locale.translate('artifact.plural')
+      artifact: App.locale.translate('artifact.plural'),
+      radiocarbon: App.locale.translate('radiocarbon.plural')
     };
 
     location.reload();

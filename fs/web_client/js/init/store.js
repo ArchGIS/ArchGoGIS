@@ -13,7 +13,8 @@ App.store.mapTypes = {
   excavation: App.locale.translate('excavation.plural'),
   heritage: App.locale.translate('heritage.singular'),
   research: App.locale.translate('research.plural'),
-  artifact: App.locale.translate('artifact.plural')
+  artifact: App.locale.translate('artifact.plural'),
+  radiocarbon: App.locale.translate('radiocarbon.plural')
 };
 
 App.store.pathToIcons = {
