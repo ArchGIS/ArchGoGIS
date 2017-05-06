@@ -79,7 +79,9 @@ App.views.map = () => {
     completedColor: '#10B8CB'
   }).addTo(map);
 
-  const cluster = L.markerClusterGroup();
+  const cluster = L.markerClusterGroup({
+    maxClusterRadius: 40
+  });
   map.addLayer(cluster);
 
   return {

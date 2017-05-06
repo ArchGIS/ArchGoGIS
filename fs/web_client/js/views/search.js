@@ -9,8 +9,9 @@ App.views.search = new (Backbone.View.extend({
     const prefix = lang === 'ru' ? '' : `${lang}_`;
     const excludeIdent = App.fn.excludeIdentMonuments;
     const map = App.views.map().map;
-    // const markersLayer = new L.FeatureGroup();
-    const clusterLayer = L.markerClusterGroup();
+    const clusterLayer = L.markerClusterGroup({
+      maxClusterRadius: 40
+    });
 
     const $results = $('#search-results');
 
