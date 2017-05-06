@@ -79,15 +79,19 @@ App.views.map = () => {
     completedColor: '#10B8CB'
   }).addTo(map);
 
+  const cluster = L.markerClusterGroup();
+  map.addLayer(cluster);
+
   return {
     map,
-    controls
+    controls,
+    cluster
   }
 };
 
 App.views.addOverlays = (leaf, types) => {
   const overlayLayers = _.reduce(types, (memo, type) => {
-    memo[App.store.mapTypes[type]] = L.featureGroup();
+    memo[App.store.mapTypes[type]] = L.featureGroup.subGroup(leaf.cluster);
     return memo;
   }, {});
 
