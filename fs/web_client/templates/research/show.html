@@ -37,9 +37,9 @@
         <dt><%= t('research.prop.description') %>:</dt>
         <dd><%= maybe(research, t('common.missing'), "description" ) %></dd>
         
-        <dt><%= t('report.singular') %>:</dt>
-        <dd>
-          <% if (reports.length) { %>
+        <% if (reports.length) { %>
+          <dt><%= t('report.singular') %>:</dt>
+          <dd>
             <div>
             <% _.each(reports, function(report, i) { %>
               <% var reportTitle = `${maybe(reports[i], t('common.noName'), "name")} (${maybe(author[i], t('common.noneAuthor'), "name")}, ${maybe(reports[i], t('common.yearNotDefined'), "year")})` %>
@@ -51,10 +51,25 @@
               <br>
             <% }); %>
             </div>
-          <% } else { %>
-              <%= t('report.not') %>
-          <% } %>
-        </dd>
+          </dd>
+        <% } %>
+
+        <% if (publication.length) { %>
+          <dt><%= t('publication.singular') %>:</dt>
+          <dd>
+            <div>
+            <% _.each(publication, function(pub, i) { %>
+              <% var pubTitle = `${maybe(publication[i], t('common.noName'), "name")} (${maybe(pubAuthor[i], t('common.noneAuthor'), "name")}, ${maybe(publication[i], t('common.yearNotDefined'), "published_at")})` %>
+              <% if (publication[i].fileid) { %>
+                <%= App.models.Publication.href(publication[i].id, pubTitle) %>
+              <% } else {%>
+                <%= pubTitle %>
+              <% } %>
+              <br>
+            <% }); %>
+            </div>
+          </dd>
+        <% } %>
 
         <dt><%= t("monument.count") %>:</dt>
         <dd><%= _.size(monuments) %></dd>

@@ -116,6 +116,13 @@ App.controllers.research = new (Backbone.View.extend({
           "reports__hasauthor__author": {},
           "research__has__reports": {}
         }),
+        publication: JSON.stringify({
+          "research:Research": {"id": resId},
+          "pubAuthor:Author": {"id": "*", "select": "*"},
+          "publication:Publication": {"id": "*", "select": "*"},
+          "publication__hasauthor__pubAuthor": {},
+          "research__has__publication": {}
+        }),
         cultureKnowledge: JSON.stringify({
           "research:Research": {"id": resId},
           "cultKnow:CultureKnowledge": {"id": "*", "select": "*"},

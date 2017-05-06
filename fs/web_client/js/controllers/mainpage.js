@@ -8,6 +8,7 @@ App.controllers.main = new (Backbone.View.extend({
         "Monument",
         "Research",
         "Artifact",
+        "Radiocarbon",
         "Report",
         "Monography",
         "Article",
