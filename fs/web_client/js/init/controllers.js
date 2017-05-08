@@ -40,10 +40,12 @@ App.controllers.fn = {
         type = (single) ? data.monTypes[0].id : data.monTypes[i][0].id || 11;
         epoch = (single) ? data.epochs[0].id : data.epochs[i][0].id || 8;
         preset = `monType${type}_${epoch}`;
-
-        placemarks.push(
-          App.controllers.fn.createStandartPlacemark('monument', monId, spatref.x, spatref.y, monName, preset)
-        );
+        
+        // if (App.utils.isNotExistID(placemarks, 'id', monId)) {
+          placemarks.push(
+            App.controllers.fn.createStandartPlacemark('monument', monId, spatref.x, spatref.y, monName, preset)
+          );
+        // }
       }
     })
 

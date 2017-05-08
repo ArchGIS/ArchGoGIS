@@ -163,10 +163,16 @@ App.views.search = new (Backbone.View.extend({
           .then(function(response) {
             if (response.length) {
               console.log(response);
-              let list = my.columnsMaker(response);
-              let coords = [];
+              const list = my.columnsMaker(response);
+              const coords = [], uniqMons = [];
 
-              _.each(response, function(item, i) {
+              _.each(response, (item) => {
+                if (App.utils.isNotExistID(uniqMons, 'monId', item.monId)) {
+                  uniqMons.push(item);
+                }
+              });
+
+              _.each(uniqMons, function(item, i) {
                 coords[i] = App.models.Monument.getActualSpatref(item.monId);
               });
 
@@ -176,7 +182,7 @@ App.views.search = new (Backbone.View.extend({
 
               clusterLayer.clearLayers();
 
-              _.each(response, function(item, i) {
+              _.each(uniqMons, function(item, i) {
                 $.when(coords[i]).then(function(coord) {
                   if ((coord.x != "нет данных" && coord.y != "нет данных") || (item.x && item.y)) {
                     let type = item.monTypeId || 10;

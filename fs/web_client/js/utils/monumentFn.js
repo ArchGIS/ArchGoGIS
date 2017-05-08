@@ -16,3 +16,7 @@ App.utils.monumentFn = {
     return bestName;
   }
 };
+
+App.utils.isNotExistID = (arr, property, value) => {
+  return _.isUndefined(_.find(arr, val => val[property] === value));
+};
