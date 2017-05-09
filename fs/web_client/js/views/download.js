@@ -366,7 +366,7 @@ App.views.download = new (Backbone.View.extend({
       query = query.replace(/LEFT/g, left);
       query = query.replace(/RIGHT/g, right);
       console.log(query, bot, top)
-      $.when(model.sendQuery(query, 1500)).then(function(response) {
+      $.when(model.sendQuery(query, 2500)).then(function(response) {
         _.extend(data, response);
 
         data[entity] = _.filter(data[entity], function(val) {
