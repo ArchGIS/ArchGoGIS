@@ -171,14 +171,12 @@ App.controllers.fn = {
           excType = (area <= 20) ? 1 : 2;
           preset = `excType${excType}`;
 
-          _.each(data.excSpatref[i].excSpatref, function(excSpatref, p) {
-            spatref.x = excSpatref.x, 
-            spatref.y = excSpatref.y
+          spatref.x = data.excSpatref[i].excSpatref[t].x; 
+          spatref.y = data.excSpatref[i].excSpatref[t].y;
 
-            placemarks.push(
-              App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
-            );
-          })
+          placemarks.push(
+            App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
+          );
           
         })
       });
