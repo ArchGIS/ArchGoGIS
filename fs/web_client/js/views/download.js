@@ -135,6 +135,10 @@ App.views.download = new (Backbone.View.extend({
 
         needCulture: JSON.stringify({
           "Radiocarbon:Radiocarbon": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+          "know:Knowledge": {"id": "*"},
+          "cul:Culture": {"id": "?", "filter": "name=CFIL=text"},
+          "know__Radiocarbon": {},
+          "know__has__cul": {},
         }),
 
         additional: {
