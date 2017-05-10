@@ -344,6 +344,10 @@
     "add": "Adding a new archaeological site",
     "add1": "Add archaeological site",
     "type": "Type of archaeological site",
+    "layersAll": "Total cultural layers",
+    "layersTop": "Вышележащие культурные слои",
+    "layersBot": "Нижележащие культурные слои",
+    "layersHere": "Культурные слои с близкой стратиграфической позицией",
     "prop": {
       "type": " Archaeological site type",
       "epoch": "Epoch",
