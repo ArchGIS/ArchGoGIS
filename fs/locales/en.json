@@ -606,7 +606,7 @@
     "developers": "Developer team",
     "dataMakers": "Content team",
     "member1":{
-      "name": "Sitdikov Ayrat",
+      "name": "Ayrat Sitdikov",
       "desc1": "PhD, corresponding member of the Tatarstan Academy of Sciences",
       "desc2": "Project director",
       "desc3": "- Director of the High School of History and World Heritage of KFU",
@@ -614,61 +614,61 @@
       "desc5": "- Head of the Tatarstan history, archaeology and ethnorgaphy department of KFU"
     },
     "member2":{
-      "name": "Vyazov Leonid",
+      "name": "Leonid Vyazov",
       "desc1": "PhD, Project manager",
       "desc2": "Leading researcher, Kazan Federal University",
       "desc3": "Senior researcher, Institute of Archaeology, Tatarstan Academy of Scienses",
       "desc4": "Archaeology of Migration period, GIS in archaeology, landscape archaeology"
     },
     "member3":{
-      "name": "Anton Marchenko",
+      "name": "Marchenko Anton",
       "desc1": "Technical lead",
       "desc2": "Lecturer at Software engineering department, Higher school of ITIS KFU",
       "desc3": "Software engineering, algorithms, data structures and computational complexity, intelligent tutoring systems"
     },
     "member4":{
-      "name": "Selezneva Natalia",
+      "name": "Natalia Selezneva",
       "desc1": "Project manager",
       "desc2": "Laboratory assistant researcher"
     },
     "member5":{
-      "name": "Farkhullin Delius",
+      "name": "Delius Farkhullin",
       "desc1": "Developer",
       "desc2": "Software Engineer",
       "desc3": "Artificial intelligence, neurobiology"
     },
     "member6":{
-      "name": "Efimov Maxim",
+      "name": "Maxim Efimov",
       "desc1": "Web-developer",
       "desc2": "Software Engineer"
     },
     "member7":{
-      "name": "Gladnev Nikita",
+      "name": "Nikita Gladnev",
       "desc1": "KFU student, department of management, economy and finances",
       "desc2": "Geoinformation systems"
     },
     "member8":{
-      "name": "Vandrohova Alevtina",
+      "name": "Alevtina Vandrohova",
       "desc1": "Student",
       "desc2": "The study of the Hunnish culture"
     },
     "member9":{
-      "name": "Pashina Ekaterina",
+      "name": "Ekaterina Pashina",
       "desc1": "Laboratory researcher of the museum of archeology, A.Kh. Khalikov Institute of archeology of the Academy of sciences of the Republic of Tatarstan",
       "desc2": "The medieval history, military-political and social history of city-fortresses of Middle Povolzya in the second half of the XVI the beginning of XVIII centuries"
     },
     "member10":{
-      "name": "Ilyasova Elina",
+      "name": "Elina Ilyasova",
       "desc1": "KFU student, department of management, economy and finances ",
       "desc2": "Geoinformation systems"
     },
     "member11":{
-      "name": "Petrova Darya",
+      "name": "Darya Petrova",
       "desc1": "Assistant researcher, Institute of archaeology, Tatarstan Academy of Sciences",
       "desc2": "Imenkovo culture, Migration period, cremation burial rites, GIS"
     },
     "member12":{
-      "name": "Sayfutdinova Guzel",
+      "name": "Guzel Sayfutdinova",
       "desc1": "Head of Department of Geoinformation Technologies of Institute of Archeology of A.H. Halikov Academies of Sciences of the Republic Tatarstan",
       "desc2": "Geoinformation systems and technologies"
     }
