@@ -552,7 +552,8 @@
       "download": "Upload data",
       "importData": "Data input",
       "getData": "Download data",
-      "more": "More"
+      "more": "More",
+      "team": "Team"
     },
     "search": {
       "index": "Search"
@@ -585,15 +586,15 @@
   },
 
   "mainpage": {
-    "name": "Archaeological Research Information System \"ArchGIS\"",
+    "name": "Archaeological Research Geographic Information System \"ArchGIS\"",
     "welcome": "Welcome to the ArchGIS Information System!",
     "counts": "At the moment in the system are taken into account",
     "heritage": "Objects of cultural heritage",
     "site": "Archaeological sites",
     "research": "Archaeological researches",
     "artifact": "Artifacts",
-    "radiocarbon": "Radiocarbon datings",
-    "report": "Reports on archaeological research",
+    "radiocarbon": "Radiocarbon dates",
+    "report": "Reports on archaeological fieldwork",
     "monography": "Monographies",
     "article": "Articles",
     "archiveDoc": "Archive documents",
