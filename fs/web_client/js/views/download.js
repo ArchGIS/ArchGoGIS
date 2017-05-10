@@ -135,6 +135,10 @@ App.views.download = new (Backbone.View.extend({
 
         needCulture: JSON.stringify({
           "Radiocarbon:Radiocarbon": {"id": "*", "select": "*", "filter": "name=FILTER=text"},
+          "know:Knowledge": {"id": "*"},
+          "cul:Culture": {"id": "?", "filter": "name=CFIL=text"},
+          "know__Radiocarbon": {},
+          "know__has__cul": {},
         }),
 
         additional: {
@@ -366,7 +370,7 @@ App.views.download = new (Backbone.View.extend({
       query = query.replace(/LEFT/g, left);
       query = query.replace(/RIGHT/g, right);
       console.log(query, bot, top)
-      $.when(model.sendQuery(query, 1500)).then(function(response) {
+      $.when(model.sendQuery(query, 2500)).then(function(response) {
         _.extend(data, response);
 
         data[entity] = _.filter(data[entity], function(val) {
