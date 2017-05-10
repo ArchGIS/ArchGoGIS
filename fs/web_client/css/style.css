@@ -53,7 +53,7 @@ figure.snip img {
 
 figure.snip figcaption {
     position: absolute;
-    top: 50%;
+    top: 80%;
     left: 30px;
     right: 30px;
     -webkit-transform: rotate(0deg) translateY(-50%) scale(1);
@@ -63,7 +63,7 @@ figure.snip figcaption {
 }
 
 figure.snip figcaption h2 {
-    top: 50%;
+    top: 75%;
     letter-spacing: -1px;
     color: #ffffff;
     text-transform: uppercase;
@@ -129,12 +129,6 @@ figure.snip a {
 figure.snip:hover img,
 figure.snip.hover img {
     opacity: 1;
-}
-
-figure.snip:hover figcaption,
-figure.snip.hover figcaption {
-    -webkit-transform: rotate(-45deg) translateY(-50%) scale(0.9);
-    transform: rotate(-45deg) translateY(-50%) scale(0.9);
 }
 
 figure.snip:hover figcaption:before,
