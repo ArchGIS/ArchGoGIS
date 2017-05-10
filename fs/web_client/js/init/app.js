@@ -93,7 +93,6 @@ function postQuery(objectId) {
     ["Monument", "Epoch", "has"],
     ["Monument", "MonumentType", "has"],
     ["Monument", "SpatialReference", "has"],
-    ["MonumentLayers", "Monument", "has"],
     ["ClarifyMon", "SpatialReference", "has"],
     ["SpatialReference", "SpatialReferenceType", "has"],
     ["Knowledge", "monumentImage", "has"],
