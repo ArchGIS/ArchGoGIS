@@ -25,6 +25,14 @@ App.models.Culture.getAll = function() {
   return d.promise();
 };
 
+App.models.Culture.url = function(id) {
+  return id ? '#culture/show/' + id : '#culture/show';
+};
+
+App.models.Culture.href = function(id, text) {
+  return '<a href="' + App.models.Culture.url(id) + '">' + text + '</a>';
+};
+
 App.models.Culture.scheme = {
   "name": {"type": "text"}
 };

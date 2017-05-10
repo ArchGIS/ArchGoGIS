@@ -24,4 +24,8 @@ App.controllers.wizard = new (Backbone.View.extend({
   'future5': function() {
     App.page.render('wizard/future5');
   },
+
+  'team': function() {
+    App.page.render('team');
+  },
 }));

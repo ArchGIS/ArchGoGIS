@@ -28,6 +28,7 @@ DROP SEQUENCE n_publication_id_seq;
 DROP SEQUENCE n_spatial_reference_id_seq;
 DROP SEQUENCE n_radiocarbon_id_seq;
 DROP SEQUENCE n_culture_knowledge_id_seq;
+DROP SEQUENCE n_monument_layers_id_seq;
 
 CREATE SEQUENCE n_author_id_seq;
 CREATE SEQUENCE n_monument_id_seq;
@@ -59,3 +60,4 @@ CREATE SEQUENCE n_publication_id_seq;
 CREATE SEQUENCE n_spatial_reference_id_seq;
 CREATE SEQUENCE n_radiocarbon_id_seq;
 CREATE SEQUENCE n_culture_knowledge_id_seq;
+CREATE SEQUENCE n_monument_layers_id_seq;

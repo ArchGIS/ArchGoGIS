@@ -120,8 +120,10 @@
               <dd><%= maybe(epochs[i][0], t('common.noData'), `${prefix}name`) %></dd>
               <dt><%= t('monument.prop.type') %>:</dt>
               <dd><%= maybe(monTypes[i][0], t('common.noData'), `${prefix}name`) %></dd>
-              <dt><%= t('knowledge.prop.culture') %>:</dt>
-              <dd><%= maybe(cultures[i][0], t('common.noData'), `${prefix}name`) %></dd>
+              <% if (cultures[i][0]) { %>
+                <dt><%= t('knowledge.prop.culture') %>:</dt>
+                <%= App.models.Culture.href(cultures[i][0].id, cultures[i][0][`${prefix}name`]) %>
+              <% } %>
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
                 <dd><%= ctl(knowledges[i].description) %></dd>

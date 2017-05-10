@@ -48,6 +48,14 @@ App.controllers.monument = new (Backbone.View.extend({
           "k__has__carbon": {},
           "carbon__has__carSpatref": {},
           "carSpatref__has__carSpatrefT": {}
+        }),
+
+        otherLayers: JSON.stringify({
+          "mon:Monument": {"id": monId},
+          "otherLayers:Monument": {"id": "*", "select": "*"},
+          "sp:SpatialReference": {"id": "*"},
+          "sp__mon": {},
+          "sp__otherLayers": {},
         })
       },
 
@@ -196,6 +204,23 @@ App.controllers.monument = new (Backbone.View.extend({
           "know__belongsto__mon": {},
           "mon__has__carMonSpatref": {},
           "carMonSpatref__has__carMonSpatrefT": {}
+        }),
+      },
+
+      otherLayers: { 
+        otherEpoch: JSON.stringify({
+          "layer:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*", "select": "*"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "layer__epoch": {},
+          "layer__know": {}
+        }),
+        otherCulture: JSON.stringify({
+          "layer:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*"},
+          "otherCulture:Culture": {"id": "*", "select": "*"},
+          "layer__know": {},
+          "know__otherCulture": {}
         }),
       }
     }
