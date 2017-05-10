@@ -104,6 +104,7 @@
   },
 
   "culture": {
+    "info": "Culture info",
     "singular": "Culture",
     "plural": "Cultures",
     "add": "Add culture",

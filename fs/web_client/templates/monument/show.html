@@ -78,7 +78,7 @@
               <dd><%= ctl(knowledges[i].monument_name) %></dd>
               <% if (_.keys(cultures[i]).length) { %>
                 <dt><%= t('knowledge.prop.culture') %>:</dt>
-                <dd><%= cultures[i][`${prefix}name`] %></dd>
+                <%= App.models.Culture.href(cultures[i].id, cultures[i][`${prefix}name`]) %>
               <% } %>
               <% if (research.description) { %>
                 <dt><%= t('research.description') %>:</dt>

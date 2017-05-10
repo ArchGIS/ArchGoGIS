@@ -1,0 +1,64 @@
+<div class="content">  
+  <h2><%= t("culture.info") %> "<%= ctl(culture.name) %>"</h2>
+  
+  <div id="container">
+    <ul>
+      <li><a href="#general"><%= t('common.general') %></a></li>
+      <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#dates"><%= t('date.plural') %></a></li>
+      <li><a href="#radiocarbon"><%= t('radiocarbon.plural') %></a></li>
+    </ul>
+
+    <div id="general">
+    </div>
+
+    <div id="researches">
+      <% let counter = 1 %>
+      <% _.each(researches, function(res, i) { %>
+        <%= t("research.singular") %> №<%= counter++ %>:
+        <% let resTitle = ctl(App.views.research.getFullResearchTitle(authors[i].name, res.year, resTypes[i][0].name)) %></b>
+        <%= App.models.Research.href(res.id, resTitle) %>
+        <br>
+      <% }); %>
+      <% _.each(researchesCult, function(res, i) { %>
+        <%= t("research.singular") %> №<%= counter++ %>:
+        <% let resTitle = ctl(App.views.research.getFullResearchTitle(res.author[0].name, res.research[0].year, res.resType[0].name)) %></b>
+        <%= App.models.Research.href(res.id, resTitle) %>
+        <br>
+      <% }); %>
+    </div>
+
+    <div id="dates">
+      <% 
+        let dates = [];
+        if (cultKnow.length) {
+          _.each(cultKnow, function(know, i) {
+            dateScale[i][0] = dateScale[i][0] || {};
+            if (know.dateBottom) {
+              let resName = researchesCult[i].research[0].name;
+              let authorName = researchesCult[i].author[0].name || t('author.unknown');
+              let resType = researchesCult[i].resType[0].name || t('common.withoutType');
+              let resYear = researchesCult[i].research[0].year || t('common.yearNotDefined');
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              resTitle = App.models.Research.href(researchesCult[i].research[0].id, ctl(resTitle));
+
+              let date = `${ctl(dateScale[i][0].name)}: ${know.dateBottom} — ${know.dateTop} - ${resTitle}`
+              dates.push(date)
+            }
+          });
+        } 
+      %>
+      <%= dates.join("<br>") %>
+    </div>
+
+    <div id="radiocarbon">
+      <%= _.compact(_.map(carbon, function(car, i) {
+        let title = `${car.name} (date: ${car.date})`;
+        return App.models.Radiocarbon.href(car.id, ctl(title));
+      })).join(", <br>") %>
+    </div>
+  </div>
+</div>
+
+<div id="map" class="maps">
+</div>
