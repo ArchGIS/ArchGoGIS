@@ -35,7 +35,7 @@ App.models.fn = {
     _.each(params, function(val, id) {
       var completedQuery = query.replace(/NEED/g, val);
       $.post({
-        url: "/hquery/read?{limitParam}",
+        url: `/hquery/read?${limitParam}`,
         data: completedQuery,
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
