@@ -13,7 +13,7 @@ App.controllers.culture = new (Backbone.View.extend({
         researches: JSON.stringify({
           "culture:Culture": {"id": cId},
           "authors:Author": {"id": "*", "select": "*"},
-          "researches:Research": {"id": "*", "select": "*"},
+          "researches:Research": {"id": "*", "select": "*", "options":"uniq"},
           "knowledges:Knowledge": {"id": "*"},
           "researches__hasauthor__authors": {},
           "researches__knowledges": {},
