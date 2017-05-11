@@ -8,12 +8,12 @@ import (
 )
 
 func stringInSlice(a string, list []string) bool {
-    for _, b := range list {
-        if b == a {
-            return true
-        }
-    }
-    return false
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
 }
 
 func NewStatementBuilder(data *Data) *StatementBuilder {
@@ -60,8 +60,8 @@ func (my *StatementBuilder) scanReturn(nodes map[string]*ast.Node, edges []*ast.
 			if node.Props["options"] != "" {
 				options := strings.Split(node.Props["options"], ";")
 
-				if (stringInSlice("uniq", options)) {
-					distinct = "distinct "	
+				if stringInSlice("uniq", options) {
+					distinct = "distinct "
 				}
 			}
 
@@ -92,7 +92,7 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 	selection := my.scanNodes(false, my.nodes)
 
 	for _, edge := range my.edges {
-		if (edge.Type == "none") {
+		if edge.Type == "none" {
 			my.buf.WriteStringf(
 				"MATCH (%s)--(%s)",
 				edge.Lhs, edge.Rhs,
@@ -108,14 +108,14 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 	firstFilter := true
 
 	for _, node := range my.nodes {
-		if (node.Props["filter"] != "") {
+		if node.Props["filter"] != "" {
 			filters := strings.Split(node.Props["filter"], ";")
 			entityName := strings.Split(node.Tag, ":")[0]
 
 			for _, filter := range filters {
 				parts := strings.Split(filter, "=")
 
-				if (firstFilter) {
+				if firstFilter {
 					my.buf.WriteStringf(
 						"WHERE ",
 					)
@@ -136,7 +136,7 @@ func (my *StatementBuilder) Build(limit string) neo.Statement {
 					my.buf.WriteStringf(
 						"%s.%s = '%s' ",
 						entityName, parts[0], parts[1],
-					)	
+					)
 				case "less":
 					my.buf.WriteStringf(
 						"%s.%s <= %s ",

@@ -946,9 +946,9 @@ App.views.bigSearch = new (Backbone.View.extend({
         let valueParts = $("#search-value-"+i).val().split(/[;]\s*/g);
         let value = valueParts.join(")|(");
 
-        let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i)
-        addQuery = addQuery.replace(/VALUEPLACE/g, value)
-        addQuery = addQuery.replace(/EXACT/g, exact)
+        let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i);
+        addQuery = addQuery.replace(/VALUEPLACE/g, value);
+        addQuery = addQuery.replace(/EXACT/g, exact);
         addQuery = JSON.parse(addQuery);
 
         _.extend(query, addQuery);
