@@ -138,16 +138,15 @@ App.controllers.culture = new (Backbone.View.extend({
     var callRender = _.after(queryCounter, render);
 
     _.each(queries.complex, function(query, key) {
-      $.when(model.sendQuery(query)).then(function(response) {
+      let limit = (key === "researches") ? 5000 : 500;
+
+      $.when(model.sendQuery(query, limit)).then(function(response) {
         _.extend(tmplData, response);
 
         var ids = _.map(tmplData[key], function(obj) {return obj.id.toString()});
 
-        if (key === "researches") {
-          data.push(model.getData(queries[key], callRender, true, ids, 5000));
-        } else {
-          data.push(model.getData(queries[key], callRender, true, ids));
-        }
+        data.push(model.getData(queries[key], callRender, true, ids));
+        
         callRender();
       })
     })
