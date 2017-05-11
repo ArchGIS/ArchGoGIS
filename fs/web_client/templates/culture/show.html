@@ -31,7 +31,9 @@
       <% }) %>
       
       <dt><%= t("excavation.genitivePl") %>:</dt>
-      <dd><%= excavations.length %>;
+      <dd><%= _.reduce(excavations, function(size, list) {
+        return size + _.size(list)
+      }, 0) %>;
       <%= t('common.area') %>
       <%= _.reduce(excavations, function(area, list) {
         return area + _.reduce(list, function(area, exc) {
