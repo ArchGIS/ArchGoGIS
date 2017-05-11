@@ -41,7 +41,7 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
   query = query + "OPTIONAL MATCH (r)--(e:Excavation)--(excSp:SpatialReference)--(excSpt:SpatialReferenceType) "
   query = query + "OPTIONAL MATCH (r)--(k:Knowledge)--(m:Monument)--(monSp:SpatialReference)--(monSpt:SpatialReferenceType) " 
 
-  query = query + "WITH {" +
+  query = query + "WITH distinct {" +
     "carbon: r, " +
     "excX: excSp.x, " +
     "excY: excSp.y, " +
