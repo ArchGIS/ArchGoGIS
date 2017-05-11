@@ -58,6 +58,13 @@ App.controllers.culture = new (Backbone.View.extend({
           "culture__knowledges": {},
           "excavations__knowledges": {},
         }),
+        artifacts: JSON.stringify({
+          "culture:Culture": {"id": cId},
+          "inter:Interpretation": {"id": "*"},
+          "artifacts:Artifact": {"id": "*", "select": "*", "options":"uniq"},
+          "culture__inter": {},
+          "artifacts__inter": {},
+        }),
       },
 
       researches: {
