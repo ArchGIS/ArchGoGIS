@@ -547,6 +547,7 @@
   "titles": {
     "wizard": {
       "create-data": "Create data",
+      "about": "About system",
       "create-map": "Creating a map",
       "createSample": "Sample сreation",
       "download": "Upload data",

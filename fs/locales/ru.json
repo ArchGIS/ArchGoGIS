@@ -546,6 +546,7 @@
   
   "titles": {
     "wizard": {
+      "about": "О системе",
       "create-data": "Создание данных",
       "create-map": "Создание карты",
       "createSample": "Создание выборки",
