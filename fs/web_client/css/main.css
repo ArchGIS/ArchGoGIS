@@ -450,7 +450,7 @@ dt {
 /*main page*/
 .main-page {
   position: relative;
-  background-image: url('../img/main_page_bg.jpg');
+  background-image: url('../img/main_grey.jpg');
   height: 100%;
   width: 100%;
   background-size: cover;

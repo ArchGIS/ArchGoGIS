@@ -99,7 +99,7 @@ App.views.functions = {
     const prefix = lang === 'ru' ? '' : `${lang}_`;
 
     $.when(d_cultures).done((cultures) => {
-      let items = _.map(cultures, culture => ({'id': culture.id, 'label': culture.name}));
+      let items = _.map(cultures, culture => ({'id': culture.id, 'label': culture[`${prefix}name`]}));
 
       $(field).autocomplete({
         source: function(req, res) {

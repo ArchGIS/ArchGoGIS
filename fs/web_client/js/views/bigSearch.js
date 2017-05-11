@@ -2,6 +2,8 @@
 
 App.views.bigSearch = new (Backbone.View.extend({
   'index': function() {
+    const prefix = App.locale.getLang() === 'ru' ? '' : `${App.locale.getLang()}_`;
+
     let queries = {
       author: {
         "main": {
@@ -222,7 +224,7 @@ App.views.bigSearch = new (Backbone.View.extend({
           "knowledge_IDPLACE:Knowledge": {"id": "*"},
           "knowledges_IDPLACE:Knowledge": {"id": "*"},
           "monument_IDPLACE:Monument": {"id": "*"},
-          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=textEXACT"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": prefix + "name=VALUEPLACE=textEXACT"},
           "research_IDPLACE__author": {},
           "research_IDPLACE__knowledge_IDPLACE": {},
           "monument_IDPLACE__knowledge_IDPLACE": {},
@@ -526,7 +528,7 @@ App.views.bigSearch = new (Backbone.View.extend({
         "monument-culture": {
           "knowledge_IDPLACE:Knowledge": {"id": "*"},
           "knowledges_IDPLACE:Knowledge": {"id": "*"},
-          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=textEXACT"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": prefix + "name=VALUEPLACE=textEXACT"},
           "monument_IDPLACE:Monument": {},
           "research__knowledge_IDPLACE": {},
           "monument_IDPLACE__knowledge_IDPLACE": {},
@@ -788,7 +790,7 @@ App.views.bigSearch = new (Backbone.View.extend({
           "knowledge:Knowledge": {"id": "*", "select": "*", "filter": "monument_name=VALUEPLACE=text"},
         },
         "monument-culture": {
-          "cult_IDPLACE:Culture": {"id": "*", "filter": "name=VALUEPLACE=textEXACT"},
+          "cult_IDPLACE:Culture": {"id": "*", "filter": prefix + "name=VALUEPLACE=textEXACT"},
           "cult_IDPLACE__knowledge": {},
         },
         "monument-type": {
@@ -944,9 +946,9 @@ App.views.bigSearch = new (Backbone.View.extend({
         let valueParts = $("#search-value-"+i).val().split(/[;]\s*/g);
         let value = valueParts.join(")|(");
 
-        let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i)
-        addQuery = addQuery.replace(/VALUEPLACE/g, value)
-        addQuery = addQuery.replace(/EXACT/g, exact)
+        let addQuery = JSON.stringify(queries[entity][criterion]).replace(/_IDPLACE/g, i);
+        addQuery = addQuery.replace(/VALUEPLACE/g, value);
+        addQuery = addQuery.replace(/EXACT/g, exact);
         addQuery = JSON.parse(addQuery);
 
         _.extend(query, addQuery);
