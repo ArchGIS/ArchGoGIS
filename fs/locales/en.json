@@ -178,6 +178,10 @@
     "monument": "Go to archaeological site"
   },
 
+  "epoch": {
+    "singular": "Epoch"
+  },
+
   "import": {
     "subject": "Data to import",
     "data": "Importing data"
