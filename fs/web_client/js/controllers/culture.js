@@ -17,6 +17,13 @@ App.controllers.culture = new (Backbone.View.extend({
           "researches__knowledges": {},
           "culture__knowledges": {},
         }),
+        monuments: JSON.stringify({
+          "culture:Culture": {"id": cId},
+          "monuments:Monument": {"id": "*", "select": "*", "options":"uniq"},
+          "knowledges:Knowledge": {"id": "*"},
+          "monuments__knowledges": {},
+          "culture__knowledges": {},
+        }),
         cultKnow: JSON.stringify({
           "culture:Culture": {"id": cId},
           "cultKnow:CultureKnowledge": {"id": "*", "select": "*"},
@@ -71,6 +78,14 @@ App.controllers.culture = new (Backbone.View.extend({
           "excSpatref__has__excSpatrefT": {},
           "researches__has__excavations": {},
         })
+      },
+
+      monuments: {
+        monTypes: JSON.stringify({
+          "monuments:Monument": {"id": "NEED"},
+          "monTypes:MonumentType": {"id": "*", "select": "*"},
+          "monuments__monTypes": {},
+        }),
       },
 
       cultKnow: {

@@ -12,6 +12,23 @@
     <div id="general">
       <dt><%= t('epoch.singular') %>:</dt>
       <dd><%= (epoch[0]) ? epoch[0].name : t("common.noData") %></dd>
+
+      <dt><%= t('monument.count') %>:</dt>
+      <dd><%= _.size(monuments) %></dd>
+
+      <dt><%= t('monument.typess') %>:</dt>
+      <% 
+      let types = {};
+      _.each(monTypes, function(monType, i) { 
+        if (!types[monType[0].name]) {
+          types[monType[0].name] = 0;
+        } 
+        types[monType[0].name]++;
+      })
+      _.each(types, function(type, key) { %>
+        <%= `${key}: ${type}`%>
+      <% }) %>
+      
     </div>
 
     <div id="researches">
