@@ -25,8 +25,7 @@ App.models.fn = {
     return deferred.promise();
   },
 
-  "sendQueries": function(query, params, limit) {
-    limit = limit || 500
+  "sendQueries": function(query, params) {
     var counter = 0;
     var fullResponse = [];
     var deferred = $.Deferred();
@@ -34,7 +33,7 @@ App.models.fn = {
     _.each(params, function(val, id) {
       var completedQuery = query.replace(/NEED/g, val);
       $.post({
-        url: "/hquery/read?limit=${limit}",
+        url: "/hquery/read",
         data: completedQuery,
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -62,19 +61,18 @@ App.models.fn = {
     return deferred.promise();
   },
 
-  "getData": function(queries, callback, needParams, params, limit) {
+  "getData": function(queries, callback, needParams, params) {
     needParams = needParams || false;
-    limit = limit || 500;
     var data = {};
 
     _.each(queries, function(query, key) {
       if (needParams) {
-        $.when(App.models.fn.sendQueries(query, params, limit)).then(function(response) {
+        $.when(App.models.fn.sendQueries(query, params)).then(function(response) {
           data[key] = response;
           callback();
         });
       } else {
-        $.when(App.models.fn.sendQuery(query, limit)).then(function(response) {
+        $.when(App.models.fn.sendQuery(query)).then(function(response) {
           _.each(response, function(val, key){
             data[key] = val;
           })
