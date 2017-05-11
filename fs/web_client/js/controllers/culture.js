@@ -12,10 +12,8 @@ App.controllers.culture = new (Backbone.View.extend({
       complex: {
         researches: JSON.stringify({
           "culture:Culture": {"id": cId},
-          "authors:Author": {"id": "*", "select": "*"},
           "researches:Research": {"id": "*", "select": "*", "options":"uniq"},
           "knowledges:Knowledge": {"id": "*"},
-          "researches__hasauthor__authors": {},
           "researches__knowledges": {},
           "culture__knowledges": {},
         }),
@@ -44,6 +42,11 @@ App.controllers.culture = new (Backbone.View.extend({
       },
 
       researches: {
+        authors: JSON.stringify({
+          "researches:Research": {"id": "NEED"},
+          "authors:Author": {"id": "*", "select": "*"},
+          "researches__hasauthor__authors": {},
+        }),
         resTypes: JSON.stringify({
           "researches:Research": {"id": "NEED"},
           "resType:ResearchType": {"id": "*", "select": "*"},

@@ -25,7 +25,8 @@ App.models.fn = {
     return deferred.promise();
   },
 
-  "sendQueries": function(query, params) {
+  "sendQueries": function(query, params, limit) {
+    limit = limit || 500
     var counter = 0;
     var fullResponse = [];
     var deferred = $.Deferred();
@@ -61,8 +62,9 @@ App.models.fn = {
     return deferred.promise();
   },
 
-  "getData": function(queries, callback, needParams, params) {
+  "getData": function(queries, callback, needParams, params, limit) {
     needParams = needParams || false;
+    limit = limit || 500;
     var data = {};
 
     _.each(queries, function(query, key) {
