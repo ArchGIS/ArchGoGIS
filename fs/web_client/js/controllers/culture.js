@@ -143,7 +143,7 @@ App.controllers.culture = new (Backbone.View.extend({
 
         var ids = _.map(tmplData[key], function(obj) {return obj.id.toString()});
 
-        data.push(model.getData(queries[key], callRender, true, ids));
+        data.push(model.getData(queries[key], callRender, true, ids, 5000));
         callRender();
       })
     })

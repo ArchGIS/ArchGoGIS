@@ -34,7 +34,7 @@ App.models.fn = {
     _.each(params, function(val, id) {
       var completedQuery = query.replace(/NEED/g, val);
       $.post({
-        url: "/hquery/read",
+        url: "/hquery/read?limit=${limit}",
         data: completedQuery,
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -69,12 +69,12 @@ App.models.fn = {
 
     _.each(queries, function(query, key) {
       if (needParams) {
-        $.when(App.models.fn.sendQueries(query, params)).then(function(response) {
+        $.when(App.models.fn.sendQueries(query, params, limit)).then(function(response) {
           data[key] = response;
           callback();
         });
       } else {
-        $.when(App.models.fn.sendQuery(query)).then(function(response) {
+        $.when(App.models.fn.sendQuery(query, limit)).then(function(response) {
           _.each(response, function(val, key){
             data[key] = val;
           })
