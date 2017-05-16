@@ -61,7 +61,7 @@
       <% _.each(researchesCult, function(res, i) { %>
         <%= t("research.singular") %> №<%= counter++ %>:
         <% let resTitle = ctl(App.views.research.getFullResearchTitle(res.author[0].name, res.research[0].year, res.resType[0].name)) %></b>
-        <%= App.models.Research.href(res.id, resTitle) %>
+        <%= App.models.Research.href(res.research[0].id, resTitle) %>
         <br>
       <% }); %>
     </div>
