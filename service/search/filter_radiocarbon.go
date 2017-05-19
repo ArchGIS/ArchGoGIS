@@ -43,6 +43,7 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
 
   query = query + "WITH distinct {" +
     "carbon: r, " +
+    "id: r.id, " +
     "excX: excSp.x, " +
     "excY: excSp.y, " +
     "excDate: excSp.date, " +
