@@ -13,7 +13,7 @@ import (
 )
 
 const (
-  filterRadiocarbonCypher = "MATCH (r:Radiocarbon)--(sp:SpatialReference)"
+  filterRadiocarbonCypher = "MATCH (r:Radiocarbon)--(sp:SpatialReference)--(spt:SpatialReferenceType)"
 )
 
 
