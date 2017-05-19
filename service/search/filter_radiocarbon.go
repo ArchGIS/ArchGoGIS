@@ -57,7 +57,7 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
     "date: sp.date, " +
     "type: spt.id} as r " +
     "RETURN r " + 
-    "ORDER BY r.type ASC, r.date DESC, r.excType ASC, r.excDate DESC, r.monType ASC, r.monDate DESC "
+    "ORDER BY r.id ASC, r.type ASC, r.date DESC, r.excType ASC, r.excDate DESC, r.monType ASC, r.monDate DESC "
 
   resp, err := neo.Run(query, params)
 

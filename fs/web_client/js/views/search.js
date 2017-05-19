@@ -610,10 +610,7 @@ App.views.search = new (Backbone.View.extend({
             _.each(response, function(item) {
               if (lastId == item.id) {
                 return 1;
-                console.log("eq")
               }
-              console.log(item.id)
-
               lastId = item.id;
 
               let icon = L.icon({
