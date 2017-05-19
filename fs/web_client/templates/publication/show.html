@@ -25,9 +25,9 @@
     <dt><%= t('publication.prop.year') %>:</dt>
     <dd><%= maybe(pub[0], t('common.notDefined'), "puplished_at") %></dd>
 
-    <% if (city.name) { %>
+    <% if (city[0].name) { %>
       <dt><%= t('city.singular') %>:</dt>
-      <dd><%= ctl(city.name) %></dd>
+      <dd><%= ctl(city[0].name) %></dd>
     <% } %>
     
     <% if (pub.jour_name) { %>
@@ -74,6 +74,8 @@
     </p>
   <% }%>
 
+  <h4><%= App.models.File.href(pub.fileid, t("common.download")) %></h4>
+
 </div>
 
-<iframe src="http://185.147.81.8:8080/local_storage/565" class="maps">
+<iframe src="http://185.147.81.8:8080/local_storage/565" class="maps"></iframe> 
