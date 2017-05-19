@@ -605,15 +605,22 @@ App.views.search = new (Backbone.View.extend({
             clusterLayer.clearLayers();
 
             console.log(response)
+            var lastId = 0;
+
             _.each(response, function(item) {
+              if (lastId == item.id) {
+                return 1;
+              }
+              lastId = item.id;
+
               let icon = L.icon({
                 iconUrl: `/web_client/img/radiocarbon/c14.png`,
                 iconSize: [16, 16]
               });
 
-              if (item.spatref.x && item.spatref.y) {
-                spatref.x = item.spatref.x;
-                spatref.y = item.spatref.y;
+              if (item.x && item.y) {
+                spatref.x = item.x;
+                spatref.y = item.y;
               } else if (item.excX && item.excY) {
                 spatref.x = item.excX;
                 spatref.y = item.excY;

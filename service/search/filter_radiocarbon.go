@@ -13,7 +13,7 @@ import (
 )
 
 const (
-  filterRadiocarbonCypher = "MATCH (r:Radiocarbon)--(sp:SpatialReference)"
+  filterRadiocarbonCypher = "MATCH (r:Radiocarbon)--(sp:SpatialReference)--(spt:SpatialReferenceType)"
 )
 
 
@@ -43,6 +43,7 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
 
   query = query + "WITH distinct {" +
     "carbon: r, " +
+    "id: r.id, " +
     "excX: excSp.x, " +
     "excY: excSp.y, " +
     "excDate: excSp.date, " +
@@ -51,9 +52,12 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
     "monY: monSp.y, " +
     "monDate: monSp.date, " +
     "monType: monSpt.id, " +
-    "spatref: sp} as r " +
+    "x: sp.x, " +
+    "y: sp.y, " +
+    "date: sp.date, " +
+    "type: spt.id} as r " +
     "RETURN r " + 
-    "ORDER BY r.excType ASC, r.excDate DESC, r.monType ASC, r.monDate DESC "
+    "ORDER BY r.id ASC, r.type ASC, r.date DESC, r.excType ASC, r.excDate DESC, r.monType ASC, r.monDate DESC "
 
   resp, err := neo.Run(query, params)
 
