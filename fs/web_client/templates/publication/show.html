@@ -25,7 +25,7 @@
     <dt><%= t('publication.prop.year') %>:</dt>
     <dd><%= maybe(pub[0], t('common.notDefined'), "puplished_at") %></dd>
 
-    <% if (city.name) { %>
+    <% if (city[0].name) { %>
       <dt><%= t('city.singular') %>:</dt>
       <dd><%= ctl(city.name) %></dd>
     <% } %>
@@ -78,4 +78,4 @@
 
 </div>
 
-<iframe src="http://185.147.81.8:8080/local_storage/565"></iframe> 
+<iframe src="http://185.147.81.8:8080/local_storage/565" class="maps"></iframe> 
