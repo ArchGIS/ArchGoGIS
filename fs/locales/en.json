@@ -13,6 +13,7 @@
     "create": "Create",
     "formAuthor": "Enter an existing research author",
     "formReport": "Select an existing report",
+    "formPub": "Select an existing publication",
     "reportName": "Report title",
     "next": "Further",
     "belongsToSite": "Belongs to the archaeological site",
