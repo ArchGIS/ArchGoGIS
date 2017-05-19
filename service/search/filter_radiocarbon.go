@@ -51,9 +51,9 @@ func searchForFilterRadiocarbon(name string) ([]byte, error) {
     "monY: monSp.y, " +
     "monDate: monSp.date, " +
     "monType: monSpt.id, " +
-    "x: sp.x," +
-    "y: sp.y," +
-    "date: sp.date," +
+    "x: sp.x, " +
+    "y: sp.y, " +
+    "date: sp.date, " +
     "type: spt.id} as r " +
     "RETURN r " + 
     "ORDER BY r.type ASC, r.date DESC, r.excType ASC, r.excDate DESC, r.monType ASC, r.monDate DESC "
