@@ -23,16 +23,16 @@
     <dd><%= maybe(publisher[0], t('common.notDefined'), "name") %></dd>
 
     <dt><%= t('publication.prop.year') %>:</dt>
-    <dd><%= maybe(pub[0], t('common.notDefined'), "puplished_at") %></dd>
+    <dd><%= maybe(pub, t('common.notDefined'), "published_at") %></dd>
 
     <% if (city[0].name) { %>
       <dt><%= t('city.singular') %>:</dt>
       <dd><%= ctl(city[0].name) %></dd>
     <% } %>
     
-    <% if (pub.jour_name) { %>
+    <% if (pub.editionName) { %>
         <dt><%= t('publication.prop.jourName') %>:</dt>
-        <dd><%= ctl(pub.jour_name) %></dd>
+        <dd><%= ctl(pub.editionName) %></dd>
     <% } %>
 
     <% if (pub.volume) { %>
