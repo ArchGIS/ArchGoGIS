@@ -10,6 +10,7 @@ import (
 
 	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/service"
+	"github.com/ArchGIS/ArchGoGIS/service/calibrate"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery"
 	"github.com/ArchGIS/ArchGoGIS/service/pfs"
 	"github.com/ArchGIS/ArchGoGIS/service/search"
@@ -25,6 +26,7 @@ func main() {
 		hquery.Config,
 		search.Config,
 		pfs.Config,
+		calibrate.Config,
 	}
 
 	e := echo.New()
