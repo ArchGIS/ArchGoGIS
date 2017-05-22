@@ -111,8 +111,8 @@
               <dt></dt>
               <dd>
                 <a href="#monument/show/<%= monument.id %>">
-                <%= t('goto.monument') %>
-              </a>
+                  <%= t('goto.monument') %>
+                </a>
               </dd>
               <dt><%= t('common.nameByAuthor') %>:</dt>
               <dd><%= ctl(knowledges[i].monument_name) %></dd>
@@ -227,6 +227,7 @@
 
     <div id="cultures">
       <div id="accordion">
+        <% counter = 1 %>
         <% _.each(resCult, function(cult, i) { %>
           <h4 class="accordion-header">
             <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
@@ -235,15 +236,21 @@
           
           <div class="accordion-content">
             <dl>
+              <dd>
+                <a href="#culture/show/<%= cult.id %>">
+                  <%= t('goto.culture') %>
+                </a>
+              </dd>
+
               <% if (cultDate[i] && cultKnow[i]) { %>
                 <dt><%= t('date.singular') %>:</dt>
                 <dd><%= cultDate[i].name %>: <%= cultKnow[i].dateBottom %> — <%= cultKnow[i].dateTop %></dd>
-             <% } %>
+              <% } %>
 
               <% if (cultKnow[i]) { %>
                 <dt><%= t('common.description') %>:</dt>
                 <dd><%= cultKnow[i].description %></dd>
-             <% } %>
+              <% } %>
             </dl>
           </div>
         <% }) %>
