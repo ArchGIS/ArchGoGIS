@@ -127,6 +127,9 @@
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
                 <dd><%= ctl(knowledges[i].description) %></dd>
+                <% if (knowledges[i].layerDesc) { %>
+                  <dd><%= knowledges[i].layerDesc %></dd>
+                <% } %>
               <% } %>
               <dt><%= t('artifact.found') %>:</dt>
               <dd>
