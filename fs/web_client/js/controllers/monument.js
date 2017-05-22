@@ -13,7 +13,9 @@ App.controllers.monument = new (Backbone.View.extend({
         knowledges: JSON.stringify({
           "monuments:Monument": {"id": monId, "select": "*"},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "researches:Research": {"id": "*"},
           "knowledges__belongsto__monuments": {},
+          "researches__has__knowledges": {},
         }),
 
         researches: JSON.stringify({
