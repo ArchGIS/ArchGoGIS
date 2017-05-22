@@ -73,9 +73,6 @@
       </a>
     </p>
   <% }%>
-
-  <h4><%= App.models.File.href(pub.fileid, t("common.download")) %></h4>
-
 </div>
 
-<iframe src="http://185.147.81.8:8080/local_storage/565" class="maps"></iframe> 
+<iframe src="<%= App.models.File.url(pub.fileid) %>" class="maps"></iframe> 
