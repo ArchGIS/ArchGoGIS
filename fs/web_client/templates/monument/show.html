@@ -63,7 +63,7 @@
       <% let addedLayers = {} %>
 
       <dt><%= t("monument.layersAll") %></dt>
-      <dd><%= _.size(otherLayers) %></dd>
+      <dd><%= _.size(_.uniq(otherLayers, 'id')) %></dd>
 
       <dt><%= t("monument.layersTop") %></dt>
       <% _.each(otherLayers, function(layer, i) { %>
