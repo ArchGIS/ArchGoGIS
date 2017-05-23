@@ -85,7 +85,9 @@ App.controllers.research = new (Backbone.View.extend({
 
         carbon: JSON.stringify({
           "research:Research": {"id": resId},
+          "carbonMaterial:CarbonMaterial": {"id": "*", "select": "*"},
           "carbon:Radiocarbon": {"id": "*", "select": "*"},
+          "carbon__carbonMaterial": {},
           "research__has__carbon": {},
         }),
       },

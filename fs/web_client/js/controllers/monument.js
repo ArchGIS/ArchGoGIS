@@ -43,12 +43,14 @@ App.controllers.monument = new (Backbone.View.extend({
         carbon: JSON.stringify({
           "mon:Monument": {"id": monId},
           "k:Knowledge": {"id": "*"},
+          "carbonMaterial:CarbonMaterial": {"id": "*", "select": "*"},
           "carbon:Radiocarbon": {"id": "*", "select": "*"},
           "carSpatref:SpatialReference": {"id": "*", "select": "*"},
           "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "k__belongsto__mon": {},
           "k__has__carbon": {},
           "carbon__has__carSpatref": {},
+          "carbon__carbonMaterial": {},
           "carSpatref__has__carSpatrefT": {}
         }),
 

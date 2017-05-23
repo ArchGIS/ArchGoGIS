@@ -22,10 +22,12 @@ App.controllers.excavation = new (Backbone.View.extend({
         }),
         carbon: JSON.stringify({
           "exc:Excavation": {"id": excId},
+          "carbonMaterial:CarbonMaterial": {"id": "*", "select": "*"},
           "carbon:Radiocarbon": {"id": "*", "select": "*"},
           "carSpatref:SpatialReference": {"id": "*", "select": "*"},
           "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "exc__has__carbon": {},
+          "carbon__carbonMaterial": {},
           "carbon__has__carSpatref": {},
           "carSpatref__has__carSpatrefT": {}
         })
