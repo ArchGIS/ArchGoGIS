@@ -605,13 +605,13 @@ App.views.search = new (Backbone.View.extend({
             clusterLayer.clearLayers();
 
             console.log(response)
+            console.log(_.uniq(response, "id"))
             var lastId = 0;
 
             _.each(response, function(item) {
               if (lastId == item.id) {
                 return 1;
               }
-              lastId = item.id;
 
               let icon = L.icon({
                 iconUrl: `/web_client/img/radiocarbon/c14.png`,
@@ -628,8 +628,11 @@ App.views.search = new (Backbone.View.extend({
                 spatref.x = item.monX;
                 spatref.y = item.monY;
               } else {
+                console.log(item.id)
                 return 1;
               }
+
+              lastId = item.id;
 
               let marker = L.marker(new L.LatLng(spatref.x, spatref.y), {
                 icon: icon

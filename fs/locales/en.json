@@ -111,7 +111,9 @@
     "add": "Add culture",
     "number": "Culture #",
     "cultName": "Culture name",
-    "description": "Culture description"
+    "description": "Culture description",
+    "resChrono": "General chronological frame of the culture (context)",
+    "monChrono": "Chronological frame of the context"
   },
 
   "examples": {
