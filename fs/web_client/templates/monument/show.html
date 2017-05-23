@@ -266,7 +266,7 @@
 
     <div id="radiocarbon">
       <%= _.compact(_.map(carbon, function(car, i) {
-        let title = `${car.name} (date: ${car.date}, sigma: ${car.s}, material: ${carbonMaterial[i].name})`;
+        let title = `${car.name} (R-date BP: ${car.date}, sigma: ${car.s}, material: ${carbonMaterial[i].name})`;
         return App.models.Radiocarbon.href(car.id, ctl(title));
       })).join(", <br>") %>
     </div>
