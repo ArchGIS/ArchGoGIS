@@ -79,36 +79,112 @@ App.views.map = () => {
     completedColor: '#10B8CB'
   }).addTo(map);
 
-  const cluster = L.markerClusterGroup({
-    maxClusterRadius: 40
-  });
-  map.addLayer(cluster);
 
   return {
     map,
-    controls,
-    cluster
+    controls
   }
 };
 
-App.views.addOverlays = (leaf, types) => {
+const setDefaultClassToMarkerCluster = (len) => {
+  let type = 'marker-cluster marker-cluster-';
+  
+  if (len < 10) {
+    type += 'small';
+  } else if (len < 100) {
+    type += 'medium';
+  } else {
+    type += 'large';
+  }
+
+  return type;
+};
+
+const monEpochsHash = [
+  {r: 179, g: 178, b: 176},
+  {r: 253, g:	4, b:	4},
+  {r: 56, g: 252, b: 4},
+  {r: 3, g: 26, b: 249},
+  {r: 249, g: 183, b: 3},
+  {r: 157, g: 112, b: 54},
+  {r: 255, g: 3, b: 235},
+  {r: 0, g: 0, b: 0}
+];
+
+const resTypeHash = [
+  {r: 0, g: 0, b: 0},
+  {r: 30, g: 30, b: 210},
+  {r: 205, g: 133, b: 63},
+  {r: 128, g: 0, b: 0}
+];
+
+App.views.createOverlays = (leaf, types) => {
+  const cluster = L.markerClusterGroup({
+    maxClusterRadius: 40,
+    iconCreateFunction: (cluster) => {
+      const markers = cluster.getAllChildMarkers();
+      const markerTypes = [];
+      let type = '';
+
+      for (let marker of markers) {
+        if (!_.contains(markerTypes, marker.type)) {
+          markerTypes.push(marker.type);
+        }
+
+        if (markerTypes.length > 1) {
+          type = setDefaultClassToMarkerCluster(markers.length);
+          break;
+        }
+      };
+
+      if (type === '') {
+        if (markerTypes[0] === 'monument') {
+          type = 'marker-cluster cluster-monument';
+        } else if (markerTypes[0] === 'research') {
+          type = 'marker-cluster cluster-research';
+        } else if (markerTypes[0] === 'radiocarbon') {
+          type = 'marker-cluster cluster-radiocarbon';
+        } else {
+          type = setDefaultClassToMarkerCluster(markers.length);
+        }
+      }
+
+      return L.divIcon({
+        html: '<div><span>' + markers.length + '</span></div>',
+        className: type,
+        iconSize: L.point(40, 40)
+      });
+    }
+  });
+
   const overlayLayers = _.reduce(types, (memo, type) => {
-    memo[App.store.mapTypes[type]] = L.featureGroup.subGroup(leaf.cluster);
+    memo[App.store.mapTypes[type]] = L.featureGroup.subGroup(cluster);
     return memo;
   }, {});
 
-  _.each(overlayLayers, (layer, key) => {
-    layer.addTo(leaf.map);
-    leaf.controls.addOverlay(layer, key);
+  return {
+    map: leaf.map,
+    controls: leaf.controls,
+    layers: overlayLayers,
+    cluster
+  };
+};
+
+App.views.addOverlaysToMap = (ov) => {
+  ov.map.addLayer(ov.cluster);
+
+  _.each(ov.layers, (layer, key) => {
+    layer.addTo(ov.map);
+    ov.controls.addOverlay(layer, key);
   });
 
-  return overlayLayers;
+  return ov;
 };
 
 App.views.addToMap = (placemarks, existMap) => {
   const types       = _.uniq( _.pluck(placemarks, 'type') ),
         mapInstance = existMap || App.views.map(),
-        overlays    = App.views.addOverlays(mapInstance, types),
+        overlay     = App.views.createOverlays(mapInstance, types),
         map         = mapInstance.map;
 
   const ctl = App.locale.getLang() === "en" ? App.locale.cyrToLatin : src => src;
@@ -150,20 +226,25 @@ App.views.addToMap = (placemarks, existMap) => {
       window.open(`${HOST_URL}/index#${item.type}/show/${item.id}`, '_blank');
     });
 
-    overlays[App.store.mapTypes[item.type]].addLayer(marker);
+    // Need for clusters
+    marker.type = item.type;
+    if (item.type === 'monument') {
+      marker.epoch = parseInt(item.opts.preset.substr(item.opts.preset.indexOf('_') + 1));
+    } else if (item.type === 'research') {
+      marker.resType = parseInt(item.opts.preset.match(/\d+/)[0]);
+    }
+
+    overlay.layers[App.store.mapTypes[item.type]].addLayer(marker);
   });
 
-  return {
-    mapInstance,
-    overlays
-  };
+  return App.views.addOverlaysToMap(overlay);
 };
 
 App.views.clearOverlays = (leaf) => {
   if (leaf) {
-    _.each(leaf.overlays, function (ov) {
+    _.each(leaf.layers, function (ov) {
       ov.remove();
-      leaf.mapInstance.controls.removeLayer(ov);
+      leaf.controls.removeLayer(ov);
     });
   }
 };

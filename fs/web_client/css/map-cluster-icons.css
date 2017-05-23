@@ -1,0 +1,20 @@
+.cluster-monument {
+	background-color: rgba(180, 0, 0, 0.6);
+}
+.cluster-monument div {
+	background-color: rgba(210, 15, 15, 0.6);
+}
+
+.cluster-research {
+	background-color: rgba(1, 211, 179, 0.6);
+}
+.cluster-research div {
+	background-color: rgba(3, 194, 150, 0.6);
+}
+
+.cluster-radiocarbon {
+	background-color: rgba(180, 180, 180, 0.6);
+}
+.cluster-radiocarbon div {
+  background-color: rgba(160, 160, 160, 0.6);
+}
