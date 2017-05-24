@@ -237,7 +237,7 @@ App.views.createOverlays = (leaf, types) => {
             pieClass: 'cluster-pie',
             pieLabel: n,
             pieLabelClass: 'marker-cluster-pie-label',
-            pathClassFunc: d => "mon-category-" + d.data.key,
+            pathClassFunc: d => "res-category-" + d.data.key,
             pathTitleFunc: d => resTypes[d.data.key][`${prefix}name`] + ' - ' + d.data.values.length
           });
 
@@ -248,6 +248,8 @@ App.views.createOverlays = (leaf, types) => {
           });
         } else if (markerTypes[0] === 'radiocarbon') {
           type = 'marker-cluster cluster-radiocarbon';
+        } else if (markerTypes[0] === 'excavation') {
+          type = 'marker-cluster cluster-excavation';
         } else {
           type = setDefaultClassToMarkerCluster(n);
         }

@@ -5,18 +5,25 @@
 	background-color: rgba(210, 15, 15, 0.6);
 }*/
 
-.cluster-research {
+/*.cluster-research {
 	background-color: rgba(1, 211, 179, 0.6);
-}
+}*/
 .cluster-research div {
 	background-color: rgba(3, 194, 150, 0.6);
 }
 
-.cluster-radiocarbon {
+/*.cluster-radiocarbon {
 	background-color: rgba(180, 180, 180, 0.6);
-}
+}*/
 .cluster-radiocarbon div {
   background-color: rgba(160, 160, 160, 0.6);
+}
+/*
+.cluster-excavation {
+	background-color: rgba(157, 112, 54, 0.6);
+}*/
+.cluster-excavation div {
+  background-color: rgba(157, 100, 54, 0.6);
 }
 
 
@@ -108,20 +115,19 @@
 }
 .res-category-2{
   fill: rgb(30, 30, 210);
-  stroke: rgb(157, 83, 54);
-  background: rgb(157, 112, 54);
-  border-color: rgb(157, 83, 54);
-  r: 30, g: 30, b: 210
+  stroke: rgb(30, 30, 180);
+  background: rgb(30, 30, 210);
+  border-color: rgb(30, 30, 180);
 }
 .res-category-3{
-  fill: rgb(255, 3, 235);
-  stroke: rgb(255, 3, 200);
-  background: rgb(255, 3, 235);
-  border-color: rgb(255, 3, 200);
+  fill: rgb(205, 133, 63);
+  stroke: rgb(205, 100, 63);
+  background: rgb(205, 133, 63);
+  border-color: rgb(205, 100, 63);
 }
 .res-category-4{
-  fill: rgb(0, 0, 0);
-  stroke: rgb(40, 40, 40);
-  background: rgb(0, 0, 0);
-  border-color: rgb(40, 40, 40);
+  fill: rgb(128, 0, 0);
+  stroke: rgb(110, 0, 0);
+  background: rgb(128, 0, 0);
+  border-color: rgb(110, 0, 0);
 }
