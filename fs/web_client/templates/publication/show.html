@@ -25,7 +25,7 @@
     <dt><%= t('publication.prop.year') %>:</dt>
     <dd><%= maybe(pub, t('common.notDefined'), "published_at") %></dd>
 
-    <% if (city[0].name) { %>
+    <% if (city[0] && city[0].name) { %>
       <dt><%= t('city.singular') %>:</dt>
       <dd><%= ctl(city[0].name) %></dd>
     <% } %>

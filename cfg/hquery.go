@@ -9,7 +9,7 @@ const (
 	HqueryReadMaxInputLen   = 1024
 	HqueryReadDefaultLimit  = "500"
 	HqueryReadMaxLimit      = "15000"
-	HqueryMaxEntries        = 32
+	HqueryMaxEntries        = 10000
 	HqueryMaxPropsPerEntry  = 24
 	HqueryMaxPropsTotal     = 1200
 	HqueryMaxTagLen         = 48
@@ -59,6 +59,7 @@ var (
 		{"Radiocarbon", "n_radiocarbon_id_seq"},
 		{"CultureKnowledge", "n_culture_knowledge_id_seq"},
 		{"MonumentLayers", "n_monument_layers_id_seq"},
+		{"Selection", "n_selection_id_seq"},
 	}
 
 	HqueryPermittedEdgeLabels = []HqueryEdgeLabel{

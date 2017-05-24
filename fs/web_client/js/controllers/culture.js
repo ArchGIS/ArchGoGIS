@@ -32,11 +32,13 @@ App.controllers.culture = new (Backbone.View.extend({
         carbon: JSON.stringify({
           "culture:Culture": {"id": cId},
           "k:Knowledge": {"id": "*"},
+          "carbonMaterial:CarbonMaterial": {"id": "*", "select": "*"},
           "carbon:Radiocarbon": {"id": "*", "select": "*"},
           "carSpatref:SpatialReference": {"id": "*", "select": "*"},
           "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "k__culture": {},
           "k__has__carbon": {},
+          "carbon__carbonMaterial": {},
           "carbon__has__carSpatref": {},
           "carSpatref__has__carSpatrefT": {}
         })

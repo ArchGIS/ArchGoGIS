@@ -1,1 +1,18 @@
-<h3 class="left-p">Здесь будет выгрузка данных в виде таблицы</h3>
+<div class="content">  
+  <h2><%= t("titles.wizard.createSample") %></h2>
+
+  <% _.each(selections, function(sel, i) { %>
+    <% 
+      let entity = "";
+      if (sel.entity == "Monument") {
+        entity = "Памятники"
+      } else if (sel.entity == "Author") {
+        entity = "Авторы"
+      } else if (sel.entity == "Research") {
+        entity = "Исследования"
+      }
+    %>
+    <a href="#selection/show/<%= sel.id %>"><%= sel.name %> (<%= entity %>)</a>
+    <br>
+  <% }) %>
+<div>

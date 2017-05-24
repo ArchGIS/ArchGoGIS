@@ -1,0 +1,12 @@
+<div class="content">  
+  <h2><%= t("selection.singular") %> "<%= selection.name %>"</h2>
+
+  <% _.each(monuments, function(mon, i) { 
+    let monTitle = `${knowledges[i][0].monument_name} (${epochs[i][0].name}, ${monTypes[i][0].name})` %>
+    <%= App.models.Monument.href(mon.id, ctl(monTitle)) %>
+    <br>
+  <% }) %>
+
+<div>
+
+<div id="map" class="maps"></div>

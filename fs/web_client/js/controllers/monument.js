@@ -13,7 +13,9 @@ App.controllers.monument = new (Backbone.View.extend({
         knowledges: JSON.stringify({
           "monuments:Monument": {"id": monId, "select": "*"},
           "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "researches:Research": {"id": "*"},
           "knowledges__belongsto__monuments": {},
+          "researches__has__knowledges": {},
         }),
 
         researches: JSON.stringify({
@@ -41,12 +43,14 @@ App.controllers.monument = new (Backbone.View.extend({
         carbon: JSON.stringify({
           "mon:Monument": {"id": monId},
           "k:Knowledge": {"id": "*"},
+          "carbonMaterial:CarbonMaterial": {"id": "*", "select": "*"},
           "carbon:Radiocarbon": {"id": "*", "select": "*"},
           "carSpatref:SpatialReference": {"id": "*", "select": "*"},
           "carSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
           "k__belongsto__mon": {},
           "k__has__carbon": {},
           "carbon__has__carSpatref": {},
+          "carbon__carbonMaterial": {},
           "carSpatref__has__carSpatrefT": {}
         }),
 
@@ -66,6 +70,24 @@ App.controllers.monument = new (Backbone.View.extend({
           "cultures:Culture": {"id": "*", "select": "*"},
           "knowledges__belongsto__monument": {},
           "knowledges__has__cultures": {},
+        }),
+        cultKnow: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "knowledges:Knowledge": {"id": "*"},
+          "cultures:Culture": {"id": "*"},
+          "cultRes:Research": {"id": "*", "select": "*"},
+          "cultAuthor:Author": {"id": "*", "select": "*"},
+          "cultRestype:ResearchType": {"id": "*", "select": "*"},
+          "cultKnow:CultureKnowledge": {"id": "*", "select": "*"},
+          "cultDatescale:DateScale": {"id": "*", "select": "*"},
+          "knowledges__monument": {},
+          "knowledges__cultures": {},
+          "knowledges__cultRes": {},
+          "cultures__cultKnow": {},
+          "cultRes__cultKnow": {},
+          "cultRes__cultAuthor": {},
+          "cultRes__cultRestype": {},
+          "cultDatescale__cultKnow": {},
         }),
         epochs: JSON.stringify({
           "monument:Monument": {"id": monId},

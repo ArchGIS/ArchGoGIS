@@ -63,7 +63,7 @@
       <% let addedLayers = {} %>
 
       <dt><%= t("monument.layersAll") %></dt>
-      <dd><%= _.size(otherLayers) %></dd>
+      <dd><%= _.size(_.uniq(otherLayers, 'id')) %></dd>
 
       <dt><%= t("monument.layersTop") %></dt>
       <% _.each(otherLayers, function(layer, i) { %>
@@ -169,8 +169,38 @@
     </div>
 
     <div id="dates">
+
       <% 
         let dates = [];
+        let knows = {};
+        if (cultKnow.length) {
+          _.each(cultKnow, function(know, i) {
+            let ds = cultDatescale[i] || {};
+            if (know.dateBottom && !knows[know.id]) {
+              knows[know.id] = true;
+              let resName = cultRes[i].name;
+              let authorName = cultAuthor[i].name || t('author.unknown');
+              let resType = cultRestype[i].name || t('common.withoutType');
+              let resYear = cultRes[i].year || t('common.yearNotDefined');
+              let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
+              resTitle = App.models.Research.href(cultRes[i].id, ctl(resTitle));
+
+              let date = `${ds[prefix+'name']}: ${know.dateBottom} — ${know.dateTop} - ${resTitle}`
+              dates.push(date)
+            }
+          });
+        } 
+      %>
+
+      <% if (dates.length) { %>
+        <br>
+        <%= t('culture.resChrono')%>:
+        <br>
+        <%= dates.join("<br>") %>
+      <% } %>
+
+      <% 
+        dates = [];
         if (knowledges.length) {
           _.each(knowledges, function(know, i) {
             let mds = monDateScale[i][0] || {};
@@ -182,13 +212,20 @@
               let resTitle = `${resName} (${authorName}, ${resType}, ${resYear})`
               resTitle = App.models.Research.href(researches[i].id, ctl(resTitle));
 
-              let date = `${mds.name}: ${know.dateBottom} — ${know.dateTop} - ${resTitle}`
+              let date = `${mds[prefix+'name']}: ${know.dateBottom} — ${know.dateTop} - ${resTitle}`
               dates.push(date)
             }
           });
         } 
       %>
-      <%= dates.join("<br>") %>
+
+      <br>
+      <% if (dates.length) { %>
+        <br>
+        <%= t('culture.monChrono')%>:
+        <br>
+        <%= dates.join("<br>") %>
+      <% } %>
     </div>
 
     <div id="reports">
@@ -229,7 +266,7 @@
 
     <div id="radiocarbon">
       <%= _.compact(_.map(carbon, function(car, i) {
-        let title = `${car.name} (date: ${car.date})`;
+        let title = `${car.name} (R-date BP: ${car.date}, sigma: ${car.s}, material: ${carbonMaterial[i].name})`;
         return App.models.Radiocarbon.href(car.id, ctl(title));
       })).join(", <br>") %>
     </div>
