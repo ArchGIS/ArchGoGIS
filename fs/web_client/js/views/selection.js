@@ -1,20 +1,1 @@
-'use strict';
-
-App.views.selection = new (Backbone.View.extend({
-  "show": function(placemarks) {
-    App.views.addToMap(placemarks);
-
-    $("#container").tabs();
-    App.views.functions.setAccordion(".accordion");
-
-    $("#get-all-radiocarbon").on("click", function() {
-      console.log(123)
-
-      var type = 'data:application/octet-stream;base64, ';
-      var text = 'jxowsjsivneic';
-      var base = btoa(text);
-      var res = type + base;
-      document.getElementById('test').href = res;
-    }) 
-  },
-}))
+'use strict';App.views.selection = new (Backbone.View.extend({  "show": function(data) {    App.views.addToMap(data.placemarks);    $("#container").tabs();    App.views.functions.setAccordion(".accordion");    $("#get-all-radiocarbon").on("click", function() {      var model = App.models.fn;      var carbons = [];      var query = {        main: JSON.stringify({          "mons:Monument": {"id": "NEED"},          "knows:Knowledge": {"id": "*"},          "carbon:Radiocarbon": {"id": "*", "select": "*"},          "mons__knows": {},          "knows__carbon": {},        }),      }      var generate = function() {        console.log(carbons)        var type = 'data:application/octet-stream;base64, ';        var text = '';        _.each(carbons.main, function(monCarbons, i) {          _.each(monCarbons, function(carbon, t) {            text += `R-Date("${carbon.name}", ${carbon.date}, ${carbon.s});\n`;          })        })        var base = btoa(text);        var res = type + base;        $('#test').attr('href', res);        $('#test').show();      };      var callGenerate = _.after(1, generate);      var ids = _.map(data.monuments, function(obj) {return obj.id.toString()});      carbons = model.getData(query, callGenerate, true, ids);    })   },}))

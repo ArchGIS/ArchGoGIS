@@ -60,8 +60,8 @@ App.controllers.selection = new (Backbone.View.extend({
       let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
 
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
-
-      App.page.render("selection/show", tmplData, tmplData.placemarks)
+      tmplData.data = data;
+      App.page.render("selection/show", tmplData, tmplData)
     };
 
     var queryCounter = _.reduce(queries, (memo, obj) => { return memo + _.size(obj) }, 0);

@@ -4,6 +4,7 @@
     "name": "Name",
     "year": "Year",
     "download": "Download",
+    "downloadFile": "Download file",
     "description": "Description",
     "culture": "Cultural attribution",
     "storage": "Storage Institution",
@@ -564,8 +565,7 @@
   "titles": {
     "wizard": {
       "create-data": "Create data",
-      "about": "About system",
-      "create-map": "Creating a map",
+      "about": "About the system",
       "createSample": "Selections",
       "download": "Upload data",
       "importData": "Data input",
