@@ -1,0 +1,101 @@
+/*.cluster-monument {
+	background-color: rgba(180, 0, 0, 0.6);
+}
+.cluster-monument div {
+	background-color: rgba(210, 15, 15, 0.6);
+}*/
+
+.cluster-research {
+	background-color: rgba(1, 211, 179, 0.6);
+}
+.cluster-research div {
+	background-color: rgba(3, 194, 150, 0.6);
+}
+
+.cluster-radiocarbon {
+	background-color: rgba(180, 180, 180, 0.6);
+}
+.cluster-radiocarbon div {
+  background-color: rgba(160, 160, 160, 0.6);
+}
+
+
+/*Marker clusters*/
+.marker-cluster-pie g.arc{
+  fill-opacity: 0.5;
+}
+.marker-cluster-pie-label {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.marker {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+  border-radius:10px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-style: solid;
+  fill: #CCC;
+  stroke: #444;
+  background: #CCC;
+  border-color: #444;
+}
+.marker div{
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+/*marker categories*/
+.mon-category-1{
+  fill: #F88;
+  stroke: #800;
+  background: #F88;
+  border-color: #800;
+}
+.mon-category-2{
+  fill: #FA0;
+  stroke: #B60;
+  background: #FA0;
+  border-color: #B60;
+}
+.mon-category-3{
+  fill: #FF3;
+  stroke: #D80;
+  background: #FF3;
+  border-color: #D80;
+}
+.mon-category-4{
+  fill: #BFB;
+  stroke: #070;
+  background: #BFB;
+  border-color: #070;
+}
+.mon-category-5{
+  fill: #9DF;
+  stroke: #007;
+  background: #9DF;
+  border-color: #007;
+}
+.mon-category-6{
+  fill: #CCC;
+  stroke: #444;
+  background: #CCC;
+  border-color: #444;
+}
+.mon-category-5{
+  fill: #9DF;
+  stroke: #007;
+  background: #9DF;
+  border-color: #007;
+}
+.mon-category-6{
+  fill: #CCC;
+  stroke: #444;
+  background: #CCC;
+  border-color: #444;
+}
