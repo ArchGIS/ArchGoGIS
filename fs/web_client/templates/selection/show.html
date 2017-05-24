@@ -1,6 +1,13 @@
 <div class="content">  
   <h2><%= t("selection.singular") %> "<%= selection.name %>"</h2>
 
+  <button class="btn btn-primary" id="get-all-radiocarbon">
+    <%= t("selection.getRadiocarbon") %>
+  </button>
+  <a download="9dksk239xwd.txt" id="test">test</a>
+  <br>
+  <br>
+
   <% _.each(monuments, function(mon, i) { 
     let monTitle = `${knowledges[i][0].monument_name} (${epochs[i][0].name}, ${monTypes[i][0].name})` %>
     <%= App.models.Monument.href(mon.id, ctl(monTitle)) %>

@@ -212,7 +212,8 @@
   
   "selection": {
     "singular": "Выборка",
-    "plural": "Выборки"
+    "plural": "Выборки",
+    "getRadiocarbon": "Получить данные абсолютной хронологии"
   },
 
   "excavation": {

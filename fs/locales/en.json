@@ -216,7 +216,8 @@
   
   "selection": {
     "singular": "Selection",
-    "plural": "Selections"
+    "plural": "Selections",
+    "getRadiocarbon": "Get absolute chronology data"
   },
 
   "excavation": {
