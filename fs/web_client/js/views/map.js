@@ -86,6 +86,9 @@ App.views.map = () => {
   }
 };
 
+const lang = App.locale.getLang();
+const prefix = lang === 'ru' ? '' : `${lang}_`;
+
 const setDefaultClassToMarkerCluster = (len) => {
   let type = 'marker-cluster marker-cluster-';
   
@@ -119,7 +122,7 @@ const resTypeHash = [
 ];
 
 App.views.createOverlays = (leaf, types) => {
-  const rmax = 20;
+  const rmax = 30;
 
   const cluster = L.markerClusterGroup({
     maxClusterRadius: rmax * 2,
@@ -146,23 +149,55 @@ App.views.createOverlays = (leaf, types) => {
 
       if (type === '') {
         if (markerTypes[0] === 'monument') {
-          type = 'marker-cluster cluster-monument';
-
+          const epochs = {
+            '1': {
+              name: 'Новое время',
+              en_name: 'Modern time'
+            },
+            '2': {
+              name: 'Средневековье',
+              en_name: 'Middle ages'
+            },
+            '3': {
+              name: 'Эпоха Великого переселения',
+              en_name: 'Great Migration period'
+            },
+            '4': {
+              name: 'Ранний железный век',
+              en_name: 'Early Iron Age'
+            },
+            '5': {
+              name: 'Эпоха палеометалла',
+              en_name: 'Paleometal age'
+            },
+            '6': {
+              name: 'Неолит',
+              en_name: 'Neolithic'
+            },
+            '7': {
+              name: 'Палеолит/Мезолит',
+              en_name: 'Paleolitic/Mesolithic'
+            },
+            '8': {
+              name: 'Не определена',
+              en_name: 'Not defined'
+            }
+          };
           const data = d3.nest()
             .key(d => d.epoch)
             .entries(markers, d3.map);
 
           const html = bakeThePie({
             data: data,
-            valueFunc: d => d,
+            valueFunc: d => d.values.length,
             strokeWidth: 1,
             outerRadius: r,
             innerRadius: r - 10,
             pieClass: 'cluster-pie',
             pieLabel: n,
             pieLabelClass: 'marker-cluster-pie-label',
-            pathClassFunc: d => { console.log(d); return "mon-category-" + d.epoch},
-            pathTitleFunc: d => "Hello"//metadata.fields[categoryField].lookup[d.data.key] + ' (' + d.data.values.length + ' accident' + (d.data.values.length!=1?'s':'')+')'
+            pathClassFunc: d => "mon-category-" + d.data.key,
+            pathTitleFunc: d => epochs[d.data.key][`${prefix}name`] + ' - ' + d.data.values.length
           });
 
           return L.divIcon({
@@ -171,7 +206,46 @@ App.views.createOverlays = (leaf, types) => {
             iconSize: L.point(iconDim, iconDim)
           });
         } else if (markerTypes[0] === 'research') {
-          type = 'marker-cluster cluster-research';
+          const resTypes = {
+            '1': {
+              name: 'Нет данных',
+              en_name: 'No data'
+            },
+            '2': {
+              name: 'Разведка',
+              en_name: 'Survey'
+            },
+            '3': {
+              name: 'Аналитическое',
+              en_name: 'Analisys'
+            },
+            '4': {
+              name: 'Раскопки',
+              en_name: 'Excavation'
+            }
+          }
+          const data = d3.nest()
+            .key(d => d.resType)
+            .entries(markers, d3.map);
+
+          const html = bakeThePie({
+            data: data,
+            valueFunc: d => d.values.length,
+            strokeWidth: 1,
+            outerRadius: r,
+            innerRadius: r - 10,
+            pieClass: 'cluster-pie',
+            pieLabel: n,
+            pieLabelClass: 'marker-cluster-pie-label',
+            pathClassFunc: d => "mon-category-" + d.data.key,
+            pathTitleFunc: d => resTypes[d.data.key][`${prefix}name`] + ' - ' + d.data.values.length
+          });
+
+          return L.divIcon({
+            html: html,
+            className: 'marker-cluster',
+            iconSize: L.point(iconDim, iconDim)
+          });
         } else if (markerTypes[0] === 'radiocarbon') {
           type = 'marker-cluster cluster-radiocarbon';
         } else {
@@ -301,7 +375,11 @@ function bakeThePie(options) {
         w = origo*2, //width and height of the svg element
         h = w,
         donut = d3.layout.pie(),
-        arc = d3.svg.arc().innerRadius(rInner).outerRadius(r);
+        arc = d3.svg.arc()
+          .innerRadius(rInner)
+          .outerRadius(r);
+          // .startAngle(0)
+          // .endAngle(Math.PI * 2);
         
     //Create an svg element
     var svg = document.createElementNS(d3.ns.prefix.svg, 'svg');
@@ -330,9 +408,9 @@ function bakeThePie(options) {
         .attr('y',origo)
         .attr('class', pieLabelClass)
         .attr('text-anchor', 'middle')
-        //.attr('dominant-baseline', 'central')
+        .attr('dominant-baseline', 'central')
         /*IE doesn't seem to support dominant-baseline, but setting dy to .3em does the trick*/
-        .attr('dy','.3em')
+        // .attr('dy','.3em')
         .text(pieLabel);
     //Return the svg-markup rather than the actual element
     return serializeXmlNode(svg);

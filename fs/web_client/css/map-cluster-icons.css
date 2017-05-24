@@ -52,50 +52,76 @@
 
 /*marker categories*/
 .mon-category-1{
-  fill: #F88;
-  stroke: #800;
-  background: #F88;
-  border-color: #800;
+  fill: rgb(179, 178, 176);
+  stroke: rgb(149, 148, 146);
+  background: rgb(179, 178, 176);
+  border-color: rgb(149, 148, 146);
 }
 .mon-category-2{
-  fill: #FA0;
-  stroke: #B60;
-  background: #FA0;
-  border-color: #B60;
+  fill: rgb(253, 4, 4);
+  stroke: rgb(204, 4, 4);
+  background: rgb(253, 4, 4);
+  border-color: rgb(204, 4, 4);
 }
 .mon-category-3{
-  fill: #FF3;
-  stroke: #D80;
-  background: #FF3;
-  border-color: #D80;
+  fill: rgb(56, 252, 4);
+  stroke: rgb(32, 205, 40);
+  background: rgb(56, 252, 4);
+  border-color: rgb(32, 205, 40);;
 }
 .mon-category-4{
-  fill: #BFB;
-  stroke: #070;
-  background: #BFB;
-  border-color: #070;
+  fill: rgb(3, 26, 249);
+  stroke: rgb(10, 10, 255);
+  background: rgb(3, 26, 249);
+  border-color: rgb(10, 10, 255);
 }
 .mon-category-5{
-  fill: #9DF;
-  stroke: #007;
-  background: #9DF;
-  border-color: #007;
+  fill: rgb(249, 183, 3);
+  stroke: rgb(249, 150, 3);
+  background: rgb(249, 183, 3);
+  border-color: rgb(249, 150, 3);
 }
 .mon-category-6{
-  fill: #CCC;
-  stroke: #444;
-  background: #CCC;
-  border-color: #444;
+  fill: rgb(157, 112, 54);
+  stroke: rgb(157, 83, 54);
+  background: rgb(157, 112, 54);
+  border-color: rgb(157, 83, 54);
 }
 .mon-category-5{
-  fill: #9DF;
-  stroke: #007;
-  background: #9DF;
-  border-color: #007;
+  fill: rgb(255, 3, 235);
+  stroke: rgb(255, 3, 200);
+  background: rgb(255, 3, 235);
+  border-color: rgb(255, 3, 200);
 }
 .mon-category-6{
-  fill: #CCC;
-  stroke: #444;
-  background: #CCC;
-  border-color: #444;
+  fill: rgb(0, 0, 0);
+  stroke: rgb(40, 40, 40);
+  background: rgb(0, 0, 0);
+  border-color: rgb(40, 40, 40);
+}
+
+.res-category-1{
+  fill: rgb(0, 0, 0);
+  stroke: rgb(40, 40, 40);
+  background: rgb(0, 0, 0);
+  border-color: rgb(40, 40, 40);
+}
+.res-category-2{
+  fill: rgb(30, 30, 210);
+  stroke: rgb(157, 83, 54);
+  background: rgb(157, 112, 54);
+  border-color: rgb(157, 83, 54);
+  r: 30, g: 30, b: 210
+}
+.res-category-3{
+  fill: rgb(255, 3, 235);
+  stroke: rgb(255, 3, 200);
+  background: rgb(255, 3, 235);
+  border-color: rgb(255, 3, 200);
+}
+.res-category-4{
+  fill: rgb(0, 0, 0);
+  stroke: rgb(40, 40, 40);
+  background: rgb(0, 0, 0);
+  border-color: rgb(40, 40, 40);
 }
