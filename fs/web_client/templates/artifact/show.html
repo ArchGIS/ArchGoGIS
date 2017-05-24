@@ -97,7 +97,7 @@
         if (photosa.length) {
           _.each(photosa, function(resInfo, i) {
             html.push(_.map(photosa, function(photo) {
-              return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" height="100px">`;
+              return `<img src="${HOST_URL + '/local_storage/' + photo.fileid}" width="100%">`;
             }))
           })
         }
