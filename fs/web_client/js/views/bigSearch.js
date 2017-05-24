@@ -991,7 +991,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                         App.controllers.fn.createStandartPlacemark('monument', spatref.monument[i].id, sp.x, sp.y, spatref.monument[i].name, preset)
                       );
 
-                      $("#search-results").append(`<p id="record-${id}"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
+                      $("#search-results").append(`<p id="record-${id}" data-id="${id}" class="record"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
                     }
                   }
                 }
@@ -1010,7 +1010,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                       );
                       ids[spatref.research[i].id] = true;
                       
-                      $("#search-results").append(`<p id="record-${id}"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
+                      $("#search-results").append(`<p id="record-${id}" data-id="${id}" class="record"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
                     }
                   }
                 }
@@ -1034,11 +1034,51 @@ App.views.bigSearch = new (Backbone.View.extend({
             let data = _.toArray(response[entity])
             data = _.uniq(data, function(item, key, id) {return item.id});
             _.each(data, function(obj, key) {
-              $("#search-results").append(`<p id="record-${obj.id}"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
+              $("#search-results").append(`<p id="record-${obj.id}" data-id="${obj.id}" class="record"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
             })
           }
         }
       });
     });
+
+    $("#create-selection-button").on("click", function() {
+      let selName = $("#selection-name").val();
+      
+      if (!selName) {
+        return;
+      }
+
+      let ids = [];
+      let entity = $("#search-object").val();
+      entity = entity[0].toUpperCase() + entity.substr(1);
+
+      _.each($(".record"), function(record, i) {
+        ids.push($(record).attr("data-id"))
+      })
+
+      let query = {
+        "sel:Selection": {"name/text": `${selName}`, "entity/text": `${entity}`},
+      }
+
+      _.each(ids, function(id, i) {
+        query[`obj${i}:${entity}`] = {
+          "id": `${id}`
+        };
+        query[`sel__has__obj${i}`] = {};
+      })        
+
+      query = JSON.stringify(query);
+
+      $.post({
+        url: "/hquery/upsert",
+        data: query,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+        },
+        success: function(response) {
+          console.log(response)
+        }
+      })
+    })
   }
 }));

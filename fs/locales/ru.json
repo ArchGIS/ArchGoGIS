@@ -210,6 +210,11 @@
     "plural": "Связанные исследования"
   },
   
+  "selection": {
+    "singular": "Выборка",
+    "plural": "Выборки"
+  },
+
   "excavation": {
     "singular": "Вскрытие",
     "second": "Раскоп",
@@ -480,6 +485,8 @@
     "criteria": "Критерии поиска",
     "criterion": "Критерий",
     "addCriterion": "Добавить критерий",
+    "createSelection": "Создать выборку",
+    "nameSelection": "Название выборки",
     "noResults": "Ничего не найдено",
     "resultsCount": "Результатов",
     "fill": "Заполните одно поле или несколько полей"
@@ -558,7 +565,7 @@
       "about": "О системе",
       "create-data": "Создание данных",
       "create-map": "Создание карты",
-      "createSample": "Создание выборки",
+      "createSample": "Выборки",
       "download": "Загрузка данных",
       "importData": "Внесение данных",
       "getData": "Выгрузка",

@@ -10,6 +10,16 @@
     </select>
   </label>
 
+  <label>
+    <%= t('search.nameSelection') %>
+    <input class="form-control" id="selection-name" type="text"></input>
+  </label>
+
+  <button class="btn btn-primary" id="create-selection-button">
+    <i class="fa fa-search"></i>
+    <%= t("search.createSelection") %>
+  </button>
+
   <button class="btn btn-primary" id="add-criterion-button">
     <i class="fa fa-search"></i>
     <%= t("search.addCriterion") %>

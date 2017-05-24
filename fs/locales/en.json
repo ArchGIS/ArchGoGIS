@@ -214,6 +214,11 @@
     "plural": "Related research"
   },
   
+  "selection": {
+    "singular": "Selection",
+    "plural": "Selections"
+  },
+
   "excavation": {
     "singular": "Excavation",
     "second": "Excavation",
@@ -480,6 +485,8 @@
     "criteria": "Search filters",
     "criterion": "Filter",
     "addCriterion": "Add filter",
+    "createSelection": "Create selection",
+    "nameSelection": "Selection name",
     "noResults": "Nothing was found",
     "resultsCount": "Results",
     "fill": "Fill atleast one input"
@@ -558,7 +565,7 @@
       "create-data": "Create data",
       "about": "About system",
       "create-map": "Creating a map",
-      "createSample": "Sample сreation",
+      "createSample": "Selections",
       "download": "Upload data",
       "importData": "Data input",
       "getData": "Download data",
