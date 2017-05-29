@@ -103,29 +103,12 @@ const setDefaultClassToMarkerCluster = (len) => {
   return type;
 };
 
-const monEpochsHash = [
-  {r: 179, g: 178, b: 176},
-  {r: 253, g:	4, b:	4},
-  {r: 56, g: 252, b: 4},
-  {r: 3, g: 26, b: 249},
-  {r: 249, g: 183, b: 3},
-  {r: 157, g: 112, b: 54},
-  {r: 255, g: 3, b: 235},
-  {r: 0, g: 0, b: 0}
-];
-
-const resTypeHash = [
-  {r: 0, g: 0, b: 0},
-  {r: 30, g: 30, b: 210},
-  {r: 205, g: 133, b: 63},
-  {r: 128, g: 0, b: 0}
-];
 
 App.views.createOverlays = (leaf, types) => {
   const rmax = 30;
 
   const cluster = L.markerClusterGroup({
-    maxClusterRadius: rmax * 2,
+    maxClusterRadius: rmax + 10,
     iconCreateFunction: (cluster) => {
       const markers = cluster.getAllChildMarkers(),
             n = markers.length,
@@ -342,7 +325,7 @@ App.views.addToMap = (placemarks, existMap) => {
 
     overlay.layers[App.store.mapTypes[item.type]].addLayer(marker);
   });
-
+  
   return App.views.addOverlaysToMap(overlay);
 };
 
