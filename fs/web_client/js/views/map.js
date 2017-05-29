@@ -332,9 +332,10 @@ App.views.addToMap = (placemarks, existMap) => {
 App.views.clearOverlays = (leaf) => {
   if (leaf) {
     _.each(leaf.layers, function (ov) {
-      ov.remove();
       leaf.controls.removeLayer(ov);
     });
+
+    leaf.cluster.clearLayers();
   }
 };
 

@@ -5,13 +5,13 @@ App.views.search = new (Backbone.View.extend({
     const loc = App.locale;
     const lang = loc.getLang();
     const t = loc.translate;
-    const ctl = loc.cyrToLatin;
+    const ctl = lang === "en" ? loc.cyrToLatin : src => src;
     const prefix = lang === 'ru' ? '' : `${lang}_`;
+
     const excludeIdent = App.fn.excludeIdentMonuments;
-    const map = App.views.map().map;
-    const clusterLayer = L.markerClusterGroup({
-      maxClusterRadius: 40
-    });
+
+    const mapInstance = App.views.map();
+    let overlays = null;
 
     const $results = $('#search-results');
 
@@ -124,7 +124,7 @@ App.views.search = new (Backbone.View.extend({
     // Смена искомого объекта.
     $objectToggler.setCallback(function($object) {
       $results.empty();
-      clusterLayer.clearLayers();
+      App.views.clearOverlays(overlays);
       object = objects[$object.prop('id')];
     });
     object = objects['monument-params'];
@@ -164,7 +164,7 @@ App.views.search = new (Backbone.View.extend({
             if (response.length) {
               console.log(response);
               const list = my.columnsMaker(response);
-              const coords = [], uniqMons = [];
+              const coords = [], uniqMons = [], placemarks = [];
 
               _.each(response, (item) => {
                 if (App.utils.isNotExistID(uniqMons, 'monId', item.monId)) {
@@ -180,45 +180,30 @@ App.views.search = new (Backbone.View.extend({
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              clusterLayer.clearLayers();
+              App.views.clearOverlays(overlays);
 
               _.each(uniqMons, function(item, i) {
                 $.when(coords[i]).then(function(coord) {
-                  if ((coord.x != "нет данных" && coord.y != "нет данных") || (item.x && item.y)) {
-                    let type = item.monTypeId || 10;
-                    let epoch = item.ep || 0;
-                    coord.x = item.x || coord.x;
-                    coord.y = item.y || coord.y;
+                  if ((coord.x != "нет данных" && coord.y != "нет данных") &&
+                      (coord.x && coord.y) || 
+                      (item.x && item.y)) {
+                        const type = item.monTypeId || 10;
+                        const epoch = item.ep || 0;
+                        const preset = `monType${type}_${epoch}`;
 
-                    let icon = L.icon({
-                      iconUrl: `/web_client/img/monTypes/monType${type}_${epoch}.png`,
-                      iconSize: [16, 16]
-                    });
+                        coord.x = item.x || coord.x;
+                        coord.y = item.y || coord.y;
 
-                    let marker = L.marker(new L.LatLng(coord.x, coord.y), {
-                      icon: icon
-                    });
-
-                    marker.bindTooltip(item.monName, {
-                      direction: 'top'
-                    });
-
-                    marker.on('mouseover', function(e) {
-                      this.openTooltip();
-                    });
-                    marker.on('mouseout', function(e) {
-                      this.closeTooltip();
-                    });
-                    marker.on('click', function(e) {
-                      window.open(`${HOST_URL}/index#monument/show/${item.monId}`, '_blank');
-                    });
-
-                    clusterLayer.addLayer(marker);
-                  }
-                });
+                        placemarks.push(
+                          App.controllers.fn.createStandartPlacemark('monument', item.monId, coord.x, coord.y, ctl(item.monName), preset)
+                        );
+                      }
+                })
               });
 
-              map.addLayer(clusterLayer);
+              $.when(...coords).then((coord) => {
+                overlays = App.views.addToMap(placemarks, mapInstance);
+              });
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -309,47 +294,27 @@ App.views.search = new (Backbone.View.extend({
           .then(function(response) {
             console.log(response);
             if (response.length) {
-              var list = my.columnsMaker(response);
+              const list = my.columnsMaker(response);
+              const placemarks = [];
 
               _.each(list, function(item) {
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              clusterLayer.clearLayers();
+              App.views.clearOverlays(overlays);
 
-              _.each(response, function(item) {
-                let type = item.resTypeId || 1;
+              _.each(response, function(item, i) {
+                const type = item.resTypeId || 1;
+                const preset = `resType${type}`;
 
-                for (var i=0; i < item.x.length; i++) {
-                  let icon = L.icon({
-                    iconUrl: `/web_client/img/resTypes/resType${type}.png`,
-                    iconSize: [20, 20]
-                  });
-
-                  let marker = L.marker(new L.LatLng(item.x[i], item.y[i]), {
-                    icon: icon
-                  });
-
-                  let resHeader = `${item.autName}, ${item.resTypeName} (${item.resYear})`
-                  marker.bindTooltip(resHeader, {
-                    direction: 'top'
-                  });
-
-                  marker.on('mouseover', function(e) {
-                    this.openTooltip();
-                  });
-                  marker.on('mouseout', function(e) {
-                    this.closeTooltip();
-                  });
-                  marker.on('click', function(e) {
-                    window.open(`${HOST_URL}/index#research/show/${item.resId}`, '_blank');
-                  });
-
-                  clusterLayer.addLayer(marker);
-                }
+                _.times(item.x.length, (n) => {
+                  placemarks.push(
+                    App.controllers.fn.createStandartPlacemark('research', item.resId, item.x[n], item.y[n], ctl(item.resName), preset)
+                  );
+                });
               });
 
-              map.addLayer(clusterLayer);
+              overlays = App.views.addToMap(placemarks, mapInstance);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -437,47 +402,28 @@ App.views.search = new (Backbone.View.extend({
         find()
           .then(function(response) {
             if (response.length) {
-              var list = my.columnsMaker(response);
-              
+              const list = my.columnsMaker(response);
+              const placemarks = [];
+
               _.each(list, function(item) {
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              clusterLayer.clearLayers();
+              App.views.clearOverlays(overlays);
 
-              _.each(response, function(item) {
-                console.log(item)
+              _.each(response, function(item, i) {
                 if (((item.x !== null) && (item.y !== null)) || ((item.spatrefX !== null) && (item.spatrefY !== null))) {
                   item.x = item.x || item.spatrefX;
                   item.y = item.y || item.spatrefY;
-                  let icon = L.icon({
-                    iconUrl: `/web_client/img/heritage/heritage.png`,
-                    iconSize: [16, 16]
-                  });
+                  const preset = `heritage`;
 
-                  let marker = L.marker(new L.LatLng(item.x, item.y), {
-                    icon: icon
-                  });
-
-                  marker.bindTooltip(item.name, {
-                    direction: 'top'
-                  });
-
-                  marker.on('mouseover', function(e) {
-                    this.openTooltip();
-                  });
-                  marker.on('mouseout', function(e) {
-                    this.closeTooltip();
-                  });
-                  marker.on('click', function(e) {
-                    window.open(`${HOST_URL}/index#heritage/show/${item.id}`, '_blank');
-                  });
-
-                  clusterLayer.addLayer(marker);
+                  placemarks.push(
+                    App.controllers.fn.createStandartPlacemark('heritage', item.id, item.x, item.y, ctl(item.name), preset)
+                  );
                 }
               });
 
-              map.addLayer(clusterLayer);
+              overlays = App.views.addToMap(placemarks, mapInstance);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -518,44 +464,25 @@ App.views.search = new (Backbone.View.extend({
         find()
           .then(function(response) {
             if (response.length) {
-              var list = my.columnsMaker(response);
+              const list = my.columnsMaker(response);
+              const placemarks = [];
 
               _.each(list, function(item) {
                 $results.append(`<p>${ ctl(item) }</p>`);
               });
 
-              clusterLayer.clearLayers();
+              App.views.clearOverlays(overlays);
 
-              _.each(response, function(item) {
-                let type = (item.area <= 20) ? 1 : 2;
-                let icon = L.icon({
-                  iconUrl: `/web_client/img/excTypes/excType${type}.png`,
-                  iconSize: (type == 1) ? [16, 16] : [21, 21]
-                });
+              _.each(response, function(item, i) {
+                const type = (item.area <= 20) ? 1 : 2;
+                const preset = `excType${type}`;
 
-                let marker = L.marker(new L.LatLng(item.x, item.y), {
-                  icon: icon
-                });
-
-                let excHeader = `${item.name} (${item.resYear})`
-                marker.bindTooltip(excHeader, {
-                  direction: 'top'
-                });
-
-                marker.on('mouseover', function(e) {
-                  this.openTooltip();
-                });
-                marker.on('mouseout', function(e) {
-                  this.closeTooltip();
-                });
-                marker.on('click', function(e) {
-                  window.open(`${HOST_URL}/index#excavation/show/${item.id}`, '_blank');
-                });
-
-                clusterLayer.addLayer(marker);
+                placemarks.push(
+                  App.controllers.fn.createStandartPlacemark('excavation', item.id, item.x, item.y, ctl(item.name), preset)
+                );
               });
 
-              map.addLayer(clusterLayer);
+              overlays = App.views.addToMap(placemarks, mapInstance);
             } else {
               $results.append(`<p>${ t('search.noResults') }</p>`);
             }
@@ -595,28 +522,21 @@ App.views.search = new (Backbone.View.extend({
       find()
         .then(function(response) {
           if (response.length) {
-            var list = my.columnsMaker(response);
-            var spatref = {};
+            const list = my.columnsMaker(response);
+            const spatref = {};
+            const placemarks = [];
 
             _.each(list, function(item) {
               $results.append(`<p>${ ctl(item) }</p>`);
             });
+            
+            App.views.clearOverlays(overlays);
 
-            clusterLayer.clearLayers();
+            let lastId = 0;            
+            _.each(response, function(item, i) {
+              if (lastId === item.id) return;
 
-            console.log(response)
-            console.log(_.uniq(response, "id"))
-            var lastId = 0;
-
-            _.each(response, function(item) {
-              if (lastId == item.id) {
-                return 1;
-              }
-
-              let icon = L.icon({
-                iconUrl: `/web_client/img/radiocarbon/c14.png`,
-                iconSize: [16, 16]
-              });
+              const preset = 'c14';
 
               if (item.x && item.y) {
                 spatref.x = item.x;
@@ -634,29 +554,12 @@ App.views.search = new (Backbone.View.extend({
 
               lastId = item.id;
 
-              let marker = L.marker(new L.LatLng(spatref.x, spatref.y), {
-                icon: icon
-              });
-
-              let excHeader = `${item.carbon.name}`
-              marker.bindTooltip(excHeader, {
-                direction: 'top'
-              });
-
-              marker.on('mouseover', function(e) {
-                this.openTooltip();
-              });
-              marker.on('mouseout', function(e) {
-                this.closeTooltip();
-              });
-              marker.on('click', function(e) {
-                window.open(`${HOST_URL}/index#radiocarbon/show/${item.carbon.id}`, '_blank');
-              });
-
-              clusterLayer.addLayer(marker);
+              placemarks.push(
+                App.controllers.fn.createStandartPlacemark('radiocarbon', item.carbon.id, item.x, item.y, ctl(item.carbon.name), preset)
+              );
             });
 
-            map.addLayer(clusterLayer);
+            overlays = App.views.addToMap(placemarks, mapInstance);
           } else {
             $results.append(`<p>${ t('search.noResults') }</p>`);
           }
