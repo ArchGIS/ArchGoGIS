@@ -310,4 +310,62 @@ App.controllers.fn = {
     console.log("carbon", placemarks)
     return placemarks;
   },
+
+  "getResPlacemarks2": function(data) {
+    let placemarks = [], spatref, found, authorName, resHeader, monKey,
+        resType, resTypeId, preset, resId, resYear, area;
+
+    _.each(data.researches, function(research, i) {
+      resId = research.id;
+      authorName = (data.author) ? data.author.name : data.authors[i].name;
+      resType = (data.resTypes[0].name) ? data.resTypes[0].name : data.resTypes[i][0].name;
+      resTypeId = data.resTypes[i][0].id || 1;
+      resYear = research.year || "Год неизвестен";
+      resHeader = `${authorName}, ${resType} (${resYear})`;
+      preset = `resType${resTypeId}`;
+
+      found = false;
+      spatref = {area: -1};
+
+      _.each(data.excavations[i].excavations, function(exc, t) {
+        area = exc.area || 0;
+        if (area > spatref.area) {
+          found = true; 
+          spatref.area = area;
+          spatref.x = data.excavations[i].excSpatref[t].x;
+          spatref.y = data.excavations[i].excSpatref[t].y;
+        }
+      })
+
+      if (found === false) {
+        if (data.resMonuments) {
+          _.each(data.resMonuments[i], function(mon, t) {
+            monKey = _.findIndex(data.monuments, (m) => {return m.id == mon.id});
+            found = true;
+            if (data.monSpatref[monKey]) {
+              spatref = App.fn.findActualSpatref(
+                data.monSpatref[monKey].monSpatref, 
+                data.monSpatref[monKey].monSpatrefT
+              );
+            }
+          })
+        } else {
+          found = true;
+          spatref = App.fn.findActualSpatref(
+            data.monSpatref, 
+            data.monSpatrefT
+          );
+        }
+      }
+
+      if (found) {
+        placemarks.push(
+          App.controllers.fn.createStandartPlacemark('research', resId, spatref.x, spatref.y, resHeader, preset)
+        );
+      }
+    });
+
+    console.log(placemarks)
+    return placemarks;
+  },
 }
