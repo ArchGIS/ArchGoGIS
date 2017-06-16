@@ -2,12 +2,14 @@
 package calibrate
 
 import (
-	"fmt"
+	"bytes"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
+	"regexp"
 
+	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service"
 	"github.com/ArchGIS/ArchGoGIS/web"
 )
@@ -24,18 +26,16 @@ const (
 )
 
 var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, ">>> Service for radiocarbon dates <<<")
-
-	var mock = `
-		R_DATE("qwerr", 2000, 24);
-	`
+	buff := new(bytes.Buffer)
+	buff.ReadFrom(r.Body)
+	reqBody := buff.Bytes()
 
 	file, err := os.Open(path + "test.oxcal")
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
 	defer file.Close()
-	file.WriteString(mock)
+	file.Write(reqBody)
 
 	_, err = exec.Command("sudo", path+"OxCalLinux", path+"test.oxcal").Output()
 	if err != nil {
@@ -47,5 +47,24 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 	}
 
-	w.Write(resFile)
+	re := regexp.MustCompile(`ocd\[1\].likelihood.start=(-?\d*.?\d*)`)
+	matched := re.Find(resFile)
+	res := bytes.Split(matched, []byte("="))[1]
+
+	var buf ext.Xbuf
+
+	buf.WriteByte('{')
+	buf.Write([]byte("start:"))
+	buf.Write(res)
+	buf.WriteByte(',')
+
+	re = regexp.MustCompile(`ocd\[1\].likelihood.prob=(\[.*\])`)
+	matched = re.Find(resFile)
+	res = bytes.Split(matched, []byte("="))[1]
+
+	buf.WriteString("prob:")
+	buf.Write(res)
+	buf.WriteByte('}')
+
+	w.Write(buf.Bytes())
 })
