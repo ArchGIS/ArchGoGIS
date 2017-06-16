@@ -76,7 +76,7 @@ App.views.selection = new (Backbone.View.extend({
           'contentType': 'application/json',
           'data': text,
 
-          'success': function(data) {
+          success: (data) => {
             console.log(data);
             drawDiagram(JSON.parse(data));
           },
