@@ -74,12 +74,15 @@ App.views.selection = new (Backbone.View.extend({
           'type': 'POST',
           'url': '/calibrate/',
           'contentType': 'application/json',
-          'data': JSON.stringify(data),
+          'data': text,
 
           'success': function(data) {
             console.log(data);
             drawDiagram(JSON.parse(data));
           },
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+          }
         });
 
       };
