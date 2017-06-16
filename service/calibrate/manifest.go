@@ -25,7 +25,11 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	var mock = `
 		R_DATE("qwerr", 2000, 24);
 	`
-	err := os.Chdir("~/OxCal/bin")
+	pwd, err := os.Getwd()
+	fmt.Fprintf(w, pwd)
+	err = os.Chdir("~/OxCal/bin")
+	pwd, err = os.Getwd()
+	fmt.Fprintf(w, pwd)
 
 	file, err := os.Open("test.oxcal")
 	if err != nil {
