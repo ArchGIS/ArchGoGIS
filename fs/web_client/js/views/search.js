@@ -555,7 +555,7 @@ App.views.search = new (Backbone.View.extend({
               lastId = item.id;
 
               placemarks.push(
-                App.controllers.fn.createStandartPlacemark('radiocarbon', item.carbon.id, item.x, item.y, ctl(item.carbon.name), preset)
+                App.controllers.fn.createStandartPlacemark('radiocarbon', item.carbon.id, spatref.x, spatref.y, ctl(item.carbon.name), preset)
               );
             });
 

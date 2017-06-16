@@ -3,10 +3,10 @@ package calibrate
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
-	"os/exec"
-
 	"os"
+	"os/exec"
 
 	"github.com/ArchGIS/ArchGoGIS/service"
 	"github.com/ArchGIS/ArchGoGIS/web"
@@ -20,16 +20,33 @@ var Config = service.Config{
 }
 
 var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi! This is an example service")
+	fmt.Fprintf(w, ">>> Service for radiocarbon dates <<<")
 
-	err := os.Chdir("~/calibrator/bin")
+	var mock = `
+		R_DATE("qwerr", 2000, 24);
+	`
+	pwd, err := os.Getwd()
+	fmt.Fprintf(w, pwd)
+	err = os.Chdir("~/OxCal/bin")
+	pwd, err = os.Getwd()
+	fmt.Fprintf(w, pwd)
+
+	file, err := os.Open("test.oxcal")
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
-	out, err := exec.Command("./calibrator", "-j", r.FormValue("dates")).Output()
+	defer file.Close()
+	file.WriteString(mock)
+
+	_, err = exec.Command("./OxCalLinux", "test.oxcal").Output()
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
 
-	w.Write(out)
+	resFile, err := ioutil.ReadFile("test.js")
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+
+	w.Write(resFile)
 })
