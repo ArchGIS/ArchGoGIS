@@ -19,31 +19,30 @@ var Config = service.Config{
 	},
 }
 
+const (
+	path = "~/OxCal/bin/"
+)
+
 var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, ">>> Service for radiocarbon dates <<<")
 
 	var mock = `
 		R_DATE("qwerr", 2000, 24);
 	`
-	pwd, err := os.Getwd()
-	fmt.Fprintf(w, pwd)
-	err = os.Chdir("~/OxCal/bin")
-	pwd, err = os.Getwd()
-	fmt.Fprintf(w, pwd)
 
-	file, err := os.Open("test.oxcal")
+	file, err := os.Open(path + "test.oxcal")
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
 	defer file.Close()
 	file.WriteString(mock)
 
-	_, err = exec.Command("./OxCalLinux", "test.oxcal").Output()
+	_, err = exec.Command(path+"OxCalLinux", path+"test.oxcal").Output()
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
 
-	resFile, err := ioutil.ReadFile("test.js")
+	resFile, err := ioutil.ReadFile(path + "test.js")
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
