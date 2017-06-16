@@ -20,7 +20,7 @@ var Config = service.Config{
 }
 
 const (
-	path = "~/OxCal/bin/"
+	path = "/home/archgis/OxCal/bin/"
 )
 
 var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
