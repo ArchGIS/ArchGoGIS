@@ -31,7 +31,7 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	buff.ReadFrom(r.Body)
 	reqBody := buff.Bytes()
 
-	file, err := os.Open(path + "test.oxcal")
+	file, err := os.Open(path + "/test.oxcal")
 	if err != nil {
 		w.Write(append([]byte("First "), api.Error(err)...))
 		return
