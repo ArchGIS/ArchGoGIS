@@ -23,7 +23,7 @@ var Config = service.Config{
 }
 
 const (
-	path = "/home/archgis/OxCal/bin/"
+	path = "/home/archgis/OxCal/bin"
 )
 
 var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,9 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 	file.Write(reqBody)
 
-	err = exec.Command(path+"OxCalLinux", path+"test.oxcal").Run()
+	command := exec.Command("./OxCalLinux", "test.oxcal")
+	command.Dir = path
+	err = command.Run()
 	if err != nil {
 		w.Write(append([]byte("Second "), api.Error(err)...))
 		return
