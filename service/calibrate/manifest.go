@@ -32,19 +32,19 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 	file, err := os.Open(path + "test.oxcal")
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		w.Write([]byte("First " + err.Error()))
 	}
 	defer file.Close()
 	file.Write(reqBody)
 
 	_, err = exec.Command("sudo", path+"OxCalLinux", path+"test.oxcal").Output()
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		w.Write([]byte("Second " + err.Error()))
 	}
 
 	resFile, err := ioutil.ReadFile(path + "test.js")
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		w.Write([]byte("Third " + err.Error()))
 	}
 
 	re := regexp.MustCompile(`ocd\[1\].likelihood.start=(-?\d*.?\d*)`)
