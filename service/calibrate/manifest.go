@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"os/exec"
 	"regexp"
 
@@ -31,13 +30,11 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	buff.ReadFrom(r.Body)
 	reqBody := buff.Bytes()
 
-	file, err := os.Open(path + "/test.oxcal")
+	err := ioutil.WriteFile(path+"/test.oxcal", reqBody, 0644)
 	if err != nil {
 		w.Write(append([]byte("First "), api.Error(err)...))
 		return
 	}
-	defer file.Close()
-	file.Write(reqBody)
 
 	command := exec.Command("./OxCalLinux", "test.oxcal")
 	command.Dir = path
