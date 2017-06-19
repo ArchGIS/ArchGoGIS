@@ -29,7 +29,6 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	buff := new(bytes.Buffer)
 	buff.ReadFrom(r.Body)
 	reqBody := buff.Bytes()
-	w.Write(reqBody)
 
 	err := ioutil.WriteFile(path+"test.oxcal", reqBody, 0644)
 	if err != nil {
@@ -39,14 +38,7 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 	command := exec.Command("./OxCalLinux", "test.oxcal")
 	command.Dir = path
-	var out bytes.Buffer
-	command.Stdout = &out
-	err = command.Run()
-	if err != nil {
-		w.Write(api.Error(err))
-		w.Write(out.Bytes())
-		return
-	}
+	command.Run()
 
 	resFile, err := ioutil.ReadFile(path + "test.js")
 	if err != nil {
