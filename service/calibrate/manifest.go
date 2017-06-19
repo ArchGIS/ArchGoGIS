@@ -53,7 +53,7 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	var buf ext.Xbuf
 
 	buf.WriteByte('{')
-	buf.Write([]byte("start:"))
+	buf.WriteString(`"start:"`)
 	buf.Write(res)
 	buf.WriteByte(',')
 
@@ -61,9 +61,10 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	matched = re.Find(resFile)
 	res = bytes.Split(matched, []byte("="))[1]
 
-	buf.WriteString("prob:")
+	buf.WriteString(`"prob:"`)
 	buf.Write(res)
 	buf.WriteByte('}')
 
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(buf.Bytes())
 })
