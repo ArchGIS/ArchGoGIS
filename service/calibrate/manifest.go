@@ -12,6 +12,7 @@ import (
 	"github.com/ArchGIS/ArchGoGIS/ext"
 	"github.com/ArchGIS/ArchGoGIS/service"
 	"github.com/ArchGIS/ArchGoGIS/web"
+	"github.com/ArchGIS/ArchGoGIS/web/api"
 )
 
 var Config = service.Config{
@@ -32,19 +33,22 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 	file, err := os.Open(path + "test.oxcal")
 	if err != nil {
-		w.Write([]byte("First " + err.Error()))
+		w.Write(append([]byte("First "), api.Error(err)...))
+		return
 	}
 	defer file.Close()
 	file.Write(reqBody)
 
 	err = exec.Command(path+"OxCalLinux", path+"test.oxcal").Run()
 	if err != nil {
-		w.Write([]byte("Second " + err.Error()))
+		w.Write(append([]byte("Second "), api.Error(err)...))
+		return
 	}
 
 	resFile, err := ioutil.ReadFile(path + "test.js")
 	if err != nil {
-		w.Write([]byte("Third " + err.Error()))
+		w.Write(append([]byte("Third "), api.Error(err)...))
+		return
 	}
 
 	re := regexp.MustCompile(`ocd\[1\].likelihood.start=(-?\d*.?\d*)`)
