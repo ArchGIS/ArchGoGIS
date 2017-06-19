@@ -38,9 +38,11 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 	command := exec.Command("./OxCalLinux", "test.oxcal")
 	command.Dir = path
+	var out bytes.Buffer
+	command.Stderr = &out
 	err = command.Run()
 	if err != nil {
-		w.Write(append([]byte("Second "), api.Error(err)...))
+		w.Write(append(api.Error(err), out.Bytes()...))
 		return
 	}
 
