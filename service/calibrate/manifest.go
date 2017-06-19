@@ -22,15 +22,16 @@ var Config = service.Config{
 }
 
 const (
-	path = "/home/archgis/OxCal/bin"
+	path = "/home/archgis/OxCal/bin/"
 )
 
 var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	buff := new(bytes.Buffer)
 	buff.ReadFrom(r.Body)
 	reqBody := buff.Bytes()
+	w.Write(reqBody)
 
-	err := ioutil.WriteFile(path+"/test.oxcal", reqBody, 0644)
+	err := ioutil.WriteFile(path+"test.oxcal", reqBody, 0644)
 	if err != nil {
 		w.Write(append([]byte("First "), api.Error(err)...))
 		return
