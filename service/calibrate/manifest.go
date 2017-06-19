@@ -37,7 +37,7 @@ var calibrate = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 	file.Write(reqBody)
 
-	_, err = exec.Command("sudo", path+"OxCalLinux", path+"test.oxcal").Output()
+	err = exec.Command(path+"OxCalLinux", path+"test.oxcal").Run()
 	if err != nil {
 		w.Write([]byte("Second " + err.Error()))
 	}
