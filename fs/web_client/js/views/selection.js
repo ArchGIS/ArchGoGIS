@@ -78,7 +78,7 @@ App.views.selection = new (Backbone.View.extend({
 
           success: (data) => {
             console.log(data);
-            drawDiagram(JSON.parse(data));
+            drawDiagram(data);
           },
           beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
