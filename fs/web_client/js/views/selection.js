@@ -33,7 +33,7 @@ App.views.selection = new (Backbone.View.extend({
 
         data = {
           labels: labels,
-          series: data.prob,
+          series: [data.prob],
         };
         
         options = {
