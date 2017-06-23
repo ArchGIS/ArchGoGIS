@@ -29,16 +29,22 @@
         <% } %>
 
         <dt><%= t('research.prop.name') %>:</dt>
-        <dd class="edit-field" data-for="Research" data-type="textarea" data-id="<%=research.id%>" data-field="name"><%= maybe(research, t('common.missing'), "name" ) %></dd>
+        <dd class="edit-field" data-for="Research" data-type="textarea" data-id="<%=research.id%>" data-field="name">
+          <span><%= maybe(research, t('common.missing'), "name" ) %></span>
+        </dd>
 
         <dt><%= t('research.year') %>:</dt>
-        <dd class="edit-field" data-for="Research" data-type="number" data-id="<%=research.id%>" data-field="year"><%= maybe(research, t('common.notDefined'), "year") %></dd>
+        <dd class="edit-field" data-for="Research" data-type="number" data-id="<%=research.id%>" data-field="year">
+          <span><%= maybe(research, t('common.notDefined'), "year") %></span>
+        </dd>
 
         <dt><%= t('research.type') %>:</dt>
         <dd><%= maybe(resType[0], t('common.notSpecif'), `${prefix}name`) %></dd>
 
         <dt><%= t('research.prop.description') %>:</dt>
-        <dd class="edit-field" data-for="Research" data-type="textarea" data-id="<%=research.id%>" data-field="description"><%= maybe(research, t('common.missing'), "description" ) %></dd>
+        <dd class="edit-field" data-for="Research" data-type="textarea" data-id="<%=research.id%>" data-field="description">
+          <span><%= maybe(research, t('common.missing'), "description" ) %></span>
+        </dd>
         
         <% if (reports.length) { %>
           <dt><%= t('report.singular') %>:</dt>
@@ -118,7 +124,9 @@
                 </a>
               </dd>
               <dt><%= t('common.nameByAuthor') %>:</dt>
-              <dd class="edit-field" data-for="Knowledge" data-type="text" data-id="<%=knowledges[i].id%>" data-field="monument_name"><%= ctl(knowledges[i].monument_name) %></dd>
+              <dd class="edit-field" data-for="Knowledge" data-type="text" data-id="<%=knowledges[i].id%>" data-field="monument_name">
+                <span><%= ctl(knowledges[i].monument_name) %></span>
+              </dd>
               <dt><%= t('monument.prop.epoch') %>:</dt>
               <dd><%= maybe(epochs[i][0], t('common.noData'), `${prefix}name`) %></dd>
               <dt><%= t('monument.prop.type') %>:</dt>
@@ -129,9 +137,13 @@
               <% } %>
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
-                <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="description"><%= ctl(knowledges[i].description) %></dd>
+                <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="description">
+                  <span><%= ctl(knowledges[i].description) %></span>
+                </dd>
                 <% if (knowledges[i].layerDesc) { %>
-                  <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="layerDesc"><%= knowledges[i].layerDesc %></dd>
+                  <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="layerDesc">
+                    <span><%= knowledges[i].layerDesc %></span>
+                  </dd>
                 <% } %>
               <% } %>
               <dt><%= t('artifact.found') %>:</dt>
