@@ -128,20 +128,28 @@
               </a>
 
               <dt><%= t('common.nameByAuthor') %>:</dt>
-              <dd><%= ctl(knowledges[i].monument_name) %></dd>
+              <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="monument_name">
+                <span><%= ctl(knowledges[i].monument_name) %></span>
+              </dd>
               <% if (_.keys(cultures[i]).length) { %>
                 <dt><%= t('knowledge.prop.culture') %>:</dt>
                 <%= App.models.Culture.href(cultures[i].id, cultures[i][`${prefix}name`]) %>
               <% } %>
               <% if (research.description) { %>
                 <dt><%= t('research.description') %>:</dt>
-                <dd><%= research.description %></dd>
+                <dd class="edit-field" data-for="Research" data-type="textarea" data-id="<%=research.id%>" data-field="description">
+                  <span><%= research.description %></span>
+                </dd>
               <% } %>
               <% if (knowledges[i].description) { %>
                 <dt><%= t('monument.description') %>:</dt>
-                <dd><%= knowledges[i].description %></dd>
+                <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="description">
+                  <span><%= knowledges[i].description %></span>
+                </dd>
                 <% if (knowledges[i].layerDesc) { %>
-                  <dd><%= knowledges[i].layerDesc %></dd>
+                  <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="layerDesc">
+                    <span><%= knowledges[i].layerDesc %></span>
+                  </dd>
                 <% } %>
               <% } %>
 

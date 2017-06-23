@@ -94,7 +94,7 @@ App.views.functions = {
       })
 
       $(`.save-icon[uid=${id}]`).on("click", function() {
-        let value = $(`.new-field[uid=${id}]`).val();
+        let value = $(`.new-field[uid=${id}]`).val().replace(/\n/g, "\\n");
         let query = {};
         query[`el:${dataFor}`] = {};
         query[`el:${dataFor}`]["id"] = `${dataId}`;

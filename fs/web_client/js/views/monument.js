@@ -518,6 +518,7 @@ App.views.monument = new (Backbone.View.extend({
 
     $("#container").tabs();
     App.views.functions.setAccordion(".accordion");
+    App.views.functions.setEdit();
   },
 
   "new_by_pub": function() {
