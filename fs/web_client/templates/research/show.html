@@ -231,7 +231,7 @@
           let boss = exc.boss || t('common.unknown');
           excs.push(
             App.models.Excavation.href(exc.id, ctl(`
-              ${name} - ${area}${ t('common.metresInSq') } (${author[0].name}, ${research.year}), t('excavation.boss').toLowerCase() : ${boss}
+              ${name} - ${area}${ t('common.metresInSq') } (${author[0].name}, ${research.year}), ${t('excavation.boss').toLowerCase()} : ${boss}
             `))
           );
         })
