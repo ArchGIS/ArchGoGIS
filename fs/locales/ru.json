@@ -259,7 +259,8 @@
     "prop": {
       "description": "Описание",
       "year": "Год проведения",
-      "type": "Тип"
+      "type": "Тип",
+      "name": "Название"
     },
     "types": {
       "excavation": "Раскопки",

@@ -263,7 +263,8 @@
     "prop": {
       "description": "Description",
       "year": "Year of research",
-      "type": "Type"
+      "type": "Type",
+      "name": "Title"
     },
     "types": {
       "excavation": "Excavation",

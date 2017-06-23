@@ -57,6 +57,73 @@ App.views.functions = {
     return imagesHtml;
   },
 
+  "setEdit": () => {
+    let fields = $("dd.edit-field");
+    console.log(fields)
+
+    _.each(fields, function(field, id) {
+      let dataFor = $(field).attr("data-for");
+      let dataType = $(field).attr("data-type");
+      let dataId = $(field).attr("data-id");
+      let dataField = $(field).attr("data-field");
+
+      let fieldType = (dataType === "textarea") ? "textarea" : "input"; 
+      dataType = (dataType === "textarea") ? "text" : dataType; 
+
+      $(field).attr("uniqid", id);
+      let icon = _.template(`
+        <img class="edit-icon" uniqid="${id}" src="<%= HOST_URL %>/web_client/img/icons/pen.png" width="12" height="12">
+      `)
+      let iconSave = _.template(`
+        <img class="save-icon" uniqid="${id}" src="<%= HOST_URL %>/web_client/img/icons/save.png" width="12" height="12">
+      `)
+      let editField = _.template(`
+        <${fieldType} class="new-field" uniqid="${id}" data-for="${dataFor}" data-type="${dataType}" data-id="${dataId}">
+      `)
+
+      $(field).after(iconSave);
+      $(field).after(editField);
+      $(field).append(icon);
+
+      $(`.edit-icon[uniqid=${id}]`).on("click", function() {
+        $(`.new-field[uniqid=${id}]`).val($.trim($(field).text()));
+
+        $(`.new-field[uniqid=${id}]`).show();
+        $(`.save-icon[uniqid=${id}]`).show();
+        $(`.edit-icon[uniqid=${id}]`).hide();
+        $(`.edit-field[uniqid=${id}]`).hide();
+      })
+
+      $(`.save-icon[uniqid=${id}]`).on("click", function() {
+        let value = $(`.new-field[uniqid=${id}]`).val();
+        let query = {};
+        query[`el:${dataFor}`] = {};
+        query[`el:${dataFor}`]["id"] = `${dataId}`;
+        query[`el:${dataFor}`][`${dataField}/${dataType}`] = `${value}`;
+        console.log(query)
+        query = JSON.stringify(query);
+
+        $.ajax({
+          url: "/hquery/upsert",
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+          },
+          data: query,
+          type: "POST",
+          success: (response) => {
+            console.log('upsert: ' + response);
+            $(field).text(value)
+
+            $(`.new-field[uniqid=${id}]`).hide();
+            $(`.save-icon[uniqid=${id}]`).hide();
+            $(`.edit-icon[uniqid=${id}]`).show();
+            $(`.edit-field[uniqid=${id}]`).show();
+          }
+        });
+      })
+    })
+  },
+
   "getTopoCard": (topos) => {
     let imagesHtml = '';
 

@@ -6,6 +6,8 @@ App.views.research = new (Backbone.View.extend({
 
     App.views.functions.setAccordion("#accordion");
     $('#container').tabs();
+
+    App.views.functions.setEdit();
   },
 
   "new_by_report": function(argument) {

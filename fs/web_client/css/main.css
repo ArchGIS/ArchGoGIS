@@ -538,3 +538,25 @@ ul.system-statistic {
 .monument-res-hide {
   display: none;
 }
+
+.edit-icon {
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.save-icon {
+  cursor: pointer;
+  margin-left: 15px;
+  display: none;
+}
+
+.new-field {
+  display: none;
+  float: left;
+}
+
+textarea.new-field {
+  float: none;
+  width: 90%;
+  height: 70px;
+}
