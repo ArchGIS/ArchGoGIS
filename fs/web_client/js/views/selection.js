@@ -26,6 +26,7 @@ App.views.selection = new (Backbone.View.extend({
         console.log(data)
         let labels = [];
         let options;
+        let offset = Math.floor(data.prob.length / 7);
 
         for (let i=0; i<data.prob.length; i++) {
           labels[i] = data.start + i*resolution;
@@ -39,7 +40,6 @@ App.views.selection = new (Backbone.View.extend({
         options = {
           axisX: {
             labelInterpolationFnc: function(value, index) {
-              let offset = Math.floor(index / 7);
               return index % offset === 0 ? value : null;
             }
           },
