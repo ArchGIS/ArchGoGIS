@@ -39,7 +39,7 @@ App.views.selection = new (Backbone.View.extend({
         options = {
           axisX: {
             labelInterpolationFnc: function(value, index) {
-             return index % 5 === 0 ? value : null;
+             return index % 50 === 0 ? value : null;
             }
           },
           showPoint: false,
