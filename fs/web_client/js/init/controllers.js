@@ -144,7 +144,7 @@ App.controllers.fn = {
 
   "getExcPlacemarks": function(data, single) {
     let placemarks = [], spatref = {}, excHeader,
-        excType, preset, resYear, area;
+        excType, preset, resYear, area, ids = [];
     single = single || false;
 
     if (single && data.excavation && data.researches[0]) {
@@ -174,10 +174,13 @@ App.controllers.fn = {
           spatref.x = data.excSpatref[i].excSpatref[t].x; 
           spatref.y = data.excSpatref[i].excSpatref[t].y;
 
-          placemarks.push(
-            App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
-          );
-          
+          if (!_.find(ids, (num) => { return num == exc.id; })) {
+            placemarks.push(
+              App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
+            );
+            
+            ids.push(exc.id)
+          }
         })
       });
     }
