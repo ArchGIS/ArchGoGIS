@@ -26,7 +26,7 @@
       <dd><%= maybe(monTypes[0], t('common.notDefined'), `${prefix}name`) %></dd>
 
       <dt><%= t("common.culture") %>:</dt>
-      <dd><%= _.pluck(cultures, "name").join(", ") %></dd>
+      <dd><%= _.uniq(_.pluck(cultures, "name")).join(", ") %></dd>
 
       <dt><%= t("research.genitivePl") %>:</dt>
       <dd><%= _.size(researches) %></dd>
