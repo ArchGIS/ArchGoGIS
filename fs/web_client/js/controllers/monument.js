@@ -60,7 +60,19 @@ App.controllers.monument = new (Backbone.View.extend({
           "sp:SpatialReference": {"id": "*"},
           "sp__mon": {},
           "sp__otherLayers": {},
-        })
+        }),
+
+        underMons: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "underMons:Monument": {"id": "*", "select": "*"},
+          "monument__up__underMons": {},
+        }),
+
+        upMons: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "upMons:Monument": {"id": "*", "select": "*"},
+          "monument__under__upMons": {},
+        }),
       },
 
       single: {
@@ -243,6 +255,40 @@ App.controllers.monument = new (Backbone.View.extend({
           "otherCulture:Culture": {"id": "*", "select": "*"},
           "layer__know": {},
           "know__otherCulture": {}
+        }),
+      },
+
+      upMons: { 
+        upEpoch: JSON.stringify({
+          "layer:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*", "select": "*"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "layer__epoch": {},
+          "layer__know": {}
+        }),
+        upCulture: JSON.stringify({
+          "layer:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*"},
+          "upCulture:Culture": {"id": "*", "select": "*"},
+          "layer__know": {},
+          "know__upCulture": {}
+        }),
+      },
+
+      underMons: { 
+        underEpoch: JSON.stringify({
+          "layer:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*", "select": "*"},
+          "epoch:Epoch": {"id": "*", "select": "*"},
+          "layer__epoch": {},
+          "layer__know": {}
+        }),
+        underCulture: JSON.stringify({
+          "layer:Monument": {"id": "NEED"},
+          "know:Knowledge": {"id": "*"},
+          "underCulture:Culture": {"id": "*", "select": "*"},
+          "layer__know": {},
+          "know__underCulture": {}
         }),
       }
     }

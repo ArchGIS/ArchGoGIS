@@ -76,6 +76,16 @@
           <br>
         <% } %>
       <% }) %>
+      <% _.each(upMons, function(layer, i) { %>
+        <% if (layer.id != monuments.id && !addedLayers[layer.id]) { %>
+          <% topLayers = true %>
+          <% let cult = (upCulture[i][0]) ? upCulture[i][0].name : t("common.noData") %>
+          <% let monTitle = `${upEpoch[i].know[0].monument_name} (${upEpoch[i].epoch[0].name}, ${cult})` %>
+          <%= App.models.Monument.href(layer.id, monTitle) %>
+          <% addedLayers[layer.id] = true %>
+          <br>
+        <% } %>
+      <% }) %>
       <% if (topLayers == false) { %>
         <%= t('common.no') %>
       <% } %>
@@ -101,6 +111,16 @@
           <% botLayers = true %>
           <% let cult = (otherCulture[i][0]) ? otherCulture[i][0].name : t("common.noData") %>
           <% let monTitle = `${otherEpoch[i].know[0].monument_name} (${otherEpoch[i].epoch[0].name}, ${cult})` %>
+          <%= App.models.Monument.href(layer.id, monTitle) %>
+          <% addedLayers[layer.id] = true %>
+          <br>
+        <% } %>
+      <% }) %>
+      <% _.each(underMons, function(layer, i) { %>
+        <% if (layer.id != monuments.id && !addedLayers[layer.id]) { %>
+          <% botLayers = true %>
+          <% let cult = (underCulture[i][0]) ? underCulture[i][0].name : t("common.noData") %>
+          <% let monTitle = `${underEpoch[i].know[0].monument_name} (${underEpoch[i].epoch[0].name}, ${cult})` %>
           <%= App.models.Monument.href(layer.id, monTitle) %>
           <% addedLayers[layer.id] = true %>
           <br>
