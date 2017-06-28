@@ -403,6 +403,8 @@ App.views.monument = new (Backbone.View.extend({
             $(`#spatref-x-${monId}`).text(monX);
             $(`#spatref-type-${monId}`).text(coord.typeName);
           })
+          
+          getDataForSelector($(`#mon-date-scale-selector-${monId}`), "DateScale");
         }
       });
       
