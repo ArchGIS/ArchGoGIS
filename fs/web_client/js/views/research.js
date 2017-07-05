@@ -113,6 +113,8 @@ App.views.research = new (Backbone.View.extend({
         tmpl = _.template( $('script.add-report').html() );
         $('.find-report').replaceWith( tmpl() );
 
+        App.views.functions.addReportFile($("#btn-new-report-file"));
+
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
       } else if (lastSelectedAuthorId != ui.item.id) {
@@ -170,9 +172,8 @@ App.views.research = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $('.add-report').html() );
-
         $input.parent().html( tmpl() );
-        
+        App.views.functions.addReportFile($("#btn-new-report-file"));
 
         $('#' + addName(id)).val(inputValue);
         

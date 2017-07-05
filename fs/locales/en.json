@@ -5,6 +5,8 @@
     "year": "Year",
     "download": "Download",
     "downloadFile": "Download file",
+    "addFile": "Add file",
+    "file": "File",
     "description": "Description",
     "culture": "Cultural attribution",
     "storage": "Storage Institution",
@@ -120,7 +122,7 @@
   "examples": {
     "chooseCoords": "Press the button to select the coordinates. The format for manual filling: 55.5555, 49.5656.",
     "maxSizePhoto": "The maximum photo size is 10 MB",
-    "maxSizeDoc": "The maximum document size is 50 MB"
+    "maxSizeDoc": "The maximum document size is 300 MB"
   },
 
   "admin": {

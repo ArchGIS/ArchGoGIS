@@ -362,5 +362,16 @@ App.views.functions = {
     _.each($("[data-need-date]"), function(field) {
       $(field).val(new Date().getTime());
     });
+  },
+
+  "addReportFile": function(button) {
+    let reportFileId = 2;
+    button.on('click', function(e) {
+      button.before(`
+        <input id="report-file-input-${reportFileId}" accept=".pdf,.doc,.docx" 
+        type="file" data-for="rep:Report" name="fileid"></input>`
+      );
+      reportFileId++;
+    });
   }
 }

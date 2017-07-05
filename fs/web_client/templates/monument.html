@@ -152,10 +152,15 @@
 
   <div class="form-group">
     <label for="report-file-input"><%= t('report.file') %></label>
-    <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="rep:Report" name="fileid">
     <div class="alert alert-dismissible alert-info">
       <%= t('examples.maxSizeDoc') %>.
     </div>
+    <input id="report-file-input" accept=".pdf,.doc,.docx" type="file" data-for="rep:Report" name="fileid">
+
+    <button class="btn btn-primary" id="btn-new-report-file">
+      <i class="fa fa-cogs"></i>
+      <%= t('common.addFile') %>
+    </button>
   </div>
 
   <div class="checkbox">

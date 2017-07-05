@@ -74,6 +74,8 @@ App.views.monument = new (Backbone.View.extend({
         $('.find-report').replaceWith( tmpl() );
         $('#author-birth-date-input').on('keyup mouseup', App.fn.checkYear);
 
+        App.views.functions.addReportFile($("#btn-new-report-file"));
+
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
         getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
@@ -137,7 +139,8 @@ App.views.monument = new (Backbone.View.extend({
         monumentResHideAll();
 
         $input.parent().replaceWith( tmpl() );
-
+        App.views.functions.addReportFile($("#btn-new-report-file"));
+        
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
         fillResearchInputs();

@@ -178,7 +178,11 @@ function postQuery(objectId) {
           json[datafor] = {};
         }
 
-        json[datafor][`${name}/text`] = key;
+        if (json[datafor][`${name}/text`] && json[datafor][`${name}/text`].length) {
+          json[datafor][`${name}/text`] += `,${key}`
+        } else {
+          json[datafor][`${name}/text`] = key;
+        }
 
         if (++uploadedFilesCounter === files.length) {
           defer.resolve();

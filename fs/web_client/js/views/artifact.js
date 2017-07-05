@@ -333,6 +333,8 @@ App.views.artifact = new (Backbone.View.extend({
         tmpl = _.template( $('script.add-report').html() );
         $('.find-report').replaceWith( tmpl() );
 
+        App.views.functions.addReportFile($("#btn-new-report-file"));
+
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
         getDataForSelector($("#research-type-selector"), "ResearchType", "Аналитическое");
@@ -367,6 +369,8 @@ App.views.artifact = new (Backbone.View.extend({
 
         let tmpl = _.template( $('script.add-report').html() );
         $('.find-report').replaceWith( tmpl() );
+
+        App.views.functions.addReportFile($("#btn-new-report-file"));
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
