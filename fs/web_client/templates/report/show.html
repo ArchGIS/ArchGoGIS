@@ -29,8 +29,9 @@
   <dt><%= t("report.prop.number") %>:</dt>
   <dd><%= maybe(report, t('common.noInfo'), "number") %></dd>
 
-  <% id (report.fileid) { %>
-    <% let files = report.fileid.split(",")%>
+  <% let files = [] %>
+  <% if (report.fileid) { %>
+    <% files = report.fileid.split(",") %>
     <% _.each(files, (file, n) => { %>
       <h4>
         <%= App.models.File.href(file, `${t("common.file")} ${n+1}`) %> 
@@ -41,6 +42,6 @@
 
 </div>
 
-<% id (report.fileid) { %>
+<% if (report.fileid) { %>
   <iframe src="<%= App.models.File.url(files[0]) %>" class="maps" id='report-view-file'></iframe> 
 <% } %>
