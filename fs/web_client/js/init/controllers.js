@@ -15,10 +15,11 @@ App.controllers.fn = {
     }
   },
 
-  "createPolygonPlacemark": function(type, id, coords, content, preset) {
+  "createPolygonPlacemark": function(type, id, coords, content, preset, epoch) {
     return {
       polygon: true,
       type: type,
+      epoch: epoch, 
       id: id,
       polygonCoords: coords,
       pref: {
@@ -58,7 +59,7 @@ App.controllers.fn = {
         
         if (spatref.polygonCoords) {
           placemarks.push(
-            App.controllers.fn.createPolygonPlacemark('monument', monId, spatref.polygonCoords, monName, preset)
+            App.controllers.fn.createPolygonPlacemark('monument', monId, spatref.polygonCoords, monName, preset, epoch)
           );
         } else {
           placemarks.push(

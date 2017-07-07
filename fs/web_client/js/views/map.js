@@ -86,6 +86,18 @@ App.views.map = () => {
   }
 };
 
+const colors = [
+  "#ffffff",
+  "#b1b1b1",
+  "#ff0000",
+  "#38fa04",
+  "#031af0",
+  "#f0b703",
+  "#9d7036",
+  "#ff03eb",
+  "#ffffff",
+]
+
 const lang = App.locale.getLang();
 const prefix = lang === 'ru' ? '' : `${lang}_`;
 
@@ -314,8 +326,14 @@ App.views.addToMap = (placemarks, existMap) => {
         }
       });
 
-      marker = L.polygon(latlngs, {"fillOpacity": .5, "opacity": 1});
-      console.log(latlngs)
+      let options = {
+        fillOpacity: .25, 
+        opacity: 1, 
+        weight: 3,
+        color: colors[item.epoch]
+      };
+
+      marker = L.polygon(latlngs, options);
     } else { 
       marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
         icon: icon
