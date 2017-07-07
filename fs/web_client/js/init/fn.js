@@ -158,6 +158,10 @@ App.fn.findActualSpatref = (spatref, spatrefT) => {
       ret.y = coord.y;
       ret.date = coord.date;
       ret.type = spatrefT[t].id;
+      
+      if (spatref[t].polygonCoords) {
+        ret.polygonCoords = spatref[t].polygonCoords;
+      }
     }
   })
 

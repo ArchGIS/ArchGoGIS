@@ -15,6 +15,21 @@ App.controllers.fn = {
     }
   },
 
+  "createPolygonPlacemark": function(type, id, coords, content, preset) {
+    return {
+      polygon: true,
+      type: type,
+      id: id,
+      polygonCoords: coords,
+      pref: {
+        hintContent: content
+      },
+      opts: {
+        preset: preset
+      }
+    }
+  },
+
   "getMonPlacemarks": function(data, single) {
     let placemarks = [], spatref, monName,
         type, epoch, preset, monId, knows;
@@ -41,11 +56,15 @@ App.controllers.fn = {
         epoch = (single) ? data.epochs[0].id : data.epochs[i][0].id || 8;
         preset = `monType${type}_${epoch}`;
         
-        // if (App.utils.isNotExistID(placemarks, 'id', monId)) {
+        if (spatref.polygonCoords) {
+          placemarks.push(
+            App.controllers.fn.createPolygonPlacemark('monument', monId, spatref.polygonCoords, monName, preset)
+          );
+        } else {
           placemarks.push(
             App.controllers.fn.createStandartPlacemark('monument', monId, spatref.x, spatref.y, monName, preset)
           );
-        // }
+        }
       }
     })
 

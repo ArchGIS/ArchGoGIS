@@ -289,7 +289,7 @@ App.views.addToMap = (placemarks, existMap) => {
   }
 
   _.each(placemarks, function(item) {
-    if (!item.coords[0] || !item.coords[1]) { return; }
+    if (!item.polygonCoords && (!item.coords[0] || !item.coords[1])) { return; }
 
     const pathToIcon = `/web_client/img/${App.store.pathToIcons[item.type]}`;
     const icon = L.icon({
@@ -297,9 +297,30 @@ App.views.addToMap = (placemarks, existMap) => {
       iconSize: iconSizes[`${item.type}`]
     });
 
-    let marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
-      icon: icon
-    });
+    let marker;
+    if (item.polygon) {
+      let latlngs = [];
+      let x = true;
+      let doubleCoords = [];
+
+      _.each(item.polygonCoords, (coord) => {
+        if (x) {
+          x = false;
+          doubleCoords[0] = coord;
+        } else {
+          x = true;
+          doubleCoords[1] = coord;
+          latlngs.push(_.clone(doubleCoords));
+        }
+      });
+
+      marker = L.polygon(latlngs, {"fillOpacity": .5, "opacity": 1});
+      console.log(latlngs)
+    } else { 
+      marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
+        icon: icon
+      });
+    }
 
     marker.bindTooltip(ctl(item.pref.hintContent), {
       direction: 'top'
