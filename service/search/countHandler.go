@@ -79,7 +79,9 @@ func searchCounts(needle []string) ([]byte, error) {
 		matchStatement += query + " "
 		returnStatement += " " + returns
 		if i != len(needle)-1 {
-			returnStatement += ","
+			returnStatement += " as " + node + ","
+		} else {
+			returnStatement += " as " + node
 		}
 	}
 
@@ -97,19 +99,22 @@ func searchCounts(needle []string) ([]byte, error) {
 
 	// Подготавливаем ответ.
 	var buf ext.Xbuf
-
-	// buf.WriteByte('[')
+	var countData [][]byte
 	for _, row := range resp.Results[0].Data {
-		// #FIXME: перепиши меня, когда будет время!
-		buf.WriteByte('[')
-		buf.Write(
-			bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")),
-		)
-		buf.WriteByte(']')
-		// buf.WriteByte(',')
+		countData = bytes.Split(bytes.Join(*(*[][]byte)(unsafe.Pointer(&row.Row)), []byte(",")), []byte(","))
 	}
-	// buf.DropLastByte()
-	// buf.WriteByte(']')
+
+	buf.WriteByte('{')
+	for i, row := range resp.Results[0].Columns {
+		buf.WriteString(`"` + row + `"` + `: "`)
+		buf.Write(countData[i])
+		buf.WriteByte('"')
+		buf.WriteByte(',')
+		buf.WriteByte(' ')
+	}
+	buf.DropLastByte()
+	buf.DropLastByte()
+	buf.WriteByte('}')
 
 	return buf.Bytes(), nil
 }
