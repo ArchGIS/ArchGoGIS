@@ -28,7 +28,8 @@ func loginHandler(c echo.Context) error {
 		claims := token.Claims.(jwt.MapClaims)
 		claims["name"] = "Admin"
 		claims["admin"] = false
-		claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+		duration := time.Now().Add(time.Hour * 24 * 365).Unix()
+		claims["exp"] = duration
 
 		// Generate encoded token and send it as response.
 		t, err := token.SignedString([]byte(os.Getenv(authSecret)))
@@ -37,7 +38,8 @@ func loginHandler(c echo.Context) error {
 		}
 
 		return c.JSON(http.StatusOK, map[string]string{
-			"token": t,
+			"token":   t,
+			"expired": string(duration),
 		})
 	}
 
