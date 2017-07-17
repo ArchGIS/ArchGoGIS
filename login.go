@@ -9,6 +9,8 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 
+	"fmt"
+
 	"github.com/ArchGIS/ArchGoGIS/db/pg"
 )
 
@@ -44,9 +46,10 @@ func loginHandler(c echo.Context) error {
 			return err
 		}
 
+		strExpired := fmt.Sprintf("%d", duration)
 		return c.JSON(http.StatusOK, map[string]string{
 			"token":   t,
-			"expired": string(duration),
+			"expired": strExpired,
 		})
 	}
 
