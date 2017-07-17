@@ -27,7 +27,6 @@ func loginHandler(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	println(user.Name, user.Password)
 	if isAuthentificated(user.Name, user.Password) {
 		// Create token
 		token := jwt.New(jwt.SigningMethodHS256)
