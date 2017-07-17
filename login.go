@@ -16,11 +16,19 @@ const (
 	authSecret = "AUTH_SECRET"
 )
 
-func loginHandler(c echo.Context) error {
-	username := c.FormValue("username")
-	password := c.FormValue("password")
+type User struct {
+	Name     string `json:"username" form:"username" query:"username"`
+	Password string `json:"password" form:"password" query:"password"`
+}
 
-	if isAuthentificated(username, password) {
+func loginHandler(c echo.Context) error {
+	user := new(User)
+	if err := c.Bind(user); err != nil {
+		return echo.ErrNotFound
+	}
+
+	println(user.Name, user.Password)
+	if isAuthentificated(user.Name, user.Password) {
 		// Create token
 		token := jwt.New(jwt.SigningMethodHS256)
 
