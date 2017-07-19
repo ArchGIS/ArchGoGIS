@@ -48,13 +48,6 @@ func main() {
 	e.File("/index", "fs/web_client/app.html")
 
 	e.POST("/login", loginHandler)
-	e.OPTIONS("/login", func(c echo.Context) error {
-		c.Response().Header().Set("Allow", "OPTIONS, GET, POST")
-		origin := c.Request().Header.Get("Origin")
-		c.Response().Header().Set("Access-Control-Allow-Origin", origin)
-		c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type")
-		return nil
-	})
 
 	for _, config := range services {
 		subRouter := e.Group("/" + config.ServiceName)
@@ -84,10 +77,8 @@ func handleOptions() echo.MiddlewareFunc {
 		return func(c echo.Context) error {
 			if c.Request().Method == "OPTIONS" {
 				c.Response().Header().Set("Allow", "OPTIONS, GET, POST")
-				origin := c.Request().Header.Get("Origin")
-				c.Response().Header().Set("Access-Control-Allow-Origin", origin)
-				c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type")
-				return next(c)
+				c.Response().Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+				return nil
 			}
 
 			return next(c)
