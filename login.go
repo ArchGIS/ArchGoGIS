@@ -9,6 +9,8 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 
+	"fmt"
+
 	"github.com/ArchGIS/ArchGoGIS/db/pg"
 )
 
@@ -16,11 +18,18 @@ const (
 	authSecret = "AUTH_SECRET"
 )
 
-func loginHandler(c echo.Context) error {
-	username := c.FormValue("username")
-	password := c.FormValue("password")
+type User struct {
+	Name     string `json:"username" form:"username" query:"username"`
+	Password string `json:"password" form:"password" query:"password"`
+}
 
-	if isAuthentificated(username, password) {
+func loginHandler(c echo.Context) error {
+	user := new(User)
+	if err := c.Bind(user); err != nil {
+		return echo.ErrNotFound
+	}
+
+	if isAuthentificated(user.Name, user.Password) {
 		// Create token
 		token := jwt.New(jwt.SigningMethodHS256)
 
@@ -28,7 +37,8 @@ func loginHandler(c echo.Context) error {
 		claims := token.Claims.(jwt.MapClaims)
 		claims["name"] = "Admin"
 		claims["admin"] = false
-		claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+		duration := time.Now().Add(time.Hour * 24 * 365).Unix()
+		claims["exp"] = duration
 
 		// Generate encoded token and send it as response.
 		t, err := token.SignedString([]byte(os.Getenv(authSecret)))
@@ -36,8 +46,10 @@ func loginHandler(c echo.Context) error {
 			return err
 		}
 
+		strExpired := fmt.Sprintf("%d", duration)
 		return c.JSON(http.StatusOK, map[string]string{
-			"token": t,
+			"token":   t,
+			"expired": strExpired,
 		})
 	}
 
