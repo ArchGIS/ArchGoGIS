@@ -43,7 +43,7 @@
               <dd><%= App.models.Monument.href(mon.id, t('goto.monument')) %></dd>
 
               <dt><%= t('monument.names') %>:</dt>
-              <dd><%= ctl(_.pluck(knowledges[i], "monument_name").join(", ")) %></dd>
+              <dd><%= ctl(_.uniq(_.pluck(knowledges[i], "monument_name")).join(", ")) %></dd>
 
               <dt><%= t('monument.prop.epoch') %>:</dt>
               <dd><%= maybe(epochs[i], t('common.noData'), `${prefix}name`) %></dd>
@@ -71,6 +71,12 @@
     </div>
 
     <div id="report">
+      <% var reportTitle = `${maybe(reports[0], t('common.noName'), "name")} (${maybe(author[0], t('common.noneAuthor'), "name")}, ${maybe(reports[0], t('common.yearNotDefined'), "year")})` %>
+      <% if (reports[0].fileid) { %>
+        <%= App.models.Report.href(reports[0].id, reportTitle) %>
+      <% } else {%>
+        <%= reportTitle %>
+      <% } %>
     </div>
 
     <div id="another">
