@@ -16,6 +16,8 @@ App.controllers.fn = {
   },
 
   "createPolygonPlacemark": function(type, id, coords, content, preset, epoch) {
+    epoch = epoch || 0;
+
     return {
       polygon: true,
       type: type,
@@ -175,12 +177,20 @@ App.controllers.fn = {
       excHeader = `${data.excavation.name} (${resYear})`;
 
       if (data.excSpatref[0]) {
-        placemarks.push(
-          App.controllers.fn.createStandartPlacemark(
-            'excavation', data.excavation.id, data.excSpatref[0].x, 
-            data.excSpatref[0].y, excHeader, preset
-          )
-        );
+        if (data.excSpatref[0].polygonCoords) {
+          spatref.polygonCoords = data.excSpatref[0].polygonCoords;
+
+          placemarks.push(
+            App.controllers.fn.createPolygonPlacemark('excavation', data.excavation.id, spatref.polygonCoords, excHeader, preset)
+          );
+        } else {
+          placemarks.push(
+            App.controllers.fn.createStandartPlacemark(
+              'excavation', data.excavation.id, data.excSpatref[0].x, 
+              data.excSpatref[0].y, excHeader, preset
+            )
+          );
+        }
       }
     } else {
       _.each(data.excavations, function(excs, i) {
@@ -191,13 +201,21 @@ App.controllers.fn = {
           excType = (area <= 20) ? 1 : 2;
           preset = `excType${excType}`;
 
-          spatref.x = data.excSpatref[i].excSpatref[t].x; 
-          spatref.y = data.excSpatref[i].excSpatref[t].y;
-
           if (!_.find(ids, (num) => { return num == exc.id; })) {
-            placemarks.push(
-              App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
-            );
+            if (data.excSpatref[i].excSpatref[t].polygonCoords) {
+              spatref.polygonCoords = data.excSpatref[i].excSpatref[t].polygonCoords;
+
+              placemarks.push(
+                App.controllers.fn.createPolygonPlacemark('excavation', exc.id, spatref.polygonCoords, excHeader, preset)
+              );
+            } else {
+              spatref.x = data.excSpatref[i].excSpatref[t].x; 
+              spatref.y = data.excSpatref[i].excSpatref[t].y;
+
+              placemarks.push(
+                App.controllers.fn.createStandartPlacemark('excavation', exc.id, spatref.x, spatref.y, excHeader, preset)
+              );
+            }
             
             ids.push(exc.id)
           }
