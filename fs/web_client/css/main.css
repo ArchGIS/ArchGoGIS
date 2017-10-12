@@ -560,3 +560,10 @@ textarea.new-field {
   width: 90%;
   height: 70px;
 }
+
+/* 3D model */
+.model3D_site_20 {
+  max-width: 100%;
+  width: 100%;
+  height: 80vh;
+}

@@ -104,7 +104,8 @@
     "protSubject": "Subject of protection",
     "docFile": "Document file",
     "cultureLayer": "The cultural layer",
-    "nothingIsSelected": "Nothing was selected"
+    "nothingIsSelected": "Nothing was selected",
+    "site3Dmodel": "3D model"
   },
 
   "culture": {

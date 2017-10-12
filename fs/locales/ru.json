@@ -104,7 +104,8 @@
     "protSubject": "Предмет охраны",
     "docFile": "Файл документа",
     "cultureLayer": "Культурный слой",
-    "nothingIsSelected": "Ничего не выбрано"
+    "nothingIsSelected": "Ничего не выбрано",
+    "site3Dmodel": "3D модель"
   },
 
   "culture": {
