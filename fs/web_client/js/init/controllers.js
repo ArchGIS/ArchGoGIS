@@ -343,7 +343,7 @@ App.controllers.fn = {
         }        
 
         placemarks.push(
-          App.controllers.fn.createStandartPlacemark('radiocarbon', carbon.id, spatref.x, spatref.y, carHeader, preset)
+          App.controllers.fn.createStandartPlacemark('radiocarbon', data.carbon[i].id, spatref.x, spatref.y, carHeader, preset)
         );
       });
     }
