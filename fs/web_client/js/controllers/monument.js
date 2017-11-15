@@ -57,7 +57,7 @@ App.controllers.monument = new (Backbone.View.extend({
         otherLayers: JSON.stringify({
           "mon:Monument": {"id": monId},
           "otherLayers:Monument": {"id": "*", "select": "*"},
-          "monument__unknown__otherLayers": {},
+          "mon__unknown__otherLayers": {},
         }),
 
         underMons: JSON.stringify({

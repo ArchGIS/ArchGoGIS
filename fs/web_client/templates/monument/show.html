@@ -96,14 +96,12 @@
 
       <dt><%= t("monument.layersHere") %></dt>
       <% _.each(otherLayers, function(layer, i) { %>
-        <% if (layer.id != monuments.id && otherEpoch[i].epoch[0].id == epochs[0].id && !addedLayers[layer.id]) { %>
-          <% hereLayers = true %>
-          <% let cult = (otherCulture[i][0]) ? otherCulture[i][0].name : t("common.noData") %>
-          <% let monTitle = `${otherEpoch[i].know[0].monument_name} (${otherEpoch[i].epoch[0].name}, ${cult})` %>
-          <%= App.models.Monument.href(layer.id, monTitle) %>
-          <% addedLayers[layer.id] = true %>
-          <br>
-        <% } %>
+        <% hereLayers = true %>
+        <% let cult = (otherCulture[i][0]) ? otherCulture[i][0].name : t("common.noData") %>
+        <% let monTitle = `${otherEpoch[i].know[0].monument_name} (${otherEpoch[i].epoch[0].name}, ${cult})` %>
+        <%= App.models.Monument.href(layer.id, monTitle) %>
+        <% addedLayers[layer.id] = true %>
+        <br>
       <% }) %>
       <% if (hereLayers == false) { %>
         <%= t('common.no') %>
