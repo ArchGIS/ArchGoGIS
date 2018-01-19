@@ -80,7 +80,7 @@ App.controllers.fn = {
 
     _.each(data.researches, function(research, i) {
       resId = research.id;
-      authorName = (data.author) ? data.author.name : data.authors[i].name;
+      authorName = (data.author) ? data.author.name : data.authors[i].name || data.authors[i][0].name;
       resType = (data.resTypes[0].name) ? data.resTypes[0].name : data.resTypes[i][0].name;
       resTypeId = data.resTypes[i][0].id || 1;
       resYear = research.year || "Год неизвестен";
