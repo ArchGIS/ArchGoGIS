@@ -524,6 +524,125 @@ App.views.monument = new (Backbone.View.extend({
     $("#container").tabs();
     App.views.functions.setAccordion(".accordion");
     App.views.functions.setEdit();
+
+    getDataForSelector($("#spatref-selector"), "SpatialReferenceType", "", true);
+
+    var monId = App.url.get('id');
+    var dialog, form,
+    
+      N = $( "#coords-x" ),
+      E = $( "#coords-y" ),
+      type = $( "#spatref-selector" ),
+      allFields = $( [] ).add(E).add(N),
+      tips = $( ".validateTips" );
+    
+    function updateTips( t ) {
+      tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+      setTimeout(function() {
+        tips.removeClass( "ui-state-highlight", 1500 );
+      }, 500 );
+    }
+    
+    function checkLength( o, min, max ) {
+      if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTips( "Заполните все поля" );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    
+    function checkRegexp( o, regexp, n ) {
+      if ( !( regexp.test( o.val() ) ) ) {
+        o.addClass( "ui-state-error" );
+        updateTips( n );
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function addUser() {
+      var valid = true;
+      allFields.removeClass( "ui-state-error" );
+    
+      valid = valid && checkLength( N, 1, 30 );
+      valid = valid && checkLength( E, 1, 30 );
+      valid = valid && checkRegexp( N, /^((?:[\-]?[\d]+[\.][\d]+)|(?:[\-]?[\d]+))$/, "" );
+      valid = valid && checkRegexp( E, /^((?:[\-]?[\d]+[\.][\d]+)|(?:[\-]?[\d]+))$/, "" );
+    
+      if ( valid ) {
+        var time = new Date().getTime();
+        var query = {
+          "m:Monument": {id: `${monId}`},
+          "s:SpatialReference": {"x/number": `${N.val()}`, "y/number": `${E.val()}`, "date/number": `${time}`},
+          "st:SpatialReferenceType": {id: `${type.val()}`},
+          "m__has__s": {},
+          "s__has__st": {}
+        };
+
+        let formdata = new FormData();
+
+        _.each(query, (val, key) => {
+          formdata.append(key, JSON.stringify(val));
+        });
+
+        $.ajax({
+          url: "/hquery/upsert",
+          data: formdata,
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+          },
+          type: "POST",
+          processData: false,
+          contentType: false,
+          success: (response) => {
+            console.log('upsert: ' + response);
+
+            if (response.length == 4) {
+              alert('При обработке данных на сервере произошла ошибка' + response);
+            } else {
+              location.reload(); 
+            }
+          }
+        });
+
+        dialog.dialog( "close" );
+      }
+      return valid;
+    }
+    
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 350,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Добавить координаты": addUser,
+        "Отмена": function() {
+          dialog.dialog( "close" );
+        }
+      },
+      open: function(event, ui) {
+        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+      },
+      close: function() {
+        form[ 0 ].reset();
+        allFields.removeClass( "ui-state-error" );
+      }
+    });
+    
+    form = dialog.find( "form" ).on( "submit", function( event ) {
+      event.preventDefault();
+      addUser();
+    });
+    
+    $( "#add-coords" ).button().on( "click", function() {
+      dialog.dialog( "open" );
+    });
   },
 
   "new_by_pub": function() {
