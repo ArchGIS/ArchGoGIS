@@ -59,11 +59,7 @@ func main() {
 		}
 	}
 
-	go func() {
-		e.Start(":8282")
-	}()
-
-	e.Logger.Fatal(e.Start(":" + cfg.DevServer().Port))
+	e.Logger.Fatal(e.Start(":" + os.Args[1])
 }
 
 func addOptions() echo.MiddlewareFunc {
