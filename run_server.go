@@ -59,7 +59,10 @@ func main() {
 		}
 	}
 
-	e.Logger.Fatal(e.Start(":8282"))
+	go func() {
+		e.Start(":8282")
+	}()
+
 	e.Logger.Fatal(e.Start(":" + cfg.DevServer().Port))
 }
 
