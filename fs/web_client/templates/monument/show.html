@@ -316,6 +316,8 @@
     </div>
 
     <div id="spatialHistory">
+      <button id="add-coords" class="btn btn-primary">Добавить новые координаты</button>
+
       <% 
       let counter = 1;
       _.each(monSpatrefT, function(type, i) { %>
@@ -331,6 +333,21 @@
           <br>
       <%}) 
       }) %>
+
+      <div id="dialog-form" title="Новые координаты">
+        <form>
+          <fieldset>
+            <label for="coords-x">N:</label>
+            <input class="form-control" id="coords-x" placeholder="12.3456"> <br>
+            <label for="coords-y">E:</label>
+            <input class="form-control" id="coords-y" placeholder="12.3456"> <br>
+            <label for="coords-y">Точность:</label>
+            <select class="form-control" id="spatref-selector"></select>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+          </fieldset>
+        </form>
+      </div>
     </div>
 
     <div id="3dmodel">

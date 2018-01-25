@@ -80,6 +80,13 @@ App.controllers.culture = new (Backbone.View.extend({
           "resType:ResearchType": {"id": "*", "select": "*"},
           "researches__has__resType": {},
         }),
+        resMonuments: JSON.stringify({
+          "researches:Research": {"id":"NEED"},
+          "knowledges:Knowledge": {"id": "*"},
+          "resMonuments:Monument": {"id": "*", "select": "*"},
+          "knowledges__belongsto__resMonuments": {},
+          "researches__has__knowledges": {},
+        }),
         excavations: JSON.stringify({
           "researches:Research": {"id":"NEED"},
           "excavations:Excavation": {"id": "*", "select": "*"},
@@ -101,6 +108,35 @@ App.controllers.culture = new (Backbone.View.extend({
           "monuments:Monument": {"id": "NEED"},
           "monTypes:MonumentType": {"id": "*", "select": "*"},
           "monuments__monTypes": {},
+        }),
+        knowledges: JSON.stringify({
+          "a:Author": {"id": "*"},
+          "r:Research": {"id": "*"},
+          "m:Monument": {"id": "NEED"},
+          "knowledges:Knowledge": {"id": "*", "select": "*"},
+          "knowledges__belongsto__m": {},
+          "r__has__knowledges": {},
+          "r__hasauthor__a": {}
+        }),
+
+        epochs: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "epochs:Epoch": {"id": "*", "select": "*"},
+          "m__has__epochs": {}
+        }),
+
+        monTypes: JSON.stringify({
+          "m:Monument": {"id": "NEED"},
+          "monTypes:MonumentType": {"id": "*", "select": "*"},
+          "m__has__monTypes": {}
+        }),
+
+        monSpatref: JSON.stringify({
+          "monument:Monument": {"id": "NEED"},
+          "monSpatref:SpatialReference": {"id": "*", "select": "*"},
+          "monSpatrefT:SpatialReferenceType": {"id": "*", "select": "*"},
+          "monument__has__monSpatref": {},
+          "monSpatref__has__monSpatrefT": {}
         }),
       },
 
@@ -162,9 +198,11 @@ App.controllers.culture = new (Backbone.View.extend({
 
       let resPlacemarks = App.controllers.fn.getResPlacemarks(tmplData);
       let carPlacemarks = App.controllers.fn.getCarPlacemarks(tmplData);
+      let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
 
       tmplData.placemarks = _.union(tmplData.placemarks, resPlacemarks);
       tmplData.placemarks = _.union(tmplData.placemarks, carPlacemarks);
+      tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
 
       App.page.render("culture/show", tmplData, tmplData.placemarks)
     };
