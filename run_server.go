@@ -8,7 +8,6 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 
-	"github.com/ArchGIS/ArchGoGIS/cfg"
 	"github.com/ArchGIS/ArchGoGIS/service"
 	"github.com/ArchGIS/ArchGoGIS/service/calibrate"
 	"github.com/ArchGIS/ArchGoGIS/service/hquery"
@@ -59,7 +58,7 @@ func main() {
 		}
 	}
 
-	e.Logger.Fatal(e.Start(":" + os.Args[1])
+	e.Logger.Fatal(e.Start(":" + os.Args[1]))
 }
 
 func addOptions() echo.MiddlewareFunc {
