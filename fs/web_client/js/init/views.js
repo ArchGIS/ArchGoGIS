@@ -65,8 +65,16 @@ App.views.functions = {
       let dataType = $(field).attr("data-type");
       let dataId = $(field).attr("data-id");
       let dataField = $(field).attr("data-field");
+      let dataWith = $(field).attr("data-with") || "";
 
-      let fieldType = (dataType === "textarea") ? "textarea" : "input"; 
+      let fieldType = "";
+      if (dataType === "textarea") 
+        fieldType = "textarea";
+      else if (dataType === "select") 
+        fieldType = "select";
+      else 
+        fieldType = "input"
+
       dataType = (dataType === "textarea") ? "text" : dataType; 
 
       $(field).attr("uid", id);
@@ -77,12 +85,17 @@ App.views.functions = {
         <img class="save-icon" uid="${id}" src="<%= HOST_URL %>/web_client/img/icons/save.png" width="12" height="12">
       `)
       let editField = _.template(`
-        <${fieldType} class="new-field" uid="${id}" data-for="${dataFor}" data-type="${dataType}" data-id="${dataId}">
+        <${fieldType} id="edit-${id}" class="new-field" uid="${id}" data-for="${dataFor}" data-type="${dataType}" data-id="${dataId}">
       `)
 
       $(field).after(iconSave);
       $(field).after(editField);
       $(field).append(icon);
+        console.log($(field))
+
+      if (dataType === "select") {
+        getDataForSelector($(`#edit-${id}`), dataWith);
+      }
 
       $(`.edit-icon[uid=${id}]`).on("click", function() {
         $(`.new-field[uid=${id}]`).val($.trim($(field).text()));
@@ -95,30 +108,63 @@ App.views.functions = {
 
       $(`.save-icon[uid=${id}]`).on("click", function() {
         let value = $(`.new-field[uid=${id}]`).val().replace(/\n/g, "\\n");
-        let query = {};
-        query[`el:${dataFor}`] = {};
-        query[`el:${dataFor}`]["id"] = `${dataId}`;
-        query[`el:${dataFor}`][`${dataField}/${dataType}`] = `${value}`;
-        console.log(query)
-        query = JSON.stringify(query);
+        let valueText = "";
+        let query = [];
+        let url = [];
+        let tmp = {};
 
-        $.ajax({
-          url: "/hquery/upsert",
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
-          },
-          data: query,
-          type: "POST",
-          success: (response) => {
-            console.log('upsert: ' + response);
-            $(field).find("span").text(value)
+        if (dataType === "select") {
+          url[0] = "/hquery/delete";
+          url[1] = "/hquery/upsert";
 
-            $(`.new-field[uid=${id}]`).hide();
-            $(`.save-icon[uid=${id}]`).hide();
-            $(`.edit-icon[uid=${id}]`).show();
-            $(`.edit-field[uid=${id}]`).show();
-          }
-        });
+          valueText = $(`.new-field[uid=${id}] option:selected`).text().replace(/\n/g, "\\n");
+
+          tmp[`el:${dataFor}`] = {};
+          tmp[`el:${dataFor}`]["id"] = `${dataId}`;
+          tmp[`el2:${dataWith}`] = {};
+          tmp[`el2:${dataWith}`]["id"]= "*";
+          tmp[`el__has__el2`] = {"delete": "*"};
+          query[0] = JSON.stringify(tmp);
+
+          tmp = {};
+
+          tmp[`el:${dataFor}`] = {};
+          tmp[`el:${dataFor}`]["id"] = `${dataId}`;
+          tmp[`el2:${dataWith}`] = {};
+          tmp[`el2:${dataWith}`]["id"]= `${value}`;
+          tmp[`el__has__el2`] = {};
+          query[1] = JSON.stringify(tmp);
+
+        } else {
+          url[0] = "/hquery/upsert";
+          tmp[`el:${dataFor}`] = {};
+          tmp[`el:${dataFor}`]["id"] = `${dataId}`;
+          tmp[`el:${dataFor}`][`${dataField}/${dataType}`] = `${value}`;
+          query[0] = JSON.stringify(tmp);
+        }
+
+        _.each(query, function(q, id) {
+          $.ajax({
+            url: url[id],
+            async: false,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+            },
+            data: q,
+            type: "POST",
+            success: (response) => {
+              console.log('upsert: ' + response);
+            }
+          });
+        })
+
+        console.log(valueText)
+        $(field).text(valueText || value)
+
+        $(`.new-field[uid=${id}]`).hide();
+        $(`.save-icon[uid=${id}]`).hide();
+        $(`.edit-icon[uid=${id}]`).show();
+        $(`.edit-field[uid=${id}]`).show();
       })
     })
   },

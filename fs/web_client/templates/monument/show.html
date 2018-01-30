@@ -21,10 +21,14 @@
       <dd><%= ctl(allNames) %></dd>
 
       <dt><%= t("monument.prop.epoch") %>:</dt>
-      <dd><%= maybe(epochs[0], t('common.notSpecif'), `${prefix}name`) %></dd>
+      <dd class="edit-field" data-for="Site" data-type="select" data-id="<%=monuments.id%>" data-field="type" data-with="Epoch">
+        <%= maybe(epochs[0], t('common.notSpecif'), `${prefix}name`) %>
+      </dd>
 
       <dt><%= t("monument.prop.type") %>:</dt>
-      <dd><%= maybe(monTypes[0], t('common.notDefined'), `${prefix}name`) %></dd>
+      <dd class="edit-field" data-for="Site" data-type="select" data-id="<%=monuments.id%>" data-field="type" data-with="MonumentType">
+        <%= maybe(monTypes[0], t('common.notDefined'), `${prefix}name`) %>
+      </dd>
 
       <dt><%= t("common.culture") %>:</dt>
       <dd><%= _.uniq(_.pluck(cultures, "name")).join(", ") %></dd>
