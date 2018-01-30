@@ -91,7 +91,6 @@ App.views.functions = {
       $(field).after(iconSave);
       $(field).after(editField);
       $(field).append(icon);
-        console.log($(field))
 
       if (dataType === "select") {
         getDataForSelector($(`#edit-${id}`), dataWith);

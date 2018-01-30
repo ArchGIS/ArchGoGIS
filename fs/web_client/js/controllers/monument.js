@@ -74,12 +74,12 @@ App.controllers.monument = new (Backbone.View.extend({
       },
 
       single: {
-        cultures: JSON.stringify({
+        cults: JSON.stringify({
           "monument:Monument": {"id": monId},
           "knowledges:Knowledge": {"id": "*"},
-          "cultures:Culture": {"id": "*", "select": "*"},
+          "cults:Culture": {"id": "*", "select": "*"},
           "knowledges__belongsto__monument": {},
-          "knowledges__has__cultures": {},
+          "knowledges__has__cults": {},
         }),
         cultKnow: JSON.stringify({
           "monument:Monument": {"id": monId},
@@ -124,6 +124,15 @@ App.controllers.monument = new (Backbone.View.extend({
       },
 
       researches: {
+        cultures: JSON.stringify({
+          "monument:Monument": {"id": monId},
+          "researches:Research": {"id": "NEED"},
+          "knowledges:Knowledge": {"id": "*"},
+          "cultures:Culture": {"id": "*", "select": "*"},
+          "researches__has__knowledges": {},
+          "knowledges__belongsto__monument": {},
+          "knowledges__has__cultures": {},
+        }),
         resTypes: JSON.stringify({
           "researches:Research": {"id": "NEED"},
           "resType:ResearchType": {"id": "*", "select": "*"},

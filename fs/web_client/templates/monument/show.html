@@ -31,7 +31,7 @@
       </dd>
 
       <dt><%= t("common.culture") %>:</dt>
-      <dd><%= _.uniq(_.pluck(cultures, "name")).join(", ") %></dd>
+      <dd><%= _.uniq(_.pluck(cults, "name")).join(", ") %></dd>
 
       <dt><%= t("research.genitivePl") %>:</dt>
       <dd><%= _.size(researches) %></dd>
@@ -159,10 +159,15 @@
               <dd class="edit-field" data-for="Knowledge" data-type="textarea" data-id="<%=knowledges[i].id%>" data-field="monument_name">
                 <span><%= ctl(knowledges[i].monument_name) %></span>
               </dd>
+              
+              <dt><%= t('knowledge.prop.culture') %>:</dt>
               <% if (_.keys(cultures[i]).length) { %>
-                <dt><%= t('knowledge.prop.culture') %>:</dt>
-                <%= App.models.Culture.href(cultures[i].id, cultures[i][`${prefix}name`]) %>
-              <% } %>
+                <% _.each(cultures[i], function(cult, i) { %>
+                  <%= App.models.Culture.href(cult.id, cult[`${prefix}name`]) %>
+                <% }) %>
+              <% } else { %>
+                <dd><%= t('culture.noData') %></dd>
+              <% } %> 
               <% if (research.description) { %>
                 <dt><%= t('research.description') %>:</dt>
                 <dd class="edit-field" data-for="Research" data-type="textarea" data-id="<%=research.id%>" data-field="description">

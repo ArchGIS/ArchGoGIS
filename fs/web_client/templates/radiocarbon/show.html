@@ -15,7 +15,7 @@
         <dd><%= ctl(carbon.name) %></dd>
 
         <% if (knowledges[0]) { %>
-          <% let monCult = (culture[0][0]) ? culture[0][0].name : t('common.noCulture') %>
+          <% let monCult = (culture[0][0]) ? culture[0][0].name : t('common.noData') %>
           <% let monTitle = `${ctl(knowledges[0].monument_name)} (${epochs[0][0].name}, ${monCult})` %>
           <dt><%= t('monument.singular') %>:</dt>
           <dd><%= App.models.Monument.href(monuments[0].id, monTitle) %></dd>

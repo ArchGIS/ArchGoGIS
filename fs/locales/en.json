@@ -112,6 +112,7 @@
     "info": "Culture info",
     "singular": "Culture",
     "plural": "Cultures",
+    "noData": "No data",
     "add": "Add culture",
     "number": "Culture #",
     "cultName": "Culture name",
