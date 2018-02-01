@@ -31,7 +31,16 @@
       </dd>
 
       <dt><%= t("common.culture") %>:</dt>
-      <dd><%= _.uniq(_.pluck(cults, "name")).join(", ") %></dd>
+      <% if (cults.length) { %>
+        <% cults = _.uniq(cults, function(item, key) {
+          return item.id;
+        }) %>
+        <% _.each(cults, function(cult, i) { %>
+          <%= App.models.Culture.href(cult.id, cult[`${prefix}name`]) %>
+        <% }) %>
+      <% } else { %>
+        <dd><%= t('culture.noData') %></dd>
+      <% } %> 
 
       <dt><%= t("research.genitivePl") %>:</dt>
       <dd><%= _.size(researches) %></dd>
