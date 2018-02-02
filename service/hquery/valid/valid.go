@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-const TextLen = 8192 // #FIXME: вынести в cfg
+const TextLen = 81920 // #FIXME: вынести в cfg
 
 var identifierMatcher *regexp.Regexp
 
