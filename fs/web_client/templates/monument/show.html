@@ -21,12 +21,12 @@
       <dd><%= ctl(allNames) %></dd>
 
       <dt><%= t("monument.prop.epoch") %>:</dt>
-      <dd class="edit-field" data-for="Site" data-type="select" data-id="<%=monuments.id%>" data-field="type" data-with="Epoch">
+      <dd class="edit-field" data-for="Monument" data-type="select" data-id="<%=monuments.id%>" data-field="type" data-with="Epoch">
         <%= maybe(epochs[0], t('common.notSpecif'), `${prefix}name`) %>
       </dd>
 
       <dt><%= t("monument.prop.type") %>:</dt>
-      <dd class="edit-field" data-for="Site" data-type="select" data-id="<%=monuments.id%>" data-field="type" data-with="MonumentType">
+      <dd class="edit-field" data-for="Monument" data-type="select" data-id="<%=monuments.id%>" data-field="type" data-with="MonumentType">
         <%= maybe(monTypes[0], t('common.notDefined'), `${prefix}name`) %>
       </dd>
 
