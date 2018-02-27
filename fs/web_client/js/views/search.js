@@ -54,6 +54,17 @@ App.views.search = new (Backbone.View.extend({
           'author': $('#author-input')
         }
       },
+      'culture-params': {
+        'handler': searchCulture,
+        'columnsMaker': function(cultures) {
+          return _.map(cultures, function(c) {
+            return App.models.Culture.href(c.id, `${c.name}`);
+          });
+        },
+        'inputs': {
+          'culture': $('#culture-input')
+        }
+      },
       'report-params': {
         'handler': searchReport,
         'columnsMaker': function(reports) {
@@ -226,6 +237,51 @@ App.views.search = new (Backbone.View.extend({
           return new Promise(function(resolve, reject) {
             var url = App.url.make('/search/filter_authors', {
               'author': author
+            });
+
+            $.get({
+              url,
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+              },
+              success: (response) => {
+                resolve($.parseJSON(response));
+              },
+              error: reject
+            });
+          });
+        }
+
+        find()
+          .then(function(response) {
+            console.log(response);
+            if (response.length) {
+              var list = my.columnsMaker(response);
+
+              _.each(list, function(item) {
+                $results.append(`<p>${ ctl(item) }</p>`);
+              });
+            } else {
+              $results.append(`<p>${ t('search.noResults') }</p>`);
+            }
+          }, function(error) {
+            console.log(error);
+          });
+      } else {
+        $results.append(`<p class="danger">${ t('search.fill') }</p>`);
+      }
+    }
+
+    function searchCulture(my) {
+      var input = my.inputs;
+
+      var culture = input.culture.val();
+      
+      if (culture) {
+        function find() {
+          return new Promise(function(resolve, reject) {
+            var url = App.url.make('/search/filter_cultures', {
+              'culture': culture
             });
 
             $.get({
