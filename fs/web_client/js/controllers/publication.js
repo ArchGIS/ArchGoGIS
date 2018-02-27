@@ -2,7 +2,7 @@
 
 App.controllers.publication = new (Backbone.View.extend({
   "show": function() {
-  	App.url.setMapping(["id"]);
+  	App.url.setMapping(["id", "mod"]);
     var pid = App.url.get("id");
     var data = [];
     var tmplData = {};

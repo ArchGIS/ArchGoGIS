@@ -10,6 +10,7 @@ App.url = new function() {
   };
 
   this.setMapping = function(mappingToSet) {
+    console.log("map", mappingToSet)
     mapping = _.invert(mappingToSet);
   };
   

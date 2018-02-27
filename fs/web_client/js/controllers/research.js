@@ -51,7 +51,7 @@ App.controllers.research = new (Backbone.View.extend({
   }, 
 
   'show': function() {
-    App.url.setMapping(['id']);
+    App.url.setMapping(['id', "mod"]);
     var resId = App.url.get("id");
     var tmplData = {};
     var data = [];

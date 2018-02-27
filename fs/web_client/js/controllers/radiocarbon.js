@@ -27,7 +27,7 @@ App.controllers.radiocarbon = new (Backbone.View.extend({
   },
 
   'show': function() {
-    App.url.setMapping(['id']);
+    App.url.setMapping(['id', "mod"]);
     var rid = App.url.get('id');
     var data = [];
     var tmplData = {};

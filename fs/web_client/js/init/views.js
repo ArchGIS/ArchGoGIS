@@ -58,6 +58,9 @@ App.views.functions = {
   },
 
   "setEdit": () => {
+    if (App.url.get('mod') != 'edit') 
+      return;
+
     let fields = $("dd.edit-field");
 
     _.each(fields, function(field, id) {
@@ -153,7 +156,6 @@ App.views.functions = {
         }
 
         _.each(query, function(q, id) {
-          console.log(q)
           $.ajax({
             url: url[id],
             async: false,
