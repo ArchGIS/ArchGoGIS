@@ -66,6 +66,7 @@ App.views.functions = {
       let dataId = $(field).attr("data-id");
       let dataField = $(field).attr("data-field");
       let dataWith = $(field).attr("data-with") || "";
+      let autoInput = $(field).attr("data-auto-input") || false;
 
       let fieldType = "";
       if (dataType === "textarea") 
@@ -92,8 +93,12 @@ App.views.functions = {
       $(field).after(editField);
       $(field).append(icon);
 
-      if (dataType === "select") {
-        getDataForSelector($(`#edit-${id}`), dataWith);
+      if (dataType === "select" || autoInput) {
+        if (autoInput) {
+          App.views.functions.setCultureAutocomplete($(`#edit-${id}`), 0, 0, "", false);
+        } else {
+          getDataForSelector($(`#edit-${id}`), dataWith);
+        }
       }
 
       $(`.edit-icon[uid=${id}]`).on("click", function() {
@@ -112,11 +117,16 @@ App.views.functions = {
         let url = [];
         let tmp = {};
 
-        if (dataType === "select") {
+        if (dataType === "select" || autoInput) {
           url[0] = "/hquery/delete";
           url[1] = "/hquery/upsert";
 
           valueText = $(`.new-field[uid=${id}] option:selected`).text().replace(/\n/g, "\\n");
+
+          if (autoInput) {
+            value = $(`.new-field[uid=${id}]`).attr("data-value").replace(/\n/g, "\\n");
+            valueText = $(`.new-field[uid=${id}]`).val().replace(/\n/g, "\\n");
+          }
 
           tmp[`el:${dataFor}`] = {};
           tmp[`el:${dataFor}`]["id"] = `${dataId}`;
@@ -143,6 +153,7 @@ App.views.functions = {
         }
 
         _.each(query, function(q, id) {
+          console.log(q)
           $.ajax({
             url: url[id],
             async: false,
@@ -244,7 +255,7 @@ App.views.functions = {
 
         App.template.get("culture/create", function(tmpl) {
           $(field).parent().replaceWith(tmpl({
-            monId: monId,
+            monId: monId || 0,
             layerId: layerId,
             subclass: subclass
           }));

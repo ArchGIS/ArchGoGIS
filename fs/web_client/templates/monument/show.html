@@ -171,11 +171,14 @@
               
               <dt><%= t('knowledge.prop.culture') %>:</dt>
               <% if (_.keys(cultures[i]).length) { %>
-                <% _.each(cultures[i], function(cult, i) { %>
+                <% _.each(cultures[i], function(cult, t) { %>
+                <dd class="edit-field" data-for="Knowledge" data-type="input" data-auto-input="true" data-id="<%=knowledges[i].id%>" data-field="type" data-with="Culture">
                   <%= App.models.Culture.href(cult.id, cult[`${prefix}name`]) %>
                 <% }) %>
               <% } else { %>
-                <dd><%= t('culture.noData') %></dd>
+                <dd class="edit-field" data-for="Knowledge" data-type="input" data-auto-input="true" data-id="<%=knowledges[i].id%>" data-field="type" data-with="Culture">
+                  <%= t('culture.noData') %>
+                </dd>
               <% } %> 
               <% if (research.description) { %>
                 <dt><%= t('research.description') %>:</dt>
