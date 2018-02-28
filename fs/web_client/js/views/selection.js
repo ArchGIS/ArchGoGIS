@@ -156,11 +156,11 @@ App.views.selection = new (Backbone.View.extend({
             if (t > 1) 
               coord = ""
 
-            line = `${name} ${mtype} ${epoch} ${cult} ${coord}\n`;
+            line = `${name} ${mtype} ${epoch} ${cult} ${coord}\r\n`;
             text += `${line}`;
           }
 
-          text += "-".repeat(line.length) + `\n`;
+          text += "-".repeat(line.length) + `\r\n`;
         })
 
         var base = window.btoa(unescape(encodeURIComponent(text)));
