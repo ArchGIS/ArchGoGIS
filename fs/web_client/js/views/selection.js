@@ -146,13 +146,12 @@ App.views.selection = new (Backbone.View.extend({
 
         _.each(names, function(obj, i) {
           count = Math.max(names[i].length, cults[i].length, 2)
-          console.log(coords)
           for (var t=0; t<count; t++) {
             epoch = epochs[i][t] || " ".repeat(epochs[i][0].length - 3) + " | "
             mtype = mtypes[i][t] || " ".repeat(mtypes[i][0].length - 3) + " | "
             name = names[i][t] || " ".repeat(names[i][0].length - 3) + " | "
             cult = cults[i][t] || " ".repeat(cults[i][0].length - 3) + " | "
-            
+
             coord = (t == 0) ? `N: ${coords[i].x}` : `E: ${coords[i].y}`
             if (t > 1) 
               coord = ""
@@ -183,7 +182,7 @@ App.views.selection = new (Backbone.View.extend({
 
       _.each(array, function(str, i) {
         _.each(str, function(s, t) {
-          if (s.length > maxLength) 
+          if (s && s.length > maxLength) 
             maxLength = s.length;
         })
       })
