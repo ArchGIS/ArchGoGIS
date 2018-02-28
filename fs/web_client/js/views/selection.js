@@ -135,7 +135,7 @@ App.views.selection = new (Backbone.View.extend({
           epochs[i] = [obj.e[0].name]; 
           mtypes[i] = [obj.mt[0].name]; 
           names[i] = _.uniq(_.pluck(sites.cults[i].knows, "name"));
-          cults[i] = _.uniq(_.pluck(sites.cults[i].cults, "name"));
+          cults[i] = _.uniq(_.pluck(sites.cults[i].cults, "monument_name"));
           coords[i] = App.fn.findActualSpatref(sites.coords[i].sp, sites.coords[i].spt);
         })
 
