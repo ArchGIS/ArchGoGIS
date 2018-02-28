@@ -181,7 +181,6 @@ App.views.selection = new (Backbone.View.extend({
       var maxLength = 0;
 
       _.each(array, function(str, i) {
-        console.log(str)
         _.each(str, function(s, t) {
           if (s && s.length > maxLength) 
             maxLength = s.length;
@@ -194,6 +193,8 @@ App.views.selection = new (Backbone.View.extend({
         _.each(strings, function(str, t) {
           if (str && str.length < maxLength) 
             array[i][t] += " ".repeat(maxLength - str.length) + " | ";
+          else 
+            array[i][t] = " ".repeat(maxLength) + " | ";
         })
       })
     }  
