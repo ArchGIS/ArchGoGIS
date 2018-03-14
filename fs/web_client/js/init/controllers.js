@@ -1,6 +1,17 @@
 'use strict';
 
 App.controllers.fn = {
+
+  escapeHtml: function(text) {
+    var map = {
+      '"': "'",
+      '\\': "/",
+      '\n': "\\n"
+    };
+
+    return text.replace(/[\n\\"']/g, function(m) { return map[m]; });
+  },
+
   "createStandartPlacemark": function(type, id, x, y, content, preset) {
     return {
       type: type,

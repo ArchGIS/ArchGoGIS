@@ -272,7 +272,7 @@ function generateJson(relations) {
     dataType = $input.attr("data-type") || $input.attr("type");
     type = (dataType != "id" && dataType != "table") ? ("/" + dataType) : "";
     name = ($input.attr("data-name") || $input.attr("name")) + type;
-    value = $input.attr("data-value") || $input.val().replace(/\n/g, "\\n");
+    value = $input.attr("data-value") || App.controllers.fn.escapeHtml($input.val());
     inputTag = dataFor.split(":")[0];
     inputClass = dataFor.split(":")[1];
     inputSubclass = $input.attr("data-subclass") || inputClass;
