@@ -223,7 +223,8 @@
     "singular": "Selection",
     "plural": "Selections",
     "getRadiocarbon": "Get absolute chronology data",
-    "getSitesCoords": "Download coordinates"
+    "getSitesCoords": "Download coordinates",
+    "delete": "Delete selection"
   },
 
   "excavation": {

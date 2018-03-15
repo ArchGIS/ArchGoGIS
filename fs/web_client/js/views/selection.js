@@ -2,6 +2,9 @@
 
 App.views.selection = new (Backbone.View.extend({
   "show": function(data) {
+    App.url.setMapping(['id', 'mod']);
+    var selId = App.url.get('id');
+
     App.views.addToMap(data.placemarks);
 
     $("#container").tabs();
@@ -93,6 +96,11 @@ App.views.selection = new (Backbone.View.extend({
       var ids = _.map(data.monuments, function(obj) {return obj.id.toString()});
       carbons = model.getData(query, callGenerate, true, ids);
     }) 
+
+    $("#delete-selection").on("click", function() {
+      App.models.fn.deleteNode("Selection", selId);
+      window.location.href = "#wizard/future3"; 
+    });
 
     $("#get-sites-coords").on("click", function() {
       var model = App.models.fn;
