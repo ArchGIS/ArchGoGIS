@@ -492,6 +492,7 @@
     "head": "Quick search",
     "subject": "Search subject",
     "showResults": "Show the results",
+    "counter": "Elements found",
     "criteria": "Search filters",
     "criterion": "Filter",
     "addCriterion": "Add filter",

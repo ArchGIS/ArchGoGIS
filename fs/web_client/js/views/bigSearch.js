@@ -847,6 +847,7 @@ App.views.bigSearch = new (Backbone.View.extend({
 
     const instMap = App.views.map();
     let exact = "";
+    $("#search-counter-title").hide();
 
     function changeCriterionType(id) {
       $(`#search-criterion-${id}`).on("change", function() {
@@ -970,7 +971,7 @@ App.views.bigSearch = new (Backbone.View.extend({
         },
         success: function(response) {
           response = JSON.parse(response);
-          let placemarks = [], spatref;
+          let placemarks = [], spatref, elemCounter = 0;
           console.log(response)
 
           function render() {
@@ -992,6 +993,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                       );
 
                       $("#search-results").append(`<p id="record-${id}" data-id="${id}" class="record"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
+                      elemCounter++;
                     }
                   }
                 }
@@ -1011,6 +1013,7 @@ App.views.bigSearch = new (Backbone.View.extend({
                       ids[spatref.research[i].id] = true;
                       
                       $("#search-results").append(`<p id="record-${id}" data-id="${id}" class="record"><a href='#${entity}/show/${id}'>${ ctl(name) }</a></p>`);
+                      elemCounter++;
                     }
                   }
                 }
@@ -1035,8 +1038,12 @@ App.views.bigSearch = new (Backbone.View.extend({
             data = _.uniq(data, function(item, key, id) {return item.id});
             _.each(data, function(obj, key) {
               $("#search-results").append(`<p id="record-${obj.id}" data-id="${obj.id}" class="record"><a href='#${entity}/show/${obj.id}'>${ ctl(obj.name) }</a></p>`);
+              elemCounter++;
             })
           }
+
+          $("#search-counter-title").show();
+          $("#search-counter").text(elemCounter);
         }
       });
     });
