@@ -807,6 +807,9 @@ var Bookmarks = L.Control.extend( /**  @lends Bookmarks.prototype */ {
    * @param  {Object} bookmark
    */
   _onBookmarkRemoved: function(bookmark) {
+    if (bookmark === null) 
+      return 0;
+    
     var li = this._list.querySelector('.' +
         this.options.bookmarkTemplateOptions.itemClass +
         "[data-id='" + bookmark.id + "']"),

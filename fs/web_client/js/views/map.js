@@ -263,6 +263,36 @@ App.views.createOverlays = (leaf, types) => {
     return memo;
   }, {});
 
+  leaf.map.fire('bookmark:remove', {
+    data: {
+      id: '10000',
+    }
+  });
+
+  leaf.map.fire('bookmark:remove', {
+    data: {
+      id: '10001',
+    }
+  });
+
+  leaf.map.fire('bookmark:add', {
+    data: {
+      id: '10000',
+      name: 'Болгар',
+      latlng: [54.98, 49.05],
+      your_key: 'your value'
+    }
+  });
+
+  leaf.map.fire('bookmark:add', {
+    data: {
+      id: '10001',
+      name: 'Свияжск',
+      latlng: [55.77165, 48.65804], 
+      your_key: 'your value'
+    }
+  });
+
   return {
     map: leaf.map,
     controls: leaf.controls,
