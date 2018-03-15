@@ -6,7 +6,6 @@
       <li><a href="#general"><%= t('common.general') %></a></li>
       <li><a href="#monuments"><%= t('monument.plural') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
-      <li><a href="#surveyMaps"><%= t('doc.surveyMap.plural') %></a></li>
       <li><a href="#topoplans"><%= t('topoplan.plural') %></a></li>
       <li><a href="#photos"><%= t('photo.plural') %></a></li>
     </ul>
@@ -95,102 +94,7 @@
         return App.models.Research.href(res.id, ctl(resTitle));
       })).join("<br>") %>
     </div>
-    <div id="surveyMaps">
-      <div class="accordion">
-        <% _.each(surveyMaps, function(map, i) { %>
-          <h4 class="accordion-header">
-            <%= t("doc.surveyMap.singular") %> №<%= i+1 %>
-          </h4>
-
-          <div class="accordion-content">
-            <div class="tabs">
-              <ul>
-                <li><a href="#general<%=i%>"><%= t('doc.surveyMap.general') %></a></li>
-                <li><a href="#use<%=i%>"><%= t('doc.surveyMap.use') %></a></li>
-                <li><a href="#state<%=i%>"><%= t('doc.surveyMap.state') %></a></li>
-              </ul>
-
-              <div id="general<%=i%>">
-                <dt><%= t('common.mapDate') %>:</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "creationDate") %></dd>
-
-                <dt><%= t('common.regNumberBTI') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "rodNum") %></dd>
-
-                <dt><%= t('common.passNumBTI') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "rodPassport") %></dd>
-
-                <dt><%= t('common.passNumDateBTI') %> :</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "rodDate") %></dd>
-
-                <dt><%= t('common.area') %>  (<%= t('common.metresInSq') %>):</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "area") %></dd>
-
-                <dt><%= t('doc.surveyMap.singular') %> :</dt>
-                <dd><%= App.models.File.href(map.fileid, t('common.document')) %></dd>
-              </div>
-
-              <div id="use<%=i%>">
-                <dt><%= t('common.ownType') %> :</dt>
-                <dd><%= maybe(lists[i].ot[0], t('common.notDefined'), "name") %></dd>
-
-                <dt><%= t('common.orderType') %> :</dt>
-                <dd><%= maybe(lists[i].dt[0], t('common.notDefined'), "name") %></dd>
-
-                <dt><%= t('common.okatoOwnerCode') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "disposalCode") %></dd>
-
-                <dt><%= t('common.ownerINN') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "disposerVat") %></dd>
-
-                <dt><%= t('common.ownerKPP') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "disposerKpp") %></dd>
-
-                <dt><%= t('common.ownerDocType') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "docType") %></dd>
-
-                <dt><%= t('common.ownerDocDate') %> :</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "docDate") %></dd>
-
-                <dt><%= t('common.ownerDocNum') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "docNum") %></dd> 
-
-                <dt><%= t('common.ownStartDate') %> :</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "startDate") %></dd>
-
-                <dt><%= t('common.ownEndDate') %> :</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "endDate") %></dd>
-
-                <dt><%= t('common.protDocType') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "docSecurityType") %></dd>
-
-                <dt><%= t('common.protDocDate1') %> :</dt>
-                <dd><%= maybe(map, t('common.notSpecif'), "docSecurityDate") %></dd>
-
-                <dt><%= t('common.protDocNum') %> :</dt>
-                <dd><%= maybe(map, t('common.notDefined'), "docSecurityNum") %></dd>
-
-                <dt><%= t('common.functionalFirst') %> :</dt>
-                <dd>
-                  <%= (map.useInitial) ? t('common.yes') : t('common.no') %>
-                </dd>
-
-                <dt><%= t('common.funcPurpose') %>:</dt>
-                <dd><%= maybe(lists[i].fp[0], t('common.notSpecif'), "name") %></dd>
-
-                <dt><%= t('common.siteAccess') %>:</dt>
-                <dd><%= maybe(lists[i].avail[0], t('common.notSpecif'), "name") %></dd>
-
-                <dt><%= t('common.useType') %>:</dt>
-                <dd><%= maybe(lists[i].ut[0], t('common.notDefined'), "name") %></dd>
-              </div>
-              <div id="state<%=i%>">
-              </div>
-            </div>
-          </div>
-        <% }) %> 
-      </div>
-    </div>
+    
     <div id="topoplans">
       <%= App.views.functions.getTopoCard(topo) %>
     </div>

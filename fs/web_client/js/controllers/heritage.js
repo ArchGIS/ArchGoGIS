@@ -26,12 +26,6 @@ App.controllers.heritage = new (Backbone.View.extend({
           "heritage__has__monument": {},
         }),
 
-        surveyMaps: JSON.stringify({
-          "h:Heritage": {"id": hId},
-          "surveyMaps:SurveyMap": {"id": "*", "select": "*"},
-          "h__has__surveyMaps": {}
-        }),
-
         monuments: JSON.stringify({
           "h:Heritage": {"id": hId},
           "monuments:Monument": {"id": "*", "select": "*"},
@@ -91,22 +85,6 @@ App.controllers.heritage = new (Backbone.View.extend({
           "topo:Image": {"id": "*", "select": "*"},
           "h__hastopo__topo": {},
         })
-      },
-
-      surveyMaps: {
-        lists: JSON.stringify({
-          "map:SurveyMap": {"id": "NEED"},
-          "ut:UsageType": {"id": "*", "select": "*"},
-          "avail:Availability": {"id": "*", "select": "*"},
-          "fp:FunctionalPurpose": {"id": "*", "select": "*"},
-          "dt:DisposalType": {"id": "*", "select": "*"},
-          "ot:OwnType": {"id": "*", "select": "*"},
-          "map__has__ut": {},
-          "map__has__avail": {},
-          "map__has__fp": {},
-          "map__has__dt": {},
-          "map__has__ot": {}
-        }),
       },
 
       monuments: {
@@ -183,20 +161,6 @@ App.controllers.heritage = new (Backbone.View.extend({
       let monMat = getNames(tmplData.monMaterial);
       let monDef = getNames(tmplData.monDefect);
       let monState = getNames(tmplData.monState);
-
-      _.each(tmplData.surveyMaps, function(map, id) {
-        stateTables[id] = [];
-        let table = JSON.parse(map.stateTable.replace(/\'/g, "\""))
-
-        _.each(table, function(row, key) {
-          stateTables[id][key] = [];
-          stateTables[id][key][0] = (row[0] === "1") ? "Да" : "Нет";
-          stateTables[id][key][1] = monMat[row[1]];
-          stateTables[id][key][2] = monState[row[2]];
-          stateTables[id][key][3] = monDef[row[3]];
-          stateTables[id][key][4] = (row[4] === "1") ? "Да" : "Нет";
-        })
-      })
 
       let monPlacemarks = App.controllers.fn.getMonPlacemarks(tmplData);
       let resPlacemarks = App.controllers.fn.getResPlacemarks(tmplData);
