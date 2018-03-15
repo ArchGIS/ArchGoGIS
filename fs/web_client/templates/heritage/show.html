@@ -6,6 +6,7 @@
       <li><a href="#general"><%= t('common.general') %></a></li>
       <li><a href="#monuments"><%= t('monument.plural') %></a></li>
       <li><a href="#researches"><%= t('research.plural') %></a></li>
+      <li><a href="#spatialHistory"><%= t('common.spatialHistory') %></a></li>
       <li><a href="#topoplans"><%= t('topoplan.plural') %></a></li>
       <li><a href="#photos"><%= t('photo.plural') %></a></li>
     </ul>
@@ -95,6 +96,22 @@
       })).join("<br>") %>
     </div>
     
+    <div id="spatialHistory">
+      <% 
+      let counter = 1; %>
+      <dt><%= herSpatrefT[0].name %></dt>
+      <% _.each(herSpatrefT, function(obj, i) { %>
+        <% let date = new Date(herSpatref[i].date) %>
+        <dd><%= counter++ %>) <%= t('coord.x') %>: <%= herSpatref[i].x %>, <%= t('coord.y') %>: <%= herSpatref[i].y %>
+          <% if (counter == 2) { %>
+           - <b><%= t('common.actualCoords') %></b>
+          <% } %>
+        </dd>
+        <dd><%= t('common.createdDate') %>: <%= date.getDate() %>.<%= date.getMonth() + 1 %>.<%= date.getFullYear() %> <%= date.getHours() %>:<%= date.getMinutes() %>:<%= date.getSeconds() %></dd>
+        <br>
+      <% }) %>
+    </div>
+
     <div id="topoplans">
       <%= App.views.functions.getTopoCard(topo) %>
     </div>
