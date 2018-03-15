@@ -367,6 +367,7 @@
     "add1": "Add archaeological site",
     "type": "Type of archaeological site",
     "typess": "Types of archaeological sites",
+    "epochs": "Epochs of archaeological sites",
     "layersAll": "Total cultural layers",
     "layersTop": "Overlying layers",
     "layersBot": "Underlying layers",

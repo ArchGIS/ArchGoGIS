@@ -19,6 +19,39 @@
   <br>
   <br>
 
+  <dt><%= t('monument.count') %>:</dt>
+  <dd><%= _.size(monuments) %></dd>
+
+  <dt><%= t('monument.typess') %>:</dt>
+  <% 
+  let types = {};
+  _.each(monTypes, function(monType, i) { 
+    if (!types[monType[0][`${prefix}name`]]) {
+      types[monType[0][`${prefix}name`]] = 0;
+    } 
+    types[monType[0][`${prefix}name`]]++;
+  })
+  _.each(types, function(type, key) { %>
+    <%= `${key}: ${type}`%>
+    <br>
+  <% }) %>
+  <br>
+
+  <dt><%= t('monument.epochs') %>:</dt>
+  <% 
+  let eps = {};
+  _.each(epochs, function(epoch, i) { 
+    if (!eps[epoch[0][`${prefix}name`]]) {
+      eps[epoch[0][`${prefix}name`]] = 0;
+    } 
+    eps[epoch[0][`${prefix}name`]]++;
+  })
+  _.each(eps, function(ep, key) { %>
+    <%= `${key}: ${ep}`%>
+    <br>
+  <% }) %>
+  <br>
+
   <% _.each(monuments, function(mon, i) { 
     let monTitle = `${knowledges[i][0].monument_name} (${epochs[i][0].name}, ${monTypes[i][0].name})` %>
     <%= App.models.Monument.href(mon.id, ctl(monTitle)) %>

@@ -61,6 +61,7 @@ App.controllers.selection = new (Backbone.View.extend({
 
       tmplData.placemarks = _.union(tmplData.placemarks, monPlacemarks);
       tmplData.data = data;
+
       App.page.render("selection/show", tmplData, tmplData)
     };
 
