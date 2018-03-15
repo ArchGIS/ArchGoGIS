@@ -20,9 +20,9 @@
 
       <dl>
         <dt><%= t('author.prop.name') %>:</dt>
-        <dd><%= ctl(author.name) %></dd>
+        <dd class="edit-field" data-for="Author" data-type="textarea" data-id="<%=author.id%>" data-field="name"><%= ctl(author.name) %></dd>
         <dt><%= t('author.prop.year') %>:</dt>
-        <dd><%= maybe(author.birthdate, t('common.notDefined')) %></dd>
+        <dd class="edit-field" data-for="Author" data-type="number" data-id="<%=author.id%>" data-field="birthdate"><%= maybe(author.birthdate, t('common.notDefined')) %></dd>
       </dl>
 
       <dl>
@@ -38,7 +38,7 @@
 
       <dl>
         <dt><%= t('author.prop.biography') %>:</dt>
-        <dd><%= maybe(author.biography, t('common.notFilled')) %></dd>
+        <dd class="edit-field" data-for="Author" data-type="textarea" data-id="<%=author.id%>" data-field="biography"><%= maybe(author.biography, t('common.notFilled')) %></dd>
       </dl>
     </div>
 

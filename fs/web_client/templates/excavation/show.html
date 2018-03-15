@@ -22,10 +22,10 @@
       <dd><%= App.models.Author.href(author[0].id, ctl(author[0].name)) %></dd>
 
       <dt><%= t('excavation.boss') %>:</dt>
-      <dd><%= maybe(excavation.boss, t('common.unknown1')) %></dd>
+      <dd class="edit-field" data-for="Radiocarbon" data-type="textarea" data-id="<%=carbon.id%>" data-field="boss"><%= maybe(excavation.boss, t('common.unknown1')) %></dd>
 
       <dt><%= t('excavation.area1') %>:</dt>
-      <dd><%= maybe(excavation.area, t('common.unknown1')) %></dd>
+      <dd class="edit-field" data-for="Radiocarbon" data-type="number" data-id="<%=carbon.id%>" data-field="area"><%= maybe(excavation.area, t('common.unknown1')) %></dd>
 
       <dt><%= t('artifact.number') %>:</dt>
       <dd><%= _.size(artifacts) %></dd>

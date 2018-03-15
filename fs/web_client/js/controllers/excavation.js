@@ -2,7 +2,7 @@
 
 App.controllers.excavation = new (Backbone.View.extend({
   'show': function() {
-    App.url.setMapping(['id']);
+    App.url.setMapping(['id', 'mod']);
     var excId = App.url.get('id');
     var tmplData = {};
     var data = [];

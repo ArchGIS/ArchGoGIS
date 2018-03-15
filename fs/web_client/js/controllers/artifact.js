@@ -52,7 +52,7 @@ App.controllers.artifact = new (Backbone.View.extend({
   },
 
   'show': function() {
-    App.url.setMapping(['id']);
+    App.url.setMapping(['id', 'mod']);
     var aid = App.url.get('id');
     var data = [];
     var tmplData = {};

@@ -12,7 +12,7 @@
     <div id="common">
       <dl>
         <dt><%= t('radiocarbon.index') %>:</dt>
-        <dd><%= ctl(carbon.name) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="textarea" data-id="<%=carbon.id%>" data-field="name"><%= ctl(carbon.name) %></dd>
 
         <% if (knowledges[0]) { %>
           <% let monCult = (culture[0][0]) ? culture[0][0].name : t('common.noData') %>
@@ -26,10 +26,10 @@
         <dd><%= maybe(dateType[0].name, t('common.noData')) %></dd>
         
         <dt><%= t('radiocarbon.date') %>:</dt>
-        <dd><%= maybe(carbon.date, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="number" data-id="<%=carbon.id%>" data-field="date"><%= maybe(carbon.date, t('common.noData')) %></dd>
         
         <dt>±1s:</dt>
-        <dd><%= maybe(carbon.s, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="number" data-id="<%=carbon.id%>" data-field="s"><%= maybe(carbon.s, t('common.noData')) %></dd>
 
         <dt>BC/AD 68.2%:</dt>
         <dd><%= maybe(carbon.bcadFirstBot, t('common.noData')) %> — <%= maybe(carbon.bcadFirstTop, t('common.noData')) %></dd>
@@ -41,13 +41,13 @@
         <dd><%= maybe(carbon.curve, t('common.noData')) %></dd>
 
         <dt><%= t('radiocarbon.depth') %>:</dt>
-        <dd><%= maybe(carbon.depth, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="number" data-id="<%=carbon.id%>" data-field="depth"><%= maybe(carbon.depth, t('common.noData')) %></dd>
 
         <dt><%= t('radiocarbon.relativeDepth') %>:</dt>
-        <dd><%= maybe(carbon.relativeDepth, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="number" data-id="<%=carbon.id%>" data-field="relativeDepth"><%= maybe(carbon.relativeDepth, t('common.noData')) %></dd>
 
         <dt><%= t('excavation.section') %>:</dt>
-        <dd><%= maybe(carbon.excRegion, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="textarea" data-id="<%=carbon.id%>" data-field="excRegion"><%= maybe(carbon.excRegion, t('common.noData')) %></dd>
 
         <% if (complex[0]) { %>
           <dt><%= t('excavation.objectName') %>:</dt>
@@ -55,7 +55,7 @@
         <% } %>
 
         <dt><%= t('radiocarbon.stratigraphic') %>:</dt>
-        <dd><%= maybe(carbon.layerChar, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="textarea" data-id="<%=carbon.id%>" data-field="layerChar"><%= maybe(carbon.layerChar, t('common.noData')) %></dd>
 
         <% if (genesis[0]) { %>
           <dt><%= t('radiocarbon.genesis') %>:</dt>
@@ -78,7 +78,7 @@
         <% } %>
 
         <dt><%= t('radiocarbon.sampleDesc') %>:</dt>
-        <dd><%= maybe(carbon.sampleDesc, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Radiocarbon" data-type="textarea" data-id="<%=carbon.id%>" data-field="sampleDesc"><%= maybe(carbon.sampleDesc, t('common.noData')) %></dd>
       </dl>
     </div>
 

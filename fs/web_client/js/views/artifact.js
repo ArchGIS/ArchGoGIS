@@ -1172,5 +1172,7 @@ App.views.artifact = new (Backbone.View.extend({
 
     $('.tabs').tabs();
     App.views.functions.setAccordion(".accordion");
+
+    App.views.functions.setEdit();
   }
 }));

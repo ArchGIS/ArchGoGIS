@@ -13,16 +13,16 @@
 
     <div id="general">
       <dt><%= t('heritage.code') %>:</dt>
-      <dd><%= maybe(heritage, t('common.notDefined'),"code") %></dd>
+      <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="code"><%= maybe(heritage, t('common.notDefined'),"code") %></dd>
 
       <dt><%= t('common.name1') %>:</dt>
-      <dd><%= ctl( maybe(heritage, t('common.notDefined'),"name") ) %></dd>
+      <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="name"><%= ctl( maybe(heritage, t('common.notDefined'),"name") ) %></dd>
 
       <dt><%= t('common.address') %>:</dt>
-      <dd><%= maybe(heritage, t('common.notDefined'),"address") %></dd>
+      <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="address"><%= maybe(heritage, t('common.notDefined'),"address") %></dd>
 
       <dt><%= t('date.singular') %>:</dt>
-      <dd><%= maybe(heritage, t('common.notSpecif'), "date") %></dd>
+      <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="date"><%= maybe(heritage, t('common.notSpecif'), "date") %></dd>
 
       <dt><%= t('common.status') %> :</dt>
       <dd><%= maybe(herStatus[0], t('common.notDefined'), `${prefix}name`) %></dd>
@@ -42,18 +42,18 @@
           <dd><%= maybe(file, t('common.notSpecif'),"docDate") %></dd>
         <% } else { %>
           <dt><%= t('common.protDoc') %> :</dt>
-          <dd><%= maybe(heritage, t('common.notDefined'),"docType") %></dd>
+          <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="docType"><%= maybe(heritage, t('common.notDefined'),"docType") %></dd>
 
           <dt><%= t('common.protDocNumber') %> :</dt>
-          <dd><%= maybe(heritage, t('common.notDefined'),"docNum") %></dd>
+          <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="docNum"><%= maybe(heritage, t('common.notDefined'),"docNum") %></dd>
 
           <dt><%= t('common.protDocDate') %> :</dt>
-          <dd><%= maybe(heritage, t('common.notSpecif'),"docDate") %></dd>
+          <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="docDate"><%= maybe(heritage, t('common.notSpecif'),"docDate") %></dd>
         <% } %>
       <% } %>
 
       <dt><%= t('common.borderDescr') %> :</dt>
-      <dd><%= maybe(heritage, t('common.notSpecif'),"borderDesc") %></dd>
+      <dd class="edit-field" data-for="Heritage" data-type="textarea" data-id="<%=heritage.id%>" data-field="borderDesc"><%= maybe(heritage, t('common.notSpecif'),"borderDesc") %></dd>
 
       <dt><%= t('doc.registration.singular') %>:</dt>
       <dd><%= App.models.File.href(heritage.fileid, t('common.document')) %></dd>

@@ -58,6 +58,7 @@ App.views.functions = {
   },
 
   "setEdit": () => {
+    console.log(App.url.get('mod'))
     if (App.url.get('mod') != 'edit') 
       return;
 
@@ -114,7 +115,7 @@ App.views.functions = {
       })
 
       $(`.save-icon[uid=${id}]`).on("click", function() {
-        let value = $(`.new-field[uid=${id}]`).val().replace(/\n/g, "\\n");
+        let value = App.controllers.fn.escapeHtml($(`.new-field[uid=${id}]`).val());
         let valueText = "";
         let query = [];
         let url = [];

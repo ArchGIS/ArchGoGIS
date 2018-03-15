@@ -14,7 +14,7 @@
       <dl>
         <% if (artifact.name) { %>
           <dt><%= t('artifact.name') %>:</dt>
-          <dd><%= ctl(artifact.name) %></dd>
+          <dd class="edit-field" data-for="Artifact" data-type="textarea" data-id="<%=artifact.id%>" data-field="name"><%= ctl(artifact.name) %></dd>
         <% } %>
 
         <dt><%= t('artifact.category') %>:</dt>
@@ -24,10 +24,10 @@
         <dd><%= (materials.length > 0) ? _.pluck(materials, 'name').join(", ") : t('common.noData') %></dd>
 
         <dt><%= t('artifact.size') %>:</dt>
-        <dd><%= maybe(artifact.size, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Artifact" data-type="textarea" data-id="<%=artifact.id%>" data-field="size"><%= maybe(artifact.size, t('common.noData')) %></dd>
 
         <dt><%= t('artifact.weight') %>:</dt>
-        <dd><%= maybe(artifact.weight, t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Artifact" data-type="textarea" data-id="<%=artifact.id%>" data-field="weight"><%= maybe(artifact.weight, t('common.noData')) %></dd>
 
         <dt><%= t('artifact.tech') %>:</dt>
         <dd><%= maybe(artifact.tech,  t('common.noData')) %></dd>
@@ -36,7 +36,7 @@
         <dd><%= t('common.noData') %></dd>
 
         <dt><%= t('artifact.yearFound') %>:</dt>
-        <dd><%= maybe(artifact.year,  t('common.noData')) %></dd>
+        <dd class="edit-field" data-for="Artifact" data-type="number" data-id="<%=artifact.id%>" data-field="year"><%= maybe(artifact.year,  t('common.noData')) %></dd>
 
         <dt><%= t('artifact.monumentFound') %>:</dt>
         <dd><%= App.models.Monument.href(monuments[0].id, ctl(knowledges[0].monument_name)) %></dd>

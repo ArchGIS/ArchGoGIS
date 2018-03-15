@@ -6,7 +6,7 @@ App.controllers.heritage = new (Backbone.View.extend({
   },
 
   'show': function() {
-    App.url.setMapping(['id']);
+    App.url.setMapping(['id', 'mod']);
     var hId = App.url.get('id');
     var tmplData = {};
     var data = [];

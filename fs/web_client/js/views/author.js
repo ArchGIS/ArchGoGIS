@@ -6,5 +6,7 @@ App.views.author = new (Backbone.View.extend({
 
     App.views.functions.setAccordion("#accordion");
     $('.tabs').tabs();
+
+    App.views.functions.setEdit();
   }
 }));
