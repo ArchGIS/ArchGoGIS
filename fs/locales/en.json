@@ -346,6 +346,10 @@
     "no": "No photos"
   },
 
+  "climat": {
+    "plural": "Climate"
+  },
+  
   "monument": {
     "singular": " Archaeological site",
     "plural": " Archaeological sites",

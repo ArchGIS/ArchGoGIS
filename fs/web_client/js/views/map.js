@@ -86,17 +86,35 @@ App.views.map = () => {
   }
 };
 
-const colors = [
-  "#ffffff",
-  "#b1b1b1",
-  "#ff0000",
-  "#38fa04",
-  "#031af0",
-  "#f0b703",
-  "#9d7036",
-  "#ff03eb",
-  "#ffffff",
-]
+const colors = {
+  1: "#d9dbd0",
+  2: "#cbe4de",
+  3: "#bab86b",
+  4: "#d5add2",
+  5: "#edd994",
+  6: "#e2b65f",
+  7: "#c4d761",
+  8: "#9bd0d8",
+  9: "#e4ebc9",
+  10:  "#f8e36c",
+  11:  "#f2d19e",
+  12:  "#f5cab9",
+  13:  "#acbad7",
+  14:  "#76a7cf",
+  15:  "#f7c2d4",
+  16:  "#c385b8",
+  17:  "#8fac6c",
+  18:  "#a69334",
+  19:  "#abca9e",
+  20:  "#67b09c",
+  21:  "#86ae68",
+  22:  "#e3775a",
+  23:  "#e2dcce",
+  24:  "#698daf",
+  25:  "#dee38f",
+  26:  "#e9efef",
+  27:  "#6366b5",
+}
 
 const lang = App.locale.getLang();
 const prefix = lang === 'ru' ? '' : `${lang}_`;
@@ -313,6 +331,24 @@ App.views.addOverlaysToMap = (ov) => {
 };
 
 App.views.addToMap = (placemarks, existMap) => {
+  let data = JSON.stringify({"areas:SpatialReferenceArea": {"id": "*", "select": "*"}});
+  $.post({
+    url: "/hquery/read?limit=1000",
+    data: data,
+    async: false,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+    },
+    success: (response) => {
+      response = JSON.parse(response)
+      _.each(response.areas, function(val, i) {
+        placemarks.push(
+          App.controllers.fn.createPolygonPlacemark('climat', 1, val.polygonCoords, val.name, "", val.type)
+        );
+      })
+    }
+  });
+  console.log(placemarks)
   const types       = _.uniq( _.pluck(placemarks, 'type') ),
         mapInstance = existMap || App.views.map(),
         overlay     = App.views.createOverlays(mapInstance, types),
@@ -345,44 +381,52 @@ App.views.addToMap = (placemarks, existMap) => {
       let x = true;
       let doubleCoords = [];
 
-      _.each(item.polygonCoords, (coord) => {
-        if (x) {
-          x = false;
-          doubleCoords[0] = coord;
-        } else {
-          x = true;
-          doubleCoords[1] = coord;
-          latlngs.push(_.clone(doubleCoords));
-        }
-      });
-
+      function onEachFeature(feature, layer) {
+        layer.bindTooltip(feature.props.tooltip);
+      }
+      console.log(item.epoch, colors[item.epoch])
       let options = {
+        style: {color: colors[item.epoch]},
+        onEachFeature: onEachFeature,
         fillOpacity: .25, 
         opacity: 1, 
         weight: 3,
         color: colors[item.epoch]
       };
 
-      marker = L.polygon(latlngs, options);
+      var states = [{
+        "type": "Feature",
+        "props": {
+          "tooltip": item.pref.hintContent
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": JSON.parse(item.polygonCoords)
+        }
+      }];
+
+      marker = L.geoJSON(states, options);
     } else { 
       marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
         icon: icon
       });
+
+      marker.on('click', function(e) {
+        window.open(`${HOST_URL}/index#${item.type}/show/${item.id}`, '_blank');
+      });
+
+      marker.bindTooltip(ctl(item.pref.hintContent), {
+        direction: top
+      });
+
+      marker.on('mouseover', function(e) {
+        this.openTooltip();
+      });
+      marker.on('mouseout', function(e) {
+        this.closeTooltip();
+      });
     }
 
-    marker.bindTooltip(ctl(item.pref.hintContent), {
-      direction: 'top'
-    });
-
-    marker.on('mouseover', function(e) {
-      this.openTooltip();
-    });
-    marker.on('mouseout', function(e) {
-      this.closeTooltip();
-    });
-    marker.on('click', function(e) {
-      window.open(`${HOST_URL}/index#${item.type}/show/${item.id}`, '_blank');
-    });
 
     // Need for clusters
     marker.type = item.type;

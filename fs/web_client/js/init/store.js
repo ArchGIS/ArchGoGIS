@@ -14,7 +14,8 @@ App.store.mapTypes = {
   heritage: App.locale.translate('heritage.singular'),
   research: App.locale.translate('research.plural'),
   artifact: App.locale.translate('artifact.plural'),
-  radiocarbon: App.locale.translate('radiocarbon.plural')
+  radiocarbon: App.locale.translate('radiocarbon.plural'),
+  climat: App.locale.translate('climat.plural')
 };
 
 App.store.pathToIcons = {
