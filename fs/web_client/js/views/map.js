@@ -386,7 +386,10 @@ App.views.addToMap = (placemarks, existMap) => {
       }
       console.log(item.epoch, colors[item.epoch])
       let options = {
-        style: {color: colors[item.epoch]},
+        style: {color: colors[item.epoch],
+          "weight": 0,
+          "fillOpacity": 1
+        },
         onEachFeature: onEachFeature,
         fillOpacity: .25, 
         opacity: 1, 
