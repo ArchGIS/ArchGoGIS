@@ -384,7 +384,7 @@ App.views.addToMap = (placemarks, existMap) => {
       function onEachFeature(feature, layer) {
         layer.bindTooltip(feature.props.tooltip);
       }
-      console.log(item.epoch, colors[item.epoch])
+
       let options = {
         style: {color: colors[item.epoch],
           "weight": 0,

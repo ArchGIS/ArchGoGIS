@@ -574,7 +574,7 @@ var Bookmarks = L.Control.extend( /**  @lends Bookmarks.prototype */ {
       });
       self._appendItems([item]);
     });
-    this._showBookmark(bookmark);
+    // this._showBookmark(bookmark);
   },
 
   /**
