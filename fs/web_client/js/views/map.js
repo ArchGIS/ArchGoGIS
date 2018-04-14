@@ -1,13 +1,13 @@
 'use strict';
 
 App.views.map = () => {
-  let map = L.map('map').setView([55.78, 49.13], 6);
+  let map = L.map('map', {preferCanvas: true}).setView([55.78, 49.13], 6);
 
   let layerdefs = {
     mapnik: {
       name: "OSM",
       js: [],
-      init: () => L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+      init: () => L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 1, maxZoom: 24})
     },
     ysat: {
       name: "Yandex",
@@ -38,7 +38,17 @@ App.views.map = () => {
       name: "Google спутник",
       js: ["/vendor/leaflet-plugins/layer/tile/Leaflet.GoogleMutant.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyARNP1tCHTxfeDKXTFbAsgsDKZeOMwPBxE"],
       init: () => L.gridLayer.googleMutant({type: "satellite"})
-    }
+    },
+    strelb: {
+      name: "Custom",
+      js: [],
+      init: () => L.tileLayer('/vendor/strelb/z{z}/{xx}/x{x}/{yy}/y{y}.jpg', {minZoom: 0, maxZoom: 11, zoomOffset: 1, xx: function(cc) {return parseInt(cc.x / 1000)}, yy: function(cc) {return parseInt(cc.y / 1000)}})
+    },
+    topoMarch: {
+      name: "topo_m",
+      js: [],
+      init: () => L.tileLayer('http://maps.marshruty.ru/ml.ashx?al=1&x={x}&y={y}&z={z}', {minZoom: 8, maxZoom: 16})
+    },
   };
 
   const yndx = new L.DeferredLayer(layerdefs.nyak);
@@ -46,6 +56,8 @@ App.views.map = () => {
   const google = new L.DeferredLayer(layerdefs.google);
   const googleSputnik = new L.DeferredLayer(layerdefs.googleSputnik);
   const osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
+  const strelb = new L.DeferredLayer(layerdefs.strelb).addTo(map);
+  const topo_m = new L.DeferredLayer(layerdefs.topoMarch).addTo(map);
   const bing = new L.DeferredLayer(layerdefs.bing);
   const bingSputnik = new L.DeferredLayer(layerdefs.bingSputnik);
 
@@ -57,7 +69,9 @@ App.views.map = () => {
       "Yandex": yndx,
       "Yandex спутник": yndxSputnik,
       "Bing": bing,
-      "Bing спутник": bingSputnik
+      "Bing спутник": bingSputnik,
+      "Топо маршруты": topo_m,
+      "Стрельбицкий 1882": strelb,
     }
   ).addTo(map);
 
@@ -78,7 +92,6 @@ App.views.map = () => {
     activeColor: '#10B8CB',
     completedColor: '#10B8CB'
   }).addTo(map);
-
 
   return {
     map,
@@ -324,6 +337,7 @@ App.views.addOverlaysToMap = (ov) => {
 
   _.each(ov.layers, (layer, key) => {
     layer.addTo(ov.map);
+
     ov.controls.addOverlay(layer, key);
   });
 
@@ -348,7 +362,7 @@ App.views.addToMap = (placemarks, existMap) => {
       })
     }
   });
-  console.log(placemarks)
+
   const types       = _.uniq( _.pluck(placemarks, 'type') ),
         mapInstance = existMap || App.views.map(),
         overlay     = App.views.createOverlays(mapInstance, types),
@@ -441,7 +455,8 @@ App.views.addToMap = (placemarks, existMap) => {
 
     overlay.layers[App.store.mapTypes[item.type]].addLayer(marker);
   });
-  
+
+
   return App.views.addOverlaysToMap(overlay);
 };
 
