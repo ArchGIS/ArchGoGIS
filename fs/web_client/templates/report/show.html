@@ -40,6 +40,16 @@
     <% }) %>
   <% } %>
 
+  <br>
+  <div class="form-group">
+    <label for="pub-file-input"><%= t('common.addFile') %></label>
+    <input id="pub-file-input" accept=".pdf,.doc,.docx" type="file">
+    <button class="btn btn-primary btn-new-coauthor" id="upload-file">
+      <i class="fa fa-cogs"></i>
+      <%= t('common.upFile') %>
+    </button>
+  </div>
+
 </div>
 
 <% if (report.fileid) { %>
