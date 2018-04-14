@@ -48,22 +48,21 @@ App.views.map = () => {
       name: "topo_m",
       js: [],
       init: () => L.tileLayer('http://maps.marshruty.ru/ml.ashx?al=1&x={x}&y={y}&z={z}', {minZoom: 8, maxZoom: 16})
-    },
+    }
   };
 
   const yndx = new L.DeferredLayer(layerdefs.nyak);
   const yndxSputnik = new L.DeferredLayer(layerdefs.ysat);
   const google = new L.DeferredLayer(layerdefs.google);
   const googleSputnik = new L.DeferredLayer(layerdefs.googleSputnik);
-  const osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
   const strelb = new L.DeferredLayer(layerdefs.strelb).addTo(map);
   const topo_m = new L.DeferredLayer(layerdefs.topoMarch).addTo(map);
+  const osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
   const bing = new L.DeferredLayer(layerdefs.bing);
   const bingSputnik = new L.DeferredLayer(layerdefs.bingSputnik);
 
   const controls = L.control.layers(
     {
-      'OSM': osm,
       'Google': google,
       'Google спутник': googleSputnik,
       "Yandex": yndx,
@@ -72,6 +71,7 @@ App.views.map = () => {
       "Bing спутник": bingSputnik,
       "Топо маршруты": topo_m,
       "Стрельбицкий 1882": strelb,
+      'OSM': osm
     }
   ).addTo(map);
 
