@@ -5,18 +5,55 @@ var queue = require('d3-queue').queue;
 
 var cacheBusterDate = +new Date();
 
+var legendEpoch = [
+    {show: false, name: "Modern time", color: "rgba(178,178,178,1)"},
+    {show: false, name: "Middle ages", color: "rgba(255,0,0,1)"},
+    {show: false, name: "Great Migration period", color: "rgba(56,252,0,1)"},
+    {show: false, name: "Early Iron Age", color: "rgba(3,26,250,1)"},
+    {show: false, name: "Paleometal age", color: "rgba(250,183,3,1)"},
+    {show: false, name: "Neolithic", color: "rgba(157,112,54,1)"},
+    {show: false, name: "Paleolitic/Mesolithic", color: "rgba(255,3,235,1)"},
+    {show: false, name: "Not defined", color: "rgba(0,0,0,1)"}
+];
+
+var legendSiteType = [
+    {show: false, name: "Fortified settlement (hillfort)", img: "monType1_1.png"},
+    {show: false, name: "Unfortified settlement (camp/village)", img: "monType2_1.png"},
+    {show: false, name: "Find", img: "monType3_1.png"},
+    {show: false, name: "Cemetery", img: "monType4_1.png"},
+    {show: false, name: "Burial mound", img: "monType5_1.png"},
+    {show: false, name: "Productuion place", img: "monType6_1.png"},
+    {show: false, name: "Sanctuary", img: "monType7_1.png"},
+    {show: false, name: "Hoard", img: "monType8_1.png"},
+    {show: false, name: "Complex", img: "monType9_1.png"},
+    {show: false, name: "Architecture", img: "monType10_1.png"},
+    {show: false, name: "Not defined", img: "monType11_1.png"},
+    {show: false, name: "Tombstone", img: "monType12_1.png"},
+];
+
 // leaflet-image
 module.exports = function leafletImage(map, callback) {
 
     var hasMapbox = !!L.mapbox;
+    var count = 1;
 
     var dimensions = map.getSize(),
         layerQueue = new queue(1);
 
+    var x = dimensions.x;
+    var y = dimensions.y;
+
     var canvas = document.createElement('canvas');
-    canvas.width = dimensions.x;
-    canvas.height = dimensions.y;
+    canvas.width = x;
+    canvas.height = y + 300;
     var ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'rgba(255,255,255,1)';
+    ctx.fillRect(0, 0, x, y + 300);
+    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fillRect(0, y, x, 2);
+
+    ctx.font = "bold 20px Arial";
+    ctx.fillText("Legend", 30, y + 30);
 
     // dummy canvas image when loadTile get 404 error
     // and layer don't have errorTileUrl
@@ -24,7 +61,7 @@ module.exports = function leafletImage(map, callback) {
     dummycanvas.width = 1;
     dummycanvas.height = 1;
     var dummyctx = dummycanvas.getContext('2d');
-    dummyctx.fillStyle = 'rgba(0,0,0,0)';
+    dummyctx.fillStyсle = 'rgba(0,0,0,0)';
     dummyctx.fillRect(0, 0, 1, 1);
 
     // layers are drawn in the same order as they are composed in the DOM:
@@ -48,7 +85,7 @@ module.exports = function leafletImage(map, callback) {
 
     function drawMarkerLayer(l) {
         if (l instanceof L.Marker && l.options.icon instanceof L.Icon) {
-            layerQueue.defer(handleMarkerLayer, l);
+            layerQueue.defer(handleMarkerLayer, l, count++);
         }
     }
     
@@ -58,6 +95,68 @@ module.exports = function leafletImage(map, callback) {
         if (l instanceof L.esri.DynamicMapLayer) {                       
             layerQueue.defer(handleEsriDymamicLayer, l);
         }
+    }
+
+    function drawLegend() {
+        var legendX = 30;
+        var legendY = y + 45
+        var im; 
+
+        ctx.fillStyle = 'rgba(0,0,0,1)';
+        ctx.font = "16px Arial";
+        ctx.fillText("Epoch", legendX, legendY + 16);
+
+        legendY += 30;
+
+        legendEpoch.forEach(function (ep) {
+            if (ep.show === true) {
+                ctx.fillStyle = ep.color;
+                ctx.fillRect(legendX, legendY, 16, 16);
+
+                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.font = "16px Arial";
+                ctx.fillText(ep.name, legendX + 20, legendY + 16);
+
+                legendY += 20;
+            }
+        })
+
+        legendX += 300;
+        legendY = y + 45
+
+        ctx.fillStyle = 'rgba(0,0,0,1)';
+        ctx.font = "16px Arial";
+        ctx.fillText("Site type", legendX, legendY + 16);
+
+        legendY += 30;
+
+        legendSiteType.forEach(function (type) {
+            if (type.show === true) {
+                im = new Image();
+                im.src = `${HOST_URL}/web_client/img/monTypes/` + type.img;
+
+                im.onload = function () {
+                    ctx.drawImage(im, legendX, legendY, 16, 16);
+                };
+
+                im.onload();
+
+                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.font = "16px Arial";
+                ctx.fillText(type.name, legendX + 20, legendY + 16);
+
+                legendY += 30;
+            }
+        })
+
+        var im2 = new Image();
+        im2.src = canvas.toDataURL()
+        im2.onload = function () {
+            canvas.height = legendY;
+            ctx = canvas.getContext('2d');
+            ctx.drawImage(this, 0, 0);
+        };
+        im2.onload();
     }
 
     function done() {
@@ -71,6 +170,7 @@ module.exports = function leafletImage(map, callback) {
                 ctx.drawImage(layer.canvas, 0, 0);
             }
         });
+        drawLegend()
         done();
     }
 
@@ -195,19 +295,24 @@ module.exports = function leafletImage(map, callback) {
         }
     }
 
-    function handleMarkerLayer(marker, callback) {
+    function handleMarkerLayer(marker, count, callback) {
         var canvas = document.createElement('canvas'),
             ctx = canvas.getContext('2d'),
             pixelBounds = map.getPixelBounds(),
             minPoint = new L.Point(pixelBounds.min.x, pixelBounds.min.y),
             pixelPoint = map.project(marker.getLatLng()),
             isBase64 = /^data\:/.test(marker._icon.src),
-            url = isBase64 ? marker._icon.src : addCacheString(marker._icon.src),
+            url = isBase64 ? marker.options.icon.options.iconUrl : addCacheString(marker.options.icon.options.iconUrl),
             im = new Image(),
             options = marker.options.icon.options,
             size = options.iconSize,
             pos = pixelPoint.subtract(minPoint);
             // anchor = L.point(options.iconAnchor || size && size.divideBy(2, true));
+
+        const reg = new RegExp(/(\d){1}/, "g");
+        var imgTypes = url.match(reg);
+        legendEpoch[imgTypes[1]-1].show = true;
+        legendSiteType[imgTypes[0]-1].show = true;
 
         if (size instanceof L.Point) size = [size.x, size.y];
 
@@ -216,10 +321,11 @@ module.exports = function leafletImage(map, callback) {
 
         canvas.width = dimensions.x;
         canvas.height = dimensions.y;
-        im.crossOrigin = '';
 
         im.onload = function () {
             ctx.drawImage(this, x, y, size[0], size[1]);
+            ctx.font="16px Arial";
+            ctx.fillText(count, x + size[0], y + size[1]);
             callback(null, {
                 canvas: canvas
             });

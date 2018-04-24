@@ -2,12 +2,13 @@
 
 App.views.map = () => {
   let map = L.map('map', {preferCanvas: true}).setView([55.78, 49.13], 6);
+  map.mapOverlays = null;
 
   let layerdefs = {
     mapnik: {
       name: "OSM",
       js: [],
-      init: () => L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 1, maxZoom: 24})
+      init: () => L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 1, maxZoom: 18})
     },
     ysat: {
       name: "Yandex",
@@ -50,6 +51,19 @@ App.views.map = () => {
       init: () => L.tileLayer('http://maps.marshruty.ru/ml.ashx?al=1&x={x}&y={y}&z={z}', {minZoom: 8, maxZoom: 16})
     }
   };
+
+  L.easyButton('fa-camera', function(btn, map){
+    App.views.clearOverlays(map.mapOverlays);
+    App.views.addOverlaysToMap(map.mapOverlays, false, ["monument"])
+    leafletImage(map, function(err, canvas) {
+      var link = document.getElementById('link-snapshot');
+      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+      link.click();
+
+      App.views.clearOverlays(map.mapOverlays);
+      App.views.addOverlaysToMap(map.mapOverlays, true)
+    })
+  }).addTo(map);
 
   const yndx = new L.DeferredLayer(layerdefs.nyak);
   const yndxSputnik = new L.DeferredLayer(layerdefs.ysat);
@@ -289,8 +303,13 @@ App.views.createOverlays = (leaf, types) => {
     }
   });
 
+  const overlayLayersClusters = _.reduce(types, (memo, type) => {
+    memo[type] = L.featureGroup.subGroup(cluster);
+    return memo;
+  }, {});
+
   const overlayLayers = _.reduce(types, (memo, type) => {
-    memo[App.store.mapTypes[type]] = L.featureGroup.subGroup(cluster);
+    memo[type] = L.featureGroup();
     return memo;
   }, {});
 
@@ -328,17 +347,26 @@ App.views.createOverlays = (leaf, types) => {
     map: leaf.map,
     controls: leaf.controls,
     layers: overlayLayers,
+    layersC: overlayLayersClusters,
     cluster
   };
 };
 
-App.views.addOverlaysToMap = (ov) => {
-  ov.map.addLayer(ov.cluster);
+App.views.addOverlaysToMap = (ov, needCluster, types) => {
+  needCluster = needCluster || false;
+  types = types || _.keys(App.store.mapTypes);
+  let layers = ov.layers;
 
-  _.each(ov.layers, (layer, key) => {
-    layer.addTo(ov.map);
+  if (needCluster) {
+    ov.map.addLayer(ov.cluster);
+    layers = ov.layersC;
+  }
 
-    ov.controls.addOverlay(layer, key);
+  _.each(layers, (layer, key) => {
+    if (App.store.mapTypes[key].show && _.contains(types, key)) {
+      layer.addTo(ov.map);
+    }
+    ov.controls.addOverlay(layer, App.store.mapTypes[key].name);
   });
 
   return ov;
@@ -453,24 +481,28 @@ App.views.addToMap = (placemarks, existMap) => {
       marker.resType = parseInt(item.opts.preset.match(/\d+/)[0]);
     }
 
-    overlay.layers[App.store.mapTypes[item.type]].addLayer(marker);
+    overlay.layersC[item.type].addLayer(marker);
+    overlay.layers[item.type].addLayer(marker);
   });
 
-
-  return App.views.addOverlaysToMap(overlay);
+  map.mapOverlays = App.views.addOverlaysToMap(overlay, true);
+  return map.mapOverlays;
 };
 
 App.views.clearOverlays = (leaf) => {
+  console.log(leaf)
   if (leaf) {
     _.each(leaf.layers, function (ov) {
+      leaf.map.removeLayer(ov)
       leaf.controls.removeLayer(ov);
     });
 
-    leaf.cluster.clearLayers();
+    _.each(leaf.layersC, function (ov) {
+      leaf.map.removeLayer(ov)
+      leaf.controls.removeLayer(ov);
+    });
   }
 };
-
-
 
 function bakeThePie(options) {
     /*data and valueFunc are required*/
