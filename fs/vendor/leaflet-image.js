@@ -5,32 +5,6 @@ var queue = require('d3-queue').queue;
 
 var cacheBusterDate = +new Date();
 
-var legendEpoch = [
-    {show: false, name: "Modern time", color: "rgba(178,178,178,1)"},
-    {show: false, name: "Middle ages", color: "rgba(255,0,0,1)"},
-    {show: false, name: "Great Migration period", color: "rgba(56,252,0,1)"},
-    {show: false, name: "Early Iron Age", color: "rgba(3,26,250,1)"},
-    {show: false, name: "Paleometal age", color: "rgba(250,183,3,1)"},
-    {show: false, name: "Neolithic", color: "rgba(157,112,54,1)"},
-    {show: false, name: "Paleolitic/Mesolithic", color: "rgba(255,3,235,1)"},
-    {show: false, name: "Not defined", color: "rgba(0,0,0,1)"}
-];
-
-var legendSiteType = [
-    {show: false, name: "Fortified settlement (hillfort)", img: "monType1_1.png"},
-    {show: false, name: "Unfortified settlement (camp/village)", img: "monType2_1.png"},
-    {show: false, name: "Find", img: "monType3_1.png"},
-    {show: false, name: "Cemetery", img: "monType4_1.png"},
-    {show: false, name: "Burial mound", img: "monType5_1.png"},
-    {show: false, name: "Productuion place", img: "monType6_1.png"},
-    {show: false, name: "Sanctuary", img: "monType7_1.png"},
-    {show: false, name: "Hoard", img: "monType8_1.png"},
-    {show: false, name: "Complex", img: "monType9_1.png"},
-    {show: false, name: "Architecture", img: "monType10_1.png"},
-    {show: false, name: "Not defined", img: "monType11_1.png"},
-    {show: false, name: "Tombstone", img: "monType12_1.png"},
-];
-
 // leaflet-image
 module.exports = function leafletImage(map, callback) {
 
@@ -42,6 +16,32 @@ module.exports = function leafletImage(map, callback) {
 
     var x = dimensions.x;
     var y = dimensions.y;
+
+    var legendEpoch = [
+        {show: false, name: "Modern time", color: "rgba(178,178,178,1)"},
+        {show: false, name: "Middle ages", color: "rgba(255,0,0,1)"},
+        {show: false, name: "Great Migration period", color: "rgba(56,252,0,1)"},
+        {show: false, name: "Early Iron Age", color: "rgba(3,26,250,1)"},
+        {show: false, name: "Paleometal age", color: "rgba(250,183,3,1)"},
+        {show: false, name: "Neolithic", color: "rgba(157,112,54,1)"},
+        {show: false, name: "Paleolitic/Mesolithic", color: "rgba(255,3,235,1)"},
+        {show: false, name: "Not defined", color: "rgba(0,0,0,1)"}
+    ];
+
+    var legendSiteType = [
+        {show: false, name: "Fortified settlement (hillfort)", img: "monType1_8.png"},
+        {show: false, name: "Unfortified settlement (camp/village)", img: "monType2_8.png"},
+        {show: false, name: "Find", img: "monType3_8.png"},
+        {show: false, name: "Cemetery", img: "monType4_8.png"},
+        {show: false, name: "Burial mound", img: "monType5_8.png"},
+        {show: false, name: "Productuion place", img: "monType6_8.png"},
+        {show: false, name: "Sanctuary", img: "monType7_8.png"},
+        {show: false, name: "Hoard", img: "monType8_8.png"},
+        {show: false, name: "Complex", img: "monType9_8.png"},
+        {show: false, name: "Architecture", img: "monType10_8.png"},
+        {show: false, name: "Not defined", img: "monType11_8.png"},
+        {show: false, name: "Tombstone", img: "monType12_8.png"},
+    ];
 
     var canvas = document.createElement('canvas');
     canvas.width = x;
@@ -100,7 +100,11 @@ module.exports = function leafletImage(map, callback) {
     function drawLegend() {
         var legendX = 30;
         var legendY = y + 45
+        var maxY = legendY;
         var im; 
+        var imCount = _.reduce(legendSiteType, function(memo, o) {return memo + o.show}, 0) * 2
+        console.log(imCount)
+        var done2 = _.after(imCount + 1, done);
 
         ctx.fillStyle = 'rgba(0,0,0,1)';
         ctx.font = "16px Arial";
@@ -120,6 +124,7 @@ module.exports = function leafletImage(map, callback) {
                 legendY += 20;
             }
         })
+        maxY = legendY;
 
         legendX += 300;
         legendY = y + 45
@@ -129,7 +134,7 @@ module.exports = function leafletImage(map, callback) {
         ctx.fillText("Site type", legendX, legendY + 16);
 
         legendY += 30;
-
+        console.log(legendSiteType)
         legendSiteType.forEach(function (type) {
             if (type.show === true) {
                 im = new Image();
@@ -137,6 +142,8 @@ module.exports = function leafletImage(map, callback) {
 
                 im.onload = function () {
                     ctx.drawImage(im, legendX, legendY, 16, 16);
+                    console.log(123)
+                    done2();
                 };
 
                 im.onload();
@@ -145,18 +152,19 @@ module.exports = function leafletImage(map, callback) {
                 ctx.font = "16px Arial";
                 ctx.fillText(type.name, legendX + 20, legendY + 16);
 
-                legendY += 30;
+                legendY += 20;
             }
         })
 
         var im2 = new Image();
-        im2.src = canvas.toDataURL()
+        im2.src = canvas.toDataURL();
         im2.onload = function () {
-            canvas.height = legendY;
+            canvas.height = Math.max(legendY, maxY);
             ctx = canvas.getContext('2d');
             ctx.drawImage(this, 0, 0);
+                    console.log(123)
+            done2();
         };
-        im2.onload();
     }
 
     function done() {
@@ -171,7 +179,6 @@ module.exports = function leafletImage(map, callback) {
             }
         });
         drawLegend()
-        done();
     }
 
     function handleTileLayer(layer, callback) {
@@ -309,7 +316,7 @@ module.exports = function leafletImage(map, callback) {
             pos = pixelPoint.subtract(minPoint);
             // anchor = L.point(options.iconAnchor || size && size.divideBy(2, true));
 
-        const reg = new RegExp(/(\d){1}/, "g");
+        const reg = new RegExp(/(\d+)/, "g");
         var imgTypes = url.match(reg);
         legendEpoch[imgTypes[1]-1].show = true;
         legendSiteType[imgTypes[0]-1].show = true;

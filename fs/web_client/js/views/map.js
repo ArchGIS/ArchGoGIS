@@ -58,7 +58,7 @@ App.views.map = () => {
     leafletImage(map, function(err, canvas) {
       var link = document.getElementById('link-snapshot');
       link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-      link.click();
+      // link.click();
 
       App.views.clearOverlays(map.mapOverlays);
       App.views.addOverlaysToMap(map.mapOverlays, true)
@@ -97,15 +97,28 @@ App.views.map = () => {
     position: 'topleft'
   }).addTo(map);
 
-  L.control.measure({
-    position: 'bottomright',
-    primaryLengthUnit: 'meters',
-    secondaryLengthUnit: 'kilometers',
-    primaryAreaUnit: 'sqmeters',
-    localization: 'ru',
-    activeColor: '#10B8CB',
-    completedColor: '#10B8CB'
-  }).addTo(map);
+  L.control.polylineMeasure({position:'bottomright',
+   unit:'metres',
+   showBearings:true,
+   clearMeasurementsOnStop: false,
+   showMeasurementsClearControl: true,
+   showUnitControl: true}).
+  addTo(map);
+
+  // L.control.measure({
+  //   position: 'bottomright',
+
+
+  //   primaryLengthUnit: 'meters',
+
+  //   secondaryLengthUnit: 'kilometers',
+
+  //   primaryAreaUnit: 'sqmeters',
+
+  //   localization: 'ru',
+  //   activeColor: '#10B8CB',
+  //   completedColor: '#10B8CB'
+  // }).addTo(map);
 
   return {
     map,
