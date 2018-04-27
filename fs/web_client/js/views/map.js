@@ -3,6 +3,20 @@
 App.views.map = () => {
   let map = L.map('map', {preferCanvas: true, maxZoom: 16}).setView([55.78, 49.13], 6);
   map.mapOverlays = null;
+  
+  map.on('baselayerchange', function (e) {
+    if (typeof e.layer.options.crs !== "undefined") {
+      if (map.options.crs != e.layer.options.crs) {
+        map.options.crs = e.layer.options.crs;
+        map.zoomOut();
+      }
+    } else {
+      if (map.options.crs != L.CRS.EPSG3857) {
+        map.options.crs = L.CRS.EPSG3857;
+        map.zoomOut();
+      }
+    }
+  });
 
   let layerdefs = {
     mapnik: {
@@ -12,13 +26,21 @@ App.views.map = () => {
     },
     ysat: {
       name: "Yandex",
+      crs: L.CRS.EPSG3395,
       js: [],
-      init: () => L.tileLayer("http://sat{s}.maps.yandex.net/tiles?l=sat&v=3.383.2&z={z}&x={x}&y={y}&scale=2&lang=ru_RU", {subdomains:['01','02','03','04']})
+      init: () => L.tileLayer("http://sat{s}.maps.yandex.net/tiles?l=sat&v=3.383&z={z}&x={x}&y={y}&scale=2&lang=ru_RU", {
+        subdomains:['01','02','03','04'],
+        crs: L.CRS.EPSG3395
+      })
     },
     nyak: {
-      name: "НЯК",
+      name: "nyak",
+      crs: L.CRS.EPSG3395,
       js: [],
-      init: () => L.tileLayer("http://vec{s}.maps.yandex.net/tiles?l=map&v=4.55.2&z={z}&x={x}&y={y}&scale=2&lang=ru_RU", {subdomains:['01','02','03','04']})
+      init: () => L.tileLayer("http://vec{s}.maps.yandex.net/tiles?l=map&v=18.04.22-2&z={z}&x={x}&y={y}&scale=1&lang=ru_RU", {
+        subdomains:['01','02','03','04'],
+        crs: L.CRS.EPSG3395
+      })
     },
     bing: {
       name: "Bing",
