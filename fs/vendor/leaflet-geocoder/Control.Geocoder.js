@@ -20,7 +20,9 @@ module.exports = {
 		includes: L.Mixin.Events,
 
 		initialize: function (options) {
+
 			L.Util.setOptions(this, options);
+			console.log(Nominatim)
 			if (!this.options.geocoder) {
 				this.options.geocoder = new Nominatim();
 			}
@@ -56,7 +58,7 @@ module.exports = {
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
 			L.DomEvent.addListener(input, 'blur', function() {
 				if (this.options.collapsed && !this._preventBlurCollapse) {
-					this._collapse();
+					// this._collapse();
 				}
 				this._preventBlurCollapse = false;
 			}, this);
@@ -909,7 +911,7 @@ module.exports = {
 		geocode: function(query, cb, context) {
 			Util.jsonp(this.options.serviceUrl + 'search', L.extend({
 				q: query,
-				limit: 5,
+				limit: 50,
 				format: 'json',
 				addressdetails: 1
 			}, this.options.geocodingQueryParams),

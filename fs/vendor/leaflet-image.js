@@ -102,9 +102,9 @@ module.exports = function leafletImage(map, callback) {
         var legendY = y + 45
         var maxY = legendY;
         var im; 
-        var imCount = _.reduce(legendSiteType, function(memo, o) {return memo + o.show}, 0) * 2
-        console.log(imCount)
-        var done2 = _.after(imCount + 1, done);
+
+        var imCount = _.reduce(legendSiteType, function(memo, o) {return memo + o.show}, 0);
+        var cutImgQ = _.after(imCount, cutImg);
 
         ctx.fillStyle = 'rgba(0,0,0,1)';
         ctx.font = "16px Arial";
@@ -134,19 +134,17 @@ module.exports = function leafletImage(map, callback) {
         ctx.fillText("Site type", legendX, legendY + 16);
 
         legendY += 30;
-        console.log(legendSiteType)
         legendSiteType.forEach(function (type) {
             if (type.show === true) {
                 im = new Image();
                 im.src = `${HOST_URL}/web_client/img/monTypes/` + type.img;
 
+                var x = legendX, y = legendY;
                 im.onload = function () {
-                    ctx.drawImage(im, legendX, legendY, 16, 16);
-                    console.log(123)
-                    done2();
+                    console.log(x, y)
+                    ctx.drawImage(this, x, y, 16, 16);
+                    cutImgQ();
                 };
-
-                im.onload();
 
                 ctx.fillStyle = 'rgba(0,0,0,1)';
                 ctx.font = "16px Arial";
@@ -155,16 +153,19 @@ module.exports = function leafletImage(map, callback) {
                 legendY += 20;
             }
         })
+        legendY += 20;
 
-        var im2 = new Image();
-        im2.src = canvas.toDataURL();
-        im2.onload = function () {
-            canvas.height = Math.max(legendY, maxY);
-            ctx = canvas.getContext('2d');
-            ctx.drawImage(this, 0, 0);
-                    console.log(123)
-            done2();
-        };
+        function cutImg() {
+            var im2 = new Image();
+            im2.crossOrigin = "";
+            im2.src = canvas.toDataURL();
+            im2.onload = function () {
+                canvas.height = Math.max(legendY, maxY);
+                ctx = canvas.getContext('2d');
+                ctx.drawImage(this, 0, 0);
+                done();
+            }; 
+        }
     }
 
     function done() {
@@ -215,6 +216,9 @@ module.exports = function leafletImage(map, callback) {
             }
         }
 
+        var tilesCount = _.size(tiles);
+        var doneQ = _.after(tilesCount, done);
+
         tiles.forEach(function (tilePoint) {
             var originalTilePoint = tilePoint.clone();
 
@@ -224,7 +228,7 @@ module.exports = function leafletImage(map, callback) {
 
             var tilePos = originalTilePoint
                 .scaleBy(new L.Point(tileSize, tileSize))
-                .subtract(bounds.min);
+                .subtract(bounds.min); 
 
             if (tilePoint.y >= 0) {
                 if (isCanvasLayer) {
@@ -233,11 +237,21 @@ module.exports = function leafletImage(map, callback) {
                 } else {
                     var url = addCacheString(layer.getTileUrl(tilePoint));
                     tileQueue.defer(loadTile, url, tilePos, tileSize);
+
+                    var im = new Image();
+                    im.crossOrigin = '';
+                    im.onload = function() {
+                        ctx.drawImage(this, Math.floor(tilePos.x), Math.floor(tilePos.y),tileSize, tileSize);
+                        doneQ();
+                    }
+                    im.src = url;
                 }
             }
         });
 
-        tileQueue.awaitAll(tileQueueFinish);
+        function done() {
+            tileQueue.awaitAll(tileQueueFinish);
+        }
 
         function canvasTile(tile, tilePos, tileSize, callback) {
             callback(null, {
@@ -274,7 +288,7 @@ module.exports = function leafletImage(map, callback) {
         }
 
         function tileQueueFinish(err, data) {
-            data.forEach(drawTile);
+            // data.forEach(drawTile);
             callback(null, { canvas: canvas });
         }
 

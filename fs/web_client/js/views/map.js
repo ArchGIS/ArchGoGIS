@@ -1,7 +1,7 @@
 'use strict';
 
 App.views.map = () => {
-  let map = L.map('map', {preferCanvas: true}).setView([55.78, 49.13], 6);
+  let map = L.map('map', {preferCanvas: true, maxZoom: 16}).setView([55.78, 49.13], 6);
   map.mapOverlays = null;
 
   let layerdefs = {
@@ -12,13 +12,13 @@ App.views.map = () => {
     },
     ysat: {
       name: "Yandex",
-      js: ["/vendor/leaflet-plugins/layer/tile/yandex.mutant.js", "http://api-maps.yandex.ru/2.1/?&lang=ru-RU"],
-      init: () => L.gridLayer.yandexMutant({type: "satellite"})
+      js: [],
+      init: () => L.tileLayer("http://sat{s}.maps.yandex.net/tiles?l=sat&v=3.383.2&z={z}&x={x}&y={y}&scale=2&lang=ru_RU", {subdomains:['01','02','03','04']})
     },
     nyak: {
       name: "НЯК",
-      js: ["/vendor/leaflet-plugins/layer/tile/yandex.mutant.js", "http://api-maps.yandex.ru/2.1/?lang=ru-RU"],
-      init: () => L.gridLayer.yandexMutant({type: "publicMap"})
+      js: [],
+      init: () => L.tileLayer("http://vec{s}.maps.yandex.net/tiles?l=map&v=4.55.2&z={z}&x={x}&y={y}&scale=2&lang=ru_RU", {subdomains:['01','02','03','04']})
     },
     bing: {
       name: "Bing",
@@ -32,13 +32,13 @@ App.views.map = () => {
     },
     google: {
       name: "Google",
-      js: ["/vendor/leaflet-plugins/layer/tile/Leaflet.GoogleMutant.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyARNP1tCHTxfeDKXTFbAsgsDKZeOMwPBxE"],
-      init: () => L.gridLayer.googleMutant({type: "roadmap"})
+      js: [],
+      init: () => L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {subdomains:['mt0','mt1','mt2','mt3']})
     },
     googleSputnik: {
       name: "Google спутник",
-      js: ["/vendor/leaflet-plugins/layer/tile/Leaflet.GoogleMutant.js", "https://maps.googleapis.com/maps/api/js?key=AIzaSyARNP1tCHTxfeDKXTFbAsgsDKZeOMwPBxE"],
-      init: () => L.gridLayer.googleMutant({type: "satellite"})
+      js: [],
+      init: () => L.tileLayer("http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {subdomains:['mt0','mt1','mt2','mt3']})
     },
     strelb: {
       name: "Custom",
@@ -49,6 +49,16 @@ App.views.map = () => {
       name: "topo_m",
       js: [],
       init: () => L.tileLayer('http://maps.marshruty.ru/ml.ashx?al=1&x={x}&y={y}&z={z}', {minZoom: 8, maxZoom: 16})
+    },
+    relief: {
+      name: "relief",
+      js: [],
+      init: () => L.tileLayer('https://maps-for-free.com/layer/relief/z{z}/row{y}/{z}_{x}-{y}.jpg')
+    },
+    noMap: {
+      name: "noMap",
+      js: [],
+      init: () => L.tileLayer("")
     }
   };
 
@@ -58,7 +68,7 @@ App.views.map = () => {
     leafletImage(map, function(err, canvas) {
       var link = document.getElementById('link-snapshot');
       link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-      // link.click();
+      link.click();
 
       App.views.clearOverlays(map.mapOverlays);
       App.views.addOverlaysToMap(map.mapOverlays, true)
@@ -69,10 +79,12 @@ App.views.map = () => {
   const yndxSputnik = new L.DeferredLayer(layerdefs.ysat);
   const google = new L.DeferredLayer(layerdefs.google);
   const googleSputnik = new L.DeferredLayer(layerdefs.googleSputnik);
-  const strelb = new L.DeferredLayer(layerdefs.strelb).addTo(map);
-  const topo_m = new L.DeferredLayer(layerdefs.topoMarch).addTo(map);
-  const osm = new L.DeferredLayer(layerdefs.mapnik).addTo(map);
-  const bing = new L.DeferredLayer(layerdefs.bing);
+  const strelb = new L.DeferredLayer(layerdefs.strelb);
+  const topo_m = new L.DeferredLayer(layerdefs.topoMarch);
+  const noMap = new L.DeferredLayer(layerdefs.noMap);
+  const osm = new L.DeferredLayer(layerdefs.mapnik);
+  const relief = new L.DeferredLayer(layerdefs.relief);
+  const bing = new L.DeferredLayer(layerdefs.bing).addTo(map);
   const bingSputnik = new L.DeferredLayer(layerdefs.bingSputnik);
 
   const controls = L.control.layers(
@@ -85,16 +97,22 @@ App.views.map = () => {
       "Bing спутник": bingSputnik,
       "Топо маршруты": topo_m,
       "Стрельбицкий 1882": strelb,
-      'OSM': osm
+      "Рельеф": relief,
+      "OSM": osm,
+      "Без карты": noMap,
     }
   ).addTo(map);
+  
+  L.control.betterscale({metric: true, imperial: false}).addTo(map);
 
   const myC = new L.Control.Bookmarks()
-    .setPosition('bottomleft')
+    .setPosition('topright')
     .addTo(map);
-
+  
+  var geocoder = new L.Control.Geocoder.Nominatim({});
   L.Control.geocoder({
-    position: 'topleft'
+    position: 'topleft',
+    geocoder: geocoder
   }).addTo(map);
 
   L.control.polylineMeasure({position:'bottomright',
@@ -105,20 +123,7 @@ App.views.map = () => {
    showUnitControl: true}).
   addTo(map);
 
-  // L.control.measure({
-  //   position: 'bottomright',
-
-
-  //   primaryLengthUnit: 'meters',
-
-  //   secondaryLengthUnit: 'kilometers',
-
-  //   primaryAreaUnit: 'sqmeters',
-
-  //   localization: 'ru',
-  //   activeColor: '#10B8CB',
-  //   completedColor: '#10B8CB'
-  // }).addTo(map);
+  map.mapOverlays = App.views.initOverlays(map, controls);
 
   return {
     map,
@@ -365,6 +370,33 @@ App.views.createOverlays = (leaf, types) => {
   };
 };
 
+App.views.initOverlays = (map, control) => {
+  let data = JSON.stringify({"areas:SpatialReferenceArea": {"id": "*", "select": "*"}});
+  let climatLayer = L.featureGroup();;
+
+  $.post({
+    url: "/hquery/read?limit=1000",
+    data: data,
+    async: true,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+    },
+    success: (response) => {
+      response = JSON.parse(response)
+      _.each(response.areas, function(val, i) {
+        let polygon = App.controllers.fn.createPolygonPlacemark('climat', 1, val.polygonCoords, val.name, "", val.type);
+        climatLayer.addLayer(createPolygon(polygon));
+      })
+    }
+  });
+  control.addOverlay(climatLayer, "Зоны растительности");
+
+  control.addOverlay(new L.DeferredLayer({
+    name: "water",
+    init: () => L.tileLayer('https://maps-for-free.com/layer/water/z{z}/row{y}/{z}_{x}-{y}.gif')
+  }), "Внутренние водоемы")
+}
+
 App.views.addOverlaysToMap = (ov, needCluster, types) => {
   needCluster = needCluster || false;
   types = types || _.keys(App.store.mapTypes);
@@ -381,29 +413,48 @@ App.views.addOverlaysToMap = (ov, needCluster, types) => {
     }
     ov.controls.addOverlay(layer, App.store.mapTypes[key].name);
   });
-
+  
   return ov;
 };
 
-App.views.addToMap = (placemarks, existMap) => {
-  let data = JSON.stringify({"areas:SpatialReferenceArea": {"id": "*", "select": "*"}});
-  $.post({
-    url: "/hquery/read?limit=1000",
-    data: data,
-    async: false,
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
-    },
-    success: (response) => {
-      response = JSON.parse(response)
-      _.each(response.areas, function(val, i) {
-        placemarks.push(
-          App.controllers.fn.createPolygonPlacemark('climat', 1, val.polygonCoords, val.name, "", val.type)
-        );
-      })
-    }
-  });
+function onEachFeature(feature, layer) {
+  layer.bindTooltip(feature.props.tooltip);
+}
 
+function createPolygon(item) {
+  if (!item.polygonCoords && (!item.coords[0] || !item.coords[1])) { return; }
+
+  let latlngs = [];
+  let x = true;
+  let doubleCoords = [];
+
+  let options = {
+    style: {color: colors[item.epoch],
+      "weight": 0,
+      "fillOpacity": 1
+    },
+    onEachFeature: onEachFeature,
+    fillOpacity: .25, 
+    opacity: 1, 
+    weight: 3,
+    color: colors[item.epoch]
+  };
+
+  var states = [{
+    "type": "Feature",
+    "props": {
+      "tooltip": item.pref.hintContent
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": JSON.parse(item.polygonCoords)
+    }
+  }];
+
+  return L.geoJSON(states, options);
+}
+
+App.views.addToMap = (placemarks, existMap) => {
   const types       = _.uniq( _.pluck(placemarks, 'type') ),
         mapInstance = existMap || App.views.map(),
         overlay     = App.views.createOverlays(mapInstance, types),
@@ -432,38 +483,7 @@ App.views.addToMap = (placemarks, existMap) => {
 
     let marker;
     if (item.polygon) {
-      let latlngs = [];
-      let x = true;
-      let doubleCoords = [];
-
-      function onEachFeature(feature, layer) {
-        layer.bindTooltip(feature.props.tooltip);
-      }
-
-      let options = {
-        style: {color: colors[item.epoch],
-          "weight": 0,
-          "fillOpacity": 1
-        },
-        onEachFeature: onEachFeature,
-        fillOpacity: .25, 
-        opacity: 1, 
-        weight: 3,
-        color: colors[item.epoch]
-      };
-
-      var states = [{
-        "type": "Feature",
-        "props": {
-          "tooltip": item.pref.hintContent
-        },
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": JSON.parse(item.polygonCoords)
-        }
-      }];
-
-      marker = L.geoJSON(states, options);
+      marker = createPolygon(item);
     } else { 
       marker = L.marker(L.latLng(item.coords[0], item.coords[1]), {
         icon: icon
@@ -503,7 +523,6 @@ App.views.addToMap = (placemarks, existMap) => {
 };
 
 App.views.clearOverlays = (leaf) => {
-  console.log(leaf)
   if (leaf) {
     _.each(leaf.layers, function (ov) {
       leaf.map.removeLayer(ov)
