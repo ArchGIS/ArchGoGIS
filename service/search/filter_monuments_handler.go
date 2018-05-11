@@ -38,6 +38,7 @@ func searchForFilterMonuments(mnt, epoch, mType, resId string) ([]byte, error) {
 	query := filterMonumentsCypher
 	ifResId := ""
 	haveThisRes := ""
+	kForThisRes := ""
 
 	if mnt != "" {
 		query = query + "WHERE k.monument_name =~ {mnt} "
@@ -46,8 +47,9 @@ func searchForFilterMonuments(mnt, epoch, mType, resId string) ([]byte, error) {
 
 	if resId != "" {
 		query = query + "OPTIONAL MATCH (r2:Research {id: {resId}})-[rel]-(k2:Knowledge)--(m)"
-		ifResId = ", rel "
+		ifResId = ", rel, k2 "
 		haveThisRes = "haveThisRes: rel, "
+		kForThisRes = "kForThisRes: k2.id, "
 		params["resId"] = resId
 	}
 
@@ -88,6 +90,7 @@ func searchForFilterMonuments(mnt, epoch, mType, resId string) ([]byte, error) {
 		"y: k.y, " +
 		"kId: k.id, " +
 		haveThisRes +
+		kForThisRes +
 		"monType: monType.name, " +
 		"en_monType: monType.en_name, " +
 		"monTypeId: monType.id}"
