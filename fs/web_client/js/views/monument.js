@@ -310,7 +310,7 @@ App.views.monument = new (Backbone.View.extend({
                     
                   label = `${row.monName} (${row.epName}, ${row.monType}, ${cult}) <b>${inThisResText}</b>`;
                   value = `${row.monName} (${row.epName}, ${row.monType}, ${cult})`;
-                  return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
+                  return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kForThisRes}
                 });
 
                 if (!results.length) {
@@ -377,6 +377,7 @@ App.views.monument = new (Backbone.View.extend({
 
           getDataForSelector($(`#mon-type-selector-${monId}`), "MonumentType");
         } else if (lastSelectedAuthorId != ui.item.id) {
+          console.log(ui)
           if (ui.item.inThisRes) {
             monumentResHide(monId);
             $(`#knowledge-id-${monId}`).val(ui.item.kId);
@@ -832,7 +833,7 @@ App.views.monument = new (Backbone.View.extend({
                     
                   label = `${row.monName} (${row.epName}, ${row.monType}, ${cult}) <b>${inThisResText}</b>`;
                   value = `${row.monName} (${row.epName}, ${row.monType}, ${cult})`;
-                  return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kId}
+                  return {'label': label, 'value': value, 'id': row.monId, 'inThisRes': inThisRes, 'kId': row.kForThisRes}
                 });
 
                 if (!results.length) {
