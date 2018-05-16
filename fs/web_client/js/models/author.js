@@ -22,7 +22,6 @@ App.models.Author.findByNamePrefix = function(name) {
     // #FIXME: нужно вызывать ошибку при слишком
     // длинном name префиксе.
     var url = App.url.make('/search/authors', {'needle': name, 'limit': 10});
-    
     $.get({
       url,
       beforeSend: function(xhr) {

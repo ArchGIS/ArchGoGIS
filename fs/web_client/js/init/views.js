@@ -432,5 +432,73 @@ App.views.functions = {
       );
       reportFileId++;
     });
+  },
+
+  "setEditionAutocomplete": function() {
+    $(`.edi-name-input, .isbn-input`).autocomplete({
+      html: true,
+      source: function(request, response) {
+        let pubs = [];
+        let pubType = $("#pub-type-selector").val();
+        let editionType = $("#edi-type-selector").val();
+        let isbnSearch = false;
+
+        if ($(this.element[0]).attr("id") === "isbn-input") {
+          isbnSearch = true;
+        }
+
+        console.log(pubType, editionType)
+        App.models.Publication.getPubsByName(request.term, pubType, editionType, isbnSearch)
+          .then(function(data) {
+            if (data && !data.error) {
+              let results = _.map(_.uniq(data.wcity.p), function(row, i) {
+                let eName = row.editionName || row.name || "Нет названия";
+                let year = row.published_at || "Год не указан";
+                let issn = row.issn || "";
+                let isbn = row.isbn || "";
+                let publisher = row.publisher || "";
+                let label = `${eName} (${year})`;
+                let value = `${eName} (${year})`;
+                return {'label': label, 'value': value, 'name': eName, 'year': year, 'issn': issn, 'isbn': isbn, 'city': "", 'publisher': publisher}
+              });
+
+              results = _.union(results, _.map(data.city.p, function(row, i) {
+                let eName = row.editionName || row.name || "Нет названия";
+                let year = row.published_at || "Год не указан";
+                let issn = row.issn || "";
+                let isbn = row.isbn || "";
+                let publisher = row.publisher || "";
+                let city = data.city.c[i].name || "";
+                let cityId = data.city.c[i].id || "";
+                let label = `${eName} (${year}, ${city})`;
+                let value = `${eName} (${year}, ${city})`;
+                return {'label': label, 'value': eName, 'name': eName, 'year': year, 'issn': issn, 'isbn': isbn, 'city': city, 'cityId': cityId, 'publisher': publisher}
+              }));
+
+              response(_.uniq(results, function(item) {return item.label}));
+            } else {
+              response();
+            }
+          });
+      },
+      minLength: 3
+    }).focus(function(){
+      $(this).autocomplete("search");
+    });
+
+    $(`.edi-name-input, .isbn-input`).on('autocompletefocus', function(event, ui) {
+      return false;
+    });
+
+    $(`.edi-name-input, .isbn-input`).on('autocompleteselect', function(event, ui) {
+      $("#edi-name-input[used='true']").val(ui.item.name)
+      $("#publisher-input[used='true']").val(ui.item.publisher)
+      $("#issn-input[used='true']").val(ui.item.issn)
+      $("#isbn-input[used='true']").val(ui.item.isbn)
+      $("#pub-year-input").val(ui.item.year)
+      $("#pub-city-input[used='true']").val(ui.item.city)
+      $("#pub-city-input-id[used='true']").val(ui.item.cityId)
+      return false;
+    })
   }
 }

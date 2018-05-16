@@ -451,6 +451,7 @@ App.views.research = new (Backbone.View.extend({
         tmpl = _.template( $('script.add-pub').html() );
         $('.find-pub').replaceWith( tmpl() );
         $('#author-birth-date-input').on('keyup mouseup', App.fn.checkYear);
+        App.views.functions.setEditionAutocomplete();
 
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
@@ -514,9 +515,9 @@ App.views.research = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $('script.add-pub').html() );
-
         $input.parent().replaceWith( tmpl() );
-
+        App.views.functions.setEditionAutocomplete();
+        
         $('#' + addName(id)).val(inputValue);
         setSelectsEvents();
         getDataForSelector($("#pub-type-selector"), "PublicationType");

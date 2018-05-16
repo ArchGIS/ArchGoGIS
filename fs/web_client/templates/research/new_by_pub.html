@@ -39,6 +39,12 @@
         <input class="form-control" id="research-input-id" hidden data-for="rs:Research" type="id" name="id">
       </div>
 
+      <div class="form-group" toggle-by="more-pub-checkbox" need-option="true" style="display: none">
+        <label for="pub-city-input"><%= t('city.singular') %></label>
+        <%= widget("SearchLine", citiesInputOptions, "pub-city-input") %>
+        <input id="pub-city-input-id" data-for="city:City" hidden type="id" name="id">
+      </div>
+
       <button class="btn btn-primary btn-next" active="1">
         <i class="fa fa-cogs"></i>
         <%= t('common.next') %>
@@ -154,7 +160,7 @@
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
       <label for="isbn-input"><%= t('publication.prop.isbn') %></label>
-      <input class="form-control" id="isbn-input" data-for="pub:Publication" type="text" name="ISBN">
+      <input class="form-control isbn-input autoinput" id="isbn-input" data-for="pub:Publication" type="text" name="isbn">
     </div>
 
     <div class="form-group" toggle-by="pub-type-selector" need-option="1">
@@ -181,17 +187,17 @@
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="1">
         <label for="edi-name-input"><%= t('publication.prop.jourName') %></label>
-        <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
+        <input class="form-control edi-name-input autoinput" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2.4.5">
         <label for="edi-name-input"><%= t('publication.prop.collName') %></label>
-        <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
+        <input class="form-control edi-name-input autoinput" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="3">
         <label for="edi-name-input"><%= t('publication.prop.monogrName') %></label>
-        <input class="form-control" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
+        <input class="form-control edi-name-input autoinput" id="edi-name-input" data-for="pub:Publication" type="text" name="editionName">
       </div>
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="4.5">
@@ -263,7 +269,7 @@
 
       <div class="form-group" toggle-by="edi-type-selector" need-option="2.3.4.5">
         <label for="isbn-input"><%= t('publication.prop.isbn') %></label>
-        <input class="form-control" id="isbn-input" data-for="pub:Publication" type="text" name="isbn">
+        <input class="form-control isbn-input autoinput" id="isbn-input" data-for="pub:Publication" type="text" name="isbn">
       </div>
 
       <div class="form-group">
@@ -275,12 +281,6 @@
           <input id="pub-page-to" data-for="pub:Publication" class="form-control input" type="text" name="pageTo"></input>
         </div>
       </div>
-    </div>
-
-    <div class="form-group" toggle-by="more-pub-checkbox" need-option="true">
-      <label for="pub-city-input"><%= t('city.singular') %></label>
-      <%= widget("SearchLine", citiesInputOptions, "pub-city-input") %>
-      <input id="pub-city-input-id" data-for="city:City" hidden type="id" name="id">
     </div>
   </div>
 

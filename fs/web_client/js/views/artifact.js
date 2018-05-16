@@ -583,7 +583,6 @@ App.views.artifact = new (Backbone.View.extend({
 
     var citySelectHandler = function(event, ui) {
       $('#pub-city-input-id').val(ui.item.id);
-
       App.models.Org.findByCityId(ui.item.id).then(function(orgs) {
         $('#pub-organization-input').autocomplete({
           source: _.map(orgs, function(org) {
@@ -823,6 +822,7 @@ App.views.artifact = new (Backbone.View.extend({
         $('.find-author').replaceWith( tmpl() );
         tmpl = _.template( $('script.add-pub').html() );
         $('.find-pub').replaceWith( tmpl() );
+        App.views.functions.setEditionAutocomplete();
         $('#author-birth-date-input').on('keyup mouseup', App.fn.checkYear);
 
         $('#' + addName(id)).val(inputValue);
@@ -859,8 +859,9 @@ App.views.artifact = new (Backbone.View.extend({
         let inputValue = $input.val();
 
         let tmpl = _.template( $('script.add-pub').html() );
-
         $input.parent().replaceWith( tmpl() );
+
+        App.views.functions.setEditionAutocomplete();
 
         resId = '';
         monumentResHideAll();
@@ -891,6 +892,10 @@ App.views.artifact = new (Backbone.View.extend({
         citySelectHandler(event, ui);
       } 
     });
+
+    $("#pub-city-input").on('autocompletefocus', function(event, ui) {
+      event.preventDefault();
+    })
 
     $("#coauthor-input").bind("keyup", function(event) {
       if (event.keyCode === $.ui.keyCode.BACKSPACE) {
